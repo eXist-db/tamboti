@@ -6,6 +6,8 @@ import module namespace theme="http:/exist-db.org/xquery/biblio/theme" at "../th
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace session="http://exist-db.org/xquery/session";
 
+declare variable $local:app-root := concat($exist:controller, "/../..");
+
 declare function local:set-user() {
     session:create(),
     let $user := request:get-parameter("user", ())
@@ -75,9 +77,12 @@ else if (starts-with($exist:path, "/libs/")) then
 
 else if (starts-with($exist:path, "/theme")) then
     let $path := theme:resolve(concat($exist:controller, "/../.."), $exist:path)
+    let $themePath := replace($path, "^(.*)/[^/]+$", "$1")
     return
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-            <forward url="{$path}"/>
+            <forward url="{$path}">
+                <set-attribute name="theme-collection" value="{$themePath}"/>
+            </forward>
         </dispatch>
 else
     (: everything else is passed through :)
