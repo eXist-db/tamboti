@@ -1,0 +1,9 @@
+<project default="xar" name="MODS Database Loader">
+
+	<target name="xar">
+		<delete file="library-1.0.xar" failonerror="false"/>
+		<zip destfile="library-1.0.xar">
+			<fileset dir="." excludes=".svn"/>
+		</zip>
+	</target>
+</project>

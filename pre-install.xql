@@ -1,0 +1,52 @@
+xquery version "1.0";
+
+import module namespace xdb="http://exist-db.org/xquery/xmldb";
+
+declare variable $home external;
+declare variable $dir external;
+
+declare variable $commons-collection-name := "resources";
+declare variable $commons-users-collection-name := "users";
+declare variable $commons-groups-collection-name := "groups";
+
+declare function local:mkcol-recursive($collection, $components) {
+    if (exists($components)) then
+        let $newColl := concat($collection, "/", $components[1])
+        return (
+            xdb:create-collection($collection, $components[1]),
+            local:mkcol-recursive($newColl, subsequence($components, 2))
+        )
+    else
+        ()
+};
+
+declare function local:mkcol($collection, $path) {
+    local:mkcol-recursive($collection, tokenize($path, "/"))
+};
+
+util:log("INFO", ("Running pre-install script ...")),
+if (xdb:group-exists("biblio.users")) then ()
+else xdb:create-group("biblio.users"),
+if (xdb:exists-user("editor")) then ()
+else xdb:create-user("editor", "editor", "biblio.users", ()),
+
+util:log("INFO", ("Loading collection configuration ...")),
+local:mkcol("/db/system/config", "db/library/modules/edit/code-tables"),
+xdb:store-files-from-pattern("/system/config/db/library/modules/edit/code-tables", $dir, "library/modules/edit/code-tables/*.xconf"),
+local:mkcol("/db/system/config", "db/resources"),
+xdb:store-files-from-pattern("/system/config/db/resources", $home, "samples/mods/*.xconf"),
+
+util:log("INFO", ("Creating temp collection ...")),
+local:mkcol("/db", "resources/temp"),
+xdb:set-collection-permissions("/db/resources/temp", "editor", "biblio.users", util:base-to-integer(0770, 8)),
+
+local:mkcol("/db", "resources/commons/samples"),
+local:mkcol("/db", "resources/commons/eXist"),
+
+local:mkcol("/db", $commons-collection-name),
+local:mkcol(fn:concat("/db/", $commons-collection-name), $commons-users-collection-name),
+local:mkcol(fn:concat("/db/", $commons-collection-name), $commons-groups-collection-name),
+xdb:set-collection-permissions(fn:concat("/db/", $commons-collection-name, "/", $commons-users-collection-name), "editor", "biblio.users", util:base-to-integer(0770, 8)),
+xdb:set-collection-permissions(fn:concat("/db/", $commons-collection-name, "/", $commons-groups-collection-name), "editor", "biblio.users", util:base-to-integer(0770, 8)),
+xdb:store-files-from-pattern("/db/resources/commons/samples", $home, "samples/mods/*.xml"),
+xdb:store-files-from-pattern("/db/resources/commons/eXist", $home, "samples/mods/eXist/*.xml")
