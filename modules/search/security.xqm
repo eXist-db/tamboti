@@ -354,7 +354,7 @@ declare function security:set-other-can-write-collection($collection, $write as 
 
 declare function security:set-group-can-read-collection($collection, $read as xs:boolean) as xs:boolean
 {
-    security:set-group-can-write-collection($collection, xmldb:get-group($collection), $read)
+    security:set-group-can-read-collection($collection, xmldb:get-group($collection), $read)
 };
 
 declare function security:set-group-can-write-collection($collection, $write as xs:boolean) as xs:boolean
@@ -372,7 +372,6 @@ declare function security:set-group-can-read-collection($collection, $group as x
         )
         return
             xmldb:set-collection-permissions($collection, xmldb:get-owner($collection), $group, xmldb:string-to-permissions($new-permissions)),
-            
             true()
 };
 
@@ -384,9 +383,8 @@ declare function security:set-group-can-write-collection($collection, $group as 
         ) else (
            fn:replace($permissions, "(....)(.)(....)", "$1-$3")
         )
-        return        
+        return
             xmldb:set-collection-permissions($collection, xmldb:get-owner($collection), $group, xmldb:string-to-permissions($new-permissions)),
-            
             true()
 };
 
