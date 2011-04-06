@@ -298,6 +298,17 @@ declare function security:get-group-members($group as xs:string) as xs:string*
 };
 
 (:~
+: Gets the managers for a group
+:
+: @param the group name
+: @return The list of managers in the group
+:)
+declare function security:get-group-managers($group as xs:string) as xs:string*
+{
+    sm:get-group-managers($group)
+};
+
+(:~
 : Gets a list of other biblio users
 :)
 declare function security:get-other-biblio-users() as xs:string*

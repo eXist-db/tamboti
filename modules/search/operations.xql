@@ -80,9 +80,9 @@ declare function op:update-collection-sharing($collection as xs:string, $sharing
         let $group-id := if(sharing:group-exists($group-list))then
         (
             let $null := util:log("debug", "********* GROUP ALREADY EXISTS ***********") return
-                
-            (: yes, are we the owner? :)
-            if(sharing:is-group-owner($group-list, security:get-user-credential-from-session()[1]))then
+            
+            (: yes, are we a manager of the group? :)
+            if(sharing:is-group-manager($group-list, security:get-user-credential-from-session()[1]))then
             (
                 (: yes, so update the group members :)
                 sharing:update-group($group-list, $group-member)

@@ -25,6 +25,14 @@ declare function sharing:get-group-members($groupId) as xs:string*
             )else()
 };
 
+declare function sharing:get-group-managers($groupId) as xs:string*
+{
+        let $group := sharing:__group-id-to-system-group-name($groupId) return
+            if($group)then(
+                security:get-group-managers($group)
+            )else()
+};
+
 declare function sharing:get-group-id($collection as xs:string) as xs:string?
 {
     let $security-group := security:get-group($collection) return
@@ -121,6 +129,12 @@ declare function sharing:is-group-owner($group-id as xs:string, $user as xs:stri
     exists(sharing:get-group($group-id)/group:system[group:owner eq $user])
 };
 
+declare function sharing:is-group-manager($group-id as xs:string, $user as xs:string) as xs:boolean
+{
+    let $group := sharing:__group-id-to-system-group-name($group-id) return
+        security:get-group-managers($group) = $user
+};
+
 declare function sharing:create-group($group-name as xs:string, $owner as xs:string, $group-member as xs:string*) as xs:string?
 {
     let $new-group-id := util:uuid(),
@@ -154,7 +168,7 @@ declare function sharing:remove-group($group-id as xs:string) as xs:boolean {
         
 };
 
-declare function sharing:update-group($group-id as xs:string, $group-members as xs:string+) as xs:string
+declare function sharing:update-group($group-id as xs:string, $group-members as xs:string*) as xs:string
 {
     let $group := fn:collection($config:groups-collection)/group:group[@id eq $group-id],
     $system-group := $group/group:system/group:group,
@@ -167,12 +181,19 @@ declare function sharing:update-group($group-id as xs:string, $group-members as 
             )
             else
             (
-                (: user is not in the new list, remove the user from the group :)
-                security:remove-user-from-group($existing-group-member, $system-group),
-                if($config:send-notification-emails)then
+                if(count(security:get-group-managers($system-group)) eq 1 and sharing:is-group-manager($group-id, $existing-group-member))then
                 (
-                    sharing:send-group-removal-mail($group/group:name, $existing-group-member)
-                )else()
+                    (: this user is the last group manager, so dont remove them! :)
+                )
+                else
+                (
+                    (: user is not in the new list, remove the user from the group :)
+                    security:remove-user-from-group($existing-group-member, $system-group),
+                    if($config:send-notification-emails)then
+                    (
+                        sharing:send-group-removal-mail($group/group:name, $existing-group-member)
+                    )else()
+                )
             )
         ,
         for $group-member in $group-members return
