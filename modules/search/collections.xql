@@ -125,7 +125,7 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
 : @param collection-path
 :   The parent collection path
 :)
-declare function col:get-child-collections($collection-path as xs:string) as element(json:value){
+declare function col:get-child-collections($collection-path as xs:string) as element(json:value)? {
     
     let $user := security:get-user-credential-from-session()[1] return
         if(security:can-read-collection($user, $collection-path)) then
@@ -133,15 +133,21 @@ declare function col:get-child-collections($collection-path as xs:string) as ele
             (:get children :)
             let $children := xmldb:get-child-collections($collection-path) return
                 
-                <json:value>
-                {
-                    for $child in $children
-                    let $child-collection-path := fn:concat($collection-path, "/", $child) return
-                    
+                if(count($children) gt 1)then   (: TODO - we need this 'if' statement at the moment because if there is only one output node then the json output gets broken :)
+                    <json:value>
+                    {
+                        for $child in $children
+                        let $child-collection-path := fn:concat($collection-path, "/", $child) return
+                        
+                            (: output the child :)
+                            col:get-collection($child-collection-path)
+                    }
+                    </json:value>
+                else if(count($children) eq 1)then
+                    let $child-collection-path := fn:concat($collection-path, "/", $children[1]) return
                         (: output the child :)
                         col:get-collection($child-collection-path)
-                }
-                </json:value>
+                else()
         else()           
 };
 
@@ -155,7 +161,7 @@ declare function col:get-collection($collection-path as xs:string) as element(js
 
     let $user := security:get-user-credential-from-session()[1] return
 
-        (: perform some checks on a child:)
+        (: perform some checks on the collection :)
         if(security:can-read-collection($user, $collection-path))then
             let $name := fn:replace($collection-path, ".*/", ""),
             $can-write := security:can-write-collection($user, $collection-path),
@@ -243,7 +249,6 @@ declare function col:resolve-real-users-collection-for-group($group-id as xs:str
                     col:resolve-real-users-collection-for-group($group-id, $user-sub-collection-path)
             )
 };
-
 
 (:~
 : Request routing
