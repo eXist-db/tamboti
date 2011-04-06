@@ -187,16 +187,26 @@ declare function col:get-collection($collection-path as xs:string) as element(js
 declare function col:get-groups-virtual-root() as element(json:value) {
     
     let $groups := sharing:get-users-groups(security:get-user-credential-from-session()[1]) return
-        <json:value>
-        {
-            for $group in $groups return
-                <json:value>
-                {
-                    col:create-tree-node($group/group:name, fn:concat($config:groups-collection, "/", $group/@id), true(), (), (), false(), (), true(), ())/child::node()
-                }
-                </json:value>
-        }
-        </json:value>
+    
+        if(count($groups) gt 1)then     (: TODO - we need this 'if' statement at the moment because if there is only one output node then the json output gets broken :)
+            <json:value>
+            {
+                for $group in $groups return
+                    <json:value>
+                    {
+                        col:create-tree-node($group/group:name, fn:concat($config:groups-collection, "/", $group/@id), true(), (), (), false(), (), true(), ())/child::node()
+                    }
+                    </json:value>
+            }
+            </json:value>
+        else if(count($groups) eq 1) then
+            <json:value>
+            {
+                col:create-tree-node($groups[1]/group:name, fn:concat($config:groups-collection, "/", $groups[1]/@id), true(), (), (), false(), (), true(), ())/child::node()
+            }
+            </json:value>
+        else
+            <json:value/>
 };
 
 (:~
