@@ -190,8 +190,15 @@ function showHideCollectionControls() {
             $('#collection-create-resource').hide();
         }
         
-        //collection is writeable and not the current users home
-        if(isWriteable && !isUsersHome) {
+        //collection is not current users home and is owned by current user
+        if(!isUsersHome && isOwner) {
+            $('#collection-sharing').show();
+        } else {
+            $('#collection-sharing').hide();
+        }
+        
+        //collection is writeable and not the current users home and the current user is the owner
+        if(isWriteable && !isUsersHome && isOwner) {
             $('#collection-rename-folder').show();
             $('#collection-move-folder').show();
             $('#collection-remove-folder').show();
@@ -199,13 +206,6 @@ function showHideCollectionControls() {
             $('#collection-rename-folder').hide();
             $('#collection-move-folder').hide();
             $('#collection-remove-folder').hide();
-        }
-        
-        //collection is not current users home and is owned by current user
-        if(!isUsersHome && isOwner) {
-            $('#collection-sharing').show();
-        } else {
-            $('#collection-sharing').hide();
         }
     });
 };
