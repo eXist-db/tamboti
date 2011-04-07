@@ -22,39 +22,6 @@ $(document).ready(function(){
 
 /* sharing dialog actions */
 $(document).ready(function(){
-
-    /*
-    $('#sharing-collection-with-group').click(function(){
-            if($(this).is(':checked')) {
-                $('#group-sharing-panel').show();
-            } else {
-                $('#group-sharing-panel').hide();
-            }
-        });
-    
-    $('#sharing-collection-with-other').click(function(){
-            if($(this).is(':checked')) {
-                $('#other-sharing-panel').show();
-            } else {
-                $('#other-sharing-panel').hide();
-            }
-    });
-    */
-
-    //when the sharing dialog is opened
-    /*
-    $('#sharing-collection-dialog').bind("dialogopen", function(event, ui) {
-    
-        //show/hide group sharing panel
-        if(!$('#sharing-collection-with-group').is(':checked')) {
-            $('#group-sharing-panel').hide()
-        }
-        
-        //show/hide other sharing panel
-        if(!$('#sharing-collection-with-other').is(':checked')) {
-            $('#other-sharing-panel').hide()
-        }
-    });*/
     
     updateSharingGroupMembers($('#group-list').val());
     $('#group-list').change(function(){
@@ -85,17 +52,6 @@ $(document).ready(function(){
     });
 });
 
-/*
-function getActiveGroup()
-{
-    var selectedGroupId = $('#group-list').val();
-    if(selectedGroupId){
-        return selectedGroupId;
-    } else {
-        return $('#group-list option[0]').val();
-    }
-}*/
-
 function getCurrentCollection() {
     return "/db" + $('#simple-search-form input[name = collection]').val();
 }
@@ -119,11 +75,6 @@ function initCollectionTree() {
             updateCollectionPaths(title, key);
             showHideCollectionWriteableControls();
             showHideCollectionOwnerControls();
-            /*var groupId = getActiveGroup();
-            if(groupId){
-                updateSharingGroupCheckboxes(groupId);
-            }
-            updateSharingOtherCheckboxes();*/
         },
         onLazyRead: function(node){
             node.appendAjax({
@@ -655,11 +606,6 @@ function updateSharingGroupCheckboxes(groupId) {
     
         //set read checkbox
         var readPermissions = $(data).find('read');
-        if(readPermissions.size() == 1){
-            //$('#group-sharing-permissions-read').get(0).checked = true;
-        } else {
-            //$('#group-sharing-permissions-read').get(0).checked = false;
-        }
         
         //set write checkbox
         var writePermissions = $(data).find('write');
@@ -672,10 +618,8 @@ function updateSharingGroupCheckboxes(groupId) {
         //set sharing checkbox
         if(readPermissions.size() + writePermissions.size() >= 1) {
             $('#sharing-collection-with-group').get(0).checked = true;
-            //$('#group-sharing-panel').show();
         } else {
             $('#sharing-collection-with-group').get(0).checked = false;
-            //$('#group-sharing-panel').hide();
         }
     });
 }
@@ -688,11 +632,6 @@ function updateSharingOtherCheckboxes() {
     
         //set read checkbox
         var readPermissions = $(data).find('read');
-        if(readPermissions.size() == 1){
-            //$('#other-sharing-permissions-read').get(0).checked = true;
-        } else {
-            //$('#other-sharing-permissions-read').get(0).checked = false;
-        }
         
         //set write checkbox
         var writePermissions = $(data).find('write');
@@ -705,10 +644,8 @@ function updateSharingOtherCheckboxes() {
         //set sharing checkbox
         if(readPermissions.size() + writePermissions.size() >= 1) {
             $('#sharing-collection-with-other').get(0).checked = true;
-            //$('#other-sharing-panel').show();
         } else {
             $('#sharing-collection-with-other').get(0).checked = false;
-            //$('#other-sharing-panel').hide();
         }
     });
 }
