@@ -504,13 +504,17 @@ span.readable .dynatree-title {
 }
 
 #group-members-list {
+    font-size: 90%;
     background-color: white;
-    border: 1px solid black;
+    border: 1px solid #CCCCCC;
     color: black;
-    height: 8em;
+    height: 5em;
     list-style: none;
     overflow: auto;
-    width: 10em;    
+    width: 10em;
+    padding: 2px;
+    display: block;
+    margin-bottom: 0.5em;    
 }
 
 #group-members-list li {
