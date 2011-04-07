@@ -31,6 +31,11 @@ declare option exist:serialize "method=json media-type=text/javascript";
 : @author Adam Retter <adam@existsolutions.com>
 :)
 
+declare variable $user-folder-icon := "../skin/ltFld.user.gif";
+declare variable $groups-folder-icon := "../skin/ltFld.groups.gif";
+declare variable $writeable-folder-icon := "../skin/ltFld.page.png";
+declare variable $not-writeable-folder-icon := "../skin/ltFld.key.png";
+
 
 (:~
 : Outputs details about a collection as a tree-node
@@ -70,7 +75,11 @@ declare function col:create-tree-node($title as xs:string, $collection-path as x
         {
         if($icon-path)then
             <icon>{$icon-path}</icon>
-        else(),
+        else if($writeable)then
+            <icon>{$writeable-folder-icon}</icon>
+        else
+            <icon>{$not-writeable-folder-icon}</icon>
+        ,
         if($tooltip)then
             <tooltip>{$tooltip}</tooltip>
         else()
@@ -104,12 +113,12 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
                 if(security:home-collection-exists($user))then
                     let $home-collection-path := security:get-home-collection-uri($user),
                     $has-home-children := not(empty(xmldb:get-child-collections($home-collection-path))) return
-                        col:create-tree-node("Home", $home-collection-path, true(), "../skin/ltFld.user.gif" , "Home Folder", true(), "userHomeSubCollection", $has-home-children, ())
+                        col:create-tree-node("Home", $home-collection-path, true(), $user-folder-icon , "Home Folder", true(), "userHomeSubCollection", $has-home-children, ())
                 else(),
             
             (: group collection :)
             $has-group-children := not(empty(sharing:get-users-groups(security:get-user-credential-from-session()[1]))),
-            $group-json := col:create-tree-node("Groups", $config:groups-collection, true(), "../skin/ltFld.groups.gif", "Groups", false(), (), $has-group-children, ())
+            $group-json := col:create-tree-node("Groups", $config:groups-collection, true(), $groups-folder-icon, "Groups", false(), (), $has-group-children, ())
             
             return
             
