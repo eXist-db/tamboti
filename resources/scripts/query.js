@@ -70,11 +70,13 @@ function initCollectionTree() {
         },
         autoFocus: false,
         onActivate: function (dtnode) {
+            /**
+            Executed when a tree node is clicked
+            */
             var title = dtnode.data.title;
             var key = dtnode.data.key;
             updateCollectionPaths(title, key);
-            showHideCollectionWriteableControls();
-            showHideCollectionOwnerControls();
+            showHideCollectionControls();
         },
         onLazyRead: function(node){
             node.appendAjax({
@@ -153,23 +155,43 @@ function updateCollectionPaths(title, key) {
     // $('#collection-create-resource').attr("href", "../edit/edit.xq?type=book-chapter&collection=" + key);
 };
 
-function showHideCollectionWriteableControls() {
+function showHideCollectionControls() {
     var collection = getCurrentCollection();
     
-    var params = { action: "can-write-collection", collection: collection };
+    var params = { action: "collection-relationship", collection: collection };
     $.get("checkuser.xql", params, function(data) {
-        if($(data).text() == 'true') {
-            $('#collection-create-folder').show();
-            $('#collection-create-resource').show();
+    
+        /**
+         data looks like this -
+        
+            <relationship user="" collection="">
+                <read></read>
+                <write></write>
+                <home></home>
+                <owner></owner>
+            </relationship>
+        */
+    
+        var write = $(data).find('write');
+        var isWriteable = (write != null && write.text() == 'true');
+        
+        var home = $(data).find('home');
+        var isUsersHome = (home != null && home.text() == 'true');
+        
+        var owner = $(data).find('owner');
+        var isOwner = (owner != null && owner.text() == 'true');
+        
+        //collection is writeable
+        if(isWriteable){
+             $('#collection-create-folder').show();
+             $('#collection-create-resource').show();
         } else {
             $('#collection-create-folder').hide();
             $('#collection-create-resource').hide();
         }
-    });
-    
-    params = { action: "can-write-collection-and-not-home", collection: collection };
-    $.get("checkuser.xql", params, function(data) {
-        if($(data).text() == 'true') {
+        
+        //collection is writeable and not the current users home
+        if(isWriteable && !isUsersHome) {
             $('#collection-rename-folder').show();
             $('#collection-move-folder').show();
             $('#collection-remove-folder').show();
@@ -178,14 +200,9 @@ function showHideCollectionWriteableControls() {
             $('#collection-move-folder').hide();
             $('#collection-remove-folder').hide();
         }
-    });
-};
-
-function showHideCollectionOwnerControls() {
-    var collection = getCurrentCollection();
-    var params = { action: "is-collection-owner-and-not-home", collection: collection };
-    $.get("checkuser.xql", params, function(data) {
-        if($(data).text() == 'true') {
+        
+        //collection is not current users home and is owned by current user
+        if(!isUsersHome && isOwner) {
             $('#collection-sharing').show();
         } else {
             $('#collection-sharing').hide();

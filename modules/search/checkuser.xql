@@ -18,28 +18,20 @@ declare function local:authenticate($user as xs:string, $password as xs:string?)
     )
 };
 
-declare function local:user-can-write-collection($user as xs:string, $collection as xs:string) as element(result)
+declare function local:collection-relationship($user as xs:string, $collection as xs:string) as element(relationship)
 {
-    if($collection eq $config:groups-collection)then
-    (
-        <result>false</result>
-    )
-    else
-    (
-        <result>{security:can-write-collection($user, $collection)}</result>
-    )
-};
-
-declare function local:user-can-write-collection-and-not-home($user, $collection as xs:string) as element(result)
-{
-    if($collection eq security:get-home-collection-uri($user))then
-    (
-        <result>false</result>
-    )
-    else
-    (
-        local:user-can-write-collection($user, $collection)
-    )
+    <relationship user="{$user}" collection="{$collection}">
+        <read>{ security:can-read-collection($user, $collection) }</read>
+        <write>{
+            if($collection = ($config:groups-collection, $config:users-collection))then (
+                false()
+            ) else (
+                security:can-write-collection($user, $collection)
+            )
+        }</write>
+        <home>{ $collection eq security:get-home-collection-uri($user) }</home>
+        <owner>{ security:is-collection-owner($user, $collection) }</owner>
+    </relationship>
 };
 
 declare function local:user-is-collection-owner($user as xs:string, $collection as xs:string) as element(result)
@@ -47,45 +39,18 @@ declare function local:user-is-collection-owner($user as xs:string, $collection 
     <result>{security:is-collection-owner($user, $collection)}</result>
 };
 
-declare function local:is-users-home-collection($user as xs:string, $collection as xs:string) as element(result)
-{
-    <result>{security:get-home-collection-uri($user) eq $collection}</result>
-};
-
-declare function local:user-is-collection-owner-and-not-home($user as xs:string, $collection as xs:string) as element(result)
-{
-    <result>{security:is-collection-owner($user, $collection) and (security:get-home-collection-uri($user) ne $collection)}</result>
-};
-
 if(request:get-parameter("action",()))then
 (
-    if(request:get-parameter("action",()) eq "can-write-collection")then
-    (
-        local:user-can-write-collection(security:get-user-credential-from-session()[1], request:get-parameter("collection",()))
-    )
-    else if(request:get-parameter("action",()) eq "can-write-collection-and-not-home")then
-    (
-        local:user-can-write-collection-and-not-home(security:get-user-credential-from-session()[1], request:get-parameter("collection",()))
-    )
-    else if(request:get-parameter("action",()) eq "is-collection-owner")then
-    (
-        local:user-is-collection-owner(security:get-user-credential-from-session()[1], request:get-parameter("collection",()))
-    )
-    else if(request:get-parameter("action",()) eq "is-users-home-collection")then
-    (
-        local:is-users-home-collection(security:get-user-credential-from-session()[1], request:get-parameter("collection",()))
-    )
-    else if(request:get-parameter("action",()) eq "is-collection-owner-and-not-home")then
-    (
-        local:user-is-collection-owner-and-not-home(security:get-user-credential-from-session()[1], request:get-parameter("collection",()))
-    )
-    else
-    (
-        response:set-status-code(403),
-        <unknown/>
-    )
+    let $action := request:get-parameter("action", ()) return
+        if($action eq "is-collection-owner")then
+            local:user-is-collection-owner(security:get-user-credential-from-session()[1], request:get-parameter("collection",()))
+        else if($action eq "collection-relationship")then
+            local:collection-relationship(security:get-user-credential-from-session()[1], request:get-parameter("collection",()))
+        else
+        (
+            response:set-status-code(403),
+            <unknown action="{$action}"/>
+        )
 )
 else
-(
-    local:authenticate(request:get-parameter("user", ()), request:get-parameter("password", ()))  
-)
+    local:authenticate(request:get-parameter("user", ()), request:get-parameter("password", ()))
