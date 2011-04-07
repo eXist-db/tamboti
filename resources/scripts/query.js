@@ -583,7 +583,8 @@ function updateSharingGroupMembers(groupId) {
             });
             
             //if we are the owner of the group, we can show a button to remove the group
-            if($(data).find('members').attr('owner') != null) {
+            var owner = $(data).find('members').attr('owner');
+            if(owner != null && owner == 'true') {
                 $('#remove-group-button').show();
             } else {
                 $('#remove-group-button').hide();
@@ -603,7 +604,7 @@ function updateSharingGroupCheckboxes(groupId) {
     var collection = getCurrentCollection();
     var params = { action: "get-group-permissions", groupId: groupId, collection: collection };
     $.get("operations.xql", params, function(data) {
-    
+        
         //set read checkbox
         var readPermissions = $(data).find('read');
         
@@ -629,7 +630,7 @@ function updateSharingOtherCheckboxes() {
     var collection = getCurrentCollection();
     var params = { action: "get-other-permissions", collection: collection };
     $.get("operations.xql", params, function(data) {
-    
+        
         //set read checkbox
         var readPermissions = $(data).find('read');
         
