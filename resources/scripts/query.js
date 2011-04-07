@@ -303,8 +303,17 @@ function refreshParentTreeNode() {
     //reload the parent tree node
     $("#collection-tree-tree").dynatree("getActiveNode").visitParents(function(parentNode){
         refreshTreeNode(parentNode);
+        parentNode.expand(true); //expand the node after reloading the children
         return false;
     });
+}
+
+//focuses on a specific tree node
+function focusOnTreeNode(key) {
+    var tree = $("#collection-tree-tree").dynatree("getTree");
+    tree.selectKey(key);
+    //var node = tree.getNodeByKey(key);
+    
 }
 
 /*
@@ -316,8 +325,15 @@ function renameCollection(dialog) {
     var params = { action: 'rename-collection', name: name, collection: collection };
     $.get("operations.xql", params, function (data) {
        
+        //current key
+        var currentKey = $("#collection-tree-tree").dynatree("getActiveNode").data.key;
+       
         //reload the parent tree node
         refreshParentTreeNode();
+        
+        //new key
+        var newKey = currentKey.replace(/(.*)\/.*/, "$1/" + name);
+        //focusOnTreeNode(newKey); //focus on the new key
        
         //close the dialog
         dialog.dialog("close");
