@@ -104,7 +104,7 @@ declare function bs:retrieve($start as xs:int, $count as xs:int) {
                                     let $collection-short := functx:replace-first($collection, '/db', '')
                                     let $clean := clean:cleanup($item)
                                     return
-                                        mods:format-full(string($currentPos), $clean, $collection-short)
+                                        mods:format-detail-view(string($currentPos), $clean, $collection-short)
                                         (: What is $currentPos used for? :)
                                     }
                                 </td>
@@ -129,8 +129,8 @@ declare function bs:retrieve($start as xs:int, $count as xs:int) {
                         {
                             let $clean := clean:cleanup($item)
                                 return
-                                    mods:format-short(string($currentPos), $clean)
-                                    (: Originally $item was passed to mods:format-short() - was there a reason for that? Performance? :)
+                                    mods:format-list-view(string($currentPos), $clean)
+                                    (: Originally $item was passed to mods:format-list-view() - was there a reason for that? Performance? :)
                         }
                         </a>
                     </td>

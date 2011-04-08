@@ -340,9 +340,9 @@ declare function biblio:process-form() as element(query)? {
 :)
 declare function biblio:orderByAuthor($m as element()) as xs:string?
 {
-    for $name in $m/mods:name[mods:role/mods:roleTerm = ('aut', 'author', 'Author', '')][1]
+    for $name in $m/mods:name[mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator') or not(mods:role/mods:roleTerm)][1]
     return
-        mods:retrieve-primary-name($name, 1)
+        mods:retrieve-name($name, 1, 'secondary')
 };
     
 (: Map order parameter to xpath for order by clause :)
@@ -363,7 +363,7 @@ declare function biblio:orderExpr($field as xs:string?) as xs:string
         else if ($field = "Author") then
             "biblio:orderByAuthor($hit)"
         else if ($field = "Title") then
-            "$hit/mods:titleInfo[not(@type)]/mods:title ascending empty least"
+            "$hit/mods:titleInfo[not(@type)]/mods:title ascending empty greatest"
         else
             "$hit/mods:originInfo[1]/mods:dateIssued[1] descending empty least"
 };
