@@ -292,29 +292,12 @@ function refreshParentTreeNodeAndFocusOnChild(focusOnKey) {
     //reload the parent tree node
     
     //find parent of the key to focus on
-    var activeNode = $("#collection-tree-tree").dynatree("getActiveNode");
-    var activeNodeKey = activeNode.data.key;
     var parentFocusKey = focusOnKey.replace(/(.*)\/.*/, "$1");
+    var tree = $("#collection-tree-tree").dynatree("getTree");
+    var parentNode = tree.getNodeByKey(parentFocusKey);
     
-    if(activeNodeKey.split('/').length > parentFocusKey.split('/').length) {
-        //walk up the tree
-        while(true) {
-            var parentNode = activeNode.getParent();
-            if(parentNode == null || parentNode.data.key == parentFocusKey) {
-                break;
-            }
-        }
-        
-        refreshTreeNodeAndFocusOnChild(parentNode, focusOnKey);
-        parentNode.expand(true); //expand the node after reloading the children
-    }
-    else {
-        //walk down the tree
-        var parentNode = activeNode.getParent();
-        //todo examine all children recursively until we match parentFocusKey
-        /*for(var i = 0; i < 
-        alert("down");*/
-    }
+    refreshTreeNodeAndFocusOnChild(parentNode, focusOnKey);
+    parentNode.expand(true); //expand the node after reloading the children
 }
 
 /*
@@ -350,13 +333,19 @@ function moveCollection(dialog) {
     $.get("operations.xql", params, function (data) {
         
         //current key
-        var currentKey = $("#collection-tree-tree").dynatree("getActiveNode").data.key;
+        var currentNode = $("#collection-tree-tree").dynatree("getActiveNode");
+        var currentKey = currentNode.data.key;
         
         //new key
         var newKey = path + currentKey.replace(/(.*)\//, "/");
         
         //reload the parent tree node
         refreshParentTreeNodeAndFocusOnChild(newKey);
+        
+        //make sure the old node is removed from the tree
+        if(currentNode != null) {
+            currentNode.remove();
+        }
        
         //close the dialog
         dialog.dialog("close");
