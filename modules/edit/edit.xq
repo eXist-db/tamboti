@@ -282,10 +282,6 @@ let $content :=
         </xf:output>
     </div>
     -->
-    <!--
-    <a href="get-instance.xq?id={$id}&amp;data={$data-collection}">View XML for the whole MODS record</a> -
-    <a href="get-instance.xq?id={$id}&amp;tab-id={$tab-id}&amp;data={$data-collection}">View XML for the current tab</a>
-    -->
 </div>
 
 return style:assemble-form('', attribute {'mods:dummy'} {'dummy'}, $style, $model, $content, false())

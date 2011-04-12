@@ -12,6 +12,7 @@ declare variable $config:users-collection := fn:concat($config:mods-root, "/user
 declare variable $config:groups-collection := fn:concat($config:mods-root, "/groups");
 
 declare variable $config:mods-temp-collection := "/db/resources/temp";
+declare variable $config:mads-collection := "/db/resources/mads";
 
 declare variable $config:themes := "../themes";
 
