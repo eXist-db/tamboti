@@ -471,13 +471,13 @@ declare function biblio:process-templates($query as element()?, $hitCount as xs:
             (
                 if ($user eq 'guest') then
                     (
-                    <div class="help"><a href="../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
+                    <div class="help"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
                     ,
                     <div class="login"><a href="#" id="login-link">Login</a></div>
                     )
                 else
                     (
-                    <div class="help"><a href="../docs/index.xml" style="text-decoration: none">Help</a></div>
+                    <div class="help"><a href="../../docs/index.xml" style="text-decoration: none">Help</a></div>
                     ,
                     <div class="login">Logged in as <span class="username">{$user}</span>. <a href="?logout=1">Logout</a></div>
                     )
