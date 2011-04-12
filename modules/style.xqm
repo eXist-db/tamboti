@@ -226,7 +226,7 @@ as node()+ {
                     <h1>Open Source Native XML Database</h1>
                 </div>
             <!--eXist-end-->
-            <div class="help"><a href="../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
+            <div class="help"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
             </div>
             <div id="content1col">
             <div class="container">
