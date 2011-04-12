@@ -260,6 +260,20 @@ function refreshTreeNode(node) {
     }
 }
 
+
+//refreshes the tree node
+function refreshTreeNodeAndFocusOnChild(node, focusOnKey) {
+	if(node) {
+        node.reloadChildren(function(node, isOk){
+            $(node.childList).each(function(index, child){
+                if(child.data.key == focusOnKey) {
+                    child.activate();
+                }
+            });
+        });
+    }
+}
+
 //refreshes the currently selected tree node
 function refreshCurrentTreeNode() {
     var node = $("#collection-tree-tree").dynatree("getActiveNode");
@@ -269,19 +283,38 @@ function refreshCurrentTreeNode() {
 //refreshes the parent of the currently selected tree node
 function refreshParentTreeNode() {
     //reload the parent tree node
-    $("#collection-tree-tree").dynatree("getActiveNode").visitParents(function(parentNode){
-        refreshTreeNode(parentNode);
-        parentNode.expand(true); //expand the node after reloading the children
-        return false;
-    });
+    var parentNode = $("#collection-tree-tree").dynatree("getActiveNode").getParent();
+    refreshTreeNode(parentNode);
+    parentNode.expand(true); //expand the node after reloading the children
 }
 
-//focuses on a specific tree node
-function focusOnTreeNode(key) {
-    var tree = $("#collection-tree-tree").dynatree("getTree");
-    tree.selectKey(key);
-    //var node = tree.getNodeByKey(key);
+function refreshParentTreeNodeAndFocusOnChild(focusOnKey) {
+    //reload the parent tree node
     
+    //find parent of the key to focus on
+    var activeNode = $("#collection-tree-tree").dynatree("getActiveNode");
+    var activeNodeKey = activeNode.data.key;
+    var parentFocusKey = focusOnKey.replace(/(.*)\/.*/, "$1");
+    
+    if(activeNodeKey.split('/').length > parentFocusKey.split('/').length) {
+        //walk up the tree
+        while(true) {
+            var parentNode = activeNode.getParent();
+            if(parentNode == null || parentNode.data.key == parentFocusKey) {
+                break;
+            }
+        }
+        
+        refreshTreeNodeAndFocusOnChild(parentNode, focusOnKey);
+        parentNode.expand(true); //expand the node after reloading the children
+    }
+    else {
+        //walk down the tree
+        var parentNode = activeNode.getParent();
+        //todo examine all children recursively until we match parentFocusKey
+        /*for(var i = 0; i < 
+        alert("down");*/
+    }
 }
 
 /*
@@ -295,13 +328,12 @@ function renameCollection(dialog) {
        
         //current key
         var currentKey = $("#collection-tree-tree").dynatree("getActiveNode").data.key;
-       
-        //reload the parent tree node
-        refreshParentTreeNode();
         
         //new key
         var newKey = currentKey.replace(/(.*)\/.*/, "$1/" + name);
-        //focusOnTreeNode(newKey); //focus on the new key
+        
+        //reload the parent tree node
+        refreshParentTreeNodeAndFocusOnChild(newKey);
        
         //close the dialog
         dialog.dialog("close");
@@ -317,8 +349,14 @@ function moveCollection(dialog) {
     var params = { action: 'move-collection', path: path, collection: collection };
     $.get("operations.xql", params, function (data) {
         
+        //current key
+        var currentKey = $("#collection-tree-tree").dynatree("getActiveNode").data.key;
+        
+        //new key
+        var newKey = path + currentKey.replace(/(.*)\//, "/");
+        
         //reload the parent tree node
-        refreshParentTreeNode();
+        refreshParentTreeNodeAndFocusOnChild(newKey);
        
         //close the dialog
         dialog.dialog("close");
