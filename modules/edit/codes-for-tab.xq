@@ -2,6 +2,8 @@ xquery version "1.0";
 
 import module namespace style = "http://exist-db.org/mods-style" at "../style.xqm";
 import module namespace config = "http://exist-db.org/mods/config" at "../config.xqm";
+import module namespace request = "http://exist-db.org/xquery/request";
+import module namespace xmldb = "http://exist-db.org/xquery/xmldb";
 
 declare namespace xf = "http://www.w3.org/2002/xforms";
 declare option exist:serialize "method=xml media-type=text/xml indent=yes";
@@ -19,6 +21,38 @@ declare option exist:serialize "method=xml media-type=text/xml indent=yes";
    Date: Aug. 2010
    
    :)
+
+(:~
+: Gets the most recent modified time for a number of resources in the same collection
+:
+: @param collection-path The collection of the resources
+: @param resources-name The filenames of the resources in the $collection-path to examine
+:
+: @return The most recently modified date of all the resources
+:)
+declare function local:get-last-modified($collection-path as xs:string, $resource-names as xs:string+) as xs:dateTime {
+    fn:max(
+        for $resource-name in $resource-names return
+            xmldb:last-modified($collection-path, $resource-name)
+    )
+};
+
+(:~
+: Creates an Etag for the codetables
+:
+: The Etag has the format {tab-id}[debug]{$last-modified}
+:
+: We use the last-modified date in the Etag to ensure that the Etag
+: changes if one of the underlying code-tables is modified
+:)
+declare function local:create-etag($last-modified as xs:dateTime) as xs:string {
+    fn:concat(
+        request:get-parameter("tab-id","-1"),
+        request:get-parameter("debug", ""),
+        $last-modified
+    )
+};
+
 
 let $tab-id := request:get-parameter('tab-id', '')
 let $debug := xs:boolean(request:get-parameter('debug', 'false'))
@@ -43,38 +77,57 @@ let $code-table-names :=
       order by $code-table-name
       return $code-table-name
 let $distinct-code-table-names := distinct-values($code-table-names)
-let $itemset-count := count($itemsets)
-let $count-distinct := count($distinct-code-table-names)
 
-return
-<code-tables>
+(: generate etag :)
+let $last-modified := local:get-last-modified($code-table-collection,
+    for $distinct-code-table-name in $distinct-code-table-names return
+        concat($distinct-code-table-name, 's.xml')
+)
+let $etag := local:create-etag($last-modified) return
+(
+    (: set some caching http headers :)
+    response:set-header("Etag", $etag),
+    response:set-header("Last-Modified", $last-modified),
 
-   { if ($debug)
-     then
-     <debug>
-       <code-table-collection>{$code-table-collection}</code-table-collection>
-       <xforms-body-collection>{$xforms-body-collection}</xforms-body-collection>
-       <tab-id>{$tab-id}</tab-id>
-       <itemset-count>{$itemset-count}</itemset-count>
-       <code-table-name-count>{$count-distinct}</code-table-name-count>
-       <distinct-code-table-names>{$distinct-code-table-names}</distinct-code-table-names>
-     </debug>
-     else ()
-   }
-   
-   {for $code-table-name in $distinct-code-table-names
-      
-      let $file-path := concat($code-table-collection, $code-table-name, 's.xml')
-      let $code-table := doc($file-path)
-      return
-         <code-table>
-            <code-table-name>{$code-table-name}</code-table-name>
-            <items>
-            {for $item in $code-table//item
-            return
-               $item
-            }
-            </items>
-         </code-table>
-   }
-</code-tables>
+    (: have we previously made the same request for the same un-modified code-tables? :)
+    if(request:get-header("If-None-Match") eq $etag)then
+    (
+        (: yes, so send not modified :)
+        response:set-status-code(304)
+    ) else (
+        (: no, so process the request:)
+        let $itemset-count := count($itemsets)
+        let $count-distinct := count($distinct-code-table-names) return
+        <code-tables>
+        {
+            if($debug) then
+                <debug>
+                    <code-table-collection>{$code-table-collection}</code-table-collection>
+                    <xforms-body-collection>{$xforms-body-collection}</xforms-body-collection>
+                    <tab-id>{$tab-id}</tab-id>
+                    <itemset-count>{$itemset-count}</itemset-count>
+                    <code-table-name-count>{$count-distinct}</code-table-name-count>
+                    <distinct-code-table-names>{$distinct-code-table-names}</distinct-code-table-names>
+                </debug>
+            else(),
+           
+            for $code-table-name in $distinct-code-table-names
+              let $file-path := concat($code-table-collection, $code-table-name, 's.xml')
+              let $code-table := doc($file-path) return
+                 <code-table>
+                    <code-table-name>{$code-table-name}</code-table-name>
+                    <items>
+                    {
+                        for $item in $code-table//item return
+                            $item
+                    }
+                    </items>
+                 </code-table>
+        }
+        </code-tables>
+    )
+)
+(:
+   Before Etag support was implemented, fastest response was 35ms
+   After ETag support was implemented, fastest response is 39ms, however when Etag is used, response is just 14ms :-)
+:)
