@@ -99,6 +99,7 @@ declare function bs:retrieve($start as xs:int, $count as xs:int) {
                                         else ()
                                     }
                                 </div>
+                                <abbr class="unapi-id" title="{$item/@ID}"></abbr>
                                     {
                                     let $collection := util:collection-name($item)
                                     let $collection-short := functx:replace-first($collection, '/db', '')
@@ -125,6 +126,7 @@ declare function bs:retrieve($start as xs:int, $count as xs:int) {
                     </td>
                     {
                     <td class="pagination-toggle">
+                        <abbr class="unapi-id" title="{$item/@ID}"></abbr>
                         <a>
                         {
                             let $clean := clean:cleanup($item)

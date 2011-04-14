@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <html xmlns:biblio="http:/exist-db.org/xquery/biblio" xmlns:jquery="http://exist-db.org/xquery/jquery">
     <!-- 
         to change from eXist (eXist-) to Tamboti (Tamboti-), 
@@ -21,6 +22,7 @@
         <link rel="stylesheet" type="text/css" href="libs/scripts/jquery/skin/ui.dynatree.css"/>
         <link rel="stylesheet" type="text/css" href="theme/css/biblio.css"/>
         <link rel="stylesheet" type="text/css" href="theme/css/customisables.css"/>
+        <link rel="unapi-server" type="application/xml" title="unAPI" href="unapi.xql"/>
         <!--Tamboti-begin
         <link rel="stylesheet" type="text/css" href="theme/resources/css/tamboti.css"/>
         Tamboti-end-->
