@@ -363,9 +363,9 @@ declare function biblio:orderExpr($field as xs:string?) as xs:string
         else if ($field = "Author") then
             "biblio:orderByAuthor($hit)"
         else if ($field = "Title") then
-            "$hit/mods:titleInfo[not(@type)]/mods:title ascending empty greatest"
+            "$hit/mods:titleInfo[not(@type)][1]/mods:title[1] ascending empty greatest"
         else
-            "$hit/mods:originInfo[1]/mods:dateIssued[1] descending empty least"
+            "$hit/mods:originInfo[1]/mods:dateIssued[1]/number() descending empty least"
 };
 
 (:~

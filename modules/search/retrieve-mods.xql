@@ -873,6 +873,8 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                     let $nameBase := <name>{$name/*:namePart[not(@transliteration) and (not(@script) or @script = ('Latn', 'Latin'))]}</name>
                     let $nameTransliteration := <name>{$name/*:namePart[exists(@transliteration) and (not(@script) or @script = ('Latn', 'Latin'))]}</name>
                     let $nameScript := <name>{$name/*:namePart[not(@transliteration) and (exists(@script) or @script = ('Latn', 'Latin'))]}</name>
+                    (: We assume that there is only one date name part. The date name parts with transliteration and script are rather theoretical. This date is attached atthe end of the name. :)
+                    let $dateBase := $name/*:namePart[@type = 'date'][1]
                     return
                         concat(
                         (: ## 1 ##:)
@@ -884,7 +886,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                             let $family := <name>{$nameBase/*:namePart[@type = 'family']}</name>
                             let $given := <name>{$nameBase/*:namePart[@type = 'given']}</name>
                             let $termsOfAddress := <name>{$nameBase/*:namePart[@type = 'termsOfAddress']}</name>
-                            let $date := <name>{$nameBase/*:namePart[@type = 'date']}</name>
+                            (: let $date := <name>{$nameBase/*:namePart[@type = 'date']}</name> :)
                             let $languageBase :=
                                 (: We try only the most obvious place for a lang attribute. :)
                                 if ($family/@lang)
@@ -927,11 +929,12 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                             then
                                                 concat(', ', string-join($termsOfAddress/*:namePart, ', ')) 
                                             else ()
+                                            (:
                                             ,
-                                            (: NB: It might be an idea to move all dates to the end of the whole function. It may not be marked with transliteration or script. :)
-                                            if ($date/string()) 
+                                            if ($date/string() and $family/string() and $given/string()) 
                                             then concat(' (', string-join($date/*:namePart, ', '),')')
                                             else ()
+                                            :)
                                         )
                                     else
                                         if ($nameOrder = 'family-given')
@@ -951,10 +954,12 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                                 then
                                                     concat(', ', string-join($termsOfAddress/*:namePart, ', ')) 
                                                 else ()
+                                                (:
                                                 ,
                                                 if ($date/string()) 
                                                 then concat(' (', string-join($date/*:namePart, ', '),')')
                                                 else ()
+                                                :)
                                             )
                                         else
                                         (: In all other situations, the name order is given-family, with a space in between. :)
@@ -971,10 +976,12 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                                         else ()
                                                         ,
                                                         string-join($family/*:namePart, ' ')
+                                                        (:
                                                         ,
                                                         if ($date/text())
                                                         then concat(' (', string-join($date/*:namePart, ', '), ')')
                                                         else ()
+                                                        :)
                                                     )
                         else ()
                         , ' ', 
@@ -986,7 +993,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                             let $familyTransliteration := <name>{$nameTransliteration/*:namePart[@type = 'family']}</name>
                             let $givenTransliteration := <name>{$nameTransliteration/*:namePart[@type = 'given']}</name>
                             let $termsOfAddressTransliteration := <name>{$nameTransliteration/*:namePart[@type = 'termsOfAddress']}</name>
-                            let $dateTransliteration := <name>{$nameTransliteration/*:namePart[@type = 'date']}</name>                    
+                            (: let $dateTransliteration := <name>{$nameTransliteration/*:namePart[@type = 'date']}</name> :)                    
                             let $languageTransliteration :=
                                 if ($familyTransliteration/@lang)
                                 then mods:get-language-label($familyTransliteration/@lang)
@@ -1016,10 +1023,12 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                         if ($termsOfAddressTransliteration/string()) 
                                         then concat(', ', string-join($termsOfAddressTransliteration/*:namePart, ', ')) 
                                         else ()
+                                        (:
                                         ,
                                         if ($dateTransliteration/string()) 
                                         then concat(' (', string-join($dateTransliteration/*:namePart, ', '),')')
                                         else ()
+                                        :)
                                     )
                                     else
                                     (: In all other situations, the name order is given-family; the difference is whether there is a space between the name parts and the order of name proper and the address. :)
@@ -1039,10 +1048,12 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                                 else ()
                                                 ,
                                                 string-join($familyTransliteration/*:namePart, ' ')
+                                                (:
                                                 ,
                                                 if ($dateTransliteration/text())
                                                 then concat(' (', string-join($dateTransliteration, ', ') ,')')
                                                 else ()
+                                                :)
                                             )
                                         else
                                         (: If it is e.g. a Chinese name. :)
@@ -1058,10 +1069,12 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                                 if ($termsOfAddressTransliteration/string()) 
                                                 then concat(' ', string-join($termsOfAddressTransliteration/*:namePart, ' ')) 
                                                 else ()
+                                                (:
                                                 ,
                                                 if ($dateTransliteration/text())
                                                 then concat(' (', string-join($dateTransliteration, ', ') ,')')
-                                                else () 
+                                                else ()
+                                                :)
                                             )
                             else ()
                             , ' ',
@@ -1072,7 +1085,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                     let $familyScript := <name>{$nameScript/*:namePart[@type = 'family']}</name>
                                     let $givenScript := <name>{$nameScript/*:namePart[@type = 'given']}</name>
                                     let $termsOfAddressScript := <name>{$nameScript/*:namePart[@type = 'termsOfAddress']}</name>
-                                    let $dateScript := <name>{$nameScript/*:namePart[@type = 'date']}</name>
+                                    (: let $dateScript := <name>{$nameScript/*:namePart[@type = 'date']}</name> :)
                                     let $languageScript :=
                                         if ($familyScript/@lang)
                                         then mods:get-language-label($familyScript/@lang)
@@ -1103,10 +1116,12 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                                 if ($termsOfAddressScript/string()) 
                                                 then concat(', ', string-join($termsOfAddressScript, ', ')) 
                                                 else ()
+                                                (:
                                                 ,
                                                 if ($dateScript/string()) 
                                                 then concat(' (', string-join($dateScript, ', '),')')
                                                 else ()
+                                                :)
                                             )
                                             else
                                                 if ($nameOrder != 'family-given')
@@ -1124,10 +1139,12 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                                         else ()
                                                         ,
                                                         string-join($familyScript/*:namePart, ' ')
+                                                        (:
                                                         ,
                                                         if ($dateScript/string())
                                                         then concat(' (', string-join($dateScript, ', ') ,')')
                                                         else ()
+                                                        :)
                                                     )
                                                 else
                                                 (: $nameOrder = 'family-given'. Here we have e.g. Chinese names which are the same wherever they occur, with no space or comma between given and family name. :)
@@ -1137,13 +1154,18 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                                         string-join($givenScript, '')
                                                         ,
                                                         string-join($termsOfAddressScript, '')
+                                                        (:
                                                         ,
                                                         if ($dateScript/string())
                                                         then concat(' (', string-join($dateScript, ', ') ,')')
-                                                        else () 
+                                                        else ()
+                                                        :)
                                                     )
-                                    else ()
-                            )
+                                else ()
+                            ,
+                            if ($dateBase)
+                            then concat(' (', $dateBase, ')')
+                            else ())
 };
 
 declare function mods:get-authority-name-from-mads($mads as element(), $caller as xs:string) {

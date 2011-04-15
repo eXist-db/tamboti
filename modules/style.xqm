@@ -189,19 +189,20 @@ as node()+ {
         
         <!--Tamboti-begin
         <div id="page-head-left">
-            <a href="/exist/library/">
+            <a href="../search/index.xml" style="text-decoration: none">
                 <img 
-                    src="../../../resources/images/tamboti.png" 
+                    src="theme/images/tamboti.png" 
                     title="Tamboti Metadata Framework" 
                     alt="Tamboti Metadata Framework" 
                     style="border-style: none;"/>
             
             </a>
+        <div class="help"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
         </div>
         <div id="page-head-right">
             <a href="http://www.asia-europe.uni-heidelberg.de/en/home.html" target="_blank">
                 <img 
-                    src="../../../resources/images/logovjc.gif" 
+                    src="theme/images/logovjc.gif" 
                     title="The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University" 
                     alt="The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University" 
                     width="75" 
@@ -211,22 +212,15 @@ as node()+ {
         </div>
         Tamboti-end-->
         <!--eXist-begin-->
-                <a href="index.xml" style="text-decoration: none">
+                <a href="../search/index.xml" style="text-decoration: none">
                     <img src="theme/images/logo.jpg" title="eXist-db: Open Source Native XML Database" style="border-style: none;text-decoration: none"/>
                 </a>
-                <!--
-                <div id="quicksearch">
-                    <form action="" method="GET">
-                        <input type="text" size="20" name="q"/>
-                        <input type="submit" value="Search"/>
-                    </form>
-                </div>
-                -->
                 <div id="navbar">
                     <h1>Open Source Native XML Database</h1>
                 </div>
+                <div class="help"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
             <!--eXist-end-->
-            <div class="help"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
+            
             </div>
             <div id="content1col">
             <div class="container">
