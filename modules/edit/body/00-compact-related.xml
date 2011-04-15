@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact related-container" tab-id="compact-b">
     <div class="block-form">
         <xf:group id="fieldset-relatedItem-periodical" ref="./mods:extension/*[2][. = 'article-in-periodical-latin-compact']             | ./mods:extension/*[2][. = 'article-in-periodical-transliterated-compact']">
@@ -2047,8 +2046,8 @@
                                 </span>
                             </div>
                             <!--relatedItem repeat begins-->
-                            <xf:repeat nodeset="./mods:relatedItem" id="relatedItem-relatedItem-series-repeat">
-                                <xf:group id="fieldset-relatedItem-relatedItem-series-titleInfo">
+                            <xf:repeat nodeset="./mods:relatedItem" id="relatedItem-relatedItem-review-series-repeat">
+                                <xf:group id="fieldset-relatedItem-relatedItem-review-series-titleInfo">
                                     <fieldset class="level-2">
                                         <div class="join">
                                             <span class="legend">Series Title</span>
@@ -2068,7 +2067,7 @@
                                                 </div>
                                             </span>
                                         </div>
-                                        <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-relatedItem-relatedItem-series-repeat">
+                                        <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-relatedItem-relatedItem-review-series-repeat">
                                             <!--titleInfo input begins-->
                                             <xf:group ref=".[(@transliteration) or string-length(@lang) &gt; 0]">
                                                 <br/>
@@ -2103,7 +2102,7 @@
                                         </xf:repeat>
                                     </fieldset>
                                 </xf:group>
-                                <xf:group id="fieldset-relatedItem-relatedItem-series-part">
+                                <xf:group id="fieldset-relatedItem-relatedItem-review-series-part">
                                     <fieldset class="level-2">
                                         <div class="join wide">
                                             <span class="legend">Location of Anthology in Book Series</span>
@@ -2116,11 +2115,11 @@
                                             </span>
                                         </div>
                                         <!--relatedItem/part repeat begins-->
-                                        <xf:repeat nodeset="./mods:part" id="part-relatedItem-relatedItem-series-repeat">
+                                        <xf:repeat nodeset="./mods:part" id="part-relatedItem-relatedItem-review-series-repeat">
                                             <!--relatedItem/part input begins-->
                                             <!--relatedItem/part input ends-->
                                             <!--relatedItem/part/detail begins-->
-                                            <xf:group id="fieldset-relatedItem-relatedItem-series-detail" ref=".[mods:detail]">
+                                            <xf:group id="fieldset-relatedItem-relatedItem-review-series-detail" ref=".[mods:detail]">
                                                 <fieldset class="level-3">
                                                     <div class="join">
                                                         <span class="legend">Volume</span>
@@ -2133,7 +2132,7 @@
                                                         </span>
                                                     </div>
                                                     <!--relatedItem/part/detail repeat begins-->
-                                                    <xf:repeat nodeset="./mods:detail" id="detail-relatedItem-relatedItem-series-repeat">
+                                                    <xf:repeat nodeset="./mods:detail" id="detail-relatedItem-relatedItem-review-series-repeat">
                                                         <!--relatedItem/part/detail input ends-->
                                                         <!--relatedItem/part/detail/number begins-->
                                                         <xf:group ref=".[mods:number]">

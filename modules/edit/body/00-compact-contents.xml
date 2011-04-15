@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact contents" tab-id="compact-c">
     <div class="block-form">
         <xf:group id="fieldset-subject">
@@ -185,7 +184,7 @@
                 <!--subject/titleInfo begins-->
                     <xf:group id="fieldset-subject-titleInfo">
                       <!--subject/titleInfo repeat begins-->
-                        <fieldset class="level-2" id="fieldset-subject-titleInfo">
+                        <fieldset class="level-2">
                             <div class="join">
                                 <span class="legend">Works as Topic</span>
                                 <span class="join-button">
@@ -206,7 +205,7 @@
                                 </span>
                             </div>
                             <xf:repeat nodeset="./mods:titleInfo" id="subject-titleinfo-repeat">
-                                <fieldset class="level-2" id="fieldset-subject-titleInfo">
+                                <fieldset class="level-2">
                                     <div class="join">
                                         <span class="legend">Work as Topic</span>
                                         <span class="xforms-hint">

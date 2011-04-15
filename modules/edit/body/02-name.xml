@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms" class="name" tab-id="name">
     <div class="block-form">
         <xf:group>
@@ -955,25 +954,25 @@
                                             <!--roleTerm input ends-->
                                             <xf:group ref=".[not(@type)] | .[not(@authority)]">
                                                 <xf:switch>
-                                                    <xf:case id="role-add-node-hide">
+                                                    <xf:case id="roleTerm-add-node-hide">
                                                         <!--only attributes, do not display
                                                         <div class="node-adds-title">
                                                             <xf:trigger class="add-button">
                                                                 <xf:label class="xforms-group-label-centered">Show Additional Fields</xf:label>
-                                                                <xf:toggle case="role-add-node-unhide" ev:event="DOMActivate"/>
+                                                                <xf:toggle case="roleTerm-add-node-unhide" ev:event="DOMActivate"/>
                                                             </xf:trigger>
                                                         </div>
                                                         -->
                                                     </xf:case>
-                                                    <xf:case id="role-add-node-unhide">
+                                                    <xf:case id="roleTerm-add-node-unhide">
                                                         <div class="node-adds-title">
                                                             <xf:trigger>
                                                                 <xf:label class="xforms-group-label-centered">Hide Additional Fields</xf:label>
-                                                                <xf:toggle case="role-add-node-hide" ev:event="DOMActivate"/>
+                                                                <xf:toggle case="roleTerm-add-node-hide" ev:event="DOMActivate"/>
                                                             </xf:trigger>
                                                         </div>
                                                         <div class="node-adds">
-                                                            <xf:group id="role-add-node-recommended" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)]">
+                                                            <xf:group id="roleTerm-add-node-recommended" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)]">
                                                                 <xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>
                                                                 <xf:trigger ref=".[not(@type)]" class="add-button">
                                                                     <xf:label class="xforms-group-label-centered">Add Type</xf:label>
