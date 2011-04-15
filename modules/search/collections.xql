@@ -118,12 +118,17 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
             
             (: group collection :)
             $has-group-children := not(empty(sharing:get-users-groups(security:get-user-credential-from-session()[1]))),
-            $group-json := col:create-tree-node("Groups", $config:groups-collection, true(), $groups-folder-icon, "Groups", false(), (), $has-group-children, ())
+            $group-json := col:create-tree-node("Groups", $config:groups-collection, true(), $groups-folder-icon, "Groups", false(), (), $has-group-children, ()),
             
+            (: commons collections :)
+            $public-json :=
+                for $child in xmldb:get-child-collections($config:mods-commons)
+                let $collection-path := fn:concat($config:mods-commons, "/", $child) return
+                    <node>{col:get-collection($collection-path)/child::node()}</node>
             return
             
                 (: root collection, containing home and group collection as children :)
-                col:create-tree-node(fn:replace($root-collection-path, ".*/", ""), $root-collection-path, true(), (), (), $can-write, (), false(), ($home-json, $group-json))
+                col:create-tree-node(fn:replace($root-collection-path, ".*/", ""), $root-collection-path, true(), (), (), $can-write, (), false(), ($home-json, $group-json, $public-json))
         else
             ()
 };
@@ -166,7 +171,7 @@ declare function col:get-child-collections($collection-path as xs:string) as ele
 : @param collection-path
 :    The path of the collection to retrieve
 :)
-declare function col:get-collection($collection-path as xs:string) as element(json:value) {
+declare function col:get-collection($collection-path as xs:string) as element(json:value)? {
 
     let $user := security:get-user-credential-from-session()[1] return
 
