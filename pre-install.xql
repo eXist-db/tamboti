@@ -45,7 +45,7 @@ declare variable $commons-samples-collection := fn:concat($commons-collection, "
 declare variable $commons-exist-collection := fn:concat($commons-collection, "/", $commons-exist-collection-name);
 declare variable $commons-mads-collection := fn:concat($commons-collection, "/", $commons-mads-collection-name);
 
-(: TODO webapp/packages should be deleted, esp. webapp/packages/library :)
+(: TODO $EXIST_HOME/webapp/packages should be removed, esp. $EXIST_HOME/webapp/packages/library :)
 
 declare function local:mkcol-recursive($collection, $components) {
     if (fn:exists($components)) then
@@ -74,8 +74,10 @@ declare function local:strip-prefix($str as xs:string, $prefix as xs:string) as 
     fn:replace($str, $prefix, "")
 };
 
-util:log($log-level, "Script: Running pre-install script ..."),
 
+util:log($log-level, "Script: Running pre-install script ..."),
+util:log($log-level, fn:concat("...Script: using $home '", $home, "'")),
+util:log($log-level, fn:concat("...Script: using $dir '", $dir, "'")),
 
 (: Create users and groups :)
 util:log($log-level, fn:concat("Security: Creating user '", $biblio-admin-user, "' and group '", $biblio-users-group, "' ...")),
@@ -88,7 +90,7 @@ util:log($log-level, "Security: Done."),
 (: Load collection.xconf documents :)
 util:log($log-level, "Config: Loading collection configuration ..."),
     local:mkcol($system-collection, $editor-app-code-tables-collection),
-    xdb:store-files-from-pattern(fn:concat($system-collection, $editor-app-code-tables-collection), $dir, "library/modules/edit/code-tables/*.xconf"), (: TODO this file is no longer loaded - should fix :)
+    xdb:store-files-from-pattern(fn:concat($system-collection, $editor-app-code-tables-collection), $dir, "modules/edit/code-tables/*.xconf"),
     local:mkcol($system-collection, $resources-collection),
     xdb:store-files-from-pattern(fn:concat($system-collection, $resources-collection), $home, "samples/mods/*.xconf"),
     local:mkcol($system-collection, $commons-mads-collection),
@@ -129,6 +131,5 @@ util:log($log-level, fn:concat("Config: Creating users '", $resources-users-coll
         xdb:set-collection-permissions($col, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0770, 8))
     ),
 util:log($log-level, "Config: Done."),
-
 
 util:log($log-level, "Script: Done.")
