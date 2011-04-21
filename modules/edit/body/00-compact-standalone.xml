@@ -63,8 +63,8 @@
                                 <xf:group>
                                     <xf:select1 ref="./@type" class="right">
                                         <xf:label>
-                                            <xf:group ref="../[@script='Latn']">Transliterated</xf:group>
-                                            <xf:group ref="../[not(@script='Latn')]">&#160;</xf:group>
+                                            <xf:group ref="../.[@script='Latn']">Transliterated</xf:group>
+                                            <xf:group ref="../.[not(@script='Latn')]">&#160;</xf:group>
                                         </xf:label>
                                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-part-type-compact-code']/items/item">
                                             <xf:label ref="label"/>
