@@ -3,15 +3,17 @@ xquery version "1.0";
 module namespace security="http://exist-db.org/mods/security";
 
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
-declare namespace session="http://exist-db.org/xquery/session";
-declare namespace sm="http://exist-db.org/xquery/securitymanager";
-declare namespace xmldb="http://exist-db.org/xquery/xmldb";
+import module namespace session="http://exist-db.org/xquery/session";
+import module namespace sm="http://exist-db.org/xquery/securitymanager";
+import module namespace util="http://exist-db.org/xquery/util";
+import module namespace xmldb="http://exist-db.org/xquery/xmldb";
 
 declare variable $security:GUEST_CREDENTIALS := ("guest", "guest");
 declare variable $security:SESSION_USER_ATTRIBUTE := "biblio.user";
 declare variable $security:SESSION_PASSWORD_ATTRIBUTE := "biblio.password";
 
 declare variable $security:biblio-users-group := "biblio.users";
+declare variable $security:user-metadata-file := "security.metadata.xml";
 
 (:~
 : Authenticates a user and creates their mods home collection if it does not exist
@@ -28,12 +30,19 @@ declare function security:login($user as xs:string, $password as xs:string?) as 
         (
             (: check if the users mods home collectin exists, if not create it (i.e. first login) :)
             if(security:home-collection-exists($username))then
+            (
+                (: update the last login time:)
+                security:update-last-login-time($username),
+                
                 true()
+            )
             else
             (
                  let $users-collection-uri := security:create-home-collection($username) return
                     true()
             )
+            
+            
         ) else
             (: authentication failed:)
             false()
@@ -117,12 +126,49 @@ declare function security:create-home-collection($user as xs:string) as xs:strin
                 if($collection-uri) then
                 (
                     (: note users the group biblio.users need read access to a users home collection root so that they can list the collections inside to match against shared :)
-                    let $null := xmldb:set-collection-permissions($collection-uri, $username, $security:biblio-users-group, xmldb:string-to-permissions("rwur-----")) return
+                    let $null := xmldb:set-collection-permissions($collection-uri, $username, $security:biblio-users-group, xmldb:string-to-permissions("rwur-----")),
+                    $null:= security:create-user-metadata($collection-uri, $username) return
                         $collection-uri
                 ) else (
                     $collection-uri
                 )
         )else()
+};
+
+(:~
+: Stores some basic metadata about a user into their home collection
+:)
+declare function security:create-user-metadata($user-collection-uri as xs:string, $owner as xs:string) as xs:string {
+    let $metadata-doc-uri := xmldb:store($user-collection-uri, $security:user-metadata-file,
+        <security:metadata>
+            <security:last-login>{util:system-dateTime()}</security:last-login>
+        </security:metadata>
+    ),
+    $null := security:set-resource-permissions($metadata-doc-uri, $owner, $security:biblio-users-group, true(), true(), false(), false(), false(), false()) return
+        
+        $metadata-doc-uri
+};
+
+(:~
+: Update the last login time of a user
+:)
+declare function security:update-last-login-time($user as xs:string) as empty() {
+    let $user-home-collection := security:get-home-collection-uri($user) return
+        update value fn:doc(fn:concat($user-home-collection, "/", $security:user-metadata-file))/security:metadata/security:last-login with util:system-dateTime()
+};
+
+(:~
+: Get the last login time of a user
+:)
+declare function security:get-last-login-time($user as xs:string) as xs:dateTime {
+    let $user-home-collection := security:get-home-collection-uri($user) return
+        let $last-login := fn:doc(fn:concat($user-home-collection, "/", $security:user-metadata-file))/security:metadata/security:last-login return
+        if(exists($last-login))then
+            $last-login
+        else (
+            util:log("WARN", fn:concat("Could not find the last-login time for the user '", $user,"'. Does the users metdata exist?")),
+            util:system-dateTime()
+        )
 };
 
 (:~
