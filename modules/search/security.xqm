@@ -32,7 +32,7 @@ declare function security:login($user as xs:string, $password as xs:string?) as 
             if(security:home-collection-exists($username))then
             (
                 (: update the last login time:)
-                security:update-last-login-time($username),
+                security:update-login-time($username),
                 
                 true()
             )
@@ -139,9 +139,11 @@ declare function security:create-home-collection($user as xs:string) as xs:strin
 : Stores some basic metadata about a user into their home collection
 :)
 declare function security:create-user-metadata($user-collection-uri as xs:string, $owner as xs:string) as xs:string {
-    let $metadata-doc-uri := xmldb:store($user-collection-uri, $security:user-metadata-file,
+    let $login-time := util:system-dateTime(), 
+    $metadata-doc-uri := xmldb:store($user-collection-uri, $security:user-metadata-file,
         <security:metadata>
-            <security:last-login>{util:system-dateTime()}</security:last-login>
+            <security:last-login-time>{$login-time}</security:last-login-time>
+            <security:login-time>{$login-time}</security:login-time>
         </security:metadata>
     ),
     $null := security:set-resource-permissions($metadata-doc-uri, $owner, $security:biblio-users-group, true(), true(), false(), false(), false(), false()) return
@@ -152,9 +154,13 @@ declare function security:create-user-metadata($user-collection-uri as xs:string
 (:~
 : Update the last login time of a user
 :)
-declare function security:update-last-login-time($user as xs:string) as empty() {
-    let $user-home-collection := security:get-home-collection-uri($user) return
-        update value fn:doc(fn:concat($user-home-collection, "/", $security:user-metadata-file))/security:metadata/security:last-login with util:system-dateTime()
+declare function security:update-login-time($user as xs:string) as empty() {
+    let $user-home-collection := security:get-home-collection-uri($user),
+    $security-metadata := fn:doc(fn:concat($user-home-collection, "/", $security:user-metadata-file)) return
+        (
+            update value $security-metadata/security:metadata/security:last-login-time with $security-metadata/security:metadata/security:login-time,
+            update value $security-metadata/security:metadata/security:login-time with util:system-dateTime()
+        )
 };
 
 (:~
@@ -162,7 +168,7 @@ declare function security:update-last-login-time($user as xs:string) as empty() 
 :)
 declare function security:get-last-login-time($user as xs:string) as xs:dateTime {
     let $user-home-collection := security:get-home-collection-uri($user) return
-        let $last-login := fn:doc(fn:concat($user-home-collection, "/", $security:user-metadata-file))/security:metadata/security:last-login return
+        let $last-login := fn:doc(fn:concat($user-home-collection, "/", $security:user-metadata-file))/security:metadata/security:last-login-time return
         if(exists($last-login))then
             $last-login
         else (
