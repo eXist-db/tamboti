@@ -57,12 +57,16 @@ else if ($exist:resource eq 'index.xml') then
                     <set-attribute name="exist:path" value="{$exist:path}"/>
                 </forward>
     		</view>
-    	</dispatch>
-        (:  Retrieve an item from the query results stored in the HTTP session. The
-    	format of the URL will be /sandbox/results/X, where X is the number of the
-    	item in the result set :)
+    	</dispatch>,
+    	
+    	response:set-header("Last-Modified", fn:current-dateTime() cast as xs:string) (: TODO the XQueryURLRewrite filter should be able to infer that a static resource has been pre-procesed and this should be set:)
 	)
 else if ($exist:resource eq 'retrieve') then
+
+    (:  Retrieve an item from the query results stored in the HTTP session. The
+    	format of the URL will be /sandbox/results/X, where X is the number of the
+    	item in the result set :)
+
 	<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
 	   { local:set-user() }
 		<forward url="{$exist:controller}/session.xql">
