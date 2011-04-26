@@ -448,6 +448,78 @@ declare function biblio:eval-query($queryAsXML as element()?) {
         0
 };
 
+(:~ 
+: Outputs a notice (if any) to the user
+:)
+declare function biblio:notice() as element(div)* {
+    
+    (: have we already seen the notices for this session? :)
+    if(session:get-attribute("seen-notices") eq true()) then
+    ()
+    else
+    (
+        (: 1 - is there a login notice :)
+        
+        (: find all collections that are shared with the current user and whoose modification time is after our last login time :)
+        let $user := security:get-user-credential-from-session()[1],
+        $users-groups := sharing:get-users-groups($user) return
+        if(not(empty($users-groups)))then
+        (
+            let $last-login-time := security:get-last-login-time($user),
+            $collections-modified-since-last-login := local:find-sub-collections-with-group-modified-after($config:users-collection, $users-groups/group:system/group:group, $last-login-time) return
+               
+                if(not(empty($collections-modified-since-last-login)))then
+                (
+                    <div id="notices-dialog" title="System Notices">
+                        <p>The following Groups have published new or updated documents since you last logged in:</p>
+                        <ul>
+                            {
+                                for $modified-collection in $collections-modified-since-last-login
+                                let $sharing-group-id := sharing:get-group-id($modified-collection) return
+                                    <li>{ sharing:get-group($sharing-group-id)/group:name/text() } ({ count(xmldb:get-child-resources($modified-collection)[$last-login-time lt xmldb:last-modified($modified-collection, .)]) })</li>
+                            }
+                        </ul>
+                    </div>
+                )else()
+        )else()
+    )
+};
+
+(:~
+: Get the last-modified date of a collection
+:)
+declare function local:get-collection-last-modified($collection-path as xs:string) as xs:dateTime {
+	
+	let $resources-last-modified := 
+		for $resource in xmldb:get-child-resources($collection-path) return
+			xmldb:last-modified($collection-path, $resource)
+	return
+		if(not(empty($resources-last-modified)))then
+			max(
+				$resources-last-modified	
+			)
+		else
+			xmldb:created($collection-path)
+};
+
+(:~
+: Find all sub-collections that have a group and are modified after a dateTime
+:)
+declare function local:find-sub-collections-with-group-modified-after($collection-path as xs:string, $groups as xs:string+, $modified-after as xs:dateTime) as xs:string* {
+	for $child-collection in xmldb:get-child-collections($collection-path)
+	let $child-collection-path := fn:concat($collection-path, "/", $child-collection) return
+	(
+		if(xmldb:get-group($child-collection-path) = $groups and $modified-after lt local:get-collection-last-modified($child-collection-path))then
+		(
+			$child-collection-path
+		)
+		else()
+		
+		,
+		local:find-sub-collections-with-group-modified-after($child-collection-path, $groups, $modified-after)
+	)
+};
+
 (:~
     Clear the last query result.
 :)
@@ -497,6 +569,8 @@ declare function biblio:process-templates($query as element()?, $hitCount as xs:
                 </div>
         case element(biblio:form-from-query) return
             biblio:form-from-query($query)
+        case element(biblio:notice) return
+            biblio:notice()
         case element(biblio:result-count) return
             text { $hitCount }
         case element(biblio:query-history) return

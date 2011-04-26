@@ -8,7 +8,7 @@ $(function() {
 
 
 /* collection action buttons */
-$(document).ready(function(){ 
+function hideCollectionActionButtons() { 
     $('#collection-create-folder').hide();
     $('#collection-rename-folder').hide();
     $('#collection-move-folder').hide();
@@ -17,11 +17,12 @@ $(document).ready(function(){
     $('#collection-create-resource').hide();
     
     $('#remove-group-button').hide();
-    
-});
+};
 
 /* sharing dialog actions */
 $(document).ready(function(){
+
+    hideCollectionActionButtons();
     
     updateSharingGroupMembers($('#group-list').val());
     $('#group-list').change(function(){
@@ -50,10 +51,25 @@ $(document).ready(function(){
         addNewGroupToGroupList($('#new-group-name').val());
         $('#new-group-sharing-dialog').dialog('close');
     });
+    
+    showNotices();
 });
 
 function getCurrentCollection() {
     return "/db" + $('#simple-search-form input[name = collection]').val();
+}
+
+function showNotices() {
+
+    $('#notices-dialog').dialog({
+        modal: true,
+        width: 460,
+        close: function(event, ui) {
+            var params = { action: "seen-notices" };
+            $.get("notices.xql", params, function (data) {
+            });
+        }
+    });
 }
 
 /*
