@@ -34,6 +34,7 @@ declare variable $config:mods-temp-collection := "/db/resources/temp";
 declare variable $config:mads-collection := "/db/resources/mads";
 
 declare variable $config:themes := concat($config:app-root, "/themes");
+declare variable $config:theme-config := concat($config:themes, "/configuration.xml");
 
 declare variable $config:resources := concat($config:app-root, "/resources");
 declare variable $config:images := concat($config:app-root, "/resources/images");

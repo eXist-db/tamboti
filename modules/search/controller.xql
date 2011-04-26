@@ -6,6 +6,12 @@ import module namespace theme="http:/exist-db.org/xquery/biblio/theme" at "../th
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace session="http://exist-db.org/xquery/session";
 
+declare variable $exist:controller external;
+declare variable $exist:path external;
+declare variable $exist:resource external;
+declare variable $exist:root external;
+declare variable $exist:prefix external;
+
 declare variable $local:app-root := concat($exist:controller, "/../..");
 
 declare function local:set-user() {
@@ -48,7 +54,9 @@ else if ($exist:resource eq 'index.xml') then
     else
     (
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-            { local:set-user() }
+            <forward url="{theme:resolve($exist:prefix, $exist:root, 'index.xml')}">
+                { local:set-user() }
+            </forward>
             <view>
                 <forward url="search.xql">
                     <!-- Errors should be passed through instead of terminating the request -->
@@ -80,12 +88,12 @@ else if (starts-with($exist:path, "/libs/")) then
     </dispatch>
 
 else if (starts-with($exist:path, "/theme")) then
-    let $path := theme:resolve(concat($exist:controller, "/../.."), $exist:path)
+    let $path := theme:resolve($exist:prefix, $exist:root, substring-after($exist:path, "/theme"))
     let $themePath := replace($path, "^(.*)/[^/]+$", "$1")
     return
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
             <forward url="{$path}">
-                <set-attribute name="theme-collection" value="{$themePath}"/>
+                <set-attribute name="theme-collection" value="{theme:get-path()}"/>
             </forward>
         </dispatch>
 else

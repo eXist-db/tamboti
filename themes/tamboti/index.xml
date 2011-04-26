@@ -29,15 +29,6 @@
     </head>
     <body>
         <div id="page-head">
-            <!--eXist-begin-->
-            <a href="/exist/" style="text-decoration: none">
-                <img src="theme/images/logo.jpg" title="eXist-db: Open Source Native XML Database" style="border-style: none;text-decoration: none"/>
-            </a>
-            <div id="navbar">
-                <h1>Open Source Native XML Database</h1>
-            </div>
-            <!--eXist-end-->
-            <!--Tamboti-begin
             <div id="page-head-left">
                 <a href="/exist/library/">
                     <img src="theme/images/tamboti.png" title="Tamboti Metadata Framework" alt="Tamboti Metadata Framework" style="border-style: none;"/>
@@ -45,10 +36,9 @@
             </div>
             <div id="page-head-right">
                 <a href="http://www.asia-europe.uni-heidelberg.de/en/home.html" target="_blank">
-                    <img src="theme/images/logovjc.gif" title="The Cluster of Excellence "Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows" at Heidelberg University" alt="The Cluster of Excellence "Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows" at Heidelberg University" width="75" height="69" style="border-style: none"/>
+                    <img src="theme/images/logovjc.gif" title="The Cluster of Excellence 'Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows' at Heidelberg University" alt="The Cluster of Excellence 'Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows' at Heidelberg University" width="75" height="69" style="border-style: none"/>
                 </a>
             </div>
-            Tamboti-end-->
         </div>
         <div id="content1col">
             <biblio:login/>
@@ -227,7 +217,6 @@
                     </div>
                 </div>
             </biblio:collection-tree>
-            <biblio:notice/>
             <div id="main-content">
                 <div id="results-head">
                     <div id="messages">Found:

@@ -1,16 +1,17 @@
-<meta xmlns="http://exist-db.org/xquery/repo">
-    <author>Jens Østergaard Petersen</author>
-    <author>Wolfgang Meier</author>
-    <author>Adam Retter</author>
-    <author>Dulip Withanage</author>
-    <website>http://exist-db.org</website>
-    <license>GNU-LGPL</license>
-    <copyright>true</copyright>
-    <description>Bibliographic Database</description>
-    <type>application</type>
-    <target>/db/library</target>
-    <permissions user="editor" password="editor"
-		group="biblio.users" mode="0444"/>
-    <status>stable</status>
-    <prepare>pre-install.xql</prepare>
-</meta>
+<?xml version="1.0" encoding="UTF-8"?>
+<repo:meta xmlns="http://exist-db.org/xquery/repo" xmlns:repo="http://exist-db.org/xquery/repo">
+    <repo:author>Jens Østergaard Petersen</repo:author>
+    <repo:author>Wolfgang Meier</repo:author>
+    <repo:author>Adam Retter</repo:author>
+    <repo:author>Dulip Withanage</repo:author>
+    <repo:website>http://exist-db.org</repo:website>
+    <repo:license>GNU-LGPL</repo:license>
+    <repo:copyright>true</repo:copyright>
+    <repo:description>Bibliographic Database</repo:description>
+    <repo:type>application</repo:type>
+    <repo:target>/db/library</repo:target>
+    <repo:permissions user="editor" password="editor" group="biblio.users" mode="0444"/>
+    <repo:status>stable</repo:status>
+    <repo:prepare>pre-install.xql</repo:prepare>
+    <repo:deployed>2011-04-26T12:42:04.373+02:00</repo:deployed>
+</repo:meta>
