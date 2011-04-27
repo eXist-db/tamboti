@@ -158,7 +158,7 @@ declare function security:update-login-time($user as xs:string) as empty() {
     let $user-home-collection := security:get-home-collection-uri($user),
     $security-metadata := fn:doc(fn:concat($user-home-collection, "/", $security:user-metadata-file)) return
         (
-            update value $security-metadata/security:metadata/security:last-login-time with $security-metadata/security:metadata/security:login-time,
+            update value $security-metadata/security:metadata/security:last-login-time with string($security-metadata/security:metadata/security:login-time),
             update value $security-metadata/security:metadata/security:login-time with util:system-dateTime()
         )
 };
