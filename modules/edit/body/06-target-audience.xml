@@ -161,7 +161,7 @@
                 </xf:group>
                         <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
                         <!--Cluster: include-->
-                <xf:group ref=".[not(@type='transliterated')] and ./@script" appearance="full">
+                <xf:group ref=".[not(@type='transliterated') and ./@script]" appearance="full">
                     <xf:select1 ref="./@script">
                         <xf:label>Script:</xf:label>
                         <xf:hint>
