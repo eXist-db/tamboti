@@ -38,7 +38,7 @@ return
             <cache-control cache="no"/>
 		</dispatch>
     else if (starts-with($exist:path, "/theme")) then
-        let $path := theme:resolve(concat($exist:controller, "/.."), $exist:path)
+        let $path := theme:resolve($exist:prefix, $exist:root, substring-after($exist:path, "/theme"))
         let $themePath := replace($path, "^(.*)/[^/]+$", "$1")
         return
             <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
