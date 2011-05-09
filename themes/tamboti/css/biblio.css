@@ -1,3 +1,5 @@
+/*Changes from default marked "Tamboti value".*/
+
 /*docs begin*/
 
 .app-name {display: none}
@@ -80,7 +82,7 @@ td .select
 }
 
 #page-head {
-    height: 8em;
+    height: 8em;/*Tamboti value*/
 }
 
 #page-head-left {
@@ -475,7 +477,7 @@ td .biblio-full .deemph {
 }
 
 .ui-widget {
-    font-size:1em;
+    font-size: 1em;
 }
 
 #optimize-trigger {
@@ -495,11 +497,16 @@ span.readable .dynatree-title {
     border: 1px black solid;
     padding: 1em;
     margin-bottom: 2em;
+    margin-bottom: .5em;
 }
 /*folder sharing dialog*/
 
 .sharing-option {
     margin-top: 1em;
+}
+
+#members-list {
+    width: 35em;
 }
 
 #group-members {
@@ -515,7 +522,7 @@ span.readable .dynatree-title {
     height: 5em;
     list-style: none;
     overflow: auto;
-    width: 10em;
+    width: 40em;
     padding: 2px;
     display: block;
     margin-bottom: 0.5em;    
@@ -526,6 +533,10 @@ span.readable .dynatree-title {
     padding-left: 0.5em;
     padding-right: 0.5em;
     padding-top: 0.25em;
+}
+
+#new-resource-dialog {
+    font-size: .85em;
 }
 
 .labelWithCheckboxLeft {

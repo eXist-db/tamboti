@@ -795,7 +795,7 @@ declare function biblio:form-select-collection($select-name as xs:string) as ele
 };
 
 declare function biblio:form-add-member-to-sharing-group() {
-     <jquery:dialog id="add-member-to-group-sharing-dialog" modal="true" title="Add User to Group" width="200">
+     <jquery:dialog id="add-member-to-group-sharing-dialog" modal="true" title="Add User to Group" width="450">
         <div>
             <jquery:input name="members-list" id="members-list">
                 <jquery:autocomplete url="autocomplete-username.xql" width="300" multiple="false" matchContains="false"/>
@@ -813,7 +813,7 @@ declare function biblio:form-add-sharing-group() {
 };
 
 declare function biblio:form-collection-sharing($collection as xs:string) {
-    <jquery:dialog id="sharing-collection-dialog" modal="true" title="Folder Sharing" trigger="#collection-sharing" width="450" onOpen="updateSharingDialog">
+    <jquery:dialog id="sharing-collection-dialog" modal="true" title="Folder Sharing" trigger="#collection-sharing" width="550" onOpen="updateSharingDialog">
         <jquery:button label="Update" function="updateCollectionSharing"/>
         <jquery:button id="cancel" label="Cancel"/>
         <form id="update-collection-sharing-form" action="operations.xql">

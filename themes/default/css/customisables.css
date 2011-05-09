@@ -6,20 +6,19 @@ a:hover {
     color: #3399CC; 
     }
 
-
 .pagination-link {
     border: 1px solid #0083CB;
     color: #0083CB;
-}
+    }
 
 #form-submit {
     color: #666;
-}
+    }
 
-.ui-widget input, 
-.ui-widget select, 
-.ui-widget textarea, 
-.ui-widget button {
-    color: #666;
-    
-}
+#login-form {
+    width: 30em;
+    }
+
+#login-form input {
+    width: 20em;
+    }

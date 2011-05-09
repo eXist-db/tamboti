@@ -10,7 +10,6 @@
         <link rel="stylesheet" type="text/css" href="theme/css/biblio.css"/>
         <link rel="stylesheet" type="text/css" href="theme/css/customisables.css"/>
         <link rel="unapi-server" type="application/xml" title="unAPI" href="unapi.xql"/>
-        <link rel="stylesheet" type="text/css" href="theme/resources/css/tamboti.css"/>
     </head>
     <body>
         <div id="page-head">
@@ -279,6 +278,7 @@
                 <jquery:button id="cancel" label="Cancel"/>
                 <form id="create-collection-form" action="operations.xql">
                     <div>Name of new folder: </div>
+                    <div><br/></div>
                     <div>
                         <input name="name" type="text"/>
                     </div>
@@ -290,18 +290,21 @@
                 <form id="rename-collection-form" action="operations.xql">
                     <input id="rename-collection-path_" type="hidden" name="collection"/>
                     <div>New folder name: </div>
+                    <div><br/></div>
                     <div>
                         <input name="name" type="text"/>
                     </div>
                 </form>
             </jquery:dialog>
-            <jquery:dialog id="move-collection-dialog" modal="true" title="Move Folder" trigger="#collection-move-folder" width="450">
+            <jquery:dialog id="move-collection-dialog" modal="true" title="Move Folder" trigger="#collection-move-folder" width="700">
                 <jquery:button label="Move" function="moveCollection"/>
                 <jquery:button id="cancel" label="Cancel"/>
                 <form id="move-collection-form" action="operations.xql">
                     <input id="move-collection-path_" type="hidden" name="collection"/>
-                    <div>Move folder '<span id="move-collection-path_"/>' to
-                            <biblio:form-select-collection name="path"/>
+                    <div>Move folder '<span id="move-collection-path_"/>' to </div>
+                    <div><br/></div>
+                    <div>
+                        <biblio:form-select-collection name="path"/>
                     </div>
                 </form>
             </jquery:dialog>
@@ -310,7 +313,9 @@
                 <jquery:button id="cancel" label="Cancel"/>
                 <form id="remove-collection-form" action="operations.xql">
                     <input id="remove-collection-path_" type="hidden" name="collection"/>
-                    <div>Are you sure you wish to remove the folder named "<span id="sharing-collection-path_"/>"? </div>
+                    <div>Remove the folder named "<span id="sharing-collection-path_"/>"? </div>
+                    <div><br/></div>
+                    <div>NB: If you remove the folder, the folder and its contents will be deleted and cannot be restored.</div>
                 </form>
             </jquery:dialog>
             <!-- end collection writeable -->
@@ -340,7 +345,7 @@
                     <input id="move-resource-id" name="resource" type="hidden" value=""/>
                 </form>
             </jquery:dialog>
-            <!-- Dialogs are created search-xql lines 532ff. -->
+            <!-- Dialogs are created search.xql lines 538ff. -->
             <jquery:dialog id="new-resource-dialog" modal="true" title="Create Stand-Alone Record" trigger="#collection-create-resource" width="550">
                 <jquery:button id="create" label="Create" function="newResource"/>
                 <jquery:button id="cancel" label="Cancel"/>
