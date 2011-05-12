@@ -14,7 +14,7 @@
     <body>
         <div id="page-head">
             <div id="page-head-left">
-                <a href="/exist/library/">
+                <a href="/exist/apps/tamboti/">
                     <img src="theme/images/tamboti.png" title="Tamboti Metadata Framework" alt="Tamboti Metadata Framework" style="border-style: none;"/>
                 </a>
             </div>
@@ -278,7 +278,9 @@
                 <jquery:button id="cancel" label="Cancel"/>
                 <form id="create-collection-form" action="operations.xql">
                     <div>Name of new folder: </div>
-                    <div><br/></div>
+                    <div>
+                        <br/>
+                    </div>
                     <div>
                         <input name="name" type="text"/>
                     </div>
@@ -290,7 +292,9 @@
                 <form id="rename-collection-form" action="operations.xql">
                     <input id="rename-collection-path_" type="hidden" name="collection"/>
                     <div>New folder name: </div>
-                    <div><br/></div>
+                    <div>
+                        <br/>
+                    </div>
                     <div>
                         <input name="name" type="text"/>
                     </div>
@@ -302,7 +306,9 @@
                 <form id="move-collection-form" action="operations.xql">
                     <input id="move-collection-path_" type="hidden" name="collection"/>
                     <div>Move folder '<span id="move-collection-path_"/>' to </div>
-                    <div><br/></div>
+                    <div>
+                        <br/>
+                    </div>
                     <div>
                         <biblio:form-select-collection name="path"/>
                     </div>
@@ -314,7 +320,9 @@
                 <form id="remove-collection-form" action="operations.xql">
                     <input id="remove-collection-path_" type="hidden" name="collection"/>
                     <div>Remove the folder named "<span id="sharing-collection-path_"/>"? </div>
-                    <div><br/></div>
+                    <div>
+                        <br/>
+                    </div>
                     <div>NB: If you remove the folder, the folder and its contents will be deleted and cannot be restored.</div>
                 </form>
             </jquery:dialog>
