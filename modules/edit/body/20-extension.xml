@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms" class="extension" tab-id="extension">
+<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001f/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="extension" tab-id="extension">
     <div class="block-form">
-        <fieldset level="1">
+        <xf:group appearance="full" class="fieldset level-1">
             <div class="join">
                 <span class="legend">Extension</span>
                 <span class="join-button">
@@ -35,7 +34,7 @@
             <xf:repeat nodeset="instance('save-data')/mods:extension" id="extension-repeat">
             -->
             <!-- repeat not used. -->
-            <xf:group ref="mods:extension[not(e:template)] | mods:extension[not(e:transliterationOfResource)]">
+            <xf:group appearance="full" ref="mods:extension[not(e:template)] | mods:extension[not(e:transliterationOfResource)]">
                 <xf:switch>
                     <xf:case id="extension-add-node-hide">
                         <div class="node-button">
@@ -53,7 +52,7 @@
                             </xf:trigger>
                         </div>
                         <div class="node-adds">
-                            <xf:group ref=".[not(e:template)] | .[not(e:transliterationOfResource)]">
+                            <xf:group appearance="full" ref=".[not(e:template)] | .[not(e:transliterationOfResource)]">
                                 <xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>
                                 <!-- attribute dummy
                                     <xf:trigger ref=".[not(@type)]" class="add-button">
@@ -80,7 +79,7 @@
                                 </xf:trigger>
                             </xf:group>
                             <!--
-                                <xf:group id="extension-add-node-optional">
+                                <xf:group appearance="full" id="extension-add-node-optional">
                                     <xf:label class="xforms-group-label-centered">Optional Fields</xf:label>
                                     <xf:trigger ref=".[not(@displayLabel)]" class="add-button">
                                         <xf:label class="xforms-group-label-centered">Add Display Label</xf:label>
@@ -90,7 +89,7 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                <xf:group id="extension-add-node-not-recommended">
+                                <xf:group appearance="full" id="extension-add-node-not-recommended">
                                     <xf:label class="xforms-group-label-centered">Deprecated Fields</xf:label>
                                     <xf:trigger ref=".[not(@ID)]" class="add-button">
                                         <xf:label class="xforms-group-label-centered">Add ID</xf:label>
@@ -105,7 +104,7 @@
                     </xf:case>
                 </xf:switch>
             </xf:group>
-            <xf:group>
+            <xf:group appearance="full">
                 <xf:select1 ref="mods:extension/e:template">
                     <xf:label>Publication Type:</xf:label>
                     <xf:hint>
@@ -121,7 +120,7 @@
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-            <xf:group>
+            <xf:group appearance="full">
                 <xf:select1 ref="mods:extension/e:transliterationOfResource">
                     <xf:label>Transliteration Of Resource:</xf:label>
                     <xf:hint>
@@ -144,7 +143,7 @@
             <!-- 
             </xf:repeat>
             -->
-            <xf:group id="extension-add-element">
+            <xf:group appearance="full" id="extension-add-element">
                 <xf:trigger ref=".[not(mods:extension)]" class="add-button">
                     <xf:label class="xforms-group-label-centered">Add Missing Extension</xf:label>
                     <xf:action ev:event="DOMActivate">
@@ -152,6 +151,6 @@
                     </xf:action>
                 </xf:trigger>
             </xf:group>
-        </fieldset>
+        </xf:group>
     </div>
 </div>

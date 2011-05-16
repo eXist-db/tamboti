@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms" class="identifier" tab-id="identifier">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="identifier" tab-id="identifier">
     <div class="block-form">
-        <fieldset class="level-1">
+        <xf:group appearance="full" class="fieldset level-1">
             <div class="join">
                 <span class="legend">Identifiers</span>
                 <span class="join-button">
@@ -40,7 +39,7 @@
                     
                         <!--DLF/Aquifer: REQUIRED-->
                         <!--Cluster: REQUIRE IF .-->
-                <xf:group ref=".[@type]" appearance="full" selection="open">
+                <xf:group appearance="full" ref=".[@type]" selection="open">
                     <xf:select1 ref="./@type">
                         <xf:label>Type:</xf:label>
                         <xf:hint>
@@ -54,7 +53,7 @@
                 </xf:group>
                         <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                         <!--Cluster: omit-->
-                <xf:group ref=".[@invalid]" appearance="full">
+                <xf:group appearance="full" ref=".[@invalid]">
                     <xf:select1 ref="./@invalid">
                         <xf:label>Invalid Identifier:</xf:label>
                         <xf:hint>
@@ -68,7 +67,7 @@
                 </xf:group>
                         <!--DLF/Aquifer: OPTIONAL-->
                         <!--Cluster: omit-->
-                <xf:group ref=".[@displayLabel]" appearance="full">
+                <xf:group appearance="full" ref=".[@displayLabel]">
                     <xf:input ref="./@displayLabel" class="text_50">
                         <xf:label>Display Label: </xf:label>
                         <xf:hint>
@@ -78,7 +77,7 @@
                 </xf:group>
                         <!--DLF/Aquifer: Recommended-->
                         <!--Cluster: include-->
-                <xf:group ref=".[not(@type='local')]" appearance="full">
+                <xf:group appearance="full" ref=".[not(@type='local')]">
                     <xf:input ref="." class="text_100">
                         <xf:label>Identifier: </xf:label>
                         <xf:hint>
@@ -94,6 +93,6 @@
                     <xf:insert nodeset="mods:form" at="index('identifier-repeat')" position="after" origin="instance('new-instance')/mods:identifier"/>
                 </xf:action>
             </xf:trigger>
-        </fieldset>
+        </xf:group>
     </div>
 </div>

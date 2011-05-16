@@ -63,7 +63,7 @@ as element() {
                 Tamboti Metadata Framework
             Tamboti-end-->
             </title>
-            { style:css('xhtml') }
+         defaul   { style:css('xhtml') }
             { $style }
         </head>
         <body>
@@ -248,7 +248,7 @@ as node()+ {
     )
     else if ($page-type eq 'xforms') then (
         <link rel="stylesheet" href="theme/css/xforms.css.xq" type="text/css" />,
-        <link rel="stylesheet" type="text/css" href="theme/css/default-style2.css"/>
+        <!--<link rel="stylesheet" type="text/css" href="theme/css/default-style2.css"/>-->
     ) else ()
 };
 

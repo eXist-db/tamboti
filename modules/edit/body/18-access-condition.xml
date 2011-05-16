@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms" class="access-condition" tab-id="access-condition">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="access-condition" tab-id="access-condition">
     <div class="block-form">
         <!--DLF/Aquifer: REQUIRED-->
         <!--Cluster: include-->
-        <fieldset class="level-1">
+        <xf:group appearance="full" class="fieldset level-1">
             <div class="join wide">
                 <span class="legend">Access Conditions</span>
                 <span class="join-button">
@@ -35,7 +34,7 @@
             
             <!--accessCondition repeat begins-->
             <xf:repeat nodeset="instance('save-data')/mods:accessCondition" id="accessCondition-repeat">
-                <xf:group ref=".[not(@xlink)] | .[not(@type)] | .[not(@altRepGroup)] | .[not(@lang)] | .[not(@xml:lang)] | .[not(@script)] | .[not(@transliteration)] | .[not(@displayLabel)]">
+                <xf:group appearance="full" ref=".[not(@xlink:href)] | .[not(@type)] | .[not(@altRepGroup)] | .[not(@lang)] | .[not(@xml:lang)] | .[not(@script)] | .[not(@transliteration)] | .[not(@displayLabel)]">
                     <xf:switch>
                         <xf:case id="extension-add-node-hide">
                             <div class="node-button">
@@ -53,13 +52,13 @@
                                 </xf:trigger>
                             </div>
                             <div class="node-adds">
-                                <xf:group ref=".[not(@xlink)] | .[not(@type)] | .[not(@altRepGroup)] | .[not(@lang)] | .[not(@xml:lang)] | .[not(@script)] | .[not(@transliteration)] | .[not(@displayLabel)] | .[not(@displayLabel)]">
+                                <xf:group appearance="full" ref=".[not(@xlink:href)] | .[not(@type)] | .[not(@altRepGroup)] | .[not(@lang)] | .[not(@xml:lang)] | .[not(@script)] | .[not(@transliteration)] | .[not(@displayLabel)] | .[not(@displayLabel)]">
                                 <!--<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-->
-                                    <xf:trigger ref=".[not(@xlink)]" class="add-button">
+                                    <xf:trigger ref=".[not(@xlink:href)]" class="add-button">
                                         <xf:label class="xforms-group-label-centered">Add XLink</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert context="." origin="instance('insert-templates')/mods:accessCondition/@xlink"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:accessCondition/@xlink:href"/>
                                         </xf:action>
                                     </xf:trigger>
                                     <xf:trigger ref=".[not(@type)]" class="add-button">
@@ -124,7 +123,7 @@
                                     -->
                                 </xf:group>
                                 <!--
-                                    <xf:group id="extension-add-node-optional">
+                                    <xf:group appearance="full" id="extension-add-node-optional">
                                     <xf:label class="xforms-group-label-centered">Optional Fields</xf:label>
                                     <xf:trigger ref=".[not(@displayLabel)]" class="add-button">
                                     <xf:label class="xforms-group-label-centered">Add Display Label</xf:label>
@@ -134,7 +133,7 @@
                                     </xf:action>
                                     </xf:trigger>
                                     </xf:group>
-                                    <xf:group id="extension-add-node-not-recommended">
+                                    <xf:group appearance="full" id="extension-add-node-not-recommended">
                                     <xf:label class="xforms-group-label-centered">Deprecated Fields</xf:label>
                                     <xf:trigger ref=".[not(@ID)]" class="add-button">
                                     <xf:label class="xforms-group-label-centered">Add ID</xf:label>
@@ -152,15 +151,15 @@
                 
                     <!--DLF/Aquifer: N/A-->
                     <!--Cluster: omit-->
-                <xf:group ref=".[@xlink]" appearance="full">
-                    <xf:input ref="./@xlink" class="text_50">
+                <xf:group appearance="full" ref=".[@xlink:href]">
+                    <xf:input ref="./@xlink:href" class="text_50">
                         <xf:label>XLink: </xf:label>
                         <xf:hint>
                             <p> The XLink field is used to reference an external resource, such as a second metadata record, a Related Item or a Table Of Contents. </p>
                         </xf:hint>
                     </xf:input>
                 </xf:group>
-                <xf:group ref=".[@type]" appearance="full">
+                <xf:group appearance="full" ref=".[@type]">
                     <xf:select1 ref="./@type" selction="open">
                         <xf:label>Type:</xf:label>
                         <xf:hint>
@@ -174,7 +173,7 @@
                 </xf:group>
                     <!--DLF/Aquifer: N/A-->
                     <!--Cluster: omit: follows languageOfCataloging-->
-                <xf:group ref=".[@lang]" appearance="full">
+                <xf:group appearance="full" ref=".[@lang]">
                     <xf:select1 ref="./@lang">
                         <xf:label>Language:</xf:label>
                         <xf:hint>
@@ -188,7 +187,7 @@
                 </xf:group>
                     <!--DLF/Aquifer: NOT RECOMMENDED-->
                     <!--Cluster: omit-->
-                <xf:group ref=".[@xml:lang]" appearance="full">
+                <xf:group appearance="full" ref=".[@xml:lang]">
                     <xf:select1 ref="./@xml:lang">
                         <xf:label>xml:lang:</xf:label>
                         <xf:hint>
@@ -203,7 +202,7 @@
                 </xf:group>
                     <!--DLF/Aquifer: N/A-->
                     <!--Cluster: omit-->
-                <xf:group ref=".[@script]" appearance="full">
+                <xf:group appearance="full" ref=".[@script]">
                     <xf:select1 ref="./@script">
                         <xf:label>Script:</xf:label>
                         <xf:hint>
@@ -217,7 +216,7 @@
                 </xf:group>
                     <!--DLF/Aquifer: N/A-->
                     <!--Cluster: omit-->
-                <xf:group ref=".[@transliteration]" appearance="full">
+                <xf:group appearance="full" ref=".[@transliteration]">
                     <xf:select1 ref="./@transliteration" selection="open">
                         <xf:label>Transliteration:</xf:label>
                         <xf:hint>
@@ -231,7 +230,7 @@
                 </xf:group>
                     <!--DLF/Aquifer: OPTIONAL]-->
                     <!--Cluster: omit-->
-                <xf:group ref=".[@displayLabel]" appearance="full">
+                <xf:group appearance="full" ref=".[@displayLabel]">
                     <xf:input ref="./@displayLabel" class="text_50">
                         <xf:label>Display Label: </xf:label>
                         <xf:hint>
@@ -239,7 +238,7 @@
                         </xf:hint>
                     </xf:input>
                 </xf:group>
-                <xf:group ref=".[@altRepGroup]" appearance="full">
+                <xf:group appearance="full" ref=".[@altRepGroup]">
                     <xf:input ref="./@altRepGroup" class="text_10">
                         <xf:label>altRepGroup: </xf:label>
                         <xf:hint>
@@ -248,7 +247,7 @@
                     </xf:input>
                 </xf:group>
                 <div class="hr-small"/>
-                <xf:group ref="." appearance="full">
+                <xf:group appearance="full" ref=".">
                     <xf:textarea ref="." class="textarea">
                         <xf:label>Access Condition: </xf:label>
                         <xf:hint>
@@ -260,7 +259,7 @@
             </xf:repeat>
             
             <!--accessCondition repeat ends-->
-            <xf:group id="accessCondition-add-element" ref=".[not(./mods:accessCondition)]" appearance="full">
+            <xf:group appearance="full" id="accessCondition-add-element" ref=".[not(./mods:accessCondition)]">
                 <xf:trigger ref=".[not(mods:accessCondition)]" class="add-button">
                     <xf:label class="xforms-group-label-centered">Add Missing Access Condition</xf:label>
                     <xf:action ev:event="DOMActivate">
@@ -268,6 +267,6 @@
                     </xf:action>
                 </xf:trigger>
             </xf:group>
-        </fieldset>
+        </xf:group>
     </div>
 </div>

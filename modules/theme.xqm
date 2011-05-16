@@ -13,6 +13,7 @@ import module namespace config="http://exist-db.org/mods/config" at "config.xqm"
  : @param $resource path to a resource in the theme collection
  : @return resolved path to the resource to be used for forwarding in controller
  :)
+(: The function from 14316 has to be integrated:
 declare function theme:resolve($prefix as xs:string?, $root as xs:string, $resource as xs:string) {
     let $theme := theme:theme-for-resource($prefix, $resource)
     let $path :=
@@ -25,7 +26,11 @@ declare function theme:resolve($prefix as xs:string?, $root as xs:string, $resou
     return
         $path
 };
-
+:)
+(: Here, the 14090 function is used. :)
+declare function theme:resolve($root as xs:string, $path as xs:string) {
+    concat($root, "/themes", "/default/", substring-after($path, "theme/"))
+};
 (:~
  :
  :)

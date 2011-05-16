@@ -1,13 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" ID="">
-    <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink="" xml:lang="" nameTitleGroup="" usage="">
+    <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="">
         <nonSort/>
         <title/>
         <subTitle/>
         <partNumber/>
         <partName/>
     </titleInfo>
-    <name type="" authority="" lang="" script="" transliteration="" xlink="" displayLabel="" ID="" xml:lang="">
+    <name type="" authority="" lang="" script="" transliteration="" xlink:href="" displayLabel="" ID="" xml:lang="">
         <namePart type=""/>
         <displayForm/>
         <affiliation/>
@@ -58,7 +57,7 @@
     <targetAudience authority="marctarget"/>
     <typeOfResource collection="" manuscript=""/>
     <genre type="code" authority="marcgt"/>
-    <subject authority="" xlink="">
+    <subject authority="" xlink:href="">
         <topic authority=""/>
         <geographic/>
         <temporal encoding="w3cdtf" point="" keyDate=""/>
@@ -97,9 +96,9 @@
     </subject>
     <classification authority="" edition="" displayLabel="" lang="eng"/>
     <abstract lang="" script="" transliteration="" type="" displayLabel=""/>
-    <tableOfContents type="" displayLabel="" lang="" script="" transliteration="" xlink=""/>
+    <tableOfContents type="" displayLabel="" lang="" script="" transliteration="" xlink:href=""/>
     <note lang="eng" type="" authority="" displayLabel="" script="" transliteration=""/>
-    <relatedItem type="" xlink="" ID="" displayLabel="">
+    <relatedItem type="" xlink:href="" ID="" displayLabel="">
         <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="">
             <nonSort/>
             <title/>
@@ -140,7 +139,7 @@
         </holdingSimple>
         <holdingExternal/>
     </location>
-    <accessCondition xlink="" lang="" type="" displayLabel="" altRepGroup="" xml:lang="" script="" transliteration=""/>
+    <accessCondition xlink:href="" lang="" type="" displayLabel="" altRepGroup="" xml:lang="" script="" transliteration=""/>
     <recordInfo lang="eng" script="" transliteration="" type="" authority="">
         <recordContentSource authority=""/>
         <recordCreationDate encoding="w3cdtf" point="" keyDate="" qualifier=""/>

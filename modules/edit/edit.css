@@ -226,12 +226,13 @@ table .tabs {
     /* white-space:nowrap; */
     }
 
-fieldset,
+.fieldset,
 .block-form .xforms-repeat-item,
 .block-form .xforms-repeat-item-selected,
 .node-adds
     {
     border-width: 1px;
+    border-color: #CCC !important;
     border-style: solid;
     padding-top: 1em;
     padding-bottom: .5em !important;
@@ -341,7 +342,7 @@ xf|group xf|trigger.delete-button { /*for field delete buttons - sizing does not
 .textarea .xforms-value  {
     width: 40em; 
     height: 3em; 
-    padding: .2em;
+    padding-left: .2em;
     }
 
 div.join span.xforms-hint { /*the hard-coded fieldset hints*/
@@ -363,7 +364,7 @@ span.xforms-hint-icon:after { /*the regular hints*/
 }
 
 span.xforms-hint-icon { /*negating the xsltforms.css hint icon*/
-    background-image:url("x.xxx");
+    background-image:url("");
 }
 
 .join-button .xforms-control button
@@ -451,7 +452,7 @@ div.xforms-hint-value p
     margin-bottom: .5em;
 }
 
-.xforms-value {
+select .xforms-value {
     padding-left: .25em;
 }
 

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <tabs>
     <tab>
         <category>Basic Input Forms</category>
@@ -33,14 +32,14 @@
     </tab>
     <tab>
         <category>Citation Forms</category>
-        <label>Title Info</label>
+        <label>Title Information</label>
         <tab-id>title</tab-id>
         <show-level>2</show-level>
         <path>titleInfo</path>
     </tab>
     <tab>
         <category>Citation Forms</category>
-        <label>Name Info</label>
+        <label>Name Information</label>
         <tab-id>name</tab-id>
         <show-level>2</show-level>
         <path>name</path>
@@ -48,7 +47,7 @@
     </tab>
     <tab>
         <category>Citation Forms</category>
-        <label>Origin Info</label>
+        <label>Origin Information</label>
         <tab-id>origin</tab-id>
         <show-level>2</show-level>
         <path>originInfo</path>
@@ -160,7 +159,7 @@
     </tab>
     <tab>
         <category>Remaining Forms</category>
-        <label>Record Info</label>
+        <label>Record Information</label>
         <tab-id>record-info</tab-id>
         <show-level>4</show-level>
         <path>recordInfo</path>
