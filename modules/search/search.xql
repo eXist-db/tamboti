@@ -26,6 +26,7 @@ declare namespace xmldb="http://exist-db.org/xquery/xmldb";
 declare namespace functx = "http://www.functx.com";
 
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
+import module namespace theme="http:/exist-db.org/xquery/biblio/theme" at "../theme.xqm";
 import module namespace jquery="http://exist-db.org/xquery/jquery" at "resource:org/exist/xquery/lib/jquery.xql";
 
 import module namespace mods="http://www.loc.gov/mods/v3" at "retrieve-mods.xql";
@@ -93,7 +94,7 @@ declare variable $biblio:FIELDS :=
 :)
 declare variable $biblio:TEMPLATE_QUERY :=
     <query>
-        <collection>{$config:mods-root}</collection>
+        <collection>{theme:get-root()}</collection>
         <and>
             <field m="1" name="All"></field>
         </and>
@@ -310,7 +311,7 @@ declare function biblio:process-form-parameters($params as xs:string*) as elemen
     the query. Filter out empty parameters and take care of boolean operators.
 :)
 declare function biblio:process-form() as element(query)? {
-    let $collection := request:get-parameter("collection", $config:mods-root)
+    let $collection := request:get-parameter("collection", theme:get-root())
     let $fields :=
         (:  Get a list of all input parameters which are not empty,
             ordered by input name. :)
@@ -576,7 +577,7 @@ declare function biblio:process-templates($query as element()?, $hitCount as xs:
         case element(biblio:query-history) return
             biblio:query-history()
         case element(biblio:collection-path) return
-            let $collection := functx:replace-first(request:get-parameter("collection", $config:mods-root), "/db/", "")
+            let $collection := functx:replace-first(request:get-parameter("collection", theme:get-root()), "/db/", "")
             return
                 <input class="collection-input" type="text" name="collection" value="{$collection}" readonly="true"/>
         case element(biblio:form-select-current-user-groups) return

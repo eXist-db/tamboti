@@ -2,6 +2,8 @@ module namespace theme="http:/exist-db.org/xquery/biblio/theme";
 
 import module namespace config="http://exist-db.org/mods/config" at "config.xqm";
 
+declare variable $theme:error := QName("http:/exist-db.org/xquery/tamboti", "error");
+
 (:~
  : Locate the specified resource for the selected theme. The theme is determined
  : from the URL prefix. If a resource cannot be found within the theme collection,
@@ -48,6 +50,24 @@ declare function theme:theme-for-prefix($prefix as xs:string?) {
                 $theme
             else
                 "default"
+};
+
+declare function theme:get-root() {
+    let $prefix := request:get-attribute("exist:prefix")
+    return
+        if (empty($prefix)) then
+            error(QName("http:/exist-db.org/xquery/tamboti", "error"), ("No prefix set!"))
+        else
+            theme:get-root($prefix)
+};
+
+declare function theme:get-root($prefix as xs:string?) as xs:string {
+    let $theme := theme:theme-for-prefix($prefix)
+    return
+        if ($theme eq "default") then
+            $config:mods-commons
+        else
+            doc($config:theme-config)//map[@theme = $theme]/@root/string()
 };
 
 (:~

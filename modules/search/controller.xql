@@ -42,7 +42,7 @@ if ($exist:path eq '/') then
     search.xql and the db2xhtml stylesheet. search.xql will run
     the actual search and expand the index.xml template.
 :)
-else if ($exist:resource eq 'index.xml') then
+else if (ends-with($exist:resource, '.xml')) then
 
     if(request:get-parameter("logout",()))then
     (
@@ -63,6 +63,7 @@ else if ($exist:resource eq 'index.xml') then
             		<set-attribute name="xquery.report-errors" value="yes"/>
             		<set-attribute name="exist:root" value="{$exist:root}"/>
                     <set-attribute name="exist:path" value="{$exist:path}"/>
+                    <set-attribute name="exist:prefix" value="{$exist:prefix}"/>
                 </forward>
     		</view>
     	</dispatch>,
