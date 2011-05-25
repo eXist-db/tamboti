@@ -106,6 +106,12 @@ function initCollectionTree() {
         onPostInit: function () {
             // when tree is reloaded, reactivate the current node to trigger an onActivate event
             this.reactivate();
+        },
+        clickFolderMode: 1,
+        onDblClick: function (node) {
+            $('#simple-search-form input[name=input1]').val('');
+            $('#simple-search-form').submit();
+            return false;
         }
     });
     toggleCollectionTree($('#collection-tree').hasClass('show'));
