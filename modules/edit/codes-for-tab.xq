@@ -76,7 +76,7 @@ let $code-table-names :=
       let $code-table-name := substring-before($after, "']/items/item")
       order by $code-table-name
       return $code-table-name
-let $distinct-code-table-names := distinct-values($code-table-names)
+let $distinct-code-table-names := (distinct-values($code-table-names), 'hint-code')
 
 (: generate etag :)
 let $last-modified := local:get-last-modified($code-table-collection,

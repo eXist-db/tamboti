@@ -1,0 +1,667 @@
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="title" tab-id="title">
+    <div class="block-form">
+        <xf:group appearance="full" class="fieldset level-1">
+            <div class="join">
+                <span class="legend">Title Information</span>
+                <!--<span dojoType="dijit.form.DropDownButton">
+                    <span> ? </span>
+                    <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                        <xf:output mediatype="text/html" incremental="true"
+                            ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo']/help"/>
+                    </span>
+                </span>-->
+                <span class="join-button">
+                    <xf:trigger>
+                        <xf:label>+</xf:label>
+                        <xf:hint>
+                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='add-frame']/hint"/>
+                        </xf:hint>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert ev:event="DOMActivate" nodeset="mods:titleInfo" at="index('titleInfo-repeat')" position="after"/>
+                        </xf:action>
+                    </xf:trigger>
+                </span>
+                <span class="join-button">
+                    <xf:trigger>
+                        <xf:label>–</xf:label>
+                        <xf:hint>
+                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='remove-frame']/hint"/>
+                        </xf:hint>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:delete nodeset="instance('save-data')/mods:titleInfo" at="index('titleInfo-repeat')"/>
+                        </xf:action>
+                    </xf:trigger>
+                </span>
+            </div>
+            <!--titleInfo repeat begins-->
+            <xf:repeat nodeset="instance('save-data')/mods:titleInfo" id="titleInfo-repeat">
+                <!--titleInfo node-add begins-->
+                <xf:group appearance="full" class="show-hide" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)] | .[not(@type)] | .[not(@authority)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@displayLabel)] | .[not(@ID)] | .[not(@xlink:href)] | .[not(@xml:lang)] | .[not(@authorityURI)] | .[not(@valueURI)] | .[not(@supplied)] | .[not(@usage)] | .[not(@altRepGroup)] | .[not(@nameTitleGroup)]">
+                    <xf:switch>
+                        <xf:case id="titleInfo-add-node-hide">
+                            <div class="node-button">
+                                <xf:trigger>
+                                    <xf:label>&gt;</xf:label>
+                                    <xf:toggle case="titleInfo-add-node-unhide" ev:event="DOMActivate"/>
+                                </xf:trigger>
+                            </div>
+                        </xf:case>
+                        <xf:case id="titleInfo-add-node-unhide">
+                            <div class="node-button">
+                                <xf:trigger>
+                                    <xf:label>&lt;</xf:label>
+                                    <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                </xf:trigger>
+                            </div>
+                            <div class="node-adds">
+                                <xf:group appearance="full" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)] | .[not(@type)] | .[not(@authority)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@displayLabel)] | .[not(@ID)] | .[not(@xlink:href)] | .[not(@xml:lang)]">
+                                    <!-- A -->
+                                    <xf:group ref=".[not(@altRepGroup)]">
+                                        <xf:trigger>
+                                            <xf:label>Add altRepGroup</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@altRepGroup"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <xf:group ref=".[not(@authority)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Authority</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@authority"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <xf:group ref=".[not(@authorityURI)]">
+                                        <xf:trigger>
+                                            <xf:label>Add authorityURI</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@authorityURI"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <!-- D -->
+                                    <xf:group ref=".[not(@displayLabel)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Display Label</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@displayLabel"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <!-- I -->
+                                    <xf:group ref=".[not(@ID)]">
+                                        <xf:trigger>
+                                            <xf:label>Add ID</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@ID"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <!-- L -->
+                                    <xf:group ref=".[not(@lang)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Language</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@lang"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <!-- N -->
+                                    <xf:group ref=".[not(@nameTitleGroup)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Name-Title Group</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@nameTitleGroup"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <xf:group ref=".[not(mods:nonSort)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Non Sort</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert nodeset="mods:nonSort" at="index('titleInfo-repeat')" position="after" origin="instance('insert-templates')/mods:titleInfo/mods:nonSort"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <!-- P -->
+                                    <xf:group ref=".[not(mods:partName)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Part Name</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert nodeset="mods:partName" at="index('titleInfo-repeat')" position="after" origin="instance('insert-templates')/mods:titleInfo/mods:partName"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <xf:group ref=".[not(mods:partNumber)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Part Number</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert nodeset="mods:partNumber" at="index('titleInfo-repeat')" position="after" origin="instance('insert-templates')/mods:titleInfo/mods:partNumber"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <!-- S -->
+                                    <xf:group ref=".[not(@script)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Script</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@script"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <xf:group ref=".[not(mods:subTitle)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Subtitle</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert nodeset="mods:subTitle" at="index('titleInfo-repeat')" position="after" origin="instance('insert-templates')/mods:titleInfo/mods:subTitle"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <xf:group ref=".[not(@supplied)]">
+                                        <xf:trigger>
+                                            <xf:label>Add supplied</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@supplied"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <!-- T -->
+                                    <xf:group ref=".[not(mods:title)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Title</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert nodeset="mods:title" at="index('titleInfo-repeat')" position="after" origin="instance('insert-templates')/mods:titleInfo/mods:title"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <xf:group ref=".[not(@transliteration)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Transliteration</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@transliteration"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <xf:group ref=".[not(@type)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Type</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@type"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <!-- U -->
+                                    <xf:group ref=".[not(@usage)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Usage</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@usage"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <!-- V -->
+                                    <xf:group ref=".[not(@valueURI)]">
+                                        <xf:trigger>
+                                            <xf:label>Add valueURI</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@valueURI"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <!-- X -->
+                                    <xf:group ref=".[not(@xml:lang)]">
+                                        <xf:trigger>
+                                            <xf:label>Add xml:lang</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@xml:lang"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <xf:group ref=".[not(@xlink:href)]">
+                                        <xf:trigger>
+                                            <xf:label>Add XLink</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@xlink:href"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                </xf:group>
+                            </div>
+                        </xf:case>
+                    </xf:switch>
+                </xf:group>
+                <!--titleInfo node-add ends-->
+                <!--titleInfo input begins-->
+                <!--<xf:output ref="instance('code-tables')/code-table[code-table-name='title-type-code']/items/item[value='abbreviated']/label"/>-->
+
+
+                <!--DLF/Aquifer: OPTIONAL-->
+                <!--Cluster: omit-->
+                <xf:group appearance="full" ref=".[@ID]" class="text_50 schema_3.3 schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='ID']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:input ref="./@ID">
+                        <xf:label>ID</xf:label>
+                        <xf:hint>
+                            <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='ID']/hint"/>
+                        </xf:hint>
+                    </xf:input>
+                </xf:group>
+                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                <!--Cluster: omit-->
+                <xf:group appearance="full" ref=".[@xlink:href]" class="text_50 schema_3.3 schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xlink_href']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:input ref="./@xlink:href">
+                        <xf:label>XLink</xf:label>
+                        <xf:hint>
+                            <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xlink:href']/hint"/>
+                        </xf:hint>
+                    </xf:input>
+                </xf:group>
+                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                <!--Cluster: include-->
+                <xf:group appearance="full" ref=".[@type]" class="schema_3.3 schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-type']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:select1 ref="./@type">
+                        <xf:label>Type</xf:label>
+                        <xf:hint>
+                            <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-type']/hint"/>
+                        </xf:hint>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='title-type-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                <!--Cluster: include-->
+                <!--selection="open"-->
+                <xf:group appearance="full" ref=".[@authority]" class="schema_3.3 schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='abbreviated-title-authority']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:select1 ref="./@authority">
+                        <xf:label>Abbreviated Title Authorities</xf:label>
+                        <xf:hint>
+                            <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='abbreviated-title-authority']/hint"/>
+                        </xf:hint>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='abbreviated-title-authority-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                <!--Cluster: include-->
+                <!--selection="open"-->
+                <xf:group appearance="full" ref=".[@authority]" class="schema_3.3 schema_3.4">
+                    <xf:select1 ref="./@authority">
+                        <!--<span dojoType="dijit.form.DropDownButton">
+                            <span> ? </span>
+                            <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                                <xf:output mediatype="text/html" incremental="true"
+                                    ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='uniform-title-authority']/help"/>
+                            </span>
+                        </span>-->
+                        <xf:label>Name-Title Authorities</xf:label>
+                        <xf:hint>
+                            <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='uniform-title-authority']/hint"/>
+                        </xf:hint>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-title-authority-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <xf:group appearance="full" ref=".[@authorityURI]" class="schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-authorityURI']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:input ref="./@authorityURI">
+                        <xf:label>authorityURI</xf:label>
+                        <!--<xf:hint>
+                            <xf:hint><xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-authorityURI']/hint"/></xf:hint>
+                        </xf:hint>-->
+                    </xf:input>
+                </xf:group>
+                <xf:group appearance="full" ref=".[@valueURI]" class="schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-valueURI']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:input ref="./@valueURI">
+                        <xf:label>valueURI</xf:label>
+                        <!--<xf:hint>
+                            <xf:hint><xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-valueURI']/hint"/></xf:hint>
+                        </xf:hint>-->
+                    </xf:input>
+                </xf:group>
+                <xf:group appearance="full" ref=".[@supplied]" class="schema_3.3 schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-supplied']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:select1 ref="./@supplied">
+                        <xf:label>supplied</xf:label>
+                        <!--<xf:hint>
+                            <xf:hint><xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-supplied']/hint"/></xf:hint>
+                        </xf:hint>-->
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='yes-empty-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <xf:group appearance="full" ref=".[@altRepGroup]" class="schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='altRepGroup']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:input ref="./@altRepGroup">
+                        <xf:label>altRepGroup</xf:label>
+                        <!--<xf:hint><xf:output mediatype="text/html" incremental="true"
+                            ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='altRepGroup']/hint"/></xf:hint>-->
+                    </xf:input>
+                </xf:group>
+                <!--DLF/Aquifer: REQUIRED IF APPLICABLE-->
+                <!--Cluster: include-->
+                <xf:group appearance="full" ref=".[@lang]" class="schema_3.3 schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='lang']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:select1 ref="./@lang">
+                        <xf:label>Language</xf:label>
+                        <xf:hint>
+                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='lang']/hint"/>
+                        </xf:hint>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <!--DLF/Aquifer: NOT RECOMMENDED]-->
+                <!--Cluster: omit-->
+                <xf:group appearance="full" ref=".[@xml:lang]" class="schema_3.3 schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xml:lang']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:select1 ref="./@xml:lang">
+                        <xf:label>xml:lang</xf:label>
+                        <xf:hint>
+                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xml:lang']/hint"/>
+                        </xf:hint>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
+                <!--Cluster: include-->
+                <!--selection="open"-->
+                <xf:group appearance="full" ref=".[@transliteration]" class="schema_3.3 schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:select1 ref="./@transliteration">
+                        <xf:label>Transliteration</xf:label>
+                        <xf:hint>
+                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration']/hint"/>
+                        </xf:hint>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
+                <!--Cluster: include-->
+                <xf:group appearance="full" ref=".[@script]" class="schema_3.3 schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='script']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:select1 ref="./@script">
+                        <xf:label>Script</xf:label>
+                        <xf:hint>
+                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='script']/hint"/>
+                        </xf:hint>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <!--DLF/Aquifer: OPTIONAL]]-->
+                <!--Cluster: hide-->
+                <xf:group appearance="full" ref=".[@displayLabel]" class="text_100 schema_3.3 schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-displayLabel']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:input ref="./@displayLabel">
+                        <xf:label>Display Label</xf:label>
+                        <xf:hint>
+                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-displayLabel']/hint"/>
+                        </xf:hint>
+                    </xf:input>
+                </xf:group>
+                <!--DLF/Aquifer: N/A]]-->
+                <!--Cluster: hide-->
+                <!--selection="open"-->
+                <xf:group appearance="full" ref=".[@nameTitleGroup]" class="schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nameTitleGroup']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:select1 ref="./@nameTitleGroup">
+                        <xf:label>Name-Title Group</xf:label>
+                        <xf:hint>
+                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nameTitleGroup']/hint"/>
+                        </xf:hint>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='nameTitleGroup-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <!--DLF/Aquifer: N/A]]-->
+                <!--Cluster: hide-->
+                <xf:group appearance="full" ref=".[@usage]" class="schema_3.4 select">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='usage']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:select1 ref="./@usage">
+                        <xf:label>Usage</xf:label>
+                        <xf:hint>
+                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='usage']/hint"/>
+                        </xf:hint>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='usage-type-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]]-->
+                <!--Cluster: hide-->
+                <xf:group appearance="full" ref=".[mods:nonSort]" class="schema_3.3 schema_3.4 set">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:input ref="./mods:nonSort" class="text_10">
+                        <xf:label>Non Sort</xf:label>
+                        <xf:hint>
+                            <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/hint"/>
+                        </xf:hint>
+                    </xf:input>
+                </xf:group>
+                <!--DLF/Aquifer: [REQUIRED]-->
+                <!--Cluster: require-->
+                <xf:group appearance="full" ref=".[mods:title]" class="textarea schema_3.3 schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:textarea ref="./mods:title">
+                        <xf:label>Title</xf:label>
+                        <xf:hint>
+                            <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title']/hint"/>
+                        </xf:hint>
+                    </xf:textarea>
+                </xf:group>
+                <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
+                <!--Cluster: include-->
+                <xf:group appearance="full" ref=".[mods:subTitle]" class="textarea schema_3.3 schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subTitle']/help"/>
+                        </span>
+                        </span>-->
+                    <xf:textarea ref="./mods:subTitle">
+                        <xf:label>Subtitle</xf:label>
+                        <xf:hint>
+                            <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title']/hint"/>
+                        </xf:hint>
+                    </xf:textarea>
+                </xf:group>
+                <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
+                <!--Cluster: hide-->
+                <xf:group appearance="full" ref=".[mods:partNumber]" class="text_50 schema_3.3 schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='partNumber']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:input ref="./mods:partNumber">
+                        <xf:label>Part Number</xf:label>
+                        <xf:hint>
+                            <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='partNumber']/hint"/>
+                        </xf:hint>
+                    </xf:input>
+                </xf:group>
+                <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
+                <!--Cluster: hide-->
+                <xf:group appearance="full" ref=".[mods:partName]" class="textarea schema_3.3 schema_3.4">
+                    <!--<span dojoType="dijit.form.DropDownButton">
+                        <span> ? </span>
+                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
+                            <xf:output mediatype="text/html" incremental="true"
+                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='partName']/help"/>
+                        </span>
+                    </span>-->
+                    <xf:textarea ref="./mods:partName">
+                        <xf:label>Part Name</xf:label>
+                        <xf:hint>
+                            <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='partName']/hint"/>
+                        </xf:hint>
+                    </xf:textarea>
+                </xf:group>
+                <!--titleInfo input ends-->
+            </xf:repeat>
+            <!--title repeat ends-->
+            <xf:group class="missing">
+                <xf:trigger ref=".[not(mods:titleInfo)]">
+                    <xf:label>Add Missing Title Information</xf:label>
+                    <xf:action ev:event="DOMActivate">
+                        <xf:insert nodeset="mods:form" at="index('titleInfo-repeat')" position="after" origin="instance('new-instance')/mods:titleInfo"/>
+                    </xf:action>
+                </xf:trigger>
+            </xf:group>
+        </xf:group>
+    </div>
+</div>
