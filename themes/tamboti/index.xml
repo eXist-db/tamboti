@@ -1,4 +1,5 @@
-<html xmlns:biblio="http:/exist-db.org/xquery/biblio" xmlns:jquery="http://exist-db.org/xquery/jquery">
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:jquery="http://exist-db.org/xquery/jquery">
     <head>
         <title>Tamboti Metadata Framework</title>
         <jquery:header base="libs/scripts/jquery" cssbase="libs/scripts/jquery/css"/>
@@ -25,7 +26,7 @@
             </div>
         </div>
         <div id="content1col">
-            <biblio:login/>
+            <div id="login"/>
             <jquery:tabset id="query-tabs" on-select="searchTabSelected">
                 <jquery:tab id="simple" label="Simple Search">
                     <form id="simple-search-form" class="search-form" action="index.xml" name="simple-search" method="POST">
@@ -41,7 +42,7 @@
                             <tr>
                                 <td class="label">inside </td>
                                 <td>
-                                    <biblio:collection-path/>
+                                    <div id="collection-path"/>
                                 </td>
                                 <td/>
                             </tr>
@@ -71,11 +72,11 @@
                                 <td/>
                                 <td colspan="2">Search for</td>
                             </tr>
-                            <biblio:form-from-query/>
+                            <tr id="form-from-query"/>
                             <tr>
                                 <td class="label">inside </td>
                                 <td colspan="2">
-                                    <biblio:collection-path/>
+                                    <span id="collection-path"/>
                                 </td>
                             </tr>
                             <tr>
@@ -117,7 +118,7 @@
                     </form>
                 </jquery:tab>
                 <jquery:tab id="query-history" label="Query History">
-                    <biblio:query-history/>
+                    <div id="query-history-content"/>
                 </jquery:tab>
                 <jquery:tab id="personal-list" label="My List">
                     <form class="search-form" action="index.xml" name="lists" method="POST">
@@ -135,7 +136,7 @@
                     </p>
                 </jquery:tab>
             </jquery:tabset>
-            <biblio:collection-tree id="collection-tree">
+            <div id="collection-tree">
                 <div class="collection-tree-head">
                     <img id="toggle-collection-tree" src="theme/images/tree.gif" title="Folder View"/>
                 </div>
@@ -200,13 +201,13 @@
                     </p>
                     </div>
                 </div>
-            </biblio:collection-tree>
+            </div>
             <div id="main-content">
                 <div id="results-head">
                     <div id="messages">Found:
-                        <biblio:result-count/>
+                        <span id="result-count"/>
                     </div>
-                    <biblio:optimize-trigger/>
+                    <div id="optimize-trigger"/>
                     <div class="navbar"/>
                 </div>
                 <div id="result-container">
@@ -309,9 +310,7 @@
                     <div>
                         <br/>
                     </div>
-                    <div>
-                        <biblio:form-select-collection name="path"/>
-                    </div>
+                    <div id="form-select-collection" class="path"/>
                 </form>
             </jquery:dialog>
             <jquery:dialog id="remove-collection-dialog" modal="true" title="Remove Folder" trigger="#collection-remove-folder" width="450">
@@ -328,9 +327,9 @@
             </jquery:dialog>
             <!-- end collection writeable -->
             <!-- collection owner -->
-            <biblio:form-collection-sharing/>
-            <biblio:form-add-member-to-sharing-group/>
-            <biblio:form-add-sharing-group/>
+            <div id="form-collection-sharing"/>
+            <div id="form-add-member-to-sharing-group"/>
+            <div id="form-add-sharing-group"/>
             <!-- end collection owner -->
             <jquery:dialog id="remove-resource-dialog" modal="true" title="Remove Folder" width="450">
                 <jquery:button label="Remove" function="removeResource"/>
@@ -345,10 +344,8 @@
                 <jquery:button id="cancel" label="Cancel"/>
                 <form id="move-resource-form" action="operations.xql">
                     <div>Move record from
-                            '<span>
-                            <biblio:collection-path/>
-                        </span>' to
-                            <biblio:form-select-collection name="path"/>
+                            '<span id="collection-path"/>' to
+                            <div id="form-select-collection" class="path"/>
                     </div>
                     <input id="move-resource-id" name="resource" type="hidden" value=""/>
                 </form>
@@ -357,12 +354,12 @@
             <jquery:dialog id="new-resource-dialog" modal="true" title="Create Stand-Alone Record" trigger="#collection-create-resource" width="550">
                 <jquery:button id="create" label="Create" function="newResource"/>
                 <jquery:button id="cancel" label="Cancel"/>
-                <biblio:resource-types classifier="stand-alone"/>
+                <div id="resource-types" class="stand-alone"/>
             </jquery:dialog>
             <jquery:dialog id="add-related-dialog" modal="true" title="Create Related Record" width="550">
                 <jquery:button id="create" label="Create" function="newRelatedResource"/>
                 <jquery:button id="cancel" label="Cancel"/>
-                <biblio:resource-types classifier="related-item"/>
+                <div id="resource-types" class="related-item"/>
             </jquery:dialog>
         </div>
     </body>
