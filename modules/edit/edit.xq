@@ -4,7 +4,6 @@ import module namespace style = "http://exist-db.org/mods-style" at "../style.xq
 import module namespace mods = "http://www.loc.gov/mods/v3" at "../mods.xqm";
 import module namespace config = "http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace xmldb = "http://exist-db.org/xquery/xmldb";
-import module namespace load-embed = "http://exist-db.org/mods/edit/load-embed" at "./load-embed.xqm";
 
 declare namespace xf="http://www.w3.org/2002/xforms";
 declare namespace xforms="http://www.w3.org/2002/xforms";
@@ -24,6 +23,7 @@ let $host := request:get-parameter('host', ())
 
 (: Get the tab-id parameter. If no tab is specified, default to the compact-a tab. :)
 let $tab-id := request:get-parameter('tab-id', 'compact-a')
+
 (: Display the label attached to the tab to the user :)
 let $tab-data := concat($config:edit-app-root, '/tab-data.xml')
 let $bottom-tab-label := doc($tab-data)/tabs/tab[tab-id=$tab-id]/label 
@@ -37,6 +37,22 @@ let $type-request := request:get-parameter('type', '')
 let $type-data := concat($config:edit-app-root, '/code-tables/document-type-codes.xml')
 let $type-label := doc($type-data)//item[value = $type-request]/label
 let $type-hint := doc($type-data)//item[value = $type-request]/hint
+
+let $instance-id := if ($tab-id ne 'compact-b') 
+                    then $tab-id
+                    else
+                        if ($type-request = ('article-in-periodical-latin-compact', 'article-in-periodical-transliterated-compact')) 
+                        then 'compact-b-periodical' 
+                        else 
+                            if ($type-request = ('contribution-to-anthology-latin-compact', 'contribution-to-anthology-transliterated-compact')) 
+                            then 'compact-b-anthology'
+                            else
+                                if ($type-request = ('monograph-latin', 'monograph-transliteration', 'anthology-latin', 'anthology-transliterated')) 
+                                then 'compact-b-series'
+                                else
+                                    if ($type-request = 'suebs-tibetan') 
+                                    then 'compact-b-suebs-tibetan'
+                                    else 'compact-b-xlink'
 
 let $target-collection := request:get-parameter('collection', '')
 let $temporary-collection := $config:mods-temp-collection
@@ -148,27 +164,15 @@ let $user := xmldb:get-current-user()
 let $body-collection := concat($config:edit-app-root, '/body')
 
 (: This is the part of the form that belongs to the tab called. :)
-let $form-body := collection($body-collection)/div[@tab-id = $tab-id]
+let $form-body := collection($body-collection)/div[@tab-id = $instance-id]
 
 let $style :=
 <style type="text/css"><![CDATA[
 @namespace xf url(http://www.w3.org/2002/xforms);]]>
 </style>
 
-let $subforms-tab-data := doc(concat($config:edit-app-root, '/tab-data.xml'))/tabs
-let $subforms-tab-data := $subforms-tab-data/tab[tab-id = $tab-id]
-
-let $subforms := $subforms-tab-data/subform/text()
-
-let $subforms-markup :=
-    for $subform in $subforms
-    return
-       <xf:load show="embed" targetid="mountpoint-{$subform}">
-          <xf:resource value="'body/subforms/{$tab-id}/{$subform}.xml#xforms'"/>
-       </xf:load>
-
 let $model :=
-    <xf:model id="model-parent">
+    <xf:model>
        
        <xf:instance xmlns="http://www.loc.gov/mods/v3" src="{$instance-src}" id="save-data"/>
        
@@ -180,16 +184,9 @@ let $model :=
 
        (: Elements for the compact forms. :)
        <xf:instance xmlns="http://www.loc.gov/mods/v3" src="compact-template.xml" id='compact-template' readonly="true"/> 
-       {
-       if($tab-id eq 'compact-b') then
-   	      (
-	   <xf:instance xmlns="" id="code-tables" src="codes-for-tab-from-tab-data.xq?tab-id={$tab-id}" readonly="true"/>
-	   
-	   )
-   	      else (
-       <xf:instance xmlns="" id="code-tables" src="codes-for-tab.xq?tab-id={$tab-id}" readonly="true"/>
-          )
-       }
+       
+       <xf:instance xmlns="" id="code-tables" src="codes-for-tab.xq?tab-id={$instance-id}" readonly="true"/>
+       
        <!-- a title should ideally speaking be required, but having this bind will prevent a tab from being saved when clicking on another tab, if the user has not input a title.--> 
        <!--
        <xf:bind nodeset="instance('save-data')/mods:titleInfo/mods:title" required="true()"/>       
@@ -212,13 +209,11 @@ let $model :=
           action="save.xq?collection={$temporary-collection}&amp;action=cancel" replace="instance"
           instance="save-results">
        </xf:submission>
-	   	{ load-embed:instance-for-tab-id('compact-b') }
-	   	{ load-embed:bind-for-tab-id($tab-id) }
-	   	{ load-embed:action-for-tab-id($tab-id) }
-
-
 
 </xf:model>
+
+let $publication-title := concat(doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) = 0][1]/mods:nonSort, ' ',
+    doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) = 0][1]/mods:title)
 
 let $content :=
 <div class="content">
@@ -241,8 +236,11 @@ let $content :=
     else
         'Editing record'
     }
-        
-    with the title<strong><xf:output value="./mods:titleInfo/mods:title"/></strong>,
+    {
+    if ($publication-title != ' ') then
+    ('with the title ', <strong>{$publication-title}</strong>)
+    else ()
+    },
     on the <strong>{$bottom-tab-label}</strong> tab,
     to be saved in <strong>{$target-collection}</strong>.
     </span>
@@ -282,21 +280,7 @@ let $content :=
     </div>
     </span>
 </div>
-    {
-		if($tab-id eq 'compact-b') then
-   		(
-   		<div style="display:none;">
-			<xf:trigger id="initial">
-				<xf:label>initial</xf:label>
-				<xf:action>
-					 {$subforms-markup}
-					<xf:recalculate/> 
-					<xf:refresh/>
-				</xf:action>
-			</xf:trigger>
-        </div>
-   		) else ()
-   	}
+    
     <!-- Import the correct form body for the tab called. -->
     {$form-body}
     

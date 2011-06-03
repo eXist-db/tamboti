@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <tabs>
     <tab>
         <category>Basic Input Forms</category>
-        <label>Publication</label>
+        <label>Main Publication</label>
         <tab-id>compact-a</tab-id>
         <show-level>1</show-level>
         <path>titleInfo</path>
@@ -13,19 +14,16 @@
     </tab>
     <tab>
         <category>Basic Input Forms</category>
-        <label>Container</label>
+        <label>Container Publication</label>
         <tab-id>compact-b</tab-id>
         <show-level>1</show-level>
-        <path>titleInfo</path>
-        <!--<path>titleInfo</path> added to every tab in order to be able to display title in "Editing records …" line of edit.xq.-->
         <path>relatedItem</path>
     </tab>
     <tab>
         <category>Basic Input Forms</category>
-        <label>Contents</label>
+        <label>Contents of Main Publication</label>
         <tab-id>compact-c</tab-id>
         <show-level>1</show-level>
-        <path>titleInfo</path>
         <path>subject</path>
         <path>note</path>
         <path>abstract</path>
@@ -34,8 +32,8 @@
         <category>Citation Forms</category>
         <label>Title Information</label>
         <tab-id>title</tab-id>
-        <show-level>2</show-level>
         <path>titleInfo</path>
+        <show-level>2</show-level>
     </tab>
     <tab>
         <category>Citation Forms</category>
@@ -43,7 +41,6 @@
         <tab-id>name</tab-id>
         <show-level>2</show-level>
         <path>name</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Citation Forms</category>
@@ -51,7 +48,6 @@
         <tab-id>origin</tab-id>
         <show-level>2</show-level>
         <path>originInfo</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Citation Forms</category>
@@ -59,7 +55,6 @@
         <tab-id>part</tab-id>
         <show-level>2</show-level>
         <path>part</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Citation Forms</category>
@@ -67,7 +62,6 @@
         <tab-id>physical-description</tab-id>
         <show-level>2</show-level>
         <path>physicalDescription</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Content Description Forms</category>
@@ -75,7 +69,6 @@
         <tab-id>subject</tab-id>
         <show-level>3</show-level>
         <path>subject</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Content Description Forms</category>
@@ -83,7 +76,6 @@
         <tab-id>abstract</tab-id>
         <show-level>3</show-level>
         <path>abstract</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Content Description Forms</category>
@@ -91,7 +83,6 @@
         <tab-id>table-of-contents</tab-id>
         <show-level>3</show-level>
         <path>tableOfContents</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Content Description Forms</category>
@@ -99,7 +90,6 @@
         <tab-id>target-audience</tab-id>
         <show-level>3</show-level>
         <path>targetAudience</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Content Description Forms</category>
@@ -107,7 +97,6 @@
         <tab-id>language</tab-id>
         <show-level>3</show-level>
         <path>language</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Content Description Forms</category>
@@ -115,7 +104,6 @@
         <tab-id>type</tab-id>
         <show-level>3</show-level>
         <path>typeOfResource</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Content Description Forms</category>
@@ -123,7 +111,6 @@
         <tab-id>genre</tab-id>
         <show-level>3</show-level>
         <path>genre</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Content Description Forms</category>
@@ -131,7 +118,6 @@
         <tab-id>classification</tab-id>
         <show-level>3</show-level>
         <path>classification</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Remaining Forms</category>
@@ -139,7 +125,6 @@
         <tab-id>note</tab-id>
         <show-level>4</show-level>
         <path>note</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Remaining Forms</category>
@@ -147,7 +132,6 @@
         <tab-id>related</tab-id>
         <show-level>4</show-level>
         <path>relatedItem</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Remaining Forms</category>
@@ -155,7 +139,6 @@
         <tab-id>identifier</tab-id>
         <show-level>4</show-level>
         <path>identifier</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Remaining Forms</category>
@@ -163,7 +146,6 @@
         <tab-id>record-info</tab-id>
         <show-level>4</show-level>
         <path>recordInfo</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Remaining Forms</category>
@@ -171,7 +153,6 @@
         <tab-id>location</tab-id>
         <show-level>4</show-level>
         <path>location</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Remaining Forms</category>
@@ -179,7 +160,6 @@
         <tab-id>access-condition</tab-id>
         <show-level>4</show-level>
         <path>accessCondition</path>
-        <path>titleInfo</path>
     </tab>
     <tab>
         <category>Remaining Forms</category>
@@ -187,6 +167,5 @@
         <tab-id>extension</tab-id>
         <show-level>4</show-level>
         <path>extension</path>
-        <path>titleInfo</path>
     </tab>
 </tabs>
