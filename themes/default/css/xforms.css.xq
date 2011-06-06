@@ -8,7 +8,7 @@
 declare option exist:serialize "method=xml media-type=text/css indent=yes";
 
 let $uri := request:get-attribute("theme-collection")
-let $css-files := ('blueprint/screen.css', 'style.css', 'xforms-xsltforms.css')
+let $css-files := ('blueprint/screen.css', 'style.css')
 return
     <css>{
         for $css-file in $css-files 

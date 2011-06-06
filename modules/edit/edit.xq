@@ -1,7 +1,7 @@
 xquery version "1.0";
 
-import module namespace style = "http://exist-db.org/mods-style" at "../style.xqm";
-import module namespace mods = "http://www.loc.gov/mods/v3" at "../mods.xqm";
+import module namespace style = "http://exist-db.org/mods-style" at "style.xqm";
+import module namespace mods = "http://www.loc.gov/mods/v3" at "tabs.xqm";
 import module namespace config = "http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace xmldb = "http://exist-db.org/xquery/xmldb";
 
@@ -9,6 +9,7 @@ declare namespace xf="http://www.w3.org/2002/xforms";
 declare namespace xforms="http://www.w3.org/2002/xforms";
 declare namespace ev="http://www.w3.org/2001/xml-events";
 declare namespace xlink="http://www.w3.org/1999/xlink";
+declare namespace e="http://www.asia-europe.uni-heidelberg.de/";
 
 declare function xf:get-temp-collection() {
     let $temp-collection := collection($config:mods-temp-collection)
@@ -32,12 +33,25 @@ let $bottom-tab-label := doc($tab-data)/tabs/tab[tab-id=$tab-id]/label
 let $record-id := request:get-parameter('id', '')
 let $record-data := concat($config:mods-temp-collection, "/", $record-id,'.xml')
 
-(: Get the type parameter which shows the record template. Get the relevant label and hint for this. :)
+(: Get the type parameter which shows which record template has been chosen.:) 
 let $type-request := request:get-parameter('type', '')
-let $type-data := concat($config:edit-app-root, '/code-tables/document-type-codes.xml')
-let $type-label := doc($type-data)//item[value = $type-request]/label
-let $type-hint := doc($type-data)//item[value = $type-request]/hint
+(: If the record has been made with Tamoboti, it will have a template. If the record is being opened from the search interface, the template name has to be retrieved, to serve the right subform. :)
+let $stored-template := doc($record-data)/mods:mods/mods:extension/e:template
+let $type-request := 
+    if ($type-request)
+    then $type-request
+    else
+        if ($stored-template)
+        then $stored-template
+        else ()
 
+(: Get the relevant label and hint for the type parameter. :)
+let $type-data := concat($config:edit-app-root, '/code-tables/document-type-codes.xml')
+let $type-label := doc($type-data)/code-table/items/item[value = $type-request]/label
+let $type-hint := doc($type-data)/code-table/items/item[value = $type-request]/hint
+
+(: In case of the complex compact-b forms, dealing with relatedItem, determine which subform to serve, based on the template chosen or stored. :)
+let $template := doc($record-data)/mods:mods/mods:extension/*:template
 let $instance-id := if ($tab-id ne 'compact-b') 
                     then $tab-id
                     else
@@ -217,7 +231,7 @@ let $publication-title := concat(doc($record-data)/mods:mods/mods:titleInfo[stri
 
 let $content :=
 <div class="content">
-    <span class="float-right">
+    <span class="info-line">
     {
     if ($type-request) then
     ('Editing record of type '
@@ -225,9 +239,9 @@ let $content :=
     <strong>{$type-label}</strong>
     ,
     if ($type-hint) then
-    <span class="xforms-hint">
+    <span class="xforms-help">
     <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
-        <div class="xforms-hint-value">
+        <div class="xforms-help-value">
             {$type-hint}
         </div>
     </span>
@@ -250,11 +264,11 @@ let $content :=
 
 <div class="save-buttons">    
     <xf:submit submission="save-submission">
-        <xf:label class="xforms-group-label-centered-general">&#160;Save</xf:label>
+        <xf:label class="xforms-group-label-centered-general">Save</xf:label>
     </xf:submit>
     
     <xf:trigger>
-        <xf:label class="xforms-group-label-centered-general">&#160;Save and Close</xf:label>
+        <xf:label class="xforms-group-label-centered-general">Save and Close</xf:label>
         <xf:action ev:event="DOMActivate">
             <xf:send submission="save-and-close-submission"/>
             <xf:load resource="../search/index.xml?reload=true" show="replace"/>
@@ -262,7 +276,7 @@ let $content :=
     </xf:trigger>
     
     <xf:trigger>
-        <xf:label class="xforms-group-label-centered-general">&#160;Cancel Editing</xf:label>
+        <xf:label class="xforms-group-label-centered-general">Cancel Editing</xf:label>
         <xf:action ev:event="DOMActivate">
             <xf:send submission="cancel-submission"/>
             <xf:load resource="../search/index.xml?reload=true" show="replace"/>
@@ -284,8 +298,6 @@ let $content :=
     <!-- Import the correct form body for the tab called. -->
     {$form-body}
     
-    
-    <br/>
     <xf:submit submission="save-submission">
         <xf:label class="xforms-group-label-centered-general">Save</xf:label>
     </xf:submit>

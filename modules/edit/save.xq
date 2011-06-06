@@ -2,8 +2,6 @@ xquery version "1.0";
 
 (: XQuery script to save a new MODS record from an incoming HTTP POST :)
 
-import module namespace style = "http://exist-db.org/mods-style" at "../style.xqm";
-
 declare namespace clean = "http:/exist-db.org/xquery/mods/cleanup";
 declare namespace xf="http://www.w3.org/2002/xforms";
 declare namespace xforms="http://www.w3.org/2002/xforms";
@@ -275,7 +273,7 @@ let $item := clean:clean-namespaces(request:get-data())
 (: this service takes an incoming POST and saves the appropriate records :)
 (: note that in this version, the incoming @ID is required :)
 
-(: This returns "/db/org/library/apps/mods/temp", but the URL contains the target collection as "collection". :)
+(: Why does this return the temp collection, when the URL contains the target collection as "collection"? :)
 let $collection := request:get-parameter('collection', ())
 
 let $action := request:get-parameter('action', 'save')
@@ -309,14 +307,18 @@ when doing an update. To remedy this, clean:clean-namespaces() is applied to the
 (: TODO: figure out some way to pass the element name to an XQuery function and then do an eval on the update :)
 
 let $updates := 
-    if ($action eq 'cancel') then
-        xmldb:remove($collection, $file-to-update)
+    if ($action eq 'cancel') 
+    then xmldb:remove($collection, $file-to-update)
     else
-        if ($action eq 'close') then
-        (: NB: $target-collection should be derived from $target-collection in edit.xq or pulled from the URL. What is the difference from $collection?:)
-        let $target-collection := $doc/mods:extension/e:collection
-        return
-            xmldb:move($collection, $target-collection, $file-to-update)
+        if ($action eq 'close') 
+        then
+            let $target-collection := $doc/mods:extension/e:collection/string()
+            return
+                (
+                xf:do-updates($item, $doc)
+                ,
+                xmldb:move($collection, $target-collection, $file-to-update)
+                )
         else
             xf:do-updates($item, $doc)    
 return

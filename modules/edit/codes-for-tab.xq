@@ -1,6 +1,6 @@
 xquery version "1.0";
 
-import module namespace style = "http://exist-db.org/mods-style" at "../style.xqm";
+import module namespace style = "http://exist-db.org/mods-style" at "style.xqm";
 import module namespace config = "http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace request = "http://exist-db.org/xquery/request";
 import module namespace xmldb = "http://exist-db.org/xquery/xmldb";

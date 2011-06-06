@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <code-table>
     <code-table-name>transliteration-code</code-table-name>
     <status>finished</status>
@@ -15,7 +14,7 @@
     </notes>
     <items>
         <item>
-            <label>(none selected)</label>
+            <label/>
             <value/>
         </item>
         <item>
@@ -120,7 +119,7 @@
             <valueTwo>iku</valueTwo>
         </item>
         <item>
-            <label>Japanese/ALA-LC (~ Hepburn)</label>
+            <label>Japanese/ALA-LC (modified Hepburn)</label>
             <value>japanese/ala-lc</value>
             <valueTwo>jpn</valueTwo>
         </item>
@@ -160,7 +159,7 @@
             <valueTwo>mkh</valueTwo>
         </item>
         <item>
-            <label>Korean/ALA-LC (~ McCune-Reischauer)</label>
+            <label>Korean/ALA-LC (modified McCune-Reischauer)</label>
             <value>korean/ala-lc</value>
             <valueTwo>kor</valueTwo>
         </item>
@@ -341,7 +340,7 @@
         </item>
         <item>
             <label>Thai/Royal Thai General System</label>
-            <value>thai/ala-lc</value>
+            <value>thai/rtgs</value>
             <valueTwo>tha</valueTwo>
         </item>
         <item>
@@ -358,11 +357,6 @@
             <label>Yiddish/ALA-LC</label>
             <value>yiddish/ala-lc</value>
             <valueTwo>yid</valueTwo>
-        </item>
-        <item>
-            <label>Yiddish/ALA-LC</label>
-            <value>yiddish/ala-lc</value>
-            <valueTwo>eng</valueTwo>
         </item>
     </items>
 </code-table>

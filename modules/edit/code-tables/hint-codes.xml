@@ -2,19 +2,33 @@
     <code-table-name>hint-code</code-table-name>
     <items>
         <item>
-            <help>&lt;p&gt; Non Sort contains characters, including initial articles (typically "A" and "The" in English), punctuation, and spaces that appear at the beginning of a title that should be ignored when indexing and sorting. &lt;/p&gt;
+            <help>
+                <p> Non Sort contains characters, including initial articles (typically "A" and "The" in English), punctuation, and spaces that appear at the beginning of a title that should be ignored when indexing and sorting. </p>
             </help>
             <hint>Non Sort contains words that appear at the beginning of a title which should be ignored when indexing and sorting. Examples are "A" and "The" in English.</hint>
             <value>nonSort</value>
         </item>
         <item>
-            <help>&lt;p&gt; Title contains the core title of the resource catalogued. &lt;/p&gt; &lt;p&gt; At least one Title is required. When no title appears on the item being described, a title should be supplied. &lt;/p&gt; &lt;p&gt; Title includes all parts of a title that are not covered by Non Sort, Subtitle, Part Number and Part Name. &lt;/p&gt; &lt;p&gt; Dates may be recorded under Title or Subtitle only if they are part of the title. Publication dates are included under Origin Information. &lt;/p&gt; &lt;p&gt; For parallel titles, i.e., equivalent titles in different languages that have not been translated by the cataloguer, add a Title Information and enter the Title there with the Type "Alternative" for each parallel title. Note the language, script and transliteration of each title. &lt;/p&gt; &lt;p&gt; For a title translated or transcribed by the cataloguer, add a Title Information and enter the Title there with the Type "Translated" or "Transliterated" for each title. Note the language, script and transliteration of each title added in this way. &lt;/p&gt; &lt;p&gt; For abbreviated titles, add a Title Information block and enter the Title there with the Type "Abbreviated" for each parallel title. &lt;/p&gt; &lt;p&gt; For uniform titles, i.e., titles with various renderings that are unified by an authority file, add a Title Information and enter the Title there with the Type "Uniform". Under each uniform title, state the Authority according to which the uniform title has been selected. &lt;/p&gt;
+            <help>
+                <p> Title contains the core title of the resource catalogued. </p>
+                <p> At least one Title is required. When no title appears on the item being described, a title should be supplied. </p>
+                <p> Title includes all parts of a title that are not covered by Non Sort, Subtitle, Part Number and Part Name. </p>
+                <p> Dates may be recorded under Title or Subtitle only if they are part of the title. Publication dates are included under Origin Information. </p>
+                <p> For parallel titles, i.e., equivalent titles in different languages that have not been translated by the cataloguer, add a Title Information and enter the Title there with the Type "Alternative" for each parallel title. Note the language, script and transliteration of each title. </p>
+                <p> For a title translated or transcribed by the cataloguer, add a Title Information and enter the Title there with the Type "Translated" or "Transliterated" for each title. Note the language, script and transliteration of each title added in this way. </p>
+                <p> For abbreviated titles, add a Title Information block and enter the Title there with the Type "Abbreviated" for each parallel title. </p>
+                <p> For uniform titles, i.e., titles with various renderings that are unified by an authority file, add a Title Information and enter the Title there with the Type "Uniform". Under each uniform title, state the Authority according to which the uniform title has been selected. </p>
             </help>
             <hint>Title contains the core title of the resource catalogued. Title includes all parts of a title that are not covered by Non Sort, Subtitle, Part Number and Part Name. A Title is required: when no title appears on the item being described, a title should be supplied. </hint>
             <value>title</value>
         </item>
         <item>
-            <help>&lt;p&gt; Subtitle is used to record a part of a title deemed secondary to the core title. &lt;/p&gt; &lt;p&gt; Use Subtitle whenever a subtitle is present, rather than including the subtitle in Title. &lt;/p&gt; &lt;p&gt; When using Subtitle, do not include punctuation intended to separate the title from the subtitle at the end of Title. &lt;/p&gt; &lt;p&gt; If more than two levels are in evidence in the whole title, i.e. if there is a sub-subtitle, include the sub-subtitle in Subtitle, with appropriate punctuation. &lt;!--NB: What are the rules here? Should not subTitle repeat?--&gt; &lt;/p&gt; &lt;p&gt; Subtitle contains every part of the title that do not belong in Non Sort, Title, Part Number or Part Name. &lt;/p&gt;
+            <help>
+                <p> Subtitle is used to record a part of a title deemed secondary to the core title. </p>
+                <p> Use Subtitle whenever a subtitle is present, rather than including the subtitle in Title. </p>
+                <p> When using Subtitle, do not include punctuation intended to separate the title from the subtitle at the end of Title. </p>
+                <p> If more than two levels are in evidence in the whole title, i.e. if there is a sub-subtitle, include the sub-subtitle in Subtitle, with appropriate punctuation. <!--NB: What are the rules here? Should not subTitle repeat?--></p>
+                <p> Subtitle contains every part of the title that do not belong in Non Sort, Title, Part Number or Part Name. </p>
             </help>
             <hint>
                 Subtitle is used to record a part of a title that is secondary to the core title. 
@@ -22,42 +36,58 @@
             <value>subTitle</value>
         </item>
         <item>
-            <help>&lt;p&gt; Part Number is used for a part or section number in a title. &lt;/p&gt; &lt;p&gt; Use Part Number when a part number is present, rather than including the part number in the text of the Title. &lt;/p&gt; &lt;p&gt; A Part Number does not have to be a digit, i.e. "First Part" may be the contents of the Part Number field if this is how it occurs on the title page. &lt;/p&gt; &lt;p&gt; Part Number may describe the section of an digital object (for example, an episode number or an audio or video clip). &lt;/p&gt; &lt;p&gt; When using Part Number, do not include punctuation at the end of the preceding field intended to separate the part number from previous parts of the title. &lt;/p&gt;
+            <help>
+                <p> Part Number is used for a part or section number in a title. </p>
+                <p> Use Part Number when a part number is present, rather than including the part number in the text of the Title. </p>
+                <p> A Part Number does not have to be a digit, i.e. "First Part" may be the contents of the Part Number field if this is how it occurs on the title page. </p>
+                <p> Part Number may describe the section of an digital object (for example, an episode number or an audio or video clip). </p>
+                <p> When using Part Number, do not include punctuation at the end of the preceding field intended to separate the part number from previous parts of the title. </p>
             </help>
             <hint> Part Number is used for a part or section number in a title. A Part Number does not have to be a digit, i.e. "Part One" may be Part Number. </hint>
             <value>partNumber</value>
         </item>
         <item>
-            <help>&lt;p&gt; Part Name is used for a part or section name of a title. Use Part Name when a part name is present, rather than including the part name in the text of Title. Use Part Name to describe the section or division titles of a digital object (for example, a chapter title, episode name, or an audio or video clip). &lt;/p&gt; &lt;p&gt; If a resource has multiple parts, each with its own Part Name, the work should be catalogued in as many records as there are Part Names. &lt;!--NB: not implemented: Multiple Part Name fields may be nested in a single Title Information to describe a single part with multiple hierarchical levels; multiple parts, however, should be separated into multiple Title Information blocks. --&gt; &lt;/p&gt; &lt;p&gt; When representing the Part Name, do not include punctuation at the end of the preceding field intended to separate the part name from previous parts of the title. &lt;!--Multiple parts of an item should appear in separate records or as Related Items.--&gt; &lt;/p&gt;
+            <help>
+                <p> Part Name is used for a part or section name of a title. Use Part Name when a part name is present, rather than including the part name in the text of Title. Use Part Name to describe the section or division titles of a digital object (for example, a chapter title, episode name, or an audio or video clip). </p>
+                <p> If a resource has multiple parts, each with its own Part Name, the work should be catalogued in as many records as there are Part Names. <!--NB: not implemented: Multiple Part Name fields may be nested in a single Title Information to describe a single part with multiple hierarchical levels; multiple parts, however, should be separated into multiple Title Information blocks. --></p>
+                <p> When representing the Part Name, do not include punctuation at the end of the preceding field intended to separate the part name from previous parts of the title. <!--Multiple parts of an item should appear in separate records or as Related Items.--></p>
             </help>
             <hint>Part Name is used for the name of a part of a resource. If a book has "Part One" as its Part Number, it could have "The First Years" as its Part Name.  If a resource has multiple parts, each with its own Part Name, the work should be catalogued in as many records as there are Part Names.</hint>
             <value>partName</value>
         </item>
         <item>
-            <help>&lt;p&gt; ID is used to link among records inside the database and to reference a field inside the database from outside the database. &lt;/p&gt;
+            <help>
+                <p> ID is used to link among records inside the database and to reference a field inside the database from outside the database. </p>
             </help>
             <hint> ID is used to link among records inside the database and to reference a field inside the database from outside the database. </hint>
             <value>ID</value>
         </item>
         <item>
-            <help>&lt;p&gt; XLink is used to reference an external resource, such as a second metadata record, a Related Item or a Table of Contents. &lt;/p&gt;
+            <help>
+                <p> XLink is used to reference an external resource, such as a second metadata record, a Related Item or a Table of Contents. </p>
             </help>
             <hint> XLink is used to reference an external resource, such as a metadata record, a Related Item or a Table of Contents. </hint>
             <value>xlink:href</value>
         </item>
         <item>
-            <help>&lt;p&gt; Type identifies what type of Title Information is recorded, if this information is special. If the title is recorded as it appears on the title page, it does not have Type. Use Type if the title is abbreviated, translated, alternative, or uniform (a transliteration is here regarded as a form of translation). &lt;/p&gt; &lt;p&gt; When an abbreviated title is present, an Authority must be chosen. An alternative title may be a parallel title found in the authoritative title information (in written works, typically the title page) or a title that does not occur in the authoritative title information, e.g. a title found on a cover. If the alternative title does not occur in the authoritative title information, indicate in Display Label where the information comes from (e.g., "Cover Title"). If the alternative title occurs in the authoritative title information, it can e.g. be a translation or a transliteration of the main title information. If a translated or a transliterated title occurs in the authoritative title information of the work being catalogued, choose "Alternative" for Type and note the language, transliteration and script of the title information, as appropriate, if this is different from the language noted in Language of Resource. If this is not the case and you have e.g. supplied the translation or transliteration yourself, choose "Translated" for Type and note the language, transliteration and script of the title information, as appropriate. &lt;/p&gt; &lt;p&gt; A uniform title is a title that refers uniformly to a work that is known by several titles, e.g. the works of Shakespeare or the Bible. When a uniform title is present, an Authority for its selection must be chosen. &lt;/p&gt;
+            <help>
+                <p> Type identifies what type of Title Information is recorded, if this information is special. If the title is recorded as it appears on the title page, it does not have Type. Use Type if the title is abbreviated, translated, alternative, or uniform (a transliteration is here regarded as a form of translation). </p>
+                <p> When an abbreviated title is present, an Authority must be chosen. An alternative title may be a parallel title found in the authoritative title information (in written works, typically the title page) or a title that does not occur in the authoritative title information, e.g. a title found on a cover. If the alternative title does not occur in the authoritative title information, indicate in Display Label where the information comes from (e.g., "Cover Title"). If the alternative title occurs in the authoritative title information, it can e.g. be a translation or a transliteration of the main title information. If a translated or a transliterated title occurs in the authoritative title information of the work being catalogued, choose "Alternative" for Type and note the language, transliteration and script of the title information, as appropriate, if this is different from the language noted in Language of Resource. If this is not the case and you have e.g. supplied the translation or transliteration yourself, choose "Translated" for Type and note the language, transliteration and script of the title information, as appropriate. </p>
+                <p> A uniform title is a title that refers uniformly to a work that is known by several titles, e.g. the works of Shakespeare or the Bible. When a uniform title is present, an Authority for its selection must be chosen. </p>
             </help>
             <hint> Type identifies what type of Title Information is recorded, if this information is special. If the title is recorded as it appears on the title page, it does not have Type and Type should be left empty. Use a value for Type if the title is abbreviated, translated, alternative, or uniform (a transliteration is here regarded as a form of translation). </hint>
             <value>titleInfo-type</value>
         </item>
         <item>
-            <help>&lt;p&gt; The name of the authoritative list for an abbreviated title is recorded here. &lt;/p&gt;</help>
+            <help>
+                <p> The name of the authoritative list for an abbreviated title is recorded here. </p>
+            </help>
             <hint> The name of the authoritative list for an abbreviated title is recorded here. </hint>
             <value>abbreviated-title-authority</value>
         </item>
         <item>
-            <help>&lt;p&gt; The name of the authoritative list for a uniform title is recorded here. &lt;/p&gt;
+            <help>
+                <p> The name of the authoritative list for a uniform title is recorded here. </p>
             </help>
             <hint> The name of the authoritative list for a uniform title is recorded here. </hint>
             <value>uniform-title-authority</value>
@@ -83,46 +113,55 @@
             <value>altRepGroup</value>
         </item>
         <item>
-            <help>&lt;p&gt; The language used within Title Information is specified here, if this language is different from the language noted in Language of Resource. The most common languages have been moved to the top of the list. &lt;/p&gt;
+            <help>
+                <p> The language used within Title Information is specified here, if this language is different from the language noted in Language of Resource. The most common languages have been moved to the top of the list. </p>
             </help>
             <hint>The language used within Title Information is specified here, if this language is different from the language noted in Language of Resource. The most common languages have been moved to the top of the list. </hint>
             <value>lang</value>
         </item>
         <item>
-            <help>&lt;p&gt; The language used within Title Information is specified here, if this language is different from the language noted in Language of Resource. xml:lang is used to specify the language used within a field, using specifications in RFC 3066. RFC 3066 uses the two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in 639-1. &lt;/p&gt; &lt;p&gt; The recommendation is not to use xml:lang, but to use Language. &lt;/p&gt;
+            <help>
+                <p> The language used within Title Information is specified here, if this language is different from the language noted in Language of Resource. xml:lang is used to specify the language used within a field, using specifications in RFC 3066. RFC 3066 uses the two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in 639-1. </p>
+                <p> The recommendation is not to use xml:lang, but to use Language. </p>
             </help>
             <hint>The language used within Title Information is specified here, if this language is different from the language noted in Language of Resource. The recommendation is not to use xml:lang, but to use Language.
             </hint>
             <value>xml:lang</value>
         </item>
         <item>
-            <help>&lt;p&gt; Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the transliteration used, also specify the language employed. There is at present no standard list of transliteration schemes available. If you wish to employ a transliteration on the scheme, please contact &lt;!--contact --&gt;. In general, the Library of Congress transliteration schemes (&lt;!-- NB --&gt;) should be used. If you follow a transliteration scheme authorised by &lt;!--NB--&gt;, choose &lt;!--NB--&gt; as the value and note the language from which the transliteration is made. The following transliteration schemes are authorised by &lt;!--NB--&gt;: Chinese: pinyin Japanese: (modified) Hepburn Korean: &lt;!--NB--&gt; Russian: &lt;!--NB--&gt; Sanskrit: &lt;!--NB--&gt; If you employ a different, but recognised, transliteration scheme, you may have it added to the list. &lt;/p&gt;
+            <help>
+                <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the transliteration used, also specify the language employed. There is at present no standard list of transliteration schemes available. If you wish to employ a transliteration on the scheme, please contact <!--contact -->. In general, the Library of Congress transliteration schemes (<!-- NB -->) should be used. If you follow a transliteration scheme authorised by <!--NB-->, choose <!--NB--> as the value and note the language from which the transliteration is made. The following transliteration schemes are authorised by <!--NB-->: Chinese: pinyin Japanese: (modified) Hepburn Korean: <!--NB--> Russian: <!--NB--> Sanskrit: <!--NB--> If you employ a different, but recognised, transliteration scheme, you may have it added to the list. </p>
             </help>
             <hint>Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the transliteration used, also specify the language employed. 
             </hint>
             <value>transliteration</value>
         </item>
         <item>
-            <help>&lt;p&gt; Script specifies the script used within individual fields. The use of Latin script is not noted. "Chinese" is "Han (Simplified Variant)" or "Han (Traditional Variant)". If the two variants are not considered, it is "Han (Hanzi, Kanji, Hanja)", also used for Japanese, Korean and Vietnamese written in Chinese. &lt;/p&gt;
+            <help>
+                <p> Script specifies the script used within individual fields. The use of Latin script is not noted. "Chinese" is "Han (Simplified Variant)" or "Han (Traditional Variant)". If the two variants are not considered, it is "Han (Hanzi, Kanji, Hanja)", also used for Japanese, Korean and Vietnamese written in Chinese. </p>
             </help>
             <hint>Script specifies the script used within individual fields. The use of Latin script is not noted.
             </hint>
             <value>script</value>
         </item>
         <item>
-            <help>&lt;p&gt; Display Label is used when additional text associated with the title is needed for display. Display Label may be used whenever appropriate to indicate the preferred labeling when displayed. Appropriate cases include titles other than the primary title or subtitle. Include the text preferred and capitalisation, but do not include delimiters such as colons. &lt;/p&gt;
+            <help>
+                <p> Display Label is used when additional text associated with the title is needed for display. Display Label may be used whenever appropriate to indicate the preferred labeling when displayed. Appropriate cases include titles other than the primary title or subtitle. Include the text preferred and capitalisation, but do not include delimiters such as colons. </p>
             </help>
             <hint>Display Label is used when additional text associated with the title is needed for display.
             </hint>
             <value>titleInfo-displayLabel</value>
         </item>
         <item>
-            <help>&lt;p&gt; Name-Title Group that can be used with Name and Title Information to enable an explicit link between a name and a title when that is desirable. The same value is assigned to this attribute for the two elements. This attribute is used to link names to uniform titles when the name-uniform title combination is an authority controlled heading. &lt;/p&gt;</help>
+            <help>
+                <p> Name-Title Group that can be used with Name and Title Information to enable an explicit link between a name and a title when that is desirable. The same value is assigned to this attribute for the two elements. This attribute is used to link names to uniform titles when the name-uniform title combination is an authority controlled heading. </p>
+            </help>
             <hint>Name-Title Group that can be used with Name and Title Information to enable an explicit link between a name and a title when that is desirable. The same value is assigned to this attribute for the two elements.</hint>
             <value>nameTitleGroup</value>
         </item>
         <item>
-            <help>&lt;p&gt;Usage with the value "primary" can be used with repeated fields to indicate special prominence of one that is useful for various special purposes such as indexing.&lt;/p&gt;
+            <help>
+                <p>Usage with the value "primary" can be used with repeated fields to indicate special prominence of one that is useful for various special purposes such as indexing.</p>
             </help>
             <hint>Usage with the value "primary" can be used with repeated fields to indicate special prominence of one that is useful for various special purposes such as indexing.
             </hint>
@@ -150,7 +189,25 @@
         </item>
         <item>
             <help>
-                &lt;p&gt; At least one Title inside a Title Information is required. Title Information can be repeated for alternative, translated, transliterated or uniform titles. These values are chosen in Type. For the basic Title Information entry, leave Type blank or use the value "Basic Title Information". If, in addition to the basic title, you also wish to record an alternative, translated, transliterated or uniform title, add a Title Information and choose the relevant Type. Repeat Title Information as many times as necessary. &lt;/p&gt; &lt;p&gt; A Title Information consists of a main Title, plus a number of supplementary fields that relate to it. A Title may have a Subtitle, usually an expansion of the Title proper. If the Title begins with a word according to which it should not be sorted (such as "The" or "A" and the like), enter this word in Non Sort and remove it from Title. If a publication consists of several parts, parts that are either numbered or named, use Part Number and/or Part Name. "A History of Philosophy" may have several numbered parts, such as "Part One. Ancient Greek Philosophy." Enter "Part One" in Part Number and "Ancient Greek Philosophy" in Part Name. &lt;/p&gt; &lt;p&gt; When no title appears on the item being described, a title should be supplied. Use Display Label to indicate that the title is supplied, by giving it the value "Supplied Title". A supplied title should be created in accordance with an established standard and describe, as concisely as possible, the content of the resource in question. If no standards apply, consider carefully the expectations users have for the naming of similar resources. &lt;/p&gt; &lt;p&gt; If an alternative, translated or transliterated title is recorded, choose the relevant Type for each separate Title Information. &lt;/p&gt; &lt;p&gt; If a uniform or an abbreviated title is recorded, choose the appropriate value in Type and note in which authority file the uniform or abbreviated title in Authority has been found. Authority files are only used in connection with uniform and abbreviated titles. &lt;/p&gt; &lt;p&gt; Record the language of the Title Information by choosing the language used in the resource, if this is different from the language noted in Language of Resource, a field describing the language of the resource as a whole. The Language of Resource was selected when opening the editor; it may be modified in the Resource Languages tab.&lt;/p&gt;
+                <p> At least one Title inside a Title Information is required. Title Information can be repeated for alternative, translated, transliterated or
+                    uniform titles. These values are chosen in Type. For the basic Title Information entry, leave Type blank or use the value "Basic Title
+                    Information". If, in addition to the basic title, you also wish to record an alternative, translated, transliterated or uniform title, add a
+                    Title Information and choose the relevant Type. Repeat Title Information as many times as necessary. </p>
+                <p> A Title Information consists of a main Title, plus a number of supplementary fields that relate to it. A Title may have a Subtitle, usually
+                    an expansion of the Title proper. If the Title begins with a word according to which it should not be sorted (such as "The" or "A" and the
+                    like), enter this word in Non Sort and remove it from Title. If a publication consists of several parts, parts that are either numbered or
+                    named, use Part Number and/or Part Name. "A History of Philosophy" may have several numbered parts, such as "Part One. Ancient Greek
+                    Philosophy." Enter "Part One" in Part Number and "Ancient Greek Philosophy" in Part Name. </p>
+                <p> When no title appears on the item being described, a title should be supplied. Use Display Label to indicate that the title is supplied, by
+                    giving it the value "Supplied Title". A supplied title should be created in accordance with an established standard and describe, as
+                    concisely as possible, the content of the resource in question. If no standards apply, consider carefully the expectations users have for
+                    the naming of similar resources. </p>
+                <p> If an alternative, translated or transliterated title is recorded, choose the relevant Type for each separate Title Information. </p>
+                <p> If a uniform or an abbreviated title is recorded, choose the appropriate value in Type and note in which authority file the uniform or
+                    abbreviated title in Authority has been found. Authority files are only used in connection with uniform and abbreviated titles. </p>
+                <p> Record the language of the Title Information by choosing the language used in the resource, if this is different from the language noted in
+                    Language of Resource, a field describing the language of the resource as a whole. The Language of Resource was selected when opening the
+                    editor; it may be modified in the Resource Languages tab.</p>
             </help>
             <hint/>
             <value>titleInfo</value>

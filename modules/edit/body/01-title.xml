@@ -1,21 +1,17 @@
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="title" tab-id="title">
     <div class="block-form">
-        <xf:group appearance="full" class="fieldset level-1">
+        <xf:group class="fieldset level-1">
             <div class="join">
                 <span class="legend">Title Information</span>
-                <!--<span dojoType="dijit.form.DropDownButton">
-                    <span> ? </span>
-                    <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                        <xf:output mediatype="text/html" incremental="true"
-                            ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo']/help"/>
-                    </span>
-                </span>-->
+                <span class="xforms-help">
+                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                    <div class="xforms-help-value">
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo']/help"/>
+                    </div>
+                </span>
                 <span class="join-button">
                     <xf:trigger>
                         <xf:label>+</xf:label>
-                        <xf:hint>
-                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='add-frame']/hint"/>
-                        </xf:hint>
                         <xf:action ev:event="DOMActivate">
                             <xf:insert ev:event="DOMActivate" nodeset="mods:titleInfo" at="index('titleInfo-repeat')" position="after"/>
                         </xf:action>
@@ -24,9 +20,6 @@
                 <span class="join-button">
                     <xf:trigger>
                         <xf:label>–</xf:label>
-                        <xf:hint>
-                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='remove-frame']/hint"/>
-                        </xf:hint>
                         <xf:action ev:event="DOMActivate">
                             <xf:delete nodeset="instance('save-data')/mods:titleInfo" at="index('titleInfo-repeat')"/>
                         </xf:action>
@@ -36,7 +29,7 @@
             <!--titleInfo repeat begins-->
             <xf:repeat nodeset="instance('save-data')/mods:titleInfo" id="titleInfo-repeat">
                 <!--titleInfo node-add begins-->
-                <xf:group appearance="full" class="show-hide" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)] | .[not(@type)] | .[not(@authority)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@displayLabel)] | .[not(@ID)] | .[not(@xlink:href)] | .[not(@xml:lang)] | .[not(@authorityURI)] | .[not(@valueURI)] | .[not(@supplied)] | .[not(@usage)] | .[not(@altRepGroup)] | .[not(@nameTitleGroup)]">
+                <xf:group class="show-hide">
                     <xf:switch>
                         <xf:case id="titleInfo-add-node-hide">
                             <div class="node-button">
@@ -54,7 +47,7 @@
                                 </xf:trigger>
                             </div>
                             <div class="node-adds">
-                                <xf:group appearance="full" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)] | .[not(@type)] | .[not(@authority)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@displayLabel)] | .[not(@ID)] | .[not(@xlink:href)] | .[not(@xml:lang)]">
+                                <xf:group ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)] | .[not(@type)] | .[not(@authority)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@displayLabel)] | .[not(@ID)] | .[not(@xlink:href)] | .[not(@xml:lang)]">
                                     <!-- A -->
                                     <xf:group ref=".[not(@altRepGroup)]">
                                         <xf:trigger>
@@ -258,14 +251,7 @@
 
                 <!--DLF/Aquifer: OPTIONAL-->
                 <!--Cluster: omit-->
-                <xf:group appearance="full" ref=".[@ID]" class="text_50 schema_3.3 schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='ID']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="text_50 schema_3.3 schema_3.4">
                     <xf:input ref="./@ID">
                         <xf:label>ID</xf:label>
                         <xf:hint>
@@ -275,14 +261,7 @@
                 </xf:group>
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                 <!--Cluster: omit-->
-                <xf:group appearance="full" ref=".[@xlink:href]" class="text_50 schema_3.3 schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xlink_href']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="text_50 schema_3.3 schema_3.4">
                     <xf:input ref="./@xlink:href">
                         <xf:label>XLink</xf:label>
                         <xf:hint>
@@ -292,14 +271,7 @@
                 </xf:group>
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                 <!--Cluster: include-->
-                <xf:group appearance="full" ref=".[@type]" class="schema_3.3 schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-type']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="schema_3.3 schema_3.4">
                     <xf:select1 ref="./@type">
                         <xf:label>Type</xf:label>
                         <xf:hint>
@@ -314,14 +286,7 @@
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                 <!--Cluster: include-->
                 <!--selection="open"-->
-                <xf:group appearance="full" ref=".[@authority]" class="schema_3.3 schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='abbreviated-title-authority']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="schema_3.3 schema_3.4">
                     <xf:select1 ref="./@authority">
                         <xf:label>Abbreviated Title Authorities</xf:label>
                         <xf:hint>
@@ -336,15 +301,8 @@
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                 <!--Cluster: include-->
                 <!--selection="open"-->
-                <xf:group appearance="full" ref=".[@authority]" class="schema_3.3 schema_3.4">
+                <xf:group class="schema_3.3 schema_3.4">
                     <xf:select1 ref="./@authority">
-                        <!--<span dojoType="dijit.form.DropDownButton">
-                            <span> ? </span>
-                            <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                                <xf:output mediatype="text/html" incremental="true"
-                                    ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='uniform-title-authority']/help"/>
-                            </span>
-                        </span>-->
                         <xf:label>Name-Title Authorities</xf:label>
                         <xf:hint>
                             <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='uniform-title-authority']/hint"/>
@@ -355,50 +313,29 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                <xf:group appearance="full" ref=".[@authorityURI]" class="schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-authorityURI']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="schema_3.4">
                     <xf:input ref="./@authorityURI">
                         <xf:label>authorityURI</xf:label>
                         <!--<xf:hint>
-                            <xf:hint><xf:output mediatype="text/html" incremental="true"
+                            <xf:hint><xf:output mediatype="application/xhtml+xml" incremental="true"
                                 ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-authorityURI']/hint"/></xf:hint>
                         </xf:hint>-->
                     </xf:input>
                 </xf:group>
-                <xf:group appearance="full" ref=".[@valueURI]" class="schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-valueURI']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="schema_3.4">
                     <xf:input ref="./@valueURI">
                         <xf:label>valueURI</xf:label>
                         <!--<xf:hint>
-                            <xf:hint><xf:output mediatype="text/html" incremental="true"
+                            <xf:hint><xf:output mediatype="application/xhtml+xml" incremental="true"
                                 ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-valueURI']/hint"/></xf:hint>
                         </xf:hint>-->
                     </xf:input>
                 </xf:group>
-                <xf:group appearance="full" ref=".[@supplied]" class="schema_3.3 schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-supplied']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="schema_3.3 schema_3.4">
                     <xf:select1 ref="./@supplied">
                         <xf:label>supplied</xf:label>
                         <!--<xf:hint>
-                            <xf:hint><xf:output mediatype="text/html" incremental="true"
+                            <xf:hint><xf:output mediatype="application/xhtml+xml" incremental="true"
                                 ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-supplied']/hint"/></xf:hint>
                         </xf:hint>-->
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='yes-empty-code']/items/item">
@@ -407,34 +344,20 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                <xf:group appearance="full" ref=".[@altRepGroup]" class="schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='altRepGroup']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="schema_3.4">
                     <xf:input ref="./@altRepGroup">
                         <xf:label>altRepGroup</xf:label>
-                        <!--<xf:hint><xf:output mediatype="text/html" incremental="true"
+                        <!--<xf:hint><xf:output mediatype="application/xhtml+xml" incremental="true"
                             ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='altRepGroup']/hint"/></xf:hint>-->
                     </xf:input>
                 </xf:group>
                 <!--DLF/Aquifer: REQUIRED IF APPLICABLE-->
                 <!--Cluster: include-->
-                <xf:group appearance="full" ref=".[@lang]" class="schema_3.3 schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='lang']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="schema_3.3 schema_3.4">
                     <xf:select1 ref="./@lang">
                         <xf:label>Language</xf:label>
                         <xf:hint>
-                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='lang']/hint"/>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='lang']/hint"/>
                         </xf:hint>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
                             <xf:label ref="label"/>
@@ -444,18 +367,11 @@
                 </xf:group>
                 <!--DLF/Aquifer: NOT RECOMMENDED]-->
                 <!--Cluster: omit-->
-                <xf:group appearance="full" ref=".[@xml:lang]" class="schema_3.3 schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xml:lang']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="schema_3.3 schema_3.4">
                     <xf:select1 ref="./@xml:lang">
                         <xf:label>xml:lang</xf:label>
                         <xf:hint>
-                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xml:lang']/hint"/>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xml:lang']/hint"/>
                         </xf:hint>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
                             <xf:label ref="label"/>
@@ -466,18 +382,11 @@
                 <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
                 <!--Cluster: include-->
                 <!--selection="open"-->
-                <xf:group appearance="full" ref=".[@transliteration]" class="schema_3.3 schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="schema_3.3 schema_3.4">
                     <xf:select1 ref="./@transliteration">
                         <xf:label>Transliteration</xf:label>
                         <xf:hint>
-                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration']/hint"/>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration']/hint"/>
                         </xf:hint>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
                             <xf:label ref="label"/>
@@ -487,18 +396,11 @@
                 </xf:group>
                 <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
                 <!--Cluster: include-->
-                <xf:group appearance="full" ref=".[@script]" class="schema_3.3 schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='script']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="schema_3.3 schema_3.4">
                     <xf:select1 ref="./@script">
                         <xf:label>Script</xf:label>
                         <xf:hint>
-                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='script']/hint"/>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='script']/hint"/>
                         </xf:hint>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
                             <xf:label ref="label"/>
@@ -508,36 +410,22 @@
                 </xf:group>
                 <!--DLF/Aquifer: OPTIONAL]]-->
                 <!--Cluster: hide-->
-                <xf:group appearance="full" ref=".[@displayLabel]" class="text_100 schema_3.3 schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-displayLabel']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="text_100 schema_3.3 schema_3.4">
                     <xf:input ref="./@displayLabel">
                         <xf:label>Display Label</xf:label>
                         <xf:hint>
-                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-displayLabel']/hint"/>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-displayLabel']/hint"/>
                         </xf:hint>
                     </xf:input>
                 </xf:group>
                 <!--DLF/Aquifer: N/A]]-->
                 <!--Cluster: hide-->
                 <!--selection="open"-->
-                <xf:group appearance="full" ref=".[@nameTitleGroup]" class="schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nameTitleGroup']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="schema_3.4">
                     <xf:select1 ref="./@nameTitleGroup">
                         <xf:label>Name-Title Group</xf:label>
                         <xf:hint>
-                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nameTitleGroup']/hint"/>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nameTitleGroup']/hint"/>
                         </xf:hint>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='nameTitleGroup-code']/items/item">
                             <xf:label ref="label"/>
@@ -547,88 +435,85 @@
                 </xf:group>
                 <!--DLF/Aquifer: N/A]]-->
                 <!--Cluster: hide-->
-                <xf:group appearance="full" ref=".[@usage]" class="schema_3.4 select">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='usage']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="schema_3.4 select">
                     <xf:select1 ref="./@usage">
-                        <xf:label>Usage</xf:label>
-                        <xf:hint>
-                            <xf:output mediatype="text/html" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='usage']/hint"/>
-                        </xf:hint>
+                        <xf:label>Usage<span class="xforms-help">
+                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='usage']/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                        <!--<xf:hint>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='usage']/hint"/>
+                        </xf:hint>-->
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='usage-type-code']/items/item">
                             <xf:label ref="label"/>
                             <xf:value ref="value"/>
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
+
                 <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]]-->
                 <!--Cluster: hide-->
-                <xf:group appearance="full" ref=".[mods:nonSort]" class="schema_3.3 schema_3.4 set">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="schema_3.3 schema_3.4 set">
                     <xf:input ref="./mods:nonSort" class="text_10">
-                        <xf:label>Non Sort</xf:label>
-                        <xf:hint>
+                        <xf:label>Non Sort<span class="xforms-help">
+                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                        <!--<xf:hint>
                             <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/hint"/>
-                        </xf:hint>
+                        </xf:hint>-->
                     </xf:input>
                 </xf:group>
+
                 <!--DLF/Aquifer: [REQUIRED]-->
                 <!--Cluster: require-->
-                <xf:group appearance="full" ref=".[mods:title]" class="textarea schema_3.3 schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="textarea schema_3.3 schema_3.4">
                     <xf:textarea ref="./mods:title">
-                        <xf:label>Title</xf:label>
-                        <xf:hint>
+                        <xf:label>Title<span class="xforms-help">
+                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title']/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                        <!--<xf:hint>
                             <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title']/hint"/>
-                        </xf:hint>
+                        </xf:hint>-->
                     </xf:textarea>
                 </xf:group>
                 <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
                 <!--Cluster: include-->
-                <xf:group appearance="full" ref=".[mods:subTitle]" class="textarea schema_3.3 schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subTitle']/help"/>
-                        </span>
-                        </span>-->
+                <xf:group class="textarea schema_3.3 schema_3.4">
                     <xf:textarea ref="./mods:subTitle">
-                        <xf:label>Subtitle</xf:label>
-                        <xf:hint>
+                        <xf:label>Subtitle<span class="xforms-help">
+                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subTitle']/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                        <!--<xf:hint>
                             <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title']/hint"/>
-                        </xf:hint>
+                        </xf:hint>-->
                     </xf:textarea>
                 </xf:group>
                 <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
                 <!--Cluster: hide-->
-                <xf:group appearance="full" ref=".[mods:partNumber]" class="text_50 schema_3.3 schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='partNumber']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="text_50 schema_3.3 schema_3.4">
                     <xf:input ref="./mods:partNumber">
-                        <xf:label>Part Number</xf:label>
+                        <xf:label>Part Number<span class="xforms-help">
+                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='partNumber']/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
                         <xf:hint>
                             <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='partNumber']/hint"/>
                         </xf:hint>
@@ -636,16 +521,15 @@
                 </xf:group>
                 <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
                 <!--Cluster: hide-->
-                <xf:group appearance="full" ref=".[mods:partName]" class="textarea schema_3.3 schema_3.4">
-                    <!--<span dojoType="dijit.form.DropDownButton">
-                        <span> ? </span>
-                        <span class="label-tooltip" dojoType="dijit.TooltipDialog">
-                            <xf:output mediatype="text/html" incremental="true"
-                                ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='partName']/help"/>
-                        </span>
-                    </span>-->
+                <xf:group class="textarea schema_3.3 schema_3.4">
                     <xf:textarea ref="./mods:partName">
-                        <xf:label>Part Name</xf:label>
+                        <xf:label>Part Name<span class="xforms-help">
+                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='partName']/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
                         <xf:hint>
                             <xf:output ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='partName']/hint"/>
                         </xf:hint>
