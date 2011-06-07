@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div id="pagination">
+    <jquery:paginate xmlns:jquery="http://exist-db.org/xquery/jquery" id="results" attribute="mods:cached" href="retrieve" navcontainer="#results-head .navbar" on-ready="resultsLoaded"/>
+</div>

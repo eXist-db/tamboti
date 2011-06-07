@@ -2,7 +2,7 @@ xquery version "1.0";
 
 if ($exist:path eq '/') then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-		<redirect url="modules/search/index.xml"/>
+		<redirect url="modules/search/index.html"/>
 	</dispatch>
 else
     (: everything else is passed through :)

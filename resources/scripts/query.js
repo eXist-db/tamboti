@@ -240,7 +240,7 @@ function removeResource(dialog) {
     var params = { action: 'remove-resource', resource: resource };
     $.get("operations.xql", params, function (data) {
         dialog.dialog("close");
-        $(location).attr('href', 'index.xml?reload=true&collection=' + getCurrentCollection());
+        $(location).attr('href', 'index.html?reload=true&collection=' + getCurrentCollection());
     });
 }
 

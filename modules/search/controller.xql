@@ -35,26 +35,26 @@ declare function local:set-user() {
 
 if ($exist:path eq '/') then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-		<redirect url="index.xml"/>
+		<redirect url="index.html"/>
 	</dispatch>
     
 (:  Main page: index.xml is a template, which is passed through
     search.xql and the db2xhtml stylesheet. search.xql will run
     the actual search and expand the index.xml template.
 :)
-else if (ends-with($exist:resource, '.xml')) then
+else if (ends-with($exist:resource, '.html')) then
 
     if(request:get-parameter("logout",()))then
     (
         session:clear(),
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-            <redirect url="index.xml"/>
+            <redirect url="index.html"/>
         </dispatch>
     )
     else
     (
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-            <forward url="{theme:resolve($exist:prefix, $exist:root, 'index.xml')}">
+            <forward url="{theme:resolve($exist:prefix, $exist:root, concat('pages/', $exist:resource))}">
                 { local:set-user() }
             </forward>
             <view>

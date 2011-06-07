@@ -271,7 +271,7 @@ let $content :=
         <xf:label class="xforms-group-label-centered-general">Save and Close</xf:label>
         <xf:action ev:event="DOMActivate">
             <xf:send submission="save-and-close-submission"/>
-            <xf:load resource="../search/index.xml?reload=true" show="replace"/>
+            <xf:load resource="../search/index.html?reload=true" show="replace"/>
         </xf:action>
     </xf:trigger>
     
@@ -279,7 +279,7 @@ let $content :=
         <xf:label class="xforms-group-label-centered-general">Cancel Editing</xf:label>
         <xf:action ev:event="DOMActivate">
             <xf:send submission="cancel-submission"/>
-            <xf:load resource="../search/index.xml?reload=true" show="replace"/>
+            <xf:load resource="../search/index.html?reload=true" show="replace"/>
         </xf:action>
      </xf:trigger>
     

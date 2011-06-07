@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns:jquery="http://exist-db.org/xquery/jquery" id="filters">
+    <jquery:ajax-accordion id="facets">
+        <jquery:panel id="keywords" title="Title Terms" on-select="loadIndexTerms">
+            <div class="keyword-prefix">
+                <form id="keyword-form">
+                    <input type="text" name="input-keyword-prefix" size="8" value="a" title="Change prefix to view more terms."/>
+                    <input type="submit" value="Show"/>
+                </form>
+            </div>
+            <div id="keywords-result"/>
+        </jquery:panel>
+        <jquery:panel id="author" title="Author" href="filters.xql?type=author"/>
+        <jquery:panel id="date" title="Date" href="filters.xql?type=date"/>
+    </jquery:ajax-accordion>
+    <div class="banner">
+        <a href="http://exist-db.org">
+            <img xmlns:xi="http://www.w3.org/2001/XInclude" alt="powered by eXist" border="0" src="theme/images/powered.gif"/>
+        </a>
+    </div>
+</div>
