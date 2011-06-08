@@ -1924,22 +1924,29 @@ declare function mods:entry-full($entry as element())
     mods:simple-row(mods:language-of-cataloging($language), 'Language of Cataloging')
     else ()
     ,
-    
+
     (: genre :)
     for $genre in ($entry/mods:genre)
     let $authority := $genre/@authority/string()
     return    
-    mods:simple-row($genre/string()
-    , 
-    concat('Genre', 
-        if ($authority)
-        then
-            if ($authority = 'marcgt')
-            then
-                concat(' (', replace(doc(concat($config:edit-app-root, '/code-tables/genre-authority-codes.xml'))/code-table/items/item[value = $authority]/label, '\*', ''), ')')
-            else concat(' (', $authority, ')')
-        else ()            
-        )
+        mods:simple-row
+            (
+                if ($authority = 'local')
+                then
+                    doc(concat($config:edit-app-root, '/code-tables/genre-local-codes.xml'))/code-table/items/item[value = $genre]/label
+                else $genre/string()
+            , 
+                concat(
+                    'Genre'
+                    , 
+                    if ($authority)
+                    then
+                        if ($authority = 'marcgt')
+                        then
+                            concat(' (', replace(doc(concat($config:edit-app-root, '/code-tables/genre-authority-codes.xml'))/code-table/items/item[value = $authority]/label, '\*', ''), ')')
+                        else concat(' (', $authority, ')')
+                    else ()            
+            )
     )
     ,
     

@@ -1,370 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact related-container" tab-id="compact-b-periodical">
-    <xf:group id="fieldset-relatedItem-periodical">
-        <fieldset class="level-2">
-            <div class="join">
-                <span class="legend">
-                    <span class="legend">Periodical</span>
-                </span>
-                <span class="xforms-hint">
-                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
-                    <div class="xforms-hint-value">
-                        <p> Enter here information related to the periodical that the article you are cataloguing occurs in. This information falls into two
-                            groups: general information on the periodical and specific information on the location of the article in the periodical.</p>
-                    </div>
-                </span>
-            </div>
-            <!--relatedItem repeat begins-->
-            <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-periodical-repeat">
-                <xf:group id="fieldset-relatedItem-periodical-titleInfo">
-                    <fieldset class="level-2">
-                        <div class="join">
-                            <span class="legend">Periodical Title</span>
-                            <div class="xforms-hint-value">
-                                <p> Enter here the title of the periodical you are cataloguing. If the title divides into a main title and a subtitle, enter
-                                    each part in its separate field. </p>
-                                <p> If the title is in a language that is usually transliterated, enter the transliterated title and subtitle in their
-                                    respective fields. Use the transliteration scheme you chose when selecting a record template. </p>
-                                <p> If you believe it is useful to supply a translation of the title, do so in their relevant fields. Note the language that the
-                                    title information is translated into (the default is English). </p>
-                                <p> The language used is only specified if it is different from the language noted in Language of Resource when you selected the
-                                    record template. The most common languages have been moved to the top of the list. </p>
-                            </div>
+    <div class="block-form">
+        <xf:group id="fieldset-relatedItem-periodical">
+            <fieldset class="level-2">
+                <div class="join">
+                    <span class="legend">
+                        <span class="legend">Periodical</span>
+                    </span>
+                    <span class="xforms-hint">
+                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <div class="xforms-hint-value">
+                            <p> Enter here information related to the periodical that the article you are cataloguing occurs in. This information falls into two
+                                groups: general information on the periodical and specific information on the location of the article in the periodical.</p>
                         </div>
-                        <xf:repeat nodeset="./mods:titleInfo" id="relatedItem-titleInfo-periodical-repeat">
-                            <!--titleInfo input begins-->
-                            <xf:group ref=".[(@transliteration) or string-length(@lang) &gt; 0]">
-                                <br/>
-                            </xf:group>
-                            <xf:group ref=".[string-length(@lang) &gt; 0]">
-                                <xf:select1 ref="./@lang">
-                                    <xf:label>Language</xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
-                                        <xf:label ref="label"/>
-                                        <xf:value ref="value"/>
-                                    </xf:itemset>
-                                </xf:select1>
-                            </xf:group>
-                            <xf:group>
-                                <xf:input ref="./mods:nonSort" class="text_10">
-                                    <xf:label>
-                                        <xf:group ref=".[string-length(../@type) = 0]">Non Sort</xf:group>
-                                        <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Non Sort</xf:group>
-                                        <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non Sort</xf:group>
-                                    </xf:label>
-                                </xf:input>
-                            </xf:group>
-                            <xf:group>
-                                <xf:input ref="./mods:title" class="text_150">
-                                    <xf:label>
-                                        <xf:group ref=".[string-length(../@type) = 0]">Title</xf:group>
-                                        <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Title</xf:group>
-                                        <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Title</xf:group>
-                                    </xf:label>
-                                </xf:input>
-                            </xf:group>
-                            <xf:group>
-                                <xf:input ref="./mods:subTitle" class="text_150">
-                                    <xf:label>
-                                        <xf:group ref=".[string-length(../@type) = 0]">Subtitle</xf:group>
-                                        <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Subtitle</xf:group>
-                                        <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Subtitle</xf:group>
-                                    </xf:label>
-                                </xf:input>
-                            </xf:group>
-                        </xf:repeat>
-                    </fieldset>
-                </xf:group>
-                <xf:group id="fieldset-relatedItem-name-periodical">
-                    <fieldset class="level-2">
-                        <div class="join">
-                            <span class="legend">Names and Roles</span>
-                            <span class="join-button">
-                                <xf:trigger>
-                                    <xf:label>+</xf:label>
-                                    <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:relatedItem/mods:name" at="index('relatedItem-name-repeat-periodical')" position="after"/>
-                                    </xf:action>
-                                </xf:trigger>
-                            </span>
-                            <span class="xforms-hint">
-                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                    </span>
+                </div>
+                <!--relatedItem repeat begins-->
+                <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-periodical-repeat">
+                    <xf:group id="fieldset-relatedItem-periodical-titleInfo">
+                        <fieldset class="level-2">
+                            <div class="join">
+                                <span class="legend">Periodical Title</span>
                                 <div class="xforms-hint-value">
-                                    <p> In Names and Roles, catalogue the names of each person, corporation or conference associated with the resource.</p>
-                                    <p> Include as many Names and Roles as needed, by clicking the '+' button. </p>
-                                    <p> Choose an appropriate Type of Name for each name, "personal" for personal names, "corporate" for names of institutions,
-                                        and "conference" for names of events such as conferences..</p>
-                                    <p> Please notice that the role pertaining to a name follows the name in question.</p>
-                                    <p> More input options can be found on the Name Info tab on the Citation Forms.</p>
+                                    <p> Enter here the title of the periodical you are cataloguing. If the title divides into a main title and a subtitle, enter
+                                        each part in its separate field. </p>
+                                    <p> If the title is in a language that is usually transliterated, enter the transliterated title and subtitle in their
+                                        respective fields. Use the transliteration scheme you chose when selecting a record template. </p>
+                                    <p> If you believe it is useful to supply a translation of the title, do so in their relevant fields. Note the language that
+                                        the title information is translated into (the default is English). </p>
+                                    <p> The language used is only specified if it is different from the language noted in Language of Resource when you selected
+                                        the record template. The most common languages have been moved to the top of the list. </p>
                                 </div>
-                            </span>
-                        </div>
-                        <!--name repeat begins-->
-                        <xf:repeat nodeset="./mods:name" id="relatedItem-name-repeat-periodical">
-                            <!--namePart begins-->
-                            <xf:group id="fieldset-relatedItem-namePart-periodical">
-                                <fieldset class="level-2">
-                                    <div class="join">
-                                        <span class="legend">Name</span>
-                                        <span class="xforms-hint">
-                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-hint-value">
-                                                <p> Analyse each name into separate name parts.</p>
-                                                <p> If possible, analyse each personal name into Given Name and Family Name. If this is not possible, choose
-                                                    "(none selected)" and enter the whole name in the field in question.</p>
-                                                <p> If a given or family name consists of several parts, enter all parts of the same type in the same field.</p>
-                                                <p> If possible, analyse each corporate name and conference name into separate name parts. Record the more
-                                                    general designation in the first field and a more specific designation in the second field. If this is not
-                                                    possible, choose "(none selected)" and enter the whole name in the field in question.</p>
-                                                <p> If the name is in a language that is usually transliterated, enter the transliterated name parts in their
-                                                    respective fields. Use the transliteration scheme you chose when selecting a record template. </p>
-                                                <p> More input options can be found on the Name Info tab on the Citation Forms.</p>
-                                            </div>
-                                        </span>
+                            </div>
+                            <xf:repeat nodeset="./mods:titleInfo" id="relatedItem-titleInfo-periodical-repeat">
+                                <!--titleInfo input begins-->
+                                <xf:group ref=".[(@transliteration) or string-length(@lang) &gt; 0]">
+                                    <br/>
+                                </xf:group>
+                                <xf:group ref=".[(@transliteration)]" class="margin-plus-12-25">
+                                    <xf:select1 ref="/mods:mods/mods:extension/*:transliterationOfResource">
+                                        <xf:label>Transliteration</xf:label>
+                                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                                            <xf:label ref="label"/>
+                                            <xf:value ref="value"/>
+                                        </xf:itemset>
+                                    </xf:select1>
+                                </xf:group>
+                                <xf:group ref=".[string-length(@lang) &gt; 0]" class="margin-plus-12-25">
+                                    <xf:select1 ref="./@lang">
+                                        <xf:label>Language</xf:label>
+                                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
+                                            <xf:label ref="label"/>
+                                            <xf:value ref="value"/>
+                                        </xf:itemset>
+                                    </xf:select1>
+                                </xf:group>
+                                <xf:group>
+                                    <xf:input ref="./mods:nonSort" class="text_10 margin-plus-12-25">
+                                        <xf:label>
+                                            <xf:group ref=".[string-length(../@type) = 0]">Non Sort</xf:group>
+                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Non Sort</xf:group>
+                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non Sort</xf:group>
+                                        </xf:label>
+                                    </xf:input>
+                                </xf:group>
+                                <xf:group>
+                                    <xf:input ref="./mods:title" class="text_150 margin-plus-12-25">
+                                        <xf:label>
+                                            <xf:group ref=".[string-length(../@type) = 0]">Title</xf:group>
+                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Title</xf:group>
+                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Title</xf:group>
+                                        </xf:label>
+                                    </xf:input>
+                                </xf:group>
+                                <xf:group>
+                                    <xf:input ref="./mods:subTitle" class="text_150 margin-plus-12-25">
+                                        <xf:label>
+                                            <xf:group ref=".[string-length(../@type) = 0]">Subtitle</xf:group>
+                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Subtitle</xf:group>
+                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Subtitle</xf:group>
+                                        </xf:label>
+                                    </xf:input>
+                                </xf:group>
+                            </xf:repeat>
+                        </fieldset>
+                    </xf:group>
+                    <xf:group id="fieldset-relatedItem-name-periodical">
+                        <fieldset class="level-2">
+                            <div class="join">
+                                <span class="legend">Names and Roles</span>
+                                <span class="join-button">
+                                    <xf:trigger>
+                                        <xf:label>+</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:insert nodeset="instance('save-data')/mods:relatedItem/mods:name" at="index('relatedItem-name-repeat-periodical')" position="after"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </span>
+                                <span class="xforms-hint">
+                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-hint-value">
+                                        <p> In Names and Roles, catalogue the names of each person, corporation or conference associated with the resource.</p>
+                                        <p> Include as many Names and Roles as needed, by clicking the '+' button. </p>
+                                        <p> Choose an appropriate Type of Name for each name, "personal" for personal names, "corporate" for names of
+                                            institutions, and "conference" for names of events such as conferences..</p>
+                                        <p> Please notice that the role pertaining to a name follows the name in question.</p>
+                                        <p> More input options can be found on the Name Info tab on the Citation Forms.</p>
                                     </div>
-                                    <xf:group>
-                                        <xf:select1 ref="./@type">
-                                            <xf:label>Type of Name</xf:label>
-                                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-type-code']/items/item">
-                                                <xf:label ref="label"/>
-                                                <xf:value ref="value"/>
-                                            </xf:itemset>
-                                        </xf:select1>
-                                    </xf:group>
-                                    <!--namePart repeat begins-->
-                                    <xf:repeat nodeset="./mods:namePart" id="relatedItem-namePart-periodical-repeat">
+                                </span>
+                            </div>
+                            <!--name repeat begins-->
+                            <xf:repeat nodeset="./mods:name" id="relatedItem-name-repeat-periodical">
+                                <!--namePart begins-->
+                                <xf:group id="fieldset-relatedItem-namePart-periodical">
+                                    <fieldset class="level-2">
+                                        <div class="join">
+                                            <span class="legend">Name</span>
+                                            <span class="xforms-hint">
+                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-hint-value">
+                                                    <p> Analyse each name into separate name parts.</p>
+                                                    <p> If possible, analyse each personal name into Given Name and Family Name. If this is not possible, choose
+                                                        "(none selected)" and enter the whole name in the field in question.</p>
+                                                    <p> If a given or family name consists of several parts, enter all parts of the same type in the same
+                                                        field.</p>
+                                                    <p> If possible, analyse each corporate name and conference name into separate name parts. Record the more
+                                                        general designation in the first field and a more specific designation in the second field. If this is
+                                                        not possible, choose "(none selected)" and enter the whole name in the field in question.</p>
+                                                    <p> If the name is in a language that is usually transliterated, enter the transliterated name parts in
+                                                        their respective fields. Use the transliteration scheme you chose when selecting a record template. </p>
+                                                    <p> More input options can be found on the Name Info tab on the Citation Forms.</p>
+                                                </div>
+                                            </span>
+                                        </div>
                                         <xf:group>
-                                            <xf:select1 ref="./@type" class="right">
-                                                <xf:label>
-                                                    <xf:group ref="../.[@script='Latn']">Transliterated</xf:group>
-                                                    <xf:group ref="../.[not(@script='Latn')]"/>
-                                                </xf:label>
-                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-part-type-compact-code']/items/item">
+                                            <xf:select1 ref="./@type">
+                                                <xf:label>Type of Name</xf:label>
+                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-type-code']/items/item">
                                                     <xf:label ref="label"/>
                                                     <xf:value ref="value"/>
                                                 </xf:itemset>
                                             </xf:select1>
-                                            <xf:input ref="." class="text_100">
-                                                <xf:label/>
-                                            </xf:input>
                                         </xf:group>
-                                        <!--namePart input ends-->
-                                    </xf:repeat>
-                                    <!--namePart repeat ends-->
-                                </fieldset>
-                            </xf:group>
-                            <!--namePart ends-->
-                            <!--role begins-->
-                            <xf:group id="fieldset-role-periodical">
-                                <fieldset class="level-2">
-                                    <div class="join">
-                                        <span class="legend">Role</span>
-                                        <span class="join-button">
-                                            <xf:trigger>
-                                                <xf:label>+</xf:label>
-                                                <xf:action ev:event="DOMActivate">
-                                                    <xf:insert nodeset="mods:role" at="index('role-repeat')" position="after"/>
-                                                </xf:action>
-                                            </xf:trigger>
-                                        </span>
-                                        <span class="xforms-hint">
-                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-hint-value">
-                                                <p> Role contains a description of the role of the person or institution named above to the resource being
-                                                    catalogued.</p>
-                                                <p> Repeat for each new role played by the named entity, i.e. the same person or institution can have several
-                                                    roles in relation to one resource.</p>
-                                                <p> The more common roles are listed at the top.</p>
-                                                <p> More role input options can be found on the Name Info tab on the Citation Forms.</p>
-                                            </div>
-                                        </span>
-                                    </div>
-                                    <!--role repeat begins-->
-                                    <xf:repeat nodeset="./mods:role" id="relatedItem-periodical-role-repeat">
-                                        <!--role input begins-->
-                                        <!--DLF/Aquifer: RECOMMENDED]-->
-                                        <!--Cluster: warn-->
-                                        <!--roleTerm begins-->
-                                        <!--DLF/Aquifer: OPTIONAL-->
-                                        <!--Cluster: include-->
-                                        <!--role node-add begins-->
-                                        <!--roleTerm repeat begins-->
-                                        <xf:repeat nodeset="./mods:roleTerm" id="relatedItem-periodical-roleTerm-repeat">
-                                            <!--roleTerm input begins-->
-                                            <!--DLF/Aquifer: REQUIRED]-->
-                                            <!--Cluster: require-->
+                                        <!--namePart repeat begins-->
+                                        <xf:repeat nodeset="./mods:namePart" id="relatedItem-namePart-periodical-repeat">
                                             <xf:group>
-                                                <xf:select1 ref=".">
-                                                    <xf:label/>
-                                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='role-short-code']/items/item">
+                                                <xf:select1 ref="./@type" class="right">
+                                                    <xf:label>
+                                                        <xf:group ref="../.[@script='Latn']">Transliterated</xf:group>
+                                                        <xf:group ref="../.[not(@script='Latn')]"/>
+                                                    </xf:label>
+                                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-part-type-compact-code']/items/item">
                                                         <xf:label ref="label"/>
                                                         <xf:value ref="value"/>
                                                     </xf:itemset>
                                                 </xf:select1>
-                                            </xf:group>
-                                            <!--roleTerm input ends-->
-                                        </xf:repeat>
-                                        <!--roleTerm repeat ends-->
-                                        <!--roleTerm ends-->
-                                        <!--role input ends-->
-                                    </xf:repeat>
-                                    <!--role repeat ends-->
-                                </fieldset>
-                            </xf:group>
-                            <!--role ends-->
-                        </xf:repeat>
-                        <!--name repeat ends-->
-                    </fieldset>
-                </xf:group>
-                <xf:group id="fieldset-relatedItem-periodical-part">
-                    <fieldset class="level-2">
-                        <div class="join wide">
-                            <span class="legend">Location of Article in Periodical</span>
-                            <span class="xforms-hint">
-                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
-                                    <p> Note here in which volume and issue and on which pages the article you are cataloguing occurs in the periodical.</p>
-                                </div>
-                            </span>
-                        </div>
-                        <!--relatedItem/part repeat begins-->
-                        <xf:repeat nodeset="./mods:part" id="related-item-part-periodical-repeat">
-                            <!--relatedItem/part input begins-->
-                            <!--relatedItem/part input ends-->
-                            <!--relatedItem/part/detail begins-->
-                            <xf:group id="fieldset-relatedItem-periodical-detail" ref=".[mods:detail]">
-                                <fieldset class="level-3">
-                                    <div class="join">
-                                        <span class="legend">Volume and Issue</span>
-                                        <span class="xforms-hint">
-                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                        </span>
-                                    </div>
-                                    <!--relatedItem/part/detail repeat begins-->
-                                    <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-periodical-repeat">
-                                        <!--relatedItem/part/detail input ends-->
-                                        <!--relatedItem/part/detail/number begins-->
-                                        <xf:group ref=".[mods:number]">
-                                            <xf:input ref="./mods:number" class="text_10">
-                                                <xf:label>
-                                                    <xf:output ref="./../@type"/>
-                                                </xf:label>
-                                            </xf:input>
-                                        </xf:group>
-                                        <!--relatedItem/part/detail/number ends-->
-                                    </xf:repeat>
-                                    <!--relatedItem/part/detail repeat ends-->
-                                </fieldset>
-                            </xf:group>
-                            <!--relatedItem/part/detail ends-->
-                            <!--relatedItem/part/date begins-->
-                            <xf:group id="fieldset-relatedItem-periodical-date" ref=".[mods:date]">
-                                <fieldset class="level-3">
-                                    <div class="join">
-                                        <span class="legend">
-                                            <span class="legend">Year of Issue</span>
-                                        </span>
-                                    </div>
-                                    <!--relatedItem/part/date repeat begins-->
-                                    <xf:repeat nodeset="./mods:date" id="related-item-part-date-periodical-repeat">
-                                        <div class="block-form">
-                                            <!--relatedItem/part/date input begins-->
-                                            <xf:group ref=".">
-                                                <xf:input ref="." class="text_10">
-                                                    <xf:label>Year</xf:label>
+                                                <xf:input ref="." class="text_100">
+                                                    <xf:label/>
                                                 </xf:input>
                                             </xf:group>
-                                            <!--relatedItem/part/date input ends-->
+                                            <!--namePart input ends-->
+                                        </xf:repeat>
+                                        <!--namePart repeat ends-->
+                                    </fieldset>
+                                </xf:group>
+                                <!--namePart ends-->
+                                <!--role begins-->
+                                <xf:group id="fieldset-role-periodical">
+                                    <fieldset class="level-2">
+                                        <div class="join">
+                                            <span class="legend">Role</span>
+                                            <span class="join-button">
+                                                <xf:trigger>
+                                                    <xf:label>+</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert nodeset="mods:role" at="index('role-repeat')" position="after"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                            </span>
+                                            <span class="xforms-hint">
+                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-hint-value">
+                                                    <p> Role contains a description of the role of the person or institution named above to the resource being
+                                                        catalogued.</p>
+                                                    <p> Repeat for each new role played by the named entity, i.e. the same person or institution can have
+                                                        several roles in relation to one resource.</p>
+                                                    <p> The more common roles are listed at the top.</p>
+                                                    <p> More role input options can be found on the Name Info tab on the Citation Forms.</p>
+                                                </div>
+                                            </span>
                                         </div>
-                                    </xf:repeat>
-                                    <!--relatedItem/part/date repeat ends-->
-                                </fieldset>
-                            </xf:group>
-                            <!--relatedItem/part/date ends-->
-                            <!--relatedItem/part/extent begins-->
-                            <xf:group id="fieldset-relatedItem-periodical-extent" ref=".[mods:extent]">
-                                <fieldset class="level-3">
-                                    <div class="join">
-                                        <span class="legend">Page Extent</span>
-                                        <div class="xforms-hint-value">
-                                            <p> Use this field to indicate from which page and to which page the article you are cataloguing occurs in the
-                                                volume and issue number of the periodical noted above. </p>
-                                        </div>
+                                        <!--role repeat begins-->
+                                        <xf:repeat nodeset="./mods:role" id="relatedItem-periodical-role-repeat">
+                                            <!--role input begins-->
+                                            <!--DLF/Aquifer: RECOMMENDED]-->
+                                            <!--Cluster: warn-->
+                                            <!--roleTerm begins-->
+                                            <!--DLF/Aquifer: OPTIONAL-->
+                                            <!--Cluster: include-->
+                                            <!--role node-add begins-->
+                                            <!--roleTerm repeat begins-->
+                                            <xf:repeat nodeset="./mods:roleTerm" id="relatedItem-periodical-roleTerm-repeat">
+                                                <!--roleTerm input begins-->
+                                                <!--DLF/Aquifer: REQUIRED]-->
+                                                <!--Cluster: require-->
+                                                <xf:group>
+                                                    <xf:select1 ref=".">
+                                                        <xf:label/>
+                                                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='role-short-code']/items/item">
+                                                            <xf:label ref="label"/>
+                                                            <xf:value ref="value"/>
+                                                        </xf:itemset>
+                                                    </xf:select1>
+                                                </xf:group>
+                                                <!--roleTerm input ends-->
+                                            </xf:repeat>
+                                            <!--roleTerm repeat ends-->
+                                            <!--roleTerm ends-->
+                                            <!--role input ends-->
+                                        </xf:repeat>
+                                        <!--role repeat ends-->
+                                    </fieldset>
+                                </xf:group>
+                                <!--role ends-->
+                            </xf:repeat>
+                            <!--name repeat ends-->
+                        </fieldset>
+                    </xf:group>
+                    <xf:group id="fieldset-relatedItem-periodical-part">
+                        <fieldset class="level-2">
+                            <div class="join wide">
+                                <span class="legend">Location of Article in Periodical</span>
+                                <span class="xforms-hint">
+                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-hint-value">
+                                        <p> Note here in which volume and issue and on which pages the article you are cataloguing occurs in the periodical.</p>
                                     </div>
-                                    <!--relatedItem/part/extent repeat begins-->
-                                    <xf:repeat nodeset="./mods:extent" id="related-item-extent-periodical-repeat">
-                                        <!--relatedItem/part/extent input begins-->
-                                        <!--relatedItem/part/extent input ends-->
-                                        <!--relatedItem/part/start begins-->
-                                        <xf:group ref=".[mods:start]">
-                                            <xf:input ref="./mods:start" class="text_10">
-                                                <xf:label>Start</xf:label>
-                                            </xf:input>
-                                        </xf:group>
-                                        <!--relatedItem/part/start ends-->
-                                        <!--relatedItem/part/end begins-->
-                                        <xf:group ref=".[mods:end]">
-                                            <xf:input ref="./mods:end" class="text_10">
-                                                <xf:label>End</xf:label>
-                                            </xf:input>
-                                        </xf:group>
-                                        <!--relatedItem/part/end ends-->
-                                    </xf:repeat>
-                                    <!--relatedItem/part/extent repeat ends-->
-                                </fieldset>
-                            </xf:group>
-                            <!--relatedItem/part/extent ends-->
-                            <!--relatedItem/part/text begins-->
-                            <xf:group ref=".[mods:part/mods:text]">
-                                <xf:textarea ref="instance('save-data')/mods:part/mods:text" class="textarea" mediatype="dojo">
-                                    <xf:label>Text</xf:label>
-                                </xf:textarea>
-                            </xf:group>
-                            <!--relatedItem/part/text ends-->
-                        </xf:repeat>
-                        <!--relatedItem/part repeat ends-->
-                    </fieldset>
-                </xf:group>
-                <xf:group id="fieldset-relatedItem-periodical-identifier" ref=".[mods:identifier]">
-                    <fieldset class="level-3">
-                        <div class="join">
-                            <span class="legend">Identifiers</span>
-                            <span class="join-button">
-                                <xf:trigger ref=".[mods:identifier]">
-                                    <xf:label>+</xf:label>
-                                    <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="mods:identifier" at="index('identifier-periodical-repeat')" position="after" origin="instance('insert-templates')/mods:identifier"/>
-                                    </xf:action>
-                                </xf:trigger>
-                            </span>
-                            <span class="xforms-hint">
-                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
-                                    <p>Enter here primarily the International Standard Serial Number (ISSN) number of the periodical you are cataloguing and/or
-                                        its Digital Object Identifier (DOI). </p>
-                                    <p>If you have access to any other unique identifier, please record it.</p>
-                                </div>
-                            </span>
-                        </div>
-                        <xf:repeat nodeset="./mods:identifier" id="identifier-periodical-repeat">
-                            <xf:group ref=".[@type]" selection="open">
-                                <xf:select1 ref="./@type">
-                                    <xf:label/>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='identifier-type-code']/items/item">
-                                        <xf:label ref="label"/>
-                                        <xf:value ref="value"/>
-                                    </xf:itemset>
-                                </xf:select1>
-                            </xf:group>
-                            <xf:group>
-                                <xf:input ref="." class="text_50">
-                                    <xf:label/>
-                                </xf:input>
-                            </xf:group>
-                        </xf:repeat>
-                    </fieldset>
-                </xf:group>
-            </xf:repeat>
-            <!--title repeat ends-->
-        </fieldset>
-    </xf:group>
+                                </span>
+                            </div>
+                            <!--relatedItem/part repeat begins-->
+                            <xf:repeat nodeset="./mods:part" id="related-item-part-periodical-repeat">
+                                <!--relatedItem/part input begins-->
+                                <!--relatedItem/part input ends-->
+                                <!--relatedItem/part/detail begins-->
+                                <xf:group id="fieldset-relatedItem-periodical-detail" ref=".[mods:detail]">
+                                    <fieldset class="level-3">
+                                        <div class="join">
+                                            <span class="legend">Volume and Issue</span>
+                                            <span class="xforms-hint">
+                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            </span>
+                                        </div>
+                                        <!--relatedItem/part/detail repeat begins-->
+                                        <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-periodical-repeat">
+                                            <!--relatedItem/part/detail input ends-->
+                                            <!--relatedItem/part/detail/number begins-->
+                                            <xf:group ref=".[mods:number]">
+                                                <xf:input ref="./mods:number" class="text_10">
+                                                    <xf:label>
+                                                        <xf:output ref="./../@type"/>
+                                                    </xf:label>
+                                                </xf:input>
+                                            </xf:group>
+                                            <!--relatedItem/part/detail/number ends-->
+                                        </xf:repeat>
+                                        <!--relatedItem/part/detail repeat ends-->
+                                    </fieldset>
+                                </xf:group>
+                                <!--relatedItem/part/detail ends-->
+                                <!--relatedItem/part/date begins-->
+                                <xf:group id="fieldset-relatedItem-periodical-date" ref=".[mods:date]">
+                                    <fieldset class="level-3">
+                                        <div class="join">
+                                            <span class="legend">
+                                                <span class="legend">Year of Issue</span>
+                                            </span>
+                                        </div>
+                                        <!--relatedItem/part/date repeat begins-->
+                                        <xf:repeat nodeset="./mods:date" id="related-item-part-date-periodical-repeat">
+                                            <div class="block-form">
+                                                <!--relatedItem/part/date input begins-->
+                                                <xf:group ref=".">
+                                                    <xf:input ref="." class="text_10">
+                                                        <xf:label>Year</xf:label>
+                                                    </xf:input>
+                                                </xf:group>
+                                                <!--relatedItem/part/date input ends-->
+                                            </div>
+                                        </xf:repeat>
+                                        <!--relatedItem/part/date repeat ends-->
+                                    </fieldset>
+                                </xf:group>
+                                <!--relatedItem/part/date ends-->
+                                <!--relatedItem/part/extent begins-->
+                                <xf:group id="fieldset-relatedItem-periodical-extent" ref=".[mods:extent]">
+                                    <fieldset class="level-3">
+                                        <div class="join">
+                                            <span class="legend">Page Extent</span>
+                                            <div class="xforms-hint-value">
+                                                <p> Use this field to indicate from which page and to which page the article you are cataloguing occurs in the
+                                                    volume and issue number of the periodical noted above. </p>
+                                            </div>
+                                        </div>
+                                        <!--relatedItem/part/extent repeat begins-->
+                                        <xf:repeat nodeset="./mods:extent" id="related-item-extent-periodical-repeat">
+                                            <!--relatedItem/part/extent input begins-->
+                                            <!--relatedItem/part/extent input ends-->
+                                            <!--relatedItem/part/start begins-->
+                                            <xf:group ref=".[mods:start]">
+                                                <xf:input ref="./mods:start" class="text_10">
+                                                    <xf:label>Start</xf:label>
+                                                </xf:input>
+                                            </xf:group>
+                                            <!--relatedItem/part/start ends-->
+                                            <!--relatedItem/part/end begins-->
+                                            <xf:group ref=".[mods:end]">
+                                                <xf:input ref="./mods:end" class="text_10">
+                                                    <xf:label>End</xf:label>
+                                                </xf:input>
+                                            </xf:group>
+                                            <!--relatedItem/part/end ends-->
+                                        </xf:repeat>
+                                        <!--relatedItem/part/extent repeat ends-->
+                                    </fieldset>
+                                </xf:group>
+                                <!--relatedItem/part/extent ends-->
+                                <!--relatedItem/part/text begins-->
+                                <xf:group ref=".[mods:part/mods:text]">
+                                    <xf:textarea ref="instance('save-data')/mods:part/mods:text" class="textarea" mediatype="dojo">
+                                        <xf:label>Text</xf:label>
+                                    </xf:textarea>
+                                </xf:group>
+                                <!--relatedItem/part/text ends-->
+                            </xf:repeat>
+                            <!--relatedItem/part repeat ends-->
+                        </fieldset>
+                    </xf:group>
+                    <xf:group id="fieldset-relatedItem-periodical-identifier" ref=".[mods:identifier]">
+                        <fieldset class="level-3">
+                            <div class="join">
+                                <span class="legend">Identifiers</span>
+                                <span class="join-button">
+                                    <xf:trigger ref=".[mods:identifier]">
+                                        <xf:label>+</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:insert nodeset="mods:identifier" at="index('identifier-periodical-repeat')" position="after" origin="instance('insert-templates')/mods:identifier"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </span>
+                                <span class="xforms-hint">
+                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-hint-value">
+                                        <p>Enter here primarily the International Standard Serial Number (ISSN) number of the periodical you are cataloguing
+                                            and/or its Digital Object Identifier (DOI). </p>
+                                        <p>If you have access to any other unique identifier, please record it.</p>
+                                    </div>
+                                </span>
+                            </div>
+                            <xf:repeat nodeset="./mods:identifier" id="identifier-periodical-repeat">
+                                <xf:group ref=".[@type]" selection="open">
+                                    <xf:select1 ref="./@type">
+                                        <xf:label/>
+                                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='identifier-type-code']/items/item">
+                                            <xf:label ref="label"/>
+                                            <xf:value ref="value"/>
+                                        </xf:itemset>
+                                    </xf:select1>
+                                </xf:group>
+                                <xf:group>
+                                    <xf:input ref="." class="text_50">
+                                        <xf:label/>
+                                    </xf:input>
+                                </xf:group>
+                            </xf:repeat>
+                        </fieldset>
+                    </xf:group>
+                </xf:repeat>
+                <!--title repeat ends-->
+            </fieldset>
+        </xf:group>
+    </div>
 </div>

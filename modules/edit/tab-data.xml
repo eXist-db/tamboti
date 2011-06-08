@@ -11,6 +11,7 @@
         <path>physicalDescription</path>
         <path>identifier</path>
         <path>location</path>
+        <path>extension</path>
     </tab>
     <tab>
         <category>Basic Input Forms</category>
@@ -18,6 +19,7 @@
         <tab-id>compact-b</tab-id>
         <show-level>1</show-level>
         <path>relatedItem</path>
+        <path>extension</path>
     </tab>
     <tab>
         <category>Basic Input Forms</category>
@@ -27,6 +29,7 @@
         <path>subject</path>
         <path>note</path>
         <path>abstract</path>
+        <path>extension</path>
     </tab>
     <tab>
         <category>Citation Forms</category>

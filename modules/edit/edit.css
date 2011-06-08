@@ -3,89 +3,114 @@
 
 /*temporary stuff begins*/
 
+.compact .xforms-group .xforms-group-content .output {
+    margin-top: -2em !important;
+}
+div.node-adds button xf|label 
+    {
+    text-align: center;
+    }
+div.node-adds div.xforms-group div.xforms-group-content
+{
+    display: inline !important;
+}
 
-
+#titleInfo-add-node-unhide {display: inline;}
 /*temporary stuff ends*/
 
-/*compact begins*/
+/*main page elements begin*/
 
-.compact .hide-label .xforms-label {
-    opacity:0;
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=40)";
-	filter:alpha(opacity=0);
-}
-
-.compact .hide-label input {
-    1margin-left:0 !important;
-}
-
-.compact .xforms-repeat-item-selected
-{
-    background-color:white;
-}
-
-.compact .xforms-group .xforms-repeat-item,
-.compact .xforms-group .xforms-repeat-item-selected
+body
     {
-    1border:0;
-    1margin:0 !important;
-    1padding:0 !important;
+  border-color:#3681B3;
+  background-color:#ffffff !important;/*overrules xsltforms.css*/
 }
 
-.compact .xforms-group .xforms-group-content .level-2,
-.compact .xforms-group .xforms-group-content .level-3
-    {
-    1margin-top:0 !important;
+#page-head {
+    height:16em;
+    margin-bottom:2.5em;
+    margin-left:50px;
+    margin-right:50px;
+    margin-top:5px;
 }
 
-.compact .hide-label (:.xfLabel:) {
-    color:white !important;
+#page-head-left { /*used for Tamboti*/
+    position:absolute;
+    margin-top:.45em;
+    left:4.15em;
 }
 
-.compact .level-3
-    {
-    margin-left:.25em;
-    margin-right:.25em;
+#page-head-right { /*used for Tamboti*/
+    position:absolute;
+    right:4.15em;
+    margin-top:1.5em;
 }
 
-.compact .margin-plus-1-15 {
-    margin-left:1.15em !important;
+#page-head #navbar {
+    margin:10px 0 0 0;
+    border-top:1px solid #DEDEDE;
+    border-bottom:1px solid #DEDEDE;
 }
 
-.compact .margin-plus-9-75 {
-    margin-left:9.75em;
+#page-head h1 {
+    color:#0A0AA0;
+    background-color:#FFF;
+    border:0;
+    font-size:1.375em;
+    font-weight:normal;
+    margin:0;
+    padding:5px 0;
 }
 
-.compact .margin-plus-10-75 {
-    margin-left:10.75em;
+.container {
+    /*overrules xsltforms.css*/
+    padding-top:0.5em !important;
+    padding-right:1em !important;
+    padding-top:0.5em !important;
+    padding-left:.25em !important;
+    margin-top:-2em !important;
+    border-color:#CCC !important;/*overrules xsltforms.css*/
+    margin-bottom:1em !important;/*overrules xsltforms.css*/
+    width:1150px !important;/*overrules xsltforms.css*/
 }
 
-.compact .margin-plus-7-75 {
-    margin-left:7.5em;
-}
+/*main page elements end*/
 
-.compact .margin-plus-6 {
-    margin-left:6em;
-}
-
-.compact .margin-minus-1 {
-    margin-left:-1em;
-}
-
-.compact .margin-minus-2-25 {
-    margin-left:-2.25em;
-}
-
-/*compact ends*/
-
+/*tabs begin*/
 
 .top-tabs {
     margin-top:1em;
 }
 
 .tabs {
-    margin-bottom:1em;
+    margin-bottom:.5em;
 }
+
+table {
+    margin-bottom:.5em !important;
+}
+
+.tabs tr td 
+    {
+    border:1px solid #BEBEBE;	/*outset #BBB*/
+    text-align:center;
+    -moz-border-radius-topleft:4px;
+    -moz-border-radius-topright:4px;
+    border-top-left-radius:4px 4px;
+    border-top-right-radius:4px 4px;
+
+}
+
+/* this styles just the lower sub-tab row that has labels inside of triggers */
+.tabs tr td xf|trigger xf|label {
+    1color:gray;
+    /* this keeps the tabs on a single line.  */
+    /* white-space:nowrap; */
+    }
+
+/*tabs end*/
+
+/*other top elements begin*/
 
 .save-buttons {
     margin-bottom:2em;
@@ -100,134 +125,16 @@
     color:#5DB0E6;
 }
 
-body
-    {
-  /*overrules xsltforms.css*/
-  background-color:#ffffff !important;
-}
-
-#page-head {
-    height:16em;
-    margin-bottom:2.5em;
-    margin-left:50px;
-    margin-right:50px;
-    margin-top:5px;
-}
-
-.level-1 .xforms-repeat-item-selected
-{
-    background-color:#F2F5FC;
-}
-
-#page-head-left {
-    position:absolute;
-    margin-top:.45em;
-    left:4.15em;
-}
-
-#page-head-right {
-    position:absolute;
-    right:4.15em;
-    margin-top:1.5em;
-}
-
-.span-24, div.span-24 {
-    /*overrules xsltforms.css*/
-    width:100% !important;
-}
-
-.container {
-    /*overrules xsltforms.css*/
-    padding-top:0.5em !important;
-    padding-right:1em !important;
-    padding-top:0.5em !important;
-    padding-left:.25em !important;
-    margin-top:-2em !important;
-    border-color:gray !important;/*overrules xsltforms.css*/
-    margin-bottom:1em !important;/*overrules xsltforms.css*/
-    width:1150px !important;/*overrules xsltforms.css*/
-
-}
-
-.header {
-    font-size:150%;
-    margin-left:1em;
-}
-
-.footer {
-    font-size:100%;
-    margin-left:1em;
-}
-
-caption, 
-th, 
-td 
-    {
-    text-align:center;
-    font-weight:normal;
-}
-
 .info-line {
     color:#666;
     }
 
-.toggle-button button {
-    margin-top:-1.5em;
-    }
+/*other top elements end*/
 
-#page-head #navbar {
-    margin:10px 0 0 0;
-    border-top:1px solid #DEDEDE;
-    border-bottom:1px solid #DEDEDE;
-}
-#page-head h1 {
-    color:#0A0AA0;
-    background-color:#FFF;
-    border:0;
-    font-size:1.375em;
-    font-weight:normal;
-    margin:0;
-    padding:5px 0;
-}
-#page-head #menu {
-    margin:0.3em 0 0 0;
-    padding:0 0 0 0;
-    float:right;
-}
-#menu li {
-    list-style:none;
-    float:left;
-    margin:0;
-    white-space:nowrap;
-    padding:0px 20px 0px 20px;
-}
-#menu li.last {
-    padding:0 0 0 20px;
-}
-#menu li a {
-    color:#666666;
-}
-
-#quicksearch {
-	position:absolute;
-	top:92px;
-	right:0px;
-	padding:7px;
-}
-
-#quicksearch input {
-	color:#666666;
-	background-color:#EDEDED;
-}
-
-@media print {
-    #page-head {
-        display:none;
-    }
-}
-
+/*buttons begin*/
 
 button { 
+    cursor:pointer;
     margin:.5em;
     background-color:#EDEDED;
     border-width:1px;
@@ -241,6 +148,16 @@ button {
     border-bottom-right-radius:5px 5px;
     border-top-left-radius:5px 5px;
     border-top-right-radius:5px 5px;
+    }
+
+.block-form xf|label {
+    display:inline-block;
+    width:15em; /* the default width of all the labels in the block form */
+    margin-right:5px; /* margin before the input area */
+    text-align:right; 
+    vertical-align:top;
+    padding-top:.5em;
+    margin-bottom:.1em;
     }
 
 .compact button,
@@ -263,46 +180,34 @@ button {
 .access-condition button,
 .location button,
 .extension button
-{
+    {
     width:20em;
 }
 
-/* style every table data as a tab if the table has a class of tabs */
-
-table {
-    margin-bottom:.5em !important;
-}
-table .tabs {
-    border:1em solid black
-    }
-
-.tabs tr td 
-    {
-    color:gray;
-    font-size:12px;
-    border:1px solid #BEBEBE;	/*outset #BBB*/
-    text-decoration:none;
-    text-align:center;
-    -moz-border-radius-topleft:4px;
-    -moz-border-radius-topright:4px;
- }
-
-.tabs tr td .selected {
-    background:#fff;
+.wide {
+    width:20em !important;
 }
 
-/* this styles just the lower sub-tab row that has labels inside of triggers */
-.tabs tr td xf|trigger xf|label {
-    color:gray;
-    /* this keeps the tabs on a single line.  */
-    /* white-space:nowrap; */
-    }
+.extra-wide {
+    width:25em !important;
+}
+
+/*buttons end*/
+
+/*boxes begin*/
+
+.level-1 .xforms-repeat-item-selected
+{
+    background-color:#F2F5FC;
+}
+
 .fieldset,
 fieldset,
 .block-form .xforms-repeat-item,
 .block-form .xforms-repeat-item-selected,
 .node-adds
     {
+    font-size:inherit !important;
     border-width:1px;
     border-color:#CCC !important;
     border-style:solid;
@@ -319,15 +224,7 @@ fieldset,
     border-top-right-radius:10px 10px;
     }
 
-.block-form xf|label {
-    display:inline-block;
-    width:15em; /* fix the width of all the labels in the block form */
-    margin-right:5px; /* margin to the right of the colon before the input area */
-    text-align:right; /* right justification makes the text easier to read */
-    vertical-align:top;
-    padding-top:.5em;
-    margin-bottom:.1em;
-    }
+/*boxes end*/
 
 .join {
     margin-bottom:.75em;
@@ -343,15 +240,6 @@ fieldset,
     margin-bottom:.75em;
     text-align:center;    
 }
-
-.wide {
-    width:20em !important;
-}
-
-.extra-wide {
-    width:25em !important;
-}
-
 
 .join .float .xforms-group .xforms-group-content
 {
@@ -378,7 +266,7 @@ xf|submit xf|label.xforms-group-label-centered-general { /*buttons outside the f
 }
 
 .xforms-case {
-    margin-bottom:3ex;
+    margin-bottom:1em;
     margin-top:auto;
 }
 
@@ -399,23 +287,43 @@ xf|group xf|trigger.delete-button { /*for field delete buttons - sizing does not
     float:left;
 }
 
+/*size of controls begins*/
+
 .text_10 .xforms-value {
     width:10em;
     }
+
 .text_50 .xforms-value {
     width:25em;
     }
+
 .text_100 .xforms-value {
     width:40em;
     }
+
 .text_150 .xforms-value {
-    width:60em;
+    width:50em;
     }
+
 .textarea .xforms-value  {
     width:40em; 
     height:3em; 
     padding-left:.2em;
     }
+
+.table-of-contents .textarea .xforms-value {
+    1height:10em;
+}
+
+.note .textarea .xforms-value {
+    1height:10em;
+}
+
+.identifier .textarea .xforms-value {
+    1height:10em;
+}
+
+/*size of controls ends*/
 
 .join-button .xforms-control button
 {
@@ -446,7 +354,7 @@ xf|group xf|trigger.delete-button { /*for field delete buttons - sizing does not
     margin-left:.5em;
 }
 
-.node-button .xforms-control button {
+.node-button .xforms-control button { /*not on Basic Input Forms*/
     height:2em;
     width:2em;
     padding:0;
@@ -609,11 +517,6 @@ fieldset,
     color:#3681B3;
 }
 
-body 
-    {
-    border-color:#3681B3;
-}
-
 .compact button {
     1margin-left:4.25em;
 }
@@ -667,20 +570,8 @@ fieldset .level-1
     1margin-top:1em;
     1margin-bottom:1em;    
 }
-/*
-.level-2,
-.level-3
-{
-    margin-top:2em;
-    margin-bottom:2em;    
-}
-*/
-/*
-fieldset .level-2 .xforms-group-content,
-fieldset .level-3 .xforms-group-content{
-    margin-bottom:.5em;    
-}
-*/
+
+fieldset .level-1,
 fieldset .level-2,
 fieldset .level-3
     {
@@ -692,7 +583,7 @@ fieldset .level-3
 .part fieldset .level-2,
 .physical-description fieldset .level-2
     {
-    margin-top:4em;
+    1margin-top:4em;
     1margin-bottom:2em;
 }
 
@@ -714,19 +605,121 @@ fieldset .level-3
 }
 
 .physical-description .node-adds {
-    margin-bottom:2.5em;
+    1margin-bottom:2.5em;
 }
 
-.table-of-contents .textarea .xforms-value {
-    height:10em;
+/*compact begins*/
+
+.compact .hide-label .xforms-label {
+    opacity:0;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=40)";
+	filter:alpha(opacity=0);
 }
 
-.note .textarea .xforms-value {
-    height:10em;
+.compact fieldset.level-2 .join {
+    1display: none;
+    margin-bottom: 1.5em;
+    } 
+
+.compact .hide-label input {
+    1margin-left:0 !important;
 }
 
-.identifier .textarea .xforms-value {
-    height:10em;
+.compact .xforms-repeat-item-selected
+{
+    background-color:white;
 }
+
+.compact .xforms-group .xforms-repeat-item,
+.compact .xforms-group .xforms-repeat-item-selected
+    {
+    border:0;
+    margin:0 !important;
+    padding:0 !important;
+}
+
+.compact .xforms-group .xforms-group-content .level-2,
+.compact .xforms-group .xforms-group-content .level-3
+    {
+    1margin-top:0 !important;
+}
+
+.compact .hide-label (:.xfLabel:) {
+    color:white !important;
+}
+
+.compact .level-3
+    {
+    margin-left:.25em;
+    margin-right:.25em;
+}
+
+.compact .margin-plus-1-15 {
+    margin-left:1.15em !important;
+}
+
+.compact .margin-plus-6 {
+    margin-left:8.5em;
+}
+
+.compact .margin-plus-7-75 {
+    margin-left:9.9em;
+}
+
+.compact .margin-plus-8-75 {
+    margin-left:9.9em;
+}
+
+.compact .margin-plus-9 {
+    margin-left:9.9em;
+}
+
+.compact .margin-plus-9-75 {
+    margin-left:9.75em;
+}
+
+.compact .margin-plus-10-75 {
+    margin-left:11.2em;
+}
+
+.compact .margin-plus-11 {
+    margin-left:10em;
+}
+
+.compact .margin-plus-12-25 {
+    margin-left:11.2em;
+}
+
+.compact .margin-minus-1 {
+    margin-left:-1em;
+}
+
+.compact .margin-minus-2-25 {
+    margin-left:-2.25em;
+}
+
+/*compact ends*/
+
+/*unused stuff begins*/
+
+caption, /*not used*/ 
+th, 
+td 
+    {
+    text-align:center;
+    font-weight:normal;
+}
+
+@media print {
+    #page-head {
+        display:none;
+    }
+}
+
+/* this keeps the tabs on a single line.  */
+/* white-space:nowrap; */
+
+/*unused stuff ends*/
+
 
 </css>
