@@ -189,7 +189,7 @@ as node()+ {
         
         <!--Tamboti-begin
         <div id="page-head-left">
-            <a href="../search/index.html" style="text-decoration: none">
+            <a href="../search/index.xml" style="text-decoration: none">
                 <img 
                     src="theme/images/tamboti.png" 
                     title="Tamboti Metadata Framework" 
@@ -212,7 +212,7 @@ as node()+ {
         </div>
         Tamboti-end-->
         <!--eXist-begin-->
-                <a href="../search/index.html" style="text-decoration: none">
+                <a href="../search/index.xml" style="text-decoration: none">
                     <img src="theme/images/logo.jpg" title="eXist-db: Open Source Native XML Database" style="border-style: none;text-decoration: none"/>
                 </a>
                 <div id="navbar">
