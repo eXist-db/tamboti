@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <code-table>
     <code-table-name>script-code</code-table-name>
     <status>finished</status>
     <form>closed</form>
-    <basis>http://unicode.org/iso15924/iso15924-codes.html </basis>
+    <basis>http://unicode.org/iso15924/iso15924-codes.html</basis>
     <description/>
     <notes/>
     <items>
-        <item>
-            <label>(no script selected)</label>
-            <value/>
-        </item>
-        <item>
-            <label>--more common scripts above--</label>
-            <value/>
-        </item>
+        <!-- A -->
         <item>
             <value>Arab</value>
             <label>Arabic</label>
             <frequencyClassifier>common</frequencyClassifier>
+        </item>
+        <item>
+            <value>Narb</value>
+            <label>Old North Arabian<!-- (Ancient North Arabian)--></label>
+        </item>
+        <item>
+            <value>Sarb</value>
+            <label>Old South Arabian</label>
         </item>
         <item>
             <value>Armi</value>
@@ -32,6 +32,7 @@
             <value>Avst</value>
             <label>Avestan</label>
         </item>
+        <!-- B -->
         <item>
             <value>Bali</value>
             <label>Balinese</label>
@@ -52,10 +53,12 @@
             <value>Beng</value>
             <label>Bengali</label>
         </item>
+        <!-- 
         <item>
             <value>Blis</value>
             <label>Blissymbols</label>
         </item>
+        -->
         <item>
             <value>Bopo</value>
             <label>Bopomofo</label>
@@ -76,10 +79,7 @@
             <value>Buhd</value>
             <label>Buhid</label>
         </item>
-        <item>
-            <value>Cakm</value>
-            <label>Chakma</label>
-        </item>
+        <!-- C -->
         <item>
             <value>Cans</value>
             <label>Unified Canadian Aboriginal Syllabics</label>
@@ -87,6 +87,10 @@
         <item>
             <value>Cari</value>
             <label>Carian</label>
+        </item>
+        <item>
+            <value>Cakm</value>
+            <label>Chakma</label>
         </item>
         <item>
             <value>Cham</value>
@@ -105,6 +109,10 @@
             <label>Coptic</label>
         </item>
         <item>
+            <value>Xsux</value>
+            <label>Cuneiform, Sumero-Akkadian</label>
+        </item>
+        <item>
             <value>Cprt</value>
             <label>Cypriot</label>
         </item>
@@ -117,6 +125,7 @@
             <value>Cyrs</value>
             <label>Cyrillic (Old Church Slavonic variant)</label>
         </item>
+        <!-- D -->
         <item>
             <value>Deva</value>
             <label>Devanagari<!-- (Nagari)--></label>
@@ -126,6 +135,7 @@
             <value>Dsrt</value>
             <label>Deseret<!-- (Mormon)--></label>
         </item>
+        <!-- E -->
         <item>
             <value>Egyd</value>
             <label>Egyptian demotic</label>
@@ -142,10 +152,7 @@
             <value>Ethi</value>
             <label>Ethiopic<!-- (Geʻez)--></label>
         </item>
-        <item>
-            <value>Geok</value>
-            <label>Khutsuri<!-- (Asomtavruli and Nuskhuri)--></label>
-        </item>
+        <!-- G -->
         <item>
             <value>Geor</value>
             <label>Georgian<!-- (Mkhedruli)--></label>
@@ -165,6 +172,7 @@
         <item>
             <value>Grek</value>
             <label>Greek</label>
+            <frequencyClassifier>common</frequencyClassifier>
         </item>
         <item>
             <value>Gujr</value>
@@ -174,18 +182,11 @@
             <value>Guru</value>
             <label>Gurmukhi</label>
         </item>
-        <item>
-            <value>Hang</value>
-            <label>Hangul<!-- (Hangŭl, Hangeul)--></label>
-        </item>
+        <!-- H -->
         <item>
             <value>Hani</value>
             <label>Han (Hanzi, Kanji, Hanja)</label>
             <frequencyClassifier>common</frequencyClassifier>
-        </item>
-        <item>
-            <value>Hano</value>
-            <label>Hanunoo<!-- (Hanunóo)--></label>
         </item>
         <item>
             <value>Hans</value>
@@ -196,6 +197,14 @@
             <value>Hant</value>
             <label>Han (Traditional variant)</label>
             <frequencyClassifier>common</frequencyClassifier>
+        </item>
+        <item>
+            <value>Hang</value>
+            <label>Hangul<!-- (Hangŭl, Hangeul)--></label>
+        </item>
+        <item>
+            <value>Hano</value>
+            <label>Hanunoo<!-- (Hanunóo)--></label>
         </item>
         <item>
             <value>Hebr</value>
@@ -210,13 +219,10 @@
             <label>Pahawh Hmong</label>
         </item>
         <item>
-            <value>Hrkt</value>
-            <label>Japanese (Hiragana + Katakana)</label>
-        </item>
-        <item>
             <value>Hung</value>
             <label>Old Hungarian</label>
         </item>
+        <!-- I -->
         <item>
             <value>Inds</value>
             <label>Indus<!-- (Harappan)--></label>
@@ -225,22 +231,36 @@
             <value>Ital</value>
             <label>Old Italic (Etruscan, Oscan, etc.)</label>
         </item>
+        <!-- J -->
         <item>
             <value>Java</value>
             <label>Javanese</label>
+        </item>
+        <item>
+            <value>Hrkt</value>
+            <label>Japanese (Hiragana + Katakana)</label>
         </item>
         <item>
             <value>Jpan</value>
             <label>Japanese (Kanji + Kana)</label>
             <frequencyClassifier>common</frequencyClassifier>
         </item>
+        <!-- K -->
         <item>
-            <value>Kali</value>
-            <label>Kayah Li</label>
+            <value>Kthi</value>
+            <label>Kaithi</label>
+        </item>
+        <item>
+            <value>Knda</value>
+            <label>Kannada</label>
         </item>
         <item>
             <value>Kana</value>
             <label>Katakana</label>
+        </item>
+        <item>
+            <value>Kali</value>
+            <label>Kayah Li</label>
         </item>
         <item>
             <value>Khar</value>
@@ -251,8 +271,8 @@
             <label>Khmer</label>
         </item>
         <item>
-            <value>Knda</value>
-            <label>Kannada</label>
+            <value>Geok</value>
+            <label>Khutsuri<!-- (Asomtavruli and Nuskhuri)--></label>
         </item>
         <item>
             <value>Kore</value>
@@ -263,14 +283,7 @@
             <value>Kpel</value>
             <label>Kpelle</label>
         </item>
-        <item>
-            <value>Kthi</value>
-            <label>Kaithi</label>
-        </item>
-        <item>
-            <value>Lana</value>
-            <label>Tai Tham<!-- (Lanna)--></label>
-        </item>
+        <!-- L -->
         <item>
             <value>Laoo</value>
             <label>Lao</label>
@@ -320,9 +333,14 @@
             <value>Lydi</value>
             <label>Lydian</label>
         </item>
+        <!-- M -->
+        <item>
+            <value>Mlym</value>
+            <label>Malayalam</label>
+        </item>
         <item>
             <value>Mand</value>
-            <label>Mandaic, Mandaean</label>
+            <label>Mandaic<!-- , Mandaean --></label>
         </item>
         <item>
             <value>Mani</value>
@@ -331,6 +349,10 @@
         <item>
             <value>Maya</value>
             <label>Mayan hieroglyphs</label>
+        </item>
+        <item>
+            <value>Mtei</value>
+            <label>Meitei Mayek<!-- (Meithei, Meetei)--></label>
         </item>
         <item>
             <value>Mend</value>
@@ -345,29 +367,24 @@
             <label>Meroitic Hieroglyphs</label>
         </item>
         <item>
-            <value>Mlym</value>
-            <label>Malayalam</label>
+            <value>Plrd</value>
+            <label>Miao<!-- (Pollard)--></label>
         </item>
         <item>
             <value>Mong</value>
             <label>Mongolian</label>
         </item>
+        <!-- 
         <item>
             <value>Moon</value>
-            <label>Moon<!-- (Moon code, Moon script, Moon type)--></label>
-        </item>
-        <item>
-            <value>Mtei</value>
-            <label>Meitei Mayek<!-- (Meithei, Meetei)--></label>
-        </item>
+            <label>Moon (Moon code, Moon script, Moon type)</label>
+            </item>
+        -->
         <item>
             <value>Mymr</value>
             <label>Myanmar<!-- (Burmese)--></label>
         </item>
-        <item>
-            <value>Narb</value>
-            <label>Old North Arabian<!-- (Ancient North Arabian)--></label>
-        </item>
+        <!-- N -->
         <item>
             <value>Nbat</value>
             <label>Nabataean</label>
@@ -380,6 +397,7 @@
             <value>Nkoo</value>
             <label>N’Ko</label>
         </item>
+        <!-- O -->
         <item>
             <value>Ogam</value>
             <label>Ogham</label>
@@ -389,10 +407,6 @@
             <label>Ol Chiki<!-- (Ol Cemet’, Ol, Santali)--></label>
         </item>
         <item>
-            <value>Orkh</value>
-            <label>Old Turkic, Orkhon Runic</label>
-        </item>
-        <item>
             <value>Orya</value>
             <label>Oriya</label>
         </item>
@@ -400,17 +414,10 @@
             <value>Osma</value>
             <label>Osmanya</label>
         </item>
+        <!-- P -->
         <item>
-            <value>Palm</value>
-            <label>Palmyrene</label>
-        </item>
-        <item>
-            <value>Perm</value>
-            <label>Old Permic</label>
-        </item>
-        <item>
-            <value>Phag</value>
-            <label>Phags-pa</label>
+            <value>Phlv</value>
+            <label>Book Pahlavi</label>
         </item>
         <item>
             <value>Phli</value>
@@ -421,22 +428,32 @@
             <label>Psalter Pahlavi</label>
         </item>
         <item>
-            <value>Phlv</value>
-            <label>Book Pahlavi</label>
-        </item>
-        <item>
-            <value>Phnx</value>
-            <label>Phoenician</label>
-        </item>
-        <item>
-            <value>Plrd</value>
-            <label>Miao<!-- (Pollard)--></label>
+            <value>Palm</value>
+            <label>Palmyrene</label>
         </item>
         <item>
             <value>Prti</value>
             <label>Inscriptional Parthian</label>
         </item>
+        <item>
+            <value>Perm</value>
+            <label>Old Permic</label>
+        </item>
+        <item>
+            <value>Xpeo</value>
+            <label>Old Persian</label>
+        </item>
+        <item>
+            <value>Phag</value>
+            <label>Phags-pa</label>
+        </item>
+        <item>
+            <value>Phnx</value>
+            <label>Phoenician</label>
+        </item>
+        <!-- Q -->
         <!--<item> <value>Qaaa</value> <label>Reserved for private use (start)</label> </item> <item> <value>Qabx</value> <label>Reserved for private use (end)</label> </item> -->
+        <!-- R -->
         <item>
             <value>Rjng</value>
             <label>Rejang<!-- (Redjang, Kaganga)--></label>
@@ -449,6 +466,7 @@
             <value>Runr</value>
             <label>Runic</label>
         </item>
+        <!-- S -->
         <item>
             <value>Samr</value>
             <label>Samaritan</label>
@@ -458,17 +476,15 @@
             <label>Sarati</label>
         </item>
         <item>
-            <value>Sarb</value>
-            <label>Old South Arabian</label>
-        </item>
-        <item>
             <value>Saur</value>
             <label>Saurashtra</label>
         </item>
+        <!--
         <item>
             <value>Sgnw</value>
             <label>SignWriting</label>
         </item>
+        -->
         <item>
             <value>Shaw</value>
             <label>Shavian<!-- (Shaw)--></label>
@@ -494,16 +510,25 @@
             <label>Syriac (Estrangelo variant)</label>
         </item>
         <item>
-            <value>Syrj</value>
-            <label>Syriac (Western variant)</label>
-        </item>
-        <item>
             <value>Syrn</value>
             <label>Syriac (Eastern variant)</label>
         </item>
         <item>
+            <value>Syrj</value>
+            <label>Syriac (Western variant)</label>
+        </item>
+        <!-- T -->
+        <item>
+            <value>Tglg</value>
+            <label>Tagalog<!-- (Baybayin, Alibata)--></label>
+        </item>
+        <item>
             <value>Tagb</value>
             <label>Tagbanwa</label>
+        </item>
+        <item>
+            <value>Lana</value>
+            <label>Tai Tham<!-- (Lanna)--></label>
         </item>
         <item>
             <value>Tale</value>
@@ -530,14 +555,6 @@
             <label>Tengwar</label>
         </item>
         <item>
-            <value>Tfng</value>
-            <label>Tifinagh<!-- (Berber)--></label>
-        </item>
-        <item>
-            <value>Tglg</value>
-            <label>Tagalog<!-- (Baybayin, Alibata)--></label>
-        </item>
-        <item>
             <value>Thaa</value>
             <label>Thaana</label>
         </item>
@@ -546,38 +563,46 @@
             <label>Thai</label>
         </item>
         <item>
+            <value>Tfng</value>
+            <label>Tifinagh<!-- (Berber)--></label>
+        </item>
+        <item>
             <value>Tibt</value>
             <label>Tibetan</label>
             <frequencyClassifier>common</frequencyClassifier>
         </item>
         <item>
+            <value>Orkh</value>
+            <label>Old Turkic, Orkhon Runic</label>
+        </item>
+        <!-- U -->
+        <item>
             <value>Ugar</value>
             <label>Ugaritic</label>
         </item>
+        <!-- V -->
         <item>
             <value>Vaii</value>
             <label>Vai</label>
         </item>
+        <!-- 
         <item>
             <value>Visp</value>
             <label>Visible Speech</label>
         </item>
+        -->
+        <!-- W -->
         <item>
             <value>Wara</value>
             <label>Warang Citi<!-- (Varang Kshiti)--></label>
         </item>
-        <item>
-            <value>Xpeo</value>
-            <label>Old Persian</label>
-        </item>
-        <item>
-            <value>Xsux</value>
-            <label>Cuneiform, Sumero-Akkadian</label>
-        </item>
+        <!-- X -->
+        <!-- Y -->
         <item>
             <value>Yiii</value>
             <label>Yi</label>
         </item>
+        <!-- Z -->
         <!--<item> <value>Zinh</value> <label>Code for inherited script</label> </item>-->
         <!--<item> <value>Zmth</value> <label>Mathematical notation</label> </item>-->
         <!--<item> <value>Zsym</value> <label>Symbols</label> </item>-->

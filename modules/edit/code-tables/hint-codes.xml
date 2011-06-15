@@ -4,6 +4,7 @@
         <item>
             <help>
                 <p> Non Sort contains characters, including initial articles (typically "A" and "The" in English), punctuation, and spaces that appear at the beginning of a title that should be ignored when indexing and sorting. </p>
+                <p> Non Sort should only be used with languages that have preposed articles. </p>
             </help>
             <hint>Non Sort contains words that appear at the beginning of a title which should be ignored when indexing and sorting. Examples are "A" and "The" in English.</hint>
             <value>nonSort</value>
@@ -24,7 +25,16 @@
         </item>
         <item>
             <help>
-                <p> Subtitle is used to record a part of a title deemed secondary to the core title. </p>
+                <p> Title contains the core title of the resource catalogued. </p>
+                <p> At least one Title is required. When no title appears on the item being described, a title should be supplied. </p>
+                <p> Title includes all parts of a title that are not covered by Non Sort, Subtitle, Part Number and Part Name. </p>
+            </help>
+            <hint>Title contains the core title of the resource catalogued. Title includes all parts of a title that are not covered by Non Sort, Subtitle, Part Number and Part Name. A Title is required: when no title appears on the item being described, a title should be supplied. </hint>
+            <value>title-compact</value>
+        </item>
+        <item>
+            <help>
+                <p> Subtitle is used to record a part of a title that is secondary to the core title. </p>
                 <p> Use Subtitle whenever a subtitle is present, rather than including the subtitle in Title. </p>
                 <p> When using Subtitle, do not include punctuation intended to separate the title from the subtitle at the end of Title. </p>
                 <p> If more than two levels are in evidence in the whole title, i.e. if there is a sub-subtitle, include the sub-subtitle in Subtitle, with appropriate punctuation. <!--NB: What are the rules here? Should not subTitle repeat?--></p>
@@ -34,6 +44,17 @@
                 Subtitle is used to record a part of a title that is secondary to the core title. 
             </hint>
             <value>subTitle</value>
+        </item>
+        <item>
+            <help>
+                <p> Subtitle is used to record a part of a title that is secondary to the core title. </p>
+                <p> Use Subtitle whenever a subtitle is present, rather than including the subtitle in Title. </p>
+                <p> Subtitle contains every part of the title that do not belong in Non Sort, Title, Part Number or Part Name. </p>
+            </help>
+            <hint>
+                Subtitle is used to record a part of a title that is secondary to the core title. 
+            </hint>
+            <value>subTitle-compact</value>
         </item>
         <item>
             <help>
@@ -138,11 +159,28 @@
         </item>
         <item>
             <help>
+                <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used.</p> 
+                <p>Note that the value shown here is the value chosen when the record template was chosen. This value applies to the whole record, not just to the field above which it is noted. If you change the value, the change will apply to the whole record. </p>
+            </help>
+            <hint>Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the transliteration used, also specify the language employed. 
+            </hint>
+            <value>transliteration-compact</value>
+        </item>
+        <item>
+            <help>
                 <p> Script specifies the script used within individual fields. The use of Latin script is not noted. "Chinese" is "Han (Simplified Variant)" or "Han (Traditional Variant)". If the two variants are not considered, it is "Han (Hanzi, Kanji, Hanja)", also used for Japanese, Korean and Vietnamese written in Chinese. </p>
             </help>
             <hint>Script specifies the script used within individual fields. The use of Latin script is not noted.
             </hint>
             <value>script</value>
+        </item>
+        <item>
+            <help>
+                <p> Script specifies the script used within individual fields. The use of Latin script is not noted. "Chinese" is "Han (Simplified Variant)" or "Han (Traditional Variant)". If the two variants are not considered, it is "Han (Hanzi, Kanji, Hanja)", also used for Japanese, Korean and Vietnamese written in Chinese. </p>
+                <p>Note that the value shown here is the value chosen when the record template was chosen. This value applies to the whole record, not just to the field above which it is noted. If you change the value, the change will apply to the whole record. </p>
+            </help>
+            <hint/>
+            <value>script-compact</value>
         </item>
         <item>
             <help>
@@ -211,6 +249,128 @@
             </help>
             <hint/>
             <value>titleInfo</value>
+        </item>
+        <item>
+            <help>
+                <p> A subject is a term or a phrase that represents the primary topic(s) on which a work is focused. Use at least one subject field in
+                    each record. Enter as many specific terms as necessary to capture the subject content. Be consistent in the formatting of subject
+                    terms. </p>
+                <p> Values for subject indicate what content is found within or represented by the work, and typically answer such questions as who,
+                    what, where, and when. </p>
+                <p> While it is allowed to place multiple values in a single Topic string, it is the preferred practice to split up subject terms into
+                    separate subfields, each of which answer the question of who, what, where, and when in relation to the resource being catalogued. </p>
+                <p> A Subject is here basically composed of a Topic, a Place reference and a Time reference. All these fields are optional, that is, one
+                    can have a Topic without any Place or Time reference, and one can have a Place reference without a Topic or a Time reference. To
+                    have a Time reference all on its own would be a little unusual, but if period labels are used, this might still be acceptable.</p>
+                <p>Topics can be divided into different kinds: "plain" Topics, Name topics and Work topics. "Plain" topics are references to abstract or
+                    concrete entities that are not persons or organisations or works created by these. Topics of this kind are "beauty" or "bicycle",
+                    "democracy" or "doors". No distinction is made between abstract or concrete topics. In addition to plain topics, a person or an
+                    institution can serve as topic, examples being "George Washington" or "United Nations." These are treated like the names of authors
+                    and editors. If a work of literature or art, or any other creation, serves as topic, it is treated as a title. These three subtypes
+                    address different aspects of the "what" of a subject. </p>
+                <p> The "where" of a subject can be expressed in a number of ways. "Place" simply contains the name of the place. </p>
+                <p> "Time", the answer to "when," can be encoded in a number of different ways. The recommendation is to use the w3cdtf encoding.
+                    According to this encoding, dates are formatted in the following way: Year: YYYY (e.g. 1997); Year and month: YYYY-MM (e.g.
+                    1997-07); Complete date: YYYY-MM-DD (e.g. 1997-07-16). </p>
+                <p> Date ranges are indicated using "start" and "end" in Point. If a date range is open to one side, leave that side blank. If the date
+                    is completely unknown, leave the Date field blank. </p>
+                <p> In Time one can also use period designations, such as "the Middle Ages" and "Industrialisation," with the dangers of differing
+                    construals that this implies. If you enter a time designation which uses a designaitn of this type, choose "text" in type.</p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+            </help>
+            <hint/>
+            <value>subject</value>
+        </item>
+        <item>
+            <help>
+                <p> Use Topic to indicate any primary subjects that do not fit into the Place, Time, Works as Topics, or Persons and
+                Institutions as Topics subfields. In general, abstract nouns should be used. Add as many Topic fields as you need in
+                order to analyse your topic. The relation between the different fields is not specified, but one may start with more
+                abstract terms and move to more specific terms, within the same Subject.</p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+            </help>
+            <hint/>
+            <value>topic</value>
+        </item>
+        <item>
+            <help>
+                <p>Use here standard names for geographical places.</p>
+                <p>Add as many Place fields as you need.</p>
+                <p>The relation between the different fields is not specified, but one may start with more abstract terms and move to more specific terms, within the same Subject.</p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+            </help>
+            <hint/>
+            <value>geographic</value>
+        </item>
+        <item>
+            <help>
+                <p> Use Time for chronological subject terms or temporal coverage. Time may be expressed as a subject term (e.g. "Middle
+                    Ages") or as a structured date (e.g. "2001-09-11"). In the first case, choose "text" in Type; otherwise choose
+                    "YYY-MM-DD" and enter the time you wish to refer to as precisely as possible.</p>
+                <p> Point is used to note whether the date noted is a start point or an end point when using a structured date. If no point
+                    is specified, date is assumed to be a single date. </p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+            </help>
+            <hint/>
+            <value>temporal</value>
+        </item>
+        <item>
+            <help>
+                <p> Enter here the title of the book or the work of art that serves as topic for the resource you are cataloguing. If the
+                    title divides into a main title and a subtitle, enter each part in its separate field. If the subtitle divides into
+                    several parts, separate the parts with a semicolon. </p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+            </help>
+            <hint/>
+            <value>subject-titleInfo</value>
+        </item>
+        <item>
+            <help>
+                <p> In Persons and Institutions as Topics, catalogue the names of each person or institution that serves as topic of the
+                resource you are calaloguing. </p>
+                <p>Add as many Persons and Institutions as Topics as is necessary. Click on "P+" to add a personal name and on "I+" to add
+                    the name of an institution.</p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+            </help>
+            <hint/>
+            <value>subject-name</value>
+        </item>
+        <item>
+            <help>
+                <p> Analyse each name into separate name parts, e.g. Given Name and Family Name.</p>
+                <p> If this is not possible, choose "(none selected)" and enter the whole name in the field in question.</p>
+                <p> If a given or family name consists of several parts, enter all parts of the same type in the same field.</p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+            </help>
+            <hint/>
+            <value>subject-name-personal</value>
+        </item>
+        <item>
+            <help>
+                <p> Analyse each name into separate name parts, e.g. Given Name and Family Name.</p>
+                <p> If this is not possible, choose "(none selected)" and enter the whole name in the field in question.</p>
+                <p> If a given or family name consists of several parts, enter all parts of the same type in the same field.</p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+            </help>
+            <hint/>
+            <value>subject-name-corporate</value>
+        </item>
+        <item>
+            <help>
+                <p> General information relating to a resource. </p>
+                <p> Note should be used only for information that cannot be encoded in another, more specific, ways. </p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+            </help>
+            <hint/>
+            <value>note</value>
+        </item>
+        <item>
+            <help>
+                <p> Abstract is used to record a succinct summary of some aspect of the content of the resource. </p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+            </help>
+            <hint/>
+            <value>abstract</value>
         </item>
     </items>
 </code-table>

@@ -160,30 +160,6 @@ button {
     margin-bottom:.1em;
     }
 
-.compact button,
-.title button,
-.name button,
-.origin button,
-.physical-description button,
-.target-audience button,
-.language button,
-.type button,
-.genre button,
-.subject button,
-.classification button,
-.abstract button,
-.table-of-contents button,
-.note button,
-.related button,
-.identifier button,
-.record-info button,
-.access-condition button,
-.location button,
-.extension button
-    {
-    width:20em;
-}
-
 .wide {
     width:20em !important;
 }
@@ -214,6 +190,14 @@ fieldset,
 .join
 {
     color:#3681B3;
+}
+
+.node-adds .xforms-group {
+    display: inline;
+}
+
+.node-adds .xforms-group button {
+    width: 15em;
 }
 
 fieldset .level-1,
@@ -356,7 +340,7 @@ select .xforms-value {
 }
 
 .xforms-case .node-button {
-    margin-bottom:-1.75em;
+    margin-bottom:-1.5em;
     margin-left:.5em;
     margin-right:0;
     margin-top:-.5em;
