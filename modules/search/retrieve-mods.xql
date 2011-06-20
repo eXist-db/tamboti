@@ -571,11 +571,40 @@ declare function mods:get-part-and-origin($entry as element()) {
     let $publisher := $originInfo/mods:publisher
     (: contains no subelements. :)
     (: has no attributes. :)
+    
     let $dateIssued := $originInfo/mods:dateIssued
     (: contains no subelements. :)
     (: has: encoding; point; keyDate; qualifier. :)    
-    
-    let $part := $entry/mods:part
+    let $dateCreated := $originInfo/mods:dateCreated
+    (: contains no subelements. :)
+    (: has: encoding; point; keyDate; qualifier. :)    
+    let $dateCaptured := $originInfo/mods:dateCaptured
+    (: contains no subelements. :)
+    (: has: encoding; point; keyDate; qualifier. :)    
+    let $dateValid := $originInfo/mods:dateValid
+    (: contains no subelements. :)
+    (: has: encoding; point; keyDate; qualifier. :)    
+    let $dateModified := $originInfo/mods:dateModified
+    (: contains no subelements. :)
+    (: has: encoding; point; keyDate; qualifier. :)    
+    let $copyrightDate := $originInfo/mods:copyrightDate
+    (: contains no subelements. :)
+    (: has: encoding; point; keyDate; qualifier. :)    
+    let $dateOther := $originInfo/mods:dateOther
+    (: contains no subelements. :)
+    (: has: encoding; point; keyDate; qualifier. :)    
+    (: pick the "strongest" value for the hitlist. :)
+    let $dateOriginInfo :=
+        if ($dateIssued) then $dateIssued else
+        if ($copyrightDate) then $copyrightDate else
+        if ($dateCreated) then $dateCreated else
+        if ($dateCaptured) then $dateCaptured else
+        if ($dateModified) then $dateModified else
+        if ($dateValid) then $dateValid else
+        if ($dateOther) then $dateOther else ()
+
+    (: NB: this should iterate over part, since there are e.g. multi-part installments of articles. :)
+    let $part := $entry/mods:part[1]
     (: contains: detail, extent, date, text. :)
     (: has: type, order, ID. :)
     let $detail := $part/mods:detail
@@ -588,12 +617,12 @@ declare function mods:get-part-and-origin($entry as element()) {
     let $extent := $part/mods:extent
     (: contains: start, end, title, list. :)
     (: has: unit. :)
-    let $date := $part/mods:date
+    let $partDate := $part/mods:date
     (: contains no subelements. :)
     (: has: encoding; point; qualifier. :)
     return
         (: If there is a part with issue information and a date, i.e. if the publication is an article in a periodical. :)
-        if ($detail/mods:number/text() and $date/text()) 
+        if ($detail/mods:number/text() and $partDate/text()) 
         then 
             concat(
             string-join(
@@ -615,9 +644,9 @@ declare function mods:get-part-and-origin($entry as element()) {
                 concat(', ', $page)
             else ()
             ,
-            if ($date/text())
+            if ($partDate/text())
             then
-                concat(' (', mods:get-date($date), ')')
+                concat(' (', mods:get-date($partDate), ')')
             else ()
             ,
             if ($extent) 
@@ -627,7 +656,7 @@ declare function mods:get-part-and-origin($entry as element()) {
             )
         else
             (: If there is a dateIssued and a place or a publisher, i.e. if the publication is an an edited volume. :)
-            if ($dateIssued and ($place | $publisher)) 
+            if ($partDate and ($place | $publisher)) 
             then
                 (
                 if ($volume) 
@@ -654,9 +683,9 @@ declare function mods:get-part-and-origin($entry as element()) {
                     mods:get-publisher($publisher)
                 else ()
                 ,
-                if ($dateIssued)
+                if ($partDate)
                 then
-                concat(', ', $dateIssued[1], '.')
+                concat(', ', $dateOriginInfo, '.')
                 else ()
                 )
             (: If not a periodical and not an edited volume, we don't know what it is and just try to extract the information. :)
@@ -670,7 +699,7 @@ declare function mods:get-part-and-origin($entry as element()) {
                 normalize-space(mods:add-part(mods:get-publisher($publisher), ', ')
                 )
                 , 
-                normalize-space(mods:add-part($dateIssued/string(), '.'))
+                normalize-space(mods:add-part($dateOriginInfo/string(), '.'))
                 ,
                 if ($extent)
                 then
@@ -678,6 +707,7 @@ declare function mods:get-part-and-origin($entry as element()) {
                 else ()
                 )
 };
+
 
 (: ### <originInfo> ends ### :)
 
@@ -1634,21 +1664,23 @@ if ($titleInfo)
 (: Application: relatedItem includes a designation of the specific type of relationship as a value of the type attribute and is a controlled list of types enumerated in the schema. <relatedItem> is a container element under which any MODS element may be used as a subelement. It is thus fully recursive. :)
 (: Attributes: type, xlink:href, displayLabel, ID. :)
 (: Values for @type: preceding, succeeding, original, host, constituent, series, otherVersion, otherFormat, isReferencedBy. :)
-    (: Unaccounted for: preceding, succeeding, original, constituent, series, otherVersion, otherFormat, isReferencedBy. :)
 (: Subelements: any MODS element. :)
 (: NB! This function is constructed differently from mods:entry-full; the two should be harmonised. :)
 
 declare function mods:get-related-items($entry as element(mods:mods), $caller as xs:string) {
-    for $item at $pos in $entry/mods:relatedItem
-    let $relatedItemPos := $item[$pos]
-    let $collection := util:collection-name($entry)
-    let $type := functx:capitalize-first(functx:camel-case-to-words($relatedItemPos/@type, ' '))
-    let $relatedItem :=
-        if (($relatedItemPos/@xlink:href) and (collection($collection)//mods:mods[@ID = $relatedItemPos/@xlink:href])) 
-        then collection($collection)//mods:mods[@ID = $relatedItemPos/@xlink:href][1]
-        else $relatedItemPos
+    for $item in $entry/mods:relatedItem
+    let $collection := util:collection-name($config:mods-root)
+    let $type := $item/@type
+    let $displayLabel := $item/@displayLabel
+    let $xlink :=
+        (: Any MODS record in /db/resources is retrieved if there is a @xlink:href/@ID match and the relatedItem has no string value. If there should be duplicated, only the first record is retrieved.:)
+        if (($item/@xlink:href) and (collection($config:mods-root)//mods:mods[@ID = $item/@xlink:href]) and (not($item/string()))) 
+        then collection($config:mods-root)//mods:mods[@ID = $item/@xlink:href][1]
+        else ()
+    let $relatedItem := if ($xlink) then $xlink else $item
     return
-        if ($relatedItem/@type = ('host', 'series') and $relatedItem/mods:titleInfo/mods:title/text())
+        (: Check for the most common types first. :)
+        if ($type = ('host', 'series') and $relatedItem/mods:titleInfo/mods:title/text())
         then
             if ($caller = 'hitlist')
             then
@@ -1667,7 +1699,22 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
                         mods:clean-up-punctuation(mods:format-related-item($relatedItem))
                     , 'In:')
                 else ()
-        else ()
+        (: if @type is not 'host' or 'series':)
+        else
+            if ($caller = 'detail')
+            then
+                mods:simple-row(
+                    mods:clean-up-punctuation(mods:format-related-item($relatedItem)), 
+                        (: NB: this is rather strong, since it suppresses @type in favour of @displayLabel. :)
+                        if ($displayLabel)
+                        then $displayLabel
+                        else
+                            if ($type)
+                            then
+                                functx:capitalize-first(functx:camel-case-to-words($type, ' '))
+                            else "Related Item"
+                    )
+            else ()
 };
 
 declare function mods:format-related-item($relatedItem as element()) {
@@ -1818,25 +1865,43 @@ declare function mods:entry-full($entry as element())
     ,
     
     (: dates :)
-    if ($entry/mods:relatedItem/mods:originInfo/mods:dateCreated) 
+    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:dateCreated) 
     then () 
     else 
-        for $dateCreated in $entry/mods:originInfo/mods:dateCreated
-            return mods:simple-row($dateCreated, 'Date Created')
+        for $date in $entry/mods:originInfo/mods:dateCreated
+            return mods:simple-row($date, 'Date Created')
     ,
-    if ($entry/mods:relatedItem/mods:originInfo/mods:dateIssued) 
+    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:copyrightDate) 
+    then () 
+    else 
+        for $date in $entry/mods:originInfo/mods:copyrightDate
+            return mods:simple-row($date, 'Copyright Date')
+    ,
+    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:dateCaptured) 
+    then () 
+    else 
+        for $date in $entry/mods:originInfo/mods:dateCaptured
+            return mods:simple-row($date, 'Date Captured')
+    ,
+    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:dateValid) 
+    then () 
+    else 
+        for $date in $entry/mods:originInfo/mods:dateValid
+            return mods:simple-row($date, 'Date Valid')
+    ,
+    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:dateIssued) 
     then () 
     else 
         for $dateIssued in $entry/mods:originInfo/mods:dateIssued
             return mods:simple-row($dateIssued, 'Date Issued')
     ,
-    if ($entry/mods:relatedItem/mods:originInfo/mods:dateModified) 
+    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:dateModified) 
     then () 
     else 
         for $dateModified in $entry/mods:originInfo/mods:dateModified
             return mods:simple-row($dateModified, 'Date Modified')
     ,
-    if ($entry/mods:relatedItem/mods:originInfo/mods:dateOther) 
+    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:dateOther) 
     then () 
     else 
         for $dateOther in $entry/mods:originInfo/mods:dateOther

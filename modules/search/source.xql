@@ -11,7 +11,7 @@ declare option exist:serialize "method=xml media-type=application/xml indent=yes
 
 let $id := request:get-parameter("id", ())
 let $clean := request:get-parameter("clean", "no")
-let $data := collection($config:mods-root)//mods:mods[@ID = $id]
+let $data := collection($config:mods-root)//mods:mods[@ID = $id][1] (: if (by error) several records should have the same id, take the first record. :)
 return
     if (empty($data)) then
         <error>No record found for id: {$id}.</error>
