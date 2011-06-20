@@ -58,27 +58,28 @@ declare variable $biblio:FIELDS :=
 		)</field>
 		<field name="Date">
 		(
-		mods:mods[ft:query(mods:originInfo/mods:dateCreated, '$q', $options)]
+		mods:mods[ft:query(mods:originInfo/mods:dateCreated, '$q*', $options)]
 		      union
-		mods:mods[ft:query(mods:originInfo/mods:dateIssued, '$q', $options)]
+		mods:mods[ft:query(mods:originInfo/mods:dateIssued, '$q*', $options)]
 		      union
-		mods:mods[ft:query(mods:originInfo/mods:dateCaptured, '$q', $options)]
+		mods:mods[ft:query(mods:originInfo/mods:dateCaptured, '$q*', $options)]
 		      union
-		mods:mods[ft:query(mods:originInfo/mods:copyrightDate, '$q', $options)]
+		mods:mods[ft:query(mods:originInfo/mods:copyrightDate, '$q*', $options)]
 		      union
-		mods:mods[ft:query(mods:relatedItem/mods:originInfo/mods:dateCreated, '$q', $options)]
+		mods:mods[ft:query(mods:relatedItem/mods:originInfo/mods:dateCreated, '$q*', $options)]
 		      union
-		mods:mods[ft:query(mods:relatedItem/mods:originInfo/mods:dateIssued, '$q', $options)]
+		mods:mods[ft:query(mods:relatedItem/mods:originInfo/mods:dateIssued, '$q*', $options)]
 		      union
-		mods:mods[ft:query(mods:relatedItem/mods:originInfo/mods:dateCaptured, '$q', $options)]
+		mods:mods[ft:query(mods:relatedItem/mods:originInfo/mods:dateCaptured, '$q*', $options)]
 		      union
-		mods:mods[ft:query(mods:relatedItem/mods:originInfo/mods:copyrightDate, '$q', $options)]
+		mods:mods[ft:query(mods:relatedItem/mods:originInfo/mods:copyrightDate, '$q*', $options)]
 		      union
-		mods:mods[ft:query(mods:part/mods:date, '$q', $options)]
+		mods:mods[ft:query(mods:part/mods:date, '$q*', $options)]
 		      union
-		mods:mods[ft:query(mods:relatedItem/mods:part/mods:date, '$q', $options)]
+		mods:mods[ft:query(mods:relatedItem/mods:part/mods:date, '$q*', $options)]
 		)
 		</field>
+		<field name="Identifier">mods:mods[ft:query(mods:identifier, '$q', $options)]</field>
 		<field name="Abstract">mods:mods[ft:query(mods:abstract, '$q', $options)]</field>
         <field name="Note">mods:mods[ft:query(mods:note, '$q', $options)]</field>
         <field name="Subject">mods:mods[ft:query(mods:subject, '$q', $options)]</field>
@@ -637,8 +638,7 @@ declare function biblio:process-templates($query as element()?, $hitCount as xs:
                                     <ul>
                                     {
                                         for $item in $code-table-type//item[classifier = $classifier]
-                                        let $label := $item/label/text()
-                                        order by $label
+                                        order by $item/sort/text(), $item/label/text()
                                         return
                                             <li>
                                               <input type="radio" name="type" value="{$item/value/text()}"/><span> {$item/label/text()}</span>
