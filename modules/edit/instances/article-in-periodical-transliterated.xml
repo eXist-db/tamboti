@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" ID="">
     <titleInfo>
         <nonSort/>
@@ -7,7 +6,7 @@
         <partNumber/>
         <partName/>
     </titleInfo>
-    <titleInfo script="Latn" transliteration="ala-lc" type="translated">
+    <titleInfo script="Latn" transliteration="" type="translated">
         <nonSort/>
         <title/>
         <subTitle/>
@@ -24,8 +23,8 @@
     <name type="personal">
         <namePart type="given"/>
         <namePart type="family"/>
-        <namePart type="given" script="Latn" transliteration="ala-lc"/>
-        <namePart type="family" script="Latn" transliteration="ala-lc"/>
+        <namePart type="given" script="Latn" transliteration=""/>
+        <namePart type="family" script="Latn" transliteration=""/>
         <role>
             <roleTerm type="code" authority="marcrelator">aut</roleTerm>
         </role>
@@ -39,62 +38,94 @@
     <subject>
         <topic/>
         <geographic/>
-        <temporal encoding="w3cdtf" point="" keyDate=""/>
-        <titleInfo lang="" type="" authority="" script="" transliteration="">
+        <temporal encoding="w3cdtf" point=""/>
+        <titleInfo script="">
             <nonSort/>
             <title/>
             <subTitle/>
+            <partNumber/>
+            <partName/>
         </titleInfo>
-        <name type="" transliteration="">
-            <namePart type=""/>
+        <titleInfo script="Latn" transliteration="" type="translated">
+            <nonSort/>
+            <title/>
+            <subTitle/>
+            <partNumber/>
+            <partName/>
+        </titleInfo>
+        <titleInfo lang="" script="" type="translated">
+            <nonSort/>
+            <title/>
+            <subTitle/>
+            <partNumber/>
+            <partName/>
+        </titleInfo>
+        <name type="personal">
+            <namePart type="given"/>
+            <namePart type="family"/>
+            <namePart type="given" script="Latn" transliteration=""/>
+            <namePart type="family" script="Latn" transliteration=""/>
+        </name>
+        <name type="corporate">
+            <namePart script=""/>
+            <namePart script=""/>
+            <namePart transliteration=""/>
+            <namePart transliteration=""/>
         </name>
     </subject>
-    <classification authority="lcc" displayLabel="" lang=""/>
-    <abstract/>
+    <classification authority="lcc"/>
+    <abstract lang=""/>
     <tableOfContents lang="" script="" xlink:href=""/>
-    <note lang="" type=""/>
+    <note lang="" type="content"/>
     <relatedItem type="host" xlink:href="">
-        <titleInfo lang="" script="" type="" authority="">
+        <titleInfo>
             <nonSort/>
             <title/>
             <subTitle/>
         </titleInfo>
-        <titleInfo lang="" script="Latn" transliteration="ala-lc" type="translated">
+        <titleInfo script="Latn" transliteration="" type="translated">
             <nonSort/>
             <title/>
             <subTitle/>
         </titleInfo>
-        <titleInfo lang="eng" script="Latn" type="translated">
+        <titleInfo lang="" script="Latn" type="translated">
             <nonSort/>
             <title/>
             <subTitle/>
         </titleInfo>
-        <name type="personal" lang="" script="">
-            <namePart type="given" lang="" script=""/>
-            <namePart type="family" lang="" script=""/>
-            <namePart type="given" lang="" script="Latn" transliteration="ala-lc"/>
-            <namePart type="family" lang="" script="Latn" transliteration="ala-lc"/>
+        <name type="corporate">
+            <namePart type=""/>
+            <namePart type=""/>
+            <namePart script="Latn" transliteration=""/>
+            <namePart script="Latn" transliteration=""/>
             <role>
-                <roleTerm type="code" authority="marcrelator">aut</roleTerm>
+                <roleTerm type="code" authority="marcrelator">edt</roleTerm>
             </role>
         </name>
-        <originInfo script="Latn">
+        <originInfo>
             <place>
                 <placeTerm type="text"/>
+                <placeTerm type="text" script="Latn" transliteration=""/>
             </place>
             <dateIssued encoding="w3cdtf"/>
             <publisher/>
+            <publisher script="Latn" transliteration=""/>
             <edition/>
+            <edition script="Latn" transliteration=""/>
             <issuance>continuing</issuance>
         </originInfo>
+        <genre type="code" authority="marcgt">periodical</genre>
+        <identifier type="issn"/>
+        <identifier type="doi"/>
+        <location>
+            <url/>
+        </location>
         <part>
             <detail type="volume">
-                <caption>vol.</caption>
                 <number/>
             </detail>
             <detail type="issue">
                 <number/>
-                <caption>no.</caption>
             </detail>
             <extent unit="pages">
                 <start/>
@@ -105,7 +136,9 @@
             <date encoding="w3cdtf"/>
         </part>
     </relatedItem>
-    <identifier displayLabel="" type="local"/>
-    <location dateLastAccessed="" displayLabel="" note="" access="" usage=""/>
+    <identifier type="doi"/>
+    <location>
+        <url/>
+    </location>
     <accessCondition/>
 </mods>

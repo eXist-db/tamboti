@@ -111,9 +111,14 @@ table {
     margin-bottom:2em;
 }
 
+.save-buttons button {
+    height:2.5em;
+}
+
 .save-buttons .xforms-label
     {
     margin:.75em !important;
+    font-weight:bold;
 }
 
 .documentation {
@@ -397,6 +402,12 @@ span.xforms-hint-icon:after { /*the regular hints*/
     margin-left:-1.2em;
     margin-right:.2em;
     margin-bottom:2em;
+}
+
+span.opaque:after { /*the regular hints*/
+    opacity:0;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=40)";
+	filter:alpha(opacity=0);
 }
 
 span.xforms-hint-icon { /*negating the xsltforms.css hint icon*/
