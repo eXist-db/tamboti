@@ -1672,12 +1672,22 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
     let $collection := util:collection-name($config:mods-root)
     let $type := $item/@type
     let $displayLabel := $item/@displayLabel
-    let $xlink :=
+    let $labelDisplayed :=
+        string(
+        if ($displayLabel)
+        then $displayLabel
+        else
+            if ($type)
+            then functx:capitalize-first(functx:camel-case-to-words($type, ' '))
+            else 'Related Item'
+        )
+    let $xlink := $item/@xlink:href
+    let $xlinkRecord :=
         (: Any MODS record in /db/resources is retrieved if there is a @xlink:href/@ID match and the relatedItem has no string value. If there should be duplicated, only the first record is retrieved.:)
         if (($item/@xlink:href) and (collection($config:mods-root)//mods:mods[@ID = $item/@xlink:href]) and (not($item/string()))) 
         then collection($config:mods-root)//mods:mods[@ID = $item/@xlink:href][1]
         else ()
-    let $relatedItem := if ($xlink) then $xlink else $item
+    let $relatedItem := if ($xlinkRecord) then $xlinkRecord else $item
     return
         (: Check for the most common types first. :)
         if ($type = ('host', 'series') and $relatedItem/mods:titleInfo/mods:title/text())
@@ -1693,28 +1703,52 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
                 mods:clean-up-punctuation(mods:format-related-item($relatedItem))
                 )
             else
-                if ($caller = 'detail')
+                if ($caller = 'detail' and string($xlink))
                 then
-                    mods:simple-row(
-                        mods:clean-up-punctuation(mods:format-related-item($relatedItem))
-                    , 'In:')
-                else ()
+                    <tr>
+                        <td class="url label">
+                            <a href="?filter=ID&amp;value={$xlink}">&lt;&lt; In:</a>
+                        </td>
+                        <td class="record">
+                            {mods:clean-up-punctuation(mods:format-related-item($relatedItem))}
+                        </td>
+                    </tr>
+                else
+                    if ($caller = 'detail')
+                    then
+                    <tr>
+                        <td class="url label">
+                            In:
+                        </td>
+                        <td class="record">
+                            {mods:clean-up-punctuation(mods:format-related-item($relatedItem))}
+                        </td>
+                    </tr>
+                    else ()
         (: if @type is not 'host' or 'series':)
         else
-            if ($caller = 'detail')
+            if ($caller = 'detail' and string($xlink))
             then
-                mods:simple-row(
-                    mods:clean-up-punctuation(mods:format-related-item($relatedItem)), 
-                        (: NB: this is rather strong, since it suppresses @type in favour of @displayLabel. :)
-                        if ($displayLabel)
-                        then $displayLabel
-                        else
-                            if ($type)
-                            then
-                                functx:capitalize-first(functx:camel-case-to-words($type, ' '))
-                            else "Related Item"
-                    )
-            else ()
+                <tr>
+                    <td class="url label">
+                        <a href="?filter=ID&amp;value={$xlink}">&lt;&lt; {$labelDisplayed}</a>
+                    </td>
+                    <td class="record">
+                        {mods:clean-up-punctuation(mods:format-related-item($relatedItem))}
+                    </td>
+                </tr>
+            else
+                if ($caller = 'detail')
+                then
+                <tr>
+                    <td class="url label">
+                        {$labelDisplayed}
+                    </td>
+                    <td class="record">
+                        {mods:clean-up-punctuation(mods:format-related-item($relatedItem))}
+                    </td>
+                </tr>
+                else ()
 };
 
 declare function mods:format-related-item($relatedItem as element()) {
