@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="name block-form" tab-id="name">
     <xf:group appearance="full" class="fieldset level-1">
-            <!-- The DLF/Aquifer Implementation Guidelines for Shareable MODS Records requires the use of at least one name element to describe the creator of the intellectual content of the resource, if available. The guidelines recommend the use of the type attribute with all name elements whenever possible for greater control and interoperability. In addition, they require the use of namePart as a subelement of name. This element is repeatable. -->
         <div class="join">
             <span class="legend">Names</span>
             <span class="join-button">
                 <xf:trigger>
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="mods:name" at="index('name-repeat')" position="after"/>
+                        <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="after" origin="instance('new-instance')/mods:name"/>
                     </xf:action>
                 </xf:trigger>
             </span>
@@ -23,24 +21,11 @@
             <span class="xforms-hint">
                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
-                    <p> In Names are catalogued the names of the persons, organisations, or events (conferences, meetings, etc.) that are associated
-                                with the resource being catalogued. These relationship between these named entities and the resource is described in Role. </p>
-                    <p>Include as many Names blocks as needed. </p>
-                    <p> In addition to describing named entities associated with the creation of a resource, Names is also used as a kind of Subject.
-                                For names used as subjects, to note that the resource is about a named entity, see the Subjects tab. </p>
-                    <p> For textual materials, include the names of all known authors, translators, compilers, and editors. </p>
-                    <p> For images, include the name of the creator of the original intellectual content (the original photographer, painter, architect,
-                                etc.) and the name of anyone capturing that content in a new medium (for a photograph of a building, include both the architect
-                                and the photographer). </p>
-                    <p> If no known person or organisation etc. is known to be associated with the resource, or if the person or organisation etc. is
-                                anonymous, do not use "unknown," "anonymous," or similar annotations; rather, leave the Names block empty. </p>
+                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name']/help"/>
                 </div>
             </span>
         </div>
-                <!--name repeat begins-->
         <xf:repeat nodeset="instance('save-data')/mods:name" id="name-repeat">
-                    <!--name node-add begins-->
-                    <!--NB: @altRepGroup, @nameTitleGroup, @usage missing-->
             <xf:group appearance="full" ref=".[not(mods:namePart)] | .[not(mods:displayForm)] | .[not(mods:affiliation)] | .[not(mods:role)] | .[not(mods:description)] | .[not(@type)] | .[not(@authority)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@xlink:href)] | .[not(@displayLabel)] | .[not(@ID)] | .[not(@xml:lang)] | .[not(@authorityURI)] | .[not(@valueURI)] | .[not(@altRepGroup)] | .[not(@nameTitleGroup)] | .[not(@usage)]">
                 <xf:switch>
                     <xf:case id="name-add-node-hide">
@@ -59,26 +44,8 @@
                             </xf:trigger>
                         </div>
                         <div class="node-adds">
-                            <xf:group appearance="full" id="name-add-node-recommended">
-                                <xf:label>Recommended Fields</xf:label>
-                                <xf:group appearance="full" ref=".[not(mods:namePart)]">
-                                    <xf:trigger class="add-button">
-                                        <xf:label>Add Name Part</xf:label>
-                                        <xf:action ev:event="DOMActivate">
-                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:namePart" at="index('namePart-repeat')" position="after" origin="instance('insert-templates')/mods:name/mods:namePart"/>
-                                        </xf:action>
-                                    </xf:trigger>
-                                </xf:group>
-                                <xf:group appearance="full" ref=".[not(mods:displayForm)]">
-                                    <xf:trigger class="add-button">
-                                        <xf:label>Add Display Form</xf:label>
-                                        <xf:action ev:event="DOMActivate">
-                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:displayForm" at="index('name-repeat')" position="after" origin="instance('insert-templates')/mods:name/mods:displayForm"/>
-                                        </xf:action>
-                                    </xf:trigger>
-                                </xf:group>
+                            <xf:group appearance="full">
+                                <!-- A -->
                                 <xf:group appearance="full" ref=".[not(mods:affiliation)]">
                                     <xf:trigger class="add-button">
                                         <xf:label>Add Affiliation</xf:label>
@@ -88,30 +55,12 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                <xf:group appearance="full" ref=".[not(mods:role)]">
+                                <xf:group appearance="full" ref=".[not(@altRepGroup)]">
                                     <xf:trigger class="add-button">
-                                        <xf:label>Add Role</xf:label>
+                                        <xf:label>Add Alternate Representation Group</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:role" at="index('name-repeat')" position="after" origin="instance('insert-templates')/mods:name/mods:role"/>
-                                        </xf:action>
-                                    </xf:trigger>
-                                </xf:group>
-                                <xf:group appearance="full" ref=".[not(mods:description)]">
-                                    <xf:trigger class="add-button">
-                                        <xf:label>Add Description</xf:label>
-                                        <xf:action ev:event="DOMActivate">
-                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:description" at="index('name-repeat')" position="after" origin="instance('insert-templates')/mods:name/mods:description"/>
-                                        </xf:action>
-                                    </xf:trigger>
-                                </xf:group>
-                                <xf:group appearance="full" ref=".[not(@type)]">
-                                    <xf:trigger class="add-button">
-                                        <xf:label>Add Type</xf:label>
-                                        <xf:action ev:event="DOMActivate">
-                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert context="." origin="instance('insert-templates')/mods:name/@type"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:name/@altRepGroup"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -124,6 +73,52 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
+                                <xf:group appearance="full" ref=".[not(@authorityURI)]">
+                                    <xf:trigger class="add-button">
+                                        <xf:label>Add Authority URI</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:name/@authorityURI"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
+                                <!-- D -->
+                                <xf:group appearance="full" ref=".[not(mods:description)]">
+                                    <xf:trigger class="add-button">
+                                        <xf:label>Add Description</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert nodeset="mods:description" at="index('name-repeat')" position="after" origin="instance('insert-templates')/mods:name/mods:description"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
+                                <xf:group appearance="full" ref=".[not(mods:displayForm)]">
+                                    <xf:trigger class="add-button">
+                                        <xf:label>Add Display Form</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert nodeset="mods:displayForm" at="index('name-repeat')" position="after" origin="instance('insert-templates')/mods:name/mods:displayForm"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
+                                <xf:trigger class="add-button">
+                                    <xf:label>Add Display Label</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
+                                        <xf:insert context="." origin="instance('insert-templates')/mods:name/@displayLabel"/>
+                                    </xf:action>
+                                </xf:trigger>
+                                <!-- I -->
+                                <xf:group appearance="full" ref=".[not(@ID)]">
+                                    <xf:trigger class="add-button">
+                                        <xf:label>Add ID</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:name/@ID"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
+                                <!-- L -->
                                 <xf:group appearance="full" ref=".[not(@lang)]">
                                     <xf:trigger class="add-button">
                                         <xf:label>Add Language</xf:label>
@@ -133,15 +128,36 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                <xf:group appearance="full" ref=".[not(@transliteration)]">
+                                <!-- N -->
+                                <xf:group appearance="full" ref=".[not(@nameTitleGroup)]">
                                     <xf:trigger class="add-button">
-                                        <xf:label>Add Transliteration</xf:label>
+                                        <xf:label>Add Name Title Group</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert context="." origin="instance('insert-templates')/mods:name/@transliteration"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:name/@nameTitleGroup"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
+                                <xf:group appearance="full" ref=".[not(mods:namePart)]">
+                                    <xf:trigger class="add-button">
+                                        <xf:label>Add Name Part</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert nodeset="mods:namePart" at="index('namePart-repeat')" position="after" origin="instance('insert-templates')/mods:name/mods:namePart"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
+                                <!-- R -->
+                                <xf:group appearance="full" ref=".[not(mods:role)]">
+                                    <xf:trigger class="add-button">
+                                        <xf:label>Add Role</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert nodeset="mods:role" at="index('name-repeat')" position="after" origin="instance('insert-templates')/mods:name/mods:role"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
+                                <!-- S -->
                                 <xf:group appearance="full" ref=".[not(@script)]">
                                     <xf:trigger class="add-button">
                                         <xf:label>Add Script</xf:label>
@@ -151,36 +167,52 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                            </xf:group>
-                            <xf:group appearance="full" id="name-add-node-optional">
-                                <xf:label>Optional Fields</xf:label>
+                                <!-- T -->
+                                <xf:group appearance="full" ref=".[not(@transliteration)]">
+                                    <xf:trigger class="add-button">
+                                        <xf:label>Add Transliteration</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:name/@transliteration"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
+                                <xf:group appearance="full" ref=".[not(@type)]">
+                                    <xf:trigger class="add-button">
+                                        <xf:label>Add Type</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:name/@type"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
+                                <!-- U -->
+                                <xf:group appearance="full" ref=".[not(@usage)]">
+                                    <xf:trigger class="add-button">
+                                        <xf:label>Add Usage</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:name/@usage"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
+                                <!-- V -->
+                                <xf:group appearance="full" ref=".[not(@valueURI)]">
+                                    <xf:trigger class="add-button">
+                                        <xf:label>Add Value URI</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:name/@valueURI"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
+                                <!-- X -->
                                 <xf:group appearance="full" ref=".[not(@xlink:href)]">
                                     <xf:trigger class="add-button">
                                         <xf:label>Add XLink</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
                                             <xf:insert context="." origin="instance('insert-templates')/mods:name/@xlink:href"/>
-                                        </xf:action>
-                                    </xf:trigger>
-                                </xf:group>
-                                <xf:group appearance="full" ref=".[not(@displayLabel)]">
-                                    <xf:trigger class="add-button">
-                                        <xf:label>Add Display Label</xf:label>
-                                        <xf:action ev:event="DOMActivate">
-                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert context="." origin="instance('insert-templates')/mods:name/@displayLabel"/>
-                                        </xf:action>
-                                    </xf:trigger>
-                                </xf:group>
-                            </xf:group>
-                            <xf:group appearance="full" id="name-add-node-not-recommended">
-                                <xf:label>Deprecated Fields</xf:label>
-                                <xf:group appearance="full" ref=".[not(@ID)]">
-                                    <xf:trigger class="add-button">
-                                        <xf:label>Add ID</xf:label>
-                                        <xf:action ev:event="DOMActivate">
-                                            <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert context="." origin="instance('insert-templates')/mods:name/@ID"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -198,58 +230,40 @@
                     </xf:case>
                 </xf:switch>
             </xf:group>
-                    <!--name node-add ends-->
-                    <!--name input begins-->
-                    <!--DLF/Aquifer: OPTIONAL-->
-                    <!--Cluster: omit-->
             <xf:group appearance="full" class="margin-bottom-2">
                 <xf:group appearance="full">
                     <xf:input ref="./@ID" class="text_50">
                         <xf:label>ID</xf:label>
                         <xf:hint>
-                            <p>ID is used to link among records inside the database and to reference a field inside the database from the outside.</p>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='ID']/help"/>
                         </xf:hint>
                     </xf:input>
                 </xf:group>
-                    <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
-                    <!--Cluster: omit-->
                 <xf:group appearance="full">
                     <xf:input ref="./@xlink:href" class="text_50">
                         <xf:label>XLink</xf:label>
                         <xf:hint>
-                            <p>The XLink field is used to reference an external resource, such as a second metadata record, a Related Item or a Table Of
-                                    Contents.</p>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xlink:href']/help"/>
                         </xf:hint>
                     </xf:input>
                 </xf:group>
-                    <!--DLF/Aquifer: RECOMMENDED-->
-                    <!--Cluster: warn-->
                 <xf:group appearance="full">
                     <xf:select1 ref="./@type">
                         <xf:label>Type</xf:label>
                         <xf:hint>
-                            <p>The Type field can take the following values: personal, corporate, conference. Use it to indicate whether the name is the
-                                    name of a person (or a family), the name of a corporation or the name of a conference (or an event similar to a
-                                    conference).</p>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-type']/help"/>
                         </xf:hint>
-                        <xf:help>xxx</xf:help>
-                        <xf:alert>invalid</xf:alert>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-type-code']/items/item">
                             <xf:label ref="label"/>
                             <xf:value ref="value"/>
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                    <!--DLF/Aquifer: RECOMMENDED-->
-                    <!--Cluster: include-->
                 <xf:group appearance="full">
                     <xf:select1 ref="./@authority">
                         <xf:label>Authority</xf:label>
                         <xf:hint>
-                            <p> The name of an authoritative list for a controlled value in Name is recorded here. </p>
-                            <p> If you render the name as it occurs in the resource, you may leave the Authority field value blank. If you normalize the
-                                    name, you should indicate according to which authority you are altering it. Use the value "Local" if a locally-developed
-                                    name authority file is used to catalogue the Name in question. </p>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-authority']/help"/>
                         </xf:hint>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-title-authority-code']/items/item">
                             <xf:label ref="label"/>
@@ -257,34 +271,28 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                    <!--DLF/Aquifer: N/A]]-->
-                    <!--Cluster: hide-->
                 <xf:group appearance="full">
                     <xf:input ref="./@authorityURI" class="text_50">
                         <xf:label>Authority URI</xf:label>
-                        <xf:hint> Hint </xf:hint>
+                        <xf:hint>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-authority-uri']/help"/>
+                        </xf:hint>
                     </xf:input>
                 </xf:group>
-                    <!--DLF/Aquifer: N/A]]-->
-                    <!--Cluster: omit-->
                 <xf:group appearance="full">
                     <xf:input ref="./@valueURI" class="text_50">
                         <xf:label>Value URI</xf:label>
-                        <xf:hint> Hint </xf:hint>
+                        <xf:hint>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-value-uri']/help"/>
+                        </xf:hint>
                     </xf:input>
                 </xf:group>
-                    <!--DLF/Aquifer: N/A-->
-                    <!--Cluster: include?-->
-                    <!-- NB: while it does seem reasonable to hold that a name occurs in a certain script or transliteration, it does not in most cases make sense to say that a name is in a certain language. What about William the Conqueror? -->
+                <!-- NB: while it does seem reasonable to hold that a name can occur in a certain script or transliteration, it does not in most cases make sense to say that a name is in a certain language. What about William the Conqueror? -->
                 <xf:group appearance="full">
                     <xf:select1 ref="./@lang">
                         <xf:label>Language</xf:label>
                         <xf:hint>
-                            <p> The language used within Title Information is specified here, if this language is different from the language noted in
-                                    Language of Resource. The most common languages have been moved to the top of the list. </p>
-                            <p> Language can be applied the Name as a whole. Do this if you are using only one Language value for all Name Parts. If you are
-                                    using different values for different Name Parts, apply Language to each Name Part and leave Language empty under Name as a
-                                    whole. </p>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-lang']/help"/>
                         </xf:hint>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
                             <xf:label ref="label"/>
@@ -292,18 +300,11 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                    <!--DLF/Aquifer: NOT RECOMMENDED]-->
-                    <!--Cluster: omit-->
                 <xf:group appearance="full">
                     <xf:select1 ref="./@xml:lang">
                         <xf:label>xml:lang</xf:label>
                         <xf:hint>
-                            <p> This field is used to specify the language used within a field, using specifications in RFC 3066. RFC 3066 uses the
-                                    two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in 639-1. The
-                                    recommendation is not to use xml:lang, but to use the above Language field. </p>
-                            <p> Language can be applied the Name as a whole. Do this if you are using only one Language value for all Name Parts. If you are
-                                    using different values for different Name Parts, apply Language to each Name Part and leave Language empty under Name as a
-                                    whole. </p>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xml:lang']/help"/>
                         </xf:hint>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
                             <xf:label ref="label"/>
@@ -311,16 +312,11 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                    <!--DLF/Aquifer: N/A-->
-                    <!--Cluster: include-->
                 <xf:group appearance="full">
                     <xf:select1 ref="./@script">
                         <xf:label>Script</xf:label>
                         <xf:hint>
-                            <p> Use Script to record the script in which the name in rendered. </p>
-                            <p>Script can be applied the Name as a whole. Do this if you are using only one Script value for all Name Parts. If you are
-                                    using different values for different Name Parts, apply Script to each Name Part and leave Script empty under Name as a
-                                    whole. </p>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-script']/help"/>
                         </xf:hint>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
                             <xf:label ref="label"/>
@@ -328,23 +324,11 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                    <!--DLF/Aquifer: N/A-->
-                    <!--Cluster: include-->
                 <xf:group appearance="full">
                     <xf:select1 ref="./@transliteration">
                         <xf:label>Transliteration</xf:label>
                         <xf:hint>
-                            <p> This field specifies the transliteration (transcription, romanisation) scheme used within Title Information. When
-                                    specificing the transliteration used, also specify the language employed. There is at present no standard list of
-                                    transliteration schemes available. If you wish to employ a transliteration on the scheme, please contact <!--contact -->. In
-                                    general, the Library of Congress transliteration schemes (<!-- NB -->) should be used. If you follow a transliteration
-                                    scheme authorised by <!--NB-->, choose <!--NB--> as the value and note the language from which the transliteration is made.
-                                    The following transliteration schemes are authorised by <!--NB-->: Chinese: pinyin Japanese: (modified) Hepburn Korean:
-                                    <!--NB--> Russian: <!--NB--> Sanskrit: <!--NB--> If you employ a different, but recognised, transliteration scheme, you may
-                                    have it added to the list. </p>
-                            <p> Script can be applied the Name as a whole. Do this if you are using only one Script value for all Name Parts. If you are
-                                    using different values for different Name Parts, apply Script to each Name Part and leave Script empty under Name as a
-                                    whole. </p>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-transliteration']/help"/>
                         </xf:hint>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
                             <xf:label ref="label"/>
@@ -352,27 +336,19 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                    <!--DLF/Aquifer: OPTIONAL]]-->
-                    <!--Cluster: omit-->
                 <xf:group appearance="full">
                     <xf:input ref="./@displayLabel" class="text_50">
                         <xf:label>Display Label</xf:label>
                         <xf:hint>
-                            <p>This field is used when additional text associated with the title is needed for display. Display Label may be used whenever
-                                    appropriate to indicate the preferred labeling when displayed. Include the text and capitalization preferred, but do not
-                                    include delimiters such as colons or semicolons.</p>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-displayLabel']/help"/>
                         </xf:hint>
                     </xf:input>
                 </xf:group>
-                    <!--DLF/Aquifer: N/A]]-->
-                    <!--Cluster: omit-->
                 <xf:group appearance="full">
                     <xf:select1 ref="./@altRepGroup">
                         <xf:label>Alternate Representation Groups</xf:label>
                         <xf:hint>
-                            <p>Alternate Representation Groups is used to link alternate representations of the same element content, such as different
-                                    scripts, transliterations, and translations. The same attribute value is applied to each of the element instances to be
-                                    linked.</p>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='altRepGroup']/help"/>
                         </xf:hint>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='altRepGroup-code']/items/item">
                             <xf:label ref="label"/>
@@ -380,32 +356,23 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                    <!--DLF/Aquifer: N/A]]-->
-                    <!--Cluster: hide-->
                 <xf:group appearance="full">
                     <xf:select1 ref="./@nameTitleGroup" selection="open">
                         <xf:label>Name-Title Group</xf:label>
-                        <xf:hint> Name-Title Group that can be used with Name and Title Information to enable an explicit link between a name and a title
-                                when that is desirable. The same value is assigned to this attribute for the two elements. This attribute is used to link names
-                                to uniform titles when the name-uniform title combination is an authority controlled heading. </xf:hint>
+                        <xf:hint>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nameTitleGroup']/help"/>
+                        </xf:hint>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='nameTitleGroup-code']/items/item">
                             <xf:label ref="label"/>
                             <xf:value ref="value"/>
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                    <!--DLF/Aquifer: N/A]]-->
-                    <!--Cluster: hide-->
                 <xf:group appearance="full">
                     <xf:select1 ref="./@usage">
                         <xf:label>Usage</xf:label>
                         <xf:hint>
-                            <p>Usage with the value "primary" can be used with repeated fields to indicate special prominence of one that is useful for
-                                    various special purposes such as indexing.</p>
-                            <p>When applied to Name, "primary" indicates the name that would probably be used when citing the resource. This is useful when
-                                    there are several authors and for citation purposes one is to be selected. The "primary" name would be used with the
-                                    resource title for the citation, and also would be the name that would be associated with the uniform title when one is
-                                    present.</p>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-usage']/help"/>
                         </xf:hint>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='usage-type-code']/items/item">
                             <xf:label ref="label"/>
@@ -413,17 +380,15 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-            </xf:group>                   <!--name input ends-->
-
-                    <!--namePart begins-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-namePart" ref=".[(mods:namePart)]">
+            </xf:group>
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:namePart]">
                 <div class="join">
                     <span class="legend">Name Part</span>
                     <span class="join-button">
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:namePart" at="index('name-repeat')" position="after"/>
+                                <xf:insert nodeset="instance('save-data')/mods:namePart" at="index('namePart-repeat')" position="after" origin="instance('new-instance')/mods:name/mods:namePart"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -438,34 +403,16 @@
                     <span class="xforms-hint">
                         <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
-                            <p>The name itself is always entered into a Name Part. This is the case even if it is not possible to parse the name
-                                            into separate units.</p>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart']/help"/>
                         </div>
                     </span>
                 </div>
-                            <!--namePart repeat begins-->
-                <xf:repeat nodeset="./mods:namePart" id="namePart-repeat">
-                                <!--namePart input begins-->
-                                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
-                                <!--Cluster: warn-->
+                <xf:repeat nodeset="instance('save-data')/mods:name/mods:namePart" id="namePart-repeat">
                     <xf:group appearance="full">
                         <xf:select1 ref="./@type">
                             <xf:label>Type</xf:label>
                             <xf:hint>
-                                <p>Name Part includes each part of the name. Parsing is used to parse parts of a personal name into family/surname
-                                                and given name/forename, as well as terms of address, but it is also used to indicate a date associated with the
-                                                name and to parse the parts of a corporate name. </p>
-                                <p> The parsing performed is indicated by the Type field. This field takes the following values: Date, Family,
-                                                Given, Terms Of Address. </p>
-                                <p> Date is used to note dates that are not integral parts of a name. For dates within e.g. a conference name, do
-                                                not use this field to separate the date, since it is an integral part of the name of the conference. The
-                                                birthdate associated with a personal name, however, is not an integral part of the name, but can be added to
-                                                distinguish the name from others, so it does include a separate Name Part with a Type of "Date". </p>
-                                <p> "Family" is used for the family name or surname of a person. </p>
-                                <p> "Given" is used for the given name or forename of a person. </p>
-                                <p> "Terms Of Address" is used to record titles and enumeration associated with a name, such as "Jr.", "II", etc. </p>
-                                <p> If you do not know how to break up a name or if a name is not constructed according to the family name/given
-                                                name pattern, leave the Type of the Name Part blank and enter the whole name as it occurs. </p>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart-type']/help"/>
                             </xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-part-type-code']/items/item">
                                 <xf:label ref="label"/>
@@ -473,16 +420,11 @@
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--DLF/Aquifer: RECOMMENDED-->
-                                <!--Cluster: include-->
                     <xf:group appearance="full">
                         <xf:select1 ref="./@authority">
                             <xf:label>Authority</xf:label>
                             <xf:hint>
-                                <p> The name of an authoritative list for a controlled value in Name is recorded here. </p>
-                                <p> If you render the name as it occurs in the resource, you may leave the Authority field value blank. If you
-                                                normalize the name, you should indicate according to which authority you are altering it. Use the value "Local"
-                                                if a locally-developed name authority file is used to catalogue the Name in question. </p>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart-authority']/help"/>
                             </xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-title-authority-code']/items/item">
                                 <xf:label ref="label"/>
@@ -490,34 +432,28 @@
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--DLF/Aquifer: N/A]]-->
-                                <!--Cluster: hide-->
                     <xf:group appearance="full">
                         <xf:input ref="./@authorityURI" class="text_50">
                             <xf:label>Authority URI</xf:label>
-                            <xf:hint> Hint </xf:hint>
+                            <xf:hint>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='authority-uri']/help"/>
+                            </xf:hint>
                         </xf:input>
                     </xf:group>
-                                <!--DLF/Aquifer: N/A]]-->
-                                <!--Cluster: omit-->
                     <xf:group appearance="full">
                         <xf:input ref="./@valueURI" class="text_50">
                             <xf:label>Value URI</xf:label>
-                            <xf:hint> Hint </xf:hint>
+                            <xf:hint>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='value-uri']/help"/>
+                            </xf:hint>
                         </xf:input>
                     </xf:group>
-                                <!--DLF/Aquifer: N/A-->
-                                <!--Cluster: include?-->
                                 <!-- NB: while it does seem reasonable to hold that a name occurs in a certain script or transliteration, it does not in most cases make sense to say that a name is in a certain language. What about William the Conqueror? -->
                     <xf:group appearance="full">
                         <xf:select1 ref="./@lang">
                             <xf:label>Language</xf:label>
                             <xf:hint>
-                                <p>The language used within Title Information is specified here, if this language is different from the language
-                                                noted in Language of Resource. The most common languages have been moved to the top of the list. </p>
-                                <p> Language can be applied the Name as a whole. Do this if you are using only one Language value for all Name
-                                                Parts. If you are using different values for different Name Parts, apply Language to each Name Part and leave
-                                                Language empty under Name as a whole. </p>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-lang']/help"/>
                             </xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
                                 <xf:label ref="label"/>
@@ -525,20 +461,11 @@
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--Schema: added in accordance with 3.4-->
-                                <!--DLF/Aquifer: NOT RECOMMENDED]-->
-                                <!--Cluster: omit-->
                     <xf:group appearance="full">
                         <xf:select1 ref="./@xml:lang">
                             <xf:label>xml:lang</xf:label>
                             <xf:hint>
-                                <p>This field is used to specify the language used within a field, using specifications in RFC 3066. RFC 3066 uses
-                                                the two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in
-                                                639-1. </p>
-                                <p> The recommendation is not to use xml:lang, but to use the above Language field. </p>
-                                <p> Language can be applied the Name as a whole. Do this if you are using only one Language value for all Name
-                                                Parts. If you are using different values for different Name Parts, apply Language to each Name Part and leave
-                                                Language empty under Name as a whole. </p>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xml:lang']/help"/>
                             </xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
                                 <xf:label ref="label"/>
@@ -546,17 +473,11 @@
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--Schema: added in accordance with 3.4-->
-                                <!--DLF/Aquifer: N/A-->
-                                <!--Cluster: include-->
                     <xf:group appearance="full">
                         <xf:select1 ref="./@script">
                             <xf:label>Script</xf:label>
                             <xf:hint>
-                                <p>Use Script to record the script in which the name in rendered. </p>
-                                <p> Script can be applied the Name as a whole. Do this if you are using only one Script value for all Name Parts. If
-                                                you are using different values for different Name Parts, apply Script to each Name Part and leave Script empty
-                                                under Name as a whole.</p>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-script']/help"/>
                             </xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
                                 <xf:label ref="label"/>
@@ -564,24 +485,11 @@
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--Schema: added in accordance with 3.4-->
-                                <!--DLF/Aquifer: N/A-->
-                                <!--Cluster: include-->
                     <xf:group appearance="full">
                         <xf:select1 ref="./@transliteration">
                             <xf:label>Transliteration</xf:label>
                             <xf:hint>
-                                <p>This field specifies the transliteration (transcription, romanisation) scheme used within Title Information. When
-                                                specificing the transliteration used, also specify the language employed. There is at present no standard list
-                                                of transliteration schemes available. If you wish to employ a transliteration on the scheme, please contact
-                                                <!--contact -->. In general, the Library of Congress transliteration schemes (<!-- NB -->) should be used. If
-                                                you follow a transliteration scheme authorised by <!--NB-->, choose <!--NB--> as the value and note the language
-                                                from which the transliteration is made. The following transliteration schemes are authorised by <!--NB-->:
-                                                Chinese: pinyin Japanese: (modified) Hepburn Korean: <!--NB--> Russian: <!--NB--> Sanskrit: <!--NB--> If you
-                                                employ a different, but recognised, transliteration scheme, you may have it added to the list. </p>
-                                <p> Script can be applied the Name as a whole. Do this if you are using only one Script value for all Name Parts. If
-                                                you are using different values for different Name Parts, apply Script to each Name Part and leave Script empty
-                                                under Name as a whole.</p>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-transliteration']/help"/>
                             </xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
                                 <xf:label ref="label"/>
@@ -589,76 +497,87 @@
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--DLF/Aquifer: REQUIRED-->
-                                <!--Cluster: require-->
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_100">
                             <xf:label>Name Part</xf:label>
                             <xf:hint>
-                                <p>The name itself is always entered into a Name Part. This is the case even if it is not possible to parse the name
-                                                into separate units.</p>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart']/help"/>
                             </xf:hint>
                         </xf:input>
                     </xf:group>
-                                <!--namePart input ends-->
-                                <!--namePart node-add begins-->
                     <xf:group appearance="full" ref=".[not(@type)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@xlink:href)] | .[not(@displayLabel)] | .[not(@ID)] | .[not(@xml:lang)]">
                         <xf:switch>
                             <xf:case id="namePart-add-node-hide">
-                                            <!-- all fields are attributes, therefore not relevant 
-                                            <div class="node-adds-title">
-                                                <xf:trigger class="add-button">
-                                                    <xf:label>Show Additional Fields</xf:label>
-                                                    <xf:toggle case="namePart-add-node-unhide" ev:event="DOMActivate"/>
-                                                </xf:trigger>
-                                            </div>
-                                            -->
+                                <div class="node-adds-title">
+                                    <xf:trigger class="add-button">
+                                        <xf:label>&gt;</xf:label>
+                                        <xf:toggle case="namePart-add-node-unhide" ev:event="DOMActivate"/>
+                                    </xf:trigger>
+                                </div>
                             </xf:case>
                             <xf:case id="namePart-add-node-unhide">
                                 <div class="node-adds-title">
                                     <xf:trigger>
-                                        <xf:label>Hide Additional Fields</xf:label>
+                                        <xf:label>&lt;</xf:label>
                                         <xf:toggle case="namePart-add-node-hide" ev:event="DOMActivate"/>
                                     </xf:trigger>
                                 </div>
                                 <div class="node-adds">
-                                                <!--NB: attributes do not work-->
-                                    <xf:group appearance="full" id="namePart-add-node-recommended">
-                                                    <!-- 
-                                                    <xf:label>Recommended Fields</xf:label>
-                                                    <xf:trigger ref=".[not(@type)]" class="add-button">
-                                                    <xf:label>Add Type</xf:label>
-                                                        <xf:action ev:event="DOMActivate">
-                                                        <xf:insert nodeset="@type" at="index('namePart-repeat')" position="after" origin="instance('insert-templates')/mods:name/@type"/>
-                                                        </xf:action>
-                                                    </xf:trigger>
-                                                    <xf:trigger ref=".[not(@lang)]" class="add-button">
-                                                    <xf:label>Add Language</xf:label>
-                                                        <xf:action ev:event="DOMActivate">
-                                                        <xf:insert nodeset="@lang" at="index('namePart-repeat')" position="after" origin="instance('insert-templates')/mods:name/@lang"/>
-                                                        </xf:action>
-                                                    </xf:trigger>
-                                                    <xf:trigger ref=".[not(@transliteration)]" class="add-button">
-                                                    <xf:label>Add Transliteration</xf:label>
-                                                        <xf:action ev:event="DOMActivate">
-                                                        <xf:insert nodeset="@transliteration" at="index('namePart-repeat')" position="after" origin="instance('insert-templates')/mods:name/@transliteration"/>
-                                                        </xf:action>
-                                                    </xf:trigger>
-                                                    <xf:trigger ref=".[not(@script)]" class="add-button">
-                                                    <xf:label>Add Script</xf:label>
-                                                        <xf:action ev:event="DOMActivate">
-                                                        <xf:insert nodeset="@script" at="index('namePart-repeat')" position="after" origin="instance('insert-templates')/mods:name/@script"/>
-                                                        </xf:action>
-                                                    </xf:trigger>
-                                        -->
-                                    </xf:group>
-                                    <xf:group appearance="full" id="namePart-add-node-optional">
-                                                    <!-- <xf:label>Optional Fields</xf:label>
-                                                        <xf:trigger ref=".[not(@xlink:href)]" class="add-button"> <xf:label>Add XLink</xf:label> <xf:action ev:event="DOMActivate"> <xf:insert nodeset="@xlink:href" at="index('namePart-repeat')" position="after" origin="instance('insert-templates')/mods:name/@xlink:href"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@displayLabel)]" class="add-button"> <xf:label>Add Display Label</xf:label> <xf:action ev:event="DOMActivate"> <xf:insert nodeset="@displayLabel" at="index('namePart-repeat')" position="after" origin="instance('insert-templates')/mods:name/@displayLabel"/> </xf:action> </xf:trigger> -->
-                                    </xf:group>
-                                    <xf:group appearance="full" id="namePart-add-node-not-recommended">
-                                                    <!--<xf:label>Deprecated Fields</xf:label>
-                                            <xf:trigger ref=".[not(@ID)]" class="add-button"> <xf:label>Add ID</xf:label> <xf:action ev:event="DOMActivate"> <xf:insert nodeset="@ID" at="index('namePart-repeat')" position="after" origin="instance('insert-templates')/mods:name/@ID"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@xml:lang)]" class="add-button"> <xf:label>Add xml:lang</xf:label> <xf:action ev:event="DOMActivate"> <xf:insert nodeset="@xml:lang" at="index('namePart-repeat')" position="after" origin="instance('insert-templates')/mods:name/@displayLabel"/> </xf:action> </xf:trigger> -->
+                                    <xf:group appearance="full">
+                                        <!-- D -->
+                                        <xf:trigger ref=".[not(@displayLabel)]" class="add-button">
+                                            <xf:label>Add Display Label</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:name/mods:namePart/@displayLabel"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                        <!-- I -->
+                                        <xf:trigger ref=".[not(@ID)]" class="add-button">
+                                            <xf:label>Add ID</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:name/mods:namePart/@ID"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                        <!-- L -->
+                                        <xf:trigger ref=".[not(@lang)]" class="add-button">
+                                            <xf:label>Add Language</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:name/mods:namePart/@lang"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                        <!-- S -->
+                                        <xf:trigger ref=".[not(@script)]" class="add-button">
+                                            <xf:label>Add Script</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:name/mods:namePart/@script"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                        <!-- T -->
+                                        <xf:trigger ref=".[not(@transliteration)]" class="add-button">
+                                            <xf:label>Add Transliteration</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:name/mods:namePart/@transliteration"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                        <xf:trigger ref=".[not(@type)]" class="add-button">
+                                            <xf:label>Add Type</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:name/mods:namePart/@type"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                        <!-- X -->
+                                        <xf:trigger ref=".[not(@xlink:href)]" class="add-button">
+                                            <xf:label>Add XLink</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:name/mods:namePart/@xlink:href"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                        <xf:trigger ref=".[not(@xml:lang)]" class="add-button">
+                                            <xf:label>Add xml:lang</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:name/mods:namePart/@xml:lang"/>
+                                            </xf:action>
+                                        </xf:trigger>
                                     </xf:group>
                                 </div>
                             </xf:case>
@@ -670,7 +589,7 @@
             </xf:group>
                     <!--namePart ends-->
                     <!--role begins-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-role" ref=".[(mods:role)]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:role]">
                 <div class="join">
                     <span class="legend">Role</span>
                     <span class="join-button">
@@ -720,7 +639,7 @@
                                     </xf:trigger>
                                 </div>
                                 <div class="node-adds">
-                                    <xf:group appearance="full" id="role-add-node-recommended" ref=".[not(mods:roleTerm)]">
+                                    <xf:group appearance="full" ref=".[not(mods:roleTerm)]">
                                                     <!--<xf:label>Recommended Fields</xf:label>-->
                                         <xf:trigger ref=".[not(mods:roleTerm)]" class="add-button">
                                             <xf:label>Add Role Term</xf:label>
@@ -742,7 +661,7 @@
                                 <!--DLF/Aquifer: OPTIONAL-->
                                 <!--Cluster: include-->
                                 <!--role node-add begins-->
-                    <xf:group appearance="full" class="fieldset level-3" id="fieldset-roleTerm" ref=".[(mods:roleTerm)]">
+                    <xf:group appearance="full" class="fieldset level-3" ref=".[(mods:roleTerm)]">
                         <div class="join">
                             <span class="legend">Role Term</span>
                             <span class="join-button">
@@ -970,7 +889,7 @@
                                             </xf:trigger>
                                         </div>
                                         <div class="node-adds">
-                                            <xf:group appearance="full" id="roleTerm-add-node-recommended" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)]">
+                                            <xf:group appearance="full" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)]">
                                                 <xf:label>Recommended Fields</xf:label>
                                                 <xf:trigger ref=".[not(@type)]" class="add-button">
                                                     <xf:label>Add Type</xf:label>
@@ -1001,14 +920,14 @@
                     <!--displayForm begins-->
                     <!--DLF/Aquifer: OPTIONAL-->
                     <!--Cluster: omit-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-displayForm" ref=".[mods:displayForm]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:displayForm]">
                 <div class="join">
                     <span class="legend">Display Form</span>
                     <span class="join-button">
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:displayForm" at="index('displayForm-repeat')" position="after"/>
+                                <xf:insert nodeset="instance('save-data')/mods:displayForm" at="index('displayForm-repeat')" position="after" origin="instance('new-instance')/mods:name/mods:displayForm"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1133,7 +1052,7 @@
                     <!--NB: this can be repeated according to schema 3.3 and 3.4.-->
                     <!--DLF/Aquifer: OPTIONAL-->
                     <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-affiliation" ref=".[mods:affiliation]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:affiliation]">
                 <div class="join">
                     <span class="legend">Affiliation</span>
                     <span class="join-button">
@@ -1266,7 +1185,7 @@
                     <!--NB: this can be repeated according to schema 3.3 and 3.4.-->
                     <!--DLF/Aquifer: NOT RECOMMENDED-->
                     <!--Cluster: omit-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-description" ref=".[mods:description]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:description]">
                 <div class="join">
                     <span class="legend">Description</span>
                     <span class="join-button">
@@ -1394,11 +1313,11 @@
             </xf:group>
                     <!--description ends-->
         </xf:repeat>
-        <xf:group appearance="full" id="name-add-element" ref=".[not(./mods:name)]">
+        <xf:group appearance="full" ref=".[not(./mods:name)]">
             <xf:trigger ref=".[not(mods:name)]" class="add-button">
                 <xf:label>Add Missing Name</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="mods:form" at="index('name-repeat')" position="after" origin="instance('new-instance')/mods:name"/>
+                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:name"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

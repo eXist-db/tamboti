@@ -4,14 +4,6 @@
         <label>Main Publication</label>
         <tab-id>compact-a</tab-id>
         <show-level>1</show-level>
-        <monograph-latin>Monograph</monograph-latin>
-        <monograph-transliterated>Monograph</monograph-transliterated>
-        <article-in-periodical-latin>Article</article-in-periodical-latin>
-        <article-in-periodical-transliterated>Article</article-in-periodical-transliterated>
-        <book-review-latin>Book Review Article</book-review-latin>
-        <book-review-transliterated>Book Review Article</book-review-transliterated>
-        <contribution-to-edited-volume-latin>Contribution</contribution-to-edited-volume-latin>
-        <contribution-to-edited-volume-transliterated>Contribution</contribution-to-edited-volume-transliterated>
         <path>titleInfo</path>
         <path>name</path>
         <path>originInfo</path>
@@ -25,14 +17,6 @@
         <label>Container Publication</label>
         <tab-id>compact-b</tab-id>
         <show-level>1</show-level>
-        <monograph-latin>Monograph Series</monograph-latin>
-        <monograph-transliterated>Monograph Series</monograph-transliterated>
-        <article-in-periodical-latin>Periodical</article-in-periodical-latin>
-        <article-in-periodical-transliterated>Periodical</article-in-periodical-transliterated>
-        <book-review-latin>Periodical With Book Review and Book Reviewed</book-review-latin>
-        <book-review-transliterated>Periodical With Book Review and Book Reviewed</book-review-transliterated>
-        <contribution-to-edited-volume-latin>Edited Volume</contribution-to-edited-volume-latin>
-        <contribution-to-edited-volume-transliterated>Edited Volume</contribution-to-edited-volume-transliterated>
         <path>relatedItem</path>
         <path>language</path>
     </tab>
@@ -41,23 +25,17 @@
         <label>Contents of Main Publication</label>
         <tab-id>compact-c</tab-id>
         <show-level>1</show-level>
-        <monograph-latin>Contents of Monograph</monograph-latin>
-        <monograph-transliterated>Contents of Monograph</monograph-transliterated>
-        <article-in-periodical-latin>Contents of Article</article-in-periodical-latin>
-        <article-in-periodical-transliterated>Contents of Article</article-in-periodical-transliterated>
-        <book-review-latin>Contents of Article Book Review</book-review-latin>
-        <book-review-transliterated>Contents of Article Book Review</book-review-transliterated>
-        <contribution-to-edited-volume-latin>Contents of Contribution</contribution-to-edited-volume-latin>
-        <contribution-to-edited-volume-transliterated>Contents of Contribution</contribution-to-edited-volume-transliterated>
         <path>subject</path>
         <path>note</path>
         <path>abstract</path>
+        <path>language</path>
     </tab>
     <tab>
         <category>Citation Forms</category>
         <label>Title Information</label>
         <tab-id>title</tab-id>
         <path>titleInfo</path>
+        <path>language</path>
         <show-level>2</show-level>
     </tab>
     <tab>

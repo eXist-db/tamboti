@@ -1690,6 +1690,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
     let $relatedItem := if ($xlinkRecord) then $xlinkRecord else $item
     return
         (: Check for the most common types first. :)
+        (: NB: The two steps should probably be collapsed. :)
         if ($type = ('host', 'series') and $relatedItem/mods:titleInfo/mods:title/text())
         then
             if ($caller = 'hitlist')
@@ -1717,7 +1718,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
                     if ($caller = 'detail')
                     then
                     <tr>
-                        <td class="url label">
+                        <td class="label">
                             In:
                         </td>
                         <td class="record">

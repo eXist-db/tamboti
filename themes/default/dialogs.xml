@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
     Provides various dialogs used by tamboti
 -->
@@ -119,7 +118,7 @@
             <input id="move-resource-id" name="resource" type="hidden" value=""/>
         </form>
     </jquery:dialog>
-    <!-- Dialogs are created search.xql lines 538ff. -->
+    <!-- Dialogs are created search.xql, biblio:process-templates(). -->
     <jquery:dialog id="new-resource-dialog" modal="true" title="Create Stand-Alone Record" trigger="#collection-create-resource" width="550">
         <jquery:button id="create" label="Create" function="newResource"/>
         <jquery:button id="cancel" label="Cancel"/>

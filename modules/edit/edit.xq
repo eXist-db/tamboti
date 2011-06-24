@@ -1,13 +1,10 @@
 xquery version "1.0";
 
-import module namespace request = "http://exist-db.org/xquery/request";
-import module namespace sm = "http://exist-db.org/xquery/securitymanager"; (: TODO move code into security module :)
-import module namespace util = "http://exist-db.org/xquery/util";
-import module namespace xmldb = "http://exist-db.org/xquery/xmldb";
-
 import module namespace style = "http://exist-db.org/mods-style" at "style.xqm";
 import module namespace mods = "http://www.loc.gov/mods/v3" at "tabs.xqm";
 import module namespace config = "http://exist-db.org/mods/config" at "../config.xqm";
+import module namespace xmldb = "http://exist-db.org/xquery/xmldb";
+
 import module namespace security = "http://exist-db.org/mods/security" at "../search/security.xqm"; (: TODO move security module up one level :)
 
 declare namespace xf="http://www.w3.org/2002/xforms";
@@ -22,9 +19,6 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
        let $template-doc := doc(concat($config:edit-app-root, '/instances/', $type-request, '.xml')),
        (: store it in the right location :)
        $stored := xmldb:store($config:mods-temp-collection, concat($id, '.xml'), $template-doc),
-       
-       (: TEMP whilst eXist-db permissions remain rwu, once they are rwx - this can be removed :)
-       $null := sm:chmod(xs:anyURI($stored), "rwur--r--"), 
        
        (: Get the remaining parameters. :)
        $host := request:get-parameter('host', ()),
@@ -97,7 +91,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
 
 declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $instance-id as xs:string) as element(xf:model) {
 
-    let $instance-src := concat('get-instance.xq?tab-id=', $tab-id, '&amp;id=', $id, '&amp;data=', $config:mods-temp-collection) return
+    let $instance-src :=  concat('get-instance.xq?tab-id=', $tab-id, '&amp;id=', $id, '&amp;data=', $config:mods-temp-collection) return
 
         <xf:model>
            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="{$instance-src}" id="save-data"/>

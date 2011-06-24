@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-anthology">
     <xf:group>
         <fieldset class="level-1">
@@ -9,9 +8,7 @@
                 <span class="xforms-help">
                     <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-help-value">
-                        <p> Enter here information related to the edited volume that the edited volume contribution you are cataloguing occurs in. This
-                                information falls into two groups: general information on the edited volume and specific information on the location of the
-                                edited volume contribution in the edited volume.</p>
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='edited-volume-compact']/help"/>
                     </div>
                 </span>
             </div>
@@ -24,14 +21,7 @@
                             <span class="xforms-help">
                                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <p> Enter here the title of the edited volume you are cataloguing. If the title divides into a main title and a
-                                            subtitle, enter each part in its separate field. </p>
-                                    <p> If the title is in a language that is usually transliterated, enter the transliterated title and subtitle in their
-                                            respective fields. Use the transliteration scheme you chose when selecting a record template. </p>
-                                    <p> If you believe it is useful to supply a translation of the title, do so in their relevant fields. Note the language
-                                            that the title information is translated into (the default is English). </p>
-                                    <p> The language used is only specified if it is different from the language noted in Language of Resource when you
-                                            selected the record template. The most common languages have been moved to the top of the list. </p>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='edited-volume-titleInfo-compact']/help"/>
                                 </div>
                             </span>
                         </div>
@@ -95,12 +85,7 @@
                             <span class="xforms-help">
                                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <p> In Names and Roles, catalogue the names of each person, corporation or conference associated with the resource.</p>
-                                    <p> Include as many Names and Roles as needed, by clicking the '+' button. </p>
-                                    <p> Choose an appropriate Type of Name for each name, "personal" for personal names, "corporate" for names of
-                                            institutions, and "conference" for names of events such as conferences..</p>
-                                    <p> Please notice that the role pertaining to a name follows the name in question.</p>
-                                    <p> More input options can be found on the Name Info tab on the Citation Forms.</p>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='edited-volume-name-compact']/help"/>
                                 </div>
                             </span>
                         </div>
@@ -126,10 +111,7 @@
                                     <span class="xforms-help">
                                         <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">
-                                            <p> Analyse each name into separate name parts, e.g. Given Name and Family Name.</p>
-                                            <p> If this is not possible, choose "(none selected)" and enter the whole name in the field in question.</p>
-                                            <p> If a given or family name consists of several parts, enter all parts of the same type in the same field.</p>
-                                            <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart-compact']/help"/>
                                         </div>
                                     </span>
                                 </div>
@@ -184,10 +166,7 @@
                                     <span class="xforms-help">
                                         <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">
-                                            <p> Analyse each name into separate name parts, e.g. Given Name and Family Name.</p>
-                                            <p> If this is not possible, choose "(none selected)" and enter the whole name in the field in question.</p>
-                                            <p> If a given or family name consists of several parts, enter all parts of the same type in the same field.</p>
-                                            <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart-institution-compact']/help"/>
                                         </div>
                                     </span>
                                 </div>
@@ -231,8 +210,7 @@
                             <span class="xforms-help">
                                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <p> Information about the origin of the resource, including its place of origin or publication, publisher/originator,
-                                            and the dates associated with the resource. </p>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='originInfo-compact']/help"/>
                                 </div>
                             </span>
                         </div>
@@ -243,6 +221,12 @@
                                 <fieldset class="level-3">
                                     <div class="join">
                                         <span class="legend">City Name</span>
+                                        <span class="xforms-help">
+                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='place-compact']/help"/>
+                                            </div>
+                                        </span>
                                     </div>
                                         <!--place repeat begins-->
                                     <xf:repeat nodeset="./mods:place" id="relatedItem-place-anthology-repeat">
@@ -279,6 +263,12 @@
                                 <fieldset class="level-3">
                                     <div class="join">
                                         <span class="legend">Publisher</span>
+                                        <span class="xforms-help">
+                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='publisher-compact']/help"/>
+                                            </div>
+                                        </span>
                                     </div>
                                         <!--publisher repeat begins-->
                                     <xf:repeat nodeset="./mods:publisher" id="relatedItem-publisher-anthology-repeat">
@@ -301,6 +291,12 @@
                                 <fieldset class="level-3">
                                     <div class="join">
                                         <span class="legend">Year of Publication</span>
+                                        <span class="xforms-help">
+                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='dateIssued-compact']/help"/>
+                                            </div>
+                                        </span>
                                     </div>
                                         <!--dateIssued repeat begins-->
                                     <xf:repeat nodeset="./mods:dateIssued" id="relatedItem-date-issued-anthology-repeat">
@@ -339,8 +335,7 @@
                             <span class="xforms-help">
                                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <p> Note here in which volume and on which pages the edited volume contribution you are cataloguing occurs in the edited
-                                            volume .</p>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='originIfo-compact']/help"/>
                                 </div>
                             </span>
                         </div>
@@ -376,8 +371,7 @@
                                     <div class="join">
                                         <span class="legend">Page Extent</span>
                                         <div class="xforms-help-value">
-                                            <p> Use this field to indicate from which page and to which page the edited volume contribution you are
-                                                    cataloguing occurs in the volume (if any) of the edited volume noted above. </p>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='extent-compact']/help"/>
                                         </div>
                                     </div>
                                         <!--relatedItem/part/extent repeat begins-->
@@ -422,10 +416,7 @@
                             <span class="xforms-help">
                                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <p>Enter here primarily the International Standard Book Number (ISBN) number of the edited volume you are cataloguing
-                                            and/or its Digital Object Identifier (DOI). </p>
-                                    <p>Use the 13-digit version of the ISBN number, if available.</p>
-                                    <p>If you have access to any other unique identifier, please record it.</p>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='identifier-monograph-compact']/help"/>
                                 </div>
                             </span>
                         </div>
@@ -457,12 +448,12 @@
                                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <p> Enter here information related to the monograph series that the monograph you are cataloguing occurs in. This
-                                            information falls into two groups: general information on the monograph series and specific information on the
-                                            location of the monograph in the monograph series.</p>
+                                        information falls into two groups: general information on the monograph series and specific information on the location
+                                        of the monograph in the monograph series.</p>
                                 </div>
                             </span>
                         </div>
-                            <!--relatedItem repeat begins-->
+                        <!--relatedItem repeat begins-->
                         <xf:repeat nodeset="./mods:relatedItem" id="relatedItem-relatedItem-series-repeat">
                             <xf:group>
                                 <fieldset class="level-3">
@@ -472,20 +463,18 @@
                                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <p> Enter here the title of the series you are cataloguing. If the title divides into a main title and a
-                                                        subtitle, enter each part in its separate field. </p>
-                                                <p> If the title is in a language that is usually transliterated, enter the transliterated title and
-                                                        subtitle in their respective fields. Use the transliteration scheme you chose when selecting a record
-                                                        template. </p>
-                                                <p> If you believe it is useful to supply a translation of the title, do so in their relevant fields. Note
-                                                        the language that the title information is translated into (the default is English). </p>
-                                                <p> The language used is only specified if it is different from the language noted in Language of Resource
-                                                        when you selected the record template. The most common languages have been moved to the top of the list.
-                                                    </p>
+                                                    subtitle, enter each part in its separate field. </p>
+                                                <p> If the title is in a language that is usually transliterated, enter the transliterated title and subtitle in
+                                                    their respective fields. Use the transliteration scheme you chose when selecting a record template. </p>
+                                                <p> If you believe it is useful to supply a translation of the title, do so in their relevant fields. Note the
+                                                    language that the title information is translated into (the default is English). </p>
+                                                <p> The language used is only specified if it is different from the language noted in Language of Resource when
+                                                    you selected the record template. The most common languages have been moved to the top of the list. </p>
                                             </div>
                                         </span>
                                     </div>
                                     <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-relatedItem-relatedItem-series-repeat">
-                                            <!--titleInfo input begins-->
+                                        <!--titleInfo input begins-->
                                         <xf:group ref=".[(@transliteration) or string-length(@lang) &gt; 0]">
                                             <br/>
                                         </xf:group>
@@ -535,16 +524,16 @@
                                         <span class="xforms-help">
                                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
-                                                <p> Use this field to indicate the volume of the series that the edited volume you are cataloguing occurs
-                                                        in. </p>
+                                                <p> Use this field to indicate the volume of the series that the edited volume you are cataloguing occurs in.
+                                                </p>
                                             </div>
                                         </span>
                                     </div>
-                                        <!--relatedItem/part repeat begins-->
+                                    <!--relatedItem/part repeat begins-->
                                     <xf:repeat nodeset="./mods:part" id="part-relatedItem-relatedItem-series-repeat">
-                                            <!--relatedItem/part input begins-->
-                                            <!--relatedItem/part input ends-->
-                                            <!--relatedItem/part/detail begins-->
+                                        <!--relatedItem/part input begins-->
+                                        <!--relatedItem/part input ends-->
+                                        <!--relatedItem/part/detail begins-->
                                         <xf:group ref=".[mods:detail]">
                                             <fieldset class="level-4">
                                                 <div class="join">
@@ -552,33 +541,33 @@
                                                     <span class="xforms-help">
                                                         <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                         <div class="xforms-help-value">
-                                                            <p> Use this field to indicate the volume the edited volume that the edited volume contribution
-                                                                    you are cataloguing occurs in. </p>
+                                                            <p> Use this field to indicate the volume the edited volume that the edited volume contribution you
+                                                                are cataloguing occurs in. </p>
                                                         </div>
                                                     </span>
                                                 </div>
-                                                    <!--relatedItem/part/detail repeat begins-->
+                                                <!--relatedItem/part/detail repeat begins-->
                                                 <xf:repeat nodeset="./mods:detail" id="detail-relatedItem-relatedItem-series-repeat">
-                                                        <!--relatedItem/part/detail input ends-->
-                                                        <!--relatedItem/part/detail/number begins-->
+                                                    <!--relatedItem/part/detail input ends-->
+                                                    <!--relatedItem/part/detail/number begins-->
                                                     <xf:group ref=".[mods:number]" class="hide-label margin-plus">
                                                         <xf:input ref="./mods:number" class="text_10">
                                                             <xf:label>Number</xf:label>
                                                         </xf:input>
                                                     </xf:group>
-                                                        <!--relatedItem/part/detail/number ends-->
+                                                    <!--relatedItem/part/detail/number ends-->
                                                 </xf:repeat>
-                                                    <!--relatedItem/part/detail repeat ends-->
+                                                <!--relatedItem/part/detail repeat ends-->
                                             </fieldset>
                                         </xf:group>
-                                            <!--relatedItem/part/detail ends-->
-                                            <!--relatedItem/part/extent begins-->
+                                        <!--relatedItem/part/detail ends-->
+                                        <!--relatedItem/part/extent begins-->
                                     </xf:repeat>
-                                        <!--relatedItem/part repeat ends-->
+                                    <!--relatedItem/part repeat ends-->
                                 </fieldset>
                             </xf:group>
                         </xf:repeat>
-                            <!--title repeat ends-->
+                        <!--title repeat ends-->
                     </fieldset>
                 </xf:group>
             </xf:repeat>

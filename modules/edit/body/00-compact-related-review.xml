@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-review">
     <xf:group>
         <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-review-repeat">
@@ -211,10 +210,7 @@
                                 <span class="xforms-help">
                                     <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <p>Enter here primarily the International Standard Book Number (ISBN) number of the monograph being reviewed and/or
-                                                its Digital Object Identifier (DOI). </p>
-                                        <p>Use the 13-digit version of the ISBN number, if available.</p>
-                                        <p>If you have access to any other unique identifier, please record it.</p>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='isbn']/help"/>
                                     </div>
                                 </span>
                             </div>
@@ -370,7 +366,7 @@
                                 </xf:group>
                                     <!--namePart ends-->
                                     <!--role begins-->
-                                <xf:group ref=".[(mods:role)]">
+                                <xf:group ref=".[mods:role]">
                                     <fieldset class="level-3">
                                         <div class="join">
                                             <span class="legend">Role</span>
@@ -443,10 +439,10 @@
                             </div>
                             <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-periodical-repeat">
                                     <!--titleInfo input begins-->
-                                <xf:group ref=".[(@transliteration) or string-length(@lang) &gt; 0]">
+                                <xf:group ref=".[@transliteration or string-length(@lang) &gt; 0]">
                                     <br/>
                                 </xf:group>
-                                <xf:group ref=".[(@transliteration)]" class="margin-plus">
+                                <xf:group ref=".[@transliteration]" class="margin-plus">
                                     <xf:select1 ref="/mods:mods/mods:extension/*:transliterationOfResource">
                                         <xf:label>Transliteration</xf:label>
                                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
@@ -730,7 +726,7 @@
                                 <!--physicalDescription repeat ends-->
                         </fieldset>
                     </xf:group>
-                    <xf:group ref="./mods:url">
+                    <xf:group ref=".[mods:url]">
                         <fieldset class="level-2">
                             <div class="join">
                                 <span class="legend">
@@ -756,10 +752,10 @@
                                 <!--url repeat ends-->
                         </fieldset>
                     </xf:group>
-                    <xf:group ref="./mods:identifier">
+                    <xf:group ref=".[mods:identifier]">
                         <fieldset class="level-2">
-                            <div class="join">
-                                <span class="legend">Identifiers</span>
+                            <div class="join wide">
+                                <span class="legend">Identifiers of Book Reviewed</span>
                                 <span class="join-button">
                                     <xf:trigger ref=".[mods:identifier]">
                                         <xf:label>+</xf:label>
@@ -771,14 +767,11 @@
                                 <span class="xforms-help">
                                     <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <p>Enter here primarily the International Standard Book Number (ISBN) number of the book you are cataloguing or its
-                                                Digital Object Identifier (DOI). </p>
-                                        <p>Use the 13-digit version of the ISBN number, if available.</p>
-                                        <p>If you have access to another unique identifier, please record it.</p>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='isbn']/help"/>
                                     </div>
                                 </span>
                             </div>
-                            <xf:repeat nodeset="instance('save-data')/mods:identifier" id="identifier-repeat">
+                            <xf:repeat nodeset="./mods:identifier" id="identifier-repeat">
                                 <xf:group ref=".[@type]" selection="open" class="margin-plus">
                                     <xf:select1 ref="./@type">
                                         <xf:label>Type</xf:label>
