@@ -1,5 +1,6 @@
 xquery version "1.0";
 
+import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace security="http://exist-db.org/mods/security" at "security.xqm";
 import module namespace theme="http:/exist-db.org/xquery/biblio/theme" at "../theme.xqm";
 
@@ -32,6 +33,14 @@ declare function local:set-user() {
             <set-attribute name="xquery.password" value="{$security:GUEST_CREDENTIALS[2]}"/>
         )
 };
+
+if(not(empty($config:allow-origin))) then
+(
+    response:set-header("Access-Control-Allow-Origin", $config:allow-origin),
+    if(request:get-header("Access-Control-Request-Headers"))then
+        response:set-header("Access-Control-Allow-Headers", request:get-header("Access-Control-Request-Headers"))
+    else()
+)else(),
 
 if ($exist:path eq '/') then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
