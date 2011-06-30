@@ -166,7 +166,11 @@ declare function theme:merge-html($node, $template) {
             </head>
         case element(body) return
             <body>
-                { $node/node(), $template//body/node() }
+                {
+                    $template//body/div[@id = "template-head"],
+                    $node/node(), 
+                    $template//body/node() except $template//body/div[@id = "template-head"]
+                }
             </body>
         case element() return
             element { node-name($node) } {
