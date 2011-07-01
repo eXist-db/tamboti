@@ -34,7 +34,7 @@ declare function local:set-user() {
         )
 };
 
-if(not(empty($config:allow-origin))) then
+if($config:allow-origin ne "") then
 (
     response:set-header("Access-Control-Allow-Origin", $config:allow-origin),
     if(request:get-header("Access-Control-Request-Headers"))then

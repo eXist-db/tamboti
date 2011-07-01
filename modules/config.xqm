@@ -47,4 +47,4 @@ declare variable $config:smtp-from-address := "exist@yourdomain.com";
 (:~ Credentials for the dba admin user :)
 declare variable $config:dba-credentials := ("admin", ());
 
-declare variable $config:allow-origin := ();
+declare variable $config:allow-origin := "";
