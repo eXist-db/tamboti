@@ -19,6 +19,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
        let $template-doc := doc(concat($config:edit-app-root, '/instances/', $type-request, '.xml')),
        (: store it in the right location :)
        $stored := xmldb:store($config:mods-temp-collection, concat($id, '.xml'), $template-doc),
+       $null := sm:chmod(xs:anyURI($stored), "rwu------"),
        
        (: Get the remaining parameters. :)
        $host := request:get-parameter('host', ()),
