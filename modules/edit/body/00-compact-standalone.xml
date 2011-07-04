@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-a">
     <xf:group ref=".[mods:name]">
         <fieldset class="level-1">
@@ -24,7 +25,7 @@
                     </div>
                 </span>
             </div>
-            <xf:repeat nodeset="instance('save-data')/mods:name" id="name-repeat">
+            <xf:repeat nodeset="./mods:name" id="name-repeat">
                 <xf:group>
                     <fieldset class="level-2">
                         <div class="join">
@@ -54,7 +55,7 @@
                                         </div>
                                     </span>
                                 </xf:label>
-                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                     <xf:label ref="label"/>
                                     <xf:value ref="value"/>
                                 </xf:itemset>
@@ -129,7 +130,7 @@
                     </div>
                 </span>
             </div>
-            <xf:repeat nodeset="instance('save-data')/mods:titleInfo" id="titleInfo-repeat">
+            <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-repeat">
                 <xf:group ref=".[@transliteration or string-length(@lang) &gt; 0]">
                     <br/>
                 </xf:group>
@@ -152,7 +153,7 @@
                                 </div>
                             </span>
                         </xf:label>
-                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                             <xf:label ref="label"/>
                             <xf:value ref="value"/>
                         </xf:itemset>
@@ -167,7 +168,7 @@
                                 </div>
                             </span>
                         </xf:label>
-                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                             <xf:label ref="label"/>
                             <xf:value ref="value"/>
                         </xf:itemset>
@@ -268,7 +269,7 @@
                     </div>
                 </span>
             </div>
-            <xf:repeat nodeset="instance('save-data')/mods:originInfo" id="origininfo-repeat">
+            <xf:repeat nodeset="./mods:originInfo" id="origininfo-repeat">
                 <xf:group ref=".[string-length(@transliteration) &gt; 0]">
                     <br/>
                 </xf:group>
@@ -398,7 +399,7 @@
                 </span>
             </div>
             <!--physicalDescription repeat begins-->
-            <xf:repeat nodeset="instance('save-data')/mods:physicalDescription" id="physicalDescription-repeat">
+            <xf:repeat nodeset="./mods:physicalDescription" id="physicalDescription-repeat">
                 <!--internetMediaType begins-->
                 <xf:group ref=".[mods:internetMediaType]">
                     <fieldset class="level-2">
@@ -472,12 +473,14 @@
                     </div>
                 </span>
             </div>
-            <xf:repeat nodeset=" instance('save-data')/mods:location/mods:url" id="location-url-repeat">
-                <xf:group class="margin-plus">
-                    <xf:input ref="." class="text_150 hide-label margin-plus">
-                        <xf:label>URL</xf:label>
-                    </xf:input>
-                </xf:group>
+            <xf:repeat nodeset="./mods:location" id="location-repeat">
+                <xf:repeat nodeset="./mods:url" id="location-url-repeat">
+                    <xf:group class="margin-plus">
+                        <xf:input ref="." class="text_150 hide-label margin-plus">
+                            <xf:label>URL</xf:label>
+                        </xf:input>
+                    </xf:group>
+                </xf:repeat>
             </xf:repeat>
         </fieldset>
     </xf:group>
@@ -500,7 +503,7 @@
                     </div>
                 </span>
             </div>
-            <xf:repeat nodeset="instance('save-data')/mods:identifier" id="identifier-repeat">
+            <xf:repeat nodeset="./mods:identifier" id="identifier-repeat">
                 <xf:group ref=".[@type]" selection="open" class="hide-label margin-plus">
                     <xf:select1 ref="./@type">
                         <xf:label>Type</xf:label>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- insert does not work with name -->
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-c">
     <xf:group>
@@ -201,7 +202,7 @@
                                             </div>
                                         </span>
                                     </xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                         <xf:label ref="label"/>
                                         <xf:value ref="value"/>
                                     </xf:itemset>
@@ -216,7 +217,7 @@
                                             </div>
                                         </span>
                                     </xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                         <xf:label ref="label"/>
                                         <xf:value ref="value"/>
                                     </xf:itemset>
@@ -231,7 +232,7 @@
                                             </div>
                                         </span>
                                     </xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                                         <xf:label ref="label"/>
                                         <xf:value ref="value"/>
                                     </xf:itemset>
@@ -246,7 +247,7 @@
                                             </div>
                                         </span>
                                     </xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                                         <xf:label ref="label"/>
                                         <xf:value ref="value"/>
                                     </xf:itemset>
@@ -341,7 +342,7 @@
                                                         </div>
                                                     </span>
                                                 </xf:label>
-                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                                     <xf:label ref="label"/>
                                                     <xf:value ref="value"/>
                                                 </xf:itemset>
@@ -356,7 +357,7 @@
                                                         </div>
                                                     </span>
                                                 </xf:label>
-                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                                     <xf:label ref="label"/>
                                                     <xf:value ref="value"/>
                                                 </xf:itemset>
@@ -430,7 +431,7 @@
                                                         </div>
                                                     </span>
                                                 </xf:label>
-                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                                                     <xf:label ref="label"/>
                                                     <xf:value ref="value"/>
                                                 </xf:itemset>
@@ -445,7 +446,7 @@
                                                         </div>
                                                     </span>
                                                 </xf:label>
-                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                                                     <xf:label ref="label"/>
                                                     <xf:value ref="value"/>
                                                 </xf:itemset>
@@ -460,7 +461,7 @@
                                                         </div>
                                                     </span>
                                                 </xf:label>
-                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                                     <xf:label ref="label"/>
                                                     <xf:value ref="value"/>
                                                 </xf:itemset>
@@ -475,7 +476,7 @@
                                                         </div>
                                                     </span>
                                                 </xf:label>
-                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                                     <xf:label ref="label"/>
                                                     <xf:value ref="value"/>
                                                 </xf:itemset>

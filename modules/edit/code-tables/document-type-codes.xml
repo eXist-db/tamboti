@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <code-table>
     <code-table-name>document-type-code</code-table-name>
     <items>
@@ -88,7 +89,7 @@
             </item>
         -->
         <!-- 
-        <item>
+            <item>
             <label>Conference Publication</label>
             <value>conference-publication</value>
             <classifier>stand-alone</classifier>
@@ -120,7 +121,7 @@
             <sort>1</sort>
         </item>
         <!-- 
-        <item>
+            <item>
             <label>Contribution to Conference Publication</label>
             <value>contribution-to-conference-publication</value>
             <classifier>related-item</classifier>
@@ -128,7 +129,7 @@
             </item>
         -->
         <!--
-        <item>
+            <item>
             <label>Electronic Serial/Periodical/Magazine</label>
             <value>electronic-serial</value>
             <classifier>stand-alone</classifier>
@@ -136,7 +137,7 @@
             </item>
         -->
         <!--
-        <item>
+            <item>
             <label>Map</label>
             <value>map</value>
             <classifier>stand-alone</classifier>
@@ -217,19 +218,19 @@
             <sort>1</sort>
         </item>
         <!--
-        <item>
+            <item>
             <label>Motion Picture</label>
             <value>motion-picture</value>
             <classifier>stand-alone</classifier>
             <sort>1</sort>    
             </item>
-        <item>
+            <item>
             <label>Sheet Music</label>
             <value>music</value>
             <classifier>stand-alone</classifier>
             <sort>1</sort>
             </item>
-        <item>
+            <item>
             <label>Photo</label>
             <value>photo</value>
             <classifier>stand-alone</classifier>
@@ -237,7 +238,7 @@
             </item>
         -->
         <!-- 
-        <item>
+            <item>
             <label>Periodical</label>
             <value>serial</value>
             <classifier>stand-alone</classifier>
@@ -245,7 +246,7 @@
             </item>
         -->
         <!-- 
-        <item>
+            <item>
             <label>Series</label>
             <value>series</value>
             <classifier>stand-alone</classifier>
@@ -253,19 +254,19 @@
             </item>
         -->
         <!-- 
-        <item>
+            <item>
             <label>Serial Special Issue</label>
             <value>serial-special-issue</value>
             <classifier>related-item</classifier>
             <sort>1</sort>
             </item>
-        <item>
+            <item>
             <label>Serial Supplement</label>
             <value>serial-supplement</value>
             <classifier>related-item</classifier>
             <sort>1</sort>
             </item>
-        <item>
+            <item>
             <label>Sound Recording</label>
             <value>sound-recording</value>
             <classifier>stand-alone</classifier>
@@ -273,7 +274,7 @@
             </item>
         -->
         <!-- 
-        <item>
+            <item>
             <label>Web Site</label>
             <value>computer-file</value>
             <classifier>stand-alone</classifier>

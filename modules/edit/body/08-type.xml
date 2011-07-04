@@ -56,7 +56,7 @@
                             </xf:trigger>
                         </div>
                         <div class="node-adds">
-                            <xf:group appearance="full" id="typeOfResource-add-node-recommended" ref=".[not(.)]">
+                            <xf:group appearance="full" ref=".[not(.)]">
                                 <xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>
                                     <!-- <xf:trigger ref=".[not(@collection)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Object Part</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="typeOfResource-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:typeOfResource/@collection"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@manuscript)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Language</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="typeOfResource-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:typeOfResource/@manuscript"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@displayLabel)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="typeOfResource-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:typeOfResource/@displayLabel"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@altRepGroup)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Authority</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="typeOfResource-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:typeOfResource/@altRepGroup"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@usage)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Usage</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="typeOfResource-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:typeOfResource/@usage"/> </xf:action> </xf:trigger> -->
                                 <xf:trigger ref=".[not(mods:typeOfResource)]" class="add-button">
@@ -67,8 +67,8 @@
                                     </xf:action>
                                 </xf:trigger>
                             </xf:group>
-                                <!-- <xf:group appearance="full" id="typeOfResource-add-node-optional">-->
-                                <!-- <xf:group appearance="full" id="typeOfResource-add-node-not-recommended"> <xf:label class="xforms-group-label-centered">Deprecated Fields</xf:label>-->
+                                <!-- <xf:group appearance="full">-->
+                                <!-- <xf:group appearance="full"> <xf:label class="xforms-group-label-centered">Deprecated Fields</xf:label>-->
                         </div>
                     </xf:case>
                 </xf:switch>
@@ -78,7 +78,7 @@
                 <!--Cluster: include-->
             <xf:group appearance="full" ref=".[@collection]" schema_3.3="yes" schema_3.4="yes">
                 <xf:select1 ref="./@collection">
-                    <xf:label>Collection:</xf:label>
+                    <xf:label>Collection</xf:label>
                     <xf:hint>
                         <p> "Yes" indicates that the resource is a collection. </p>
                         <p> A collection is defined as a multi-part group of resources. One example would be an anthology. If there are multiple resource
@@ -97,7 +97,7 @@
                 <!--Cluster: include-->
             <xf:group appearance="full" ref=".[@manuscript]" schema_3.3="yes" schema_3.4="yes">
                 <xf:select1 ref="./@manuscript">
-                    <xf:label>Manuscript:</xf:label>
+                    <xf:label>Manuscript</xf:label>
                     <xf:hint>
                         <p> "Yes" indicates that the resource is handwritten or typescript. </p>
                         <p> The fields "collection" and "manuscript" are associated with a specific value used in Type Of Resource. </p>
@@ -113,13 +113,13 @@
             </xf:group>
             <xf:group appearance="full" ref=".[@displayLabel]" schema_3.4="yes">
                 <xf:input ref="./@displayLabel" class="text_50">
-                    <xf:label>Display Label:</xf:label>
+                    <xf:label>Display Label</xf:label>
                     <xf:hint>Hint</xf:hint>
                 </xf:input>
             </xf:group>
             <xf:group appearance="full" ref=".[@altRepGroup]" schema_3.4="yes">
                 <xf:select1 ref="./@altRepGroup">
-                    <xf:label>Alternate Representation Groups: </xf:label>
+                    <xf:label>Alternate Representation Groups</xf:label>
                     <xf:hint>
                         <p>Alternate Representation Groups is used to link alternate representations of the same element content, such as different scripts, transliterations, and translations. 
                                 The same attribute value is applied to each of the element instances to be linked.</p>
@@ -139,7 +139,7 @@
             </xf:group>
             <xf:group appearance="full" ref=".[@usage]" schema_3.4="yes">
                 <xf:select1 ref="./@usage">
-                    <xf:label>Usage: </xf:label>
+                    <xf:label>Usage</xf:label>
                     <xf:hint>
                         <p>Usage with the value "primary" can be used with repeated fields to indicate special prominence of one that is useful for various special purposes such as indexing.</p>
                     </xf:hint>
@@ -154,7 +154,7 @@
                 <!--Cluster: include-->
             <xf:group appearance="full" ref="." schema_3.3="yes" schema_3.4="yes">
                 <xf:select1 ref=".">
-                    <xf:label>Resource Type:</xf:label>
+                    <xf:label>Resource Type</xf:label>
                     <xf:hint>
                         <p> This field includes a high-level type that categorises the material in a general way. More specific typing is done in the Genre
                                 field. There may be no value given for Type Of Resource if the Collection or Manuscript field is used and none of the enumerated
@@ -171,11 +171,11 @@
                 <!--typeOfResource input ends-->
         </xf:repeat>
             <!--typeOfResource repeat ends-->
-        <xf:group appearance="full" id="typeOfResource-add-element" ref=".[not(./mods:typeOfResource)]">
+        <xf:group appearance="full" ref=".[not(./mods:typeOfResource)]">
             <xf:trigger ref=".[not(mods:typeOfResource)]" class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Resource Type</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="mods:form" at="index('typeOfResource-repeat')" position="after" origin="instance('insert-templates')/mods:typeOfResource"/>
+                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:typeOfResource"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

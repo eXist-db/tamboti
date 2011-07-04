@@ -5,22 +5,18 @@
     <form>closed</form>
     <basis>http://www.loc.gov/standards/mods/v3/mods-userguide-elements.html#url</basis>
     <description/>
-    <notes/>
+    <notes>"The following values may be used with the access attribute"</notes>
     <items>
         <item>
-            <label>(none selected)</label>
-            <value/>
-        </item>
-        <item>
-            <label>preview</label>
+            <label>Preview</label>
             <value>preview</value>
         </item>
         <item>
-            <label>raw object</label>
+            <label>Raw Object</label>
             <value>raw object</value>
         </item>
         <item>
-            <label>object in context</label>
+            <label>Object in Context</label>
             <value>object in context</value>
         </item>
     </items>

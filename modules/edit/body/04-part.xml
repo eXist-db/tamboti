@@ -59,7 +59,7 @@
                             </xf:trigger>
                         </div>
                         <div class="node-adds">
-                            <xf:group appearance="full" id="part-add-node-recommended" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)]">
+                            <xf:group appearance="full" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)]">
                                         <!--<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-->
                                         <!-- <xf:trigger ref=".[not(@type)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Type</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@type"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@order)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Order</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@order"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@lang)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Language</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@lang"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@transliteration)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@transliteration"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@script)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Script</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@script"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@altRepGroup)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add altRepGroup</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@altRepGroup"/> </xf:action> </xf:trigger> -->
                                 <xf:trigger ref=".[not(mods:detail)]" class="add-button">
@@ -91,8 +91,8 @@
                                     </xf:action>
                                 </xf:trigger>
                             </xf:group>
-                                    <!-- <xf:group appearance="full" id="part-add-node-optional"> <xf:label class="xforms-group-label-centered">Optional Fields</xf:label> <xf:trigger ref=".[not(@displayLabel)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Display Label</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@displayLabel"/> </xf:action> </xf:trigger> </xf:group> -->
-                                <!-- <xf:group appearance="full" id="part-add-node-not-recommended"> <xf:label class="xforms-group-label-centered">Deprecated Fields</xf:label> <xf:trigger ref=".[not(@ID)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add ID</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@ID"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@xlink:href)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add XLink</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@xlink:href"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@xml:lang)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@xml:lang"/> </xf:action> </xf:trigger> </xf:group> </xf:group> -->
+                                    <!-- <xf:group appearance="full"> <xf:label class="xforms-group-label-centered">Optional Fields</xf:label> <xf:trigger ref=".[not(@displayLabel)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Display Label</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@displayLabel"/> </xf:action> </xf:trigger> </xf:group> -->
+                                <!-- <xf:group appearance="full"> <xf:label class="xforms-group-label-centered">Deprecated Fields</xf:label> <xf:trigger ref=".[not(@ID)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add ID</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@ID"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@xlink:href)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add XLink</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@xlink:href"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@xml:lang)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@xml:lang"/> </xf:action> </xf:trigger> </xf:group> </xf:group> -->
                         </div>
                     </xf:case>
                 </xf:switch>
@@ -103,7 +103,7 @@
                     <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@ID]">
                 <xf:input ref="./@ID" class="text_50">
-                    <xf:label>ID: </xf:label>
+                    <xf:label>ID</xf:label>
                     <xf:hint>
                         <p> ID is used to link among records inside the database and to reference a field inside the database from the outside. </p>
                     </xf:hint>
@@ -114,7 +114,7 @@
                     <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@type]">
                 <xf:input ref="./@type" class="text_50">
-                    <xf:label>Type: </xf:label>
+                    <xf:label>Type</xf:label>
                     <xf:hint>
                         <p> A designation of a document segment type. Suggested values include volume, issue, chapter, section, paragraph, and track.
                                     Other values may be used as needed. Since there is not a controlled set of terms for type, if used, the value should be
@@ -127,7 +127,7 @@
                     <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@order]">
                 <xf:input ref="./@order" class="text_50">
-                    <xf:label>Order:</xf:label>
+                    <xf:label>Order</xf:label>
                     <xf:hint>
                         <p> An integer that designates the sequence of parts. </p>
                     </xf:hint>
@@ -138,7 +138,7 @@
                     <!--Cluster: include-->
             <xf:group appearance="full" class="input-group" ref=".[@lang]">
                 <xf:select1 ref="./@lang">
-                    <xf:label>Language:</xf:label>
+                    <xf:label>Language</xf:label>
                     <xf:hint>
                         <p> The language used within Title Information is specified here, if this language is different from the language noted in
                                     Language of Resource. The most common languages have been moved to the top of the list. </p>
@@ -154,7 +154,7 @@
                     <!--Cluster: omit-->
             <xf:group appearance="full" class="input-group" ref=".[@xml:lang]">
                 <xf:select1 ref="./@xml:lang">
-                    <xf:label>xml:lang:</xf:label>
+                    <xf:label>xml:lang</xf:label>
                     <xf:hint>
                         <p> The language used within Title Information is specified here, if this language is different from the language noted in
                                     Language of Resource. xml:lang is used to specify the language used within a field, using specifications in RFC 3066. RFC
@@ -173,7 +173,7 @@
                     <!--Cluster: include-->
             <xf:group appearance="full" class="input-group" ref=".[@type='transliterated']">
                 <xf:select1 ref="./@transliteration" selection="open">
-                    <xf:label>Transliteration:</xf:label>
+                    <xf:label>Transliteration</xf:label>
                     <xf:hint>
                         <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When
                                     specificing the transliteration used, also specify the language employed. There is at present no standard list of
@@ -195,7 +195,7 @@
                     <!--Cluster: include-->
             <xf:group appearance="full" class="input-group" ref=".[not(@type='transliterated') and ./@script]">
                 <xf:select1 ref="./@script">
-                    <xf:label>Script:</xf:label>
+                    <xf:label>Script</xf:label>
                     <xf:hint>
                         <p> Script specifies the script used within individual fields. The use of Latin script is not noted. "Chinese" is "Han
                                     (Simplified Variant)" or "Han (Traditional Variant)". If the two variants are not considered, it is "Han (Hanzi, Kanji,
@@ -212,7 +212,7 @@
                     <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@altRepGroup]">
                 <xf:select1 ref="./@altRepGroup">
-                    <xf:label>Alternate Representation Groups: </xf:label>
+                    <xf:label>Alternate Representation Groups</xf:label>
                     <xf:hint>
                         <p>Alternate Representation Groups is used to link alternate representations of the same element content, such as different
                                     scripts, transliterations, and translations. The same attribute value is applied to each of the element instances to be
@@ -229,7 +229,7 @@
                     <!--part/detail begins-->
                     <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE]-->
                     <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-detail" ref=".[mods:detail]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:detail]">
                 <div class="join">
                     <span class="legend">Detail</span>
                     <span class="join-button">
@@ -264,7 +264,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@type]">
                         <xf:input ref="./@type" class="text_50">
-                            <xf:label>Type:</xf:label>
+                            <xf:label>Type</xf:label>
                             <xf:hint>
                                 <p> Use this field to indicate the type of the part described. Suggested values include part, volume, issue,
                                                 chapter, section, paragraph, track. Other values may be used as needed. However, since there is not a controlled
@@ -278,7 +278,7 @@
                                 <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@order]">
                         <xf:input ref="./@order" class="text_50">
-                            <xf:label>Order:</xf:label>
+                            <xf:label>Order</xf:label>
                             <xf:hint>
                                 <p> An integer that designates the sequence of parts. </p>
                             </xf:hint>
@@ -288,7 +288,7 @@
                                 <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@level]">
                         <xf:input ref="./@level" class="text_50">
-                            <xf:label>Level:</xf:label>
+                            <xf:label>Level</xf:label>
                             <xf:hint>
                                 <p> Describes the level of numbering in the host/parent item. This is used to ensure that the numbering is retained
                                                 in the proper order. An example is: "v. 2, no. 3". </p>
@@ -301,7 +301,7 @@
                                 <!--Cluster: ?-->
                     <xf:group appearance="full" ref=".[mods:number]">
                         <xf:input ref="./mods:number" class="text_50">
-                            <xf:label>Number:</xf:label>
+                            <xf:label>Number</xf:label>
                             <xf:hint>
                                 <p> Contains the actual number within the part. </p>
                             </xf:hint>
@@ -311,7 +311,7 @@
                                 <!--part/detail/caption begins-->
                     <xf:group appearance="full" ref=".[mods:caption]">
                         <xf:input ref="./mods:caption" class="text_50">
-                            <xf:label>Caption:</xf:label>
+                            <xf:label>Caption</xf:label>
                             <xf:hint>
                                 <p> Contains the caption describing the enumeration within a part. This may be the same as type, but conveys what is
                                                 on the item being described. </p>
@@ -322,7 +322,7 @@
                                 <!--part/detail/title begins-->
                     <xf:group appearance="full" ref=".[mods:title]">
                         <xf:input ref="./mods:title" class="text_50">
-                            <xf:label>Title:</xf:label>
+                            <xf:label>Title</xf:label>
                             <xf:hint>
                                 <p> Contains the title of the part. Only include if this is different than the Title in Title Information. </p>
                             </xf:hint>
@@ -336,7 +336,7 @@
                     <!--part/extent begins-->
                     <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                     <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-extent" ref=".[mods:extent]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:extent]">
                 <div class="join">
                     <span class="legend">Extent</span>
                     <span class="join-button">
@@ -369,7 +369,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[count(@unit) &gt; 0]">
                         <xf:select1 ref="./@unit" selection="open">
-                            <xf:label>Unit:</xf:label>
+                            <xf:label>Unit</xf:label>
                             <xf:hint>
                                 <p> Suggested values include page, minute, etc. <!--NB: make code table with open selection?--></p>
                             </xf:hint>
@@ -385,7 +385,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[count(mods:start) &gt; 0]">
                         <xf:input ref="./mods:start" class="text_50">
-                            <xf:label>Start:</xf:label>
+                            <xf:label>Start</xf:label>
                             <xf:hint>
                                 <p> Contains the beginning unit of the extent within a part (e.g., first page). </p>
                             </xf:hint>
@@ -397,7 +397,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[count(mods:end) &gt; 0]">
                         <xf:input ref="./mods:end" class="text_50">
-                            <xf:label>End:</xf:label>
+                            <xf:label>End</xf:label>
                             <xf:hint>
                                 <p> Contains the ending unit of the extent within a part. </p>
                             </xf:hint>
@@ -409,7 +409,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[count(mods:total) &gt; 0]">
                         <xf:input ref="./mods:total" class="text_50">
-                            <xf:label>Total:</xf:label>
+                            <xf:label>Total</xf:label>
                             <xf:hint>
                                 <p> Contains the total number of units within a part, rather than specific units. </p>
                             </xf:hint>
@@ -421,7 +421,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[count(mods:list) &gt; 0]">
                         <xf:input ref="./mods:list" class="text_50">
-                            <xf:label>List:</xf:label>
+                            <xf:label>List</xf:label>
                             <xf:hint>
                                 <p> Contains a textual listing of the units within a part (e.g., "pp. 5-9".) </p>
                             </xf:hint>
@@ -435,7 +435,7 @@
                     <!--part/date begins-->
                     <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                     <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-date" ref=".[mods:date]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:date]">
                 <div class="join">
                     <span class="legend">
                         <span class="legend">Date</span>
@@ -464,13 +464,13 @@
                     </span>
                 </div>
                             <!--part/date repeat begins-->
-                <xf:repeat nodeset="instance('save-data')/mods:part/mods:date" id="part-date-repeat">
+                <xf:repeat nodeset="./mods:date" id="part-date-repeat">
                                 <!--part/date input begins-->
                                 <!--DLF/Aquifer: RECOMMENDED-->
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@encoding]">
                         <xf:select1 ref="./@encoding">
-                            <xf:label>Encoding:</xf:label>
+                            <xf:label>Encoding</xf:label>
                             <xf:hint>
                                 <p> If a structured date is used, indicate the formatting source using the encoding field. These guidelines
                                                 recommend using the following value for the encoding field: "w3cdtf" This encoding is used to specify YYYY-MM-DD
@@ -490,7 +490,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@point]">
                         <xf:select1 ref="./@point">
-                            <xf:label>Point:</xf:label>
+                            <xf:label>Point</xf:label>
                             <xf:hint>
                                 <p> The point field can be used to encode date ranges using the following values: "start" and "end". If no point is
                                                 specified, date is assumed to be a single date. </p>
@@ -505,7 +505,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@qualifier]">
                         <xf:select1 ref="./@qualifier">
-                            <xf:label>Qualifier:</xf:label>
+                            <xf:label>Qualifier</xf:label>
                             <xf:hint>
                                 <p> The qualifier field has three allowed values: approximate, inferred, and questionable. Best practice is to use
                                                 this field with the appropriate value when a date is approximate, inferred, or questionable, rather than
@@ -521,7 +521,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Date: </xf:label>
+                            <xf:label>Date</xf:label>
                             <xf:hint>
                                 <p> Date contains date information relevant to the part described. </p>
                             </xf:hint>
@@ -532,7 +532,7 @@
                             <!--part/date repeat ends-->
             </xf:group>
                     <!--part/date ends-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-text" ref=".[mods:text]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:text]">
                 <div class="join">
                     <span class="legend">Text</span>
                     <span class="join-button">
@@ -564,7 +564,7 @@
                                 <!--part/text input begins-->
                     <xf:group appearance="full" ref=".">
                         <xf:textarea ref="." class="textarea" mediatype="dojo">
-                            <xf:label>Text:</xf:label>
+                            <xf:label>Text</xf:label>
                             <xf:hint>
                                 <p> Use this subfield to record information in textual form. Use this subfield when other subfields will not capture
                                                 the appropriate information. </p>
@@ -578,11 +578,11 @@
                     <!--part/text ends-->
         </xf:repeat>
                 <!--part repeat ends-->
-        <xf:group appearance="full" id="part-add-element" ref=".[not(./mods:part)]">
+        <xf:group appearance="full" ref=".[not(./mods:part)]">
             <xf:trigger ref=".[not(mods:part)]" class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Part</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="mods:form" at="index('part-repeat')" position="after" origin="instance('insert-templates')/mods:part"/>
+                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:part"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

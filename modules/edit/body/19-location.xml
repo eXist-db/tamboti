@@ -39,7 +39,7 @@
                     <!--physicalLocation begins-->
                     <!--DLF/Aquifer: OPTIONAL-->
                     <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-physicalLocation" ref=".[mods:physicalLocation]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:physicalLocation]">
                 <div class="join">
                     <span class="legend">Physical Location</span>
                     <span class="join-button">
@@ -74,7 +74,7 @@
                                     <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@authority]">
                         <xf:select1 ref="./@authority" selection="open">
-                            <xf:label>Authority:</xf:label>
+                            <xf:label>Authority</xf:label>
                             <xf:hint>
                                 <p> The name of the authoritative list for a controlled value is recorded here. </p>
                             </xf:hint>
@@ -88,7 +88,7 @@
                                     <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@type]">
                         <xf:input ref="./@type" class="text_50">
-                            <xf:label>Type:</xf:label>
+                            <xf:label>Type</xf:label>
                             <xf:hint>
                                 <p> Type Identifies the type of location recorded. Use Type to indicate different kinds of locations if more specificity is needed, e.g. current, discovery, former, creation. </p>
                             </xf:hint>
@@ -98,7 +98,7 @@
                                     <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@xlink:href]">
                         <xf:input ref="./@xlink:href" class="text_50">
-                            <xf:label>XLink: </xf:label>
+                            <xf:label>XLink</xf:label>
                             <xf:hint>
                                 <p> The XLink field is used to reference an external resource, such as a second metadata record, a Related Item or a Table Of Contents. Here, XLink may be used to link to additional information about the resource recorded in Physical Location, e.g. the institution's website. </p>
                             </xf:hint>
@@ -108,7 +108,7 @@
                                     <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
-                            <xf:label>Language:</xf:label>
+                            <xf:label>Language</xf:label>
                             <xf:hint>
                                 <p> The language used within Title Information is specified here, if this language is different from the language noted in Language of Resource. The most common languages have been moved to the top of the list. </p>
                             </xf:hint>
@@ -122,7 +122,7 @@
                                     <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
-                            <xf:label>xml:lang:</xf:label>
+                            <xf:label>xml:lang</xf:label>
                             <xf:hint>
                                 <p> This field is used to specify the language used within an element, using specifications in RFC 3066. RFC 3066 uses the two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in 639-1. </p>
                                 <p> The recommendation is not to use xml:lang, but to use the above Language field. </p>
@@ -137,7 +137,7 @@
                                     <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@script]">
                         <xf:select1 ref="./@script">
-                            <xf:label>Script:</xf:label>
+                            <xf:label>Script</xf:label>
                             <xf:hint>
                                 <p> This field specifies the script used within individual elements. The use of Latin script is not noted. "Chinese" is "Han (Simplified Variant)" or "Han (Traditional Variant)". If the two variants are not considered, it is "Han (Hanzi, Kanji, Hanja)", also used for Japanese, Korean and Vietnamese written in Chinese. </p>
                             </xf:hint>
@@ -151,7 +151,7 @@
                                     <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@transliteration]">
                         <xf:select1 ref="./@transliteration" selection="open">
-                            <xf:label>Transliteration:</xf:label>
+                            <xf:label>Transliteration</xf:label>
                             <xf:hint>
                                 <p> This field specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the transliteration used, also specify the language employed. There is at present no standard list of transliteration schemes available. If you wish to employ a transliteration on the scheme, please contact <!--contact -->. In general, the Library of Congress transliteration schemes (<!-- NB -->) should be used. If you follow a transliteration scheme authorised by <!--NB-->, choose <!--NB--> as the value and note the language from which the transliteration is made. The following transliteration schemes are authorised by <!--NB-->: Chinese: pinyin Japanese: (modified) Hepburn Korean: <!--NB--> Russian: <!--NB--> Sanskrit: <!--NB--> If you employ a different, but recognised, transliteration scheme, you may have it added to the list. </p>
                             </xf:hint>
@@ -165,7 +165,7 @@
                                     <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@displayLabel]">
                         <xf:input ref="./@displayLabel" class="text_50">
-                            <xf:label>Display Label: </xf:label>
+                            <xf:label>Display Label</xf:label>
                             <xf:hint>
                                 <p> Display Label provides additional text associated with the physical location if needed for display purposes. </p>
                             </xf:hint>
@@ -173,7 +173,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Physical Location: </xf:label>
+                            <xf:label>Physical Location</xf:label>
                             <xf:hint>
                                 <p> Record in Physical Location the institution or repository that holds the resource or where it is available. Physical Location may be expressed as text and/or as a code. If expressed as code, use the Authority field to designate the source of the code. </p>
                                 <p> Physical Location typically includes specific information used to locate a resource within a collection, such as the name or code of an institution/repository, and perhaps subcollection. A shelf number is given in Shelf Locator. </p>
@@ -188,7 +188,7 @@
                     <!--shelfLocator begins-->
                     <!--DLF/Aquifer: N/A-->
                     <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-shelfLocator" ref=".[mods:shelfLocator]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:shelfLocator]">
                 <div class="join">
                     <span class="legend">Shelf Locator</span>
                     <span class="join-button">
@@ -220,7 +220,7 @@
                                     <!--shelfLocator input begins-->
                     <xf:group appearance="full" ref=".">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Shelf Locator: </xf:label>
+                            <xf:label>Shelf Locator</xf:label>
                             <xf:hint>
                                 <p> Shelf Locator records a shelfmark or other shelving designation that indicates the location identifier for a copy. </p>
                             </xf:hint>
@@ -234,7 +234,7 @@
                     <!--url begins-->
                     <!--DLF/Aquifer: REQUIRED-->
                     <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-url" ref=".[mods:url]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:url]">
                 <div class="join">
                     <span class="legend">URL</span>
                     <span class="join-button">
@@ -268,7 +268,7 @@
                                     <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@dateLastAccessed]">
                         <xf:input ref="./@dateLastAccessed" class="text_50">
-                            <xf:label>Date Last Accessed: </xf:label>
+                            <xf:label>Date Last Accessed</xf:label>
                             <xf:hint>
                                 <p> This field is intended to express the date that a digital resource has last been accessed remotely. This may be useful to a user trying to access the site because of the volatility of Web content. A structured date of the form "2010-08-12" is recommended. </p>
                             </xf:hint>
@@ -278,7 +278,7 @@
                                     <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@access]">
                         <xf:select1 ref="./@access" selection="open">
-                            <xf:label>Access:</xf:label>
+                            <xf:label>Access</xf:label>
                             <xf:hint>
                                 <p> Access indicates the type of resource that the user or aggregator will access when following the URL link. It has the values: preview, raw object, and object in context. The value "preview" indicates a link to a thumbnail or snippet of text. The value "raw object" indicates a direct link to the object described (e.g., a jpg or pdf document). Used only when the object is represented by a single file. The value "object in context" indicates a link to the object within the context of its environment (with associated metadata, navigation, etc.) If at all possible, refer in URL to an object in context, i.e. an object in the context of a web page, with access to metadata and possibilities for navigation. <!--It is particularly useful to provide a flag in the context of OAI service providers harvesting metadata.--></p>
                             </xf:hint>
@@ -292,7 +292,7 @@
                                     <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@usage]">
                         <xf:select1 ref="./@usage">
-                            <xf:label>Usage:</xf:label>
+                            <xf:label>Usage</xf:label>
                             <xf:hint>
                                 <p> This field indicates how the object represented by the link will be used. There is only one possible value, "primary display", which indicates that the link is the most appropriate to display for end users. </p>
                             </xf:hint>
@@ -306,7 +306,7 @@
                                     <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@displayLabel]">
                         <xf:input ref="./@displayLabel" class="text_50">
-                            <xf:label>Display Label: </xf:label>
+                            <xf:label>Display Label</xf:label>
                             <xf:hint>
                                 <p> Display Label provides additional text associated with the URL if needed for display purposes. Use Display Label to supply additional explanatory information related to the URL. Include the preferred text and capitalization, but do not include delimiters such as colons. </p>
                             </xf:hint>
@@ -316,7 +316,7 @@
                                     <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@note]">
                         <xf:textarea ref="./@note" class="textarea" mediatype="dojo">
-                            <xf:label>Note: </xf:label>
+                            <xf:label>Note</xf:label>
                             <xf:hint>
                                 <p> Note includes notes that are associated with the link that is included as the value of the URL element. </p>
                             </xf:hint>
@@ -324,7 +324,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".">
                         <xf:input ref="." class="text_50">
-                            <xf:label>URL: </xf:label>
+                            <xf:label>URL</xf:label>
                             <xf:hint>
                                 <p> In URL, record the Uniform Resource Locator (URL) of the networked location of a resource. It is recommended that all URLs used with the Location element be persistent. </p>
                             </xf:hint>
@@ -338,7 +338,7 @@
                     <!--location/holdingSimple begins-->
                     <!--DLF/Aquifer: N/A-->
                     <!--Cluster: hide-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-holdingSimple" ref=".[mods:holdingSimple]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:holdingSimple]">
                 <div class="join">
                     <span class="legend">Holdings Simple</span>
                     <span class="xforms-hint">
@@ -403,7 +403,7 @@
                                                 <!--location/form input begins-->
                                     <xf:group appearance="full" ref=".[@authority]">
                                         <xf:select1 ref="./@authority">
-                                            <xf:label>Authority:</xf:label>
+                                            <xf:label>Authority</xf:label>
                                             <xf:hint>
                                                 <p> The name of the authoritative list for a controlled value is recorded here. </p>
                                             </xf:hint>
@@ -415,7 +415,7 @@
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[@authority='marcgt']">
                                         <xf:select1 ref=".">
-                                            <xf:label>Form:</xf:label>
+                                            <xf:label>Form</xf:label>
                                             <xf:hint>
                                                 <p> Form is a designation of a particular physical presentation of a resource. This is equivalent to Form under Physical Description. Form may be included under Copy Information when the record refers to multiple forms and there is different detailed holdings information associated with each form. Otherwise, use Form under Physical Description. Here </p>
                                             </xf:hint>
@@ -427,7 +427,7 @@
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[@authority='marcsmd']">
                                         <xf:select1 ref=".">
-                                            <xf:label>Form:</xf:label>
+                                            <xf:label>Form</xf:label>
                                             <xf:hint>
                                                 <p> Form is a designation of a particular physical presentation of a resource. This is equivalent to Form under Physical Description. Form may be included under Copy Information when the record refers to multiple forms and there is different detailed holdings information associated with each form. Otherwise, use Form under Physical Description. </p>
                                             </xf:hint>
@@ -440,7 +440,7 @@
                                                 <!--NB: make other code tables-->
                                     <xf:group appearance="full" ref=".[not(@authority='marcgt') and not(@authority='marcsmd')]">
                                         <xf:select1 ref="." selection="open">
-                                            <xf:label>Form:</xf:label>
+                                            <xf:label>Form</xf:label>
                                             <xf:hint>
                                                 <p> Form is a designation of a particular physical presentation of a resource. This is equivalent to Form under Physical Description. Form may be included under Copy Information when the record refers to multiple forms and there is different detailed holdings information associated with each form. Otherwise, use Form under Physical Description. </p>
                                             </xf:hint>
@@ -493,7 +493,7 @@
                                                 <!--location/sublocation input begins-->
                                     <xf:group appearance="full" ref=".">
                                         <xf:input ref="." class="text_50">
-                                            <xf:label>Sublocation:</xf:label>
+                                            <xf:label>Sublocation</xf:label>
                                             <xf:hint>
                                                 <p> Department, division or section of an institution holding a copy of the resource. </p>
                                             </xf:hint>
@@ -536,7 +536,7 @@
                                                 <!--location/shelfLocator input begins-->
                                     <xf:group appearance="full" ref=".">
                                         <xf:input ref="." class="text_50">
-                                            <xf:label>Shelf Locator:</xf:label>
+                                            <xf:label>Shelf Locator</xf:label>
                                             <xf:hint>
                                                 <p> Shelfmark or other shelving designation that indicates the location identifier for a copy. </p>
                                             </xf:hint>
@@ -579,7 +579,7 @@
                                                 <!--location/electronicLocator input begins-->
                                     <xf:group appearance="full" ref=".">
                                         <xf:input ref="." class="text_50">
-                                            <xf:label>Electronic Locator:</xf:label>
+                                            <xf:label>Electronic Locator</xf:label>
                                             <xf:hint>
                                                 <p> Uniform Resource Location (URL) of the resource. </p>
                                             </xf:hint>
@@ -623,7 +623,7 @@
                                                 <!-- Cluster: omit -->
                                     <xf:group appearance="full" ref=".[@type]">
                                         <xf:input ref="./@type" class="text_50">
-                                            <xf:label>Type:</xf:label>
+                                            <xf:label>Type</xf:label>
                                             <xf:hint>
                                                 <p> This field is not controlled by a list and thus is open-ended. </p>
                                             </xf:hint>
@@ -632,7 +632,7 @@
                                                 <!-- Cluster: omit -->
                                     <xf:group appearance="full" ref=".[@displayLabel]">
                                         <xf:input ref="./@displayLabel" class="text_50">
-                                            <xf:label>Display Label:</xf:label>
+                                            <xf:label>Display Label</xf:label>
                                             <xf:hint>
                                                 <p> Indicates that the note text is for display purposes. Use when a particular label for display is preferred to aid the user in understanding the note. </p>
                                             </xf:hint>
@@ -640,7 +640,7 @@
                                     </xf:group>
                                     <xf:group appearance="full" ref=".">
                                         <xf:textarea ref="." class="textarea" mediatype="dojo">
-                                            <xf:label>Note:</xf:label>
+                                            <xf:label>Note</xf:label>
                                             <xf:hint>
                                                 <p> Note relating to a specific copy of a document. </p>
                                             </xf:hint>
@@ -683,7 +683,7 @@
                                                 <!--location/enumerationAndChronology input begins-->
                                     <xf:group appearance="full" ref=".[@unitType]">
                                         <xf:select1 ref="./@unitType">
-                                            <xf:label>Unit Type:</xf:label>
+                                            <xf:label>Unit Type</xf:label>
                                             <xf:hint>
                                                 <p> The category of bibliographic entity for which Enumeration And Chronology is given, i.e. basic bibliographic unit, supplement, or index. </p>
                                             </xf:hint>
@@ -695,7 +695,7 @@
                                     </xf:group>
                                     <xf:group appearance="full" ref=".">
                                         <xf:textarea ref="." class="textarea" mediatype="dojo">
-                                            <xf:label>Enumeration And Chronology:</xf:label>
+                                            <xf:label>Enumeration And Chronology</xf:label>
                                             <xf:hint>
                                                 <p> Alpha-numeric identification, such as a volume or issue, and an indication of the date of publication or date of issue of a component of a multi-part resource, distinguishing it from other components of the same resource. </p>
                                             </xf:hint>
@@ -723,7 +723,7 @@
                     <!--location/holdingSimple ends-->
                     <!--holdingExternal begins-->
                     <!--Cluster: omit-->
-            <xf:group appearance="full" class="level-2" id="fieldset-holdingExternal" ref=".[mods:holdingExternal]">
+            <xf:group appearance="full" class="level-2" ref=".[mods:holdingExternal]">
                 <fieldset>
                     <div class="join">
                         <span class="legend">Holding External</span>
@@ -756,7 +756,7 @@
                                     <!--holdingExternal input begins-->
                         <xf:group appearance="full" ref=".">
                             <xf:textarea ref="." class="textarea" mediatype="dojo">
-                                <xf:label>Holding External:</xf:label>
+                                <xf:label>Holding External</xf:label>
                                 <xf:hint>
                                     <p> Holdings information that uses a schema defined externally to MODS. Holding External may include more detailed holdings information than that accommodated by the MODS schema. Holding External may include more detailed holdings information than that accommodated by the MODS schema. An example is ISO 20775 and its accompanying schema. </p>
                                 </xf:hint>
@@ -770,11 +770,11 @@
                     <!--holdingExternal ends-->
         </xf:repeat>
             <!--location repeat ends-->
-        <xf:group appearance="full" id="location-add-element" ref=".[not(./mods:location)]">
+        <xf:group appearance="full" ref=".[not(./mods:location)]">
             <xf:trigger ref=".[not(mods:location)]" class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Location</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="mods:form" at="index('location-repeat')" position="after" origin="instance('insert-templates')/mods:location"/>
+                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:location"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

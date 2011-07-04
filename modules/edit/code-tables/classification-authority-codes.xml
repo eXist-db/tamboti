@@ -5,19 +5,15 @@
     <form>closed</form>
     <basis>http://www.loc.gov/standards/sourcelist/classification.html</basis>
     <description/>
-    <notes>items with asterix have web pages</notes>
+    <notes/>
     <items>
-        <item>
-            <label>(none selected)</label>
-            <value/>
-        </item>
         <item>
             <value>accs</value>
             <label>Annehurst curriculum classification system<!--. (West Lafayette, IN: Kappa Delta Pi)--></label>
         </item>
         <item>
             <value>acmccs</value>
-            <label>*ACM Computing Classification System<!-- <ulink url="http://www.acm.org">ACM Computing Classification System</ulink>[1998 Version]--></label>
+            <label>ACM Computing Classification System<!-- <ulink url="http://www.acm.org">ACM Computing Classification System</ulink>[1998 Version]--></label>
             <link>http://www.acm.org/</link>
         </item>
         <item>
@@ -58,7 +54,7 @@
         </item>
         <item>
             <value>bkl</value>
-            <label>*Basisklassifikation<!-- <ulink url="http://www.gbv.de/vgm/info/mitglieder/02Verbund/01Erschliessung/02Richtlinien/05Basisklassifikation/">Basisklassifikation</ulink>--></label>
+            <label>Basisklassifikation<!-- <ulink url="http://www.gbv.de/vgm/info/mitglieder/02Verbund/01Erschliessung/02Richtlinien/05Basisklassifikation/">Basisklassifikation</ulink>--></label>
             <link>http://www.gbv.de/vgm/info/mitglieder/02Verbund/01Erschliessung/02Richtlinien/05Basisklassifikation/</link>
         </item>
         <item>
@@ -159,12 +155,12 @@
         </item>
         <item>
             <value>gfdc</value>
-            <label>*Global forest classification system (GFDC)<!-- <ulink url="http://iufro.forintek.ca/gfdceditssearch.aspx">Global forest classification system (GFDC) </ulink>--></label>
+            <label>Global forest classification system (GFDC)<!-- <ulink url="http://iufro.forintek.ca/gfdceditssearch.aspx">Global forest classification system (GFDC) </ulink>--></label>
             <link>http://iufro.forintek.ca/gfdceditssearch.aspx</link>
         </item>
         <item>
             <value>ghbs</value>
-            <label>*GHB-Aufstellungssystematik: HBZ Köln<!-- <ulink url="http://www.hbz-nrw.de/produkte_dienstl/ghb-sys/index.html">GHB-Aufstellungssystematik: HBZ Köln</ulink>--></label>
+            <label>GHB-Aufstellungssystematik: HBZ Köln<!-- <ulink url="http://www.hbz-nrw.de/produkte_dienstl/ghb-sys/index.html">GHB-Aufstellungssystematik: HBZ Köln</ulink>--></label>
             <link>http://www.hbz-nrw.de/produkte_dienstl/ghb-sys/index.html</link>
         </item>
         <item>
@@ -173,7 +169,7 @@
         </item>
         <item>
             <value>ifzs</value>
-            <label>*Systematik der IfZ-Bibliothek<!-- <ulink url="http://bastion.ifz-muenchen.de/bibliothek/systematik_typo.html">Systematik der IfZ-Bibliothek.</ulink>--></label>
+            <label>Systematik der IfZ-Bibliothek<!-- <ulink url="http://bastion.ifz-muenchen.de/bibliothek/systematik_typo.html">Systematik der IfZ-Bibliothek.</ulink>--></label>
             <link>http://bastion.ifz-muenchen.de/bibliothek/systematik_typo.html</link>
         </item>
         <item>
@@ -182,7 +178,7 @@
         </item>
         <item>
             <value>ipc</value>
-            <label>*International Patent Classification<!-- <ulink url="http://www.wipo.int/classifications/ipc/en/">International Patent Classification</ulink>--></label>
+            <label>International Patent Classification<!-- <ulink url="http://www.wipo.int/classifications/ipc/en/">International Patent Classification</ulink>--></label>
             <link>http://www.wipo.int/classifications/ipc/en/</link>
         </item>
         <item>
@@ -247,7 +243,7 @@
         </item>
         <item>
             <value>mpkkl</value>
-            <label>*Maanpuolustuskorkeakoulun kirjaston luokitusjärjestelmä<!-- <ulink url="http://www.mpkk.fi/fi/kirjasto/kokoelmat/">Maanpuolustuskorkeakoulun kirjaston luokitusjï¿½rjestelmï¿½</ulink>--></label>
+            <label>Maanpuolustuskorkeakoulun kirjaston luokitusjärjestelmä<!-- <ulink url="http://www.mpkk.fi/fi/kirjasto/kokoelmat/">Maanpuolustuskorkeakoulun kirjaston luokitusjï¿½rjestelmï¿½</ulink>--></label>
             <link>http://www.mpkk.fi/fi/kirjasto/kokoelmat/</link>
         </item>
         <item>
@@ -340,12 +336,12 @@
         </item>
         <item>
             <value>rilm</value>
-            <label>*RILM classification system<!-- <ulink url="http://www.rilm.org/searching/classes.html">RILM classification system</ulink>--></label>
+            <label>RILM classification system<!-- <ulink url="http://www.rilm.org/searching/classes.html">RILM classification system</ulink>--></label>
             <link>http://www.rilm.org/searching/classes.html</link>
         </item>
         <item>
             <value>rpb</value>
-            <label>*Rheinland-Pfälzische Bibliographie<!-- <ulink url="http://www.rlb.de/cgi-bin/wwwalleg/maske.pl?db=rpb">Rheinland-Pfï¿½lzische Bibliographie</ulink>--></label>
+            <label>Rheinland-Pfälzische Bibliographie<!-- <ulink url="http://www.rlb.de/cgi-bin/wwwalleg/maske.pl?db=rpb">Rheinland-Pfï¿½lzische Bibliographie</ulink>--></label>
             <link>http://www.rlb.de/cgi-bin/wwwalleg/maske.pl?db=rpb</link>
         </item>
         <item>
@@ -398,12 +394,12 @@
         </item>
         <item>
             <value>rvk</value>
-            <label>*Regensburger Verbundklassifikation (RVK)<!-- <ulink url="http://www.bibliothek.uni-regensburg.de/Systematik/systemat.html">Regensburger Verbundklassifikation (RVK)</ulink>--></label>
+            <label>Regensburger Verbundklassifikation (RVK)<!-- <ulink url="http://www.bibliothek.uni-regensburg.de/Systematik/systemat.html">Regensburger Verbundklassifikation (RVK)</ulink>--></label>
             <link>http://www.bibliothek.uni-regensburg.de/Systematik/systemat.html</link>
         </item>
         <item>
             <value>sbb</value>
-            <label>*Systematik der Bayerischen Bibliographie<!-- <ulink url="http://www.bayerische-bibliographie.de/">Systematik der Bayerischen Bibliographie</ulink>--></label>
+            <label>Systematik der Bayerischen Bibliographie<!-- <ulink url="http://www.bayerische-bibliographie.de/">Systematik der Bayerischen Bibliographie</ulink>--></label>
             <link>http://www.bayerische-bibliographie.de/</link>
         </item>
         <item>
@@ -412,7 +408,7 @@
         </item>
         <item>
             <value>sdnb</value>
-            <label>*Systematik der Deutschen Nationalbibliographie<!-- <ulink url="http://www.d-nb.de/eng/service/zd/gliederung_dnb.htm">Systematik der Deutschen Nationalbibliographie</ulink>--></label>
+            <label>Systematik der Deutschen Nationalbibliographie<!-- <ulink url="http://www.d-nb.de/eng/service/zd/gliederung_dnb.htm">Systematik der Deutschen Nationalbibliographie</ulink>--></label>
             <link>http://www.d-nb.de/eng/service/zd/gliederung_dnb.htm</link>
         </item>
         <item>
@@ -443,12 +439,12 @@
         </item>
         <item>
             <value>sswd</value>
-            <label>*Schlagwortnormdatei<!-- <ulink url="http://www.d-nb.de/eng/standardisierung/normdateien/swd_not_hilfe.htm">Schlagwortnormdatei</ulink>--></label>
+            <label>Schlagwortnormdatei<!-- <ulink url="http://www.d-nb.de/eng/standardisierung/normdateien/swd_not_hilfe.htm">Schlagwortnormdatei</ulink>--></label>
             <link>http://www.d-nb.de/eng/standardisierung/normdateien/swd_not_hilfe.htm</link>
         </item>
         <item>
             <value>stub</value>
-            <label>*Systematik der TUB Müchen<!-- <ulink url="http://www.ub.tum.de/medien/systematik.html">Systematik der TUB Mï¿½nchen</ulink>--></label>
+            <label>Systematik der TUB Müchen<!-- <ulink url="http://www.ub.tum.de/medien/systematik.html">Systematik der TUB Mï¿½nchen</ulink>--></label>
             <link>http://www.ub.tum.de/medien/systematik.html</link>
         </item>
         <item>
@@ -465,7 +461,7 @@
         </item>
         <item>
             <value>taikclas</value>
-            <label>*Taideteollisen korkeakoulun kirjaston luokitus<!-- <ulink url="http://www.aralis.fi/en/taik/collections/classification.html">Taideteollisen korkeakoulun kirjaston luokitus</ulink>= University of Art and Design Helsinki Library Classification <ulink url="http://www.aralis.fi/taik/kokoelmat/luokitusopas.html">University of Art and Design Helsinki Library Classification</ulink>--></label>
+            <label>Taideteollisen korkeakoulun kirjaston luokitus<!-- <ulink url="http://www.aralis.fi/en/taik/collections/classification.html">Taideteollisen korkeakoulun kirjaston luokitus</ulink>= University of Art and Design Helsinki Library Classification <ulink url="http://www.aralis.fi/taik/kokoelmat/luokitusopas.html">University of Art and Design Helsinki Library Classification</ulink>--></label>
             <link>http://www.aralis.fi/en/taik/collections/classification.html</link>
         </item>
         <item>
@@ -474,7 +470,7 @@
         </item>
         <item>
             <value>teatkl</value>
-            <label>*Teatterikorkeakoulun kirjaston luokitusopas<!-- <ulink url="http://www.teak.fi/Kirjasto/Kokoelmat_ja_aineistot/Luokitusopas">Teatterikorkeakoulun kirjaston luokitusopas</ulink>--></label>
+            <label>Teatterikorkeakoulun kirjaston luokitusopas<!-- <ulink url="http://www.teak.fi/Kirjasto/Kokoelmat_ja_aineistot/Luokitusopas">Teatterikorkeakoulun kirjaston luokitusopas</ulink>--></label>
             <link>http://www.teak.fi/Kirjasto/Kokoelmat_ja_aineistot/Luokitusopas</link>
         </item>
         <item>
@@ -483,7 +479,7 @@
         </item>
         <item>
             <value>tykoma</value>
-            <label>*Turun yliopiston kirjaston vanha luokitus<!-- <ulink url="http://trip.abo.fi/tydb/luokitus/">Turun yliopiston kirjaston vanha luokitus</ulink>--></label>
+            <label>Turun yliopiston kirjaston vanha luokitus<!-- <ulink url="http://trip.abo.fi/tydb/luokitus/">Turun yliopiston kirjaston vanha luokitus</ulink>--></label>
             <link>http://trip.abo.fi/tydb/luokitus/</link>
         </item>
         <item>
@@ -508,7 +504,7 @@
         </item>
         <item>
             <value>veera</value>
-            <label>*VEERA-luokitus = VEERA-классификация<!-- <ulink url="http://veera.linneanet.fi/help/Finnish/veera-luokitus.htm">VEERA-luokitus = VEERA-классификация</ulink>--></label>
+            <label>VEERA-luokitus = VEERA-классификация<!-- <ulink url="http://veera.linneanet.fi/help/Finnish/veera-luokitus.htm">VEERA-luokitus = VEERA-классификация</ulink>--></label>
             <link>http://veera.linneanet.fi/help/Finnish/veera-luokitus.htm</link>
         </item>
         <item>

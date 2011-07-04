@@ -50,10 +50,28 @@ table.center {
     background-color: #EDF0FA;
     }
 
-/*docs end*/    
+/*docs end*/
+
+/*results-view styling begins*/
+
+.title {
+    font-style: italic;
+}
+
+.title-no-italics {}
+
+.name {}
+
+.relatedItem-row {}
+
+.relatedItem-span {}
+
+.relatedItem-label {}
+
+/*results-view styling ends*/
 
 p, td {
-    line-height: 1.25em;
+    line-height: 1em;
 }
 
 td .record,
@@ -164,10 +182,6 @@ td.collection-path {
 
 .language-list option {
     margin: .25em .5em .25em .5em;
-}
-
-.title {
-    font-style: italic;
 }
 
 .box {
@@ -384,11 +398,13 @@ a:hover {
     margin: 0;
 }
 
-.list-type img {
-    margin-right: 4px;
-    width: 2em;
-    
+.list-type img, 
+.detail-type img 
+	{
+    height: 16px;
+    width: 16px;
 }
+
 .pagination-n {
     padding: 0.55em 0 0 0;
  }
@@ -413,7 +429,6 @@ td .biblio-full .label {
     text-align: right;
     padding-right: 1em;
     vertical-align: middle;
-    width: 45em;
     color: #5DB0E6;
 }
 
@@ -423,14 +438,14 @@ td .biblio-full .sublabel {
     padding-right: 1em;
     vertical-align: middle;
     color: gray;
-    width: 12.5em;
+    width: 5em;
 }
 
 td .biblio-full .host {
     font-weight: bold;
     text-align: right;
     padding-right: 1em;
-    color: #5DB0E6;
+    1color: #5DB0E6;
     width: 16em;
 }
 
@@ -445,7 +460,7 @@ td .biblio-full .deemph {
     font-weight: normal;
     text-align: left;
     vertical-align: middle;
-    width: 70%;
+    width: 65%;
 }
 
 .biblio-full .subrecord {

@@ -50,7 +50,7 @@
                             </xf:trigger>
                         </div>
                         <div class="node-adds">
-                            <xf:group appearance="full" id="originInfo-add-node-recommended">
+                            <xf:group appearance="full">
                                         <!--<xf:label class="xforms-group-label-centered">
                                             <span class="legend">Recommended Fields</span>
                                             </xf:label>-->
@@ -163,7 +163,7 @@
                                     </xf:trigger>
                                 </xf:group>
                             </xf:group>
-                            <xf:group appearance="full" id="originInfo-add-node-optional" ref=".[not(@lang)] | .[not(@script)] | .[not(@transliteration)] | .[not(@displayLabel)]">
+                            <xf:group appearance="full" ref=".[not(@lang)] | .[not(@script)] | .[not(@transliteration)] | .[not(@displayLabel)]">
                                         <!--<xf:label class="xforms-group-label-centered">Optional Fields</xf:label>-->
                                         <!-- 
                                                 <xf:group appearance="full" ref=".[not(@lang)]">
@@ -203,7 +203,7 @@
                                                 </xf:group>
                                             -->
                             </xf:group>
-                            <xf:group appearance="full" id="originInfo-add-node-not-recommended" ref=".[not(@ID)] | .[not(@xml:lang)]">
+                            <xf:group appearance="full" ref=".[not(@ID)] | .[not(@xml:lang)]">
                                         <!--<xf:label class="xforms-group-label-centered">Deprecated Fields</xf:label>-->
                                         <!--  
                                                 <xf:group appearance="full" ref=".[not(@xml:lang)]">
@@ -228,7 +228,7 @@
                     <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@lang]">
                 <xf:select1 ref="./@lang">
-                    <xf:label>Language:</xf:label>
+                    <xf:label>Language</xf:label>
                     <xf:hint>
                         <p> The language used within Origin Information is specified here, if this language is different from the language noted in
                                     Language of Resource. The most common languages have been moved to the top of the list. </p>
@@ -246,7 +246,7 @@
                     <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@xml:lang]">
                 <xf:select1 ref="./@xml:lang">
-                    <xf:label>xml:lang:</xf:label>
+                    <xf:label>xml:lang</xf:label>
                     <xf:hint>
                         <p> This field is used to specify the language used within a field, using specifications in RFC 3066. RFC 3066 uses the
                                     two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in 639-1. </p>
@@ -265,7 +265,7 @@
                     <!--Cluster: include-->
             <xf:group appearance="full" ref=".[@script]">
                 <xf:select1 ref="./@script">
-                    <xf:label>Script:</xf:label>
+                    <xf:label>Script</xf:label>
                     <xf:hint>
                         <p> If the Origin Information is in a non-Latin script, note here the script utilised. As transliterations use the Latin script,
                                     the Transliteration field becomes unneccesary when Latin script is chosen. </p>
@@ -283,7 +283,7 @@
                     <!--Cluster: include-->
             <xf:group appearance="full" ref=".[not(@script='Latn')]">
                 <xf:select1 ref="./@transliteration">
-                    <xf:label>Transliteration:</xf:label>
+                    <xf:label>Transliteration</xf:label>
                     <xf:hint>
                         <p> If the Origin Information is transliterated, note here the transliteration scheme utilised. As transliterations are
                                     romanisations, the Script field becomes unneccesary. </p>
@@ -301,7 +301,7 @@
                     <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@displayLabel]">
                 <xf:input ref="./@displayLabel" class="text_50">
-                    <xf:label>Display Label: </xf:label>
+                    <xf:label>Display Label</xf:label>
                     <xf:hint>
                         <p>This field is used when additional text associated with the name is needed for display. Display Label may be used whenever
                                     appropriate to indicate the preferred labeling when displayed. Include the text and capitalization preferred, but do not
@@ -318,7 +318,7 @@
             </xf:group>
             <xf:group appearance="full" ref=".[@altRepGroup]">
                 <xf:input ref="./@altRepGroup" class="text_50">
-                    <xf:label>altRepGroup: </xf:label>
+                    <xf:label>altRepGroup</xf:label>
                     <xf:hint>
                         <p>Hint</p>
                     </xf:hint>
@@ -336,7 +336,7 @@
                     <!--place begins-->
                     <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                     <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-place" ref=".[mods:place]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:place]">
                 <div class="join">
                     <span class="legend">Place</span>
                     <span class="join-button">
@@ -387,7 +387,7 @@
                                     </xf:trigger>
                                 </div>
                                 <div class="node-adds">
-                                    <xf:group appearance="full" id="place-add-node-recommended" ref=".[not(mods:placeTerm)]">
+                                    <xf:group appearance="full" ref=".[not(mods:placeTerm)]">
                                                     <!--<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-->
                                                     <!--
                                                         <xf:trigger ref=".[not(@type)]" class="add-button">
@@ -422,7 +422,7 @@
                                 <!--place input begins-->
                     <xf:group appearance="full" ref=".[@supplied]">
                         <xf:select1 ref="./@supplied">
-                            <xf:label>Supplied:</xf:label>
+                            <xf:label>Supplied</xf:label>
                             <xf:hint>Hint</xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='yes-empty-code']/items/item">
                                 <xf:label ref="label"/>
@@ -434,7 +434,7 @@
                                 <!--placeTerm begins-->
                                 <!--DLF/Aquifer: REQUIRED-->
                                 <!--Cluster: include-->
-                    <xf:group appearance="full" class="fieldset level-3" id="fieldset-placeTerm" ref=".[mods:placeTerm]">
+                    <xf:group appearance="full" class="fieldset level-3" ref=".[mods:placeTerm]">
                         <div class="join">
                             <span class="legend">Place Term</span>
                             <span class="join-button">
@@ -471,7 +471,7 @@
                                             <!--Cluster: omit-->
                             <xf:group appearance="full" ref=".[@lang]">
                                 <xf:select1 ref="./@lang">
-                                    <xf:label>Language:</xf:label>
+                                    <xf:label>Language</xf:label>
                                     <xf:hint>
                                         <p> The language used within Origin Information is specified here, if this language is different from
                                                             the language noted in Language of Resource. The most common languages have been moved to the top of
@@ -491,7 +491,7 @@
                                             <!--Cluster: omit-->
                             <xf:group appearance="full" ref=".[@xml:lang]">
                                 <xf:select1 ref="./@xml:lang">
-                                    <xf:label>xml:lang:</xf:label>
+                                    <xf:label>xml:lang</xf:label>
                                     <xf:hint>
                                         <p> This field is used to specify the language used within a field, using specifications in RFC 3066.
                                                             RFC 3066 uses the two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those
@@ -512,7 +512,7 @@
                                             <!--Cluster: include-->
                             <xf:group appearance="full" ref=".[@script]">
                                 <xf:select1 ref="./@script">
-                                    <xf:label>Script:</xf:label>
+                                    <xf:label>Script</xf:label>
                                     <xf:hint>
                                         <p> If the Origin Information is in a non-Latin script, note here the script utilised. As
                                                             transliterations use the Latin script, the Transliteration field becomes unneccesary when Latin
@@ -532,7 +532,7 @@
                                             <!--Cluster: include-->
                             <xf:group appearance="full" ref=".[not(@script='Latn')]">
                                 <xf:select1 ref="./@transliteration">
-                                    <xf:label>Transliteration:</xf:label>
+                                    <xf:label>Transliteration</xf:label>
                                     <xf:hint>
                                         <p> If the Origin Information is transliterated, note here the transliteration scheme utilised. As
                                                             transliterations are romanisations, the Script field becomes unneccesary. </p>
@@ -549,7 +549,7 @@
                             </xf:group>
                             <xf:group appearance="full" ref=".[@type]">
                                 <xf:select1 ref="./@type">
-                                    <xf:label>Type:</xf:label>
+                                    <xf:label>Type</xf:label>
                                     <xf:hint>
                                         <p> Type indicates whether the place is expressed in a coded or textual form. </p>
                                     </xf:hint>
@@ -561,7 +561,7 @@
                             </xf:group>
                             <xf:group appearance="full" ref=".[@type='code']">
                                 <xf:select1 ref="./@authority">
-                                    <xf:label>Authority:</xf:label>
+                                    <xf:label>Authority</xf:label>
                                     <xf:hint>
                                         <p> The name of the authoritative list for a controlled value is recorded here. </p>
                                     </xf:hint>
@@ -572,7 +572,7 @@
                                 </xf:select1>
                                 <xf:group appearance="full" ref=".[@authorityURI]">
                                     <xf:input ref="./@authorityURI" class="text_50">
-                                        <xf:label>authorityURI: </xf:label>
+                                        <xf:label>authorityURI</xf:label>
                                         <xf:hint> Hint </xf:hint>
                                     </xf:input>
                                                     <!-- 
@@ -587,7 +587,7 @@
                                                 <!--Cluster: omit-->
                                 <xf:group appearance="full" ref=".[@valueURI]">
                                     <xf:input ref="./@valueURI" class="text_50">
-                                        <xf:label>valueURI: </xf:label>
+                                        <xf:label>valueURI</xf:label>
                                         <xf:hint> Hint </xf:hint>
                                     </xf:input>
                                                     <!-- 
@@ -601,7 +601,7 @@
                             </xf:group>
                             <xf:group appearance="full" ref=".[(@type='code') and (@authority='marccountry')]">
                                 <xf:select1 ref=".">
-                                    <xf:label>Place Term:</xf:label>
+                                    <xf:label>Place Term</xf:label>
                                     <xf:hint>
                                         <p> Names of countries (and US states) according to the marccountry standard list. </p>
                                     </xf:hint>
@@ -613,7 +613,7 @@
                             </xf:group>
                             <xf:group appearance="full" ref=".[(@type='code') and (@authority='iso3166')]">
                                 <xf:select1 ref=".">
-                                    <xf:label>Place Term:</xf:label>
+                                    <xf:label>Place Term</xf:label>
                                     <xf:hint>
                                         <p> Names of countries according to the iso3166 standard list. </p>
                                     </xf:hint>
@@ -625,7 +625,7 @@
                             </xf:group>
                             <xf:group appearance="full" ref=".[@type='text']">
                                 <xf:input ref="." class="text_100">
-                                    <xf:label>Place Term: </xf:label>
+                                    <xf:label>Place Term</xf:label>
                                     <xf:hint>
                                         <p> Uncoded place terms, i.e. place terms that have not been chosen in an authority file. </p>
                                     </xf:hint>
@@ -633,7 +633,7 @@
                             </xf:group>
                             <xf:group appearance="full" ref=".[string-length(@type) = 0]">
                                 <xf:input ref="." class="text_100">
-                                    <xf:label>Place Term: </xf:label>
+                                    <xf:label>Place Term</xf:label>
                                     <xf:hint>
                                         <p> Uncoded place terms, i.e. place terms that have not been chosen in an authority file. </p>
                                     </xf:hint>
@@ -650,7 +650,7 @@
                     <!--place ends-->
 
                     <!--publisher begins-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-publisher" ref=".[mods:publisher]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:publisher]">
                 <div class="join">
                     <span class="legend">Publisher</span>
                     <span class="join-button">
@@ -685,7 +685,7 @@
                                 <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
-                            <xf:label>Language:</xf:label>
+                            <xf:label>Language</xf:label>
                             <xf:hint>
                                 <p> The language used within Origin Information is specified here, if this language is different from the language
                                                 noted in Language of Resource. The most common languages have been moved to the top of the list. </p>
@@ -703,7 +703,7 @@
                                 <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
-                            <xf:label>xml:lang:</xf:label>
+                            <xf:label>xml:lang</xf:label>
                             <xf:hint>
                                 <p> This field is used to specify the language used within a field, using specifications in RFC 3066. RFC 3066 uses
                                                 the two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in
@@ -723,7 +723,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@script]">
                         <xf:select1 ref="./@script">
-                            <xf:label>Script:</xf:label>
+                            <xf:label>Script</xf:label>
                             <xf:hint>
                                 <p> If the Origin Information is in a non-Latin script, note here the script utilised. As transliterations use the
                                                 Latin script, the Transliteration field becomes unneccesary when Latin script is chosen. </p>
@@ -741,7 +741,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[not(@script='Latn')]">
                         <xf:select1 ref="./@transliteration">
-                            <xf:label>Transliteration:</xf:label>
+                            <xf:label>Transliteration</xf:label>
                             <xf:hint>
                                 <p> If the Origin Information is transliterated, note here the transliteration scheme utilised. As transliterations
                                                 are romanisations, the Script field becomes unneccesary. </p>
@@ -758,7 +758,7 @@
                     </xf:group>
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_100">
-                            <xf:label>Publisher: </xf:label>
+                            <xf:label>Publisher</xf:label>
                             <xf:hint>
                                 <p> The name of the entity that is the originator for a resource, i.e. that has published, printed, distributed,
                                                 released, issued, or produced it. Information about an institution responsible for digitising and delivering
@@ -774,7 +774,7 @@
 
                     <!--edition begins-->
                     <!--NB: according to schema, edition should repeat, but it does not make any sense-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-edition" ref=".[mods:edition]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:edition]">
                 <div class="join">
                     <span class="legend">Edition</span>
                     <span class="xforms-hint">
@@ -793,7 +793,7 @@
                                 <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
-                            <xf:label>Language:</xf:label>
+                            <xf:label>Language</xf:label>
                             <xf:hint>
                                 <p> The language used within Origin Information is specified here, if this language is different from the language
                                                 noted in Language of Resource. The most common languages have been moved to the top of the list. </p>
@@ -811,7 +811,7 @@
                                 <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
-                            <xf:label>xml:lang:</xf:label>
+                            <xf:label>xml:lang</xf:label>
                             <xf:hint>
                                 <p> This field is used to specify the language used within a field, using specifications in RFC 3066. RFC 3066 uses
                                                 the two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in
@@ -831,7 +831,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@script]">
                         <xf:select1 ref="./@script">
-                            <xf:label>Script:</xf:label>
+                            <xf:label>Script</xf:label>
                             <xf:hint>
                                 <p> If the Origin Information is in a non-Latin script, note here the script utilised. As transliterations use the
                                                 Latin script, the Transliteration field becomes unneccesary when Latin script is chosen. </p>
@@ -849,7 +849,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[not(@script='Latn')]">
                         <xf:select1 ref="./@transliteration">
-                            <xf:label>Transliteration:</xf:label>
+                            <xf:label>Transliteration</xf:label>
                             <xf:hint>
                                 <p> If the Origin Information is transliterated, note here the transliteration scheme utilised. As transliterations
                                                 are romanisations, the Script field becomes unneccesary. </p>
@@ -866,7 +866,7 @@
                     </xf:group>
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Edition: </xf:label>
+                            <xf:label>Edition</xf:label>
                             <xf:hint>
                                 <p> Information identifying the version of the resource. </p>
                             </xf:hint>
@@ -897,7 +897,7 @@
                     <!--issuance begins-->
                     <!--DLF/Aquifer: -->
                     <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-issuance" ref=".[mods:issuance]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:issuance]">
                 <div class="join">
                     <span class="legend">Issuance</span>
                     <span class="join-button">
@@ -932,7 +932,7 @@
                                 <!--issuance input begins-->
                     <xf:group appearance="full">
                         <xf:select1 ref=".">
-                            <xf:label>Issuance:</xf:label>
+                            <xf:label>Issuance</xf:label>
                             <xf:hint>
                                 <p>Issuance records how the resource is issued. It may be used with the following values: continuing and
                                                 monographic. </p>
@@ -952,7 +952,7 @@
                     <!--frequency begins-->
                     <!--DLF/Aquifer: -->
                     <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-frequency" ref=".[mods:frequency]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:frequency]">
                 <div class="join">
                     <span class="legend">Frequency</span>
                     <span class="xforms-hint">
@@ -968,7 +968,7 @@
                                 <!--frequency input begins-->
                     <xf:group appearance="full" ref=".[@authority]">
                         <xf:select1 ref="./@authority">
-                            <xf:label>Authority:</xf:label>
+                            <xf:label>Authority</xf:label>
                             <xf:hint>
                                 <p> The name of the authoritative list for a controlled value is recorded here. </p>
                             </xf:hint>
@@ -980,7 +980,7 @@
                     </xf:group>
                     <xf:group appearance="full">
                         <xf:select1 ref=".">
-                            <xf:label>Frequency:</xf:label>
+                            <xf:label>Frequency</xf:label>
                             <xf:hint>
                                 <p> Frequency is used to note the publication pattern of the item. It is only used if the Issuance of the resource
                                                 is "continuing".</p>
@@ -1015,7 +1015,7 @@
                     <!--frequency ends-->
 
                     <!--dateIssued begins-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-dateIssued">
+            <xf:group appearance="full" class="fieldset level-2">
                 <div class="join">
                     <span class="legend">Date Issued</span>
                     <span class="join-button">
@@ -1046,7 +1046,7 @@
                                 <!--dateIssued input begins-->
                     <xf:group appearance="full" ref=".[@encoding]">
                         <xf:select1 ref="./@encoding">
-                            <xf:label>Encoding:</xf:label>
+                            <xf:label>Encoding</xf:label>
                             <xf:hint>
                                 <p> Dates can be expressed in several different formats. The following values are used with the Encoding: w3cdtf,
                                                 iso8601, marc. The recommended encoding is w3cdtf. </p>
@@ -1065,7 +1065,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@point]">
                         <xf:select1 ref="./@point">
-                            <xf:label>Point:</xf:label>
+                            <xf:label>Point</xf:label>
                             <xf:hint>
                                 <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The following values are used with Point: start,
                                                 end. Repeat the date field and choose "start" in one and "end" in the other repetition, and enter the
@@ -1081,7 +1081,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[@keyDate]">
                         <xf:select1 ref="./@keyDate">
-                            <xf:label>Key Date:</xf:label>
+                            <xf:label>Key Date</xf:label>
                             <xf:hint>
                                 <p> One can record different events that may be important in the life of a resource in a number of different date
                                                 fields. When multiple date fields apply but would contain identical data, one may choose to use only one of the
@@ -1096,7 +1096,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@qualifier]">
                         <xf:select1 ref="./@qualifier">
-                            <xf:label>Qualifier:</xf:label>
+                            <xf:label>Qualifier</xf:label>
                             <xf:hint>
                                 <p> When a date is uncertain or supplied by the cataloger, indicate this through the use of Qualifier rather than
                                                 inserting characters such as "ca.", brackets, or a question mark as part of the date string. When only a decade
@@ -1111,7 +1111,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Date Issued: </xf:label>
+                            <xf:label>Date Issued</xf:label>
                             <xf:hint>
                                 <p> The date that the resource was published, released, or issued. </p>
                             </xf:hint>
@@ -1123,7 +1123,7 @@
             </xf:group>
                     <!--dateIssued ends-->
                     <!--dateCreated begins-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-dateCreated" ref=".[mods:dateCreated]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:dateCreated]">
                 <div class="join">
                     <span class="legend">Date Created</span>
                     <span class="join-button">
@@ -1154,7 +1154,7 @@
                                 <!--dateCreated input begins-->
                     <xf:group appearance="full" ref=".[@encoding]">
                         <xf:select1 ref="./@encoding">
-                            <xf:label>Encoding:</xf:label>
+                            <xf:label>Encoding</xf:label>
                             <xf:hint>
                                 <p> Dates can be expressed in several different formats. The following values are used with the Encoding: w3cdtf,
                                                 iso8601, marc. The recommended encoding is w3cdtf. </p>
@@ -1173,7 +1173,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@point]">
                         <xf:select1 ref="./@point">
-                            <xf:label>Point:</xf:label>
+                            <xf:label>Point</xf:label>
                             <xf:hint>
                                 <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The following values are used with Point: start,
                                                 end. Repeat the date field and choose "start" in one and "end" in the other repetition, and enter the
@@ -1189,7 +1189,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[@keyDate]">
                         <xf:select1 ref="./@keyDate">
-                            <xf:label>Key Date:</xf:label>
+                            <xf:label>Key Date</xf:label>
                             <xf:hint>
                                 <p> One can record different events that may be important in the life of a resource in a number of different date
                                                 fields. When multiple date fields apply but would contain identical data, one may choose to use only one of the
@@ -1204,7 +1204,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@qualifier]">
                         <xf:select1 ref="./@qualifier">
-                            <xf:label>Qualifier:</xf:label>
+                            <xf:label>Qualifier</xf:label>
                             <xf:hint>
                                 <p> When a date is uncertain or supplied by the cataloger, indicate this through the use of Qualifier rather than
                                                 inserting characters such as "ca.", brackets, or a question mark as part of the date string. When only a decade
@@ -1219,7 +1219,7 @@
                     </xf:group>
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Date Created: </xf:label>
+                            <xf:label>Date Created</xf:label>
                             <xf:hint>
                                 <p> The date that the resource was published, released, or issued. </p>
                             </xf:hint>
@@ -1231,7 +1231,7 @@
             </xf:group>
                     <!--dateCreated ends-->
                     <!--dateCaptured begins-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-dateCaptured" ref=".[mods:dateCaptured]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:dateCaptured]">
                 <div class="join">
                     <span class="legend">Date Captured</span>
                     <span class="join-button">
@@ -1262,7 +1262,7 @@
                                 <!--dateCaptured input begins-->
                     <xf:group appearance="full" ref=".[@encoding]">
                         <xf:select1 ref="./@encoding">
-                            <xf:label>Encoding:</xf:label>
+                            <xf:label>Encoding</xf:label>
                             <xf:hint>
                                 <p> Dates can be expressed in several different formats. The following values are used with the Encoding: w3cdtf,
                                                 iso8601, marc. The recommended encoding is w3cdtf. </p>
@@ -1281,7 +1281,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@point]">
                         <xf:select1 ref="./@point">
-                            <xf:label>Point:</xf:label>
+                            <xf:label>Point</xf:label>
                             <xf:hint>
                                 <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The following values are used with Point: start,
                                                 end. Repeat the date field and choose "start" in one and "end" in the other repetition, and enter the
@@ -1297,7 +1297,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[@keyDate]">
                         <xf:select1 ref="./@keyDate">
-                            <xf:label>Key Date:</xf:label>
+                            <xf:label>Key Date</xf:label>
                             <xf:hint>
                                 <p> One can record different events that may be important in the life of a resource in a number of different date
                                                 fields. When multiple date fields apply but would contain identical data, one may choose to use only one of the
@@ -1312,7 +1312,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@qualifier]">
                         <xf:select1 ref="./@qualifier">
-                            <xf:label>Qualifier:</xf:label>
+                            <xf:label>Qualifier</xf:label>
                             <xf:hint>
                                 <p> When a date is uncertain or supplied by the cataloger, indicate this through the use of Qualifier rather than
                                                 inserting characters such as "ca.", brackets, or a question mark as part of the date string. When only a decade
@@ -1327,7 +1327,7 @@
                     </xf:group>
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Date Captured: </xf:label>
+                            <xf:label>Date Captured</xf:label>
                             <xf:hint>
                                 <p> The date that the resource was published, released, or issued. </p>
                             </xf:hint>
@@ -1339,7 +1339,7 @@
             </xf:group>
                     <!--dateCaptured ends-->
                     <!--fieldset-dateValid begins-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-dateValid" ref=".[mods:dateValid]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:dateValid]">
                 <div class="join">
                     <span class="legend">Date Valid</span>
                     <span class="join-button">
@@ -1370,7 +1370,7 @@
                                 <!--dateValid input begins-->
                     <xf:group appearance="full" ref=".[@encoding]">
                         <xf:select1 ref="./@encoding">
-                            <xf:label>Encoding:</xf:label>
+                            <xf:label>Encoding</xf:label>
                             <xf:hint>
                                 <p> Dates can be expressed in several different formats. The following values are used with the Encoding: w3cdtf,
                                                 iso8601, marc. The recommended encoding is w3cdtf. </p>
@@ -1389,7 +1389,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@point]">
                         <xf:select1 ref="./@point">
-                            <xf:label>Point:</xf:label>
+                            <xf:label>Point</xf:label>
                             <xf:hint>
                                 <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The following values are used with Point: start,
                                                 end. Repeat the date field and choose "start" in one and "end" in the other repetition, and enter the
@@ -1405,7 +1405,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[@keyDate]">
                         <xf:select1 ref="./@keyDate">
-                            <xf:label>Key Date:</xf:label>
+                            <xf:label>Key Date</xf:label>
                             <xf:hint>
                                 <p> One can record different events that may be important in the life of a resource in a number of different date
                                                 fields. When multiple date fields apply but would contain identical data, one may choose to use only one of the
@@ -1420,7 +1420,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@qualifier]">
                         <xf:select1 ref="./@qualifier">
-                            <xf:label>Qualifier:</xf:label>
+                            <xf:label>Qualifier</xf:label>
                             <xf:hint>
                                 <p> When a date is uncertain or supplied by the cataloger, indicate this through the use of Qualifier rather than
                                                 inserting characters such as "ca.", brackets, or a question mark as part of the date string. When only a decade
@@ -1435,7 +1435,7 @@
                     </xf:group>
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Date Valid: </xf:label>
+                            <xf:label>Date Valid</xf:label>
                             <xf:hint>
                                 <p> The date that the resource was published, released, or issued. </p>
                             </xf:hint>
@@ -1447,7 +1447,7 @@
             </xf:group>
                     <!--dateValid ends-->
                     <!--fieldset-dateModified begins-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-dateModified" ref=".[mods:dateModified]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:dateModified]">
                 <div class="join">
                     <span class="legend">Date Modified</span>
                     <span class="join-button">
@@ -1478,7 +1478,7 @@
                                 <!--dateModified input begins-->
                     <xf:group appearance="full" ref=".[@encoding]">
                         <xf:select1 ref="./@encoding">
-                            <xf:label>Encoding:</xf:label>
+                            <xf:label>Encoding</xf:label>
                             <xf:hint>
                                 <p> Dates can be expressed in several different formats. The following values are used with the Encoding: w3cdtf,
                                                 iso8601, marc. The recommended encoding is w3cdtf. </p>
@@ -1497,7 +1497,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@point]">
                         <xf:select1 ref="./@point">
-                            <xf:label>Point:</xf:label>
+                            <xf:label>Point</xf:label>
                             <xf:hint>
                                 <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The following values are used with Point: start,
                                                 end. Repeat the date field and choose "start" in one and "end" in the other repetition, and enter the
@@ -1513,7 +1513,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[@keyDate]">
                         <xf:select1 ref="./@keyDate">
-                            <xf:label>Key Date:</xf:label>
+                            <xf:label>Key Date</xf:label>
                             <xf:hint>
                                 <p> One can record different events that may be important in the life of a resource in a number of different date
                                                 fields. When multiple date fields apply but would contain identical data, one may choose to use only one of the
@@ -1528,7 +1528,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@qualifier]">
                         <xf:select1 ref="./@qualifier">
-                            <xf:label>Qualifier:</xf:label>
+                            <xf:label>Qualifier</xf:label>
                             <xf:hint>
                                 <p> When a date is uncertain or supplied by the cataloger, indicate this through the use of Qualifier rather than
                                                 inserting characters such as "ca.", brackets, or a question mark as part of the date string. When only a decade
@@ -1543,7 +1543,7 @@
                     </xf:group>
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Date Modified: </xf:label>
+                            <xf:label>Date Modified</xf:label>
                             <xf:hint>
                                 <p> The date that the resource was published, released, or issued. </p>
                             </xf:hint>
@@ -1555,7 +1555,7 @@
             </xf:group>
                     <!--dateModified ends-->
                     <!--copyrightDate begins-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-copyrightDate" ref=".[mods:copyrightDate]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:copyrightDate]">
                 <div class="join">
                     <span class="legend">Copyright Date</span>
                     <span class="join-button">
@@ -1586,7 +1586,7 @@
                                 <!--copyrightDate input begins-->
                     <xf:group appearance="full" ref=".[@encoding]">
                         <xf:select1 ref="./@encoding">
-                            <xf:label>Encoding:</xf:label>
+                            <xf:label>Encoding</xf:label>
                             <xf:hint>
                                 <p> Dates can be expressed in several different formats. The following values are used with the Encoding: w3cdtf,
                                                 iso8601, marc. The recommended encoding is w3cdtf. </p>
@@ -1605,7 +1605,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@point]">
                         <xf:select1 ref="./@point">
-                            <xf:label>Point:</xf:label>
+                            <xf:label>Point</xf:label>
                             <xf:hint>
                                 <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The following values are used with Point: start,
                                                 end. Repeat the date field and choose "start" in one and "end" in the other repetition, and enter the
@@ -1621,7 +1621,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[@keyDate]">
                         <xf:select1 ref="./@keyDate">
-                            <xf:label>Key Date:</xf:label>
+                            <xf:label>Key Date</xf:label>
                             <xf:hint>
                                 <p> One can record different events that may be important in the life of a resource in a number of different date
                                                 fields. When multiple date fields apply but would contain identical data, one may choose to use only one of the
@@ -1636,7 +1636,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@qualifier]">
                         <xf:select1 ref="./@qualifier">
-                            <xf:label>Qualifier:</xf:label>
+                            <xf:label>Qualifier</xf:label>
                             <xf:hint>
                                 <p> When a date is uncertain or supplied by the cataloger, indicate this through the use of Qualifier rather than
                                                 inserting characters such as "ca.", brackets, or a question mark as part of the date string. When only a decade
@@ -1651,7 +1651,7 @@
                     </xf:group>
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Copytight Date: </xf:label>
+                            <xf:label>Copytight Date</xf:label>
                             <xf:hint>
                                 <p> The date that the resource was published, released, or issued. </p>
                             </xf:hint>
@@ -1663,7 +1663,7 @@
             </xf:group>
                     <!--copyrightDate ends-->
                     <!--dateOther begins-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-dateOther" ref=".[mods:dateOther]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:dateOther]">
                 <div class="join">
                     <span class="legend">Other Date</span>
                     <span class="join-button">
@@ -1694,7 +1694,7 @@
                                 <!--dateOther input begins-->
                     <xf:group appearance="full" ref=".[@encoding]">
                         <xf:select1 ref="./@encoding">
-                            <xf:label>Encoding:</xf:label>
+                            <xf:label>Encoding</xf:label>
                             <xf:hint>
                                 <p> Dates can be expressed in several different formats. The following values are used with the Encoding: w3cdtf,
                                                 iso8601, marc. The recommended encoding is w3cdtf. </p>
@@ -1713,7 +1713,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@point]">
                         <xf:select1 ref="./@point">
-                            <xf:label>Point:</xf:label>
+                            <xf:label>Point</xf:label>
                             <xf:hint>
                                 <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The following values are used with Point: start,
                                                 end. Repeat the date field and choose "start" in one and "end" in the other repetition, and enter the
@@ -1729,7 +1729,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[@keyDate]">
                         <xf:select1 ref="./@keyDate">
-                            <xf:label>Key Date:</xf:label>
+                            <xf:label>Key Date</xf:label>
                             <xf:hint>
                                 <p> One can record different events that may be important in the life of a resource in a number of different date
                                                 fields. When multiple date fields apply but would contain identical data, one may choose to use only one of the
@@ -1744,7 +1744,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@qualifier]">
                         <xf:select1 ref="./@qualifier">
-                            <xf:label>Qualifier:</xf:label>
+                            <xf:label>Qualifier</xf:label>
                             <xf:hint>
                                 <p> When a date is uncertain or supplied by the cataloger, indicate this through the use of Qualifier rather than
                                                 inserting characters such as "ca.", brackets, or a question mark as part of the date string. When only a decade
@@ -1759,7 +1759,7 @@
                     </xf:group>
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Other Date: </xf:label>
+                            <xf:label>Other Date</xf:label>
                             <xf:hint>
                                 <p> A date that does not fall into another category but is important to record. </p>
                             </xf:hint>
@@ -1772,11 +1772,11 @@
                     <!--dateOther ends-->
         </xf:repeat>
                 <!--originInfo repeat ends-->
-        <xf:group appearance="full" id="originInfo-add-element" ref=".[not(./mods:originInfo)]">
+        <xf:group appearance="full" ref=".[not(./mods:originInfo)]">
             <xf:trigger ref=".[not(mods:originInfo)]" class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Origin Information</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="mods:form" at="index('originInfo-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo"/>
+                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:originInfo"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

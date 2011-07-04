@@ -7,17 +7,14 @@
     <description/>
     <notes>used for xml:lang</notes>
     <items>
+        <!-- A -->
         <item>
-            <label>(none selected)</label>
-            <value/>
+            <label>Abkhazian</label>
+            <value>ab</value>
         </item>
         <item>
             <label>Afar</label>
             <value>aa</value>
-        </item>
-        <item>
-            <label>Abkhazian</label>
-            <value>ab</value>
         </item>
         <item>
             <label>Afrikaans</label>
@@ -67,13 +64,14 @@
             <label>Azerbaijani</label>
             <value>az</value>
         </item>
-        <item>
-            <label>Bashkir</label>
-            <value>ba</value>
-        </item>
+        <!-- B -->
         <item>
             <label>Bambara</label>
             <value>bm</value>
+        </item>
+        <item>
+            <label>Bashkir</label>
+            <value>ba</value>
         </item>
         <item>
             <label>Basque</label>
@@ -96,10 +94,6 @@
             <value>bi</value>
         </item>
         <item>
-            <label>Tibetan</label>
-            <value>bo</value>
-        </item>
-        <item>
             <label>Bosnian</label>
             <value>bs</value>
         </item>
@@ -115,13 +109,10 @@
             <label>Burmese</label>
             <value>my</value>
         </item>
+        <!-- C -->
         <item>
             <label>Catalan<!--; Valencian--></label>
             <value>ca</value>
-        </item>
-        <item>
-            <label>Czech</label>
-            <value>cs</value>
         </item>
         <item>
             <label>Chamorro</label>
@@ -130,6 +121,10 @@
         <item>
             <label>Chechen</label>
             <value>ce</value>
+        </item>
+        <item>
+            <label>Chichewa; Chewa; Nyanja</label>
+            <value>ny</value>
         </item>
         <item>
             <label>Chinese</label>
@@ -156,20 +151,17 @@
             <value>cr</value>
         </item>
         <item>
-            <label>Welsh</label>
-            <value>cy</value>
+            <label>Croatian</label>
+            <value>hr</value>
         </item>
         <item>
             <label>Czech</label>
             <value>cs</value>
         </item>
+        <!-- D -->
         <item>
             <label>Danish</label>
             <value>da</value>
-        </item>
-        <item>
-            <label>German</label>
-            <value>de</value>
         </item>
         <item>
             <label>Divehi; Dhivehi; Maldivian</label>
@@ -183,10 +175,7 @@
             <label>Dzongkha</label>
             <value>dz</value>
         </item>
-        <item>
-            <label>Greek, Modern (1453-)</label>
-            <value>el</value>
-        </item>
+        <!-- E -->
         <item>
             <label>English</label>
             <value>en</value>
@@ -200,20 +189,13 @@
             <value>et</value>
         </item>
         <item>
-            <label>Basque</label>
-            <value>eu</value>
-        </item>
-        <item>
             <label>Ewe</label>
             <value>ee</value>
         </item>
+        <!-- F -->
         <item>
             <label>Faroese</label>
             <value>fo</value>
-        </item>
-        <item>
-            <label>Persian</label>
-            <value>fa</value>
         </item>
         <item>
             <label>Fijian</label>
@@ -228,16 +210,25 @@
             <value>fr</value>
         </item>
         <item>
-            <label>French</label>
-            <value>fr</value>
-        </item>
-        <item>
             <label>Western Frisian</label>
             <value>fy</value>
         </item>
         <item>
             <label>Fulah</label>
             <value>ff</value>
+        </item>
+        <!-- G -->
+        <item>
+            <label>Gaelic; Scottish Gaelic</label>
+            <value>gd</value>
+        </item>
+        <item>
+            <label>Galician</label>
+            <value>gl</value>
+        </item>
+        <item>
+            <label>Ganda</label>
+            <value>lg</value>
         </item>
         <item>
             <label>Georgian</label>
@@ -246,22 +237,6 @@
         <item>
             <label>German</label>
             <value>de</value>
-        </item>
-        <item>
-            <label>Gaelic; Scottish Gaelic</label>
-            <value>gd</value>
-        </item>
-        <item>
-            <label>Irish</label>
-            <value>ga</value>
-        </item>
-        <item>
-            <label>Galician</label>
-            <value>gl</value>
-        </item>
-        <item>
-            <label>Manx</label>
-            <value>gv</value>
         </item>
         <item>
             <label>Greek, Modern (1453-)</label>
@@ -275,6 +250,7 @@
             <label>Gujarati</label>
             <value>gu</value>
         </item>
+        <!-- H -->
         <item>
             <label>Haitian; Haitian Creole</label>
             <value>ht</value>
@@ -300,21 +276,10 @@
             <value>ho</value>
         </item>
         <item>
-            <label>Croatian</label>
-            <value>hr</value>
-        </item>
-        <item>
             <label>Hungarian</label>
             <value>hu</value>
         </item>
-        <item>
-            <label>Armenian</label>
-            <value>hy</value>
-        </item>
-        <item>
-            <label>Igbo</label>
-            <value>ig</value>
-        </item>
+        <!-- I -->
         <item>
             <label>Icelandic</label>
             <value>is</value>
@@ -324,8 +289,12 @@
             <value>io</value>
         </item>
         <item>
-            <label>Sichuan Yi; Nuosu</label>
-            <value>ii</value>
+            <label>Igbo</label>
+            <value>ig</value>
+        </item>
+        <item>
+            <label>Indonesian</label>
+            <value>id</value>
         </item>
         <item>
             <label>Inuktitut</label>
@@ -336,33 +305,31 @@
             <value>ie</value>
         </item>
         <item>
-            <label>Interlingua (Intl. Aux. Language Assoc.)</label>
+            <label>Interlingua<!-- (Intl. Aux. Language Assoc.)--></label>
             <value>ia</value>
-        </item>
-        <item>
-            <label>Indonesian</label>
-            <value>id</value>
         </item>
         <item>
             <label>Inupiaq</label>
             <value>ik</value>
         </item>
         <item>
-            <label>Icelandic</label>
-            <value>is</value>
+            <label>Irish</label>
+            <value>ga</value>
         </item>
         <item>
             <label>Italian</label>
             <value>it</value>
         </item>
-        <item>
-            <label>Javanese</label>
-            <value>jv</value>
-        </item>
+        <!-- J -->
         <item>
             <label>Japanese</label>
             <value>ja</value>
         </item>
+        <item>
+            <label>Javanese</label>
+            <value>jv</value>
+        </item>
+        <!-- K -->
         <item>
             <label>Kalaallisut; Greenlandic</label>
             <value>kl</value>
@@ -372,16 +339,12 @@
             <value>kn</value>
         </item>
         <item>
-            <label>Kashmiri</label>
-            <value>ks</value>
-        </item>
-        <item>
-            <label>Georgian</label>
-            <value>ka</value>
-        </item>
-        <item>
             <label>Kanuri</label>
             <value>kr</value>
+        </item>
+        <item>
+            <label>Kashmiri</label>
+            <value>ks</value>
         </item>
         <item>
             <label>Kazakh</label>
@@ -423,6 +386,7 @@
             <label>Kurdish</label>
             <value>ku</value>
         </item>
+        <!-- L -->
         <item>
             <label>Lao</label>
             <value>lo</value>
@@ -448,28 +412,37 @@
             <value>lt</value>
         </item>
         <item>
-            <label>Luxembourgish; Letzeburgesch</label>
-            <value>lb</value>
-        </item>
-        <item>
             <label>Luba-Katanga</label>
             <value>lu</value>
         </item>
         <item>
-            <label>Ganda</label>
-            <value>lg</value>
+            <label>Luxembourgish; Letzeburgesch</label>
+            <value>lb</value>
         </item>
+        <!-- M -->
         <item>
             <label>Macedonian</label>
             <value>mk</value>
         </item>
         <item>
-            <label>Marshallese</label>
-            <value>mh</value>
+            <label>Malagasy</label>
+            <value>mg</value>
+        </item>
+        <item>
+            <label>Malay</label>
+            <value>ms</value>
         </item>
         <item>
             <label>Malayalam</label>
             <value>ml</value>
+        </item>
+        <item>
+            <label>Maltese</label>
+            <value>mt</value>
+        </item>
+        <item>
+            <label>Manx</label>
+            <value>gv</value>
         </item>
         <item>
             <label>Maori</label>
@@ -480,37 +453,14 @@
             <value>mr</value>
         </item>
         <item>
-            <label>Malay</label>
-            <value>ms</value>
-        </item>
-        <item>
-            <label>Macedonian</label>
-            <value>mk</value>
-        </item>
-        <item>
-            <label>Malagasy</label>
-            <value>mg</value>
-        </item>
-        <item>
-            <label>Maltese</label>
-            <value>mt</value>
+            <label>Marshallese</label>
+            <value>mh</value>
         </item>
         <item>
             <label>Mongolian</label>
             <value>mn</value>
         </item>
-        <item>
-            <label>Maori</label>
-            <value>mi</value>
-        </item>
-        <item>
-            <label>Malay</label>
-            <value>ms</value>
-        </item>
-        <item>
-            <label>Burmese</label>
-            <value>my</value>
-        </item>
+        <!-- N -->
         <item>
             <label>Nauru</label>
             <value>na</value>
@@ -520,12 +470,12 @@
             <value>nv</value>
         </item>
         <item>
-            <label>Ndebele, South; South Ndebele</label>
-            <value>nr</value>
-        </item>
-        <item>
             <label>Ndebele, North; North Ndebele</label>
             <value>nd</value>
+        </item>
+        <item>
+            <label>Ndebele, South; South Ndebele</label>
+            <value>nr</value>
         </item>
         <item>
             <label>Ndonga</label>
@@ -536,25 +486,18 @@
             <value>ne</value>
         </item>
         <item>
-            <label>Dutch; Flemish</label>
-            <value>nl</value>
-        </item>
-        <item>
-            <label>Norwegian Nynorsk; Nynorsk, Norwegian</label>
-            <value>nn</value>
-        </item>
-        <item>
-            <label>Bokmål, Norwegian; Norwegian Bokmål</label>
-            <value>nb</value>
-        </item>
-        <item>
             <label>Norwegian</label>
             <value>no</value>
         </item>
         <item>
-            <label>Chichewa; Chewa; Nyanja</label>
-            <value>ny</value>
+            <label>Norwegian Nynorsk<!--; Nynorsk, Norwegian--></label>
+            <value>nn</value>
         </item>
+        <item>
+            <label><!--Bokmål, Norwegian; -->Norwegian Bokmål</label>
+            <value>nb</value>
+        </item>
+        <!-- O -->
         <item>
             <label>Occitan (post 1500)</label>
             <value>oc</value>
@@ -575,6 +518,11 @@
             <label>Ossetian; Ossetic</label>
             <value>os</value>
         </item>
+        <!-- P -->
+        <item>
+            <label>Pali</label>
+            <value>pi</value>
+        </item>
         <item>
             <label>Panjabi; Punjabi</label>
             <value>pa</value>
@@ -582,10 +530,6 @@
         <item>
             <label>Persian</label>
             <value>fa</value>
-        </item>
-        <item>
-            <label>Pali</label>
-            <value>pi</value>
         </item>
         <item>
             <label>Polish</label>
@@ -599,17 +543,15 @@
             <label>Pushto; Pashto</label>
             <value>ps</value>
         </item>
+        <!-- Q -->
         <item>
             <label>Quechua</label>
             <value>qu</value>
         </item>
+        <!-- R -->
         <item>
             <label>Romansh</label>
             <value>rm</value>
-        </item>
-        <item>
-            <label>Romanian; Moldavian; Moldovan</label>
-            <value>ro</value>
         </item>
         <item>
             <label>Romanian; Moldavian; Moldovan</label>
@@ -623,6 +565,15 @@
             <label>Russian</label>
             <value>ru</value>
         </item>
+        <!-- S -->
+        <item>
+            <label>Samoan</label>
+            <value>sm</value>
+        </item>
+        <item>
+            <label>Northern Sami</label>
+            <value>se</value>
+        </item>
         <item>
             <label>Sango</label>
             <value>sg</value>
@@ -630,6 +581,22 @@
         <item>
             <label>Sanskrit</label>
             <value>sa</value>
+        </item>
+        <item>
+            <label>Sardinian</label>
+            <value>sc</value>
+        </item>
+        <item>
+            <label>Serbian</label>
+            <value>sr</value>
+        </item>
+        <item>
+            <label>Shona</label>
+            <value>sn</value>
+        </item>
+        <item>
+            <label>Sindhi</label>
+            <value>sd</value>
         </item>
         <item>
             <label>Sinhala; Sinhalese</label>
@@ -640,28 +607,8 @@
             <value>sk</value>
         </item>
         <item>
-            <label>Slovak</label>
-            <value>sk</value>
-        </item>
-        <item>
             <label>Slovenian</label>
             <value>sl</value>
-        </item>
-        <item>
-            <label>Northern Sami</label>
-            <value>se</value>
-        </item>
-        <item>
-            <label>Samoan</label>
-            <value>sm</value>
-        </item>
-        <item>
-            <label>Shona</label>
-            <value>sn</value>
-        </item>
-        <item>
-            <label>Sindhi</label>
-            <value>sd</value>
         </item>
         <item>
             <label>Somali</label>
@@ -676,22 +623,6 @@
             <value>es</value>
         </item>
         <item>
-            <label>Albanian</label>
-            <value>sq</value>
-        </item>
-        <item>
-            <label>Sardinian</label>
-            <value>sc</value>
-        </item>
-        <item>
-            <label>Serbian</label>
-            <value>sr</value>
-        </item>
-        <item>
-            <label>Swati</label>
-            <value>ss</value>
-        </item>
-        <item>
             <label>Sundanese</label>
             <value>su</value>
         </item>
@@ -700,12 +631,25 @@
             <value>sw</value>
         </item>
         <item>
+            <label>Swati</label>
+            <value>ss</value>
+        </item>
+        <item>
             <label>Swedish</label>
             <value>sv</value>
+        </item>
+        <!-- T -->
+        <item>
+            <label>Tagalog</label>
+            <value>tl</value>
         </item>
         <item>
             <label>Tahitian</label>
             <value>ty</value>
+        </item>
+        <item>
+            <label>Tajik</label>
+            <value>tg</value>
         </item>
         <item>
             <label>Tamil</label>
@@ -718,14 +662,6 @@
         <item>
             <label>Telugu</label>
             <value>te</value>
-        </item>
-        <item>
-            <label>Tajik</label>
-            <value>tg</value>
-        </item>
-        <item>
-            <label>Tagalog</label>
-            <value>tl</value>
         </item>
         <item>
             <label>Thai</label>
@@ -744,25 +680,26 @@
             <value>to</value>
         </item>
         <item>
-            <label>Tswana</label>
-            <value>tn</value>
-        </item>
-        <item>
             <label>Tsonga</label>
             <value>ts</value>
         </item>
         <item>
-            <label>Turkmen</label>
-            <value>tk</value>
+            <label>Tswana</label>
+            <value>tn</value>
         </item>
         <item>
             <label>Turkish</label>
             <value>tr</value>
         </item>
         <item>
+            <label>Turkmen</label>
+            <value>tk</value>
+        </item>
+        <item>
             <label>Twi</label>
             <value>tw</value>
         </item>
+        <!-- U -->
         <item>
             <label>Uighur; Uyghur</label>
             <value>ug</value>
@@ -779,6 +716,7 @@
             <label>Uzbek</label>
             <value>uz</value>
         </item>
+        <!-- V -->
         <item>
             <label>Venda</label>
             <value>ve</value>
@@ -791,21 +729,28 @@
             <label>Volapük</label>
             <value>vo</value>
         </item>
-        <item>
-            <label>Welsh</label>
-            <value>cy</value>
-        </item>
+        <!-- W -->
         <item>
             <label>Walloon</label>
             <value>wa</value>
         </item>
         <item>
+            <label>Welsh</label>
+            <value>cy</value>
+        </item>
+        <item>
             <label>Wolof</label>
             <value>wo</value>
         </item>
+        <!-- X -->
         <item>
             <label>Xhosa</label>
             <value>xh</value>
+        </item>
+        <!-- Y -->
+        <item>
+            <label>Sichuan Yi; Nuosu</label>
+            <value>ii</value>
         </item>
         <item>
             <label>Yiddish</label>
@@ -815,13 +760,10 @@
             <label>Yoruba</label>
             <value>yo</value>
         </item>
+        <!-- Z -->
         <item>
             <label>Zhuang; Chuang</label>
             <value>za</value>
-        </item>
-        <item>
-            <label>Chinese</label>
-            <value>zh</value>
         </item>
         <item>
             <label>Zulu</label>

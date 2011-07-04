@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-xlink">
     <xf:group>
         <fieldset class="level-1">
@@ -474,7 +475,7 @@
                                                 <!--NB-->: Chinese: pinyin Japanese: (modified) Hepburn Korean: <!--NB--> Russian: <!--NB--> Sanskrit: <!--NB-->
                                                 If you employ a different, but recognised, transliteration scheme, you may have it added to the list. </p>
                                     </xf:hint>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                         <xf:label ref="label"/>
                                         <xf:value ref="value"/>
                                     </xf:itemset>
@@ -497,7 +498,7 @@
                                                 "Han (Simplified Variant)" or "Han (Traditional Variant)". If the two variants are not considered, it is "Han
                                                 (Hanzi, Kanji, Hanja)", also used for Japanese, Korean and Vietnamese written in Chinese. </p>
                                     </xf:hint>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                                         <xf:label ref="label"/>
                                         <xf:value ref="value"/>
                                     </xf:itemset>

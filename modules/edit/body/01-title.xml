@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="title block-form" tab-id="title">
     <xf:group class="fieldset level-1">
         <div class="join">
@@ -25,9 +26,7 @@
                 </xf:trigger>
             </span>
         </div>
-            <!--titleInfo repeat begins-->
         <xf:repeat nodeset="instance('save-data')/mods:titleInfo" id="titleInfo-repeat">
-                <!--titleInfo node-add begins-->
             <xf:group class="show-hide">
                 <xf:switch>
                     <xf:case id="titleInfo-add-node-hide">
@@ -243,13 +242,9 @@
                     </xf:case>
                 </xf:switch>
             </xf:group>
-                <!--titleInfo node-add ends-->
-                <!--titleInfo input begins-->
-                <!--<xf:output ref="instance('code-tables')/code-table[code-table-name='title-type-code']/items/item[value='abbreviated']/label"/>-->
 
 
                 <!--DLF/Aquifer: OPTIONAL-->
-                <!--Cluster: omit-->
             <xf:group class="text_50 schema_3.3 schema_3.4">
                 <xf:input ref="./@ID">
                     <xf:label>ID<span class="xforms-help">
@@ -262,7 +257,6 @@
                 </xf:input>
             </xf:group>
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
-                <!--Cluster: omit-->
             <xf:group class="text_50 schema_3.3 schema_3.4">
                 <xf:input ref="./@xlink:href">
                     <xf:label>XLink<span class="xforms-help">
@@ -275,7 +269,6 @@
                 </xf:input>
             </xf:group>
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
-                <!--Cluster: include-->
             <xf:group class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@type">
                     <xf:label>Type<span class="xforms-help">
@@ -292,10 +285,8 @@
                 </xf:select1>
             </xf:group>
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
-                <!--Cluster: include-->
-                <!--selection="open"-->
             <xf:group class="schema_3.3 schema_3.4">
-                <xf:select1 ref="./@authority">
+                <xf:select1 ref="./@authority" selection="open">
                     <xf:label>Abbreviated Title Authorities<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
@@ -310,10 +301,8 @@
                 </xf:select1>
             </xf:group>
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
-                <!--Cluster: include-->
-                <!--selection="open"-->
             <xf:group class="schema_3.3 schema_3.4">
-                <xf:select1 ref="./@authority">
+                <xf:select1 ref="./@authority" selection="open">
                     <xf:label>Name-Title Authorities<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
@@ -376,7 +365,6 @@
                 </xf:input>
             </xf:group>
                 <!--DLF/Aquifer: REQUIRED IF APPLICABLE-->
-                <!--Cluster: include-->
             <xf:group class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@lang">
                     <xf:label>Language<span class="xforms-help">
@@ -393,7 +381,6 @@
                 </xf:select1>
             </xf:group>
                 <!--DLF/Aquifer: NOT RECOMMENDED]-->
-                <!--Cluster: omit-->
             <xf:group class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@xml:lang">
                     <xf:label>XML:Lang<span class="xforms-help">
@@ -410,10 +397,8 @@
                 </xf:select1>
             </xf:group>
                 <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
-                <!--Cluster: include-->
-                <!--selection="open"-->
             <xf:group class="schema_3.3 schema_3.4">
-                <xf:select1 ref="./@transliteration">
+                <xf:select1 ref="./@transliteration" selection="open">
                     <xf:label>Transliteration<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
@@ -428,7 +413,6 @@
                 </xf:select1>
             </xf:group>
                 <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
-                <!--Cluster: include-->
             <xf:group class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@script">
                     <xf:label>Script
@@ -446,7 +430,6 @@
                 </xf:select1>
             </xf:group>
                 <!--DLF/Aquifer: OPTIONAL]]-->
-                <!--Cluster: hide-->
             <xf:group class="text_100 schema_3.3 schema_3.4">
                 <xf:input ref="./@displayLabel">
                     <xf:label>Display Label<span class="xforms-help">
@@ -459,10 +442,8 @@
                 </xf:input>
             </xf:group>
                 <!--DLF/Aquifer: N/A]]-->
-                <!--Cluster: hide-->
-                <!--selection="open"-->
             <xf:group class="schema_3.4">
-                <xf:select1 ref="./@nameTitleGroup">
+                <xf:select1 ref="./@nameTitleGroup" selection="open">
                     <xf:label>Name-Title Group<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
@@ -477,7 +458,6 @@
                 </xf:select1>
             </xf:group>
                 <!--DLF/Aquifer: N/A]]-->
-                <!--Cluster: hide-->
             <xf:group class="schema_3.4 select">
                 <xf:select1 ref="./@usage">
                     <xf:label>Usage<span class="xforms-help">
@@ -495,7 +475,6 @@
             </xf:group>
 
                 <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]]-->
-                <!--Cluster: hide-->
             <xf:group class="schema_3.3 schema_3.4 set">
                 <xf:input ref="./mods:nonSort" class="text_10">
                     <xf:label>Non Sort<span class="xforms-help">
@@ -509,7 +488,6 @@
             </xf:group>
 
                 <!--DLF/Aquifer: [REQUIRED]-->
-                <!--Cluster: require-->
             <xf:group class="textarea schema_3.3 schema_3.4">
                 <xf:textarea ref="./mods:title">
                     <xf:label>Title<span class="xforms-help">
@@ -522,7 +500,6 @@
                 </xf:textarea>
             </xf:group>
                 <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
-                <!--Cluster: include-->
             <xf:group class="textarea schema_3.3 schema_3.4">
                 <xf:textarea ref="./mods:subTitle">
                     <xf:label>Subtitle<span class="xforms-help">
@@ -535,7 +512,6 @@
                 </xf:textarea>
             </xf:group>
                 <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
-                <!--Cluster: hide-->
             <xf:group class="text_50 schema_3.3 schema_3.4">
                 <xf:input ref="./mods:partNumber">
                     <xf:label>Part Number<span class="xforms-help">
@@ -548,7 +524,6 @@
                 </xf:input>
             </xf:group>
                 <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
-                <!--Cluster: hide-->
             <xf:group class="textarea schema_3.3 schema_3.4">
                 <xf:textarea ref="./mods:partName">
                     <xf:label>Part Name<span class="xforms-help">
@@ -560,9 +535,7 @@
                     </xf:label>
                 </xf:textarea>
             </xf:group>
-                <!--titleInfo input ends-->
         </xf:repeat>
-            <!--title repeat ends-->
         <xf:group class="missing">
             <xf:trigger ref=".[not(mods:titleInfo)]">
                 <xf:label>Add Missing Title Information</xf:label>

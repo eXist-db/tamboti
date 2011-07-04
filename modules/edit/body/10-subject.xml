@@ -61,7 +61,7 @@
                             </xf:trigger>
                         </div>
                         <div class="node-adds">
-                            <xf:group appearance="full" id="subject-add-node-recommended" ref=".[not(mods:topic)] | .[not(mods:geographic)] | .[not(mods:temporal)] | .[not(mods:titleInfo)] | .[not(mods:name)] | .[not(mods:genre)] | .[not(mods:hierarchicalGeographic)] | .[not(mods:cartographics)] | .[not(mods:geographicCode)] | .[not(mods:occupation)]">
+                            <xf:group appearance="full" ref=".[not(mods:topic)] | .[not(mods:geographic)] | .[not(mods:temporal)] | .[not(mods:titleInfo)] | .[not(mods:name)] | .[not(mods:genre)] | .[not(mods:hierarchicalGeographic)] | .[not(mods:cartographics)] | .[not(mods:geographicCode)] | .[not(mods:occupation)]">
                                     <!--<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-->
                                     <!--
                                         <xf:trigger ref=".[not(@type)]" class="add-button">
@@ -171,7 +171,7 @@
                                 </xf:trigger>
                             </xf:group>
                                 <!-- 
-                                    <xf:group appearance="full" id="subject-add-node-optional" ref=".[not(mods:genre)]">
+                                    <xf:group appearance="full" ref=".[not(mods:genre)]">
                                     <xf:label class="xforms-group-label-centered">Optional Fields</xf:label>
                                     <xf:trigger ref=".[not(mods:genre)]" class="add-button">
                                     <xf:label class="xforms-group-label-centered">Add Genre</xf:label>
@@ -183,7 +183,7 @@
                                     </xf:group> 
                                 -->
                                 <!--
-                                    <xf:group appearance="full" id="subject-add-node-not-recommended">
+                                    <xf:group appearance="full">
                                     </xf:group> 
                                 -->
                         </div>
@@ -197,7 +197,7 @@
                 <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@ID]">
                 <xf:input ref="./@ID" class="text_50">
-                    <xf:label>ID: </xf:label>
+                    <xf:label>ID</xf:label>
                     <xf:hint>
                         <p>Hint</p>
                     </xf:hint>
@@ -208,7 +208,7 @@
                 <!--NB: we could have links to Cluster structured subjects inserted automatically.-->
             <xf:group appearance="full" ref=".[@xlink:href]">
                 <xf:input ref="./@xlink:href" class="text_50">
-                    <xf:label>XLink: </xf:label>
+                    <xf:label>XLink</xf:label>
                     <xf:hint>
                         <p> The XLink field is used to reference an external resource, such as a second metadata record, a Related Item or a Table Of
                                 Contents. </p>
@@ -219,7 +219,7 @@
                 <!--Cluster: include-->
             <xf:group appearance="full" ref=".[@authority]">
                 <xf:select1 ref="./@authority">
-                    <xf:label>Authority:</xf:label>
+                    <xf:label>Authority</xf:label>
                     <xf:hint>
                         <p> The name of the authoritative list for a controlled value is recorded here. An authority field is used to indicate that a
                                 subject has been entered by reference to a record in an authority file. If you are not using an authority file, leave this field
@@ -236,7 +236,7 @@
                 <!--the language of the authority file is used-->
             <xf:group appearance="full" ref=".[@lang]">
                 <xf:select1 ref="./@lang">
-                    <xf:label>Language:</xf:label>
+                    <xf:label>Language</xf:label>
                     <xf:hint>
                         <p> Hint </p>
                     </xf:hint>
@@ -250,7 +250,7 @@
                 <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@xml:lang]">
                 <xf:select1 ref="./@xml:lang">
-                    <xf:label>xml:lang:</xf:label>
+                    <xf:label>xml:lang</xf:label>
                     <xf:hint>
                         <p> This field is used to specify the language used within a field, using specifications in RFC 3066. RFC 3066 uses the
                                 two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in 639-1. </p>
@@ -266,7 +266,7 @@
                 <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@script]">
                 <xf:select1 ref="./@script">
-                    <xf:label>Script:</xf:label>
+                    <xf:label>Script</xf:label>
                     <xf:hint>
                         <p> Hint </p>
                     </xf:hint>
@@ -280,7 +280,7 @@
                 <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@transliteration]">
                 <xf:select1 ref="./@transliteration">
-                    <xf:label>Transliteration:</xf:label>
+                    <xf:label>Transliteration</xf:label>
                     <xf:hint>
                         <p> Hint </p>
                     </xf:hint>
@@ -294,7 +294,7 @@
                 <!--subject/topic begins-->
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                 <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-topic" ref=".[mods:topic]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:topic]">
                 <div class="join">
                     <span class="legend">Topic</span>
                     <span class="join-button">
@@ -328,7 +328,7 @@
                             <!--subject/topic input begins-->
                     <xf:group appearance="full" ref=".">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Topic:</xf:label>
+                            <xf:label>Topic</xf:label>
                             <xf:hint>
                                 <p> Use Topic to indicate any primary topical/abstract subjects that do not fit into the Geographic, Temporal, Title
                                             Information, or Name subfields. </p>
@@ -343,7 +343,7 @@
                 <!--subject/geographic begins-->
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                 <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-geographic" ref=".[mods:geographic]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:geographic]">
                 <div class="join">
                     <span class="legend">Geographic</span>
                     <span class="join-button">
@@ -376,7 +376,7 @@
                             <!--subject/geographic input begins-->
                     <xf:group appearance="full" ref=".">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Geographic:</xf:label>
+                            <xf:label>Geographic</xf:label>
                             <xf:hint>
                                 <p> Use Geographic for geographic subject terms that are not parsed within the Hierarchical Geographic field. </p>
                             </xf:hint>
@@ -390,7 +390,7 @@
                 <!--subject/temporal begins-->
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                 <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-temporal" ref=".[mods:temporal]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:temporal]">
                 <div class="join">
                     <span class="legend">Temporal</span>
                     <span class="join-button">
@@ -424,13 +424,13 @@
                             <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@encoding]">
                         <xf:select1 ref="./@encoding">
-                            <xf:label>Encoding:</xf:label>
-                            <xf:hint>
-                                <p> Encoding is used to note the encoding followed in the date notation. The recommendation is to use the w3cdtf
-                                            encoding. According to this encoding, dates are formatted in the following way: Year: YYYY (eg 1997); Year and
-                                            month: YYYY-MM (eg 1997-07); Complete date: YYYY-MM-DD (eg 1997-07-16). If you are inputting a controlled subject
-                                            term such as the designation of a period or an era, leave this field blank. </p>
-                            </xf:hint>
+                            <xf:label>Encoding<span class="xforms-help">
+                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-help-value">
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='temporal-encoding']/help"/>
+                                    </div>
+                                </span>
+                            </xf:label>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='date-encoding-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
@@ -441,11 +441,13 @@
                             <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@point]">
                         <xf:select1 ref="./@point">
-                            <xf:label>Point:</xf:label>
-                            <xf:hint>
-                                <p>Point is used to note whether the date noted is a start point or an end point. If no point is specified, date is
-                                            assumed to be a single date. </p>
-                            </xf:hint>
+                            <xf:label>Point<span class="xforms-help">
+                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-help-value">
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='temporal-point']/help"/>
+                                    </div>
+                                </span>
+                            </xf:label>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='date-point-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
@@ -454,7 +456,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Temporal:</xf:label>
+                            <xf:label>Temporal</xf:label>
                             <xf:hint>
                                 <p> Use Temporal for chronological subject terms or temporal coverage. It may be expressed as a controlled subject term
                                             (e.g. "Middle Ages") or as a structured date (e.g. "2001-09-11"). </p>
@@ -469,7 +471,7 @@
                 <!--subject/titleInfo begins-->
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                 <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-subject-titleInfo" ref=".[mods:titleInfo]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:titleInfo]">
                 <div class="join">
                     <span class="legend">
                         <span class="legend">Title Information</span>
@@ -523,7 +525,7 @@
                                 <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@ID]">
                         <xf:input ref="./@ID" class="text_50">
-                            <xf:label>ID: </xf:label>
+                            <xf:label>ID</xf:label>
                             <xf:hint>
                                 <p> This field is used to link among records inside the database and to reference an element inside the database
                                                 from the outside. The UID of the record as a whole is noted in mods:identifier type="local". </p>
@@ -534,7 +536,7 @@
                                 <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@xlink:href]">
                         <xf:input ref="./@xlink:href" class="text_50">
-                            <xf:label>XLink: </xf:label>
+                            <xf:label>XLink</xf:label>
                             <xf:hint>
                                 <p> The XLink field is used to reference an external resource, such as a second metadata record, a Related Item or a
                                                 Table Of Contents. </p>
@@ -545,7 +547,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@type]">
                         <xf:select1 ref="./@type">
-                            <xf:label>Type:</xf:label>
+                            <xf:label>Type</xf:label>
                             <xf:hint>
                                 <p> This field identifies what type of Title Information is recorded. The default is Basic Title Information. The
                                                 following values may be used in addition to this: Abbreviated, Translated, Transliterated
@@ -574,7 +576,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@type='abbreviated']">
                         <xf:select1 ref="./@authority" selection="open">
-                            <xf:label>Authority:</xf:label>
+                            <xf:label>Authority</xf:label>
                             <xf:hint>
                                 <p> The name of the authoritative list for the abbreviated title is recorded here. </p>
                             </xf:hint>
@@ -588,7 +590,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@type='uniform']">
                         <xf:select1 ref="./@authority" selection="open">
-                            <xf:label>Authority:</xf:label>
+                            <xf:label>Authority</xf:label>
                             <xf:hint>
                                 <p> The name of the authoritative list for the uniform title is recorded here. </p>
                             </xf:hint>
@@ -603,7 +605,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
-                            <xf:label>Language:</xf:label>
+                            <xf:label>Language</xf:label>
                             <xf:hint>
                                 <p> The language used within Title Information is specified here. The most common languages have been moved to the
                                                 top of the list. </p>
@@ -619,7 +621,7 @@
                                 <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
-                            <xf:label>xml:lang:</xf:label>
+                            <xf:label>xml:lang</xf:label>
                             <xf:hint>
                                 <p> This field is used to specify the language used within a field, using specifications in RFC 3066. RFC 3066 uses
                                                 the two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in
@@ -636,7 +638,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@type='transliterated']">
                         <xf:select1 ref="./@transliteration" selection="open">
-                            <xf:label>Transliteration:</xf:label>
+                            <xf:label>Transliteration</xf:label>
                             <xf:hint>
                                 <p> This field specifies the transliteration (transcription, romanisation) scheme used within Title Information.
                                                 When specificing the transliteration used, also specify the language employed. There is at present no standard
@@ -658,7 +660,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[not(@type='transliterated')]">
                         <xf:select1 ref="./@script">
-                            <xf:label>Script:</xf:label>
+                            <xf:label>Script</xf:label>
                             <xf:hint>
                                 <p> This field specifies the script used within individual fields. The use of Latin script is not noted. "Chinese"
                                                 is "Han (Simplified Variant)" or "Han (Traditional Variant)". If the two variants are not considered, it is "Han
@@ -674,7 +676,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[@displayLabel]">
                         <xf:input ref="./@displayLabel" class="text_50">
-                            <xf:label>Display Label: </xf:label>
+                            <xf:label>Display Label</xf:label>
                             <xf:hint>
                                 <p> This field is intended to be used when additional text associated with the title is needed for display. The
                                                 Display Label field may be used whenever appropriate to indicate the preferred labeling when displayed.
@@ -687,7 +689,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[mods:nonSort]">
                         <xf:input ref="./mods:nonSort" class="text_50">
-                            <xf:label>Non Sort: </xf:label>
+                            <xf:label>Non Sort</xf:label>
                             <xf:hint>
                                 <p> Non Sort contains characters, including initial articles (typically "A" and "The" in English), punctuation, and
                                                 spaces that appear at the beginning of a title that should be ignored when indexing and sorting. </p>
@@ -698,7 +700,7 @@
                                 <!--Cluster: require-->
                     <xf:group appearance="full" ref=".[mods:title]">
                         <xf:input ref="./mods:title" class="text_50">
-                            <xf:label>Title: </xf:label>
+                            <xf:label>Title</xf:label>
                             <xf:hint>
                                 <p> Title contains the core title of the resource catalogued. </p>
                                 <p> At least one Title is required. When no title appears on the item being described, a title should be supplied. </p>
@@ -723,7 +725,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[mods:subTitle]">
                         <xf:input ref="./mods:subTitle" class="text_50">
-                            <xf:label>Subtitle: </xf:label>
+                            <xf:label>Subtitle</xf:label>
                             <xf:hint>
                                 <p> Subtitle is used to record a part of a title deemed secondary to the core title. </p>
                                 <p> Use Subtitle whenever a subtitle is present, rather than including the subtitle in Title. </p>
@@ -740,7 +742,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[mods:partNumber]">
                         <xf:input ref="./mods:partNumber" class="text_50">
-                            <xf:label>Part Number: </xf:label>
+                            <xf:label>Part Number</xf:label>
                             <xf:hint>
                                 <p> Part Number is used for a part or section number in a title. </p>
                                 <p> A Part Number does not have to be a digit, i.e. "First Part" may be the contents of the Part Number field if
@@ -757,7 +759,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[mods:partName]">
                         <xf:input ref="./mods:partName" class="text_50">
-                            <xf:label>Part Name: </xf:label>
+                            <xf:label>Part Name</xf:label>
                             <xf:hint>
                                 <p> Part Name is used for a part or section name of a title. Use Part Name when a part name is present, rather than
                                                 including the part name in the text of Title. Use Part Name to describe the section or division titles of a
@@ -781,7 +783,7 @@
                 <!--subject/name begins-->
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                 <!--Cluster: include-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-subject-name" ref=".[mods:name]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:name]">
                 <div class="join">
                     <span class="legend">Names</span>
                     <span class="join-button">
@@ -840,7 +842,7 @@
                                     </xf:trigger>
                                 </div>
                                 <div class="node-adds">
-                                    <xf:group appearance="full" id="name-add-node-recommended" ref=".[not(mods:namePart)]">
+                                    <xf:group appearance="full" ref=".[not(mods:namePart)]">
                                                 <!--<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-->
                                                 <!--
                                                     <xf:trigger ref=".[not(@type)]" class="add-button">
@@ -869,7 +871,7 @@
                             <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@ID]">
                         <xf:input ref="./@ID" class="text_50">
-                            <xf:label>ID: </xf:label>
+                            <xf:label>ID</xf:label>
                             <xf:hint>
                                 <p>Hint</p>
                             </xf:hint>
@@ -879,7 +881,7 @@
                             <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@xlink:href]">
                         <xf:input ref="./@xlink:href" class="text_50">
-                            <xf:label>XLink: </xf:label>
+                            <xf:label>XLink</xf:label>
                             <xf:hint>
                                 <p> The XLink field is used to reference an external resource, such as a second metadata record, a Related Item or a
                                             Table Of Contents. </p>
@@ -890,7 +892,7 @@
                             <!--Cluster: warn-->
                     <xf:group appearance="full" ref=".[@type]">
                         <xf:select1 ref="./@type">
-                            <xf:label>Type:</xf:label>
+                            <xf:label>Type</xf:label>
                             <xf:hint>
                                 <p> The type field can take the following values: personal, corporate, conference. Use it to indicate whether the name
                                             is the name of a person, the name of a corporation or the name of a conference. </p>
@@ -905,7 +907,7 @@
                             <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@authority]">
                         <xf:select1 ref="./@authority">
-                            <xf:label>Authority:</xf:label>
+                            <xf:label>Authority</xf:label>
                             <xf:hint>
                                 <p> The name of an authoritative list for a controlled value in Name is recorded here. If you render the name as it
                                             occurs in the resource, you may leave the Authority field value blank. If you normalise the name, you should
@@ -922,7 +924,7 @@
                             <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
-                            <xf:label>Language:</xf:label>
+                            <xf:label>Language</xf:label>
                             <xf:hint>
                                 <p>Hint</p>
                             </xf:hint>
@@ -937,7 +939,7 @@
                             <!-- NB: while it does seem reasonable to hold that a name occurs in a certain script or transliteration, it may not make much sense to say that a name is in a certain language. What about William the Conqueror? -->
                     <xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
-                            <xf:label>xml:lang:</xf:label>
+                            <xf:label>xml:lang</xf:label>
                             <xf:hint>
                                 <p>Hint</p>
                             </xf:hint>
@@ -951,7 +953,7 @@
                             <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[@script]">
                         <xf:select1 ref="./@script">
-                            <xf:label>Script:</xf:label>
+                            <xf:label>Script</xf:label>
                             <xf:hint>
                                 <p> Use this to record the script in which the name occurs, if this is not Latin. </p>
                             </xf:hint>
@@ -965,7 +967,7 @@
                             <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@transliteration]">
                         <xf:select1 ref="./@transliteration">
-                            <xf:label>Transliteration:</xf:label>
+                            <xf:label>Transliteration</xf:label>
                             <xf:hint>
                                 <p> If the name is rendered in translietrated form, register the transliteration scheme followed here. </p>
                             </xf:hint>
@@ -977,7 +979,7 @@
                     </xf:group>
                             <!--subject/name input ends-->
                             <!--subject/name/namePart begins-->
-                    <xf:group appearance="full" class="fieldset level-3" id="fieldset-subject-name-namePart" ref=".[mods:namePart]">
+                    <xf:group appearance="full" class="fieldset level-3" ref=".[mods:namePart]">
                         <div class="join">
                             <span class="legend">Name Part</span>
                             <span class="xforms-hint">
@@ -992,7 +994,7 @@
                                     <!--Cluster: warn-->
                             <xf:group appearance="full" ref=".[@type]">
                                 <xf:select1 ref="./@type">
-                                    <xf:label>Type:</xf:label>
+                                    <xf:label>Type</xf:label>
                                     <xf:hint>
                                         <p> Name Part includes each part of the name. Parsing is used to indicate a date associated with the name, to
                                                     parse the parts of a corporate name, or to parse parts of a personal name into family/surname and given
@@ -1020,7 +1022,7 @@
                                     <!--Cluster: require-->
                             <xf:group appearance="full" ref=".">
                                 <xf:input ref="." class="text_50">
-                                    <xf:label>Name Part:</xf:label>
+                                    <xf:label>Name Part</xf:label>
                                     <xf:hint>
                                         <p> The name itself is always entered into a Name Part. See the hint above for futher explanation. </p>
                                     </xf:hint>
@@ -1039,7 +1041,7 @@
                 <!-- MODS 3.2 added genre as a subelement under subject, which allows legacy complex subjects (for example LC Subject Headings) with a form/genre subelement to be more appropriately represented in MODS. These guidelines make use of this subelement an option but give strong preference to use of the genre element for form/genre terms whenever possible. -->
                 <!--DLF/Aquifer: OPTIONAL-->
                 <!--Cluster: omit-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-subject-genre" ref=".[mods:genre]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:genre]">
                 <div class="join">
                     <span class="legend">Genre</span>
                     <span class="join-button">
@@ -1075,7 +1077,7 @@
                             <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@type]">
                         <xf:input ref="./@type">
-                            <xf:label>Type:</xf:label>
+                            <xf:label>Type</xf:label>
                             <xf:hint>
                                 <p>Hint</p>
                             </xf:hint>
@@ -1085,7 +1087,7 @@
                             <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@authority]">
                         <xf:select1 ref="./@authority" selection="open">
-                            <xf:label>Authority:</xf:label>
+                            <xf:label>Authority</xf:label>
                             <xf:hint>
                                 <p> The name of the authoritative list for a controlled value is recorded here. </p>
                             </xf:hint>
@@ -1099,7 +1101,7 @@
                             <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
-                            <xf:label>Language:</xf:label>
+                            <xf:label>Language</xf:label>
                             <xf:hint>
                                 <p>Hint</p>
                             </xf:hint>
@@ -1113,7 +1115,7 @@
                             <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
-                            <xf:label>xml:lang:</xf:label>
+                            <xf:label>xml:lang</xf:label>
                             <xf:hint>
                                 <p>Hint</p>
                             </xf:hint>
@@ -1127,7 +1129,7 @@
                             <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@script]">
                         <xf:select1 ref="./@script">
-                            <xf:label>Script:</xf:label>
+                            <xf:label>Script</xf:label>
                             <xf:hint>
                                 <p>Hint</p>
                             </xf:hint>
@@ -1141,7 +1143,7 @@
                             <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@transliteration]">
                         <xf:select1 ref="./@transliteration">
-                            <xf:label>Transliteration:</xf:label>
+                            <xf:label>Transliteration</xf:label>
                             <xf:hint>
                                 <p>Hint</p>
                             </xf:hint>
@@ -1153,7 +1155,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@authority='marcgt']">
                         <xf:select1 ref=".">
-                            <xf:label>Genre (marcgt):</xf:label>
+                            <xf:label>Genre (marcgt)</xf:label>
                             <xf:hint>
                                 <p> One or more terms that designate a category characterising a particular style, form, or content, such as artistic,
                                             musical, literary composition, etc. Genre contains terms that give more specificity than the broad terms used in
@@ -1167,7 +1169,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@authority='marcsmd']">
                         <xf:select1 ref=".">
-                            <xf:label>Genre (marcsmd):</xf:label>
+                            <xf:label>Genre (marcsmd)</xf:label>
                             <xf:hint>
                                 <p> One or more terms that designate a category characterising a particular style, form, or content, such as artistic,
                                             musical, literary composition, etc. Genre contains terms that give more specificity than the broad terms used in
@@ -1181,7 +1183,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@authority='dct']">
                         <xf:select1 ref=".">
-                            <xf:label>Genre (dct):</xf:label>
+                            <xf:label>Genre (dct)</xf:label>
                             <xf:hint>
                                 <p> One or more terms that designate a category characterising a particular style, form, or content, such as artistic,
                                             musical, literary composition, etc. Genre contains terms that give more specificity than the broad terms used in
@@ -1195,7 +1197,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@authority='bgtchm']">
                         <xf:select1 ref=".">
-                            <xf:label>Genre (bgtchm):</xf:label>
+                            <xf:label>Genre (bgtchm)</xf:label>
                             <xf:hint>
                                 <p> One or more terms that designate a category characterising a particular style, form, or content, such as artistic,
                                             musical, literary composition, etc. Genre contains terms that give more specificity than the broad terms used in
@@ -1210,7 +1212,7 @@
                             <!--NB: make other code tables-->
                     <xf:group appearance="full" ref=".[not(@authority='marcgt') and not(@authority='marcsmd') and not(@authority='bgtchm') and not(@authority='dct')]">
                         <xf:select1 ref="." selection="open">
-                            <xf:label>Genre:</xf:label>
+                            <xf:label>Genre</xf:label>
                             <xf:hint>
                                 <p> One or more terms that designate a category characterising a particular style, form, or content, such as artistic,
                                             musical, literary composition, etc. Genre contains terms that give more specificity than the broad terms used in
@@ -1230,7 +1232,7 @@
                 <!--subject/hierarchicalGeographic begins-->
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                 <!--Cluster: hide-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-hierarchicalGeographic" ref=".[mods:hierarchicalGeographic]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:hierarchicalGeographic]">
                 <div class="join wide">
                     <span class="legend">Hierarchical Geographic</span>
                     <span class="join-button">
@@ -1269,7 +1271,7 @@
                             <!--subject/hierarchicalGeographic/continent input begins-->
                     <xf:group appearance="full" ref=".[mods:continent]">
                         <xf:select1 ref="./mods:continent">
-                            <xf:label>Continent:</xf:label>
+                            <xf:label>Continent</xf:label>
                             <xf:hint>
                                 <p> Includes Asia, Africa, Europe, North America, South America. </p>
                             </xf:hint>
@@ -1286,7 +1288,7 @@
                             <!--subject/hierarchicalGeographic/country input begins-->
                     <xf:group appearance="full" ref=".[mods:country]">
                         <xf:input ref="./mods:country" class="text_50">
-                            <xf:label>Country:</xf:label>
+                            <xf:label>Country</xf:label>
                             <xf:hint>
                                 <p> Name of a country, i.e. a political entity considered a country. </p>
                             </xf:hint>
@@ -1299,7 +1301,7 @@
                             <!--subject/hierarchicalGeographic/province input begins-->
                     <xf:group appearance="full" ref=".[mods:province]">
                         <xf:input ref="./mods:province" class="text_50">
-                            <xf:label>Province:</xf:label>
+                            <xf:label>Province</xf:label>
                             <xf:hint>
                                 <p> Includes first order political divisions called provinces within a country, e.g. Canada. </p>
                             </xf:hint>
@@ -1312,7 +1314,7 @@
                             <!--subject/hierarchicalGeographic/region input begins-->
                     <xf:group appearance="full" ref=".[mods:region]">
                         <xf:input ref="./mods:region" class="text_50">
-                            <xf:label>Region:</xf:label>
+                            <xf:label>Region</xf:label>
                             <xf:hint>
                                 <p> Includes regions that have status as a jurisdiction, usually incorporating more than one first level jurisdiction.
                                         </p>
@@ -1326,7 +1328,7 @@
                             <!--subject/hierarchicalGeographic/state input begins-->
                     <xf:group appearance="full" ref=".[mods:state]">
                         <xf:input ref="./mods:state" class="text_50">
-                            <xf:label>State:</xf:label>
+                            <xf:label>State</xf:label>
                             <xf:hint>
                                 <p> Includes first order political divisions called states within a country, e.g. in U.S., Argentina, Italy. Use also
                                             for France département. </p>
@@ -1340,7 +1342,7 @@
                             <!--subject/hierarchicalGeographic/territory input begins-->
                     <xf:group appearance="full" ref=".[mods:territory]">
                         <xf:input ref="./mods:territory" class="text_50">
-                            <xf:label>Territory:</xf:label>
+                            <xf:label>Territory</xf:label>
                             <xf:hint>
                                 <p> Name of a geographical area belonging to or under the jurisdiction of a governmental authority. </p>
                             </xf:hint>
@@ -1353,7 +1355,7 @@
                             <!--subject/hierarchicalGeographic/county input begins-->
                     <xf:group appearance="full" ref=".[mods:county]">
                         <xf:input ref="./mods:county" class="text_50">
-                            <xf:label>County:</xf:label>
+                            <xf:label>County</xf:label>
                             <xf:hint>
                                 <p> Name of the largest local administrative unit in various countries, e.g. England. </p>
                             </xf:hint>
@@ -1366,7 +1368,7 @@
                             <!--subject/hierarchicalGeographic/city input begins-->
                     <xf:group appearance="full" ref=".[mods:city]">
                         <xf:input ref="./mods:city" class="text_50">
-                            <xf:label>City:</xf:label>
+                            <xf:label>City</xf:label>
                             <xf:hint>
                                 <p> Name of an inhabited place incorporated as a city, town, etc. </p>
                             </xf:hint>
@@ -1379,7 +1381,7 @@
                             <!--subject/hierarchicalGeographic/citySection input begins-->
                     <xf:group appearance="full" ref=".[mods:citySection]">
                         <xf:input ref="./mods:citySection" class="text_50">
-                            <xf:label>City Section:</xf:label>
+                            <xf:label>City Section</xf:label>
                             <xf:hint>
                                 <p> Name of a smaller unit within a populated place, e.g., neighborhoods, parks or streets. </p>
                             </xf:hint>
@@ -1392,7 +1394,7 @@
                             <!--subject/hierarchicalGeographic/island input begins-->
                     <xf:group appearance="full" ref=".[mods:island]">
                         <xf:input ref="./mods:island" class="text_50">
-                            <xf:label>Island:</xf:label>
+                            <xf:label>Island</xf:label>
                             <xf:hint>
                                 <p> Name of a tract of land surrounded by water and smaller than a continent but is not itself a separate country. </p>
                             </xf:hint>
@@ -1405,7 +1407,7 @@
                             <!--subject/hierarchicalGeographic/area input begins-->
                     <xf:group appearance="full" ref=".[mods:area]">
                         <xf:input ref="./mods:area" class="text_50">
-                            <xf:label>Area:</xf:label>
+                            <xf:label>Area</xf:label>
                             <xf:hint>
                                 <p> Name of a non-jurisdictional geographic entity. </p>
                             </xf:hint>
@@ -1418,7 +1420,7 @@
                             <!--subject/hierarchicalGeographic/extraterrestrialArea input begins-->
                     <xf:group appearance="full" ref=".[mods:extraterrestrialArea]">
                         <xf:input ref="./mods:extraterrestrialArea" class="text_50">
-                            <xf:label>Extraterrestrial Area:</xf:label>
+                            <xf:label>Extraterrestrial Area</xf:label>
                             <xf:hint>
                                 <p> Name of any extraterrestrial entity or space, including solar systems, galaxies, star systems, and planets as well
                                             as geographic features of individual planets. </p>
@@ -1434,7 +1436,7 @@
                 <!--subject/cartographics begins-->
                 <!--DLF/Aquifer: OPTIONAL-->
                 <!--Cluster: omit-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-cartographics" ref=".[mods:cartographics]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:cartographics]">
                 <div class="join">
                     <span class="legend">Cartographics</span>
                     <span class="join-button">
@@ -1467,7 +1469,7 @@
                             <!--subject/cartographics input ends-->
                     <xf:group appearance="full" ref=".[mods:coordinates]">
                         <xf:input ref="./mods:coordinates" class="text_50">
-                            <xf:label>Coordinates:</xf:label>
+                            <xf:label>Coordinates</xf:label>
                             <xf:hint>
                                 <p> Coordinates contains a statement of coordinates covered by the resource. One or more statements may be supplied. If
                                             one is supplied, it is a point (i.e., a single location); if two, it is a line; if more than two, it is a n-sided
@@ -1478,7 +1480,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[mods:scale]">
                         <xf:input ref="./mods:scale" class="text_50">
-                            <xf:label>Scale:</xf:label>
+                            <xf:label>Scale</xf:label>
                             <xf:hint>
                                 <p> Scale provides a statement of scale. It may include any equivalency statements, vertical scales or vertical
                                             exaggeration statements for relief models and other three-dimensional items. </p>
@@ -1487,7 +1489,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[mods:projection]">
                         <xf:input ref="./mods:projection" class="text_50">
-                            <xf:label>Projection:</xf:label>
+                            <xf:label>Projection</xf:label>
                             <xf:hint>
                                 <p> Projection provides a statement of projection. </p>
                             </xf:hint>
@@ -1500,7 +1502,7 @@
                 <!--subject/geographicCode begins-->
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                 <!--Cluster: hide-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-geographicCode" ref=".[mods:geographicCode]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:geographicCode]">
                 <div class="join">
                     <span class="legend">Geographic Code</span>
                     <span class="join-button">
@@ -1533,7 +1535,7 @@
                             <!--subject/geographicCode input begins-->
                     <xf:group appearance="full" ref=".[@authority]">
                         <xf:select1 ref="./@authority">
-                            <xf:label>Authority:</xf:label>
+                            <xf:label>Authority</xf:label>
                             <xf:hint>
                                 <p> The name of the authoritative list for a controlled value is recorded here. </p>
                             </xf:hint>
@@ -1545,7 +1547,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Geographic Code:</xf:label>
+                            <xf:label>Geographic Code</xf:label>
                             <xf:hint>
                                 <p> Geographic Code includes a geographic area code associated with a resource. A geographic code that represents the
                                             same entity as a term in Geographic is included within the same Subject field. </p>
@@ -1560,7 +1562,7 @@
                 <!--subject/occupation begins-->
                 <!--DLF/Aquifer: OPTIONAL-->
                 <!--Cluster: omit-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-occupation" ref=".[mods:occupation]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:occupation]">
                 <div class="join">
                     <span class="legend">Occupation</span>
                     <span class="join-button">
@@ -1594,7 +1596,7 @@
                             <!--subject/occupation input begins-->
                     <xf:group appearance="full" ref=".">
                         <xf:input ref="." class="text_50">
-                            <xf:label>Occupation:</xf:label>
+                            <xf:label>Occupation</xf:label>
                             <xf:hint>
                                 <p> Occupation includes a term that is descriptive of the occupation reflected in the contents of the described
                                             materials. It is not used to list the occupations of the creators of the described materials, unless those
@@ -1609,11 +1611,12 @@
                 <!--subject/occupation ends-->
         </xf:repeat>
             <!--subject repeat ends-->
-        <xf:group appearance="full" id="subject-add-element" ref=".[not(./mods:subject)]">
+        <xf:group appearance="full" ref=".[not(./mods:subject)]">
             <xf:trigger ref=".[not(mods:subject)]" class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Subject</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="mods:form" at="index('subject-repeat')" position="after" origin="instance('insert-templates')/mods:subject"/>
+                    <!-- NB: does not work. -->
+                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:subject"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

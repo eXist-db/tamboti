@@ -2,19 +2,24 @@
 <mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" ID="">
     <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="">
         <nonSort/>
+        <!--<nonSort lang="" xml:lang="" script="" transliteration=""/>-->
         <title/>
+        <!--<title lang="" xml:lang="" script="" transliteration=""/>-->
         <subTitle/>
+        <!--<subTitle lang="" xml:lang="" script="" transliteration=""/>-->
         <partNumber/>
+        <!--<partNumber lang="" xml:lang="" script="" transliteration=""/>-->
         <partName/>
+        <!--<partName lang="" xml:lang="" script="" transliteration=""/>-->
     </titleInfo>
-    <name type="" authority="" lang="" script="" transliteration="" xlink:href="" displayLabel="" ID="" xml:lang="">
-        <namePart type=""/>
-        <displayForm/>
-        <affiliation/>
+    <name altRepGroup="" authorityURI="" nameTitleGroup="" usage="" valueURI="" type="" authority="" lang="" script="" transliteration="" xlink:href="" displayLabel="" ID="" xml:lang="">
+        <namePart type="" lang="" xml:lang="" script="" transliteration=""/>
+        <displayForm lang="" xml:lang="" script="" transliteration=""/>
+        <affiliation lang="" xml:lang="" script="" transliteration=""/>
         <role>
-            <roleTerm type="code" authority="marcrelator" authorityURI="" valueURI=""/>
+            <roleTerm type="code" authority="marcrelator" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
         </role>
-        <description/>
+        <description lang="" xml:lang="" script="" transliteration=""/>
     </name>
     <originInfo lang="" script="" transliteration="" displayLabel="" altRepGroup="">
         <place supplied="">

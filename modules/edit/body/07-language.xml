@@ -70,7 +70,7 @@
                             </xf:trigger>
                         </div>
                         <div class="node-adds">
-                            <xf:group appearance="full" id="language-add-node-recommended" ref=".[not(mods:languageTerm)]">
+                            <xf:group appearance="full" ref=".[not(mods:languageTerm)]">
                                         <!--<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-->
                                         <!--
                                             <xf:trigger ref=".[not(@objectPart)]" class="add-button">
@@ -99,7 +99,7 @@
                     <!--Cluster: include-->
             <xf:group appearance="full" ref=".[@objectPart]">
                 <xf:input ref="./@objectPart" class="text_50">
-                    <xf:label>Object Part: </xf:label>
+                    <xf:label>Object Part</xf:label>
                     <xf:hint>
                         <p> This field designates which part of the resource is in the language stated in Language Term. The values of the field are not
                                     controlled by an authority list; examples of values of Object Part are "Summary" and "Caption". If you use this field, use
@@ -109,7 +109,7 @@
             </xf:group>
             <xf:group appearance="full" ref=".[@lang]">
                 <xf:select1 ref="./@lang">
-                    <xf:label>Language:</xf:label>
+                    <xf:label>Language</xf:label>
                     <xf:hint>
                         <p> The language used within Title Information is specified here, if this language is different from the language noted in
                                     Language of Resource. The most common languages have been moved to the top of the list. </p>
@@ -124,7 +124,7 @@
                     <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@xml:lang]">
                 <xf:select1 ref="./@xml:lang">
-                    <xf:label>xml:lang:</xf:label>
+                    <xf:label>xml:lang</xf:label>
                     <xf:hint>
                         <p> The language used within Title Information is specified here, if this language is different from the language noted in
                                     Language of Resource. xml:lang is used to specify the language used within a field, using specifications in RFC 3066. RFC
@@ -142,7 +142,7 @@
                     <!--Cluster: include-->
             <xf:group appearance="full" ref=".[@type]">
                 <xf:select1 ref="./@type">
-                    <xf:label>Type:</xf:label>
+                    <xf:label>Type</xf:label>
                     <xf:hint>
                         <p> This field is used to express whether the Language Term value is in textual or coded form. </p>
                     </xf:hint>
@@ -154,7 +154,7 @@
             </xf:group>
             <xf:group appearance="full" ref=".[@type='transliterated']">
                 <xf:select1 ref="./@transliteration" selection="open">
-                    <xf:label>Transliteration:</xf:label>
+                    <xf:label>Transliteration</xf:label>
                     <xf:hint>
                         <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When
                                     specificing the transliteration used, also specify the language employed. There is at present no standard list of
@@ -175,7 +175,7 @@
                     <!--Cluster: include-->
             <xf:group appearance="full" ref=".[not(@type='transliterated') and ./@script]">
                 <xf:select1 ref="./@script">
-                    <xf:label>Script:</xf:label>
+                    <xf:label>Script</xf:label>
                     <xf:hint>
                         <p> Script specifies the script used within individual fields. The use of Latin script is not noted. "Chinese" is "Han
                                     (Simplified Variant)" or "Han (Traditional Variant)". If the two variants are not considered, it is "Han (Hanzi, Kanji,
@@ -191,7 +191,7 @@
                     <!--Cluster: hide-->
             <xf:group appearance="full" ref=".[@displayLabel]">
                 <xf:input ref="./@displayLabel" class="text_100">
-                    <xf:label>Display Label: </xf:label>
+                    <xf:label>Display Label</xf:label>
                     <xf:hint>
                         <p> Display Label is intended to be used when additional text associated with the title is needed for display. Display Label may
                                     be used whenever appropriate to indicate the preferred labeling when displayed. Appropriate cases include titles other than
@@ -204,7 +204,7 @@
                     <!--Cluster: hide-->
             <xf:group appearance="full" ref=".[@altRepGroup]">
                 <xf:select1 ref="./@altRepGroup" selection="open">
-                    <xf:label>altRepGroup: </xf:label>
+                    <xf:label>altRepGroup</xf:label>
                     <xf:hint>Hint</xf:hint>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='nameTitleGroup-code']/items/item">
                         <xf:label ref="label"/>
@@ -216,7 +216,7 @@
                     <!--Cluster: hide-->
             <xf:group appearance="full" ref=".[@usage]">
                 <xf:select1 ref="./@usage">
-                    <xf:label>Usage: </xf:label>
+                    <xf:label>Usage</xf:label>
                     <xf:hint>
                         <p>Usage with the value "primary" can be used with repeated fields to indicate special prominence of one that is useful for
                                     various special purposes such as indexing.</p>
@@ -229,7 +229,7 @@
             </xf:group>
                     <!--language input ends-->
                     <!--languageTerm begins-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-languageTerm" ref=".[mods:languageTerm]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:languageTerm]">
                 <div class="join">
                     <span class="legend">Language Terms</span>
                     <span class="join-button">
@@ -261,11 +261,11 @@
                     </span>
                 </div>
                             <!--languageTerm repeat begins-->
-                <xf:repeat nodeset="instance('save-data')/mods:language/mods:languageTerm" id="languageTerm-repeat">
+                <xf:repeat nodeset="./mods:languageTerm" id="languageTerm-repeat">
                                 <!--languageTerm input begins-->
                     <xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
-                            <xf:label>Language:</xf:label>
+                            <xf:label>Language</xf:label>
                             <xf:hint>
                                 <p> The language used within Title Information is specified here, if this language is different from the language
                                                 noted in Language of Resource. The most common languages have been moved to the top of the list. </p>
@@ -280,7 +280,7 @@
                                 <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
-                            <xf:label>xml:lang:</xf:label>
+                            <xf:label>xml:lang</xf:label>
                             <xf:hint>
                                 <p> The language used within Title Information is specified here, if this language is different from the language
                                                 noted in Language of Resource. xml:lang is used to specify the language used within a field, using
@@ -298,7 +298,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@type='transliterated']">
                         <xf:select1 ref="./@transliteration" selection="open">
-                            <xf:label>Transliteration:</xf:label>
+                            <xf:label>Transliteration</xf:label>
                             <xf:hint>
                                 <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title
                                                 Information. When specificing the transliteration used, also specify the language employed. There is at present
@@ -319,7 +319,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[not(@type='transliterated') and ./@script]">
                         <xf:select1 ref="./@script">
-                            <xf:label>Script:</xf:label>
+                            <xf:label>Script</xf:label>
                             <xf:hint>
                                 <p> Script specifies the script used within individual fields. The use of Latin script is not noted. "Chinese" is
                                                 "Han (Simplified Variant)" or "Han (Traditional Variant)". If the two variants are not considered, it is "Han
@@ -338,7 +338,7 @@
                                 <!--Cluster: include, with default "iso639-2b"-->
                     <xf:group appearance="full" ref=".[@type='code']">
                         <xf:select1 ref="./@authority">
-                            <xf:label>Authority:</xf:label>
+                            <xf:label>Authority</xf:label>
                             <xf:hint>
                                 <p> The name of the authoritative list for a controlled value is recorded here. </p>
                             </xf:hint>
@@ -352,7 +352,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[@authorityURI]">
                         <xf:select1 ref="./@authorityURI" selection="open">
-                            <xf:label>authorityURI: </xf:label>
+                            <xf:label>authorityURI</xf:label>
                             <xf:hint> Hint</xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='nameTitleGroup-code']/items/item">
                                 <xf:label ref="label"/>
@@ -364,7 +364,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[@valueURI]">
                         <xf:select1 ref="./@valueURI">
-                            <xf:label>valueURI: </xf:label>
+                            <xf:label>valueURI</xf:label>
                             <xf:hint> Hint </xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='usage-type-code']/items/item">
                                 <xf:label ref="label"/>
@@ -374,7 +374,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@type]">
                         <xf:input ref="./@type" class="text_100">
-                            <xf:label>Type: </xf:label>
+                            <xf:label>Type</xf:label>
                             <xf:hint> Hint </xf:hint>
                         </xf:input>
                     </xf:group>
@@ -382,7 +382,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@type='code']">
                         <xf:select1 ref=".">
-                            <xf:label>Language Term (code):</xf:label>
+                            <xf:label>Language Term (code)</xf:label>
                             <xf:hint>
                                 <p> Language Term specifies the language(s) of the content of the resource. </p>
                             </xf:hint>
@@ -395,7 +395,7 @@
                                 <!--NB: code tables for rfc3066, iso639-3 and rfc4646 could be made as well.-->
                     <xf:group appearance="full" ref=".[@type='text']">
                         <xf:select1 ref=".">
-                            <xf:label>Language Term (text):</xf:label>
+                            <xf:label>Language Term (text)</xf:label>
                             <xf:hint>
                                 <p> Language Term specifies the language(s) of the content of the resource. </p>
                             </xf:hint>
@@ -411,7 +411,7 @@
             </xf:group>
                     <!--languageTerm ends-->
                     <!--scriptTerm begins-->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-scriptTerm" ref=".[mods:scriptTerm]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:scriptTerm]">
                 <div class="join">
                     <span class="legend">Script Terms</span>
                     <span class="join-button">
@@ -438,11 +438,11 @@
                     </span>
                 </div>
                             <!--scriptTerm repeat begins-->
-                <xf:repeat nodeset="instance('save-data')/mods:language/mods:scriptTerm" id="scriptTerm-repeat">
+                <xf:repeat nodeset="./mods:scriptTerm" id="scriptTerm-repeat">
                                 <!--scriptTerm input begins-->
                     <xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
-                            <xf:label>Script:</xf:label>
+                            <xf:label>Script</xf:label>
                             <xf:hint>Hint</xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
                                 <xf:label ref="label"/>
@@ -454,7 +454,7 @@
                                 <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
-                            <xf:label>xml:lang:</xf:label>
+                            <xf:label>xml:lang</xf:label>
                             <xf:hint>Hint</xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
                                 <xf:label ref="label"/>
@@ -466,7 +466,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@type='transliterated']">
                         <xf:select1 ref="./@transliteration" selection="open">
-                            <xf:label>Transliteration:</xf:label>
+                            <xf:label>Transliteration</xf:label>
                             <xf:hint>
                                 <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title
                                                 Information. When specificing the transliteration used, also specify the language employed. There is at present
@@ -487,7 +487,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[not(@type='transliterated') and ./@script]">
                         <xf:select1 ref="./@script">
-                            <xf:label>Script:</xf:label>
+                            <xf:label>Script</xf:label>
                             <xf:hint>
                                 <p> Script specifies the script used within individual fields. The use of Latin script is not noted. "Chinese" is
                                                 "Han (Simplified Variant)" or "Han (Traditional Variant)". If the two variants are not considered, it is "Han
@@ -506,7 +506,7 @@
                                 <!--Cluster: include, with default "iso639-2b"-->
                     <xf:group appearance="full" ref=".[@type='code']">
                         <xf:select1 ref="./@authority">
-                            <xf:label>Authority:</xf:label>
+                            <xf:label>Authority</xf:label>
                             <xf:hint>
                                 <p> The name of the authoritative list for a controlled value is recorded here. </p>
                             </xf:hint>
@@ -520,7 +520,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[@authorityURI]">
                         <xf:select1 ref="./@authorityURI" selection="open">
-                            <xf:label>authorityURI: </xf:label>
+                            <xf:label>authorityURI</xf:label>
                             <xf:hint> Hint</xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='nameTitleGroup-code']/items/item">
                                 <xf:label ref="label"/>
@@ -532,7 +532,7 @@
                                 <!--Cluster: hide-->
                     <xf:group appearance="full" ref=".[@valueURI]">
                         <xf:select1 ref="./@valueURI">
-                            <xf:label>valueURI: </xf:label>
+                            <xf:label>valueURI</xf:label>
                             <xf:hint> Hint </xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='usage-type-code']/items/item">
                                 <xf:label ref="label"/>
@@ -542,7 +542,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@type]">
                         <xf:input ref="./@type" class="text_100">
-                            <xf:label>Type: </xf:label>
+                            <xf:label>Type</xf:label>
                             <xf:hint> Hint </xf:hint>
                         </xf:input>
                     </xf:group>
@@ -550,7 +550,7 @@
                                 <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@type='code']">
                         <xf:select1 ref=".">
-                            <xf:label>Script Term (code):</xf:label>
+                            <xf:label>Script Term (code)</xf:label>
                             <xf:hint>Hint</xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
                                 <xf:label ref="label"/>
@@ -560,7 +560,7 @@
                     </xf:group>
                     <xf:group appearance="full" ref=".[@type='text']">
                         <xf:select1 ref=".">
-                            <xf:label>Script Term (text):</xf:label>
+                            <xf:label>Script Term (text)</xf:label>
                             <xf:hint>Hint</xf:hint>
                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item[value=instance('save-data')/mods:language/mods:scriptTerm[@type='code']]">
                                 <xf:label ref="label"/>
@@ -575,11 +575,11 @@
                     <!--scriptTerm ends-->
         </xf:repeat>
             <!--language repeat ends-->
-        <xf:group appearance="full" id="language-add-element" ref=".[not(./mods:language)]">
+        <xf:group appearance="full" ref=".[not(./mods:language)]">
             <xf:trigger ref=".[not(mods:language)]" class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Resource Language</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="mods:form" at="index('language-repeat')" position="after" origin="instance('insert-templates')/mods:language"/>
+                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:language"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

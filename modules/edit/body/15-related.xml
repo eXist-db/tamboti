@@ -49,7 +49,7 @@
                             </xf:trigger>
                         </div>
                         <div class="node-adds">
-                            <xf:group appearance="full" id="relatedItem-add-node-recommended" ref=".[not(mods:part)]">
+                            <xf:group appearance="full" ref=".[not(mods:part)]">
                                     <!--<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-->
                                 <xf:trigger ref=".[not(mods:part)]" class="add-button">
                                     <xf:label class="xforms-group-label-centered">Add Part</xf:label>
@@ -69,7 +69,7 @@
                 <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@ID]">
                 <xf:input ref="./@ID" class="text_50">
-                    <xf:label>ID: </xf:label>
+                    <xf:label>ID</xf:label>
                     <xf:hint>
                         <p> This field is used to link among records inside the database and to reference an element inside the database from the outside. The UID of the record as a whole is noted in mods:identifier type="local". </p>
                     </xf:hint>
@@ -82,7 +82,7 @@
                 <!--Cluster: include-->
             <xf:group appearance="full" ref=".[@type]">
                 <xf:select1 ref="./@type">
-                    <xf:label>Type:</xf:label>
+                    <xf:label>Type</xf:label>
                     <xf:hint>
                         <p> The type field describes the relationship between the resource in Related Item and the resource in the parent record. Use one
                         of the following values: Host, Constituent, Series, Other Version. "Host" is used to describe a host or parent resource, for example a
@@ -98,7 +98,7 @@
             </xf:group>
             <xf:group appearance="full" ref=".[@xlink:href]">
                 <xf:input ref="./@xlink:href" class="text_50">
-                    <xf:label>XLink: </xf:label>
+                    <xf:label>XLink</xf:label>
                     <xf:hint>
                         <p>
                                     The XLink field is used to reference an external resource, such as a second metadata record, a Related Item or a Table Of Contents.
@@ -110,7 +110,7 @@
                 <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@displayLabel]">
                 <xf:input ref="./@displayLabel" class="text_100">
-                    <xf:label>Display Label: </xf:label>
+                    <xf:label>Display Label</xf:label>
                     <xf:hint>
                         <p> This field is intended to be used when additional text associated with the title is needed for display. The Display Label field may be used whenever appropriate to indicate the preferred labeling when displayed by a metadata aggregator. Appropriate cases include titles other than the primary title or subtitle. Include the text preferred and capitalisation, but do not include delimiters such as colons. </p>
                     </xf:hint>
@@ -118,7 +118,7 @@
             </xf:group>
                 <!--relatedItem/part begins-->
                 <!-- The DLF/Aquifer Implementation Guidelines for Shareable MODS Records recommend that the part element be used in cases where the part of a resource being represented is a physical or structural part of another resource. Examples include an issue of a journal or a single story from a collection. This element is repeatable. -->
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-relatedItem-titleInfo" ref=".[mods:titleInfo]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:titleInfo]">
                 <div class="join">
                     <span class="legend">Title Information</span>
                     <span class="join-button">
@@ -187,7 +187,7 @@
                                     </xf:trigger>
                                 </div>
                                 <div class="node-adds">
-                                    <xf:group appearance="full" id="titleInfo-add-node-recommended" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)]">
+                                    <xf:group appearance="full" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)]">
                                         <xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>
                                         <xf:trigger ref=".[not(@type)]" class="add-button">
                                             <xf:label class="xforms-group-label-centered">Add Type</xf:label>
@@ -260,7 +260,7 @@
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
-                                    <xf:group appearance="full" id="titleInfo-add-node-optional">
+                                    <xf:group appearance="full">
                                         <xf:label class="xforms-group-label-centered">Optional Fields</xf:label>
                                         <xf:trigger ref=".[not(@displayLabel)]" class="add-button">
                                             <xf:label class="xforms-group-label-centered">Add Display Label</xf:label>
@@ -271,7 +271,7 @@
                                         </xf:trigger>
                                     </xf:group>
                                             <!--
-                                        <xf:group appearance="full" id="titleInfo-add-node-not-recommended">
+                                        <xf:group appearance="full">
                                         <xf:label class="xforms-group-label-centered">Deprecated Fields</xf:label>
                                         <xf:trigger ref=".[not(@ID)]" class="add-button">
                                         <xf:label class="xforms-group-label-centered">Add ID</xf:label>
@@ -679,7 +679,7 @@
                 </xf:repeat>
                         <!--title repeat ends-->
             </xf:group>
-            <xf:group appearance="full" class="fieldset level-2" id="fieldset-relatedItem-part" ref=".[mods:part]">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:part]">
                 <div class="join">
                     <span class="legend">Part</span>
                     <span class="join-button">
@@ -735,7 +735,7 @@
                                     </xf:trigger>
                                 </div>
                                 <div class="node-adds">
-                                    <xf:group appearance="full" id="part-add-node-recommended" ref=".[not(mods:detail)] | .[not(mods:extent)] | .[not(mods:date)] | .[not(mods:text)]">
+                                    <xf:group appearance="full" ref=".[not(mods:detail)] | .[not(mods:extent)] | .[not(mods:date)] | .[not(mods:text)]">
                                                         <!--<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-->
                                                         <!--
                                                             <xf:trigger ref=".[not(@type)]" class="add-button">
@@ -783,7 +783,7 @@
                                         </xf:trigger>
                                     </xf:group>
                                                     <!-- 
-                                                        <xf:group appearance="full" id="part-add-node-optional" ref=".[not(@ID)]">
+                                                        <xf:group appearance="full" ref=".[not(@ID)]">
                                                         <xf:label class="xforms-group-label-centered">Optional Fields</xf:label>
                                                         <xf:trigger ref=".[not(@ID)]" class="add-button">
                                                         <xf:label class="xforms-group-label-centered">Add Genre</xf:label>
@@ -795,7 +795,7 @@
                                                         </xf:group> 
                                                     -->
                                                     <!--
-                                                        <xf:group appearance="full" id="part-add-node-not-recommended">
+                                                        <xf:group appearance="full">
                                                         </xf:group> 
                                                     -->
                                 </div>
@@ -808,7 +808,7 @@
                         <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@ID]">
                         <xf:input ref="./@ID" class="text_50">
-                            <xf:label>ID: </xf:label>
+                            <xf:label>ID</xf:label>
                             <xf:hint>
                                 <p>Hint</p>
                             </xf:hint>
@@ -818,7 +818,7 @@
                         <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@type]">
                         <xf:input ref="./@type" class="text_50">
-                            <xf:label>Type: </xf:label>
+                            <xf:label>Type</xf:label>
                             <xf:hint>
                                 <p> A designation of a document segment type. See the MODS User Guidelines for suggested values. However, since there is not a controlled set of terms for type, if used, the value should be expressed clearly and be generally understandable outside of the local context of the resource. </p>
                             </xf:hint>
@@ -828,7 +828,7 @@
                         <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@order]">
                         <xf:input ref="./@order" class="text_50">
-                            <xf:label>Order:</xf:label>
+                            <xf:label>Order</xf:label>
                             <xf:hint>
                                 <p> An integer that designates the sequence of parts. </p>
                             </xf:hint>
@@ -840,7 +840,7 @@
                         <!--relatedItem/part/detail begins-->
                         <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                         <!--Cluster: include-->
-                    <xf:group appearance="full" class="fieldset level-3" id="fieldset-relatedItem-detail" ref=".[mods:detail]">
+                    <xf:group appearance="full" class="fieldset level-3" ref=".[mods:detail]">
                         <div class="join">
                             <span class="legend">Detail</span>
                             <span class="join-button">
@@ -875,7 +875,7 @@
                                 <!--Cluster: include-->
                             <xf:group appearance="full" ref=".[@type]">
                                 <xf:input ref="./@type" class="text_50">
-                                    <xf:label>Type:</xf:label>
+                                    <xf:label>Type</xf:label>
                                     <xf:hint>
                                         <p> Use this field to indicate the type of the part described. Suggested values include part,
                                                                 volume, issue, chapter, section, paragraph, track. Other values may be used as needed. However,
@@ -890,7 +890,7 @@
                                 <!--Cluster: omit-->
                             <xf:group appearance="full" ref=".[@level]">
                                 <xf:select1 ref="./@level">
-                                    <xf:label>Level:</xf:label>
+                                    <xf:label>Level</xf:label>
                                     <xf:hint>
                                         <p> Describes the level of numbering in the host/parent item. This is used to ensure that the numbering is retained in the proper order, with "vol." before "no.".</p>
                                     </xf:hint>
@@ -908,7 +908,7 @@
                                                 <!-- NB: 3.4 adds languageAttributeGroup -->
                             <xf:group appearance="full" ref=".[mods:number]">
                                 <xf:input ref="./mods:number" class="text_50">
-                                    <xf:label>Number:</xf:label>
+                                    <xf:label>Number</xf:label>
                                     <xf:hint>
                                         <p> Contains the actual number within the part. Numbering can be sequencing in any form, e.g., Part 1, Supplement A, Book two.</p>
                                     </xf:hint>
@@ -922,7 +922,7 @@
                                                 <!-- NB: 3.4 adds languageAttributeGroup -->
                             <xf:group appearance="full" ref=".[mods:caption]">
                                 <xf:input ref="./mods:caption" class="text_50">
-                                    <xf:label>Caption:</xf:label>
+                                    <xf:label>Caption</xf:label>
                                     <xf:hint>
                                         <p> Contains the caption describing the enumeration within a part. This may be the same as type, but conveys the actual text of what is
                                         on the item being described. </p>
@@ -937,7 +937,7 @@
                                                 <!-- NB: 3.4 adds languageAttributeGroup -->
                             <xf:group appearance="full" ref=".[mods:title]">
                                 <xf:input ref="./mods:title" class="text_50">
-                                    <xf:label>Title:</xf:label>
+                                    <xf:label>Title</xf:label>
                                     <xf:hint>
                                         <p> Contains the title of the part. Only include if this is different than the Title in Title Information. </p>
                                     </xf:hint>
@@ -951,7 +951,7 @@
                         <!--relatedItem/part/extent begins-->
                         <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                         <!--Cluster: include-->
-                    <xf:group appearance="full" class="fieldset level-3" id="fieldset-relatedItem-extent" ref=".[mods:extent]">
+                    <xf:group appearance="full" class="fieldset level-3" ref=".[mods:extent]">
                         <div class="join">
                             <span class="legend">Extent</span>
                             <span class="join-button">
@@ -984,7 +984,7 @@
                                 <!--Cluster: include-->
                             <xf:group appearance="full" ref=".[@unit]">
                                 <xf:select1 ref="./@unit" selection="open">
-                                    <xf:label>Unit:</xf:label>
+                                    <xf:label>Unit</xf:label>
                                     <xf:hint>
                                         <p> Suggested values include page, minute, etc.</p>
                                     </xf:hint>
@@ -1002,7 +1002,7 @@
                                                 <!-- NB: 3.4 adds languageAttributeGroup -->
                             <xf:group appearance="full" ref=".[mods:start]">
                                 <xf:input ref="./mods:start" class="text_50">
-                                    <xf:label>Start:</xf:label>
+                                    <xf:label>Start</xf:label>
                                     <xf:hint>
                                         <p> Contains the beginning unit of the extent within a part (e.g., first page). </p>
                                     </xf:hint>
@@ -1016,7 +1016,7 @@
                                                 <!-- NB: 3.4 adds languageAttributeGroup -->
                             <xf:group appearance="full" ref=".[mods:end]">
                                 <xf:input ref="./mods:end" class="text_50">
-                                    <xf:label>End:</xf:label>
+                                    <xf:label>End</xf:label>
                                     <xf:hint>
                                         <p> Contains the ending unit of the extent within a part. </p>
                                     </xf:hint>
@@ -1029,7 +1029,7 @@
                                 <!--Cluster: include-->
                             <xf:group appearance="full" ref=".[mods:total]">
                                 <xf:input ref="./mods:total" class="text_50">
-                                    <xf:label>Total:</xf:label>
+                                    <xf:label>Total</xf:label>
                                     <xf:hint>
                                         <p> Contains the total number of units within a part, rather than specific units. Use positive numbers only. For example, use "5" to indicate a total of five pages.</p>
                                     </xf:hint>
@@ -1043,7 +1043,7 @@
                                                 <!-- NB: 3.4 adds languageAttributeGroup -->
                             <xf:group appearance="full" ref=".[mods:list]">
                                 <xf:input ref="./mods:list" class="text_50">
-                                    <xf:label>List:</xf:label>
+                                    <xf:label>List</xf:label>
                                     <xf:hint>
                                         <p> Contains a textual listing of the units within a part (e.g., "pp. 5-9".) </p>
                                     </xf:hint>
@@ -1057,7 +1057,7 @@
                         <!--relatedItem/part/date begins-->
                         <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                         <!--Cluster: include-->
-                    <xf:group appearance="full" class="fieldset level-3" id="fieldset-relatedItem-date" ref=".[mods:date]">
+                    <xf:group appearance="full" class="fieldset level-3" ref=".[mods:date]">
                         <div class="join">
                             <span class="legend">Date</span>
                             <span class="join-button">
@@ -1092,7 +1092,7 @@
                                                     <!-- NB: 3.4 adds languageAttributeGroup -->
                             <xf:group appearance="full" ref=".[@encoding]">
                                 <xf:select1 ref="./@encoding">
-                                    <xf:label>Encoding:</xf:label>
+                                    <xf:label>Encoding</xf:label>
                                     <xf:hint>
                                         <p> If a structured date is used, indicate the formatting source using the encoding field. These guidelines recommend
                                                                     using the following value for the encoding field: "w3cdtf" This encoding is used to specify YYYY-MM-DD date patterns.
@@ -1112,7 +1112,7 @@
                                     <!--Cluster: include-->
                             <xf:group appearance="full" ref=".[@point]">
                                 <xf:select1 ref="./@point">
-                                    <xf:label>Point:</xf:label>
+                                    <xf:label>Point</xf:label>
                                     <xf:hint>
                                         <p> The point field can be used to encode date ranges using the following values: "start" and "end". If no point is specified, date
                                                                     is assumed to be a single date. </p>
@@ -1127,7 +1127,7 @@
                                     <!--Cluster: include-->
                             <xf:group appearance="full" ref=".[@qualifier]">
                                 <xf:select1 ref="./@qualifier">
-                                    <xf:label>Qualifier:</xf:label>
+                                    <xf:label>Qualifier</xf:label>
                                     <xf:hint>
                                         <p> The Qualifier field has three allowed values: approximate, inferred, and questionable. Best practice is to
                                                                 use this field with the appropriate value when a date is approximate, inferred, or questionable, rather than
@@ -1143,7 +1143,7 @@
                                     <!--Cluster: include-->
                             <xf:group appearance="full" ref=".">
                                 <xf:input ref="." class="text_50">
-                                    <xf:label>Date: </xf:label>
+                                    <xf:label>Date</xf:label>
                                     <xf:hint>
                                         <p> Date contains date information relevant to the part described. </p>
                                     </xf:hint>
@@ -1155,7 +1155,7 @@
                     </xf:group>
                                     <!--relatedItem/part/date ends-->
                         <!--relatedItem/part/text begins-->
-                    <xf:group appearance="full" class="fieldset level-3" id="fieldset-relatedItem-text" ref=".[mods:text]">
+                    <xf:group appearance="full" class="fieldset level-3" ref=".[mods:text]">
                         <div class="join">
                             <span class="legend">Text</span>
                             <span class="join-button">
@@ -1187,7 +1187,7 @@
                                         <!--relatedItem/part/text input begins-->
                             <xf:group appearance="full" ref=".">
                                 <xf:textarea ref="." class="textarea">
-                                    <xf:label>Text: </xf:label>
+                                    <xf:label>Text</xf:label>
                                     <xf:hint>
                                         <p> Date contains date information relevant to the part described. </p>
                                     </xf:hint>
@@ -1204,11 +1204,11 @@
                <!--relatedItem/part ends-->
         </xf:repeat>
         <!--title repeat ends-->
-        <xf:group appearance="full" id="relatedItem-add-element" ref=".[not(./mods:relatedItem)]">
+        <xf:group appearance="full" ref=".[not(./mods:relatedItem)]">
             <xf:trigger ref=".[not(mods:relatedItem)]" class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Related Item</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="mods:form" at="index('relatedItem-repeat')" position="after" origin="instance('insert-templates')/mods:relatedItem"/>
+                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:relatedItem"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

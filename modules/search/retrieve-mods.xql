@@ -10,7 +10,6 @@ import module namespace config="http://exist-db.org/mods/config" at "../config.x
 declare option exist:serialize "media-type=text/xml";
 
 (: TODO: A lot of restrictions to the first item in a sequence ([1]) have been made; these must all be changed to for-structures or string-joins. :)
-(: TODO: With the new cleanup script, the results received have no empty attributes and no empty elements; there are no titleInfo with empty title and no name with empty namePart. A lot of checking for these should be rolled back. :)
 
 (: ### general functions begin ###:)
 
@@ -24,13 +23,13 @@ declare function functx:camel-case-to-words($arg as xs:string?, $delim as xs:str
    concat(substring($arg,1,1), replace(substring($arg,2),'(\p{Lu})', concat($delim, '$1')))
 };
 
-(:~primary-
+(:~
 : Used to capitalize the first character of $arg.   
 : @param
 : @return
 : @see http://http://www.xqueryfunctions.com/xq/functx_capitalize-first.html
 :)
-declare function functx:capitalize-first( $arg as xs:string? ) as xs:string? {       
+declare function functx:capitalize-first($arg as xs:string?) as xs:string? {       
    concat(upper-case(substring($arg,1,1)),
              substring($arg,2))
 };
@@ -41,64 +40,49 @@ declare function functx:capitalize-first( $arg as xs:string? ) as xs:string? {
 : @return
 : @see http://http://www.xqueryfunctions.com/xq/functx_trim.html
 :)
-declare function functx:trim( $arg as xs:string? )  as xs:string {       
+declare function functx:trim($arg as xs:string?) as xs:string {       
    replace(replace($arg,'\s+$',''),'^\s+','')
- } ;
- 
-(: not used :)
-declare function mods:space-before($node as node()?) as xs:string? {
-    if (exists($node)) then
-        concat(' ', $node)
-    else
-        ()
 };
-
+ 
 (:~
 : Used to clean up unintended sequences of punctuation. These should ideally be removed at the source.   
 : @param
 : @return
 :)
 (: Function to clean up unintended punctuation. These should ideally be removed at the source. :)
-declare function mods:clean-up-punctuation($input as xs:string?) as xs:string? {
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-    replace(
-        $input
-    , '\s*\)', ')')
-    , ' \.', '.')
-    , '\s*,', ',')
-    , ' :', ':')
-    , ' ”', '”')
-    , '\s*;', ';')
-    , '\.\.', '.')
-    , ',,', ',')
-    , '“ ', '“')
-    , '”\.', '.”')
-    , '\. ,', ',') (: Fixes mistake in originInfo for periodicals. :)
-    , ',\s*\.', '') (: Fixes mistake in originInfo for periodicals. :)
-    , '\?\.', '?')
-    , '!\.', '!')
-    ,'\.” \.', '.”')
-    ,' \)', ')')
-    ,'\( ', '(')
-    ,'\.\.', '.')
-    ,'\.”,', ',”')
+declare function mods:clean-up-punctuation($element as node()) as node() {
+	element {node-name($element)}
+		{$element/@*,
+			for $child in $element/node()
+			return
+				if ($child instance of text())
+				then 
+					replace(
+					replace(
+					replace(
+					replace(
+					replace(
+					replace(
+					replace(
+					replace(
+					replace(
+					replace(
+					replace(
+						($child)
+					(:, '\s*\)', ')'):) (:, '\s*;', ';'):) (:, ',,', ','):) (:, '”\.', '.”'):) (:, '\. ,', ','):) (:, ',\s*\.', ''):) (:,'\.\.', '.'):) (:,'\.”,', ',”'):)
+					, '\s*\.', '.')
+					, '\s*,', ',')
+					, ' :', ':')
+					, ' ”', '”')
+					, '\.\.', '.')
+					, '“ ', '“')
+					, '\?\.', '?')
+					, '!\.', '!')
+					,'\.”\.', '.”')
+					,' \)', ')')
+					,'\( ', '(')
+				else mods:clean-up-punctuation($child)
+      }
 };
 
 (: ### general functions end ###:)
@@ -186,8 +170,7 @@ declare function mods:language-of-resource($language as element(mods:language)*)
         let $languageTerm := $language/mods:languageTerm[1]
         return
             if ($languageTerm) 
-            then
-                mods:get-language-label($languageTerm)
+            then mods:get-language-label($languageTerm)
             else ()
 };
 
@@ -195,8 +178,7 @@ declare function mods:script-of-resource($language as element(mods:language)*) a
         let $scriptTerm := $language/mods:scriptTerm
         return
             if ($scriptTerm) 
-            then
-                mods:get-script-term($language)
+            then mods:get-script-term($language)
             else ()
 };
 
@@ -218,8 +200,7 @@ declare function mods:language-of-cataloging($language as element(mods:languageO
         let $languageTerm := $language/mods:languageTerm[1]
         return
             if ($languageTerm) 
-            then
-                mods:get-language-label($languageTerm)
+            then mods:get-language-label($languageTerm)
             else ()
 };
 
@@ -278,10 +259,9 @@ declare function mods:get-role-terms-for-detail-view($role as element()*) as ite
     for $roleTerm at $pos in distinct-values($roleTerms)
     
     return
-    if ($roleTerm)
-    then
-        mods:get-role-label-for-detail-view($roleTerm)
-        else ()
+	    if ($roleTerm)
+	    then mods:get-role-label-for-detail-view($roleTerm)
+	    else ()
 
 };
 
@@ -323,7 +303,7 @@ declare function mods:get-role-label-for-list-view($roleTerm as xs:string*) as x
                                         then $roleLabel
                                             else $roleTerm
                                             (: Do not present default values in case of absence of $roleTerm, since primary roles are not displayed in list view. :)
-        return $roleLabel
+        return ($roleLabel, ' ')
 };
 
 declare function mods:add-part($part, $sep as xs:string) {
@@ -332,8 +312,7 @@ declare function mods:add-part($part, $sep as xs:string) {
     else concat(string-join($part, ' '), $sep)
 };
 
-declare function mods:get-publisher($publishers as element(mods:publisher)*) as xs:string? {
-    string-join(
+declare function mods:get-publisher($publishers as element(mods:publisher)*) as node()* {
         for $publisher in $publishers
         let $order := 
             if ($publisher[@transliteration]) 
@@ -341,14 +320,10 @@ declare function mods:get-publisher($publishers as element(mods:publisher)*) as 
             else 1
         order by $order
         return
+        	(:NB: This is an expansion of the MODS schema.:)
             if ($publisher/mods:name)
-            then
-                for $name at $pos in $publisher/mods:name
-                return
-                    mods:retrieve-name($name, $pos, 'secondary')
-            else
-                $publisher
-    , ', ')
+            then mods:retrieve-name($publisher/mods:name, 1, 'secondary')
+            else $publisher
 };
 
 
@@ -387,16 +362,19 @@ declare function mods:format-subjects($entry as element()) {
             }
         </td><td class="subrecord">
             {
+            (: If there is a child. :)
             if ($item/mods:*) 
             then
+            	(:If it is a name.:)
                 if ($item/name() = 'name')
-                then 
-                    mods:format-name($item, 1, 'primary')
+                then mods:format-name($item, 1, 'primary')
                 else
+                	(:If it is a titleInfo.:)
                     if ($item/name() = 'titleInfo')
-                    then 
-                        string-join(mods:get-short-title('', $item/.., ''), '')
+                    (:NB: What if there is more than one titleInfo? Here one steps out of the iteration.:)
+                    then string-join(mods:get-short-title($item/..), '')
                     else
+                    	(:If it is something else, such as topic (caught by $subitem/name()).:)
                         for $subitem in ($item/mods:*)
                         let $authority := 
                             if ($subitem/@authority/string()) 
@@ -418,9 +396,7 @@ declare function mods:format-subjects($entry as element()) {
                             {$subitem/string()}
                         </td></td></tr></table>
             else
-            <table><tr><td class="subrecord" colspan="2">
-            {$item/string()}
-            </td></tr></table>
+	            <table><tr><td class="subrecord" colspan="2">{$item/string()}</td></tr></table>
             }
             </td></tr>
     }
@@ -436,11 +412,11 @@ declare function mods:format-subjects($entry as element()) {
 Under <physicalDescription>, <extent> has no subelements.:)
 
 declare function mods:get-extent($extent as element(mods:extent)?) as xs:string? {
-let $unit := functx:trim($extent/@unit/string())
-let $start := functx:trim($extent/mods:start/string())
-let $end := functx:trim($extent/mods:end/string())
-let $total := functx:trim($extent/mods:total/string())
-let $list := functx:trim($extent/mods:list/string())
+let $unit := $extent/@unit
+let $start := $extent/mods:start
+let $end := $extent/mods:end
+let $total := $extent/mods:total
+let $list := $extent/mods:list
 return
     if ($start and $end) 
     then 
@@ -453,27 +429,24 @@ return
         ,
         :)
         if ($start != $end)
-        then
-        concat($start, '-', $end)
-        else
-        $start        
+        then concat($start, '-', $end)
+        else $start        
     else 
         if ($start or $end) 
         then 
             if ($start)
             then $start
             else $end
-        (: if not $start or $end. :)
         else
             if ($total) 
-            then concat('(', $total, ')')
+            then concat($total, ' ', $unit)
             else
                 if ($list) 
                 then $list
                 else string-join($extent/string(), ' ')    
 };
 
-declare function mods:get-date($date as element(mods:date)*) as xs:string* {
+declare function mods:get-date($date as element()*) as xs:string* {
     (: contains no subelements. :)
     (: has: encoding; point; qualifier. :)
     (: some dates have keyDate. :)
@@ -527,39 +500,42 @@ return
         (: The MODS schema includes several date elements intended to record different events that may be important in the life of a resource. :)
     
 declare function mods:get-place($places as element(mods:place)*) as xs:string? {
-    (: NB: Should iterate over both place and placeTerm. :)
     string-join(
         for $place in $places
-        let $placeTerm := $place/mods:placeTerm
-        let $order := 
-            if ($placeTerm/@transliteration) 
-            then 0 
-            else 1
-        order by $order
+        let $placeTerms := $place/mods:placeTerm
         return
-            if ($placeTerm[@type = 'text']/text()) 
-            then concat(
-                $placeTerm[@transliteration]/text()
-                ,
-                ' '
-                ,
-                $placeTerm[not(@transliteration)]/text()
-                )
-            else
-                if ($placeTerm[@authority = 'marccountry']/text()) 
-                then
-                    doc(concat($config:edit-app-root, '/code-tables/marc-country-codes.xml'))/code-table/items/item[value = $placeTerm]/label
-                else 
-                    if ($placeTerm[@authority = 'iso3166']/text()) 
-                    then
-                        doc(concat($config:edit-app-root, '/code-tables/iso3166-country-codes.xml'))/code-table/items/item[value = $placeTerm]/label
-                    else
-                        $place/mods:placeTerm[not(@type)]/text(),
+        	string-join(
+	        	for $placeTerm in $placeTerms
+	        	let $order := 
+	            if ($placeTerm/@transliteration) 
+	            then 0 
+	            else 1
+	        order by $order
+	        	return
+	            if ($placeTerm[@type = 'text']/text()) 
+	            then concat
+	            	(
+	                $placeTerm[@transliteration]/text()
+	                ,
+	                ' '
+	                ,
+	                $placeTerm[not(@transliteration)]/text()
+	                )
+	            else
+	                if ($placeTerm[@authority = 'marccountry']/text()) 
+	                then doc(concat($config:edit-app-root, '/code-tables/marc-country-codes.xml'))/code-table/items/item[value = $placeTerm]/label
+	                else 
+	                    if ($placeTerm[@authority = 'iso3166']/text()) 
+	                    then doc(concat($config:edit-app-root, '/code-tables/iso3166-country-codes.xml'))/code-table/items/item[value = $placeTerm]/label
+	                    else $place/mods:placeTerm[not(@type)]/text(),
         ' ')
+    ,
+    ' and ')
 };
 
+(:NB: This function should be split up in a part and an originInfo function.:)
 (: <part> is found both as a top level element and under <relatedItem>. :)
-
+(: Used in list view and relatedItem. :)
 declare function mods:get-part-and-origin($entry as element()) {
     let $originInfo := $entry/mods:originInfo
     (: contains: place, publisher, dateIssued, dateCreated, dateCaptured, dateValid, 
@@ -568,41 +544,59 @@ declare function mods:get-part-and-origin($entry as element()) {
     let $place := $originInfo/mods:place
     (: contains: placeTerm. :)
     (: has no attributes. :)
+    (: handled by get-place(). :)
+    
     let $publisher := $originInfo/mods:publisher
     (: contains no subelements. :)
     (: has no attributes. :)
+    (: handled by get-publisher(). :)
     
     let $dateIssued := $originInfo/mods:dateIssued
     (: contains no subelements. :)
-    (: has: encoding; point; keyDate; qualifier. :)    
+    (: has: encoding; point; keyDate; qualifier. :)
     let $dateCreated := $originInfo/mods:dateCreated
     (: contains no subelements. :)
-    (: has: encoding; point; keyDate; qualifier. :)    
+    (: has: encoding; point; keyDate; qualifier. :)
     let $dateCaptured := $originInfo/mods:dateCaptured
     (: contains no subelements. :)
-    (: has: encoding; point; keyDate; qualifier. :)    
+    (: has: encoding; point; keyDate; qualifier. :)
     let $dateValid := $originInfo/mods:dateValid
     (: contains no subelements. :)
-    (: has: encoding; point; keyDate; qualifier. :)    
+    (: has: encoding; point; keyDate; qualifier. :)
     let $dateModified := $originInfo/mods:dateModified
     (: contains no subelements. :)
-    (: has: encoding; point; keyDate; qualifier. :)    
-    let $copyrightDate := $originInfo/mods:copyrightDate
+    (: has: encoding; point; keyDate; qualifier. :)
+    let $copyrightDate := replace($originInfo/mods:copyrightDate, 'c', '')
     (: contains no subelements. :)
-    (: has: encoding; point; keyDate; qualifier. :)    
+    (: has: encoding; point; keyDate; qualifier. :)
     let $dateOther := $originInfo/mods:dateOther
     (: contains no subelements. :)
-    (: has: encoding; point; keyDate; qualifier. :)    
+    (: has: encoding; point; keyDate; qualifier. :)
     (: pick the "strongest" value for the hitlist. :)
     let $dateOriginInfo :=
-        if ($dateIssued) then $dateIssued else
-        if ($copyrightDate) then $copyrightDate else
-        if ($dateCreated) then $dateCreated else
-        if ($dateCaptured) then $dateCaptured else
-        if ($dateModified) then $dateModified else
-        if ($dateValid) then $dateValid else
-        if ($dateOther) then $dateOther else ()
-
+        if ($dateIssued) 
+        then $dateIssued 
+        else
+        	if ($copyrightDate) 
+        	then $copyrightDate 
+        	else
+        		if ($dateCreated) 
+        		then $dateCreated 
+        		else
+			        if ($dateCaptured) 
+			        then $dateCaptured 
+			        else
+				        if ($dateModified) 
+				        then $dateModified 
+				        else
+					        if ($dateValid) 
+					        then $dateValid 
+					        else
+						        if ($dateOther) 
+						        then $dateOther 
+						        else ()
+	(: handled by get-date(). :)
+	
     (: NB: this should iterate over part, since there are e.g. multi-part installments of articles. :)
     let $part := $entry/mods:part[1]
     (: contains: detail, extent, date, text. :)
@@ -610,25 +604,33 @@ declare function mods:get-part-and-origin($entry as element()) {
     let $detail := $part/mods:detail
     (: contains: number, caption, title. :)
     (: has: type, level. :)
-        let $issue := $detail[@type=('issue', 'number')]/mods:number
-        let $volume := $detail[@type='volume']/mods:number
-        let $page := $detail[@type='page']/mods:number
+        let $issue := $detail[@type=('issue', 'number')]/mods:number/text()
+        let $volume := $detail[@type='volume']/mods:number/text()
+        let $page := $detail[@type='page']/mods:number/text()
         (: $page resembles list. :)
+    
     let $extent := $part/mods:extent
-    (: contains: start, end, title, list. :)
+    (: contains: start, end, total, list. :)
     (: has: unit. :)
-    let $partDate := $part/mods:date
+    (: handled by mods:get-extent(). :)
+    
+    let $datePart := $part/mods:date
     (: contains no subelements. :)
     (: has: encoding; point; qualifier. :)
+    (: handled by mods:get-date(). :)
+    
+    let $text := $part/mods:text
+    (: contains no subelements. :)
+    (: has no attributes. :)
+    
     return
         (: If there is a part with issue information and a date, i.e. if the publication is an article in a periodical. :)
-        if ($detail/mods:number/text() and $partDate/text()) 
+        if ($detail/mods:number/text() and $datePart/text()) 
         then 
             concat(
             string-join(
             if ($issue and $volume)
-            then
-                concat($volume, ', no. ', $issue)
+            then concat($volume, ', no. ', $issue)
                 (: concat((if ($part/mods:detail/mods:caption) then $part/mods:detail/mods:caption/string() else '/'), $part/mods:detail[@type='issue']/mods:number) :)
             else 
                 if (not($volume) and ($issue))
@@ -640,38 +642,32 @@ declare function mods:get-part-and-origin($entry as element()) {
             , ' ')
             ,
             if ($page) 
-            then
-                concat(', ', $page)
+            then concat(', ', $page)
             else ()
             ,
-            if ($partDate/text())
-            then
-                concat(' (', mods:get-date($partDate), ')')
+            if ($datePart/text())
+            then concat(' (', mods:get-date($datePart), ')')
             else ()
             ,
             if ($extent) 
-            then
-                concat(', ', mods:get-extent($extent[1]), '.')
+            then concat(': ', mods:get-extent($extent[1]), '.')
             else '.'
             )
         else
             (: If there is a dateIssued and a place or a publisher, i.e. if the publication is an an edited volume. :)
-            if ($partDate and ($place | $publisher)) 
+            if ($datePart and ($place | $publisher)) 
             then
                 (
                 if ($volume) 
-                then
-                    concat(', Vol. ', $volume)
+                then concat(', Vol. ', $volume)
                 else ()
                 ,
                 if ($extent)
-                then
-                    concat(', ', mods:get-extent($extent),'.')
+                then concat(': ', mods:get-extent($extent),'.')
                 else ()
                 ,
                 if ($place)
-                then
-                    concat('. ', mods:get-place($place))
+                then concat('. ', mods:get-place($place))
                 else ()
                 ,
                 if ($place and $publisher)
@@ -679,108 +675,64 @@ declare function mods:get-part-and-origin($entry as element()) {
                 else ()
                 ,
                 if ($publisher)
-                then
-                    mods:get-publisher($publisher)
+                then (': ', mods:get-publisher($publisher))
                 else ()
                 ,
-                if ($partDate)
+                if ($datePart)
                 then
-                concat(', ', $dateOriginInfo, '.')
+	                (
+	                ', '
+	                ,
+	                for $date in $dateOriginInfo
+	                return
+	                	string-join($date, ' and ')
+	                )
                 else ()
                 )
             (: If not a periodical and not an edited volume, we don't know what it is and just try to extract the information. :)
             else
                 (
                 if ($place)
-                then
-                    mods:get-place($place)
+                then mods:get-place($place)
                 else ()
                 ,
-                normalize-space(mods:add-part(mods:get-publisher($publisher), ', ')
-                )
+                if ($publisher)
+                then (
+	                	if ($place)
+	                	then ': '
+	                	else ()
+                	, normalize-space(mods:add-part(mods:get-publisher($publisher), ', '))
+                	)
+                else ()
                 , 
-                normalize-space(mods:add-part($dateOriginInfo/string(), '.'))
+                mods:add-part(mods:get-date(<date>{$dateOriginInfo}</date>), 
+                if (exists($entry/mods:relatedItem[@type='host']/mods:part/mods:extent) or exists($entry/mods:relatedItem[@type='host']/mods:part/mods:detail))
+                then '.'
+                else ''
+                )
                 ,
-                if ($extent)
-                then
-                    mods:get-extent($extent[1])            
+                if (exists($extent/mods:start) or exists($extent/mods:end) or exists($extent/mods:list))
+                then (': ', mods:get-extent($extent))            
+                else ()
+                ,
+                if (exists($volume))
+                then ''
+                else '.'
+                ,
+                (:If it is a series:)
+                (:NB: polish!:)
+                if ($volume)
+                then concat(', Vol. ', $volume, '.')
+                else ()
+                ,
+                if ($text)
+                then $text
                 else ()
                 )
 };
 
 
 (: ### <originInfo> ends ### :)
-
-(: ### <relatedItem><part> begins ### :)
-
-(: Application: 'part' is used to provide detailed coding for physical parts of a resource. It may be used as a top level element to designate physical parts or under relatedItem. It may be used under relatedItem for generating citations about the location of a part within a host/parent item. When used with relatedItem type="host", <part> is roughly equivalent to MARC 21 field 773, subfields $g (Relationship information) and $q (Enumeration and first page), but allows for additional parsing of data. There is no MARC 21 equivalent to <part> at the <mods> level. :)
-(: Attributes: type, order, ID. :)
-    (: Unaccounted for: type, order, ID. :)
-(: Suggested values for @type: volume, issue, chapter, section, paragraph, track. :)
-    (: Unaccounted for: none. :)
-(: Subelements: <detail>, <extent>, <date>, <text>. :)
-    (: Unaccounted for: <text>. :)
-        (: Problem: <date> does not generally occur in relatedItem. :)
-        (: Subelement <extent>. :)
-            (: Attribute: type. :)
-                (: Suggested values for @type: page, minute. :)
-            (: Subelements: <start>, <end>, <total>, <list>. :)
-                (: Unaccounted for: <total>, <list>. :)
-
-(: not used. :)
-declare function mods:get-related-item-part($entry as element()) {
-
-    let $part := $entry/mods:relatedItem[@type='host'][1]/mods:part
-    let $volume := $part/mods:detail[@type='volume']/mods:number
-    let $issue := $part/mods:detail[@type='issue']/mods:number
-    let $date := $part/mods:date
-    let $extent := mods:get-extent($part/mods:extent)
-
-    return
-    if ($part or $volume or $issue or $date or $extent) 
-    then
-        (
-            (:if ($volume and $issue) 
-            then
-                <tr>
-                    <td class="label">Volume/Issue</td>
-                    <td class="record">{string-join(($volume/string(), $issue/string()), '/')}</td>
-                </tr>
-            else:) 
-            if ($volume) 
-            then
-                <tr>
-                    <td class="label">Volume</td>
-                    <td class="record">{$volume/string()}</td>
-                </tr>
-            else () 
-            ,
-            if ($issue) 
-            then
-                <tr>
-                    <td class="label">Issue</td>
-                    <td class="record">{$issue/string()}</td>
-                </tr>
-            else ()
-            ,
-            if ($date) 
-            then
-                <tr>
-                    <td class="label">Date</td>
-                    <td class="record">{$date/string()}</td>
-                </tr>
-            else ()
-            ,
-            if ($extent) 
-            then
-                <tr>
-                    <td class="label">Extent</td>
-                    <td class="record">{$extent}</td>
-                </tr>
-            else ()
-        )
-    else ()
-};
 
 (: ### <name> begins ### :)
 
@@ -819,14 +771,14 @@ declare function mods:get-conference-hitlist($entry as element(mods:mods)) {
             $entry/mods:originInfo/mods:dateCreated/string())[1]
     let $conference := $entry/mods:name[@type = 'conference']/mods:namePart
     return
-    if ($conference) then
+    if ($conference) 
+    then
         concat('Paper presented at ', 
             mods:add-part($conference/string(), ', '),
             mods:add-part($entry/mods:originInfo/mods:place/mods:placeTerm, ', '),
             $date
         )
-        else
-        ()
+    else ()
 };
 
 declare function mods:get-conference-detail-view($entry as element()) {
@@ -835,13 +787,13 @@ declare function mods:get-conference-detail-view($entry as element()) {
     return:)
     let $conference := $entry/mods:name[@type = 'conference']/mods:namePart
     return
-    if ($conference) then
+    if ($conference) 
+    then
         concat('Paper presented at ', $conference/string()
             (: , mods:add-part($entry/mods:originInfo/mods:place/mods:placeTerm, ', '), $date:)
             (: no need to duplicate placeinfo in detail view. :)
         )
-    else
-    ()
+    else ()
 };
 
 declare function mods:format-name($name as element()?, $pos as xs:integer, $caller as xs:string) {
@@ -873,10 +825,18 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                 if ($type = 'corporate') 
                 then
                     concat(
-                        string-join(for $item in $name/*:namePart where exists($item/@transliteration) return $item, ' ')
+                        string-join(
+                        	for $item in $name/*:namePart 
+                        	where exists($item/@transliteration) 
+                        	return $item
+                        , ' ')
                         
                         , ' ', 
-                        string-join(for $item in $name/*:namePart where not($item/@transliteration) return $item, ' ')
+                        string-join(
+                        	for $item in $name/*:namePart 
+                        	where not($item/@transliteration) 
+                        	return $item
+                        , ' ')
                     )
                 (: The assumption is that any sequence of corporate name parts is meaningfully constructed, e.g. with more general term first. :)
                 (: NB: this is the same as no type. :)
@@ -956,8 +916,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                             ,
                                             if ($termsOfAddress/string())
                                             (: If there are several terms of address, join them with a comma in between ("Dr., Prof."). :)
-                                            then
-                                                concat(', ', string-join($termsOfAddress/*:namePart, ', ')) 
+                                            then concat(', ', string-join($termsOfAddress/*:namePart, ', ')) 
                                             else ()
                                             (:
                                             ,
@@ -981,8 +940,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                                 ,
                                                 if ($termsOfAddress/string())
                                                 (: NB: Where do terms of address go in Hungarian? :)
-                                                then
-                                                    concat(', ', string-join($termsOfAddress/*:namePart, ', ')) 
+                                                then concat(', ', string-join($termsOfAddress/*:namePart, ', ')) 
                                                 else ()
                                                 (:
                                                 ,
@@ -1033,7 +991,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                 then $languageTransliteration
                                 else $language
                             let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[label = $language]/nameOrder/string()
-                            return        
+                            return       
                                 if ($untypedTransliteration/string())
                                 then string-join($untypedTransliteration/*:namePart, ' ') 
                                 else
@@ -1125,7 +1083,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                         then $languageScript
                                         else $language
                                     let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[label = $language]/nameOrder/string()
-                                    return        
+                                    return       
                                         if ($untypedScript/string())
                                         (: If the name parts are not typed, there is nothing we can do to order their sequence. When name parts are not typed, it is generally because the whole name occurs in one name part, formatted for display (usually with a comma between family and given name), but it may also be used when names that cannot be divided into family and given names are in evidence. We trust that any sequence of nameparts are meaningfully ordered and string-join them. :)
                                         then string-join($untypedScript, ' ') 
@@ -1248,10 +1206,26 @@ declare function mods:retrieve-mads-names($name as element(), $pos as xs:int, $c
     let $mads-preferred-name-formatted := mods:format-name($mads-preferred-name, 1, 'primary')
     let $mads-variant-names := $mads-record/mads:variant/mads:name
     let $mads-variant-name-nos := count($mads-record/mads:variant/mads:name)
-    let $mads-variant-names-formatted := string-join(for $name in $mads-variant-names return mods:format-name($name, 1, 'primary'), ', ')
+    let $mads-variant-names-formatted := 
+    	string-join(
+	    	for $name in $mads-variant-names 
+    		return mods:format-name($name, 1, 'primary')
+    	, ', ')
     return
         if ($mads-preferred-name)
-        then mods:clean-up-punctuation(concat(' (Preferred Name: ', $mads-preferred-name-formatted, if($mads-variant-name-nos = 1) then '; Variant Name: ' else '; Variant Names: ', $mads-variant-names-formatted, ')'))
+        then 
+        	concat
+        		(
+        		' (Preferred Name: ', 
+        		$mads-preferred-name-formatted, 
+        			if ($mads-variant-name-nos = 1) 
+        			then '; Variant Name: ' 
+        			else '; Variant Names: '
+        		, 
+        		$mads-variant-names-formatted
+        		, 
+        		')'
+        		)
         else ()
 };
 
@@ -1260,7 +1234,7 @@ declare function mods:retrieve-mads-names($name as element(), $pos as xs:int, $c
 declare function mods:retrieve-names($entry as element()*, $caller as xs:string) {
     for $name at $pos in $entry/mods:name
     return
-        mods:retrieve-name($name, $pos, $caller)
+    <span class="name">{mods:retrieve-name($name, $pos, $caller)}</span>
 };
 
 (:~
@@ -1282,28 +1256,26 @@ declare function mods:format-multiple-names($entry as element()*, $caller as xs:
     let $names := mods:retrieve-names($entry, $caller)
     let $nameCount := count($names)
     let $formatted :=
-        if ($nameCount eq 0) then
-            ()
+        if ($nameCount eq 0) 
+        then ()
         else 
             if ($nameCount eq 1) 
             then
                 if (ends-with($names, '.')) 
-                then
                 (: Places period after single author name, if it does not end with a term of address ending in period, such as "Jr." or "Dr.". :)
-                concat($names, ' ')
-                else
-                concat($names, '. ')
+                then concat($names, ' ')
+                else concat($names, '.')
             else
                 if ($nameCount eq 2)
                 then
-                concat(
-                    subsequence($names, 1, $nameCount - 1),
-                    ' and ',
-                    (: Places "and" before last name. :)
-                    $names[$nameCount],
-                    '. '
-                    (: Places period after last name. :)
-                )
+	                concat(
+	                    subsequence($names, 1, $nameCount - 1),
+	                    ' and ',
+	                    (: Places "and" before last name. :)
+	                    $names[$nameCount],
+	                    '.'
+	                    (: Places period after last name. :)
+	                )
                 else 
                     concat(
                         string-join(subsequence($names, 1, $nameCount - 1), ', '),
@@ -1312,14 +1284,14 @@ declare function mods:format-multiple-names($entry as element()*, $caller as xs:
                         (: Places ", and" before name that comes last. :)
                         $names[$nameCount],
                         if ($caller = 'primary')
-                        then '. '
+                        then '.&#160;'
                         else ()
                         (: Places period after last name. :)
                         )
     return
-    normalize-space(
+    <span class="name">{normalize-space(
         $formatted
-        )
+        )}</span>
 };
 
 (: NB! Create function to render real names from abbreviations! :)
@@ -1333,15 +1305,11 @@ declare function mods:get-language-name() {
 declare function mods:return-type($id as xs:string, $entry as element(mods:mods)) {
 let $type := $entry/mods:typeOfResource[1]/string()
     return
-     <span>{ 
-        replace(
-        if($type) then
-        $type
-        else
-        'text'
-        ,' ','_')
-        }
-      </span>  
+        replace(replace(
+        if ($type)
+        then $type
+        else 'text'
+        ,' ','_'),',','')
 };
 
 (: ### <typeOfResource> ends ### :)
@@ -1402,59 +1370,52 @@ declare function mods:get-genre() {
 
 declare function mods:get-title-translated($entry as element(mods:mods), $titleInfo as element(mods:titleInfo)?) {
     let $titleInfo :=
-        if ($titleInfo/@lang = 'ja' or $titleInfo/@lang = 'zh') then
-            string-join(($entry/mods:titleInfo[@lang = 'en']/mods:title, $entry/mods:titleInfo[@lang = 'en']/mods:subTitle), ' ')
-        else
-            ()
+        if ($titleInfo/@lang = 'ja' or $titleInfo/@lang = 'zh') 
+        then string-join(($entry/mods:titleInfo[@lang = 'en']/mods:title, $entry/mods:titleInfo[@lang = 'en']/mods:subTitle), ' ')
+        else ()
     return
-        if ($titleInfo) then
-            <span class="title-translated">{string-join(($titleInfo/mods:title/string(), $titleInfo/mods:subTitle/string()), ' ') }</span>
+        if ($titleInfo) 
+        then <span class="title-translated">{string-join(($titleInfo/mods:title/string(), $titleInfo/mods:subTitle/string()), ' ') }</span>
         else ()
 };
 
-(: Constructs the title for the hitlist view. :)
-declare function mods:get-short-title($id as xs:string?, $entry as element(), $type as xs:string?) {
+(: Constructs a compact title for list view, for subject, and for related items. :)
+declare function mods:get-short-title($entry as element()) {
+    (: If the entry has a host related item with an extent in part, it is a periodical article of a contribution to an edited volume and should be enclosed in quotation marks. :)
+    let $quotes := 
+    	if (exists($entry/mods:relatedItem[@type='host']/mods:part/mods:extent) or exists($entry/mods:relatedItem[@type='host']/mods:part/mods:detail))
+    	then 1
+    	else ()
     
-    let $relatedItemType := $type
-    
-    let $titleInfo := $entry/mods:titleInfo
-    let $titleInfoTransliteration := $titleInfo[@type='translated' and @transliteration]
+    let $titleInfo := $entry/mods:titleInfo[not(@type=('abbreviated', 'uniform', 'alternative'))]
+    let $titleInfoTransliteration := $titleInfo[@transliteration]
     let $titleInfoTranslation := $titleInfo[@type='translated' and not(@transliteration)]
+    let $titleInfo := $titleInfo[not(@type)][not(@transliteration)]
     
-    (: NB: Should short title contain the following? :)
-    (:
-    let $titleInfoUniform := $titleInfo[@type='uniform']
-    let $titleInfoAbbreviated := $titleInfo[@type='abbreviated']
-    let $titleInfoAlternative := $titleInfo[@type='alternative']
-    :)
+    let $nonSort := $titleInfo/mods:nonSort
+    let $title := $titleInfo/mods:title
+    let $subTitle := $titleInfo/mods:subTitle
+    let $partNumber := $titleInfo/mods:partNumber
+    let $partName := $titleInfo/mods:partName
     
-    (: Repeated assignment of $titleInfo. :)
-    let $titleInfo := $titleInfo[not(@type='abbreviated')][not(@type='uniform')][not(@type='alternative')][not(@type='translated')]
+    let $nonSortTransliteration := $titleInfoTransliteration/mods:nonSort
+    let $titleTransliteration := $titleInfoTransliteration/mods:title
+    let $subTitleTransliteration := $titleInfoTransliteration/mods:subTitle
+    let $partNumberTransliteration := $titleInfoTransliteration/mods:partNumber
+    let $partNameTransliteration := $titleInfoTransliteration/mods:partName
     
-    (: NB: The string-joins below are not necessary. :)
-    let $nonSort := string-join($titleInfo/mods:nonSort, ' ')
-    let $title := string-join($titleInfo/mods:title, ' ')
-    let $subTitle := string-join($titleInfo/mods:subTitle, ' ')
-    let $partNumber := string-join($titleInfo/mods:partNumber, ' ')
-    let $partName := string-join($titleInfo/mods:partName, ' ')
-    
-    let $nonSortTransliteration := string-join($titleInfoTransliteration/mods:nonSort, ' ')
-    let $titleTransliteration := string-join($titleInfoTransliteration/mods:title, ' ')
-    let $subTitleTransliteration := string-join($titleInfoTransliteration/mods:subTitle, ' ')
-    let $partNumberTransliteration := string-join($titleInfoTransliteration/mods:partNumber, ' ')
-    let $partNameTransliteration := string-join($titleInfoTransliteration/mods:partName, ' ')
-    
-    let $nonSortTranslation := string-join($titleInfoTranslation/mods:nonSort, ' ')
-    let $titleTranslation := string-join($titleInfoTranslation/mods:title, ' ')
-    let $subTitleTranslation := string-join($titleInfoTranslation/mods:subTitle, ' ')
-    let $partNumberTranslation := string-join($titleInfoTranslation/mods:partNumber, ' ')
-    let $partNameTranslation := string-join($titleInfoTranslation/mods:partName, ' ')
+    let $nonSortTranslation := $titleInfoTranslation/mods:nonSort
+    let $titleTranslation := $titleInfoTranslation/mods:title
+    let $subTitleTranslation := $titleInfoTranslation/mods:subTitle
+    let $partNumberTranslation := $titleInfoTranslation/mods:partNumber
+    let $partNameTranslation := $titleInfoTranslation/mods:partName
         
     let $titleFormat := 
         (
         if ($nonSort) 
         then concat($nonSort, ' ' , $title)
-        else $title
+        (:NB: Why need to trim?:)
+        else functx:trim($title)
         , 
         if ($subTitle) 
         then concat(': ', $subTitle)
@@ -1470,20 +1431,18 @@ declare function mods:get-short-title($id as xs:string?, $entry as element(), $t
                 else
                     if ($partName)
                     then concat('. ', $partName)
-            else ()
+            		else ()
         else ()
         )
+        
     let $titleTransliterationFormat := 
         (
         if ($nonSortTransliteration) 
-        then 
-            concat($nonSortTransliteration, ' ' , $titleTransliteration)
-        else 
-            $titleTransliteration
+        then concat($nonSortTransliteration, ' ' , $titleTransliteration)
+        else $titleTransliteration
         , 
         if ($subTitleTransliteration) 
-        then 
-            concat(': ', $subTitleTransliteration)
+        then concat(': ', $subTitleTransliteration)
         else ()
         ,
         if ($partNumberTransliteration or $partNameTransliteration)
@@ -1496,9 +1455,10 @@ declare function mods:get-short-title($id as xs:string?, $entry as element(), $t
                 else
                     if ($partNameTransliteration)
                     then concat('. ', $partNameTransliteration)
-            else ()
+            		else ()
         else ()
         )
+        
     let $titleTranslationFormat := 
         (
         if ($nonSortTranslation) 
@@ -1519,42 +1479,46 @@ declare function mods:get-short-title($id as xs:string?, $entry as element(), $t
                 else
                     if ($partNameTranslation)
                     then concat('. ', $partNameTranslation)
-            else ()
+            		else ()
         else ()
         )
+        
     return
         ( 
-        if ($relatedItemType)
-        (: If it is a related item it has a type, and related items are not enclosed by quotation marks. :)
-        then ()
-        else '“'
+        if ($quotes)
+        (:Do not use ordinary quotation marks, in order not to conflict with the cleanup function.:)
+        then ' “'
+        else ''
         ,
         (
         if ($titleTransliteration) 
-        then
-        (
-        $titleTransliterationFormat         
-        ,
-        ' '
-        )
+        then (<span class="title">{$titleTransliterationFormat}</span>, ' ')
         else ()
         , 
-        $titleFormat
+        if ($titleTransliteration)
+        (:If there is a transliteration, the title in original script should not be italisised.:)
+        then <span class="title-no-italics">{$titleFormat}</span>
+        else
+        	if ($quotes)
+        	(:then <span class="title-no-italics">{replace(string-join($titleFormat, ''), ' :', ':')}</span>:)
+        	(:then <span class="title-no-italics">{functx:trim(string-join($titleFormat, ''))}</span>:)
+        	then <span class="title-no-italics">{$titleFormat}</span>
+        	else <span class="title">{string-join($titleFormat, '')}</span>
         ,
-        if ($relatedItemType) 
-        then ()
-        else '.”'
+        if ($quotes and $titleTranslation) 
+        then '”'
+        else 
+	        if ($quotes)
+	        then '.”'
+	        else ''
         ,
         if ($titleTranslation)
-        then ('(', $titleTranslationFormat,')')
+        then <span class="title"> [{$titleTranslationFormat/text()}]</span>
         else ()
-        (:
         ,
-        (: If the publication is a periodical (continuing) or if it is an edited volume, it should have no period attached. :)
-        if (local-name($titleInfo/..) = 'relatedItem') 
-        then ()
-        else '.'
-        :)        
+        if ($quotes and $titleTranslation) 
+        then '.'
+        else '' 
         )
         )
 };
@@ -1645,11 +1609,34 @@ if ($titleInfo)
         <td class='record'>
         {
         if ($titleInfo/mods:partNumber | $titleInfo/mods:partName)
-        then
-        concat(concat(concat($titleInfo/mods:nonSort, ' ', $titleInfo/mods:title), (if ($titleInfo/mods:subTitle) then ': ' else ()), string-join($titleInfo/mods:subTitle, '; ')), '. ', string-join(($titleInfo/mods:partNumber, $titleInfo/mods:partName), ': '))
-        else
-        concat(concat($titleInfo/mods:nonSort, ' ', $titleInfo/mods:title), (if ($titleInfo/mods:subTitle) then ': ' else ()), string-join($titleInfo/mods:subTitle, '; '))
-                
+        then 
+	        concat(
+	        concat(
+	        concat(
+	        	$titleInfo/mods:nonSort, 
+	        	' ', 
+	        	$titleInfo/mods:title), 
+	        		(
+	        			if ($titleInfo/mods:subTitle) 
+	        			then ': ' 
+	        			else ()
+	        		), 
+	        	string-join($titleInfo/mods:subTitle, '; ')), 
+	        	'. ', 
+	        	string-join(($titleInfo/mods:partNumber, $titleInfo/mods:partName),
+	        	': ')
+	        	)
+        else 
+        	concat(
+        	concat(
+        	$titleInfo/mods:nonSort, ' ', 
+        	$titleInfo/mods:title), 
+        		(
+        			if ($titleInfo/mods:subTitle) 
+        			then ': ' 
+        			else ()
+        		), 
+        	string-join($titleInfo/mods:subTitle, '; '))
         }
         </td>
     </tr>
@@ -1687,125 +1674,113 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
         if (($item/@xlink:href) and (collection($config:mods-root)//mods:mods[@ID = $item/@xlink:href]) and (not($item/string()))) 
         then collection($config:mods-root)//mods:mods[@ID = $item/@xlink:href][1]
         else ()
-    let $relatedItem := if ($xlinkRecord) then $xlinkRecord else $item
+    let $relatedItem :=
+        (: NB: If there is a xlink on relatedItem and relatedItem has a part, the xlink record should be merged with part. :)
+    	if ($xlinkRecord) 
+    	then $xlinkRecord 
+    	else
+    		if ($item/mods:titleInfo/mods:title/text())
+    		then $item
+    		else ()
     return
         (: Check for the most common types first. :)
-        (: NB: The two steps should probably be collapsed. :)
-        if ($type = ('host', 'series') and $relatedItem/mods:titleInfo/mods:title/text())
+        if ($relatedItem)
         then
-            if ($caller = 'hitlist')
-            then
-                concat
-                (
-                    if ($relatedItem/mods:originInfo/mods:issuance != 'continuing')
-                    then 'In '
-                    else ''
-                , 
-                mods:clean-up-punctuation(mods:format-related-item($relatedItem))
-                )
-            else
-                if ($caller = 'detail' and string($xlink))
-                then
-                    <tr>
-                        <td class="url label">
-                            <a href="?filter=ID&amp;value={$xlink}">&lt;&lt; In:</a>
-                        </td>
-                        <td class="record">
-                            {mods:clean-up-punctuation(mods:format-related-item($relatedItem))}
-                        </td>
-                    </tr>
-                else
-                    if ($caller = 'detail')
-                    then
-                    <tr>
-                        <td class="label">
-                            In:
-                        </td>
-                        <td class="record">
-                            {mods:clean-up-punctuation(mods:format-related-item($relatedItem))}
-                        </td>
-                    </tr>
-                    else ()
-        (: if @type is not 'host' or 'series':)
-        else
-            if ($caller = 'detail' and string($xlink))
-            then
-                <tr>
-                    <td class="url label">
-                        <a href="?filter=ID&amp;value={$xlink}">&lt;&lt; {$labelDisplayed}</a>
-                    </td>
-                    <td class="record">
-                        {mods:clean-up-punctuation(mods:format-related-item($relatedItem))}
-                    </td>
-                </tr>
-            else
-                if ($caller = 'detail')
-                then
-                <tr>
-                    <td class="url label">
-                        {$labelDisplayed}
-                    </td>
-                    <td class="record">
-                        {mods:clean-up-punctuation(mods:format-related-item($relatedItem))}
-                    </td>
-                </tr>
-                else ()
+	        if ($type = ('host', 'series'))
+	        then
+	            if ($caller = 'hitlist')
+	            then
+	                <span class="relatedItem-span">{mods:format-related-item($relatedItem)}</span>
+	            else
+	                if ($caller = 'detail' and string($xlink))
+	                then
+	                    <tr class="relatedItem-row">
+							<td class="url label relatedItem-label">
+	                            <a href="?filter=ID&amp;value={$xlink}">&lt;&lt; In:</a>
+	                        </td>
+	                        <td class="relatedItem-record">
+								<span class="relatedItem-span">{mods:format-related-item($relatedItem)}</span>
+	                        </td>
+	                    </tr>
+	                else
+	                    if ($caller = 'detail')
+	                    then
+	                    <tr class="relatedItem-row">
+							<td class="url label relatedItem-label">In:</td>
+	                        <td class="relatedItem-record">
+								<span class="relatedItem-span">{mods:format-related-item($relatedItem)}</span>
+	                        </td>
+	                    </tr>
+	                    else ()
+	        (: if @type is not 'host' or 'series':)
+	        else
+	            if ($caller = 'detail' and string($xlink))
+	            then
+	                <tr class="relatedItem-row">
+						<td class="url label relatedItem-label">
+	                        <a href="?filter=ID&amp;value={$xlink}">&lt;&lt; {$labelDisplayed}</a>
+	                    </td>
+	                    <td class="relatedItem-record">
+							<span class="relatedItem-span">{mods:format-related-item($relatedItem)}</span>
+	                    </td>
+	                </tr>
+	            else
+	                if ($caller = 'detail')
+	                then
+	                <tr class="relatedItem-row">
+	                    <td class="url label relatedItem-label">
+	                        {$type}
+	                    </td>
+	                    <td class="relatedItem-record">
+	                        <span class="relatedItem-span">{mods:format-related-item($relatedItem)}</span>
+	                    </td>
+	                </tr>
+	                else ()
+        else ()
 };
 
 declare function mods:format-related-item($relatedItem as element()) {
-                <span class="related">
-                {
-                if ($relatedItem/mods:name/mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator') or not($relatedItem/mods:name/mods:role/mods:roleTerm))
-                then
-                    if ($relatedItem/mods:name/mods:role/mods:namePart/text())
-                    then
-                        mods:format-multiple-names($relatedItem, 'primary')
-                    else ()
-                else ()
-                }
-                <span class="title">
-                {
-                mods:get-short-title('', $relatedItem, $relatedItem/@type)
-                }
-                </span>,
-                {
-        let $roleTerms := $relatedItem/mods:name/mods:role/mods:roleTerm
-        return
-            for $roleTerm in distinct-values($roleTerms)
-                where $roleTerm = ('com', 'compiler', 'editor', 'edt', 'trl', 'translator', 'annotator', 'ann')        
-                    return
-                        let $names := <entry>{$relatedItem/mods:name[mods:role/mods:roleTerm = $roleTerm]}</entry>
-                            return
-                                if ($names/string())
-                                then
-                                    (
-                                    ', '
-                                    ,
-                                    mods:get-role-label-for-list-view($roleTerm)
-                                    ,
-                                    mods:format-multiple-names($names, 'secondary')
-                                    )
+    mods:clean-up-punctuation(<result>{(
+    if ($relatedItem/mods:name/mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator') or not($relatedItem/mods:name/mods:role/mods:roleTerm))
+    then mods:format-multiple-names($relatedItem, 'primary')
+    else ()
+    ,
+    mods:get-short-title($relatedItem)
+    ,
+    let $roleTerms := $relatedItem/mods:name/mods:role/mods:roleTerm
+    return
+        for $roleTerm in distinct-values($roleTerms)
+            where $roleTerm = ('com', 'compiler', 'editor', 'edt', 'trl', 'translator', 'annotator', 'ann')        
+                return
+                    let $names := <entry>{$relatedItem/mods:name[mods:role/mods:roleTerm = $roleTerm]}</entry>
+                        return
+                            if ($names/string())
+                            then
+                                (
+                                ', '
+                                ,
+                                mods:get-role-label-for-list-view($roleTerm)
+                                ,
+                                mods:format-multiple-names($names, 'secondary')
+                                )
+                            else ()
+                            ,
+                            (:if ($relatedItem/mods:originInfo/mods:issuance = 'monographic' or not($relatedItem/mods:part/mods:date/text()))
+                            then ()
+                            else '.'
+                            ,:)
+                            if ($relatedItem/mods:originInfo or $relatedItem/mods:part) 
+                            then
+                                (
+                                ' ',                
+                                mods:get-part-and-origin($relatedItem)
+                                ,                
+                                if ($relatedItem/mods:location/mods:url/text()) 
+                                then concat(' <', $relatedItem/mods:location/mods:url, '>')
                                 else ()
-                                }
-                                {
-                                if ($relatedItem/mods:originInfo/mods:issuance = 'monographic' or not($relatedItem/mods:part/mods:date/text()))
-                                then ()
-                                else '.'
-                                }
-                                {
-                                if ($relatedItem/mods:originInfo or $relatedItem/mods:part) 
-                                then
-                                    (
-                                    ' ',                
-                                    mods:get-part-and-origin($relatedItem)
-                                    ,                
-                                    if ($relatedItem/mods:location/mods:url/text()) 
-                                    then concat(' <', $relatedItem/mods:location/mods:url, '>')
-                                    else ()
-                                    )
-                                else ()                
-                                }
-            </span>
+                                )
+                            else ()                
+	)}</result>)
 };
 
 (: ### <relatedItem> ends ### :)
@@ -1820,12 +1795,11 @@ declare function mods:names-full($entry as element()) {
                     }
                 </td><td class="record">
                     {
-                    mods:clean-up-punctuation(mods:format-name($name, 1, 'primary'))
+                    mods:format-name($name, 1, 'primary')
                     }
                     {
                     if ($name/@xlink:href)
-                    then
-                        mods:retrieve-mads-names($name, 1,'primary')
+                    then mods:retrieve-mads-names($name, 1,'primary')
                     else ()
                     }</td>
                 
@@ -1862,8 +1836,7 @@ declare function mods:url($entry as element()) as element(tr)* {
             <td class="label"> 
             {
                 if ($url/@displayLabel)
-                then
-                    $url/@displayLabel/text()
+                then $url/@displayLabel/text()
                 else 'URL'
             }
             </td>
@@ -1910,7 +1883,7 @@ declare function mods:entry-full($entry as element())
     then () 
     else 
         for $date in $entry/mods:originInfo/mods:copyrightDate
-            return mods:simple-row($date, 'Copyright Date')
+            return mods:simple-row(replace($date,'c',''), 'Copyright Date')
     ,
     if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:dateCaptured) 
     then () 
@@ -1942,33 +1915,33 @@ declare function mods:entry-full($entry as element())
         for $dateOther in $entry/mods:originInfo/mods:dateOther
             return mods:simple-row($dateOther, 'Other Date')
     ,
-    
-    (: extent :)
-    if ($entry/mods:extent) 
-    then mods:simple-row(mods:get-extent($entry/mods:extent), 'Extent') 
+    (: edition :)
+    if ($entry/mods:originInfo/mods:edition) 
+    then mods:simple-row($entry/mods:originInfo/mods:edition, 'Edition') 
     else ()
     ,
-    
+    (: extent :)
+    if ($entry/mods:physicalDescription/mods:extent) 
+    then mods:simple-row(mods:get-extent($entry/mods:physicalDescription/mods:extent), 'Extent') 
+    else ()
+    ,
     (: URL :)
     mods:url($entry)
     ,
-    
     (: relatedItem :)
     mods:get-related-items($entry, 'detail')
     ,
-    
     (: typeOfResource :)
     mods:simple-row($entry/mods:typeOfResource[1]/string(), 'Type of Resource')
     ,
-    
     (: internetMediaType :)
     mods:simple-row(
     (
-    let $label := doc(concat($config:edit-app-root, '/code-tables/internet-media-type-codes.xml'))/code-table/items/item[value = $entry/mods:physicalDescription[1]/mods:internetMediaType]/label
-    return
-        if ($label) 
-        then $label
-        else $entry/mods:physicalDescription[1]/mods:internetMediaType)
+	    let $label := doc(concat($config:edit-app-root, '/code-tables/internet-media-type-codes.xml'))/code-table/items/item[value = $entry/mods:physicalDescription[1]/mods:internetMediaType]/label
+	    return
+	        if ($label) 
+	        then $label
+	        else $entry/mods:physicalDescription[1]/mods:internetMediaType)
     , 'Internet Media Type')
     ,
     
@@ -2019,21 +1992,19 @@ declare function mods:entry-full($entry as element())
     for $language in ($entry/mods:recordInfo/mods:languageOfCataloging)
     let $languageTerm := $language/mods:languageTerm 
     return    
-    if ($languageTerm)
-    then
-    mods:simple-row(mods:language-of-cataloging($language), 'Language of Cataloging')
-    else ()
+	    if ($languageTerm)
+	    then mods:simple-row(mods:language-of-cataloging($language), 'Language of Cataloging')
+	    else ()
     ,
 
     (: genre :)
     for $genre in ($entry/mods:genre)
     let $authority := $genre/@authority/string()
-    return    
+    return   
         mods:simple-row
             (
                 if ($authority = 'local')
-                then
-                    doc(concat($config:edit-app-root, '/code-tables/genre-local-codes.xml'))/code-table/items/item[value = $genre]/label
+                then doc(concat($config:edit-app-root, '/code-tables/genre-local-codes.xml'))/code-table/items/item[value = $genre]/label
                 else $genre/string()
             , 
                 concat(
@@ -2042,8 +2013,7 @@ declare function mods:entry-full($entry as element())
                     if ($authority)
                     then
                         if ($authority = 'marcgt')
-                        then
-                            concat(' (', replace(doc(concat($config:edit-app-root, '/code-tables/genre-authority-codes.xml'))/code-table/items/item[value = $authority]/label, '\*', ''), ')')
+                        then concat(' (', replace(doc(concat($config:edit-app-root, '/code-tables/genre-authority-codes.xml'))/code-table/items/item[value = $authority]/label, '\*', ''), ')')
                         else concat(' (', $authority, ')')
                     else ()            
             )
@@ -2059,37 +2029,44 @@ declare function mods:entry-full($entry as element())
     (: note :)
     for $note in ($entry/mods:note)
     let $displayLabel := $note/@displayLabel
+    let $type := $note/@type
     return    
-    mods:simple-row($note
-    , 
-    concat('Note', 
-        if ($displayLabel)
-            then
-                concat(' (', $displayLabel, ')')            
-        else ()            
-        )
-    )
+	    mods:simple-row($note
+	    , 
+	    concat('Note', 
+	        (
+	        if ($displayLabel)
+	        then concat(' (', $displayLabel, ')')            
+	        else ()
+	        ,
+	        if ($type)
+	        then concat(' (', $type, ')')            
+	        else ()
+	        )
+	        )
+	    )
     ,
-    
     (: subject :)
     (: We assume that there are not many subjects with the first element, topic, empty. :)
     if (normalize-space($entry/mods:subject[1]/string()))
-    then
-    mods:format-subjects($entry)    
+    then mods:format-subjects($entry)    
     else ()
     , 
-    
-    (: ISBN :)
-    mods:simple-row($entry/mods:identifier[@type='isbn'][1], 'ISBN'),
-    
+    (: identifier :)
+    for $item in $entry/mods:identifier
+    let $type := 
+        if ($item/@type/string()) 
+        then concat(' (', ($item/@type/string()), ')') 
+        else ()
+    return mods:simple-row($item, concat('Identifier', upper-case($type)))
+    ,
     (: classification :)
     for $item in $entry/mods:classification
     let $authority := 
         if ($item/@authority/string()) 
         then concat(' (', ($item/@authority/string()), ')') 
         else ()
-    return
-    mods:simple-row($item, concat('Classification', $authority))
+    return mods:simple-row($item, concat('Classification', $authority))
 };
 
 (: Creates view for detail view. :)
@@ -2112,17 +2089,19 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
     let $format :=
         (
         (: The author, etc. of the primary publication. :)
-        let $names := <entry>{$entry/mods:name[@type = 'personal' or @type = 'corporate' or @type = 'family' or not(@type)][(mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator')) or not ($entry/mods:name/mods:role/mods:roleTerm)]}</entry>
+        let $names := <entry>{$entry/mods:name[@type = 'personal' or @type = 'corporate' or @type = 'family' or not(@type)][(mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator')) or not(mods:role/mods:roleTerm)]}</entry>
         return mods:format-multiple-names($names, 'primary')
         ,
-        
         (: The title of the primary publication. :)
-        mods:get-short-title($id, $entry, '')
+        mods:get-short-title($entry)
         ,
-        
-        (: The editor, etc. of the primary publication. :)
         let $roleTerms := $entry/mods:name/mods:role/mods:roleTerm[. = ('com', 'compiler', 'Compiler', 'editor', 'Editor', 'edt', 'trl', 'translator', 'Translator', 'annotator', 'Annotator', 'ann')]
         return
+	        (if (not($entry/mods:relatedItem[@type = 'host']) and not($roleTerms)) 
+	        then '.'
+	        else ''
+	    ,
+        (: The editor, etc. of the primary publication. :)
         for $roleTerm in distinct-values($roleTerms)        
             return
                 (: NB: Can the wrapper be avoided? :)
@@ -2137,23 +2116,25 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
                     ,
                     mods:format-multiple-names($names, 'secondary')
                     (: Terminate secondary role with period. :)
-                    (: NB: What if there are multiple secondary roles? :)
-                    ,'.')
+                    ,
+			        if (not($entry/mods:relatedItem[@type = 'host']) and ($roleTerms)) 
+			        then ''
+			        else '.'
+                    )
+                    )
         , ' '
         ,
         (: The conference of the primary publication, containing originInfo and part information. :)
         if ($entry/mods:name[@type = 'conference']) 
-        then
-            mods:get-conference-hitlist($entry)
-        else 
-        (: If not a publication, get originInfo and part information for primary publication. :)
-            mods:get-part-and-origin($entry)
+        then mods:get-conference-hitlist($entry)
+        (: If not a conference publication, get originInfo and part information for the primary publication. :)
+        else mods:get-part-and-origin($entry)    
         ,
-        
-        (: The periodical or edited volume that the primary publication occurs in. :)    
-        mods:get-related-items($entry, 'hitlist')
+        (: The periodical or edited volume that the primary publication occurs in. :)
+        if (exists($entry/mods:relatedItem[@type='host']/mods:part/mods:extent) or exists($entry/mods:relatedItem[@type='host']/mods:part/mods:detail)) 
+        then <span class="relatedItem-span">{mods:get-related-items($entry, 'hitlist')}</span>
+        else ()
         ,
-        
         (: The url of the primary publication. :)
         if ($entry/mods:location/mods:url/text())
         then
@@ -2163,10 +2144,6 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         else ()
         )
     return
-        (: The result. :)
-        <div class="select">
-        {
-        mods:clean-up-punctuation(normalize-space(string-join($format,' ')))
-        }
-        </div>
+        mods:clean-up-punctuation(<span class="record">{$format}</span>)
+        (:$format:)
 };

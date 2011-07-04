@@ -7,10 +7,6 @@
     <description/>
     <notes>terms with asterix have links. should be called genre-form-authority-code</notes>
     <items>
-        <item>
-            <label>(none selected)</label>
-            <value/>
-        </item>
         <!--
             <item>
             <label>Audiovisual material glossary</label>
@@ -18,12 +14,12 @@
             </item>
         -->
         <item>
-            <label>*Basic genre terms for cultural heritage materials</label>
+            <label>Basic genre terms for cultural heritage materials</label>
             <value>bgtchm</value>
             <link>http://memory.loc.gov/ammem/techdocs/genre.html</link>
         </item>
         <item>
-            <label>*Dublin Core list of resources types</label>
+            <label>Dublin Core list of resources types</label>
             <value>dct</value>
             <link>http://dublincore.org/documents/resource-typelist/</link>
         </item>
@@ -73,13 +69,13 @@
             <value>marccontent</value>
             </item>
             <item>ail
-            <label>*MARC form of item term list</label>
+            <label>MARC form of item term list</label>
             <value>marcform</value>
             <link>http://www.loc.gov/standards/valuelist/marcform.html</link>
             </item>
         -->
         <item>
-            <label>*MARC genre terms</label>
+            <label>MARC genre terms</label>
             <value>marcgt</value>
             <link>http://www.loc.gov/standards/valuelist/marcgt.html</link>
         </item>
@@ -90,13 +86,13 @@
             </item>
         -->
         <item>
-            <label>*MARC specific material form term list</label>
+            <label>MARC specific material form term list</label>
             <value>marcsmd</value>
             <link>http://www.loc.gov/standards/valuelist/marcsmd.html</link>
         </item>
         <!-- 
             <item>
-            <label>*Moving image genre-form guide</label>
+            <label>Moving image genre-form guide</label>
             <value>migfg</value>
             <link>http://www.loc.gov/rr/mopic/migintro.html</link>
             </item>
@@ -153,17 +149,17 @@
             <value>rbtyp</value>
             </item>
             <item>
-            <label>*Term and code list for RDA carrier types</label>
+            <label>Term and code list for RDA carrier types</label>
             <value>rdacarrier</value>
             <link>http://www.loc.gov/standards/valuelist/rdacarrier.html</link>
             </item>
             <item>
-            <label>*Term and code list for RDA content types</label>
+            <label>Term and code list for RDA content types</label>
             <value>rdacontent</value>
             <link>http://www.loc.gov/standards/valuelist/rdacontent.html</link>
             </item>
             <item>
-            <label>*Term and code list for RDA media types</label>
+            <label>Term and code list for RDA media types</label>
             <value>rdamedia</value>
             <link>http://www.loc.gov/standards/valuelist/rdamedia.html</link>
             </item>

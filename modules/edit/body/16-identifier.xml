@@ -41,7 +41,7 @@
                         <!--Cluster: REQUIRE IF .-->
             <xf:group appearance="full" ref=".[@type]" selection="open">
                 <xf:select1 ref="./@type">
-                    <xf:label>Type:</xf:label>
+                    <xf:label>Type</xf:label>
                     <xf:hint>
                         <p>Type identifies the type of identifier that is recorded</p>
                     </xf:hint>
@@ -55,7 +55,7 @@
                         <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@invalid]">
                 <xf:select1 ref="./@invalid">
-                    <xf:label>Invalid Identifier:</xf:label>
+                    <xf:label>Invalid Identifier</xf:label>
                     <xf:hint>
                         <p> This field signifies a canceled or invalid identifier. It should be used with the value Yes. This value is used only when recording a canceled or invalid identifier. If Invalid= "Yes" is not present, the identifier is assumed to be valid. </p>
                     </xf:hint>
@@ -69,7 +69,7 @@
                         <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@displayLabel]">
                 <xf:input ref="./@displayLabel" class="text_50">
-                    <xf:label>Display Label: </xf:label>
+                    <xf:label>Display Label</xf:label>
                     <xf:hint>
                         <p> This field is used when additional text associated with the identifier is necessary for display. The Display Label field may be used to indicate the preferred labeling when displayed. Include the text preferred and capitalisation, but do not include delimiters such as colons. </p>
                     </xf:hint>
@@ -79,7 +79,7 @@
                         <!--Cluster: include-->
             <xf:group appearance="full" ref=".[not(@type='local')]">
                 <xf:input ref="." class="text_100">
-                    <xf:label>Identifier: </xf:label>
+                    <xf:label>Identifier</xf:label>
                     <xf:hint>
                         <p> Identifier contains a unique standard number or code that distinctively identifies a resource. Use this field to register ISBN, ISSN, DOI; URI and similar unique identifiers. Identifier should be repeated for each applicable identifier recorded<!--Cluster delete:, including invalid and canceled identifiers-->. </p>
                     </xf:hint>
@@ -90,7 +90,7 @@
         <xf:trigger ref=".[not(mods:identifier)]" class="add-button">
             <xf:label class="xforms-group-label-centered">Add Missing Identifier</xf:label>
             <xf:action ev:event="DOMActivate">
-                <xf:insert nodeset="mods:form" at="index('identifier-repeat')" position="after" origin="instance('insert-templates')/mods:identifier"/>
+                <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:identifier"/>
             </xf:action>
         </xf:trigger>
     </xf:group>

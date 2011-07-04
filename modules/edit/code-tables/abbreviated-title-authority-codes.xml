@@ -5,12 +5,8 @@
     <form>closed</form>
     <basis>http://www.loc.gov/standards/sourcelist/abbreviated-title.html</basis>
     <description/>
-    <notes>items with asterix have web pages</notes>
+    <notes/>
     <items>
-        <item>
-            <label>(none selected)</label>
-            <value/>
-        </item>
         <item>
             <label>local</label>
             <value>local</value>
@@ -28,7 +24,7 @@
             <value>dnlm</value>
         </item>
         <item>
-            <label>*HLAS journal abbreviations</label>
+            <label>HLAS journal abbreviations</label>
             <value>hlasja</value>
             <link>http://lcweb2.loc.gov/hlas/journals.html</link>
         </item>
@@ -37,7 +33,7 @@
             <value>inisaljt</value>
         </item>
         <item>
-            <label>*Abbreviated Key Titles</label>
+            <label>Abbreviated Key Titles</label>
             <value>issnkey</value>
             <link>http://www.issn.org/2-22655-The-ISSN-Portal.php</link>
         </item>

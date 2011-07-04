@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--let $code-table :=
 --><!--let $code-table :=
 -->
@@ -5,18 +6,40 @@
     <code-table-name>hint-code</code-table-name>
     <items>
         <item>
-            <help>
-                <p> ID is used to link among records inside the database and to reference a field inside the database from outside the database. </p>
-            </help>
-            <hint> ID is used to link among records inside the database and to reference a field inside the database from outside the database. </hint>
-            <value>ID</value>
+            <help/>
+            <hint>Click to add another frame with the same contents after the frame with the blue background.</hint>
+            <value>add-frame</value>
+            <local-name/>
+            <tab-id/>
         </item>
         <item>
             <help>
-                <p> The name of the authoritative list for an abbreviated title is recorded here. </p>
+                <p>The Type field can take the following values: personal, corporate, conference. Use it to indicate whether the name is the name of a person
+                    (or a family), the name of a corporation or the name of a conference (or an event similar to a conference).</p>
             </help>
-            <hint> The name of the authoritative list for an abbreviated title is recorded here. </hint>
-            <value>abbreviated-title-authority</value>
+            <hint> Type identifies what type of Title Information is recorded, if this information is special. If the title is recorded as it appears on the
+                title page, it does not have Type and Type should be left empty. Use a value for Type if the title is abbreviated, translated, alternative, or
+                uniform (a transliteration is here regarded as a form of translation). </hint>
+            <value>name-type</value>
+            <local-name/>
+            <tab-id>type</tab-id>
+        </item>
+        <item>
+            <help/>
+            <hint>Click to remove the frame with blue background.</hint>
+            <value>remove-frame</value>
+            <local-name/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Enter here information related to the edited volume that the edited volume contribution you are cataloguing occurs in. This information
+                    falls into two groups: general information on the edited volume and specific information on the location of the edited volume contribution
+                    in the edited volume.</p>
+            </help>
+            <value>edited-volume-compact</value>
+            <local-name/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -25,11 +48,20 @@
             </help>
             <hint/>
             <value>abstract</value>
+            <local-name>abstract</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
-            <help/>
-            <hint>Click to add another frame with the same contents after the frame with the blue background.</hint>
-            <value>add-frame</value>
+            <help>
+                <p>Affiliation contains the name, address, etc. of an organisation with which the person in Name was associated when the resource was created.</p>
+                <p>If the information is readily available, it may be included.</p>
+            </help>
+            <hint/>
+            <value>affiliation</value>
+            <local-name>affiliation</local-name>
+            <parent>name</parent>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -38,6 +70,73 @@
             </help>
             <hint/>
             <value>altRepGroup</value>
+            <local-name>altRepGroup</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> The name of the authoritative list for an abbreviated title is recorded here. </p>
+            </help>
+            <hint> The name of the authoritative list for an abbreviated title is recorded here. </hint>
+            <value>abbreviated-title-authority</value>
+            <local-name>authority</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> The name of an authoritative list for a controlled value in Name is recorded here. </p>
+                <p> If you render the name as it occurs in the resource, you may leave the Authority field value blank. If you normalize the name, you should
+                    indicate according to which authority you are altering it. Use the value "Local" if a locally-developed name authority file is used to
+                    catalogue the Name in question. </p>
+            </help>
+            <hint> Type identifies what type of Title Information is recorded, if this information is special. If the title is recorded as it appears on the
+                title page, it does not have Type and Type should be left empty. Use a value for Type if the title is abbreviated, translated, alternative, or
+                uniform (a transliteration is here regarded as a form of translation). </hint>
+            <value>name-authority</value>
+            <local-name>authority</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> The name of an authoritative list for a controlled value in Name is recorded here. </p>
+                <p> If you render the name as it occurs in the resource, you may leave the Authority field value blank. If you normalize the name, you should
+                    indicate according to which authority you are altering it. Use the value "Local" if a locally-developed name authority file is used to
+                    catalogue the Name in question. </p>
+            </help>
+            <hint/>
+            <value>namePart-authority</value>
+            <local-name>authority</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> The name of the authoritative list for a uniform title is recorded here. </p>
+            </help>
+            <hint> The name of the authoritative list for a uniform title is recorded here. </hint>
+            <value>uniform-title-authority</value>
+            <local-name>authority</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help/>
+            <hint/>
+            <value>name-authority-uri</value>
+            <local-name>authorityUri</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help/>
+            <hint/>
+            <value>titleInfo-authorityURI</value>
+            <local-name>authorityURI</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -50,6 +149,68 @@
             </help>
             <hint/>
             <value>dateIssued-compact</value>
+            <local-name>dateIssued</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Description contains a textual description for a name when this is necessary, for example, to distinguish it from other names.</p>
+            </help>
+            <hint/>
+            <value>description</value>
+            <local-name>description</local-name>
+            <parent>name</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>The Display Form field makes it possible to display personal names in unstructured form. It typically renders a name as given on the
+                    resource. </p>
+                <p> For some applications, contractual agreements require that the form of the name provided on the resource be provided.</p>
+            </help>
+            <hint/>
+            <value>name-displayForm</value>
+            <local-name>displayForm</local-name>
+            <parent>name</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>
+                    <p>This field is used when additional text associated with the name is needed for display. Display Label may be used whenever appropriate to
+                        indicate the preferred labeling when displayed. Include the text and capitalization preferred, but do not include delimiters such as
+                        colons or semicolons.</p>
+                </p>
+            </help>
+            <hint>Display Label is used when additional text associated with the title is needed for display. </hint>
+            <value>name-displayLabel</value>
+            <local-name>displayLabel</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Display Label is used when additional text associated with the title is needed for display. Display Label may be used whenever appropriate
+                    to indicate the preferred labeling when displayed. Appropriate cases include titles other than the primary title or subtitle. Include the
+                    text preferred and capitalisation, but do not include delimiters such as colons. </p>
+            </help>
+            <hint>Display Label is used when additional text associated with the title is needed for display. </hint>
+            <value>titleInfo-displayLabel</value>
+            <local-name>displayLabel</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Encoding is used to note the encoding followed in the date notation. The recommendation is to use the w3cdtf encoding. According to this
+                    encoding, dates are formatted in the following way: Year: YYYY (eg 1997); Year and month: YYYY-MM (eg 1997-07); Complete date: YYYY-MM-DD
+                    (eg 1997-07-16). If you are inputting a controlled subject term such as the designation of a period or an era, leave this field blank. </p>
+            </help>
+            <value>temporal-encoding</value>
+            <local-name>encoding</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -59,6 +220,9 @@
             </help>
             <hint/>
             <value>extent-compact</value>
+            <local-name>extent</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -70,6 +234,19 @@
             </help>
             <hint/>
             <value>geographic</value>
+            <local-name>geographic</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> ID is used to link among records inside the database and to reference a field inside the database from outside the database. </p>
+            </help>
+            <hint> ID is used to link among records inside the database and to reference a field inside the database from outside the database. </hint>
+            <value>ID</value>
+            <local-name>ID</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -79,6 +256,9 @@
                 <p>If you have access to another unique identifier, please record it.</p>
             </help>
             <value>isbn</value>
+            <local-name>identifier</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -87,6 +267,9 @@
                 <p>If you have access to any other unique identifier, please record it.</p>
             </help>
             <value>identifier-periodical-compact</value>
+            <local-name>identifier</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -96,24 +279,20 @@
             </help>
             <hint/>
             <value>internetMediaType-compact</value>
+            <local-name>internetMediaType</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
-                <p> Use this field if the resource is electronic. An identification of the electronic format type, or the data representation of the resource.
-                    Internet Media Type specifies the electronic format type of the resource, such as text/html, PDF file, JPEG image or executable application
-                    .</p>
-            </help>
-            <hint/>
-            <value>internetMediaType-compact</value>
-        </item>
-        <item>
-            <help>
-                <p> The language used within Title Information is specified here, if this language is different from the language noted in Language of Resource.
+                <p> The language used within the input field is specified here, if this language is different from the language noted in Language of Resource.
                     The most common languages have been moved to the top of the list. </p>
             </help>
-            <hint>The language used within Title Information is specified here, if this language is different from the language noted in Language of Resource.
-                The most common languages have been moved to the top of the list. </hint>
+            <hint/>
             <value>lang</value>
+            <local-name>lang</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -123,6 +302,9 @@
             </help>
             <hint/>
             <value>lang-global-compact</value>
+            <local-name>lang</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -133,6 +315,35 @@
             </help>
             <hint/>
             <value>lang-local-compact</value>
+            <local-name>lang</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> The language used within Name Information is specified here, if this language is different from the language noted in Language of Resource.
+                    The most common languages have been moved to the top of the list. </p>
+                <p> Language can be applied the Name as a whole. Do this if you are using only one Language value for all Name Parts. If you are using different
+                    values for different Name Parts, apply Language to each Name Part and leave Language empty under Name as a whole. </p>
+            </help>
+            <hint/>
+            <value>name-lang</value>
+            <local-name>lang</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>The language used within Title Information is specified here, if this language is different from the language noted in Language of Resource.
+                    The most common languages have been moved to the top of the list. </p>
+                <p> Language can be applied the Name as a whole. Do this if you are using only one Language value for all Name Parts. If you are using different
+                    values for different Name Parts, apply Language to each Name Part and leave Language empty under Name as a whole. </p>
+            </help>
+            <hint/>
+            <value>namePart-lang</value>
+            <local-name>lang</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -149,6 +360,9 @@
             </help>
             <hint/>
             <value>name</value>
+            <local-name>name</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -161,23 +375,9 @@
             </help>
             <hint/>
             <value>name-relatedItem-periodical-editor-compact</value>
-        </item>
-        <item>
-            <help>
-                <p> The name of an authoritative list for a controlled value in Name is recorded here. </p>
-                <p> If you render the name as it occurs in the resource, you may leave the Authority field value blank. If you normalize the name, you should
-                    indicate according to which authority you are altering it. Use the value "Local" if a locally-developed name authority file is used to
-                    catalogue the Name in question. </p>
-            </help>
-            <hint> Type identifies what type of Title Information is recorded, if this information is special. If the title is recorded as it appears on the
-                title page, it does not have Type and Type should be left empty. Use a value for Type if the title is abbreviated, translated, alternative, or
-                uniform (a transliteration is here regarded as a form of translation). </hint>
-            <value>name-authority</value>
-        </item>
-        <item>
-            <help/>
-            <hint/>
-            <value>name-authority-uri</value>
+            <local-name>name</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -193,75 +393,63 @@
             </help>
             <hint/>
             <value>name-compact</value>
+            <local-name>name</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
-                <p>
-                    <p>This field is used when additional text associated with the name is needed for display. Display Label may be used whenever appropriate to
-                        indicate the preferred labeling when displayed. Include the text and capitalization preferred, but do not include delimiters such as
-                        colons or semicolons.</p>
-                </p>
-            </help>
-            <hint>Display Label is used when additional text associated with the title is needed for display. </hint>
-            <value>name-displayLabel</value>
-        </item>
-        <item>
-            <help>
-                <p> The language used within Name Information is specified here, if this language is different from the language noted in Language of Resource.
-                    The most common languages have been moved to the top of the list. </p>
-                <p> Language can be applied the Name as a whole. Do this if you are using only one Language value for all Name Parts. If you are using different
-                    values for different Name Parts, apply Language to each Name Part and leave Language empty under Name as a whole. </p>
+                <p> In Persons and Institutions as Topics, catalogue the names of each person or institution that serves as topic of the resource you are
+                    calaloguing. </p>
+                <p>Add as many Persons and Institutions as Topics as is necessary. Click on "P+" to add a personal name and on "I+" to add the name of an
+                    institution.</p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
             </help>
             <hint/>
-            <value>name-lang</value>
+            <value>subject-name</value>
+            <local-name>name</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
-                <p> Use Script to record the script in which the name in rendered. </p>
-                <p>Script can be applied the Name as a whole. Do this if you are using only one Script value for all Name Parts. If you are using different
-                    values for different Name Parts, apply Script to each Name Part and leave Script empty under Name as a whole. </p>
+                <p> Analyse each name into separate name parts, e.g. Given Name and Family Name.</p>
+                <p> If this is not possible, choose "(none selected)" and enter the whole name in the field in question.</p>
+                <p> If a given or family name consists of several parts, enter all parts of the same type in the same field.</p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
             </help>
             <hint/>
-            <value>name-script</value>
-        </item>
-        <item>
-            <p> This field specifies the transliteration (transcription, romanisation) scheme used within Name Information. When specificing the transliteration
-                used, also specify the language employed. There is at present no standard list of transliteration schemes available. If you wish to employ a
-                transliteration on the scheme, please contact <!--contact -->. In general, the Library of Congress transliteration schemes (<!-- NB -->) should
-                be used. If you follow a transliteration scheme authorised by <!--NB-->, choose <!--NB--> as the value and note the language from which the
-                transliteration is made. The following transliteration schemes are authorised by <!--NB-->: Chinese: pinyin Japanese: (modified) Hepburn Korean:
-                <!--NB--> Russian: <!--NB--> Sanskrit: <!--NB--> If you employ a different, but recognised, transliteration scheme, you may have it added to the
-                list. </p>
-            <hint>Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the
-                transliteration used, also specify the language employed. </hint>
-            <value>name-transliteration</value>
+            <value>subject-name-corporate</value>
+            <local-name>name</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
-                <p>The Type field can take the following values: personal, corporate, conference. Use it to indicate whether the name is the name of a person
-                    (or a family), the name of a corporation or the name of a conference (or an event similar to a conference).</p>
+                <p> Analyse each name into separate name parts, e.g. Given Name and Family Name.</p>
+                <p> If this is not possible, choose "(none selected)" and enter the whole name in the field in question.</p>
+                <p> If a given or family name consists of several parts, enter all parts of the same type in the same field.</p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
             </help>
-            <hint> Type identifies what type of Title Information is recorded, if this information is special. If the title is recorded as it appears on the
-                title page, it does not have Type and Type should be left empty. Use a value for Type if the title is abbreviated, translated, alternative, or
-                uniform (a transliteration is here regarded as a form of translation). </hint>
-            <value>name-type</value>
-        </item>
-        <item>
-            <help>
-                <p>Usage with the value "primary" can be used with repeated fields to indicate special prominence of one that is useful for various special
-                    purposes such as indexing.</p>
-                <p>When applied to Name, "primary" indicates the name that would probably be used when citing the resource. This is useful when there are
-                    several authors and for citation purposes one is to be selected. The "primary" name would be used with the resource title for the citation,
-                    and also would be the name that would be associated with the uniform title when one is present.</p>
-            </help>
-            <hint>Usage with the value "primary" can be used with repeated fields to indicate special prominence of one that is useful for various special
-                purposes such as indexing. </hint>
-            <value>name-usage</value>
-        </item>
-        <item>
-            <help/>
             <hint/>
-            <value>name-value-uri</value>
+            <value>subject-name-personal</value>
+            <local-name>name</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> In Names and Roles, catalogue the names of each person, corporation or conference associated with the resource.</p>
+                <p> Include as many Names and Roles as needed, by clicking the '+' button. </p>
+                <p> Choose an appropriate Type of Name for each name, "personal" for personal names, "corporate" for names of institutions, and "conference" for
+                    names of events such as conferences..</p>
+                <p> Please notice that the role pertaining to a name follows the name in question.</p>
+                <p> More input options can be found on the Name Information tab on the Citation Forms.</p>
+            </help>
+            <value>edited-volume-name-compact</value>
+            <local-name>name</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -269,16 +457,9 @@
             </help>
             <hint/>
             <value>namePart</value>
-        </item>
-        <item>
-            <help>
-                <p> The name of an authoritative list for a controlled value in Name is recorded here. </p>
-                <p> If you render the name as it occurs in the resource, you may leave the Authority field value blank. If you normalize the name, you should
-                    indicate according to which authority you are altering it. Use the value "Local" if a locally-developed name authority file is used to
-                    catalogue the Name in question. </p>
-            </help>
-            <hint/>
-            <value>namePart-authority</value>
+            <local-name>namePart</local-name>
+            <parent>name</parent>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -292,14 +473,9 @@
             </help>
             <hint/>
             <value>namePart-compact</value>
-        </item>
-        <item>
-            <help>
-                <p> Note here in which volume and issue the article you are cataloguing occurs in the periodical, in which year the volume/issue was published,
-                    and on which pages the article occurs.</p>
-            </help>
-            <hint/>
-            <value>part-relatedItem-periodical-compact</value>
+            <local-name>namePart</local-name>
+            <parent>name</parent>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -311,6 +487,9 @@
             </help>
             <hint/>
             <value>namePart-institution-compact</value>
+            <local-name>namePart</local-name>
+            <parent>name</parent>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -329,6 +508,9 @@
             </help>
             <hint/>
             <value>namePart-type</value>
+            <local-name>namePart</local-name>
+            <parent>name</parent>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -339,6 +521,9 @@
             <hint>Name-Title Group that can be used with Name and Title Information to enable an explicit link between a name and a title when that is
                 desirable. The same value is assigned to this attribute for the two elements.</hint>
             <value>nameTitleGroup</value>
+            <local-name>nameTitleGroup</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -349,6 +534,9 @@
             <hint>Non Sort contains words that appear at the beginning of a title which should be ignored when indexing and sorting. Examples are "A" and "The"
                 in English.</hint>
             <value>nonSort</value>
+            <local-name>nonSort</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -358,6 +546,9 @@
             </help>
             <hint/>
             <value>note</value>
+            <local-name>note</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -367,6 +558,20 @@
             </help>
             <hint/>
             <value>originInfo-compact</value>
+            <local-name>originInfo</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Note here in which volume and issue the article you are cataloguing occurs in the periodical, in which year the volume/issue was published,
+                    and on which pages the article occurs.</p>
+            </help>
+            <hint/>
+            <value>part-relatedItem-periodical-compact</value>
+            <local-name>part</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -384,11 +589,9 @@
                 Part Name. If a resource has multiple parts, each with its own Part Name, the work should be catalogued in as many records as there are Part
                 Names.</hint>
             <value>partName</value>
-        </item>
-        <item>
-            <help/>
-            <hint/>
-            <value>partName</value>
+            <local-name>partName</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -402,11 +605,9 @@
             </help>
             <hint> Part Number is used for a part or section number in a title. A Part Number does not have to be a digit, i.e. "Part One" may be Part Number. </hint>
             <value>partNumber</value>
-        </item>
-        <item>
-            <help/>
-            <hint/>
-            <value>partNumber</value>
+            <local-name>partNumber</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -415,6 +616,9 @@
             </help>
             <hint/>
             <value>physicalDescription-compact</value>
+            <local-name>physicalDescription</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -427,6 +631,19 @@
             </help>
             <hint/>
             <value>place-compact</value>
+            <local-name>place</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Point is used to note whether the date noted is a start point or an end point. If no point is specified, date is assumed to be a single date.
+                </p>
+            </help>
+            <value>temporal-point</value>
+            <local-name>point</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -438,11 +655,9 @@
             </help>
             <hint/>
             <value>publisher-compact</value>
-        </item>
-        <item>
-            <help/>
-            <hint>Click to remove the frame with blue background.</hint>
-            <value>remove-frame</value>
+            <local-name>publisher</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -450,6 +665,9 @@
                     general information on the periodical and specific information on the location of the article in the periodical.</p>
             </help>
             <value>relatedItem-periodical-compact</value>
+            <local-name>relatedItem</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -463,6 +681,9 @@
                     template. The most common languages have been moved to the top of the list. </p>
             </help>
             <value>relatedItem-periodical-titleInfo-compact</value>
+            <local-name>relatedItem</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -474,6 +695,104 @@
             </help>
             <hint/>
             <value>role-compact</value>
+            <local-name>role</local-name>
+            <parent>name</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Role contains a coded and/or textual description of the role of the person, corporation or conference entered into Name Part to the resource
+                    being catalogued. Repeat Role for each new role played by the the person, corporation or conference.</p>
+            </help>
+            <hint/>
+            <value>role</value>
+            <local-name>role</local-name>
+            <parent>name</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Role contains a coded and/or textual description of the role of the person, corporation or conference entered into Name Part to the resource
+                    being catalogued. An authority should be indicated if using a coded form for role. </p>
+                <p> Coded input is preselected as Type. The MARC Code List for Relators is preselected as Authority, with the most common roles placed at the
+                    top. </p>
+                <p> If both a coded term and a textual term are given that represent the same role, use one Role and two occurrences of Role Term.</p>
+            </help>
+            <hint/>
+            <value>roleTerm</value>
+            <local-name>roleTerm</local-name>
+            <parent>role</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Select a Role Term from the list. </p>
+                <p> Note that "Author" is primarily used in connection with printed resources, whereas "Creator" is primarily used in connection with other
+                    resources.</p>
+            </help>
+            <hint/>
+            <value>roleTerm-code</value>
+            <local-name>roleTerm</local-name>
+            <parent>role</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Select a term from the list. </p>
+                <p> The list of terms given if "Text" is chosen for Type is the same as the list given if "Code" is chosen for Type and Authority is MARC Code
+                    List for Relators. However, the values entered into the database are different. If Code is chosen, "aut" will e.g be input, whereas "Author"
+                    will be input if "Text" is chosen. It is recomended to input each role in both coded and textual form. </p>
+                <p> If "Text" is chosen, you can also input a term not on the list.</p>
+            </help>
+            <hint/>
+            <value>roleTerm-text</value>
+            <local-name>roleTerm</local-name>
+            <parent>role</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Type is used to express whether the Role Term has textual or coded form.</p>
+            </help>
+            <hint/>
+            <value>roleTerm-type</value>
+            <local-name>roleTerm</local-name>
+            <parent>role</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>If the Type is in coded form, the authority file followed must be indicated.</p>
+            </help>
+            <hint/>
+            <value>roleTerm-authority</value>
+            <local-name>roleTerm</local-name>
+            <parent>role</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Use Script to record the script in which the name in rendered. </p>
+                <p>Script can be applied the Name as a whole. Do this if you are using only one Script value for all Name Parts. If you are using different
+                    values for different Name Parts, apply Script to each Name Part and leave Script empty under Name as a whole. </p>
+            </help>
+            <hint/>
+            <value>name-script</value>
+            <local-name>script</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Use Script to record the script in which the name in rendered. </p>
+                <p> Script can be applied the Name as a whole. Do this if you are using only one Script value for all Name Parts. If you are using different
+                    values for different Name Parts, apply Script to each Name Part and leave Script empty under Name as a whole.</p>
+            </help>
+            <hint/>
+            <value>namePart-script</value>
+            <local-name>script</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -483,6 +802,9 @@
             </help>
             <hint/>
             <value>script</value>
+            <local-name>script</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -494,6 +816,9 @@
             </help>
             <hint/>
             <value>script-global-compact</value>
+            <local-name>script</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -505,6 +830,9 @@
             </help>
             <hint/>
             <value>script-local-compact</value>
+            <local-name>script</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -516,28 +844,9 @@
             </help>
             <hint/>
             <value>script-compact</value>
-        </item>
-        <item>
-            <help>
-                <p> Subtitle is used to record a part of a title that is secondary to the core title. </p>
-                <p> Use Subtitle whenever a subtitle is present, rather than including the subtitle in Title. </p>
-                <p> When using Subtitle, do not include punctuation intended to separate the title from the subtitle at the end of Title. </p>
-                <p> If more than two levels are in evidence in the whole title, i.e. if there is a sub-subtitle, include the sub-subtitle in Subtitle, with
-                    appropriate punctuation. <!--NB: What are the rules here? Should not subTitle repeat?-->
-                </p>
-                <p> Subtitle contains every part of the title that do not belong in Non Sort, Title, Part Number or Part Name. </p>
-            </help>
-            <hint> Subtitle is used to record a part of a title that is secondary to the core title. </hint>
-            <value>subTitle</value>
-        </item>
-        <item>
-            <help>
-                <p> Subtitle is used to record a part of a title that is secondary to the core title. </p>
-                <p> Use Subtitle whenever a subtitle is present, rather than including the subtitle in Title. </p>
-                <p> Subtitle contains every part of the title that do not belong in Non Sort, Title, Part Number or Part Name. </p>
-            </help>
-            <hint> Subtitle is used to record a part of a title that is secondary to the core title. </hint>
-            <value>subTitle-compact</value>
+            <local-name>script</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -568,47 +877,45 @@
             </help>
             <hint/>
             <value>subject</value>
+            <local-name>subject</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
-                <p> In Persons and Institutions as Topics, catalogue the names of each person or institution that serves as topic of the resource you are
-                    calaloguing. </p>
-                <p>Add as many Persons and Institutions as Topics as is necessary. Click on "P+" to add a personal name and on "I+" to add the name of an
-                    institution.</p>
-                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+                <p> Subtitle is used to record a part of a title that is secondary to the core title. </p>
+                <p> Use Subtitle whenever a subtitle is present, rather than including the subtitle in Title. </p>
+                <p> When using Subtitle, do not include punctuation intended to separate the title from the subtitle at the end of Title. </p>
+                <p> If more than two levels are in evidence in the whole title, i.e. if there is a sub-subtitle, include the sub-subtitle in Subtitle, with
+                    appropriate punctuation. <!--NB: What are the rules here? Should not subTitle repeat?-->
+                </p>
+                <p> Subtitle contains every part of the title that do not belong in Non Sort, Title, Part Number or Part Name. </p>
             </help>
-            <hint/>
-            <value>subject-name</value>
+            <hint> Subtitle is used to record a part of a title that is secondary to the core title. </hint>
+            <value>subTitle</value>
+            <local-name>subTitle</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
-                <p> Analyse each name into separate name parts, e.g. Given Name and Family Name.</p>
-                <p> If this is not possible, choose "(none selected)" and enter the whole name in the field in question.</p>
-                <p> If a given or family name consists of several parts, enter all parts of the same type in the same field.</p>
-                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+                <p> Subtitle is used to record a part of a title that is secondary to the core title. </p>
+                <p> Use Subtitle whenever a subtitle is present, rather than including the subtitle in Title. </p>
+                <p> Subtitle contains every part of the title that do not belong in Non Sort, Title, Part Number or Part Name. </p>
             </help>
-            <hint/>
-            <value>subject-name-corporate</value>
+            <hint> Subtitle is used to record a part of a title that is secondary to the core title. </hint>
+            <value>subTitle-compact</value>
+            <local-name>subTitle</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
-            <help>
-                <p> Analyse each name into separate name parts, e.g. Given Name and Family Name.</p>
-                <p> If this is not possible, choose "(none selected)" and enter the whole name in the field in question.</p>
-                <p> If a given or family name consists of several parts, enter all parts of the same type in the same field.</p>
-                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
-            </help>
+            <help/>
             <hint/>
-            <value>subject-name-personal</value>
-        </item>
-        <item>
-            <help>
-                <p> Enter here the title of the book or the work of art that serves as topic for the resource you are cataloguing. If the title divides into a
-                    main title and a subtitle, enter each part in its separate field. If the subtitle divides into several parts, separate the parts with a
-                    semicolon. </p>
-                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
-            </help>
-            <hint/>
-            <value>subject-titleInfo</value>
+            <value>titleInfo-supplied</value>
+            <local-name>supplied</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -621,6 +928,9 @@
             </help>
             <hint/>
             <value>temporal</value>
+            <local-name>temporal</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -639,6 +949,9 @@
             <hint>Title contains the core title of the resource catalogued. Title includes all parts of a title that are not covered by Non Sort, Subtitle, Part
                 Number and Part Name. A Title is required: when no title appears on the item being described, a title should be supplied. </hint>
             <value>title</value>
+            <local-name>title</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -649,6 +962,22 @@
             <hint>Title contains the core title of the resource catalogued. Title includes all parts of a title that are not covered by Non Sort, Subtitle, Part
                 Number and Part Name. A Title is required: when no title appears on the item being described, a title should be supplied. </hint>
             <value>title-compact</value>
+            <local-name>title</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Enter here the title of the book or the work of art that serves as topic for the resource you are cataloguing. If the title divides into a
+                    main title and a subtitle, enter each part in its separate field. If the subtitle divides into several parts, separate the parts with a
+                    semicolon. </p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
+            </help>
+            <hint/>
+            <value>subject-titleInfo</value>
+            <local-name>titleInfo</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -674,11 +1003,9 @@
             </help>
             <hint/>
             <value>titleInfo</value>
-        </item>
-        <item>
-            <help/>
-            <hint/>
-            <value>titleInfo-authorityURI</value>
+            <local-name>titleInfo</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -692,34 +1019,9 @@
             </help>
             <hint/>
             <value>titleInfo-compact</value>
-        </item>
-        <item>
-            <help>
-                <p> Display Label is used when additional text associated with the title is needed for display. Display Label may be used whenever appropriate
-                    to indicate the preferred labeling when displayed. Appropriate cases include titles other than the primary title or subtitle. Include the
-                    text preferred and capitalisation, but do not include delimiters such as colons. </p>
-            </help>
-            <hint>Display Label is used when additional text associated with the title is needed for display. </hint>
-            <value>titleInfo-displayLabel</value>
-        </item>
-        <item>
-            <help/>
-            <hint/>
-            <value>titleInfo-supplied</value>
-        </item>
-        <item>
-            <help>
-                <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the
-                    transliteration used, also specify the language employed. There is at present no standard list of transliteration schemes available. If you
-                    wish to employ a transliteration on the scheme, please contact <!--contact -->. In general, the Library of Congress transliteration schemes
-                    (<!-- NB -->) should be used. If you follow a transliteration scheme authorised by <!--NB-->, choose <!--NB--> as the value and note the
-                    language from which the transliteration is made. The following transliteration schemes are authorised by <!--NB-->: Chinese: pinyin
-                    Japanese: (modified) Hepburn Korean: <!--NB--> Russian: <!--NB--> Sanskrit: <!--NB--> If you employ a different, but recognised,
-                    transliteration scheme, you may have it added to the list. </p>
-            </help>
-            <hint>Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the
-                transliteration used, also specify the language employed. </hint>
-            <value>titleInfo-transliteration</value>
+            <local-name>titleInfo</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -742,105 +1044,9 @@
                 title page, it does not have Type and Type should be left empty. Use a value for Type if the title is abbreviated, translated, alternative, or
                 uniform (a transliteration is here regarded as a form of translation). </hint>
             <value>titleInfo-type</value>
-        </item>
-        <item>
-            <help/>
-            <hint/>
-            <value>titleInfo-valueURI</value>
-        </item>
-        <item>
-            <help>
-                <p> Use Topic to indicate any primary subjects that do not fit into the Place, Time, Works as Topics, or Persons and Institutions as Topics
-                    subfields. In general, abstract nouns should be used. Add as many Topic fields as you need in order to analyse your topic. The relation
-                    between the different fields is not specified, but one may start with more abstract terms and move to more specific terms, within the same
-                    Subject.</p>
-                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
-            </help>
-            <hint/>
-            <value>topic</value>
-        </item>
-        <item>
-            <help>
-                <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used.</p>
-                <p>Note that the value shown here is the value chosen when the record template was chosen. This value applies to the whole record, not just to
-                    the field above which it is noted. If you change the value, the change will apply to the whole record. </p>
-            </help>
-            <hint>Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the
-                transliteration used, also specify the language employed. </hint>
-            <value>transliteration-compact</value>
-        </item>
-        <item>
-            <help>
-                <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used.</p>
-                <p>Note that the value shown here is the value chosen when the record template was chosen. This value applies to the whole record, not just to
-                    the field above which it is noted. If you change the value, the change will apply to the whole record. </p>
-                <p>The transliteration noted here is the transliteration chosen when the record was created. It applies to the record as a whole, unless
-                    otherwise noted. Since a title or a name as a subject can be in any transliteration, the Global Transliteration can be overruled here by
-                    chosing a Local Transliteration .</p>
-            </help>
-            <hint/>
-            <value>transliteration-global-compact</value>
-        </item>
-        <item>
-            <help>
-                <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used.</p>
-                <p>Note that the value shown here is the value chosen when the record template was chosen. This value applies to the whole record, not just to
-                    the field above which it is noted. If you change the value, the change will apply to the whole record. </p>
-                <p>The transliteration noted here is not the transliteration chosen when the record was created. The transliteration noted here only applies to
-                    the field(s) immediately below. Since a title or a name as a subject can be in any language , the Global Transliteration can be overruled
-                    here by chosing a Local Transliteration.</p>
-            </help>
-            <hint/>
-            <value>transliteration-local-compact</value>
-        </item>
-        <item>
-            <help>
-                <p> The name of the authoritative list for a uniform title is recorded here. </p>
-            </help>
-            <hint> The name of the authoritative list for a uniform title is recorded here. </hint>
-            <value>uniform-title-authority</value>
-        </item>
-        <item>
-            <help>
-                <p> In URL, record the Uniform Resource Locator (URL) of a resource accessed on the Internet.</p>
-            </help>
-            <hint/>
-            <value>url-compact</value>
-        </item>
-        <item>
-            <help>
-                <p>Usage with the value "primary" can be used with repeated fields to indicate special prominence of one that is useful for various special
-                    purposes such as indexing.</p>
-            </help>
-            <hint>Usage with the value "primary" can be used with repeated fields to indicate special prominence of one that is useful for various special
-                purposes such as indexing. </hint>
-            <value>usage</value>
-        </item>
-        <item>
-            <help>
-                <p> XLink is used to reference an external resource, such as a second metadata record, a Related Item or a Table of Contents. </p>
-            </help>
-            <hint> XLink is used to reference an external resource, such as a metadata record, a Related Item or a Table of Contents. </hint>
-            <value>xlink:href</value>
-        </item>
-        <item>
-            <help>
-                <p> The language used within Title Information is specified here, if this language is different from the language noted in Language of Resource.
-                    xml:lang is used to specify the language used within a field, using specifications in RFC 3066. RFC 3066 uses the two-character ISO 639-1
-                    codes along with three-character ISO 639-2 codes for those languages not given in 639-1. </p>
-                <p> The recommendation is not to use xml:lang, but to use Language. </p>
-            </help>
-            <hint>The language used within Title Information is specified here, if this language is different from the language noted in Language of Resource.
-                The recommendation is not to use xml:lang, but to use Language. </hint>
-            <value>xml:lang</value>
-        </item>
-        <item>
-            <help>
-                <p> Enter here information related to the edited volume that the edited volume contribution you are cataloguing occurs in. This information
-                    falls into two groups: general information on the edited volume and specific information on the location of the edited volume contribution
-                    in the edited volume.</p>
-            </help>
-            <value>edited-volume-compact</value>
+            <local-name>titleInfo</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -854,36 +1060,198 @@
                     template. The most common languages have been moved to the top of the list. </p>
             </help>
             <value>edited-volume-titleInfo-compact</value>
+            <local-name>titleInfo</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
-                <p> In Names and Roles, catalogue the names of each person, corporation or conference associated with the resource.</p>
-                <p> Include as many Names and Roles as needed, by clicking the '+' button. </p>
-                <p> Choose an appropriate Type of Name for each name, "personal" for personal names, "corporate" for names of institutions, and "conference" for
-                    names of events such as conferences..</p>
-                <p> Please notice that the role pertaining to a name follows the name in question.</p>
-                <p> More input options can be found on the Name Information tab on the Citation Forms.</p>
+                <p> Use Topic to indicate any primary subjects that do not fit into the Place, Time, Works as Topics, or Persons and Institutions as Topics
+                    subfields. In general, abstract nouns should be used. Add as many Topic fields as you need in order to analyse your topic. The relation
+                    between the different fields is not specified, but one may start with more abstract terms and move to more specific terms, within the same
+                    Subject.</p>
+                <p> More input options can be accessed by clicking the Subjects tab on Context Description Forms.</p>
             </help>
-            <value>edited-volume-name-compact</value>
+            <hint/>
+            <value>topic</value>
+            <local-name>topic</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
-                <p> Encoding is used to note the encoding followed in the date notation. The recommendation is to use the w3cdtf encoding. According to this
-                    encoding, dates are formatted in the following way: Year: YYYY (eg 1997); Year and month: YYYY-MM (eg 1997-07); Complete date: YYYY-MM-DD
-                    (eg 1997-07-16). If you are inputting a controlled subject term such as the designation of a period or an era, leave this field blank. </p>
+                <p> This field specifies the transliteration (transcription, romanisation) scheme used within Name Information. When specificing the
+                    transliteration used, also specify the language employed. There is at present no standard list of transliteration schemes available. If you
+                    wish to employ a transliteration on the scheme, please contact <!--contact -->. In general, the Library of Congress transliteration schemes
+                    (<!-- NB -->) should be used. If you follow a transliteration scheme authorised by <!--NB-->, choose <!--NB--> as the value and note the
+                    language from which the transliteration is made. The following transliteration schemes are authorised by <!--NB-->: Chinese: pinyin
+                    Japanese: (modified) Hepburn Korean: <!--NB--> Russian: <!--NB--> Sanskrit: <!--NB--> If you employ a different, but recognised,
+                    transliteration scheme, you may have it added to the list. </p>
             </help>
-            <value>temporal-encoding</value>
+            <hint>Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the
+                transliteration used, also specify the language employed. </hint>
+            <value>name-transliteration</value>
+            <local-name>transliteration</local-name>
+            <parent/>
+            <tab-id/>
         </item>
         <item>
             <help>
-                <p>Point is used to note whether the date noted is a start point or an end point. If no point is specified, date is assumed to be a single date.
-                </p>
+                <p>This field specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the
+                    transliteration used, also specify the language employed. There is at present no standard list of transliteration schemes available. If you
+                    wish to employ a transliteration on the scheme, please contact <!--contact -->. In general, the Library of Congress transliteration schemes
+                    (<!-- NB -->) should be used. If you follow a transliteration scheme authorised by <!--NB-->, choose <!--NB--> as the value and note the
+                    language from which the transliteration is made. The following transliteration schemes are authorised by <!--NB-->: Chinese: pinyin
+                    Japanese: (modified) Hepburn Korean: <!--NB--> Russian: <!--NB--> Sanskrit: <!--NB--> If you employ a different, but recognised,
+                    transliteration scheme, you may have it added to the list. </p>
+                <p> Script can be applied the Name as a whole. Do this if you are using only one Script value for all Name Parts. If you are using different
+                    values for different Name Parts, apply Script to each Name Part and leave Script empty under Name as a whole.</p>
             </help>
-            <value>temporal-point</value>
+            <hint/>
+            <value>namePart-transliteration</value>
+            <local-name>transliteration</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the
+                    transliteration used, also specify the language employed. There is at present no standard list of transliteration schemes available. If you
+                    wish to employ a transliteration on the scheme, please contact <!--contact -->. In general, the Library of Congress transliteration schemes
+                    (<!-- NB -->) should be used. If you follow a transliteration scheme authorised by <!--NB-->, choose <!--NB--> as the value and note the
+                    language from which the transliteration is made. The following transliteration schemes are authorised by <!--NB-->: Chinese: pinyin
+                    Japanese: (modified) Hepburn Korean: <!--NB--> Russian: <!--NB--> Sanskrit: <!--NB--> If you employ a different, but recognised,
+                    transliteration scheme, you may have it added to the list. </p>
+            </help>
+            <hint>Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the
+                transliteration used, also specify the language employed. </hint>
+            <value>titleInfo-transliteration</value>
+            <local-name>transliteration</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used.</p>
+                <p>Note that the value shown here is the value chosen when the record template was chosen. This value applies to the whole record, not just to
+                    the field above which it is noted. If you change the value, the change will apply to the whole record. </p>
+            </help>
+            <hint>Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the
+                transliteration used, also specify the language employed. </hint>
+            <value>transliteration-compact</value>
+            <local-name>transliteration</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used.</p>
+                <p>Note that the value shown here is the value chosen when the record template was chosen. This value applies to the whole record, not just to
+                    the field above which it is noted. If you change the value, the change will apply to the whole record. </p>
+                <p>The transliteration noted here is the transliteration chosen when the record was created. It applies to the record as a whole, unless
+                    otherwise noted. Since a title or a name as a subject can be in any transliteration, the Global Transliteration can be overruled here by
+                    chosing a Local Transliteration .</p>
+            </help>
+            <hint/>
+            <value>transliteration-global-compact</value>
+            <local-name>transliteration</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used.</p>
+                <p>Note that the value shown here is the value chosen when the record template was chosen. This value applies to the whole record, not just to
+                    the field above which it is noted. If you change the value, the change will apply to the whole record. </p>
+                <p>The transliteration noted here is not the transliteration chosen when the record was created. The transliteration noted here only applies to
+                    the field(s) immediately below. Since a title or a name as a subject can be in any language , the Global Transliteration can be overruled
+                    here by chosing a Local Transliteration.</p>
+            </help>
+            <hint/>
+            <value>transliteration-local-compact</value>
+            <local-name>transliteration</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> In URL, record the Uniform Resource Locator (URL) of a resource accessed on the Internet.</p>
+            </help>
+            <hint/>
+            <value>url-compact</value>
+            <local-name>url</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Usage with the value "primary" can be used with repeated fields to indicate special prominence of one that is useful for various special
+                    purposes such as indexing.</p>
+                <p>When applied to Name, "primary" indicates the name that would probably be used when citing the resource. This is useful when there are
+                    several authors and for citation purposes one is to be selected. The "primary" name would be used with the resource title for the citation,
+                    and also would be the name that would be associated with the uniform title when one is present.</p>
+            </help>
+            <hint>Usage with the value "primary" can be used with repeated fields to indicate special prominence of one that is useful for various special
+                purposes such as indexing. </hint>
+            <value>name-usage</value>
+            <local-name>usage</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Usage with the value "primary" can be used with repeated fields to indicate special prominence of one that is useful for various special
+                    purposes such as indexing.</p>
+            </help>
+            <hint>Usage with the value "primary" can be used with repeated fields to indicate special prominence of one that is useful for various special
+                purposes such as indexing. </hint>
+            <value>usage</value>
+            <local-name>usage</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help/>
+            <hint/>
+            <value>name-value-uri</value>
+            <local-name>valueUri</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help/>
+            <hint/>
+            <value>titleInfo-valueURI</value>
+            <local-name>valueURI</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> XLink is used to reference an external resource, such as a second metadata record, a Related Item or a Table of Contents. </p>
+            </help>
+            <hint> XLink is used to reference an external resource, such as a metadata record, a Related Item or a Table of Contents. </hint>
+            <value>xlink:href</value>
+            <local-name>xlink:href</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> The language used within Title Information is specified here, if this language is different from the language noted in Language of Resource.
+                    xml:lang is used to specify the language used within a field, using specifications in RFC 3066. RFC 3066 uses the two-character ISO 639-1
+                    codes along with three-character ISO 639-2 codes for those languages not given in 639-1. </p>
+                <p> The recommendation is not to use xml:lang, but to use Language. </p>
+            </help>
+            <hint>The language used within Title Information is specified here, if this language is different from the language noted in Language of Resource.
+                The recommendation is not to use xml:lang, but to use Language. </hint>
+            <value>xml:lang</value>
+            <local-name>xml:lang</local-name>
+            <parent/>
+            <tab-id/>
         </item>
     </items>
 </code-table><!--return
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        for $item in $code-table/items/item
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        order by upper-case($item/value)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        return $item
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    -->
+for $item in $code-table/items/item
+order by upper-case($item/value)
+return $item-->

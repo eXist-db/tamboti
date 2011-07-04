@@ -79,7 +79,7 @@
                             </xf:trigger>
                         </xf:group>
                             <!--
-                                <xf:group appearance="full" id="extension-add-node-optional">
+                                <xf:group appearance="full">
                                     <xf:label class="xforms-group-label-centered">Optional Fields</xf:label>
                                     <xf:trigger ref=".[not(@displayLabel)]" class="add-button">
                                         <xf:label class="xforms-group-label-centered">Add Display Label</xf:label>
@@ -89,7 +89,7 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                <xf:group appearance="full" id="extension-add-node-not-recommended">
+                                <xf:group appearance="full">
                                     <xf:label class="xforms-group-label-centered">Deprecated Fields</xf:label>
                                     <xf:trigger ref=".[not(@ID)]" class="add-button">
                                         <xf:label class="xforms-group-label-centered">Add ID</xf:label>
@@ -106,7 +106,7 @@
         </xf:group>
         <xf:group appearance="full">
             <xf:select1 ref="mods:extension/e:template">
-                <xf:label>Publication Type:</xf:label>
+                <xf:label>Publication Type</xf:label>
                 <xf:hint>
                     <p>Choose one of the publication types listed below. These publication types are the same as the record templates used in the pre-entry
                             options. </p>
@@ -122,7 +122,7 @@
         </xf:group>
         <xf:group appearance="full">
             <xf:select1 ref="mods:extension/e:transliterationOfResource">
-                <xf:label>Transliteration Of Resource:</xf:label>
+                <xf:label>Transliteration Of Resource</xf:label>
                 <xf:hint>
                     <p> Choose one of the transliteration schemes listed below. The transliteration schemes are the same as those used in the pre-entry
                             options. </p>
@@ -143,11 +143,11 @@
             <!-- 
             </xf:repeat>
             -->
-        <xf:group appearance="full" id="extension-add-element">
+        <xf:group appearance="full">
             <xf:trigger ref=".[not(mods:extension)]" class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Extension</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="mods:extension" at="index('extension-repeat')" position="after" origin="instance('insert-templates')/mods:extension"/>
+                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:extension"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>
