@@ -216,18 +216,16 @@
                                 </span>
                             </div>
                             <xf:repeat nodeset="./mods:identifier" id="identifier-review-repeat">
-                                <xf:group ref=".[@type]" selection="open" class="hide-label margin-plus">
+                                <xf:group class="hide-label margin-plus">
                                     <xf:select1 ref="./@type">
-                                        <xf:label>Type of Identifier</xf:label>
+                                        <xf:label>Type</xf:label>
                                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='identifier-type-code']/items/item">
                                             <xf:label ref="label"/>
                                             <xf:value ref="value"/>
                                         </xf:itemset>
                                     </xf:select1>
-                                </xf:group>
-                                <xf:group>
-                                    <xf:input ref="." class="text_50 hide-label margin-plus">
-                                        <xf:label>Identifier</xf:label>
+                                    <xf:input ref="." class="text_50">
+                                        <xf:label/>
                                     </xf:input>
                                 </xf:group>
                             </xf:repeat>

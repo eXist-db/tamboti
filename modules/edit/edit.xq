@@ -138,6 +138,7 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
 declare function local:create-page-content($id as xs:string, $tab-id as xs:string, $type-request as xs:string, $target-collection as xs:string, $instance-id as xs:string, $record-data as xs:string, $type-data as xs:string) as element(div) {
 
     (: Get the relevant label and hint for the type parameter. :)
+    let $log := util:log("DEBUG", ("##$type-request): ", $type-request))
     let $type-label := doc($type-data)/code-table/items/item[value = $type-request]/label,
     $type-hint := doc($type-data)/code-table/items/item[value = $type-request]/hint,
     (: Display the label attached to the tab to the user :)
@@ -238,20 +239,24 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
 };
 
 declare function local:get-instance-id($tab-id as xs:string, $type-request as xs:string) {
-    if($tab-id ne 'compact-b')then
-        $tab-id
-    else if($type-request = ('article-in-periodical-latin-compact', 'article-in-periodical-transliterated-compact'))then
-        'compact-b-periodical' 
-    else if($type-request = ('contribution-to-anthology-latin-compact', 'contribution-to-anthology-transliterated-compact'))then
-        'compact-b-anthology'
-    else if ($type-request = ('monograph-latin', 'monograph-transliteration', 'anthology-latin', 'anthology-transliterated'))then
-        'compact-b-series'
-    else if($type-request = ('book-review-latin', 'book-review-transliteration'))then
-        'compact-b-review'
-    else if($type-request = 'suebs-tibetan')then 
-        'compact-b-suebs-tibetan'
-    else
-        'compact-b-xlink'
+    if ($tab-id ne 'compact-b')
+    then $tab-id
+    else 
+	    if ($type-request = ('article-in-periodical-latin', 'article-in-periodical-transliterated'))
+	    then 'compact-b-periodical' 
+	    else 
+		    if ($type-request = ('contribution-to-edited-volume-latin', 'contribution-to-edited-volume-transliterated'))
+		    then 'compact-b-anthology'
+		    else
+		    if ($type-request = ('monograph-latin', 'monograph-transliterated', 'edited-volume-latin', 'edited-volume-transliterated'))
+		    then 'compact-b-series'
+		    else 
+			    if ($type-request = ('book-review-latin', 'book-review-transliterated'))
+			    then 'compact-b-review'
+			    else 
+				    if ($type-request = 'suebs-tibetan')
+				    then 'compact-b-suebs-tibetan'
+				    else 'compact-b-xlink'
 };
 
 let $title := 'MODS Record Editor'
@@ -264,9 +269,13 @@ let $record-data := concat($config:mods-temp-collection, "/", $record-id,'.xml')
 If the record is being opened from the search interface, the template name has to be retrieved in order to serve the right subform. :)
 (: NB: $stored-template has no value when a stored record is loaded for the first time. :)
 let $stored-template := doc($record-data)/mods:mods/mods:extension/e:template
-
 (: Get the type parameter which shows which record template has been chosen.:) 
 let $type-request := request:get-parameter('type', $stored-template)
+(: If there is no type parameter, use the stored template instead. :)
+let $type-request := 
+	if ($type-request)
+	then $type-request
+	else $stored-template
 
 let $type-data := concat($config:edit-app-root, '/code-tables/document-type-codes.xml')
 

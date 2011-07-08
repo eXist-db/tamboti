@@ -7,6 +7,27 @@ declare namespace functx = "http://www.functx.com";
 
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 
+(: Removes titleIfo, name and relatedItem nodes that do not contain nodes required by the respective elements. :)
+declare function mods:remove-parent-with-missing-required-node($node as node()) as node() {
+element {node-name($node)} 
+{
+for $element in $node/*
+return
+    if ($element instance of element(mods:titleInfo) and not($element/mods:title/text())) 
+    then ()
+    else
+        if ($element instance of element(mods:name) and not($element/mods:namePart/text()))
+        then ()
+        else
+            if ($element instance of element(mods:relatedItem))
+            then 
+            	if (not(((string-length($element) > 0) or ($element/@xlink:href))))
+            	then ()
+            	else $element
+	        else $element
+}
+};
+
 declare option exist:serialize "media-type=text/xml";
 
 (: TODO: A lot of restrictions to the first item in a sequence ([1]) have been made; these must all be changed to for-structures or string-joins. :)
@@ -57,17 +78,7 @@ declare function mods:clean-up-punctuation($element as node()) as node() {
 			return
 				if ($child instance of text())
 				then 
-					replace(
-					replace(
-					replace(
-					replace(
-					replace(
-					replace(
-					replace(
-					replace(
-					replace(
-					replace(
-					replace(
+					replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
 						($child)
 					(:, '\s*\)', ')'):) (:, '\s*;', ';'):) (:, ',,', ','):) (:, '”\.', '.”'):) (:, '\. ,', ','):) (:, ',\s*\.', ''):) (:,'\.\.', '.'):) (:,'\.”,', ',”'):)
 					, '\s*\.', '.')
@@ -1740,6 +1751,8 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
 };
 
 declare function mods:format-related-item($relatedItem as element()) {
+	let $relatedItem := mods:remove-parent-with-missing-required-node($relatedItem)
+	return
     mods:clean-up-punctuation(<result>{(
     if ($relatedItem/mods:name/mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator') or not($relatedItem/mods:name/mods:role/mods:roleTerm))
     then mods:format-multiple-names($relatedItem, 'primary')
@@ -1772,7 +1785,7 @@ declare function mods:format-related-item($relatedItem as element()) {
                             if ($relatedItem/mods:originInfo or $relatedItem/mods:part) 
                             then
                                 (
-                                ' ',                
+                                (:###' ',:)                
                                 mods:get-part-and-origin($relatedItem)
                                 ,                
                                 if ($relatedItem/mods:location/mods:url/text()) 
@@ -1842,12 +1855,21 @@ declare function mods:url($entry as element()) as element(tr)* {
             </td>
             <td class="record"><a href="{$url}" target="_blank">{$url}</a></td>
         </tr>
-};
-        
-(: Prepares for mods:format-full. :)
-declare function mods:entry-full($entry as element()) 
+};        
+
+(: Creates view for detail view. :)
+(: NB: "mods:format-detail-view()" is referenced in session.xql. :)
+declare function mods:format-detail-view($id as xs:string, $entry as element(mods:mods), $collection-short as xs:string) {
+	let $entry := mods:remove-parent-with-missing-required-node($entry)
+	return
+    <table class="biblio-full">
     {
-    (: names :)
+    <tr>
+        <td class="label">In Folder:</td>
+        <td><div class="collection">{$collection-short}</div></td>
+    </tr>
+    ,
+            (: names :)
     if ($entry/mods:name)
     then mods:names-full($entry)
     else ()
@@ -2067,18 +2089,6 @@ declare function mods:entry-full($entry as element())
         then concat(' (', ($item/@authority/string()), ')') 
         else ()
     return mods:simple-row($item, concat('Classification', $authority))
-};
-
-(: Creates view for detail view. :)
-(: NB: "mods:format-detail-view()" is referenced in session.xql. :)
-declare function mods:format-detail-view($id as xs:string, $clean as element(mods:mods), $collection-short as xs:string) {
-    <table class="biblio-full">
-    {
-        <tr><td class="label">In Folder:</td><td>
-        {$collection-short}
-        </td></tr>
-        ,
-        mods:entry-full($clean)
     }
     </table>
 };
@@ -2086,6 +2096,8 @@ declare function mods:format-detail-view($id as xs:string, $clean as element(mod
 (: Creates view for hitlist. :)
 (: NB: "mods:format-list-view()" is referenced in session.xql. :)
 declare function mods:format-list-view($id as xs:string, $entry as element(mods:mods)) {
+	let $entry := mods:remove-parent-with-missing-required-node($entry)
+	return
     let $format :=
         (
         (: The author, etc. of the primary publication. :)

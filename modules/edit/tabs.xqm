@@ -38,10 +38,9 @@ return
         <tr>
             {
             for $category in $all-categories
-            let $category-count := count($tabs-data[category/text() = $category])
             return
             <td style="{if ($tabs-data[category = $category]/show-level = $show-level) then "background:white;border-bottom-color:white;" else "background:#EDEDED"}">
-                {attribute{'width'}{100 div $category-count}}
+                {attribute{'width'}{25}}
                 <xf:trigger appearance="minimal">
                     <xf:label>
                         <div class="label" style="{if ($tabs-data[category = $category]/show-level = $show-level) then "font-weight:bold;color:#3681B3;" else "font-weight:bold;color:darkgray"}">
@@ -65,10 +64,10 @@ return
                 {
                 for $tab in $tabs-data[show-level = $show-level]
                 let $tab-for-template := $tab/*[local-name() = $type]/text()
-                let $log := util:log("DEBUG", ("##$tab-for-template): ", $tab-for-template))
-                let $log := util:log("DEBUG", ("##$type): ", $type))
+                let $category-count := count($tabs-data[category/text() = $tab/category/text()])
                 return
-                <td style="{if ($tab-id = $tab/tab-id/text()) then "background:white;border-bottom-color:white;color:#3681B3;" else "background:#EDEDED"}">
+                <td style="{if ($tab-id = $tab/tab-id/text()) then "background:white;border-bottom-color:white;color:#3681B3;" else "background:#EDEDED"}">{attribute{'width'}
+                {100 div $category-count}}
                     <xf:trigger appearance="minimal">
                         <xf:label><div class="label" style="{if ($tab-id = $tab/tab-id/text()) then "color:#3681B3;font-weight:bold;" else "color:darkgray;font-weight:bold"}">{
                         if ($tab-for-template) then $tab-for-template else $tab/label

@@ -522,10 +522,15 @@ div.xforms-hint-value strong
     margin-left:1em;
 }
 
-.compact .level-2 .margin-plus input {/*level-2, space between name type and name part*/
+.compact .level-2 .margin-plus input,
+.compact .level-1 .margin-plus input
+	{
     margin-left:1em;
 }
 
+.compact .level-1 .margin-plus .xforms-select1 {
+	margin-left:1em;
+}
 .compact .level-3 .margin-plus {/*level-3*/
     margin-left:8em;
 }

@@ -73,9 +73,27 @@
                             <xf:group>
                                 <xf:input ref="./mods:nonSort" class="text_10 margin-plus">
                                     <xf:label>
-                                        <xf:group ref=".[string-length(../@type) = 0]">Non Sort</xf:group>
-                                        <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Non Sort</xf:group>
-                                        <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non Sort</xf:group>
+                                        <xf:group ref=".[string-length(../@type) = 0]">Non Sort<span class="xforms-help">
+                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-help-value">
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/help"/>
+                                                </div>
+                                            </span>
+                                        </xf:group>
+                                        <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Non Sort<span class="xforms-help">
+                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-help-value">
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/help"/>
+                                                </div>
+                                            </span>
+                                        </xf:group>
+                                        <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non Sort<span class="xforms-help">
+                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-help-value">
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/help"/>
+                                                </div>
+                                            </span>
+                                        </xf:group>
                                     </xf:label>
                                 </xf:input>
                             </xf:group>
@@ -261,20 +279,20 @@
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:identifier" id="identifier-periodical-repeat">
-                            <xf:group ref=".[@type]" selection="open" class="hide-label margin-plus">
-                                <xf:select1 ref="./@type">
-                                    <xf:label>Identifier Type</xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='identifier-type-code']/items/item">
-                                        <xf:label ref="label"/>
-                                        <xf:value ref="value"/>
-                                    </xf:itemset>
-                                </xf:select1>
-                            </xf:group>
-                            <xf:group>
-                                <xf:input ref="." class="text_50 hide-label margin-plus">
-                                    <xf:label>Identifier</xf:label>
-                                </xf:input>
-                            </xf:group>
+                            <xf:repeat nodeset="./mods:identifier" id="identifier-repeat">
+                                <xf:group class="hide-label margin-plus">
+                                    <xf:select1 ref="./@type">
+                                        <xf:label>Type</xf:label>
+                                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='identifier-type-code']/items/item">
+                                            <xf:label ref="label"/>
+                                            <xf:value ref="value"/>
+                                        </xf:itemset>
+                                    </xf:select1>
+                                    <xf:input ref="." class="text_50">
+                                        <xf:label/>
+                                    </xf:input>
+                                </xf:group>
+                            </xf:repeat>
                         </xf:repeat>
                     </fieldset>
                 </xf:group>

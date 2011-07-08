@@ -12,7 +12,7 @@ let $name := replace($uri, '^.*/([^/]+)$', '$1')
 return
     if ($exist:path eq '/') then
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-    		<redirect url="../modules/search/index.xml"/>
+    		<redirect url="../modules/search/index.html"/>
     	</dispatch>
     (: paths starting with /libs/ will be loaded from the webapp directory on the file system :)
     else if (starts-with($exist:path, "/libs/")) then
