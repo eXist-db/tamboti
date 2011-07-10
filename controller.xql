@@ -13,24 +13,28 @@ declare variable $exist:prefix external;
 declare variable $exist:path external;
 declare variable $exist:resource external;
 
+declare variable $local:item-uri-regexp := "/item/([a-z0-9-_]*)";
+
 declare function local:get-item($controller as xs:string, $root as xs:string, $prefix as xs:string?, $path as xs:string, $resource as xs:string?, $username as xs:string?, $password as xs:string?) as element(exist:dispatch) {
     
-    let $item-id := fn:replace($path, "/item/([a-z0-9-_]*)", "$1") return
+    let $item-id := fn:replace($path, $local:item-uri-regexp, "$1") return
     
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">        
             <forward url="{theme:resolve($prefix, $root, 'pages/index.html')}">
                 { local:set-user($username, $password) }
             </forward>
-            <forward url="{$controller}/modules/search/search.xql">
-                <set-attribute name="xquery.report-errors" value="yes"/>
-                
-                <set-attribute name="exist:root" value="{$root}"/>
-                <set-attribute name="exist:path" value="{$path}"/>
-                <set-attribute name="exist:prefix" value="{$prefix}"/>
-                
-                <add-parameter name="filter" value="ID"/>
-                <add-parameter name="value" value="{$item-id}"/>
-    		</forward>
+            <view>
+                <forward url="../modules/search/search.xql">
+                    <set-attribute name="xquery.report-errors" value="yes"/>
+                    
+                    <set-attribute name="exist:root" value="{$root}"/>
+                    <set-attribute name="exist:path" value="{$path}"/>
+                    <set-attribute name="exist:prefix" value="{$prefix}"/>
+                    
+                    <add-parameter name="filter" value="ID"/>
+                    <add-parameter name="value" value="{$item-id}"/>
+        		</forward>
+        	</view>
     	</dispatch>
 };
 
@@ -55,12 +59,48 @@ let
     $username := request:get-parameter("username",()),
     $password := request:get-parameter("password",())
 return
-
+    
     if ($exist:path eq '/') then
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
     		<redirect url="modules/search/index.html"/>
     	</dispatch>
-    
+
+    else if ($exist:resource eq 'retrieve') then
+
+        (:  Retrieve an item from the query results stored in the HTTP session. The
+    	   format of the URL will be /sandbox/results/X, where X is the number of the
+    	   item in the result set :)
+
+	   <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+	       { local:set-user($username, $password) }
+		  <forward url="../modules/search/session.xql">
+		  </forward>
+	   </dispatch>
+
+        (: paths starting with /libs/ will be loaded from the webapp directory on the file system :)
+    else if (fn:starts-with($exist:path, "/item/libs/")) then
+        let $lib-path := fn:concat("/", substring-after($exist:path, 'item/libs/')) return
+            <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+                <forward url="{$lib-path}" absolute="yes"/>
+            </dispatch>
+
+    else if (starts-with($exist:path, "/item/theme")) then
+        let $path := theme:resolve($exist:prefix, $exist:root, substring-after($exist:path, "/item/theme"))
+        let $themePath := replace($path, "^(.*)/[^/]+$", "$1")
+        return
+            <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+                <forward url="{$path}">
+                    <set-attribute name="theme-collection" value="{theme:get-path()}"/>
+                </forward>
+            </dispatch>
+            
+    else if (starts-with($exist:path, "/item/resources")) then
+        let $real-resources-path := fn:concat($exist:controller, "/", substring-after($exist:path, "/item/")) return
+            <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+                <forward url="{$real-resources-path}">
+                </forward>
+            </dispatch>
+            
     else if(fn:starts-with($exist:path, "/item/")) then
         local:get-item($exist:controller, $exist:root, $exist:prefix, $exist:path, $exist:resource, $username, $password)
         

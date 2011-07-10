@@ -36,6 +36,21 @@ declare function bs:collection-is-writable($collection as xs:string) {
         security:can-write-collection($bs:USER, $collection):)
 };
 
+declare function bs:get-item-uri($item-id as xs:string) {
+    fn:concat(
+        request:get-scheme(),
+        "://",
+        request:get-server-name(),
+        if((request:get-scheme() eq "http" and request:get-server-port() eq 80) or (request:get-scheme() eq "https" and request:get-server-port() eq 443))then "" else fn:concat(":", request:get-server-port()),
+        
+        fn:replace(request:get-uri(), "/exist/([^/]*)/([^/]*)/.*", "/exist/$1/$2"),
+        
+        (:fn:substring-before(request:get-url(), "/modules"), :)
+        "/item/",
+        $item-id
+    )
+};
+
 declare function bs:retrieve($start as xs:int, $count as xs:int) {
     let $cached := session:get-attribute("mods:cached")
     let $stored := session:get-attribute("mods-personal-list")
@@ -99,7 +114,7 @@ declare function bs:retrieve($start as xs:int, $count as xs:int) {
                                         else ()
                                     }
                                 </div>
-                                <abbr class="unapi-id" title="{$item/@ID}"></abbr>
+                                <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
                                     {
                                     let $collection := util:collection-name($item)
                                     let $collection-short := functx:replace-first($collection, '/db', '')
@@ -126,7 +141,7 @@ declare function bs:retrieve($start as xs:int, $count as xs:int) {
                     </td>
                     {
                     <td class="pagination-toggle">
-                        <abbr class="unapi-id" title="{$item/@ID}"></abbr>
+                        <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
                         <a>
                         {
                             let $clean := clean:cleanup($item)

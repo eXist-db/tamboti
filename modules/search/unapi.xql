@@ -20,14 +20,20 @@ declare variable $HTTP_NOT_MODIFIED := xs:int(304);
 declare variable $HTTP_NOT_FOUND := xs:int(404);
 declare variable $HTTP_NOT_ACCEPTABLE := xs:int(406);
 
+declare option exist:serialize "omit-xml-declaration=no";
+
 (:~
 : Retrieves all formats for all objects
 :)
 declare function unapi:list-formats-for-all-objects() as element(formats) {
     <formats>
-        <format name="mods" type="application/mods+xml"/>
+        <format name="mods" type="application/xml"/>
         <format name="web" type="text/html"/>
     </formats>
+};
+
+declare function unapi:extract-uuid-from-uri($uri as xs:string) as xs:string {
+    fn:substring-after($uri, "/item/")
 };
 
 (:~
@@ -36,7 +42,7 @@ declare function unapi:list-formats-for-all-objects() as element(formats) {
 declare function unapi:list-formats-for-id($id as xs:string) as element(formats) {
     <formats id="{$id}">
         <format name="web" type="text/html" />
-        <format name="mods" type="application/mods+xml"/>
+        <format name="mods" type="application/xml"/>
     </formats>
 };
 
@@ -45,9 +51,27 @@ declare function unapi:list-formats-for-id($id as xs:string) as element(formats)
 :)
 declare function unapi:get-object($id as xs:string, $format as xs:string, $resource as element(mods:mods)) as element()? {
     if($format eq "mods")then
-        clean:cleanup($resource)
+    (
+        response:set-header("Content-Type", "application/xml"),
+        <modsCollection version="3.4" xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/standards/mods/mods.xsd">
+        {
+            clean:cleanup($resource)
+        }
+        </modsCollection>
+    )
     else if($format eq "web")then
-        () (: TODO export as html :)
+    (
+        response:set-header("Content-Type", "text/html"),
+        util:declare-option("exist:serialize", "doctype-public=-//W3C//DTD&#160;XHTML&#160;1.1//EN doctype-system=http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"),
+        <html>
+            <head>
+                <title>{$id}</title>
+            </head>
+            <body>
+                <p>{$resource//text()}</p>
+            </body>
+        </html>
+    )
     else
         response:set-status-code($HTTP_NOT_ACCEPTABLE)
 };
@@ -56,7 +80,7 @@ declare function unapi:get-object($id as xs:string, $format as xs:string, $resou
 : Get a mods resource from the database
 :)
 declare function local:get-resource($id as xs:string) as element(mods:mods)? {
-    fn:collection($config:mods-root)//mods:mods[@ID eq $id]
+    fn:collection($config:mods-root)//mods:mods[@ID eq unapi:extract-uuid-from-uri($id)]
 };
 
 (:~

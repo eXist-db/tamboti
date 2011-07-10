@@ -106,6 +106,14 @@ else if (starts-with($exist:path, "/theme")) then
                 <set-attribute name="theme-collection" value="{theme:get-path()}"/>
             </forward>
         </dispatch>
+
+else if (starts-with($exist:path, "/resources")) then
+    let $real-resources-path := fn:concat(substring-before($exist:controller, "/modules/"), $exist:path) return
+        <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+            <forward url="{$real-resources-path}">
+            </forward>
+        </dispatch>
+
 else
     (: everything else is passed through :)
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
