@@ -430,18 +430,17 @@ declare function biblio:query-history() {
     Evaluate the query given as XML and store its results into the HTTP session
     for later reference.
 :)
-declare function biblio:eval-query($queryAsXML as element()?) {
-    if ($queryAsXML) then
-        let $query := string-join(biblio:generate-query($queryAsXML), '')
+declare function biblio:eval-query($query-as-xml as element(query)?, $sort0 as item()?) as xs:int {
+    if ($query-as-xml) then
+        let $query := string-join(biblio:generate-query($query-as-xml), '')
         (:let $log := util:log("DEBUG", ("QUERY: ", $query)):)
-        let $sort0 := request:get-parameter("sort", ())
         let $sort := if ($sort0) then $sort0 else session:get-attribute("sort")
         let $results := biblio:evaluate-query($query, $sort)
         (:~ Take the query results and store them into the HTTP session. :)
         let $null := session:set-attribute('mods:cached', $results)
-        let $null := session:set-attribute('query', $queryAsXML)
-        let $null := session:set-attribute('sort', $queryAsXML)
-        let $null := biblio:add-to-history($queryAsXML)
+        let $null := session:set-attribute('query', $query-as-xml)
+        let $null := session:set-attribute('sort', $query-as-xml)
+        let $null := biblio:add-to-history($query-as-xml)
         return
             count($results)
     else
@@ -531,11 +530,11 @@ declare function biblio:clear() {
         ()
 };
 
-declare function biblio:include-resource($id as xs:string, $query as element()?, $hitCount as xs:integer?) {
+declare function biblio:include-resource($collection as xs:string, $id as xs:string, $query as element()?, $hitCount as xs:integer?) {
     let $node := theme:resolve-by-id($config:app-root, $id)
     return
         if ($node) then
-            biblio:process-templates($query, $hitCount, $node)
+            biblio:process-templates($collection, $query, $hitCount, $node)
         else
             ()
 };
@@ -544,7 +543,7 @@ declare function biblio:include-resource($id as xs:string, $query as element()?,
     Scan the input HTML template and expand the biblio:* tags
     found therein.
 :)
-declare function biblio:process-templates($query as element()?, $hitCount as xs:integer?, $node as node()) {
+declare function biblio:process-templates($collection as xs:string, $query as element()?, $hitCount as xs:integer?, $node as node()) {
     typeswitch ($node)
         (: The following cases do not seem to be used anymore:
         case element(biblio:notice) return
@@ -553,7 +552,7 @@ declare function biblio:process-templates($query as element()?, $hitCount as xs:
             biblio:form-select-current-user-groups($node/@name)
         case element(biblio:current-user) return
             <span>{request:get-attribute("xquery.user")}</span>
-        case element(biblio:conditional) return
+        case element($collection, biblio:conditional) return
             let $result := biblio:conditional($node) return
                 if($result)then
                 (
@@ -570,7 +569,7 @@ declare function biblio:process-templates($query as element()?, $hitCount as xs:
             let $classes := tokenize($node/@class, "\s")
             return
                 if ("include" = $classes) then
-                    biblio:include-resource($classes[2], $query, $hitCount)
+                    biblio:include-resource($collection, $classes[2], $query, $hitCount)
                 else
                 switch ($node/@id)
                     case "login" return
@@ -602,7 +601,7 @@ declare function biblio:process-templates($query as element()?, $hitCount as xs:
                         let $show := request:get-parameter("collection-tree", "hidden")
                         return
                             <div id="collection-tree" class="{$show}">
-                            {for $child in $node/node() return biblio:process-templates($query, $hitCount, $child)}
+                            {for $child in $node/node() return biblio:process-templates($collection, $query, $hitCount, $child)}
                             </div>
                     case "result-count" return
                         text { $hitCount }
@@ -614,7 +613,7 @@ declare function biblio:process-templates($query as element()?, $hitCount as xs:
                             else
                                 ()
                     case "form-select-collection" return
-                        biblio:form-select-collection($node/@class)
+                        biblio:form-select-collection($collection, $node/@class)
                     case "form-collection-sharing" return
                         biblio:form-collection-sharing(request:get-parameter("collection", $config:mods-root))
                     case "form-add-member-to-sharing-group" return
@@ -766,7 +765,7 @@ declare function biblio:process-templates($query as element()?, $hitCount as xs:
                         element { node-name($node) } {
                             $node/@*,
                             for $child in $node/node() return
-                                biblio:process-templates($query, $hitCount, $child)
+                                biblio:process-templates($collection, $query, $hitCount, $child)
                         }
         default return
             $node
@@ -782,9 +781,7 @@ declare function biblio:form-select-current-user-groups($select-name as xs:strin
         </select>
 };
 
-declare function biblio:form-select-collection($select-name as xs:string) as element(select) {
-
-    let $current-collection := request:get-parameter("collection", $config:mods-root) return
+declare function biblio:form-select-collection($current-collection as xs:string, $select-name as xs:string) as element(select) {
 
         <select name="{$select-name}">
         {
@@ -946,8 +943,8 @@ declare function biblio:get-writeable-subcollection-paths($path as xs:string) {
 		)
 };
 
-declare function biblio:conditional($node as element(biblio:conditional)) {
-    let $test-result := biblio:process-templates((), (), $node/biblio:test/biblio:*) return
+declare function biblio:conditional($collection as xs:string, $node as element(biblio:conditional)) {
+    let $test-result := biblio:process-templates($collection, (), (), $node/biblio:test/biblio:*) return
         if($test-result) then
         (
             $node/biblio:result
@@ -958,12 +955,9 @@ declare function biblio:conditional($node as element(biblio:conditional)) {
     Filter an existing result set by applying an additional
     clause with "and".
 :)
-declare function biblio:apply-filter() {
-    let $prevQuery := session:get-attribute("query")
-    let $filter := request:get-parameter("filter", ())
-    let $value := request:get-parameter("value", ())
+declare function biblio:apply-filter($filter as xs:string, $value as xs:string) {
+    let $prevQuery := session:get-attribute("query") return
     
-    return
         if (not($prevQuery/field)) then
             <query>
                 { $prevQuery/collection }
@@ -979,20 +973,11 @@ declare function biblio:apply-filter() {
             </query>
 };
 
-session:create(),
-(: We receive an HTML template as input :)
-let $input := request:get-data()
-let $filter := request:get-parameter("filter", ())
-let $history := request:get-parameter("history", ())
-let $reload := request:get-parameter("reload", ())
-let $clear := request:get-parameter("clear", ())
-let $mylist := request:get-parameter("mylist", ())
-let $collection0 := request:get-parameter("collection", ())
-let $collection := if (starts-with($collection0, "/db")) then $collection0 else concat("/db", $collection0)
-let $id := request:get-parameter("id", ())
-
-(: Process request parameters and generate an XML representation of the query :)
-let $queryAsXML :=
+(:~
+: Prepare an XML fragment which describes the query to undertake
+:
+:)
+declare function biblio:prepare-query($id as xs:string?, $collection as xs:string, $reload as xs:string?, $history as xs:string?, $clear as xs:string?, $filter as xs:string?, $mylist as xs:string?, $value as xs:string?) as element(query)? {
     if ($id) then
         <query>
             <collection>{$config:mods-root}</collection>
@@ -1007,15 +992,22 @@ let $queryAsXML :=
     else if ($clear) then
         biblio:clear()
     else if ($filter) then 
-        biblio:apply-filter()
+        biblio:apply-filter($filter, $value)
     else if ($mylist eq 'display') then
         ()
     else 
         biblio:process-form()
-(:let $log := util:log("DEBUG", ("$queryAsXML: ", $queryAsXML)):)
-(: Evaluate the query :)
-let $results :=
-    if ($mylist) then (
+};
+
+(:~
+: Gets cached results from the session
+: if not such results exist, then a query is performed
+: and the resilts are then cached in the session
+:
+: @retun a count of the results available
+:)
+declare function biblio:get-or-create-cached-results($mylist as xs:string?, $query as element(query)?, $sort as item()?) as xs:int {
+    if($mylist) then (
         if ($mylist eq 'clear') then
             session:set-attribute("personal-list", ())
         else
@@ -1029,14 +1021,42 @@ let $results :=
         return
             count($items)
     ) else
-        biblio:eval-query($queryAsXML)
-(:  Process the HTML template received as input :)
-let $merged := theme:apply-template($input)
-let $output :=
-    jquery:process(
-        biblio:process-templates($queryAsXML, $results, $merged)
+        biblio:eval-query($query, $sort)
+};
+
+declare function biblio:process-request($id as xs:string?, $collection as xs:string, $reload as xs:string?, $history as xs:string?, $clear as xs:string?, $filter as xs:string?, $mylist as xs:string?, $input, $value as xs:string?, $sort as item()?) as node()* {
+    (: Process request parameters and generate an XML representation of the query :)
+    let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $mylist, $value)
+
+    (:let $log := util:log("DEBUG", ("$queryAsXML: ", $queryAsXML)):)
+    (: Get the results :)
+    let $results := biblio:get-or-create-cached-results($mylist, $query-as-xml, $sort)
+    
+    (:  Process the HTML template received as input :)
+    let $merged := theme:apply-template($input)
+    let $output := jquery:process(
+        biblio:process-templates($collection, $query-as-xml, $results, $merged)
         (: biblio:process-templates(if ($queryAsXML//field) then $queryAsXML else $biblio:TEMPLATE_QUERY, $results, $input) :)
     )
-let $header := response:set-header("Content-Type", "application/xhtml+xml")
+    let $header := response:set-header("Content-Type", "application/xhtml+xml")
+    return
+        
+        $output
+};
+
+session:create(),
+(: We receive an HTML template as input :)
+let $input := request:get-data()
+let $filter := request:get-parameter("filter", ())
+let $history := request:get-parameter("history", ())
+let $reload := request:get-parameter("reload", ())
+let $clear := request:get-parameter("clear", ())
+let $mylist := request:get-parameter("mylist", ())
+let $collection0 := request:get-parameter("collection", $config:mods-root)
+let $collection := if (starts-with($collection0, "/db")) then $collection0 else concat("/db", $collection0)
+let $id := request:get-parameter("id", ())
+let $value := request:get-parameter("value",())
+let $sort := request:get-parameter("sort", ())
 return
-    $output
+      
+      biblio:process-request($id, $collection, $reload, $history, $clear, $filter, $mylist, $input, $value, $sort)
