@@ -1060,6 +1060,4 @@ let $id := request:get-parameter("id", ())
 let $value := request:get-parameter("value",())
 let $sort := request:get-parameter("sort", ())
 return
-      let $id := util:log("DEBUG", ("ID= ", $id)) return
-      let $id := util:log("DEBUG", ("ID2= ", $id)) return
       biblio:process-request($id, $collection, $reload, $history, $clear, $filter, $mylist, $input, $value, $sort)
