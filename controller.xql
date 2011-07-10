@@ -31,11 +31,14 @@ declare function local:get-item($controller as xs:string, $root as xs:string, $p
                     <set-attribute name="exist:path" value="{$path}"/>
                     <set-attribute name="exist:prefix" value="{$prefix}"/>
                     
-                    <add-parameter name="filter" value="ID"/>
-                    <add-parameter name="value" value="{$item-id}"/>
+                    <add-parameter name="id" value="{$item-id}"/>
         		</forward>
         	</view>
     	</dispatch>
+    	(:
+    	<add-parameter name="filter" value="ID"/>
+        <add-parameter name="value" value="{$item-id}"/>
+    	:)
 };
 
 declare function local:set-user($user as xs:string?, $password as xs:string?) {
