@@ -1027,19 +1027,23 @@ declare function biblio:get-or-create-cached-results($mylist as xs:string?, $que
 declare function biblio:process-request($id as xs:string?, $collection as xs:string, $reload as xs:string?, $history as xs:string?, $clear as xs:string?, $filter as xs:string?, $mylist as xs:string?, $input, $value as xs:string?, $sort as item()?) as node()* {
     (: Process request parameters and generate an XML representation of the query :)
     let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $mylist, $value)
-
-    let $null := util:log("DEBUG", ("ID= ", $id))
-    let $log := util:log("DEBUG", ("$queryAsXML: ", $query-as-xml))
     
     (: Get the results :)
     let $results := biblio:get-or-create-cached-results($mylist, $query-as-xml, $sort)
     
+    let $null := util:log("debug", fn:concat("RESULTS=", $results))
+    let $null := util:log("debug", fn:concat("INPUT=", $input))
+    
     (:  Process the HTML template received as input :)
     let $merged := theme:apply-template($input)
-    let $output := jquery:process(
-        biblio:process-templates($collection, $query-as-xml, $results, $merged)
-        (: biblio:process-templates(if ($queryAsXML//field) then $queryAsXML else $biblio:TEMPLATE_QUERY, $results, $input) :)
-    )
+    
+    let $null := util:log("debug", fn:concat("MERGED=", $merged))
+    
+    let $templates := biblio:process-templates($collection, $query-as-xml, $results, $merged)
+    (: biblio:process-templates(if ($queryAsXML//field) then $queryAsXML else $biblio:TEMPLATE_QUERY, $results, $input) :)
+    
+    let $output := jquery:process($templates)
+    
     let $header := response:set-header("Content-Type", "application/xhtml+xml")
     return
         
