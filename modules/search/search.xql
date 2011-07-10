@@ -1028,7 +1028,9 @@ declare function biblio:process-request($id as xs:string?, $collection as xs:str
     (: Process request parameters and generate an XML representation of the query :)
     let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $mylist, $value)
 
-    (:let $log := util:log("DEBUG", ("$queryAsXML: ", $queryAsXML)):)
+    let $null := util:log("DEBUG", ("ID= ", $id))
+    let $log := util:log("DEBUG", ("$queryAsXML: ", $query-as-xml))
+    
     (: Get the results :)
     let $results := biblio:get-or-create-cached-results($mylist, $query-as-xml, $sort)
     
@@ -1058,5 +1060,6 @@ let $id := request:get-parameter("id", ())
 let $value := request:get-parameter("value",())
 let $sort := request:get-parameter("sort", ())
 return
-      
+      let $id := util:log("DEBUG", ("ID= ", $id)) return
+      let $id := util:log("DEBUG", ("ID2= ", $id)) return
       biblio:process-request($id, $collection, $reload, $history, $clear, $filter, $mylist, $input, $value, $sort)
