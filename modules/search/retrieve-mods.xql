@@ -1524,7 +1524,8 @@ declare function mods:get-short-title($entry as element()) {
 	        else ''
         ,
         if ($titleTranslation)
-        then <span class="title"> [{$titleTranslationFormat/text()}]</span>
+        (:NB: iterate.:)
+        then <span class="title"> [{$titleTranslationFormat[1]/text()}]</span>
         else ()
         ,
         if ($quotes and $titleTranslation) 
@@ -1865,7 +1866,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     <table class="biblio-full">
     {
     <tr>
-        <td class="label">In Folder:</td>
+        <td class="collection-label">In Folder:</td>
         <td><div class="collection">{$collection-short}</div></td>
     </tr>
     ,

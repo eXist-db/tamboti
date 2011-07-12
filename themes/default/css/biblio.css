@@ -99,23 +99,37 @@ img {border: 0;
 
 /*folder view*/
 
+/*#collection-tree-main {
+	background-color:white;
+}
+*/
 #collection-tree {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
     float: left;
     margin-top: 1em;
-    background-color: #CCC;
+    background-color: #EDEDED !important;
     width: 40px;
     height: 390px;
 }
 
 .collection-tree-head {
-    background-color: #CCC;
+    background-color: #EDEDED;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+
 }
 
 .collection-tree-toolbar {
+    margin:5px;
     height: 20px;
     list-style: none;
     padding: 8px 0;
-    margin: 0;
+    1margin: 0;
+    background-color: white;
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+
 }
 
 .collection-tree-toolbar li {
@@ -137,11 +151,21 @@ img {border: 0;
 }
 
 #collection-tree-tree ul {
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 ul.dynatree-container {
     border: 0;
+    background-color: white;/*#EDEDED !important;*/
+    font-size:1em;
+    margin-left:5px;
+    margin-right:5px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+#collection-expand-all {
+	margin-left: 5px;
 }
 
 td.collection-path {
@@ -164,15 +188,17 @@ td.collection-path {
 }
 
 .box {
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
     background-color: #CCC;
     color: #FFFFFF;
-    margin-top: 100px;
+    margin-top: 75px;
+    margin-bottom: 5px;
     width: 240px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    padding: 2px;
 }
 
 .box p {
@@ -276,7 +302,7 @@ a:hover {
     cursor: pointer;
     padding: 2px 4px;
     border: 1px solid #0083CB;
-    color: #0083CB;
+    color: #5DB0E6;
     margin-right: 10px;
 }
 
@@ -284,7 +310,7 @@ a:hover {
     cursor: pointer;
     padding: 2px 4px;
     border: 1px solid #0083CB;
-    color: #0083CB;
+    color: #5DB0E6;
 }
 
 .inactive {
@@ -409,6 +435,11 @@ table .biblio-full .subrecord {
     width:40em;
 }
 
+table .biblio-full .record table,
+table .biblio-full .subrecord table {
+	margin:0;
+}
+
 table .biblio-full .related td {
     margin:10em;
     line-height:3.4em;
@@ -463,7 +494,7 @@ form ul li {
 /*collection-tree*/
 span.readable .dynatree-title {
     font-weight: normal;
-    color: #999;
+    color: grey;
 }
 
 /*folder sharing dialog begins*/
