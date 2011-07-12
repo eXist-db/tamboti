@@ -569,6 +569,11 @@ function resultsLoaded(options) {
         $('#add-related-form input[name = host]').val(params[1]);
         $('#add-related-dialog').dialog('open');
     });
+    
+    //notify zotero that the dom has changed
+    var ev = document.createEvent('HTMLEvents');
+    ev.initEvent('ZoteroItemUpdated', true, true);
+    document.dispatchEvent(ev);
 }
 
 function searchTabSelected(ev, ui) {
