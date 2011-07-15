@@ -3,7 +3,8 @@ module namespace mods="http://www.loc.gov/mods/v3";
 declare namespace mads="http://www.loc.gov/mads/";
 declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace fo="http://www.w3.org/1999/XSL/Format";
-declare namespace functx = "http://www.functx.com"; 
+declare namespace functx = "http://www.functx.com";
+declare namespace e = "http://www.asia-europe.uni-heidelberg.de/";
 
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 
@@ -177,7 +178,7 @@ declare function mods:get-script-term($language as node()*) as xs:string* {
 : @param $language The MODS languageTerm element, child of the top-level language element
 : @return The language label string
 :)
-declare function mods:language-of-resource($language as element(mods:language)*) as xs:anyAtomicType* {
+declare function mods:language-of-resource($language as element()*) as xs:anyAtomicType* {
         let $languageTerm := $language/mods:languageTerm[1]
         return
             if ($languageTerm) 
@@ -185,7 +186,7 @@ declare function mods:language-of-resource($language as element(mods:language)*)
             else ()
 };
 
-declare function mods:script-of-resource($language as element(mods:language)*) as xs:anyAtomicType* {
+declare function mods:script-of-resource($language as element()*) as xs:anyAtomicType* {
         let $scriptTerm := $language/mods:scriptTerm
         return
             if ($scriptTerm) 
@@ -333,7 +334,7 @@ declare function mods:get-publisher($publishers as element(mods:publisher)*) as 
         return
         	(:NB: This is an expansion of the MODS schema.:)
             if ($publisher/mods:name)
-            then mods:retrieve-name($publisher/mods:name, 1, 'secondary')
+            then mods:retrieve-name($publisher/mods:name, 1, 'secondary', '')
             else $publisher
 };
 
@@ -341,7 +342,7 @@ declare function mods:get-publisher($publishers as element(mods:publisher)*) as 
 (: ### <subject> begins ### :)
 
 (: format subject :)
-declare function mods:format-subjects($entry as element()) {
+declare function mods:format-subjects($entry as element(), $global-transliteration) {
     for $subject in ($entry/mods:subject)
     let $authority := 
         if ($subject/@authority/string()) 
@@ -378,7 +379,7 @@ declare function mods:format-subjects($entry as element()) {
             then
             	(:If it is a name.:)
                 if ($item/name() = 'name')
-                then mods:format-name($item, 1, 'primary')
+                then mods:format-name($item, 1, 'primary', $global-transliteration)
                 else
                 	(:If it is a titleInfo.:)
                     if ($item/name() = 'titleInfo')
@@ -625,7 +626,11 @@ declare function mods:get-part-and-origin($entry as element()) {
     (: has: unit. :)
     (: handled by mods:get-extent(). :)
     
-    let $datePart := $part/mods:date
+    (: NB: If the date of a periodical issue is wrongly put in originInfo/dateIssued. Delete when MODS export is corrected.:)
+    let $datePart := 
+	    if ($part/mods:date) 
+	    then $part/mods:date
+	    else $dateIssued
     (: contains no subelements. :)
     (: has: encoding; point; qualifier. :)
     (: handled by mods:get-date(). :)
@@ -636,28 +641,41 @@ declare function mods:get-part-and-origin($entry as element()) {
     
     return
         (: If there is a part with issue information and a date, i.e. if the publication is an article in a periodical. :)
-        if ($detail/mods:number/text() and $datePart/text()) 
+        if (($volume or $issue) and $datePart) 
         then 
             concat(
-            string-join(
-            if ($issue and $volume)
-            then concat($volume, ', no. ', $issue)
-                (: concat((if ($part/mods:detail/mods:caption) then $part/mods:detail/mods:caption/string() else '/'), $part/mods:detail[@type='issue']/mods:number) :)
-            else 
-                if (not($volume) and ($issue))
-                then (', ', $issue)
-                else
-                    if ($volume and not($issue))
-                    then $volume
-                    else ()
-            , ' ')
+            ' '
             ,
+            if ($volume and $issue)
+            then concat(
+            	$volume
+            	, 
+            	', no. '
+            	, 
+            	$issue
+            	,
+            	concat(' (', mods:get-date($datePart), ')')    
+		    )
+            (: concat((if ($part/mods:detail/mods:caption) then $part/mods:detail/mods:caption/string() else '/'), $part/mods:detail[@type='issue']/mods:number) :)
+            else 
+                (: If the year is used as volume. :)
+                if ($issue)
+                then concat(
+                	concat(' ', mods:get-date($datePart))
+		            ,
+		            ', no. ', 
+		            $issue
+		            )
+                else
+                    concat(
+	                    $volume
+	                    ,
+	                    concat(' (', mods:get-date($datePart), ')')
+	            		)
+            ,
+            (:NB: We assume that there will not both be $page and $extent.:)
             if ($page) 
             then concat(', ', $page)
-            else ()
-            ,
-            if ($datePart/text())
-            then concat(' (', mods:get-date($datePart), ')')
             else ()
             ,
             if ($extent) 
@@ -807,20 +825,26 @@ declare function mods:get-conference-detail-view($entry as element()) {
     else ()
 };
 
-declare function mods:format-name($name as element()?, $pos as xs:integer, $caller as xs:string) {
-    (: Get the label for the lang attribute; if it does not exist, get the language of the resource as such. :)
-    let $language :=
+declare function mods:format-name($name as element()?, $pos as xs:integer, $caller as xs:string, $global-transliteration as xs:string) {	
+	(: $nameLanguageLabel is retrieved only in order to get the name order. :)
+	let $nameLanguageLabel :=
         if ($name/@lang)
         then mods:get-language-label($name/@lang)
-        else mods:language-of-resource($name/../*:language[1])
-    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[label = $language]/nameOrder/string()
-    let $type := $name/@type
+        else mods:language-of-resource($name/../mods:language)
+    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[label = $nameLanguageLabel]/nameOrder/string()
+    let $nameStyle :=
+        if ($nameLanguageLabel = ('Chinese','Japanese','Korean','Vietnamese'))
+        then 'EastAsian'
+        else 'not'
+    let $nameType := $name/@type
+    
     return   
     (: If the name is (erroneously) not typed (as personal corporate, conference, or family), then string-join the transliterated name parts and string-join the untransliterated nameParts. :)
     (: NB: One could also decide to treat it as a personal name. :)
-        if (not($type))
+        if (not($nameType))
         then
             concat(
+                (: The namespace is masked because to incorporate both MODS and MADS.:)
                 string-join($name/*:namePart[exists(@transliteration)], ' ')
                 , ' ', 
                 string-join($name/*:namePart[not(@transliteration)], ' ')
@@ -828,12 +852,12 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
         (: If the name is typed :)
         else    
             (: If the name is type conference. :)
-        	if ($type = 'conference') 
+        	if ($nameType = 'conference') 
         	then ()
         	(: Do nothing, since get-conference-detail-view and get-conference-hitlist take care of conference. :)
             else    
                 (: If the name is type corporate. :)
-                if ($type = 'corporate') 
+                if ($nameType = 'corporate') 
                 then
                     concat(
                         string-join(
@@ -862,44 +886,80 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                     (: If the above three name groups occur, they should be formatted in the sequence of 1, 2, and 3. 
                     Only in rare cases will 1, 2, and 3 occur together (e.g. a Westerner with name form in Chinese characters or a Chinese with an established Western-style name form different from the transliterated name form. 
                     In the case of persons using Latin script to render their name, only 1 will be used. Here we have the typical Western names.
-                    In the case of e.g. Chinese or Russian names, only 2 and 3 will be used. Only 3 will be used, if no transliteration is given and only 2 will be used, if only transliteration is given. :)
+                    In the case of e.g. Chinese or Russian names, only 2 and 3 will be used. 
+                    Only 3 will be used if no transliteration is given.
+                    Only 2 will be used if only transliteration is given. :)
                     (: When formatting a name, $pos is relevant to the formatting of Base, i.e. to Western names, and to Russian names in Script and Transliteration. 
                     Hungarian is special, in that it uses Latin script, but has the name order family-given. :)
                     (: When formatting a name, the first question to ask is whether the name parts are typed, i.e. are divded into given and family name parts (plus date and terms of address). 
                     If they are not, there is really not much one can do, besides concatenating the name parts and trusting that their sequence is meaningful. :)
-                    (: NB: If the name is translated from one language to another (e.g. William the Conqueror, Guillaume le Conquérant), there will be two $nameBase, one for each language. This is not handled. :)
+                    (: NB: If the name is translated from one language to another (e.g. William the Conqueror, Guillaume le Conquérant), there will be two $nameBasic, one for each language. This is not handled. :)
                     (: NB: If the name is transliterated in two ways, there will be two $nameTransliteration, one for each transliteration scheme. This is not handled. :)
                     (: NB: If the name is rendered in two scripts, there will be two $nameScript, one for each script. This is not handled. :)
-    
-                    let $nameBase := <name>{$name/*:namePart[not(@transliteration) and (not(@script) or @script = ('Latn', 'Latin'))]}</name>
-                    let $nameTransliteration := <name>{$name/*:namePart[exists(@transliteration) and (not(@script) or @script = ('Latn', 'Latin'))]}</name>
-                    let $nameScript := <name>{$name/*:namePart[not(@transliteration) and (exists(@script) or @script = ('Latn', 'Latin'))]}</name>
-                    (: We assume that there is only one date name part. The date name parts with transliteration and script are rather theoretical. This date is attached atthe end of the name. :)
+    				let $nameContainsTransliteration := 
+    					if ($name[*:namePart[@transliteration]])
+    					then 1
+    					else
+    						if ($global-transliteration)
+    						then 1
+    						else 0
+                    (:If the name does not contain a namePart with transliteration, it is a basic name, i.e. a name where the distinction between the name in native script and in transliteration does not arise. 
+                    Typical examples are Western names, but also include Eastern names where no effort has been taken to distinguish between native script and transliteration. 
+                    Filtering like this would leave out names where Westerners have Chinese names, and in order to catch these, we require that they have language set to English. :)
+                    let $nameBasic :=
+	                    if (not($nameContainsTransliteration))
+	                    then <name>{$name/*:namePart[not(@transliteration) and (not(@script) or @script = ('Latn', 'Latin'))]}</name>
+                    	else <name>{$name/*:namePart[@lang = 'eng']}</name>
+                    	
+                    (: If there is transliteration, there are nameParts with transliteration. 
+                    To filter these, we seek nameParts
+                    which contain the transliteration attribute, even though this may be empty (this is special to the templates, since they allow the user to set a global transliteration value, to be applied whereever an empty transliteration attribute occurs; and
+                    which do not contain the script attribute or which have the script attribute set to Latin (defining of transliterations here). :)
+                    (: NB: Should English names be filtered away?:)
+                    let $nameTransliteration := 
+                    	if ($nameContainsTransliteration)
+                    	then <name>{$name/*:namePart[@transliteration and (not(@script) or (@script = ('Latn', 'Latin')))]}</name>
+                    	else ()
+                    
+                    (: If there is transliteration, the presumption must be that all nameParts which are not transliterations (and which do not have the language set to English) are names in non-Latin script. We filter for nameParts
+                    which do no have the transliteration attribute or have one with no contents, and
+                    which do not have script set to Latin, and
+                    which do not have English as their language. :)
+                    let $nameScript := 
+	                    if ($nameContainsTransliteration)
+	                    then <name>{$name/*:namePart[(not(@transliteration) or string-length(@transliteration) = 0) and not(@script = ('Latn', 'Latin')) and not(@lang='eng')]}</name>
+	                    else ()
+                    (: We assume that there is only one date name part. The date name parts with transliteration and script are rather theoretical. This date is attached at the end of the name. :)
                     let $dateBase := $name/*:namePart[@type = 'date'][1]
+                    
+                    (: We try only the most obvious place for a lang and script attribute on namePart. :)
+                    (: NB: Only the first value is chosen, so names cannot have several language. :)
+                    let $namePartFamilyLanguage := $name/*:namePart[type = 'family'][1]/@lang
+                    let $namePartLanguage :=
+                        if ($namePartFamilyLanguage)
+                        then mods:get-language-label($namePartFamilyLanguage)
+                        else ()
+                    let $namePartLanguageLabel :=
+                        (: If there is language on namePart, use that; otherwise use language on name. :)
+                        if ($namePartLanguage)
+                        then $namePartLanguage
+                        else $nameLanguageLabel
+                    (: If there is lang on namePart, use that for retrieving the name order; otherwise use language on name (or, if this did not exist when it was set, the language of the resource as a whole. :)
+                    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[label = $namePartLanguageLabel]/nameOrder/string()
+                    
                     return
                         concat(
                         (: ## 1 ##:)
-                        if ($nameBase/string())
+                        if ($nameBasic/string())
                         (: If there are one or more name parts that are not marked as being transliteration and that are not marked as having a certain script (aside from Latin). :)
                         then
                         (: Filter the name parts according to type. :)
-                            let $untyped := <name>{$nameBase/*:namePart[not(@type)]}</name>
-                            let $family := <name>{$nameBase/*:namePart[@type = 'family']}</name>
-                            let $given := <name>{$nameBase/*:namePart[@type = 'given']}</name>
-                            let $termsOfAddress := <name>{$nameBase/*:namePart[@type = 'termsOfAddress']}</name>
-                            (: let $date := <name>{$nameBase/*:namePart[@type = 'date']}</name> :)
-                            let $languageBase :=
-                                (: We try only the most obvious place for a lang attribute. :)
-                                if ($family/@lang)
-                                then mods:get-language-label($family/@lang)
-                                else ()
-                            let $language :=
-                                (: If there is language on namePart, use that; otherwise use language on name. :)
-                                if ($languageBase)
-                                then $languageBase
-                                else $language
-                            (: If there is lang on namePart, use that for retrieving the name order; otherwise use language on name (or, if this did not exist when it was set, the language of the resource as a whole. :)
-                            let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[label = $language]/nameOrder/string()
+                            let $untyped := <name>{$nameBasic/*:namePart[not(@type)]}</name>
+                            let $family := <name>{$nameBasic/*:namePart[@type = 'family']}</name>
+                            let $given := <name>{$nameBasic/*:namePart[@type = 'given']}</name>
+                            let $termsOfAddress := <name>{$nameBasic/*:namePart[@type = 'termsOfAddress']}</name>
+                            (: let $date := <name>{$nameBasic/*:namePart[@type = 'date']}</name> :)
+                            
                             return
                                 if ($untyped/string())
                                 (: If there are name parts that are not typed, there is nothing we can do to order their sequence. When name parts are not typed, it is generally because the whole name occurs in one name part, formatted for display (usually with a comma between family and given name), but a name part may also be untyped when (non-Western) names that cannot (easily) be divided into family and given names are in evidence. We trust that any sequence of nameparts are meaningfully ordered and simply string-join them. :)
@@ -907,7 +967,8 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                 else
                                 (: If the name parts are typed, we have here a name divided into given and family name (and so on), a name that is not a transliteration and that is not in a non-Latin script: an ordinary (Western) name. :)
                                     if ($pos = 1 and $caller = 'primary')
-                                    (: If the name occurs first in primary position (i.e. first in author position in list view) and the name is not a name that occurs in family-given sequence (is not an Oriental or Hungarian name), then format it with a comma between family name and given name, with family name placed first. :)
+                                    (: If the name occurs first in primary position (i.e. first in author position in list view) and the name is not a name that occurs in family-given sequence (is not an Oriental or Hungarian name), then format it with a comma between the family name and the given name, with the family name placed first, and append the term of address. :)
+                                    (: Dates are appended last, once for the whole name. :)
                                     (: Example: "Freud, Sigmund, Dr. (1856-1939)". :)
                                     then
                                         concat(
@@ -916,7 +977,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                             ,
                                             if ($family/string() and $given/string())
                                             (: If only one of family and given are evidenced, no comma is needed. :)
-                                            then 
+                                            then
                                                 if ($nameOrder = 'family-given')
                                                 (: If the name is Hungarian, use a space; otherwise (i.e. in most cases) use a comma. :)
                                                 then ' '
@@ -983,7 +1044,14 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                                         :)
                                                     )
                         else ()
-                        , ' ', 
+                        , 
+                        ' '
+                        , 
+                        (:If there is an "English" name, enclose the transliterated and Eastern script name in parenthesis.:)
+                        if ($name/*:namePart[@lang = 'eng'])
+                        then ' ('
+                        else ()
+                        ,
                         (: ## 2 ##:)
                         if ($nameTransliteration/string())
                         (: We have a name in transliteration. This can e.g. be a Chinese name or a Russian name. :)
@@ -992,16 +1060,8 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                             let $familyTransliteration := <name>{$nameTransliteration/*:namePart[@type = 'family']}</name>
                             let $givenTransliteration := <name>{$nameTransliteration/*:namePart[@type = 'given']}</name>
                             let $termsOfAddressTransliteration := <name>{$nameTransliteration/*:namePart[@type = 'termsOfAddress']}</name>
-                            (: let $dateTransliteration := <name>{$nameTransliteration/*:namePart[@type = 'date']}</name> :)                    
-                            let $languageTransliteration :=
-                                if ($familyTransliteration/@lang)
-                                then mods:get-language-label($familyTransliteration/@lang)
-                                else ()
-                            let $language :=
-                                if ($languageTransliteration)
-                                then $languageTransliteration
-                                else $language
-                            let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[label = $language]/nameOrder/string()
+                            (: let $dateTransliteration := <name>{$nameTransliteration/*:namePart[@type = 'date']}</name> :)
+                            
                             return       
                                 if ($untypedTransliteration/string())
                                 then string-join($untypedTransliteration/*:namePart, ' ') 
@@ -1092,7 +1152,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                     let $language :=
                                         if ($languageScript)
                                         then $languageScript
-                                        else $language
+                                        else $nameLanguageLabel
                                     let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[label = $language]/nameOrder/string()
                                     return       
                                         if ($untypedScript/string())
@@ -1161,24 +1221,32 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                                         :)
                                                     )
                                 else ()
-                            ,
+                            ,     
+	                        (: Close Chinese alias.:)
+	                        if ($name/*:namePart[@lang = 'eng'])
+	                        then ') '
+	                        else ()
+	                        ,
+	                        (: Finish off by giving the dates of the person, in parenthesis.:)
                             if ($dateBase)
                             then concat(' (', $dateBase, ')')
-                            else ())
+                            else ()
+                            )
 };
 
 declare function mods:get-authority-name-from-mads($mads as element(), $caller as xs:string) {
     let $auth := $mads/mads:authority/mads:name
     return
-        mods:format-name($auth, 1, $caller)
+        mods:format-name($auth, 1, $caller, '')
    
 };
 
-(: NB: used in search.xql :)
+(: NB: also used in search.xql :)
 (: Each name in the list view should have an authority name added to it in parentheses, if it exists and is different from the name as given in the mods record. :)
-declare function mods:retrieve-name($name as element(), $pos as xs:int, $caller as xs:string) {    
-    let $mods-name := mods:format-name($name, $pos, $caller)
+declare function mods:retrieve-name($name as element(), $pos as xs:int, $caller as xs:string, $global-transliteration as xs:string) {    
+    let $mods-name := mods:format-name($name, $pos, $caller, $global-transliteration)
     let $mads-reference := replace($name/@xlink:href, '^#?(.*)$', '$1')
+    (: NB: What if there are several xlink:href values? :)
     (: NB: The following could be optimised. :)
     let $mads-record :=
         if (empty($mads-reference)) 
@@ -1187,7 +1255,7 @@ declare function mods:retrieve-name($name as element(), $pos as xs:int, $caller 
     let $mads-preferred-name :=
         if (empty($mads-record)) 
         then ()
-        else mods:format-name($mads-record/mads:name, 1, $caller)
+        else mods:format-name($mads-record/mads:name, 1, $caller, $global-transliteration)
     let $mads-preferred-name-display :=
         if (empty($mads-preferred-name))
         then ()
@@ -1214,13 +1282,13 @@ declare function mods:retrieve-mads-names($name as element(), $pos as xs:int, $c
         if (empty($mads-record)) 
         then ()
         else $mads-record/mads:authority/mads:name
-    let $mads-preferred-name-formatted := mods:format-name($mads-preferred-name, 1, 'primary')
+    let $mads-preferred-name-formatted := mods:format-name($mads-preferred-name, 1, 'primary', '')
     let $mads-variant-names := $mads-record/mads:variant/mads:name
     let $mads-variant-name-nos := count($mads-record/mads:variant/mads:name)
     let $mads-variant-names-formatted := 
     	string-join(
 	    	for $name in $mads-variant-names 
-    		return mods:format-name($name, 1, 'primary')
+    		return mods:format-name($name, 1, 'primary', '')
     	, ', ')
     return
         if ($mads-preferred-name)
@@ -1242,10 +1310,10 @@ declare function mods:retrieve-mads-names($name as element(), $pos as xs:int, $c
 
 (: Retrieves names. :)
 (: Called from mods:format-multiple-names() :)
-declare function mods:retrieve-names($entry as element()*, $caller as xs:string) {
+declare function mods:retrieve-names($entry as element()*, $caller as xs:string, $global-transliteration as xs:string) {
     for $name at $pos in $entry/mods:name
     return
-    <span class="name">{mods:retrieve-name($name, $pos, $caller)}</span>
+    <span class="name">{mods:retrieve-name($name, $pos, $caller, $global-transliteration)}</span>
 };
 
 (:~
@@ -1263,8 +1331,8 @@ declare function mods:retrieve-names($entry as element()*, $caller as xs:string)
 : @return
 : @see
 :)
-declare function mods:format-multiple-names($entry as element()*, $caller as xs:string) {
-    let $names := mods:retrieve-names($entry, $caller)
+declare function mods:format-multiple-names($entry as element()*, $caller as xs:string, $global-transliteration as xs:string) {
+    let $names := mods:retrieve-names($entry, $caller, $global-transliteration)
     let $nameCount := count($names)
     let $formatted :=
         if ($nameCount eq 0) 
@@ -1399,9 +1467,9 @@ declare function mods:get-short-title($entry as element()) {
     	else ()
     
     let $titleInfo := $entry/mods:titleInfo[not(@type=('abbreviated', 'uniform', 'alternative'))]
-    let $titleInfoTransliteration := $titleInfo[@transliteration]
-    let $titleInfoTranslation := $titleInfo[@type='translated' and not(@transliteration)]
-    let $titleInfo := $titleInfo[not(@type)][not(@transliteration)]
+    let $titleInfoTransliteration := $titleInfo[@transliteration][1]
+    let $titleInfoTranslation := $titleInfo[@type='translated' and not(@transliteration)][1]
+    let $titleInfo := $titleInfo[not(@type)][not(@transliteration)][1]
     
     let $nonSort := $titleInfo/mods:nonSort
     let $title := $titleInfo/mods:title
@@ -1524,8 +1592,7 @@ declare function mods:get-short-title($entry as element()) {
 	        else ''
         ,
         if ($titleTranslation)
-        (:NB: iterate.:)
-        then <span class="title"> [{$titleTranslationFormat[1]/text()}]</span>
+        then <span class="title"> ({$titleTranslationFormat})</span>
         else ()
         ,
         if ($quotes and $titleTranslation) 
@@ -1593,9 +1660,15 @@ if ($titleInfo)
             else ()
         }
         {
+        
         let $transliteration := $titleInfo/@transliteration/string()
+        let $recordTransliteration := $titleInfo/../mods:extension/*:transliterationOfResource
+        let $transliteration := 
+        	if ($transliteration)
+        	then $transliteration
+        	else $recordTransliteration
         return
-        if ($transliteration)
+        if ($titleInfo/@transliteration and $transliteration)
         then
             (<br/>, 'Transliteration: ',
             let $transliteration-label := doc(concat($config:edit-app-root, '/code-tables/transliteration-codes.xml'))/code-table/items/item[value = $transliteration]/label
@@ -1603,15 +1676,6 @@ if ($titleInfo)
                 if ($transliteration-label)
                 then $transliteration-label
                 else $transliteration
-            )
-        else
-        ()
-        }
-        {
-        if ($titleInfo/@script/string())
-        then
-            ('; Script: ', 
-            doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/code-table/items/item[value = $titleInfo/@script]/label
             )
         else
         ()
@@ -1753,10 +1817,11 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
 
 declare function mods:format-related-item($relatedItem as element()) {
 	let $relatedItem := mods:remove-parent-with-missing-required-node($relatedItem)
+	let $global-transliteration := $relatedItem/../mods:extension/e:transliterationOfResource/text()
 	return
     mods:clean-up-punctuation(<result>{(
     if ($relatedItem/mods:name/mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator') or not($relatedItem/mods:name/mods:role/mods:roleTerm))
-    then mods:format-multiple-names($relatedItem, 'primary')
+    then mods:format-multiple-names($relatedItem, 'primary', $global-transliteration)
     else ()
     ,
     mods:get-short-title($relatedItem)
@@ -1775,31 +1840,23 @@ declare function mods:format-related-item($relatedItem as element()) {
                                 ,
                                 mods:get-role-label-for-list-view($roleTerm)
                                 ,
-                                mods:format-multiple-names($names, 'secondary')
+                                mods:format-multiple-names($names, 'secondary', $global-transliteration)
                                 )
                             else ()
-                            ,
-                            (:if ($relatedItem/mods:originInfo/mods:issuance = 'monographic' or not($relatedItem/mods:part/mods:date/text()))
-                            then ()
-                            else '.'
-                            ,:)
-                            if ($relatedItem/mods:originInfo or $relatedItem/mods:part) 
-                            then
-                                (
-                                (:###' ',:)                
-                                mods:get-part-and-origin($relatedItem)
-                                ,                
-                                if ($relatedItem/mods:location/mods:url/text()) 
-                                then concat(' <', $relatedItem/mods:location/mods:url, '>')
-                                else ()
-                                )
-                            else ()                
+    ,
+    mods:get-part-and-origin($relatedItem)
+    ,                
+    if ($relatedItem/mods:location/mods:url/text()) 
+    then concat(' <', $relatedItem/mods:location/mods:url, '>')
+    else ()
+        
+                  
 	)}</result>)
 };
 
 (: ### <relatedItem> ends ### :)
 
-declare function mods:names-full($entry as element()) {
+declare function mods:names-full($entry as element(), $global-transliteration) {
         let $names := $entry/*:name[@type = 'personal' or @type = 'corporate' or @type = 'family' or not(@type)]
         for $name in $names
         return
@@ -1809,7 +1866,7 @@ declare function mods:names-full($entry as element()) {
                     }
                 </td><td class="record">
                     {
-                    mods:format-name($name, 1, 'primary')
+                    mods:format-name($name, 1, 'primary', $global-transliteration)
                     }
                     {
                     if ($name/@xlink:href)
@@ -1862,6 +1919,7 @@ declare function mods:url($entry as element()) as element(tr)* {
 (: NB: "mods:format-detail-view()" is referenced in session.xql. :)
 declare function mods:format-detail-view($id as xs:string, $entry as element(mods:mods), $collection-short as xs:string) {
 	let $entry := mods:remove-parent-with-missing-required-node($entry)
+	let $global-transliteration := $entry/mods:extension/e:transliterationOfResource/text()
 	return
     <table class="biblio-full">
     {
@@ -1872,7 +1930,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     ,
             (: names :)
     if ($entry/mods:name)
-    then mods:names-full($entry)
+    then mods:names-full($entry, $global-transliteration)
     else ()
     ,
     
@@ -2072,7 +2130,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     (: subject :)
     (: We assume that there are not many subjects with the first element, topic, empty. :)
     if (normalize-space($entry/mods:subject[1]/string()))
-    then mods:format-subjects($entry)    
+    then mods:format-subjects($entry, $global-transliteration)    
     else ()
     , 
     (: identifier :)
@@ -2098,12 +2156,13 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
 (: NB: "mods:format-list-view()" is referenced in session.xql. :)
 declare function mods:format-list-view($id as xs:string, $entry as element(mods:mods)) {
 	let $entry := mods:remove-parent-with-missing-required-node($entry)
+	let $global-transliteration := $entry/mods:extension/e:transliterationOfResource/text()
 	return
     let $format :=
         (
         (: The author, etc. of the primary publication. :)
         let $names := <entry>{$entry/mods:name[@type = 'personal' or @type = 'corporate' or @type = 'family' or not(@type)][(mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator')) or not(mods:role/mods:roleTerm)]}</entry>
-        return mods:format-multiple-names($names, 'primary')
+        return mods:format-multiple-names($names, 'primary', $global-transliteration)
         ,
         (: The title of the primary publication. :)
         mods:get-short-title($entry)
@@ -2127,7 +2186,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
                     ,
                     mods:get-role-label-for-list-view($roleTerm)
                     ,
-                    mods:format-multiple-names($names, 'secondary')
+                    mods:format-multiple-names($names, 'secondary', $global-transliteration)
                     (: Terminate secondary role with period. :)
                     ,
 			        if (not($entry/mods:relatedItem[@type = 'host']) and ($roleTerms)) 

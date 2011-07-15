@@ -135,7 +135,7 @@ declare function biblio:form-from-query($incomingQuery as element()?) as element
                     </select>
             } 
             </td>
-            <td> 
+            <td class="label"> 
                 <jquery:input name="input{$pos}" value="{$field/string()}">
                     <jquery:autocomplete url="autocomplete.xql"
                         width="300" multiple="false"
@@ -144,7 +144,7 @@ declare function biblio:form-from-query($incomingQuery as element()?) as element
                     </jquery:autocomplete>
                 </jquery:input>
             </td>
-            <td>
+            <td class="label">
                 in <select name="field{$pos}">
                 {
                     for $f in $biblio:FIELDS/field
@@ -342,7 +342,7 @@ declare function biblio:orderByAuthor($m as element()) as xs:string?
 {
     for $name in $m/mods:name[mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator') or not(mods:role/mods:roleTerm)][1]
     return
-        mods:retrieve-name($name, 1, 'secondary')
+        mods:retrieve-name($name, 1, 'secondary', '')
 };
     
 (: Map order parameter to xpath for order by clause :)

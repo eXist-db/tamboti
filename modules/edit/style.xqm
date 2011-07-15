@@ -57,7 +57,7 @@ as element() {
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <title>
             <!--eXist-begin-->
-                eXist Bibiliographical Demo
+                eXist Bibliographical Demo
                 <!--eXist-end-->
             <!--Tamboti-begin
                 Tamboti Metadata Framework
@@ -170,7 +170,7 @@ as node()+ {
             
             <title>
             <!--eXist-begin-->
-                eXist Bibiliographical Demo - MODS record editor
+                eXist Bibliographical Demo - MODS record editor
                 <!--eXist-end-->
             <!--Tamboti-begin
                 Tamboti Metadata Framework - MODS record editor

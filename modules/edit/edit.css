@@ -406,7 +406,7 @@ span.xforms-hint-icon:after { /*the regular hints*/
 
 span.opaque:after { /*the regular hints*/
     opacity:0;
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=40)";
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=0)";
 	filter:alpha(opacity=0);
 }
 
@@ -485,7 +485,7 @@ div.xforms-hint-value strong
 
 .compact .hide-label .xforms-label {
     opacity:0;
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=40)";
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=0)";
 	filter:alpha(opacity=0);
 }
 

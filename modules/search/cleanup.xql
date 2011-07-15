@@ -38,9 +38,9 @@ declare function clean:remove-empty-elements($nodes as node()*)  as node()* {
 
 (: The function called in session.xql which passes search results to retrieve-mods.xql after cleaning them. :)
 declare function clean:cleanup($node as node()) {
-    let $result := clean:remove-empty-attributes($node)
-    return
-        let $result := clean:remove-empty-elements($result)
+    (:let $result := clean:remove-empty-attributes($node)
+    return:)
+        let $result := clean:remove-empty-elements($node)
         return
             $result
             };

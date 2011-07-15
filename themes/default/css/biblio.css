@@ -76,7 +76,7 @@ img {border: 0;
 
 #query-panel .advanced-search {
     display:inline;
-    padding-left: 10em;
+    
     }
 
 #query-panel .search-form .collection-input {
@@ -84,12 +84,21 @@ img {border: 0;
     width:800px;
 }
 
+#add-field,
+#remove-field,
+#clear-all {
+	padding-bottom:2px;
+    padding-left: 1em;
+    padding-right:1em;
+    padding-top:2px;
+}
+
 #form-submit {
     font-weight: bold; 
     display: inline;
     padding-bottom:2px;
-    padding-left:1ex;
-    padding-right:1ex;
+    padding-left: 1em;
+    padding-right:1em;
     padding-top:2px;
     margin-left: 7em;
     color: #666;
@@ -99,10 +108,6 @@ img {border: 0;
 
 /*folder view*/
 
-/*#collection-tree-main {
-	background-color:white;
-}
-*/
 #collection-tree {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -115,6 +120,7 @@ img {border: 0;
 
 .collection-tree-head {
     background-color: #EDEDED;
+    margin-bottom:-8px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
 
@@ -125,11 +131,9 @@ img {border: 0;
     height: 20px;
     list-style: none;
     padding: 8px 0;
-    1margin: 0;
     background-color: white;
 	-moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-
 }
 
 .collection-tree-toolbar li {
@@ -143,7 +147,7 @@ img {border: 0;
 }
 
 #toggle-collection-tree {
-    margin: 8px 4px 8px 4px;
+    margin: 4px;
 }
 
 #collection-tree-tree {
@@ -154,14 +158,19 @@ img {border: 0;
     font-size: 1em;
 }
 
+table.biblio-full td.collection-label {
+    background-color:#FFFFFF;
+    text-align:right;
+}
+
 ul.dynatree-container {
     border: 0;
     background-color: white;/*#EDEDED !important;*/
     font-size:1em;
     margin-left:5px;
     margin-right:5px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 
 #collection-expand-all {

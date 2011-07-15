@@ -78,7 +78,7 @@
                     <tr>
                         <td/>
                         <td colspan="2">
-                            <button class="button" name="clear" value="clear" type="submit">Clear All</button>
+                            <button id="clear-all" class="button" name="clear" value="clear" type="submit">Clear All</button>
                             <div class="advanced-search">
                                 <button class="advanced-search" name="action" id="form-submit" type="submit">Search</button>
                             </div>
