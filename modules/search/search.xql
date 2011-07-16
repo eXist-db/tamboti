@@ -341,8 +341,11 @@ declare function biblio:process-form() as element(query)? {
 declare function biblio:orderByAuthor($m as element()) as xs:string?
 {
     for $name in $m/mods:name[mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator') or not(mods:role/mods:roleTerm)][1]
+    let $sortFirst := $name/mods:namePart[@type='family' or not(@type)][1]
+    let $sortLast := $name/mods:namePart[@type='given'][1]
+    order by $sortFirst, $sortLast ascending empty greatest
     return
-        mods:retrieve-name($name, 1, 'secondary', '')
+        concat($sortFirst, $sortLast)
 };
     
 (: Map order parameter to xpath for order by clause :)
