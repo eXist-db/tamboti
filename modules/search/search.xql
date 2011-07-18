@@ -340,9 +340,53 @@ declare function biblio:process-form() as element(query)? {
 :)
 declare function biblio:orderByAuthor($m as element()) as xs:string?
 {
-    for $name in $m/mods:name[mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator') or not(mods:role/mods:roleTerm)][1]
-    let $sortFirst := $name/mods:namePart[@type='family' or not(@type)][1]
-    let $sortLast := $name/mods:namePart[@type='given'][1]
+    (: Pick the first name of an author/creator. :)
+    let $names := $m/mods:name[mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator') or not(mods:role/mods:roleTerm)][1] 
+    (: Iterate through the single name in order to be able to order it in a return statement. :)
+    for $name in $names
+    (: Sort according to family and given names.:)
+    let $sortFirst :=
+    	(: If there is a namePart marked as being Western, there will probably in addition be a transliterated and a Eastern-script "nick-name", but the Western namePart should have precedence over the nick-name, therefore pick out the Western-language nameParts first. :)
+    	(: NB: it is a problem to have a positive list of languages to filter; it would be easier to rule out 'chi','jpn' and 'kor' and so on. :)
+    	if ($name/mods:namePart[@lang = ('eng', 'fre', 'ger')]/text())
+    	then
+    		(: If it has a family type, take it; otherwise take whatever namePart there is (in case of a name which has not been analysed into given and family names. :)
+    		if ($name/mods:namePart[@type = 'family'])
+    		then $name/mods:namePart[@lang = ('eng', 'fre', 'ger')][@type='family'][1]/text()
+    		else $name/mods:namePart[@lang = ('eng', 'fre', 'ger')][1]/text()
+    	else
+    		(: If there is not an Western namePart, check if there is a namePart with transliteration; if this is the case, take it. :)
+	    	if ($name/mods:namePart[@transliteration]/text())
+	    	then
+	    		(: If it has a family type, take it; otherwise take whatever transliterated namePart there is. :)
+	    		if ($name/mods:namePart[@type = 'family']/text())
+	    		then $name/mods:namePart[@type='family'][@transliteration][1]/text()
+		    	else $name/mods:namePart[@transliteration][1]/text()
+		    else
+		    	(: If the name does not have a transliterated namePart, it is probably a "standard" (unmarked) Western name, if it does not have a script attribute or uses Latin script. :)
+	    		if ($name/mods:namePart[not(@script) or @script = 'Latn']/text())
+	    		then
+	    		(: If it has a family type, take it; otherwise takes whatever untransliterated namePart there is.:) 
+		    		if ($name/mods:namePart[not(@script) or @script = 'Latn'][@type = 'family']/text())
+		    		then $name/mods:namePart[not(@script) or @script = 'Latn'][@type='family'][1]/text()
+	    			else $name/mods:namePart[not(@script) or @script = 'Latn'][1]/text()
+	    		(: The last step should take care of Eastern names without transliteration. These will usually have a script attribute :)
+	    		else
+	    			if ($name/mods:namePart[@type = 'family']/text())
+		    		then $name/mods:namePart[@type='family'][1]/text()
+	    			else $name/mods:namePart[1]/text()
+	let $sortLast :=
+	    	if ($name/mods:namePart[@lang = ('eng', 'fre', 'ger')]/text())
+	    	then
+	    		$name/mods:namePart[@lang = ('eng', 'fre', 'ger')][@type='given'][1]/text()
+	    	else
+		    	if ($name/mods:namePart[@transliteration]/text())
+		    	then
+		    		$name/mods:namePart[@type='given'][@transliteration][1]/text()
+			    else
+			    	if ($name/mods:namePart[not(@script) or @script = 'Latn']/text())
+		    		then $name/mods:namePart[@type='given'][not(@script) or @script = 'Latn'][1]/text()
+		    		else $name/mods:namePart[@type='given'][1]/text()
     order by $sortFirst, $sortLast ascending empty greatest
     return
         concat($sortFirst, $sortLast)
