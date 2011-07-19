@@ -1,3 +1,5 @@
+xquery version "3.0";
+
 (:~
     Create indexes to speed up the sorting of query results.
     In particular, ordering by author name requires a lot of
@@ -7,6 +9,7 @@ declare namespace opt="http://exist-db.org/xquery/biblio/optimize";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
 
+import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace names="http://exist-db.org/xquery/biblio/names"
     at "names.xql";
 
@@ -39,23 +42,27 @@ declare function opt:order-by-date($node as node()) as xs:integer* {
         :)
         (:~ Callback function to index by date :)
 declare function opt:order-by-date($node as node()) as xs:integer? {
-    let $year :=
-        for $date in $node/mods:relatedItem/mods:part/mods:date[1]
+    try {
+        let $year :=
+            for $date in ($node/mods:relatedItem/mods:part/mods:date)[1]
+            return
+                xs:integer(substring($date, 1, 4))
         return
-            xs:integer(substring($date, 1, 4))
-    return
-        if (empty($year)) 
-        then 
-            for $date in $node/mods:originInfo/mods:dateIssued[1]
-            return
-            xs:integer(substring($date, 1, 4))
-        else 
-        if (empty($year)) 
-        then 
-            for $date in $node/mods:relatedItem/mods:originInfo/mods:dateIssued[1]
-            return
-            xs:integer(substring($date, 1, 4))
-        else $year        
+            if (empty($year)) 
+            then 
+                for $date in ($node/mods:originInfo/mods:dateIssued)[1]
+                return
+                xs:integer(substring($date, 1, 4))
+            else 
+            if (empty($year)) 
+            then 
+                for $date in ($node/mods:relatedItem/mods:originInfo/mods:dateIssued)[1]
+                return
+                xs:integer(substring($date, 1, 4))
+            else $year
+    } catch * {
+        0
+    }
 };
 
 (:~ Callback function to return the normalized title :)
@@ -70,7 +77,7 @@ return
         let $fn := util:function(xs:QName("opt:order-by-name"), 1)
         let $dateFn := util:function(xs:QName("opt:order-by-date"), 1)
         let $titleFn := util:function(xs:QName("opt:order-by-title"), 1)
-        let $mods := //mods:mods
+        let $mods := collection($config:mods-commons)//mods:mods
         let $nameIdx :=
         	sort:create-index-callback("mods:name", $mods, $fn, <options empty="greatest"/>)
         let $titleIdx :=
