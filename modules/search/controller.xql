@@ -23,14 +23,14 @@ declare function local:set-user() {
     return
         if ($user) then (
             security:store-user-credential-in-session($user, $password),
-            <set-attribute name="xquery.user" value="{$user}"/>,
-            <set-attribute name="xquery.password" value="{$password}"/>
+            <set-attribute xmlns="http://exist.sourceforge.net/NS/exist" name="xquery.user" value="{$user}"/>,
+            <set-attribute xmlns="http://exist.sourceforge.net/NS/exist" name="xquery.password" value="{$password}"/>
         ) else if ($session-user-credential != '') then (
-            <set-attribute name="xquery.user" value="{$session-user-credential[1]}"/>,
-            <set-attribute name="xquery.password" value="{$session-user-credential[2]}"/>
+            <set-attribute xmlns="http://exist.sourceforge.net/NS/exist" name="xquery.user" value="{$session-user-credential[1]}"/>,
+            <set-attribute xmlns="http://exist.sourceforge.net/NS/exist" name="xquery.password" value="{$session-user-credential[2]}"/>
         ) else (
-            <set-attribute name="xquery.user" value="{$security:GUEST_CREDENTIALS[1]}"/>,
-            <set-attribute name="xquery.password" value="{$security:GUEST_CREDENTIALS[2]}"/>
+            <set-attribute xmlns="http://exist.sourceforge.net/NS/exist" name="xquery.user" value="{$security:GUEST_CREDENTIALS[1]}"/>,
+            <set-attribute xmlns="http://exist.sourceforge.net/NS/exist" name="xquery.password" value="{$security:GUEST_CREDENTIALS[2]}"/>
         )
 };
 
@@ -69,6 +69,7 @@ else if (ends-with($exist:resource, '.html')) then
             <view>
                 <forward url="search.xql">
                     <!-- Errors should be passed through instead of terminating the request -->
+                    { local:set-user() }
             		<set-attribute name="xquery.report-errors" value="yes"/>
             		<set-attribute name="exist:root" value="{$exist:root}"/>
                     <set-attribute name="exist:path" value="{$exist:path}"/>
