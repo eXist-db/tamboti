@@ -10,9 +10,9 @@ import module namespace names="http://exist-db.org/xquery/biblio/names"
 
 declare namespace mods="http://www.loc.gov/mods/v3";
 
-declare variable $local:MAX_RESULTS := 1000;
+declare variable $local:MAX_RESULTS := 10000;
 declare variable $local:MAX_RESULTS_NAMES := 2000;
-declare variable $local:MAX_TERMS := 30;
+declare variable $local:MAX_TERMS := 100;
 
 declare function local:key($key, $options) {
     <li><a href="?filter=Title&amp;value={$key}&amp;query-tabs=advanced-search-form">{$key} ({$options[1]})</a></li>
@@ -39,7 +39,7 @@ return
     if ($type eq 'author') then
         <ul xmlns="http://www.w3.org/1999/xhtml">
         {
-            let $names := $cached//mods:name
+            let $names := $cached//mods:name[mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator') or not(mods:role/mods:roleTerm)]
             return
                 if (count($names) gt $local:MAX_RESULTS_NAMES) then
                     <li>Too many names. Please restrict the result set.</li>
@@ -57,21 +57,51 @@ return
     else if ($type eq 'date') then
         <ul xmlns="http://www.w3.org/1999/xhtml">
         {
-            let $dates := $cached/mods:originInfo
+            let $dates := (
+            	$cached/mods:originInfo/mods:dateIssued, 
+            	$cached/mods:originInfo/mods:dateCreated, 
+            	$cached/mods:originInfo/mods:copyrightDate, 
+            	$cached/mods:relatedItem/mods:originInfo/mods:copyrightDate, 
+            	$cached/mods:relatedItem/mods:originInfo/mods:dateIssued, 
+            	$cached/mods:relatedItem/mods:part/mods:date
+            	)
             return
-                if (count($dates) gt $local:MAX_RESULTS_NAMES) then
+                if (count($dates) gt $local:MAX_RESULTS) then
                     <li>Too many dates. Please restrict the result set.</li>
                 else
                     let $dates :=
-                        for $info in $cached/mods:originInfo
+                        for $info in (
+                        	$cached/mods:originInfo, 
+                        	$cached/mods:relatedItem/mods:part, 
+                        	$cached/mods:relatedItem/mods:originInfo
+                        	)
                         return
-                            ($info/mods:dateCreated | $info/mods:dateIssued)[1]
+                            ($info/mods:dateCreated | $info/mods:dateIssued | $info/mods:copyrightDate | $info/mods:date)
                     for $date in distinct-values($dates)
                     order by $date descending
                     return
                         <li><a href="?filter=Date&amp;value={$date}&amp;query-tabs=advanced-search-form">{$date}</a></li>
          }</ul>
-    else if ($type eq 'keywords') then
+    else if ($type eq 'subject') then
+        <ul xmlns="http://www.w3.org/1999/xhtml">
+        {
+            let $subjects := $cached/mods:subject
+            let $log := util:log("DEBUG", ("##$subjects1): ", $subjects))
+            return
+                if (count($subjects) gt $local:MAX_RESULTS) then
+                    <li>Too many subjects. Please restrict the result set.</li>
+                else
+                    let $subjects :=
+                        for $info in $cached/mods:subject
+                        return
+                            ($info/mods:topic | $info/mods:geographic | $info/mods:temporal)
+                    let $log := util:log("DEBUG", ("##$subjects2): ", $subjects))
+                    for $subject in distinct-values($subjects)
+                    order by $subject ascending
+                    return
+                        <li><a href="?filter=Subject&amp;value={$subject}&amp;query-tabs=advanced-search-form">{$subject}</a></li>
+         }</ul>
+     else if ($type eq 'keywords') then
         local:keywords($cached)
     else
         ()
