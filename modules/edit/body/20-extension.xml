@@ -7,7 +7,7 @@
                 <xf:trigger>
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="mods:extension" at="index('extension-repeat')" position="after"/>
+                        <xf:insert nodeset="mods:extension" at="index('extension-repeat')" position="before"/>
                     </xf:action>
                 </xf:trigger>
             </span>
@@ -67,14 +67,14 @@
                                 <xf:label class="xforms-group-label-centered">Add Publication Type</xf:label>
                                 <xf:action ev:event="DOMActivate">
                                     <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
-                                    <xf:insert nodeset="e:template" at="index('extension-repeat')" position="after" origin="instance('insert-templates')/e:template"/>
+                                    <xf:insert nodeset="e:template" at="index('extension-repeat')" position="before" origin="instance('insert-templates')/e:template"/>
                                 </xf:action>
                             </xf:trigger>
                             <xf:trigger ref=".[not(e:transliterationOfResource)]" class="add-button">
                                 <xf:label class="xforms-group-label-centered">Add Transliteration Of Resource</xf:label>
                                 <xf:action ev:event="DOMActivate">
                                     <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
-                                    <xf:insert nodeset="e:template" at="index('extension-repeat')" position="after" origin="instance('insert-templates')/e:template"/>
+                                    <xf:insert nodeset="e:template" at="index('extension-repeat')" position="before" origin="instance('insert-templates')/e:template"/>
                                 </xf:action>
                             </xf:trigger>
                         </xf:group>

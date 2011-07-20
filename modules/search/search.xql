@@ -651,7 +651,9 @@ declare function biblio:process-templates($collection as xs:string, $query as el
                             {for $child in $node/node() return biblio:process-templates($collection, $query, $hitCount, $child)}
                             </div>
                     case "result-count" return
-                        text { $hitCount }
+                        if ($hitCount != 1)
+                        then (<span class="hit-count">{$hitCount}</span>, ' records')
+                        else (<span class="hit-count">{$hitCount}</span>, ' record')
                     case "optimize-trigger" return
                         let $user := request:get-attribute("xquery.user")
                         return

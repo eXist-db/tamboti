@@ -10,9 +10,10 @@ import module namespace names="http://exist-db.org/xquery/biblio/names"
 
 declare namespace mods="http://www.loc.gov/mods/v3";
 
-declare variable $local:MAX_RESULTS := 10000;
-declare variable $local:MAX_RESULTS_NAMES := 2000;
-declare variable $local:MAX_TERMS := 100;
+declare variable $local:MAX_RESULTS := 1000;
+declare variable $local:MAX_RESULTS_NAMES := 1500;
+declare variable $local:MAX_TERMS := 50;
+declare variable $local:MAX_RESULTS_SUBJECTS := 5000;
 
 declare function local:key($key, $options) {
     <li><a href="?filter=Title&amp;value={$key}&amp;query-tabs=advanced-search-form">{$key} ({$options[1]})</a></li>
@@ -88,7 +89,7 @@ return
             let $subjects := $cached/mods:subject
             let $log := util:log("DEBUG", ("##$subjects1): ", $subjects))
             return
-                if (count($subjects) gt $local:MAX_RESULTS) then
+                if (count($subjects) gt $local:MAX_RESULTS_SUBJECTS) then
                     <li>Too many subjects. Please restrict the result set.</li>
                 else
                     let $subjects :=

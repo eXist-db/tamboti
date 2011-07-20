@@ -11,7 +11,7 @@
                     <xf:trigger>
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="mods:targetAudience" at="index('targetAudience-repeat')" position="after"/>
+                            <xf:insert nodeset="mods:targetAudience" at="index('targetAudience-repeat')" position="before"/>
                         </xf:action>
                     </xf:trigger>
                 </span>
@@ -78,7 +78,7 @@
                                     <xf:label class="xforms-group-label-centered">Add Target Audience</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="targetAudience-add-node-hide" ev:event="DOMActivate"/>
-                                        <xf:insert nodeset="mods:form" at="index('targetAudience-repeat')" position="after" origin="instance('insert-templates')/mods:targetAudience/mods:form"/>
+                                        <xf:insert nodeset="mods:form" at="index('targetAudience-repeat')" position="before" origin="instance('insert-templates')/mods:targetAudience/mods:form"/>
                                     </xf:action>
                                 </xf:trigger>
                             </xf:group>

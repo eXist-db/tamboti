@@ -8,7 +8,7 @@
                     <xf:trigger>
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="instance('save-data')/mods:relatedItem" at="index('relatedItem-repeat')" position="after"/>
+                            <xf:insert nodeset="instance('save-data')/mods:relatedItem" at="index('relatedItem-repeat')" position="before"/>
                         </xf:action>
                     </xf:trigger>
                 </span>
@@ -55,7 +55,7 @@
                                         <xf:label class="xforms-group-label-centered">Add Part</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="relatedItem-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="instance('save-data')/mods:relatedItemPart" at="index('relatedItem-repeat')" position="after" origin="instance('insert-templates')/mods:relatedItem/mods:part"/>
+                                            <xf:insert nodeset="instance('save-data')/mods:relatedItemPart" at="index('relatedItem-repeat')" position="before" origin="instance('insert-templates')/mods:relatedItem/mods:part"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -131,7 +131,7 @@
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:titleInfo" ev:event="DOMActivate" at="index('relatedItem-titleInfo-repeat')" position="after"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:titleInfo" ev:event="DOMActivate" at="index('relatedItem-titleInfo-repeat')" position="before"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
@@ -234,35 +234,35 @@
                                                     <xf:label class="xforms-group-label-centered">Add Non Sort</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                                        <xf:insert nodeset="mods:nonSort" at="index('relatedItem-titleInfo-repeat')" position="after" origin="instance('insert-templates')/mods:relatedItem/mods:titleInfo/mods:nonSort"/>
+                                                        <xf:insert nodeset="mods:nonSort" at="index('relatedItem-titleInfo-repeat')" position="before" origin="instance('insert-templates')/mods:relatedItem/mods:titleInfo/mods:nonSort"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:title)]" class="add-button">
                                                     <xf:label class="xforms-group-label-centered">Add Title</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                                        <xf:insert nodeset="mods:title" at="index('relatedItem-titleInfo-repeat')" position="after" origin="instance('insert-templates')/mods:relatedItem/mods:titleInfo/mods:title"/>
+                                                        <xf:insert nodeset="mods:title" at="index('relatedItem-titleInfo-repeat')" position="before" origin="instance('insert-templates')/mods:relatedItem/mods:titleInfo/mods:title"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:subTitle)]" class="add-button">
                                                     <xf:label class="xforms-group-label-centered">Add Subtitle</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                                        <xf:insert nodeset="mods:subTitle" at="index('relatedItem-titleInfo-repeat')" position="after" origin="instance('insert-templates')/mods:relatedItem/mods:titleInfo/mods:subTitle"/>
+                                                        <xf:insert nodeset="mods:subTitle" at="index('relatedItem-titleInfo-repeat')" position="before" origin="instance('insert-templates')/mods:relatedItem/mods:titleInfo/mods:subTitle"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:partNumber)]" class="add-button">
                                                     <xf:label class="xforms-group-label-centered">Add Part Number</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                                        <xf:insert nodeset="mods:partNumber" at="index('relatedItem-titleInfo-repeat')" position="after" origin="instance('insert-templates')/mods:relatedItem/mods:titleInfo/mods:partNumber"/>
+                                                        <xf:insert nodeset="mods:partNumber" at="index('relatedItem-titleInfo-repeat')" position="before" origin="instance('insert-templates')/mods:relatedItem/mods:titleInfo/mods:partNumber"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:partName)]" class="add-button">
                                                     <xf:label class="xforms-group-label-centered">Add Part Name</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                                        <xf:insert nodeset="mods:partName" at="index('relatedItem-titleInfo-repeat')" position="after" origin="instance('insert-templates')/mods:relatedItem/mods:titleInfo/mods:partName"/>
+                                                        <xf:insert nodeset="mods:partName" at="index('relatedItem-titleInfo-repeat')" position="before" origin="instance('insert-templates')/mods:relatedItem/mods:titleInfo/mods:partName"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                             </xf:group>
@@ -696,7 +696,7 @@
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:part" at="index('related-item-part-repeat')" position="after"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:part" at="index('related-item-part-repeat')" position="before"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
@@ -768,28 +768,28 @@
                                                     <xf:label class="xforms-group-label-centered">Add Detail</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/>
-                                                        <xf:insert nodeset="mods:detail" at="index('part-repeat')" position="after" origin="instance('insert-templates')/mods:relatedItem/mods:part/mods:detail"/>
+                                                        <xf:insert nodeset="mods:detail" at="index('part-repeat')" position="before" origin="instance('insert-templates')/mods:relatedItem/mods:part/mods:detail"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:extent)]" class="add-button">
                                                     <xf:label class="xforms-group-label-centered">Add Extent</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/>
-                                                        <xf:insert nodeset="mods:extent" at="index('part-repeat')" position="after" origin="instance('insert-templates')/mods:relatedItem/mods:part/mods:extent"/>
+                                                        <xf:insert nodeset="mods:extent" at="index('part-repeat')" position="before" origin="instance('insert-templates')/mods:relatedItem/mods:part/mods:extent"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:date)]" class="add-button">
                                                     <xf:label class="xforms-group-label-centered">Add Date</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/>
-                                                        <xf:insert nodeset="mods:date" at="index('part-repeat')" position="after" origin="instance('insert-templates')/mods:relatedItem/mods:part/mods:date"/>
+                                                        <xf:insert nodeset="mods:date" at="index('part-repeat')" position="before" origin="instance('insert-templates')/mods:relatedItem/mods:part/mods:date"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:text)]" class="add-button">
                                                     <xf:label class="xforms-group-label-centered">Add Text</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/>
-                                                        <xf:insert nodeset="mods:text" at="index('part-repeat')" position="after" origin="instance('insert-templates')/mods:relatedItem/mods:part/mods:text"/>
+                                                        <xf:insert nodeset="mods:text" at="index('part-repeat')" position="before" origin="instance('insert-templates')/mods:relatedItem/mods:part/mods:text"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                             </xf:group>
@@ -861,7 +861,7 @@
                                             <xf:trigger>
                                                 <xf:label>+</xf:label>
                                                 <xf:action ev:event="DOMActivate">
-                                                    <xf:insert nodeset="instance('save-data')/mods:part" at="index('related-item-part-repeat')" position="after"/>
+                                                    <xf:insert nodeset="instance('save-data')/mods:part" at="index('related-item-part-repeat')" position="before"/>
                                                 </xf:action>
                                             </xf:trigger>
                                         </span>
@@ -869,7 +869,7 @@
                                             <xf:trigger>
                                                 <xf:label>–</xf:label>
                                                 <xf:action ev:event="DOMActivate">
-                                                    <xf:insert nodeset="instance('save-data')/mods:detail" at="index('related-item-part-detail-repeat')" position="after"/>
+                                                    <xf:insert nodeset="instance('save-data')/mods:detail" at="index('related-item-part-detail-repeat')" position="before"/>
                                                 </xf:action>
                                             </xf:trigger>
                                         </span>
@@ -977,7 +977,7 @@
                                             <xf:trigger>
                                                 <xf:label>+</xf:label>
                                                 <xf:action ev:event="DOMActivate">
-                                                    <xf:insert nodeset="instance('save-data')/mods:extent" at="index('related-item-extent-repeat')" position="after"/>
+                                                    <xf:insert nodeset="instance('save-data')/mods:extent" at="index('related-item-extent-repeat')" position="before"/>
                                                 </xf:action>
                                             </xf:trigger>
                                         </span>
@@ -1087,7 +1087,7 @@
                                             <xf:trigger>
                                                 <xf:label>+</xf:label>
                                                 <xf:action ev:event="DOMActivate">
-                                                    <xf:insert nodeset="instance('save-data')/mods:date" at="index('related-item-part-date-repeat')" position="after"/>
+                                                    <xf:insert nodeset="instance('save-data')/mods:date" at="index('related-item-part-date-repeat')" position="before"/>
                                                 </xf:action>
                                             </xf:trigger>
                                         </span>
@@ -1189,7 +1189,7 @@
                                             <xf:trigger>
                                                 <xf:label>+</xf:label>
                                                 <xf:action ev:event="DOMActivate">
-                                                    <xf:insert nodeset="instance('save-data')/mods:text" at="index('related-item-part-text-repeat')" position="after"/>
+                                                    <xf:insert nodeset="instance('save-data')/mods:text" at="index('related-item-part-text-repeat')" position="before"/>
                                                 </xf:action>
                                             </xf:trigger>
                                         </span>
@@ -1237,7 +1237,7 @@
                 <xf:trigger ref=".[not(mods:relatedItem)]" class="add-button">
                     <xf:label class="xforms-group-label-centered">Add Missing Related Item</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="instance('save-data')/mods:form" at="index('relatedItem-repeat')" position="after" origin="instance('insert-templates')/mods:relatedItem"/>
+                        <xf:insert nodeset="instance('save-data')/mods:form" at="index('relatedItem-repeat')" position="before" origin="instance('insert-templates')/mods:relatedItem"/>
                     </xf:action>
                 </xf:trigger>
             </xf:group>

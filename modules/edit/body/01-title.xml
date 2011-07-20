@@ -13,7 +13,7 @@
                 <xf:trigger>
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="instance('save-data')/mods:titleInfo" at="index('titleInfo-repeat')" position="after" origin="instance('new-instance')/mods:titleInfo"/>
+                        <xf:insert nodeset="instance('save-data')/mods:titleInfo" at="index('titleInfo-repeat')" position="before" origin="instance('new-instance')/mods:titleInfo"/>
                     </xf:action>
                 </xf:trigger>
             </span>
@@ -27,6 +27,7 @@
             </span>
         </div>
         <xf:repeat nodeset="instance('save-data')/mods:titleInfo" id="titleInfo-repeat">
+            <!--<xf:group class="show-hide" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)] | .[not(@type)] | .[not(@authority)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@displayLabel)] | .[not(@ID)]">-->
             <xf:group class="show-hide">
                 <xf:switch>
                     <xf:case id="titleInfo-add-node-hide">
@@ -45,7 +46,7 @@
                             </xf:trigger>
                         </div>
                         <div class="node-adds">
-                            <xf:group ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)] | .[not(@type)] | .[not(@authority)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@displayLabel)] | .[not(@ID)] | .[not(@xlink:href)] | .[not(@xml:lang)]">
+                            <xf:group class="add-buttons">
                                     <!-- A -->
                                 <xf:group ref=".[not(@altRepGroup)]">
                                     <xf:trigger>
@@ -374,7 +375,7 @@
                             </div>
                         </span>
                     </xf:label>
-                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>
@@ -390,7 +391,7 @@
                             </div>
                         </span>
                     </xf:label>
-                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>
@@ -406,7 +407,7 @@
                             </div>
                         </span>
                     </xf:label>
-                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>
@@ -423,7 +424,7 @@
                             </div>
                         </span>
                     </xf:label>
-                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>

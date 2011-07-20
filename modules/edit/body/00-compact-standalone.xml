@@ -8,13 +8,13 @@
                     <xf:trigger ref="./mods:extension[*:scriptTypeOfResource='Latin']">
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="after" origin="instance('compact-template')/mods:name[1]"/>
+                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:name[1]"/>
                         </xf:action>
                     </xf:trigger>
                     <xf:trigger ref="./mods:extension[*:scriptTypeOfResource='not Latin']">
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="after" origin="instance('compact-template')/mods:name[2]"/>
+                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:name[2]"/>
                         </xf:action>
                     </xf:trigger>
                 </span>
@@ -90,7 +90,7 @@
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <!-- why cannot this select name's higher than 8 (when there are 10)? -->
-                                        <xf:insert nodeset="instance('save-data')/mods:role" at="index('name-repeat')" position="after" origin="instance('compact-template')/mods:name[8]/mods:role"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:role" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:name[8]/mods:role"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
@@ -471,6 +471,14 @@
                 <span class="legend">
                     <span class="legend">URL</span>
                 </span>
+                <span class="join-button">
+                    <xf:trigger>
+                        <xf:label>+</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert nodeset="instance('save-data')/mods:location/mods:url" at="index('location-url-repeat')" position="before" origin="instance('compact-template')/mods:location/mods:url"/>
+                        </xf:action>
+                    </xf:trigger>
+                </span>
                 <span class="xforms-help">
                     <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-help-value">
@@ -480,10 +488,20 @@
             </div>
             <xf:repeat nodeset="./mods:location" id="location-repeat">
                 <xf:repeat nodeset="./mods:url" id="location-url-repeat">
-                    <xf:group class="hide-label margin-plus">
-                        <xf:input ref="." class="text_150">
-                            <xf:label>URL</xf:label>
-                        </xf:input>
+                    <xf:group class="margin-plus">
+                        <xf:group>
+                            <xf:input ref="./@dateLastAccessed" class="text_10">
+                                <xf:label>Last Accessed</xf:label>
+                            </xf:input>
+                        </xf:group>
+                        <xf:group>
+                            <xf:input ref="." class="text_150">
+                                <xf:label>URL</xf:label>
+                            </xf:input>
+                        </xf:group>
+                    </xf:group>
+                    <xf:group ref=".[count(../mods:url) &gt; 1]">
+                        <br/>
                     </xf:group>
                 </xf:repeat>
             </xf:repeat>
@@ -497,7 +515,7 @@
                     <xf:trigger ref=".[mods:identifier]">
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="instance('save-data')/mods:identifier" at="index('identifier-repeat')" position="after" origin="instance('compact-template')/mods:identifier"/>
+                            <xf:insert nodeset="instance('save-data')/mods:identifier" at="index('identifier-repeat')" position="before" origin="instance('compact-template')/mods:identifier"/>
                         </xf:action>
                     </xf:trigger>
                 </span>

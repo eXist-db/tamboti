@@ -8,7 +8,7 @@ declare namespace mods="http://www.loc.gov/mods/v3";
 declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace functx = "http://www.functx.com";
 
-(: Removes empty attributes. Attributes are often left empty by the editor. :)
+(: Removes empty attributes. Attributes are often left empty by the Tamboti editor. :)
 declare function clean:remove-empty-attributes($element as element()) as element() {
 element { node-name($element)}
 { $element/@*[string-length(.) ne 0],
@@ -36,11 +36,18 @@ declare function clean:remove-empty-elements($nodes as node()*)  as node()* {
      else $node
  } ;
 
-(: The function called in session.xql which passes search results to retrieve-mods.xql after cleaning them. :)
+(: The function called in session.xql which passes search results to retrieve-mods.xql after cleaning them. It does not remove empty attributes, since the transliteration attribute is used, even if empty. :)
 declare function clean:cleanup($node as node()) {
-    (:let $result := clean:remove-empty-attributes($node)
-    return:)
         let $result := clean:remove-empty-elements($node)
+        return
+            $result
+            };
+
+(: The function called in source.xql which cleans records before presenting them in XML view, for import into other tools. This also removes empty attributes. :) 
+ declare function clean:cleanup-for-code-view($node as node()) {
+    let $result := clean:remove-empty-attributes($node)
+    return
+        let $result := clean:remove-empty-elements($result)
         return
             $result
             };

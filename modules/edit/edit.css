@@ -1,19 +1,29 @@
 <css>
 @namespace xf url(http://www.w3.org/2002/xforms);
 
+/*colour scheme
+#EDF5FA very pale blue
+
+*/
+
 /*temporary stuff begins*/
-.xforms-output .xforms-value {
-    1color: red;
-    1display: inline;
-    }
+
+.xforms-repeat-item-selected,
+#subject-repeat .xforms-repeat-item-selected
+{
+    background-color:#EDF5FA;
+}
+
 .compact .xforms-group .xforms-group-content .output {
     margin-top: -2em !important;
 }
-div.node-adds button xf|label 
+
+.node-adds button xf|label 
     {
     text-align: center;
     }
-div.node-adds div.xforms-group div.xforms-group-content
+
+.node-adds .xforms-group .xforms-group-content
 {
     display: inline !important;
 }
@@ -25,7 +35,7 @@ div.node-adds div.xforms-group div.xforms-group-content
 body
     {
   border-color:#3681B3;
-  background-color:#ffffff !important;/*overrules xsltforms.css*/
+  background-color:#FFFFFF !important;/*overrules xsltforms.css*/
 }
 
 #page-head {
@@ -71,7 +81,7 @@ body
     padding-top:0.5em !important;
     padding-left:.25em !important;
     margin-top:-2em !important;
-    border-color:#CCC !important;/*overrules xsltforms.css*/
+    border-color:#CCCCCC !important;/*overrules xsltforms.css*/
     margin-bottom:1em !important;/*overrules xsltforms.css*/
     width:1150px !important;/*overrules xsltforms.css*/
 }
@@ -131,7 +141,7 @@ table {
 }
 
 .info-line {
-    color:#666;
+    color:#666666;
     }
 
 /*other top elements end*/
@@ -186,8 +196,10 @@ fieldset,
 .xforms-repeat-item,
 .xforms-repeat-item-selected
 {
-    border-color:#CCC;
+    border-color:#CCCCCC;
 }
+
+.fieldset .level-3  .xforms-group {margin-bottom}
 
 .node-adds, 
 .node-adds-title, 
@@ -214,7 +226,9 @@ fieldset .level-4
     margin-bottom:0;
 }
 
-
+.fieldset .xforms-repeat-item {
+	padding-bottom:1em !important;
+}
 .fieldset,
 fieldset,
 .block-form .xforms-repeat-item,
@@ -223,10 +237,10 @@ fieldset,
     {
     font-size:inherit !important;
     border-width:1px;
-    border-color:#CCC !important;
+    border-color:#CCCCCC !important;
     border-style:solid;
     padding-top:1em;
-    /*padding-bottom:.5em !important;*/
+    padding-bottom:0;
     padding-left:1em !important;
     padding-right:1em !important;
     margin-top:.5em !important;
@@ -251,7 +265,7 @@ fieldset,
     padding:.3em 1em .3em 1em;
     width:15em;
     height:1.5em;
-    margin-top:-2.4em; /*to make the fieldset border hit the centre of the box*/
+    margin-top:-2em; /*to make the fieldset border hit the centre of the box*/
     margin-left:1.55em;
     margin-bottom:.75em;
     text-align:center;    
@@ -334,7 +348,7 @@ select .xforms-value {
     height:2em;
     width:2em;
     padding:0;
-    margin:0;
+    1margin-bottom:1em;
 }
 
 .node-button .xforms-control button .xforms-label {
@@ -352,7 +366,9 @@ select .xforms-value {
 }
 
 .node-adds {
-    margin-top:2.25em;
+    margin-top:2.25em !important;
+    padding-bottom:1em;
+    background-color:#FFFFFF;
 }
 
 /*unsorted ends*/
@@ -391,7 +407,7 @@ div.join span.xforms-hint { /*the hard-coded fieldset hints*/
     vertical-align:top;
     font-style:normal;
     font-weight:normal;
-    color:#cccccc;
+    color:#CCCCCC;
     cursor:help;    
 }
 
@@ -451,7 +467,7 @@ div.xforms-hint-value
     text-align:left;
     color:gray;
     display:none;
-	background-color:white;
+	background-color:#FFFFFF;
 	position:absolute;
 	border:gray 1px solid; 
 	margin:0;
@@ -495,7 +511,7 @@ div.xforms-hint-value strong
 
 .compact .xforms-repeat-item-selected
 {
-    background-color:white;
+    background-color:#FFFFFF;
 }
 
 .compact .xforms-group .xforms-repeat-item,
@@ -511,7 +527,7 @@ div.xforms-hint-value strong
 }
 
 .compact .level-1 .margin-plus .xforms-select1 {/*level-1 with select1*/
-    margin-left:0;
+    margin-left:0 !important;
 }
 
 .compact .level-2 .margin-plus {/*level-2*/

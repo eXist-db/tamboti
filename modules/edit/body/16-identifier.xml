@@ -7,7 +7,7 @@
                 <xf:trigger>
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="mods:identifier" at="index('identifier-repeat')" position="after"/>
+                        <xf:insert nodeset="mods:identifier" at="index('identifier-repeat')" position="before"/>
                     </xf:action>
                 </xf:trigger>
             </span>

@@ -9,6 +9,10 @@ a:link, a:visited {
 img {border: 0;
 }
 
+#content1col {
+	margin-bottom:3em;
+}
+
 /*page top elements begin*/
 
 #page-head {
@@ -229,10 +233,20 @@ td.collection-path {
     margin-top: .5em;
 }
 
-.repeat-selected {
-    background-color: #CCC;
+.label select {
+	margin-left:.5em;
+	
 }
 
+.hit-count {
+	color: #5DB0E6;
+	font-weight:bold;
+}
+
+/*.repeat-selected {
+    background-color: #EEEEEE;
+}
+*/
 /*facets begin*/
 
 #filters {
@@ -490,6 +504,10 @@ td .relatedItem-label {}
 
 .ui-widget {
     font-size: 1em;
+}
+
+.ui-widget-content .ui-state-default {
+	color:#444444;
 }
 
 #optimize-trigger { /*shown when logged in as admin*/

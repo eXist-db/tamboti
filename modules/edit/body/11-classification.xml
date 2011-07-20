@@ -9,7 +9,7 @@
                 <xf:trigger>
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="mods:classification" at="index('classification-repeat')" position="after"/>
+                        <xf:insert nodeset="mods:classification" at="index('classification-repeat')" position="before"/>
                     </xf:action>
                 </xf:trigger>
             </span>

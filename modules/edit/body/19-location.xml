@@ -9,7 +9,7 @@
                 <xf:trigger>
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="mods:location" at="index('location-repeat')" position="after"/>
+                        <xf:insert nodeset="mods:location" at="index('location-repeat')" position="before"/>
                     </xf:action>
                 </xf:trigger>
             </span>
@@ -46,7 +46,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:physicalLocation" at="index('physical-location-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:physicalLocation" at="index('physical-location-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -195,7 +195,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:shelfLocator" at="index('location-shelfLocator-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:shelfLocator" at="index('location-shelfLocator-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -241,7 +241,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:url" at="index('location-url-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:url" at="index('location-url-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -362,7 +362,7 @@
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="mods:copyInformation" at="index('location-copyInformation-repeat')" position="after"/>
+                                        <xf:insert nodeset="mods:copyInformation" at="index('location-copyInformation-repeat')" position="before"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
@@ -457,7 +457,7 @@
                                 </xf:repeat>
                                             <!--location/form repeat ends-->
                                             <!--location/form add begins-->
-                                            <!-- <xf:trigger ref=".[count(mods:form) > 0]" class="add-button"> <xf:label>Add Form</xf:label> <xf:action ev:event="DOMActivate"> <xf:insert nodeset="mods:form" at="index('location-form-repeat')" position="after" origin="instance('insert-templates')/mods:form"/> <xf:setvalue ref="instance('save-data')/mods:form[last()]" value="''"/> </xf:action> </xf:trigger> -->
+                                            <!-- <xf:trigger ref=".[count(mods:form) > 0]" class="add-button"> <xf:label>Add Form</xf:label> <xf:action ev:event="DOMActivate"> <xf:insert nodeset="mods:form" at="index('location-form-repeat')" position="before" origin="instance('insert-templates')/mods:form"/> <xf:setvalue ref="instance('save-data')/mods:form[last()]" value="''"/> </xf:action> </xf:trigger> -->
                                             <!--location/form add ends-->
                             </xf:group>
                                         <!--location/form ends-->
@@ -469,7 +469,7 @@
                                         <xf:trigger>
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="mods:sublocation" at="index('location-sublocation-repeat')" position="after"/>
+                                                <xf:insert nodeset="mods:sublocation" at="index('location-sublocation-repeat')" position="before"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </span>
@@ -512,7 +512,7 @@
                                         <xf:trigger>
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="mods:sublocation" at="index('location-sublocation-repeat')" position="after"/>
+                                                <xf:insert nodeset="mods:sublocation" at="index('location-sublocation-repeat')" position="before"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </span>
@@ -555,7 +555,7 @@
                                         <xf:trigger>
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="mods:electronicLocator" at="index('location-electronicLocator-repeat')" position="after"/>
+                                                <xf:insert nodeset="mods:electronicLocator" at="index('location-electronicLocator-repeat')" position="before"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </span>
@@ -598,7 +598,7 @@
                                         <xf:trigger>
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="mods:note" at="index('location-note-repeat')" position="after"/>
+                                                <xf:insert nodeset="mods:note" at="index('location-note-repeat')" position="before"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </span>
@@ -659,7 +659,7 @@
                                         <xf:trigger>
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="mods:enumerationAndChronology" at="index('location-enumerationAndChronology-repeat')" position="after"/>
+                                                <xf:insert nodeset="mods:enumerationAndChronology" at="index('location-enumerationAndChronology-repeat')" position="before"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </span>
@@ -717,7 +717,7 @@
                 </xf:repeat>
                             <!--location/holdingSimple repeat ends-->
                             <!--location/holdingSimple add begins-->
-                            <!-- NB: not used <xf:trigger ref=".[count(mods:holdingSimple) > 0]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Another Holding Simple</xf:label> <xf:action ev:event="DOMActivate"> <xf:insert nodeset="mods:holdingSimple" at="index('location-holding-simple-repeat')" position="after" origin="instance('insert-templates')/mods:holdingSimple"/> <xf:setvalue ref="instance('save-data')/mods:holdingSimple[last()]" value="''"/> </xf:action> </xf:trigger> -->
+                            <!-- NB: not used <xf:trigger ref=".[count(mods:holdingSimple) > 0]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Another Holding Simple</xf:label> <xf:action ev:event="DOMActivate"> <xf:insert nodeset="mods:holdingSimple" at="index('location-holding-simple-repeat')" position="before" origin="instance('insert-templates')/mods:holdingSimple"/> <xf:setvalue ref="instance('save-data')/mods:holdingSimple[last()]" value="''"/> </xf:action> </xf:trigger> -->
                             <!--location/holdingSimple add ends-->
             </xf:group>
                     <!--location/holdingSimple ends-->
@@ -731,7 +731,7 @@
                             <xf:trigger>
                                 <xf:label>+</xf:label>
                                 <xf:action ev:event="DOMActivate">
-                                    <xf:insert nodeset="mods:holdingExternal" at="index('holding-external-repeat')" position="after"/>
+                                    <xf:insert nodeset="mods:holdingExternal" at="index('holding-external-repeat')" position="before"/>
                                 </xf:action>
                             </xf:trigger>
                         </span>

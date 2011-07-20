@@ -35,7 +35,11 @@ declare option exist:serialize "media-type=text/xml";
 
 (: ### general functions begin ###:)
 
-(:~
+declare function functx:substring-before-last-match($arg as xs:string?, $regex as xs:string) as xs:string? {       
+   replace($arg,concat('^(.*)',$regex,'.*'),'$1')
+} ;
+ 
+ (:~
 : Used to transform the camel-case names of MODS elements into space-separated words.  
 : @param
 : @return
@@ -545,9 +549,10 @@ declare function mods:get-place($places as element(mods:place)*) as xs:string? {
     ' and ')
 };
 
-(:NB: This function should be split up in a part and an originInfo function.:)
-(: <part> is found both as a top level element and under <relatedItem>. :)
-(: Used in list view and relatedItem. :)
+(: NB: This function should be split up in a part and an originInfo function.:)
+(: <part> is found both as a top level element and under <relatedItem>. $entry can be both mods and relatedItem. :)
+(: NB: where is the relatedItem type? :)
+(: Used in list view and display of related items in list and detail view. :)
 declare function mods:get-part-and-origin($entry as element()) {
     let $originInfo := $entry/mods:originInfo
     (: contains: place, publisher, dateIssued, dateCreated, dateCaptured, dateValid, 
@@ -630,7 +635,10 @@ declare function mods:get-part-and-origin($entry as element()) {
     let $datePart := 
 	    if ($part/mods:date) 
 	    then $part/mods:date
-	    else $dateIssued
+	    else $dateOriginInfo
+(:	    let $log := util:log("DEBUG", ("##$datePart): ", mods:get-date($datePart)))
+	    let $log := util:log("DEBUG", ("##$place): ", mods:get-place($place)))
+	    let $log := util:log("DEBUG", ("##$publisher): ", mods:get-publisher($publisher))):)
     (: contains no subelements. :)
     (: has: encoding; point; qualifier. :)
     (: handled by mods:get-date(). :)
@@ -641,37 +649,27 @@ declare function mods:get-part-and-origin($entry as element()) {
     
     return
         (: If there is a part with issue information and a date, i.e. if the publication is an article in a periodical. :)
-        if (($volume or $issue) and $datePart) 
+        if ($datePart and ($volume or $issue)) 
         then 
             concat(
             ' '
             ,
             if ($volume and $issue)
-            then concat(
-            	$volume
-            	, 
-            	', no. '
-            	, 
-            	$issue
+            then concat($volume, ', no. ', $issue
             	,
             	concat(' (', mods:get-date($datePart), ')')    
-		    )
+			    )
             (: concat((if ($part/mods:detail/mods:caption) then $part/mods:detail/mods:caption/string() else '/'), $part/mods:detail[@type='issue']/mods:number) :)
-            else 
+            else
+            	if ($issue or $volume)
+            	then
                 (: If the year is used as volume. :)
-                if ($issue)
-                then concat(
-                	concat(' ', mods:get-date($datePart))
-		            ,
-		            ', no. ', 
-		            $issue
-		            )
-                else
-                    concat(
-	                    $volume
-	                    ,
-	                    concat(' (', mods:get-date($datePart), ')')
-	            		)
+	                if ($issue)
+	                then concat(
+	                	concat(' ', mods:get-date($datePart))
+			            , ', no. ', $issue)
+	                else concat($volume, concat(' (', $datePart, ')'))
+				else concat(' ', $datePart)
             ,
             (:NB: We assume that there will not both be $page and $extent.:)
             if ($page) 
@@ -683,8 +681,8 @@ declare function mods:get-part-and-origin($entry as element()) {
             else '.'
             )
         else
-            (: If there is a dateIssued and a place or a publisher, i.e. if the publication is an an edited volume. :)
-            if ($datePart and ($place | $publisher)) 
+            (: If there is a dateIssued (loaded in $datePart) and a place or a publisher, i.e. if the publication is an an edited volume. :)
+            if ($datePart and ($place or $publisher)) 
             then
                 (
                 if ($volume) 
@@ -692,7 +690,10 @@ declare function mods:get-part-and-origin($entry as element()) {
                 else ()
                 ,
                 if ($extent)
-                then concat(': ', mods:get-extent($extent),'.')
+                then
+                	if ($volume)
+                	then concat(': ', mods:get-extent($extent),'.')
+                	else concat(', ', mods:get-extent($extent),'.')
                 else ()
                 ,
                 if ($place)
@@ -700,25 +701,19 @@ declare function mods:get-part-and-origin($entry as element()) {
                 else ()
                 ,
                 if ($place and $publisher)
-                then ': '
-                else ()
-                ,
-                if ($publisher)
                 then (': ', mods:get-publisher($publisher))
                 else ()
                 ,
                 if ($datePart)
                 then
-	                (
-	                ', '
-	                ,
+	                (', ',
 	                for $date in $dateOriginInfo
 	                return
 	                	string-join($date, ' and ')
 	                )
                 else ()
                 )
-            (: If not a periodical and not an edited volume, we don't know what it is and just try to extract the information. :)
+            (: If not a periodical and not an edited volume, we don't really know what it is and just try to extract whatever information there is. :)
             else
                 (
                 if ($place)
@@ -734,28 +729,25 @@ declare function mods:get-part-and-origin($entry as element()) {
                 	)
                 else ()
                 , 
-                mods:add-part(mods:get-date(<date>{$dateOriginInfo}</date>), 
+                mods:add-part(mods:get-date(<date>{$dateOriginInfo}</date>)
+                , 
                 if (exists($entry/mods:relatedItem[@type='host']/mods:part/mods:extent) or exists($entry/mods:relatedItem[@type='host']/mods:part/mods:detail))
                 then '.'
-                else ''
+                else ()
                 )
                 ,
                 if (exists($extent/mods:start) or exists($extent/mods:end) or exists($extent/mods:list))
                 then (': ', mods:get-extent($extent))            
                 else ()
                 ,
-                if (exists($volume))
-                then ''
-                else '.'
-                ,
-                (:If it is a series:)
+                (: If it is a series:)
                 (:NB: polish!:)
                 if ($volume)
-                then concat(', Vol. ', $volume, '.')
-                else ()
+	            then concat(', Vol. ', $volume, '.')
+	            else ()
                 ,
                 if ($text)
-                then $text
+                then concat(' ', $text)
                 else ()
                 )
 };
@@ -1340,44 +1332,34 @@ declare function mods:format-multiple-names($entry as element()*, $caller as xs:
         else 
             if ($nameCount eq 1) 
             then
-                if (ends-with($names, '.')) 
-                (: Places period after single author name, if it does not end with a term of address ending in period, such as "Jr." or "Dr.". :)
-                then concat($names, ' ')
-                else concat($names, '.')
+                if (ends-with(normalize-space($names), '.')) 
+                (: Removes period after author name if it ends with a term of address ending in period, such as "Jr." or "Dr.", since a period will be inserted after the primary names(s). :)
+                then functx:substring-before-last-match($names, '\.')
+                else $names
             else
                 if ($nameCount eq 2)
                 then
 	                concat(
 	                    subsequence($names, 1, $nameCount - 1),
-	                    ' and ',
 	                    (: Places "and" before last name. :)
-	                    $names[$nameCount],
-	                    '.'
-	                    (: Places period after last name. :)
+	                    ' and ',
+	                    if (ends-with(normalize-space($names[$nameCount]), '.'))
+	                    then functx:substring-before-last-match($names[$nameCount], '\.')
+	                    else $names[$nameCount]
 	                )
                 else 
                     concat(
-                        string-join(subsequence($names, 1, $nameCount - 1), ', '),
-                        (: Places ", " after all names that do not come last. :)
-                        ', and ',
+                        string-join(subsequence($names, 1, $nameCount - 1), 
+                        (: Places ", " after all names that do not come last. :)', ')
+                        ,
                         (: Places ", and" before name that comes last. :)
-                        $names[$nameCount],
-                        if ($caller = 'primary')
-                        then '.&#160;'
-                        else ()
-                        (: Places period after last name. :)
+                        ', and ',
+                        if (ends-with(normalize-space($names[$nameCount]), '.'))
+	                    then functx:substring-before-last-match($names[$nameCount], '\.')
+	                    else $names[$nameCount]
                         )
-    return
-    <span class="name">{normalize-space(
-        $formatted
-        )}</span>
+    return <span class="name">{normalize-space($formatted)}</span>
 };
-
-(: NB! Create function to render real names from abbreviations! :)
-(:
-declare function mods:get-language-name() {
-};
-:)
 
 (: ### <typeOfResource> begins ### :)
 
@@ -1766,7 +1748,9 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
 	        then
 	            if ($caller = 'hitlist')
 	            then
-	                <span class="relatedItem-span">{mods:format-related-item($relatedItem)}</span>
+	                <span class="relatedItem-span">
+	                	<span class="relatedItem-record">{mods:format-related-item($relatedItem)}</span>
+	                </span>
 	            else
 	                if ($caller = 'detail' and string($xlink))
 	                then
@@ -2162,7 +2146,11 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         (
         (: The author, etc. of the primary publication. :)
         let $names := <entry>{$entry/mods:name[@type = 'personal' or @type = 'corporate' or @type = 'family' or not(@type)][(mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator')) or not(mods:role/mods:roleTerm)]}</entry>
-        return mods:format-multiple-names($names, 'primary', $global-transliteration)
+        return
+	        if ($names/string())
+	        then (mods:format-multiple-names($names, 'primary', $global-transliteration)
+	        , '. ')
+	        else ()
         ,
         (: The title of the primary publication. :)
         mods:get-short-title($entry)
@@ -2202,8 +2190,9 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         (: If not a conference publication, get originInfo and part information for the primary publication. :)
         else mods:get-part-and-origin($entry)    
         ,
-        (: The periodical or edited volume that the primary publication occurs in. :)
-        if (exists($entry/mods:relatedItem[@type='host']/mods:part/mods:extent) or exists($entry/mods:relatedItem[@type='host']/mods:part/mods:detail)) 
+        (: The periodical, edited volume or series that the primary publication occurs in. :)
+        (:if ($entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:extent or $entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:detail/mods:number/text()):)
+        if ($entry/mods:relatedItem[@type=('host','series')])
         then <span class="relatedItem-span">{mods:get-related-items($entry, 'hitlist')}</span>
         else ()
         ,

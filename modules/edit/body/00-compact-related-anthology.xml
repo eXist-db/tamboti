@@ -99,13 +99,13 @@
                                         <xf:trigger ref=".[mods:namePart/@transliteration]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-person-repeat')" position="after" origin="instance('compact-template')/mods:name[2]"/>
+                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-person-repeat')" position="before" origin="instance('compact-template')/mods:name[4]"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(mods:namePart/@transliteration)]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-person-repeat')" position="after" origin="instance('compact-template')/mods:name[1]"/>
+                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-person-repeat')" position="before" origin="instance('compact-template')/mods:name[3]"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </span>
@@ -154,13 +154,13 @@
                                         <xf:trigger ref=".[@transliteration]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-institution-namePart-repeat')" position="after" origin="instance('compact-template')/mods:name[6]"/>
+                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-institution-namePart-repeat')" position="before" origin="instance('compact-template')/mods:name[6]"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@transliteration)]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-institution-namePart-repeat')" position="after" origin="instance('compact-template')/mods:name[5]"/>
+                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-institution-namePart-repeat')" position="before" origin="instance('compact-template')/mods:name[5]"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </span>
@@ -410,7 +410,7 @@
                                 <xf:trigger ref=".[mods:identifier]">
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:identifier" at="index('identifier-anthology-repeat')" position="after" origin="instance('compact-template')/mods:identifier"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:identifier" at="index('identifier-anthology-repeat')" position="before" origin="instance('compact-template')/mods:identifier"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>

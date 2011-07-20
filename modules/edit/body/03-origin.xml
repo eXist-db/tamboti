@@ -8,7 +8,7 @@
                 <xf:trigger>
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="mods:originInfo" at="index('origininfo-repeat')" position="after"/>
+                        <xf:insert nodeset="mods:originInfo" at="index('origininfo-repeat')" position="before"/>
                     </xf:action>
                 </xf:trigger>
             </span>
@@ -59,7 +59,7 @@
                                         <xf:label class="xforms-group-label-centered">Add Place</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:place" at="index('origininfo-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:place"/>
+                                            <xf:insert nodeset="mods:place" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:place"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -68,7 +68,7 @@
                                         <xf:label class="xforms-group-label-centered">Add Publisher</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:publisher" at="index('origininfo-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:publisher"/>
+                                            <xf:insert nodeset="mods:publisher" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:publisher"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -77,7 +77,7 @@
                                         <xf:label class="xforms-group-label-centered">Add Date Issued</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:dateIssued" at="index('origininfo-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:dateIssued"/>
+                                            <xf:insert nodeset="mods:dateIssued" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateIssued"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -86,7 +86,7 @@
                                         <xf:label class="xforms-group-label-centered">Add Date Created</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:dateCreated" at="index('origininfo-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:dateCreated"/>
+                                            <xf:insert nodeset="mods:dateCreated" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateCreated"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -95,7 +95,7 @@
                                         <xf:label class="xforms-group-label-centered">Add Date Captured</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:dateCaptured" at="index('origininfo-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:dateCaptured"/>
+                                            <xf:insert nodeset="mods:dateCaptured" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateCaptured"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -104,7 +104,7 @@
                                         <xf:label class="xforms-group-label-centered">Add Date Valid</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:dateValid" at="index('origininfo-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:dateValid"/>
+                                            <xf:insert nodeset="mods:dateValid" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateValid"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -113,7 +113,7 @@
                                         <xf:label class="xforms-group-label-centered">Add Date Modified</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:dateModified" at="index('origininfo-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:dateModified"/>
+                                            <xf:insert nodeset="mods:dateModified" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateModified"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -122,7 +122,7 @@
                                         <xf:label class="xforms-group-label-centered">Add Copyright Date </xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:copyrightDate" at="index('origininfo-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:copyrightDate"/>
+                                            <xf:insert nodeset="mods:copyrightDate" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:copyrightDate"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -131,7 +131,7 @@
                                         <xf:label class="xforms-group-label-centered">Add Date Other</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:dateOther" at="index('origininfo-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:dateOther"/>
+                                            <xf:insert nodeset="mods:dateOther" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateOther"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -140,7 +140,7 @@
                                         <xf:label class="xforms-group-label-centered">Add Edition</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:edition" at="index('origininfo-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:edition"/>
+                                            <xf:insert nodeset="mods:edition" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:edition"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -149,7 +149,7 @@
                                         <xf:label class="xforms-group-label-centered">Add Issuance</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:issuance" at="index('origininfo-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:issuance"/>
+                                            <xf:insert nodeset="mods:issuance" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:issuance"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -158,7 +158,7 @@
                                         <xf:label class="xforms-group-label-centered">Add Frequency</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:frequency" at="index('origininfo-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:frequency"/>
+                                            <xf:insert nodeset="mods:frequency" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:frequency"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -236,7 +236,7 @@
                                     Terms, for Publisher and for Edition. If you are using different Language values inside Origin Information, apply Language
                                     to each field and leave Language empty under Origin Information. </p>
                     </xf:hint>
-                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>
@@ -255,7 +255,7 @@
                                     Terms, for Publisher and for Edition. If you are using different Language values inside Origin Information, apply Language
                                     to each field and leave Language empty under Origin Information. </p>
                     </xf:hint>
-                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>
@@ -273,7 +273,7 @@
                                     for Publisher and for Edition. If you are using different Script values inside Origin Information, apply Script to each
                                     field and leave Script empty under Origin Information. </p>
                     </xf:hint>
-                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>
@@ -291,7 +291,7 @@
                                     for all Place Terms, for Publisher and for Edition. If you are using different Transliteration values inside Origin
                                     Information, apply Transliteration to each field and leave Transliteration empty under Origin Information. </p>
                     </xf:hint>
-                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>
@@ -343,7 +343,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:place" at="index('place-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:place" at="index('place-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -410,7 +410,7 @@
                                             <xf:label class="xforms-group-label-centered">Add Place Term</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="place-add-node-hide" ev:event="DOMActivate"/>
-                                                <xf:insert nodeset="mods:placeTerm" at="index('place-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:place/mods:placeTerm"/>
+                                                <xf:insert nodeset="mods:placeTerm" at="index('place-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:place/mods:placeTerm"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
@@ -441,7 +441,7 @@
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="mods:placeTerm" at="index('place-term-repeat')" position="after"/>
+                                        <xf:insert nodeset="mods:placeTerm" at="index('place-term-repeat')" position="before"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
@@ -481,7 +481,7 @@
                                                             Language values inside Origin Information, apply Language to each field and leave Language empty
                                                             under Origin Information. </p>
                                     </xf:hint>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
                                         <xf:label ref="label"/>
                                         <xf:value ref="value"/>
                                     </xf:itemset>
@@ -502,7 +502,7 @@
                                                             Language values inside Origin Information, apply Language to each field and leave Language empty
                                                             under Origin Information. </p>
                                     </xf:hint>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                                         <xf:label ref="label"/>
                                         <xf:value ref="value"/>
                                     </xf:itemset>
@@ -522,7 +522,7 @@
                                                             inside Origin Information, apply Script to each field and leave Script empty under Origin
                                                             Information. </p>
                                     </xf:hint>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                                         <xf:label ref="label"/>
                                         <xf:value ref="value"/>
                                     </xf:itemset>
@@ -541,7 +541,7 @@
                                                             Transliteration values inside Origin Information, apply Transliteration to each field and leave
                                                             Transliteration empty under Origin Information. </p>
                                     </xf:hint>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                         <xf:label ref="label"/>
                                         <xf:value ref="value"/>
                                     </xf:itemset>
@@ -657,7 +657,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:publisher" at="index('publisher-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:publisher" at="index('publisher-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -693,7 +693,7 @@
                                                 all Place Terms, for Publisher and for Edition. If you are using different Language values inside Origin
                                                 Information, apply Language to each field and leave Language empty under Origin Information. </p>
                             </xf:hint>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
@@ -713,7 +713,7 @@
                                                 all Place Terms, for Publisher and for Edition. If you are using different Language values inside Origin
                                                 Information, apply Language to each field and leave Language empty under Origin Information. </p>
                             </xf:hint>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
@@ -731,7 +731,7 @@
                                                 Place Terms, for Publisher and for Edition. If you are using different Script values inside Origin Information,
                                                 apply Script to each field and leave Script empty under Origin Information. </p>
                             </xf:hint>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
@@ -750,7 +750,7 @@
                                                 Transliteration values inside Origin Information, apply Transliteration to each field and leave Transliteration
                                                 empty under Origin Information. </p>
                             </xf:hint>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
@@ -801,7 +801,7 @@
                                                 all Place Terms, for Publisher and for Edition. If you are using different Language values inside Origin
                                                 Information, apply Language to each field and leave Language empty under Origin Information. </p>
                             </xf:hint>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
@@ -821,7 +821,7 @@
                                                 all Place Terms, for Publisher and for Edition. If you are using different Language values inside Origin
                                                 Information, apply Language to each field and leave Language empty under Origin Information. </p>
                             </xf:hint>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
@@ -839,7 +839,7 @@
                                                 Place Terms, for Publisher and for Edition. If you are using different Script values inside Origin Information,
                                                 apply Script to each field and leave Script empty under Origin Information. </p>
                             </xf:hint>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
@@ -858,7 +858,7 @@
                                                 Transliteration values inside Origin Information, apply Transliteration to each field and leave Transliteration
                                                 empty under Origin Information. </p>
                             </xf:hint>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
@@ -887,7 +887,7 @@
                 <xf:trigger ref=".[mods:edition]" class="add-button">
                     <xf:label class="xforms-group-label-centered">Add Another Edition</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="mods:edition" at="index('edition-repeat')" position="after" origin="instance('insert-templates')/mods:edition"/>
+                        <xf:insert nodeset="mods:edition" at="index('edition-repeat')" position="before" origin="instance('insert-templates')/mods:edition"/>
                     </xf:action>
                 </xf:trigger>
                             <!--issuance add ends-->
@@ -904,7 +904,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:issuance" at="index('issuance-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:issuance" at="index('issuance-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1007,7 +1007,7 @@
                 <xf:trigger ref=".[mods:frequency]" class="add-button">
                     <xf:label class="xforms-group-label-centered">Add Another Frequency</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="mods:frequency" at="index('frequency-repeat')" position="after" origin="instance('insert-templates')/mods:frequency"/>
+                        <xf:insert nodeset="mods:frequency" at="index('frequency-repeat')" position="before" origin="instance('insert-templates')/mods:frequency"/>
                     </xf:action>
                 </xf:trigger>
                             <!--frequency add ends-->
@@ -1015,14 +1015,14 @@
                     <!--frequency ends-->
 
                     <!--dateIssued begins-->
-            <xf:group appearance="full" class="fieldset level-2">
+            <xf:group ref="./mods:dateIssued" appearance="full" class="fieldset level-2">
                 <div class="join">
                     <span class="legend">Date Issued</span>
                     <span class="join-button">
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:dateIssued" at="index('date-issued-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:dateIssued" at="index('date-issued-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1130,7 +1130,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:dateCreated" at="index('date-created-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:dateCreated" at="index('date-created-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1238,7 +1238,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:dateCaptured" at="index('date-captured-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:dateCaptured" at="index('date-captured-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1346,7 +1346,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:dateValid" at="index('date-valid-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:dateValid" at="index('date-valid-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1454,7 +1454,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:dateModified" at="index('date-modified-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:dateModified" at="index('date-modified-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1562,7 +1562,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:copyrightDate" at="index('copyright-date-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:copyrightDate" at="index('copyright-date-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1670,7 +1670,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:dateOther" at="index('date-other-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:dateOther" at="index('date-other-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>

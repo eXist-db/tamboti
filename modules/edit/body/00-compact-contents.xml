@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- insert does not work with name -->
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-c">
     <xf:group>
         <fieldset class="level-1">
             <div class="join">
-                <span class="legend">Subjects</span>
+                <span class="legend">Subject</span>
                 <span class="join-button">
                     <xf:trigger>
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="instance('save-data')/mods:subject" at="index('subject-repeat')" position="after" origin="instance('compact-template')/mods:subject"/>
+                            <xf:insert nodeset="instance('save-data')/mods:subject" at="index('subject-repeat')" position="before" origin="instance('compact-template')/mods:subject"/>
                         </xf:action>
                     </xf:trigger>
                 </span>
@@ -29,7 +28,7 @@
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:topic" at="index('topic-repeat')" position="after" origin="instance('compact-template')/mods:subject/mods:topic"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:topic" at="index('topic-repeat')" position="before" origin="instance('compact-template')/mods:subject/mods:topic"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
@@ -57,7 +56,7 @@
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:geographic" at="index('geographic-repeat')" position="after" origin="instance('compact-template')/mods:subject/mods:geographic"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:geographic" at="index('geographic-repeat')" position="before" origin="instance('compact-template')/mods:subject/mods:geographic"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
@@ -85,7 +84,7 @@
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:temporal" at="index('temporal-repeat')" position="after" origin="instance('compact-template')/mods:subject/mods:temporal"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:temporal" at="index('temporal-repeat')" position="before" origin="instance('compact-template')/mods:subject/mods:temporal"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
@@ -151,7 +150,7 @@
                     <xf:trigger>
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="instance('save-data')/mods:note" at="index('note-repeat')" position="after" origin="instance('compact-template')/mods:note"/>
+                            <xf:insert nodeset="instance('save-data')/mods:note" at="index('note-repeat')" position="before" origin="instance('compact-template')/mods:note"/>
                         </xf:action>
                     </xf:trigger>
                 </span>
@@ -164,7 +163,7 @@
             </div>
             <xf:repeat nodeset="./mods:note" id="note-repeat">
                 <xf:group class="margin-plus">
-                    <xf:select1 ref="./@type" selection="open" class="margin-plus">
+                    <xf:select1 ref="./@type" selection="open">
                         <xf:label>Type<span class="xforms-hint-icon opaque"/>
                         </xf:label>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='note-type-code']/items/item">
@@ -194,7 +193,7 @@
                     <xf:trigger>
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="instance('save-data')/mods:abstract" at="index('abstract-repeat')" position="after" origin="instance('compact-template')/mods:abstract"/>
+                            <xf:insert nodeset="instance('save-data')/mods:abstract" at="index('abstract-repeat')" position="before" origin="instance('compact-template')/mods:abstract"/>
                         </xf:action>
                     </xf:trigger>
                 </span>

@@ -1,111 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <code-table>
-    <code-table-name>language-3-type-sorted-short-code</code-table-name>
+    <code-table-name>language-2-type-short-code</code-table-name>
+    <status>finished</status>
+    <form>closed</form>
+    <basis>http://www.mathguide.de/info/tools/languagecode.html</basis>
+    <description/>
+    <notes>used for xml:lang</notes>
     <items>
         <item>
-            <value/>
-            <label/>
-        </item>
-        <item>
-            <value>ara</value>
             <label>Arabic</label>
+            <value>ar</value>
         </item>
         <item>
-            <value>chi</value>
             <label>Chinese</label>
+            <value>zh</value>
         </item>
         <item>
-            <value>eng</value>
             <label>English</label>
+            <value>en</value>
         </item>
         <item>
-            <value>fre</value>
             <label>French</label>
-            <scriptClassifier>Latin</scriptClassifier>
+            <value>fr</value>
         </item>
         <item>
-            <value>ger</value>
             <label>German</label>
+            <value>de</value>
         </item>
         <item>
-            <value>hin</value>
-            <label>Hindi</label>
-        </item>
-        <item>
-            <value>heb</value>
             <label>Hebrew</label>
+            <value>he</value>
         </item>
         <item>
-            <value>ita</value>
+            <label>Hindi</label>
+            <value>hi</value>
+        </item>
+        <item>
             <label>Italian</label>
+            <value>it</value>
         </item>
+        <!-- J -->
         <item>
-            <value>jpn</value>
             <label>Japanese</label>
+            <value>ja</value>
         </item>
         <item>
-            <value>kor</value>
             <label>Korean</label>
+            <value>ko</value>
         </item>
         <item>
-            <value>lat</value>
             <label>Latin</label>
+            <value>la</value>
         </item>
         <item>
-            <value>mul</value>
-            <label>Multiple languages</label>
-        </item>
-        <item>
-            <value>pli</value>
             <label>Pali</label>
+            <value>pi</value>
         </item>
         <item>
-            <value>per</value>
             <label>Persian</label>
+            <value>fa</value>
         </item>
         <item>
-            <value>pol</value>
             <label>Polish</label>
+            <value>pl</value>
         </item>
         <item>
-            <value>por</value>
             <label>Portuguese</label>
+            <value>pt</value>
         </item>
         <item>
-            <value>rus</value>
             <label>Russian</label>
+            <value>ru</value>
         </item>
         <item>
-            <value>san</value>
             <label>Sanskrit</label>
+            <value>sa</value>
         </item>
         <item>
-            <value>spa</value>
             <label>Spanish</label>
+            <value>es</value>
         </item>
         <item>
-            <value>tgl</value>
             <label>Tagalog</label>
+            <value>tl</value>
         </item>
         <item>
-            <value>tha</value>
             <label>Thai</label>
+            <value>th</value>
         </item>
         <item>
-            <value>tib</value>
             <label>Tibetan</label>
+            <value>bo</value>
         </item>
         <item>
-            <value>tur</value>
             <label>Turkish</label>
+            <value>tr</value>
         </item>
         <item>
-            <value>vie</value>
             <label>Vietnamese</label>
-        </item>
-        <item>
-            <value>zxx</value>
-            <label>No linguistic content</label>
+            <value>vi</value>
         </item>
     </items>
 </code-table>

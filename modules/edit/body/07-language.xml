@@ -12,7 +12,7 @@
                 <xf:trigger>
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="mods:language" at="index('language-repeat')" position="after"/>
+                        <xf:insert nodeset="mods:language" at="index('language-repeat')" position="before"/>
                     </xf:action>
                 </xf:trigger>
             </span>
@@ -85,7 +85,7 @@
                                     <xf:label class="xforms-group-label-centered">Add Language Term</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="language-add-node-hide" ev:event="DOMActivate"/>
-                                        <xf:insert nodeset="mods:languageTerm" at="index('language-repeat')" position="after" origin="instance('insert-templates')/mods:language/mods:languageTerm"/>
+                                        <xf:insert nodeset="mods:languageTerm" at="index('language-repeat')" position="before" origin="instance('insert-templates')/mods:language/mods:languageTerm"/>
                                     </xf:action>
                                 </xf:trigger>
                             </xf:group>
@@ -236,7 +236,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:languageTerm" at="index('languageTerm-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:languageTerm" at="index('languageTerm-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -418,7 +418,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:scriptTerm" at="index('scriptTerm-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:scriptTerm" at="index('scriptTerm-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>

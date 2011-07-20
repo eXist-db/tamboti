@@ -7,7 +7,7 @@
                 <xf:trigger>
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="after" origin="instance('new-instance')/mods:name"/>
+                        <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="before" origin="instance('new-instance')/mods:name"/>
                     </xf:action>
                 </xf:trigger>
             </span>
@@ -27,7 +27,8 @@
             </span>
         </div>
         <xf:repeat nodeset="instance('save-data')/mods:name" id="name-repeat">
-            <xf:group appearance="full" ref=".[not(mods:namePart)] | .[not(mods:displayForm)] | .[not(mods:affiliation)] | .[not(mods:role)] | .[not(mods:description)] | .[not(@type)] | .[not(@authority)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@xlink:href)] | .[not(@displayLabel)] | .[not(@ID)] | .[not(@xml:lang)] | .[not(@authorityURI)] | .[not(@valueURI)] | .[not(@altRepGroup)] | .[not(@nameTitleGroup)] | .[not(@usage)]">
+            <!--<xf:group appearance="full" ref=".[not(mods:namePart)] | .[not(mods:displayForm)] | .[not(mods:affiliation)] | .[not(mods:role)] | .[not(mods:description)] | .[not(@type)] | .[not(@authority)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@xlink:href)] | .[not(@displayLabel)] | .[not(@ID)] | .[not(@xml:lang)] | .[not(@authorityURI)] | .[not(@valueURI)] | .[not(@altRepGroup)] | .[not(@nameTitleGroup)] | .[not(@usage)]">-->
+            <xf:group appearance="full">
                 <xf:switch>
                     <xf:case id="name-add-node-hide">
                         <div class="node-button">
@@ -52,7 +53,7 @@
                                         <xf:label>Add Affiliation</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:affiliation" at="index('name-repeat')" position="after" origin="instance('insert-templates')/mods:name/mods:affiliation"/>
+                                            <xf:insert nodeset="mods:affiliation" at="index('name-repeat')" position="before" origin="instance('insert-templates')/mods:name/mods:affiliation"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -89,7 +90,7 @@
                                         <xf:label>Add Description</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:description" at="index('name-repeat')" position="after" origin="instance('insert-templates')/mods:name/mods:description"/>
+                                            <xf:insert nodeset="mods:description" at="index('name-repeat')" position="before" origin="instance('insert-templates')/mods:name/mods:description"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -98,7 +99,7 @@
                                         <xf:label>Add Display Form</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:displayForm" at="index('name-repeat')" position="after" origin="instance('insert-templates')/mods:name/mods:displayForm"/>
+                                            <xf:insert nodeset="mods:displayForm" at="index('name-repeat')" position="before" origin="instance('insert-templates')/mods:name/mods:displayForm"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -144,7 +145,7 @@
                                         <xf:label>Add Name Part</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:namePart" at="index('namePart-repeat')" position="after" origin="instance('insert-templates')/mods:name/mods:namePart"/>
+                                            <xf:insert nodeset="mods:namePart" at="index('namePart-repeat')" position="before" origin="instance('insert-templates')/mods:name/mods:namePart"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -154,7 +155,7 @@
                                         <xf:label>Add Role</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:role" at="index('name-repeat')" position="after" origin="instance('insert-templates')/mods:name/mods:role"/>
+                                            <xf:insert nodeset="mods:role" at="index('name-repeat')" position="before" origin="instance('insert-templates')/mods:name/mods:role"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -316,7 +317,7 @@
                                 </div>
                             </span>
                         </xf:label>
-                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
                             <xf:label ref="label"/>
                             <xf:value ref="value"/>
                         </xf:itemset>
@@ -331,7 +332,7 @@
                                 </div>
                             </span>
                         </xf:label>
-                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-short-code']/items/item">
                             <xf:label ref="label"/>
                             <xf:value ref="value"/>
                         </xf:itemset>
@@ -346,7 +347,7 @@
                                 </div>
                             </span>
                         </xf:label>
-                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                             <xf:label ref="label"/>
                             <xf:value ref="value"/>
                         </xf:itemset>
@@ -361,7 +362,7 @@
                                 </div>
                             </span>
                         </xf:label>
-                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                             <xf:label ref="label"/>
                             <xf:value ref="value"/>
                         </xf:itemset>
@@ -432,7 +433,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="instance('save-data')/mods:namePart" at="index('namePart-repeat')" position="after" origin="instance('new-instance')/mods:name/mods:namePart"/>
+                                <xf:insert nodeset="instance('save-data')/mods:namePart" at="index('namePart-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:namePart"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -452,7 +453,8 @@
                     </span>
                 </div>
                 <xf:repeat nodeset="./mods:namePart" id="namePart-repeat">
-                    <xf:group appearance="full" ref=".[not(@type)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@xml:lang)]">
+                    <!--<xf:group appearance="full" ref=".[not(@type)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@xml:lang)]">-->
+                    <xf:group appearance="full">
                         <xf:switch>
                             <xf:case id="namePart-add-node-hide">
                                 <div class="node-button">
@@ -547,7 +549,7 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
@@ -562,7 +564,7 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
@@ -577,7 +579,7 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
@@ -592,7 +594,7 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
@@ -618,7 +620,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:role" at="index('role-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:role" at="index('role-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -661,7 +663,7 @@
                                             <xf:label>Add Role Term</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="role-add-node-hide" ev:event="DOMActivate"/>
-                                                <xf:insert nodeset="mods:roleTerm" at="index('role-repeat')" position="after" origin="instance('insert-templates')/mods:name/mods:role/mods:roleTerm"/>
+                                                <xf:insert nodeset="mods:roleTerm" at="index('role-repeat')" position="before" origin="instance('insert-templates')/mods:name/mods:role/mods:roleTerm"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
@@ -676,7 +678,7 @@
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="mods:roleTerm" at="index('roleTerm-repeat')" position="after"/>
+                                        <xf:insert nodeset="mods:roleTerm" at="index('roleTerm-repeat')" position="before"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
@@ -696,7 +698,8 @@
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:roleTerm" id="roleTerm-repeat">
-                            <xf:group appearance="full" ref=".[not(@type)] | .[not(@authority)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@xml:lang)] | .[not(@authorityURI)] | .[not(@valueURI)]">
+                            <!--<xf:group appearance="full" ref=".[not(@type)] | .[not(@authority)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@xml:lang)] | .[not(@authorityURI)] | .[not(@valueURI)]">-->
+                            <xf:group appearance="full">
                                 <xf:switch>
                                     <xf:case id="roleTerm-add-node-hide">
                                         <div class="node-button">
@@ -798,7 +801,6 @@
                                     </xf:case>
                                 </xf:switch>
                             </xf:group>
-                            <!--DLF/Aquifer: RECOMMENDED]-->
                             <xf:group appearance="full">
                                 <xf:select1 ref="./@type">
                                     <xf:label>Type<span class="xforms-help">
@@ -814,7 +816,6 @@
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
-                            <!--DLF/Aquifer: RECOMMENDED-->
                             <xf:group appearance="full" selection="open">
                                 <xf:select1 ref="./@authority">
                                     <xf:label>Authority<span class="xforms-help">
@@ -830,7 +831,6 @@
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
-                                            <!--DLF/Aquifer: N/A]]-->
                             <xf:group appearance="full">
                                 <xf:input ref="./@authorityURI" class="text_50">
                                     <xf:label>Authority URI
@@ -843,8 +843,6 @@
                                     </xf:label>
                                 </xf:input>
                             </xf:group>
-                                            <!--DLF/Aquifer: N/A]]-->
-                                            <!--Cluster: omit-->
                             <xf:group appearance="full">
                                 <xf:input ref="./@valueURI" class="text_50">
                                     <xf:label>Value URI<span class="xforms-help">
@@ -856,9 +854,6 @@
                                     </xf:label>
                                 </xf:input>
                             </xf:group>
-                                            <!--DLF/Aquifer: N/A-->
-                                            <!--Cluster: include?-->
-                                            <!-- NB: while it does seem reasonable to hold that a name occurs in a certain script or transliteration, it does not in most cases make sense to say that a name is in a certain language. What about William the Conqueror? -->
                             <xf:group appearance="full">
                                 <xf:select1 ref="./@lang">
                                     <xf:label>Language<span class="xforms-help">
@@ -868,15 +863,12 @@
                                             </div>
                                         </span>
                                     </xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
                                         <xf:label ref="label"/>
                                         <xf:value ref="value"/>
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
-                                            <!--Schema: added in accordance with 3.4-->
-                                            <!--DLF/Aquifer: NOT RECOMMENDED]-->
-                                            <!--Cluster: omit-->
                             <xf:group appearance="full">
                                 <xf:select1 ref="./@xml:lang">
                                     <xf:label>xml:lang<span class="xforms-help">
@@ -886,15 +878,12 @@
                                             </div>
                                         </span>
                                     </xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                                         <xf:label ref="label"/>
                                         <xf:value ref="value"/>
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
-                                            <!--Schema: added in accordance with 3.4-->
-                                            <!--DLF/Aquifer: N/A-->
-                                            <!--Cluster: include-->
                             <xf:group appearance="full">
                                 <xf:select1 ref="./@script">
                                     <xf:label>Script<span class="xforms-help">
@@ -904,15 +893,12 @@
                                             </div>
                                         </span>
                                     </xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                                         <xf:label ref="label"/>
                                         <xf:value ref="value"/>
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
-                                            <!--Schema: added in accordance with 3.4-->
-                                            <!--DLF/Aquifer: N/A-->
-                                            <!--Cluster: include-->
                             <xf:group appearance="full">
                                 <xf:select1 ref="./@transliteration">
                                     <xf:label>Transliteration<span class="xforms-help">
@@ -922,14 +908,12 @@
                                             </div>
                                         </span>
                                     </xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                         <xf:label ref="label"/>
                                         <xf:value ref="value"/>
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
-                                            <!--DLF/Aquifer: REQUIRED]-->
-                                            <!--Cluster: require-->
                             <xf:group appearance="full" ref=".[@type='code' and @authority ='marcrelator']">
                                 <xf:select1 ref=".">
                                     <xf:label>Role Term (code)<span class="xforms-help">
@@ -957,7 +941,7 @@
                                     </xf:label>
                                 </xf:input>
                             </xf:group>
-                            <xf:group appearance="full" ref=".[not(@type='code')]">
+                            <!--<xf:group appearance="full" ref=".[not(@type='code')]">
                                 <xf:select1 ref="." selection="open">
                                     <xf:label>Role Term (text)<span class="xforms-help">
                                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -971,6 +955,17 @@
                                         <xf:value ref="label"/>
                                     </xf:itemset>
                                 </xf:select1>
+                            </xf:group>-->
+                            <xf:group appearance="full" ref=".[not(@type='code')]">
+                                <xf:input ref="." selection="open">
+                                    <xf:label>Role Term (text)<span class="xforms-help">
+                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='roleTerm-text']/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:input>
                             </xf:group>
                         </xf:repeat>
                     </xf:group>
@@ -984,7 +979,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="instance('save-data')/mods:displayForm" at="index('displayForm-repeat')" position="after" origin="instance('new-instance')/mods:name/mods:displayForm"/>
+                                <xf:insert nodeset="instance('save-data')/mods:displayForm" at="index('displayForm-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:displayForm"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1004,7 +999,8 @@
                     </span>
                 </div>
                 <xf:repeat nodeset="./mods:displayForm" id="displayForm-repeat">
-                    <xf:group appearance="full" ref=".[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@xml:lang)]">
+                    <!--<xf:group appearance="full" ref=".[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@xml:lang)]">-->
+                    <xf:group appearance="full">
                         <xf:switch>
                             <xf:case id="displayForm-add-node-hide">
                                 <div class="node-button">
@@ -1074,15 +1070,12 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--Schema: added in accordance with 3.4-->
-                                <!--DLF/Aquifer: NOT RECOMMENDED]-->
-                                <!--Cluster: omit-->
                     <xf:group appearance="full">
                         <xf:select1 ref="./@xml:lang">
                             <xf:label>xml:lang<span class="xforms-help">
@@ -1092,13 +1085,12 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--DLF/Aquifer: N/A-->
                     <xf:group appearance="full">
                         <xf:select1 ref="./@script">
                             <xf:label>Script<span class="xforms-help">
@@ -1108,13 +1100,12 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--DLF/Aquifer: N/A-->
                     <xf:group appearance="full">
                         <xf:select1 ref="./@transliteration">
                             <xf:label>Transliteration<span class="xforms-help">
@@ -1124,7 +1115,7 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
@@ -1151,7 +1142,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:affiliation" at="index('affiliation-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:affiliation" at="index('affiliation-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1171,7 +1162,8 @@
                     </span>
                 </div>
                 <xf:repeat nodeset="./mods:affiliation" id="affiliation-repeat">
-                    <xf:group appearance="full" ref=".[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@xml:lang)]">
+                    <!--<xf:group appearance="full" ref=".[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@xml:lang)]">-->
+                    <xf:group appearance="full">
                         <xf:switch>
                             <xf:case id="affiliation-add-node-hide">
                                 <div class="node-button">
@@ -1241,15 +1233,12 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--Schema: added in accordance with 3.4-->
-                                <!--DLF/Aquifer: NOT RECOMMENDED]-->
-                                <!--Cluster: omit-->
                     <xf:group appearance="full">
                         <xf:select1 ref="./@xml:lang">
                             <xf:label>xml:lang<span class="xforms-help">
@@ -1259,15 +1248,12 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--Schema: added in accordance with 3.4-->
-                                <!--DLF/Aquifer: N/A-->
-                                <!--Cluster: include-->
                     <xf:group appearance="full">
                         <xf:select1 ref="./@script">
                             <xf:label>Script<span class="xforms-help">
@@ -1277,15 +1263,12 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--Schema: added in accordance with 3.4-->
-                                <!--DLF/Aquifer: N/A-->
-                                <!--Cluster: include-->
                     <xf:group appearance="full">
                         <xf:select1 ref="./@transliteration">
                             <xf:label>Transliteration<span class="xforms-help">
@@ -1295,7 +1278,7 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
@@ -1326,7 +1309,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:name" at="index('name-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:name" at="index('name-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1334,7 +1317,7 @@
                         <xf:trigger>
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:description" at="index('description-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:description" at="index('description-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1348,7 +1331,8 @@
                             <!--description input begins-->
                             <!--description repeat begins-->
                 <xf:repeat nodeset="./mods:description" id="description-repeat">
-                    <xf:group appearance="full" ref=".[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@xml:lang)]">
+                    <!--<xf:group appearance="full" ref=".[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@xml:lang)]">-->
+                    <xf:group appearance="full">
                         <xf:switch>
                             <xf:case id="description-add-node-hide">
                                 <div class="node-button">
@@ -1420,15 +1404,12 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--Schema: added in accordance with 3.4-->
-                                <!--DLF/Aquifer: NOT RECOMMENDED]-->
-                                <!--Cluster: omit-->
                     <xf:group appearance="full">
                         <xf:select1 ref="./@xml:lang">
                             <xf:label>xml:lang<span class="xforms-help">
@@ -1438,15 +1419,12 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--Schema: added in accordance with 3.4-->
-                                <!--DLF/Aquifer: N/A-->
-                                <!--Cluster: include-->
                     <xf:group appearance="full">
                         <xf:select1 ref="./@script">
                             <xf:label>Script<span class="xforms-help">
@@ -1456,15 +1434,12 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                                <!--Schema: added in accordance with 3.4-->
-                                <!--DLF/Aquifer: N/A-->
-                                <!--Cluster: include-->
                     <xf:group appearance="full">
                         <xf:select1 ref="./@transliteration">
                             <xf:label>Transliteration<span class="xforms-help">
@@ -1474,7 +1449,7 @@
                                     </div>
                                 </span>
                             </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>

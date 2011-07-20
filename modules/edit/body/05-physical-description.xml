@@ -8,7 +8,7 @@
                 <xf:trigger>
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="mods:physicalDescription" at="index('physicalDescription-repeat')" position="after"/>
+                        <xf:insert nodeset="mods:physicalDescription" at="index('physicalDescription-repeat')" position="before"/>
                     </xf:action>
                 </xf:trigger>
             </span>
@@ -62,42 +62,42 @@
                                     <xf:label class="xforms-group-label-centered">Add Form</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="physicalDescription-add-node-hide" ev:event="DOMActivate"/>
-                                        <xf:insert nodeset="mods:form" at="index('physicalDescription-repeat')" position="after" origin="instance('insert-templates')/mods:physicalDescription/mods:form"/>
+                                        <xf:insert nodeset="mods:form" at="index('physicalDescription-repeat')" position="before" origin="instance('insert-templates')/mods:physicalDescription/mods:form"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(mods:reformattingQuality)]" class="add-button">
                                     <xf:label class="xforms-group-label-centered">Add Reformatting Quality</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="physicalDescription-add-node-hide" ev:event="DOMActivate"/>
-                                        <xf:insert nodeset="mods:reformattingQuality" at="index('physicalDescription-repeat')" position="after" origin="instance('insert-templates')/mods:physicalDescription/mods:reformattingQuality"/>
+                                        <xf:insert nodeset="mods:reformattingQuality" at="index('physicalDescription-repeat')" position="before" origin="instance('insert-templates')/mods:physicalDescription/mods:reformattingQuality"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(mods:internetMediaType)]" class="add-button">
                                     <xf:label class="xforms-group-label-centered">Add Internet MediaType</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="physicalDescription-add-node-hide" ev:event="DOMActivate"/>
-                                        <xf:insert nodeset="mods:internetMediaType" at="index('physicalDescription-repeat')" position="after" origin="instance('insert-templates')/mods:physicalDescription/mods:internetMediaType"/>
+                                        <xf:insert nodeset="mods:internetMediaType" at="index('physicalDescription-repeat')" position="before" origin="instance('insert-templates')/mods:physicalDescription/mods:internetMediaType"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(mods:extent)]" class="add-button">
                                     <xf:label class="xforms-group-label-centered">Add Extent</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="physicalDescription-add-node-hide" ev:event="DOMActivate"/>
-                                        <xf:insert nodeset="mods:extent" at="index('physicalDescription-repeat')" position="after" origin="instance('insert-templates')/mods:physicalDescription/mods:extent"/>
+                                        <xf:insert nodeset="mods:extent" at="index('physicalDescription-repeat')" position="before" origin="instance('insert-templates')/mods:physicalDescription/mods:extent"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(mods:digitalOrigin)]" class="add-button">
                                     <xf:label class="xforms-group-label-centered">Add Digital Origin</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="physicalDescription-add-node-hide" ev:event="DOMActivate"/>
-                                        <xf:insert nodeset="mods:digitalOrigin" at="index('physicalDescription-repeat')" position="after" origin="instance('insert-templates')/mods:physicalDescription/mods:digitalOrigin"/>
+                                        <xf:insert nodeset="mods:digitalOrigin" at="index('physicalDescription-repeat')" position="before" origin="instance('insert-templates')/mods:physicalDescription/mods:digitalOrigin"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(mods:note)]" class="add-button">
                                     <xf:label class="xforms-group-label-centered">Add Note</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="physicalDescription-add-node-hide" ev:event="DOMActivate"/>
-                                        <xf:insert nodeset="mods:note" at="index('physicalDescription-repeat')" position="after" origin="instance('insert-templates')/mods:physicalDescription/mods:note"/>
+                                        <xf:insert nodeset="mods:note" at="index('physicalDescription-repeat')" position="before" origin="instance('insert-templates')/mods:physicalDescription/mods:note"/>
                                     </xf:action>
                                 </xf:trigger>
                             </xf:group>
@@ -174,7 +174,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:form" at="index('form-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:form" at="index('form-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -246,7 +246,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:reformattingQuality" at="index('reformattingQuality-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:reformattingQuality" at="index('reformattingQuality-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -299,7 +299,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:internetMediaType" at="index('internetMediaType-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:internetMediaType" at="index('internetMediaType-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -346,7 +346,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:extent" at="index('extent-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:extent" at="index('extent-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -389,7 +389,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:digitalOrigin" at="index('digitalOrigin-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:digitalOrigin" at="index('digitalOrigin-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -436,7 +436,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:digitalOrigin" at="index('digitalOrigin-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:digitalOrigin" at="index('digitalOrigin-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -444,7 +444,7 @@
                         <xf:trigger>
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:note" at="index('physical-description-note-repeat')" position="after"/>
+                                <xf:insert nodeset="mods:note" at="index('physical-description-note-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>

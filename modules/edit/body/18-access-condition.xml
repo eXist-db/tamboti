@@ -9,7 +9,7 @@
                 <xf:trigger>
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="mods:accessCondition" at="index('accessCondition-repeat')" position="after"/>
+                        <xf:insert nodeset="mods:accessCondition" at="index('accessCondition-repeat')" position="before"/>
                     </xf:action>
                 </xf:trigger>
             </span>
@@ -116,7 +116,7 @@
                                         <xf:label class="xforms-group-label-centered">Add Publication Type</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="e:template" at="index('extension-repeat')" position="after"
+                                            <xf:insert nodeset="e:template" at="index('extension-repeat')" position="before"
                                                 origin="instance('insert-templates')/e:template"/>
                                         </xf:action>
                                     </xf:trigger>
