@@ -3,7 +3,6 @@
 
 /*colour scheme
 #EDF5FA very pale blue
-
 */
 
 /*temporary stuff begins*/
@@ -35,7 +34,8 @@
 body
     {
   border-color:#3681B3;
-  background-color:#FFFFFF !important;/*overrules xsltforms.css*/
+  font-size:75%;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #page-head {
@@ -75,7 +75,7 @@ body
 }
 
 .container {
-    /*overrules xsltforms.css*/
+    margin: 0 auto;
     padding-top:0.5em !important;
     padding-right:1em !important;
     padding-top:0.5em !important;
@@ -84,23 +84,48 @@ body
     border-color:#CCCCCC !important;/*overrules xsltforms.css*/
     margin-bottom:1em !important;/*overrules xsltforms.css*/
     width:1150px !important;/*overrules xsltforms.css*/
+    -moz-border-radius: 10px 10px 10px 10px;
+	border: 1px solid #CCCCCC;
 }
 
+.content {
+    margin-left:.75em;
+}
 /*main page elements end*/
 
 /*tabs begin*/
-
-.top-tabs {
-    margin-top:1em;
-}
 
 .tabs {
     margin-bottom:.5em;
 }
 
-table {
-    margin-bottom:.5em !important;
+.tabs a {
+    text-decoration: none;
 }
+
+.top-tabs {
+    margin-top:1em;
+    margin-bottom: .25em;
+    width: 100%;
+    margin-top: .75em;
+}
+
+.bottom-tabs {
+    width: 100%;
+    margin-bottom: .5em;
+}
+
+
+table { 
+    margin-bottom:.5em !important;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+table, td, th {
+    vertical-align: middle;
+}
+
 
 .tabs tr td 
     {
@@ -191,6 +216,12 @@ button {
 
 /*boxes begin*/
 
+fieldset {
+	padding:1.4em !important;
+	margin:0 0 1.5em 0;
+	border:1px solid #BBBBBB;
+}
+
 .fieldset,/*delete*/
 fieldset,
 .xforms-repeat-item,
@@ -198,8 +229,6 @@ fieldset,
 {
     border-color:#CCCCCC;
 }
-
-.fieldset .level-3  .xforms-group {margin-bottom}
 
 .node-adds, 
 .node-adds-title, 
@@ -215,15 +244,6 @@ fieldset,
 
 .node-adds .xforms-group button {
     width: 15em;
-}
-
-fieldset .level-1,
-fieldset .level-2,
-fieldset .level-3,
-fieldset .level-4
-{
-    margin-top:0;
-    margin-bottom:0;
 }
 
 .fieldset .xforms-repeat-item {
@@ -256,7 +276,31 @@ fieldset,
 
 /*unsorted begins*/
 
-.join {
+caption, th, td {
+    font-weight: normal;
+    padding: .5em 1em .5em .5em;
+}
+
+label {
+	color: gray;
+	white-space: nowrap;
+	font-weight: bold;
+}
+
+input[type="text"], 
+input[type="password"], 
+input.text, 
+input.title, 
+textarea, 
+select 
+	{
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+    border: 1px solid #BBBBBB;
+    padding:.2em; /*to give a little less cramped input field*/
+}
+
+.join { /*rename: label-box*/
     margin-bottom:.75em;
     font-weight:bold;
     border-style:solid;
@@ -265,7 +309,7 @@ fieldset,
     padding:.3em 1em .3em 1em;
     width:15em;
     height:1.5em;
-    margin-top:-2em; /*to make the fieldset border hit the centre of the box*/
+    margin-top:-2.5em; /*to make the fieldset border hit the centre of the box*/
     margin-left:1.55em;
     margin-bottom:.75em;
     text-align:center;    
@@ -275,10 +319,6 @@ fieldset,
 {
     float:left;
 }
-
-input    {
-    padding:.2em; /*to give a little less cramped input field*/    
-    }
 
 .block-form .xforms-group-label-centered { /*button text*/
     display:inline-block;
@@ -348,7 +388,7 @@ select .xforms-value {
     height:2em;
     width:2em;
     padding:0;
-    1margin-bottom:1em;
+    /*margin-bottom:1em;*/
 }
 
 .node-button .xforms-control button .xforms-label {

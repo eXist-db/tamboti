@@ -552,6 +552,16 @@
         </item>
         <item>
             <help>
+                <p>Identifies what type of note is recorded.</p>
+            </help>
+            <hint/>
+            <value>note-type</value>
+            <local-name>type</local-name>
+            <parent>note</parent>
+            <tab-id>compact-c</tab-id>
+        </item>
+        <item>
+            <help>
                 <p> Enter here information about the publication's origin, including its place of origin or publication, its publisher, and its date of issue or
                     date of copyright. </p>
                 <p> More input options can be found on the Origin Info tab on the Citation Forms.</p>
