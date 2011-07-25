@@ -353,7 +353,7 @@ declare function mods:format-subjects($entry as element(), $global-transliterati
         then concat('(', ($subject/@authority/string()), ')') 
         else ()
     return
-    <tr>
+    <tr xmlns="http://www.w3.org/1999/xhtml">
     <td class="label subject">Subject {$authority}</td>
     <td class="record"><table class="subject">
     {
@@ -1305,7 +1305,7 @@ declare function mods:retrieve-mads-names($name as element(), $pos as xs:int, $c
 declare function mods:retrieve-names($entry as element()*, $caller as xs:string, $global-transliteration as xs:string) {
     for $name at $pos in $entry/mods:name
     return
-    <span class="name">{mods:retrieve-name($name, $pos, $caller, $global-transliteration)}</span>
+    <span xmlns="http://www.w3.org/1999/xhtml" class="name">{mods:retrieve-name($name, $pos, $caller, $global-transliteration)}</span>
 };
 
 (:~
@@ -1358,7 +1358,7 @@ declare function mods:format-multiple-names($entry as element()*, $caller as xs:
 	                    then functx:substring-before-last-match($names[$nameCount], '\.')
 	                    else $names[$nameCount]
                         )
-    return <span class="name">{normalize-space($formatted)}</span>
+    return <span xmlns="http://www.w3.org/1999/xhtml" class="name">{normalize-space($formatted)}</span>
 };
 
 (: ### <typeOfResource> begins ### :)
@@ -1436,7 +1436,7 @@ declare function mods:get-title-translated($entry as element(mods:mods), $titleI
         else ()
     return
         if ($titleInfo) 
-        then <span class="title-translated">{string-join(($titleInfo/mods:title/string(), $titleInfo/mods:subTitle/string()), ' ') }</span>
+        then <span xmlns="http://www.w3.org/1999/xhtml" class="title-translated">{string-join(($titleInfo/mods:title/string(), $titleInfo/mods:subTitle/string()), ' ') }</span>
         else ()
 };
 
@@ -1553,18 +1553,18 @@ declare function mods:get-short-title($entry as element()) {
         ,
         (
         if ($titleTransliteration) 
-        then (<span class="title">{$titleTransliterationFormat}</span>, ' ')
+        then (<span xmlns="http://www.w3.org/1999/xhtml" class="title">{$titleTransliterationFormat}</span>, ' ')
         else ()
         , 
         if ($titleTransliteration)
         (:If there is a transliteration, the title in original script should not be italisised.:)
-        then <span class="title-no-italics">{$titleFormat}</span>
+        then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">{$titleFormat}</span>
         else
         	if ($quotes)
         	(:then <span class="title-no-italics">{replace(string-join($titleFormat, ''), ' :', ':')}</span>:)
         	(:then <span class="title-no-italics">{functx:trim(string-join($titleFormat, ''))}</span>:)
-        	then <span class="title-no-italics">{$titleFormat}</span>
-        	else <span class="title">{string-join($titleFormat, '')}</span>
+        	then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">{$titleFormat}</span>
+        	else <span xmlns="http://www.w3.org/1999/xhtml" class="title">{string-join($titleFormat, '')}</span>
         ,
         if ($quotes and $titleTranslation) 
         then '”'
@@ -1574,7 +1574,7 @@ declare function mods:get-short-title($entry as element()) {
 	        else ''
         ,
         if ($titleTranslation)
-        then <span class="title"> ({$titleTranslationFormat})</span>
+        then <span xmlns="http://www.w3.org/1999/xhtml" class="title"> ({$titleTranslationFormat})</span>
         else ()
         ,
         if ($quotes and $titleTranslation) 
@@ -1588,7 +1588,7 @@ declare function mods:get-short-title($entry as element()) {
 declare function mods:title-full($titleInfo as element(mods:titleInfo)) {
 if ($titleInfo)
     then
-    <tr>
+    <tr xmlns="http://www.w3.org/1999/xhtml">
         <td class="label">
         {
             if (($titleInfo/@type = 'translated') and not($titleInfo/@transliteration)) 
@@ -1748,13 +1748,13 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
 	        then
 	            if ($caller = 'hitlist')
 	            then
-	                <span class="relatedItem-span">
+	                <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">
 	                	<span class="relatedItem-record">{mods:format-related-item($relatedItem)}</span>
 	                </span>
 	            else
 	                if ($caller = 'detail' and string($xlink))
 	                then
-	                    <tr class="relatedItem-row">
+	                    <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
 							<td class="url label relatedItem-label">
 	                            <a href="?filter=ID&amp;value={$xlink}">&lt;&lt; In:</a>
 	                        </td>
@@ -1765,7 +1765,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
 	                else
 	                    if ($caller = 'detail')
 	                    then
-	                    <tr class="relatedItem-row">
+	                    <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
 							<td class="url label relatedItem-label">In:</td>
 	                        <td class="relatedItem-record">
 								<span class="relatedItem-span">{mods:format-related-item($relatedItem)}</span>
@@ -1776,7 +1776,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
 	        else
 	            if ($caller = 'detail' and string($xlink))
 	            then
-	                <tr class="relatedItem-row">
+	                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
 						<td class="url label relatedItem-label">
 	                        <a href="?filter=ID&amp;value={$xlink}">&lt;&lt; {$labelDisplayed}</a>
 	                    </td>
@@ -1787,7 +1787,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
 	            else
 	                if ($caller = 'detail')
 	                then
-	                <tr class="relatedItem-row">
+	                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
 	                    <td class="url label relatedItem-label">
 	                        {$type}
 	                    </td>
@@ -1844,7 +1844,7 @@ declare function mods:names-full($entry as element(), $global-transliteration) {
         let $names := $entry/*:name[@type = 'personal' or @type = 'corporate' or @type = 'family' or not(@type)]
         for $name in $names
         return
-                <tr><td class="label">
+                <tr xmlns="http://www.w3.org/1999/xhtml"><td class="label">
                     {
                     mods:get-roles-for-detail-view($name)
                     }
@@ -1871,7 +1871,7 @@ declare function mods:names-full($entry as element(), $global-transliteration) {
 declare function mods:simple-row($data as item()?, $label as xs:string) as element(tr)? {
     for $d in $data
     return
-        <tr>
+        <tr xmlns="http://www.w3.org/1999/xhtml">
             <td class="label">{$label}</td>
             <td class="record">{string($d)}</td>
         </tr>
@@ -1887,7 +1887,7 @@ declare function mods:simple-row($data as item()?, $label as xs:string) as eleme
 declare function mods:url($entry as element()) as element(tr)* {
     for $url in $entry/mods:location/mods:url
     return
-        <tr>
+        <tr xmlns="http://www.w3.org/1999/xhtml">
             <td class="label"> 
             {
                 if ($url/@displayLabel)
@@ -1905,7 +1905,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
 	let $entry := mods:remove-parent-with-missing-required-node($entry)
 	let $global-transliteration := $entry/mods:extension/e:transliterationOfResource/text()
 	return
-    <table class="biblio-full">
+    <table xmlns="http://www.w3.org/1999/xhtml" class="biblio-full">
     {
     <tr>
         <td class="collection-label">In Folder:</td>
@@ -2193,7 +2193,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         (: The periodical, edited volume or series that the primary publication occurs in. :)
         (:if ($entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:extent or $entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:detail/mods:number/text()):)
         if ($entry/mods:relatedItem[@type=('host','series')])
-        then <span class="relatedItem-span">{mods:get-related-items($entry, 'hitlist')}</span>
+        then <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods:get-related-items($entry, 'hitlist')}</span>
         else ()
         ,
         (: The url of the primary publication. :)
@@ -2205,6 +2205,6 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         else ()
         )
     return
-        mods:clean-up-punctuation(<span class="record">{$format}</span>)
+        mods:clean-up-punctuation(<span xmlns="http://www.w3.org/1999/xhtml" class="record">{$format}</span>)
         (:$format:)
 };
