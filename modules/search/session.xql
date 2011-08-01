@@ -16,11 +16,12 @@ import module namespace jquery="http://exist-db.org/xquery/jquery" at "resource:
 import module namespace security="http://exist-db.org/mods/security" at "security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "sharing.xqm";
 import module namespace clean="http:/exist-db.org/xquery/mods/cleanup" at "cleanup.xql";
-
+import module namespace kwic="http://exist-db.org/xquery/kwic" at "resource:org/exist/xquery/lib/kwic.xql";
+    
 declare namespace bs="http://exist-db.org/xquery/biblio/session";
 declare namespace functx = "http://www.functx.com";
 
-declare option exist:serialize "media-type=application/xhtml+xml";
+declare option exist:serialize "method=xhtml media-type=application/xhtml+xml enforce-xhtml=yes";
 
 declare variable $bs:USER := security:get-user-credential-from-session()[1];
 
@@ -51,6 +52,69 @@ declare function bs:get-item-uri($item-id as xs:string) {
     )
 };
 
+declare function bs:mods-list-view($item as node(), $id as xs:string, $currentPos as xs:int, $saved as xs:boolean) {
+    <tr xmlns="http://www.w3.org/1999/xhtml" class="list">
+        <td class="list-number">{$currentPos}</td>
+        {
+        <td class="actions-cell">
+            <a id="save_{$id}" href="#{$currentPos}" class="save">
+                <img title="Save Record to My List" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+            </a>
+        </td>
+        }
+        <td class="list-type">
+            <img title="{$item/mods:typeOfResource/string()}" src="theme/images/{mods:return-type(string($currentPos), $item)}.png"/>
+        </td>
+        {
+        <td class="pagination-toggle">
+            <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
+            <a>
+            {
+                let $clean := clean:cleanup($item)
+                return
+                    mods:format-list-view(string($currentPos), $clean)
+                    (: Originally $item was passed to mods:format-list-view() - was there a reason for that? Performance? :)
+            }
+            </a>
+        </td>
+        }
+    </tr>
+};
+
+declare function bs:plain-list-view($item as node(), $id as xs:string, $currentPos as xs:int, $saved as xs:boolean) {
+    let $kwic := kwic:summarize($item/field[1], <config xmlns="" width="40"/>)
+    let $titleField := ft:get-field($item/@uri, "Title")
+    let $title := if ($titleField) then $titleField else replace($item/@uri, "^.*/([^/]+)$", "$1")
+    return
+        <tr xmlns="http://www.w3.org/1999/xhtml" class="list">
+            <td class="list-number">{$currentPos}</td>
+            {
+            <td class="actions-cell">
+                <a id="save_{$id}" href="#{$currentPos}" class="save">
+                    <img title="Save Record to My List" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+                </a>
+            </td>
+            }
+            <td class="list-type">
+                <a href="{substring($item/@uri, 2)}" target="_new"><img src="theme/images/file_pdf.png"/></a>
+            </td>
+            {
+            <td class="pagination-toggle">
+                <h3>{$title}</h3>
+                { $kwic }
+            </td>
+            }
+        </tr>
+};
+
+declare function bs:list-view($item as node(), $id as xs:string, $currentPos as xs:int, $saved as xs:boolean) {
+    typeswitch ($item)
+        case element(mods:mods) return
+            bs:mods-list-view($item, $id, $currentPos, $saved)
+        default return
+            bs:plain-list-view($item, $id, $currentPos, $saved)
+};
+
 declare function bs:retrieve($start as xs:int, $count as xs:int) {
     let $cached := session:get-attribute("mods:cached")
     let $stored := session:get-attribute("mods-personal-list")
@@ -68,9 +132,9 @@ declare function bs:retrieve($start as xs:int, $count as xs:int) {
             let $currentPos := $start + $pos - 1
             (: Why does $currentPos have a final "."? Should be removed. :)
             let $id := concat(document-uri(root($item)), '#', util:node-id($item))
-            let $saved := $stored//*[@id = $id]
+            let $saved := exists($stored//*[@id = $id])
             return
-            if ($count eq 1) then
+            if ($count eq 1 and $item instance of element(mods:mods)) then
                 <tr class="detail">
                     <td class="detail-number">{$currentPos}</td>
                     {
@@ -127,33 +191,7 @@ declare function bs:retrieve($start as xs:int, $count as xs:int) {
                     }
                 </tr>
             else 
-                <tr class="list">
-                    <td class="list-number">{$currentPos}</td>
-                    {
-                    <td class="actions-cell">
-                        <a id="save_{$id}" href="#{$currentPos}" class="save">
-                            <img title="Save Record to My List" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
-                        </a>
-                    </td>
-                    }
-                    <td class="list-type">
-                        <img title="{$item/mods:typeOfResource/string()}" src="theme/images/{mods:return-type(string($currentPos), $item)}.png"/>
-                    </td>
-                    {
-                    <td class="pagination-toggle">
-                        <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
-                        <a>
-                        {
-                            let $clean := clean:cleanup($item)
-                                return
-                                    mods:format-list-view(string($currentPos), $clean)
-                                    (: Originally $item was passed to mods:format-list-view() - was there a reason for that? Performance? :)
-                        }
-                        </a>
-                    </td>
-                    }
-                </tr>
-
+                bs:list-view($item, $id, $currentPos, $saved)
         }
         </table>
 };

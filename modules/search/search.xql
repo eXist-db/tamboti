@@ -83,8 +83,9 @@ declare variable $biblio:FIELDS :=
 		<field name="Abstract">mods:mods[ft:query(mods:abstract, '$q', $options)]</field>
         <field name="Note">mods:mods[ft:query(mods:note, '$q', $options)]</field>
         <field name="Subject">mods:mods[ft:query(mods:subject, '$q', $options)]</field>
-        <field name="All">mods:mods[ft:query(.//*, '$q', $options)]</field>
+        <field name="All">(mods:mods[ft:query(.//*, '$q', $options)] union ft:search("page:$q"))</field>
         <field name="ID">mods:mods[@ID = '$q']</field>
+        <field name="FullText">ft:search("page:$q")</field>
 	</fields>;
 
 (:
@@ -480,16 +481,24 @@ declare function biblio:query-history() {
 declare function biblio:eval-query($query-as-xml as element(query)?, $sort0 as item()?) as xs:int {
     if ($query-as-xml) then
         let $query := string-join(biblio:generate-query($query-as-xml), '')
-        (:let $log := util:log("DEBUG", ("QUERY: ", $query)):)
+        let $log := util:log("DEBUG", ("QUERY: ", $query))
         let $sort := if ($sort0) then $sort0 else session:get-attribute("sort")
         let $results := biblio:evaluate-query($query, $sort)
+        let $processed :=
+            for $item in $results
+            return
+                typeswitch ($item)
+                    case element(results) return
+                        $item/search
+                    default return
+                        $item
         (:~ Take the query results and store them into the HTTP session. :)
-        let $null := session:set-attribute('mods:cached', $results)
+        let $null := session:set-attribute('mods:cached', $processed)
         let $null := session:set-attribute('query', $query-as-xml)
         let $null := session:set-attribute('sort', $query-as-xml)
         let $null := biblio:add-to-history($query-as-xml)
         return
-            count($results)
+            count($processed)
     else
         0
 };
@@ -1094,6 +1103,7 @@ declare function biblio:process-request($id as xs:string?, $collection as xs:str
         $output
 };
 
+util:log("ERROR", ("search.xql called")),
 session:create(),
 (: We receive an HTML template as input :)
 let $input := request:get-data()

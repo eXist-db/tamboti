@@ -115,6 +115,13 @@ else if (starts-with($exist:path, "/resources")) then
             </forward>
         </dispatch>
 
+else if (starts-with($exist:path, "/db")) then
+    let $resource := concat("/rest", $exist:path)
+    return
+        <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+            <forward url="{$resource}" absolute="yes"/>
+        </dispatch>
+        
 else
     (: everything else is passed through :)
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">

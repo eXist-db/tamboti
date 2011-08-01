@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <collection xmlns="http://exist-db.org/collection-config/1.0">
     <index xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mods="http://www.loc.gov/mods/v3">
         <fulltext default="none" attributes="no"/>
@@ -31,6 +32,7 @@
             <text qname="mods:dateIssued"/>
             <text qname="mods:dateCaptured"/>
             <text qname="mods:copyrightDate"/>
+            <fieldType id="page" store="yes"/>
         </lucene>
         <create qname="@ID" type="xs:string"/>
         <create qname="@type" type="xs:string"/>
