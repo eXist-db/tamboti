@@ -120,27 +120,27 @@ declare function mods:clean-up-punctuation($element as node()) as node() {
 :)
 declare function mods:get-language-label($language as item()*) as xs:string* {
         let $languageTerm :=
-            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[value = $language]/label
+            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:value = $language]/*:label
             return
                 if ($languageTerm)
                 then $languageTerm
                 else
-                    let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTwo = $language]/label
+                    let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTwo = $language]/*:label
                     return
                         if ($languageTerm)
                         then $languageTerm
                         else
-                            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTerm = $language]/label
+                            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTerm = $language]/*:label
                             return
                                 if ($languageTerm)
                                 then $languageTerm
                                 else
-                                    let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[upper-case(label) = $language/upper-case(label)]/label
+                                    let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) = $language/upper-case(*:label)]/*:label
                                     return
                                         if ($languageTerm)
                                         then $languageTerm
                                         else
-                                            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[upper-case(label) = upper-case($language)]/label
+                                            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) = upper-case($language)]/*:label
                                             return
                                                 if ($languageTerm)
                                                 then $languageTerm
@@ -156,12 +156,12 @@ declare function mods:get-language-label($language as item()*) as xs:string* {
 :)
 declare function mods:get-script-term($language as node()*) as xs:string* {
         let $scriptTerm :=
-            let $scriptTerm := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/code-table/items/item[value = $language/mods:scriptTerm[@authority]]/label
+            let $scriptTerm := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/*:code-table/*:items/*:item[*:value = $language/mods:scriptTerm[@authority]]/*:label
             return
                 if ($scriptTerm)
                 then $scriptTerm
                 else
-                    let $scriptTerm := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/code-table/items/item[value = $language/mods:scriptTerm]/label
+                    let $scriptTerm := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/*:code-table/*:items/*:item[*:value = $language/mods:scriptTerm]/*:label
                     return
                         if ($scriptTerm)
                         then $scriptTerm
@@ -237,14 +237,14 @@ declare function mods:language-of-cataloging($language as element(mods:languageO
 declare function mods:get-role-label-for-detail-view($roleTerm as item()?) as item()? {        
         let $roleLabel :=
             (: Is the roleTerm a role label? :)
-            let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/code-table/items/item[upper-case(label) = upper-case($roleTerm)]/label
+            let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) = upper-case($roleTerm)]/*:label
             (: Prefer the label proper, since it contains the form presented in the detail view, e.g. "Editor" instead of "edited by". :)
             return
                 if ($roleLabel)
                 then $roleLabel
                 else
                     (: Is the roleTerm a role term @code? :)
-                    let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/code-table/items/item[value = $roleTerm]/label
+                    let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[*:value = $roleTerm]/*:label
                     return
                         if ($roleLabel)
                         then $roleLabel
@@ -296,24 +296,24 @@ declare function mods:get-role-terms-for-detail-view($role as element()*) as ite
 :)
 declare function mods:get-role-label-for-list-view($roleTerm as xs:string*) as xs:string* {
         let $roleLabel :=
-            let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/code-table/items/item[upper-case(label) = upper-case($roleTerm)]/labelSecondary
+            let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) = upper-case($roleTerm)]/*:labelSecondary
             (: Prefer labelSecondary, since it contains the form presented in the list view output, e.g. "edited by" instead of "editor". :)
             return
                 if ($roleLabel)
                 then $roleLabel
                 else
-                    let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/code-table/items/item[value = $roleTerm]/labelSecondary
+                    let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[*:value = $roleTerm]/*:labelSecondary
                     return
                         if ($roleLabel)
                         then $roleLabel
                         else
-                            let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/code-table/items/item[upper-case(label) = upper-case($roleTerm)]/label
+                            let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) = upper-case($roleTerm)]/*:label
                             (: If there is no labelSecondary, take the label. :)
                             return
                                 if ($roleLabel)
                                 then $roleLabel
                                 else
-                                    let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/code-table/items/item[value = $roleTerm]/label
+                                    let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[*:value = $roleTerm]/*:label
                                     return
                                         if ($roleLabel)
                                         then $roleLabel
@@ -328,18 +328,15 @@ declare function mods:add-part($part, $sep as xs:string) {
     else concat(string-join($part, ' '), $sep)
 };
 
-declare function mods:get-publisher($publishers as element(mods:publisher)*) as node()* {
-        for $publisher in $publishers
-        let $order := 
-            if ($publisher[@transliteration]) 
-            then 0 
-            else 1
-        order by $order
-        return
-        	(:NB: This is an expansion of the MODS schema.:)
-            if ($publisher/mods:name)
-            then mods:retrieve-name($publisher/mods:name, 1, 'secondary', '')
-            else $publisher
+declare function mods:get-publisher($publishers as element(mods:publisher)*) as item()* {
+        string-join(
+	        for $publisher in $publishers
+	        return	
+	        	(: NB: Using name here is an expansion of the MODS schema.:)
+	            if ($publisher/mods:name)
+	            then mods:retrieve-name($publisher/mods:name, 1, 'secondary', '')
+	            else $publisher
+        , ' and ')
 };
 
 
@@ -539,10 +536,10 @@ declare function mods:get-place($places as element(mods:place)*) as xs:string? {
 	                )
 	            else
 	                if ($placeTerm[@authority = 'marccountry']/text()) 
-	                then doc(concat($config:edit-app-root, '/code-tables/marc-country-codes.xml'))/code-table/items/item[value = $placeTerm]/label
+	                then doc(concat($config:edit-app-root, '/code-tables/marc-country-codes.xml'))/*:code-table/*:items/*:item[*:value = $placeTerm]/*:label
 	                else 
 	                    if ($placeTerm[@authority = 'iso3166']/text()) 
-	                    then doc(concat($config:edit-app-root, '/code-tables/iso3166-country-codes.xml'))/code-table/items/item[value = $placeTerm]/label
+	                    then doc(concat($config:edit-app-root, '/code-tables/iso3166-country-codes.xml'))/*:code-table/*:items/*:item[*:value = $placeTerm]/*:label
 	                    else $place/mods:placeTerm[not(@type)]/text(),
         ' ')
     ,
@@ -622,7 +619,12 @@ declare function mods:get-part-and-origin($entry as element()) {
     (: contains: number, caption, title. :)
     (: has: type, level. :)
         let $issue := $detail[@type=('issue', 'number')]/mods:number/text()
-        let $volume := $detail[@type='volume']/mods:number/text()
+        let $volume := 
+        	if ($detail[@type='volume']/mods:number/text())
+        	then $detail[@type='volume']/mods:number/text()
+			(: NB: to accommodate erroneous Zotero export. Only number is valid. :)
+        	else $detail[@type='volume']/mods:text/text()
+        (:NB: Does $page exist?:)
         let $page := $detail[@type='page']/mods:number/text()
         (: $page resembles list. :)
     
@@ -636,9 +638,6 @@ declare function mods:get-part-and-origin($entry as element()) {
 	    if ($part/mods:date) 
 	    then $part/mods:date
 	    else $dateOriginInfo
-(:	    let $log := util:log("DEBUG", ("##$datePart): ", mods:get-date($datePart)))
-	    let $log := util:log("DEBUG", ("##$place): ", mods:get-place($place)))
-	    let $log := util:log("DEBUG", ("##$publisher): ", mods:get-publisher($publisher))):)
     (: contains no subelements. :)
     (: has: encoding; point; qualifier. :)
     (: handled by mods:get-date(). :)
@@ -649,7 +648,8 @@ declare function mods:get-part-and-origin($entry as element()) {
     
     return
         (: If there is a part with issue information and a date, i.e. if the publication is an article in a periodical. :)
-        if ($datePart and ($volume or $issue)) 
+        (: NB: "not($place or $publisher" is a little risky since full entries of periodicals have these elements. :)
+        if ($datePart and ($volume or $issue or $extent or $page) and not($place or $publisher)) 
         then 
             concat(
             ' '
@@ -657,7 +657,7 @@ declare function mods:get-part-and-origin($entry as element()) {
             if ($volume and $issue)
             then concat($volume, ', no. ', $issue
             	,
-            	concat(' (', mods:get-date($datePart), ')')    
+            	concat(' (', string-join(mods:get-date($datePart), ' '), ')')    
 			    )
             (: concat((if ($part/mods:detail/mods:caption) then $part/mods:detail/mods:caption/string() else '/'), $part/mods:detail[@type='issue']/mods:number) :)
             else
@@ -668,17 +668,20 @@ declare function mods:get-part-and-origin($entry as element()) {
 	                then concat(
 	                	concat(' ', mods:get-date($datePart))
 			            , ', no. ', $issue)
-	                else concat($volume, concat(' (', $datePart, ')'))
-				else concat(' ', $datePart)
-            ,
-            (:NB: We assume that there will not both be $page and $extent.:)
-            if ($page) 
-            then concat(', ', $page)
-            else ()
-            ,
-            if ($extent) 
-            then concat(': ', mods:get-extent($extent[1]), '.')
-            else '.'
+	                else concat($volume, concat(' (', string-join($datePart, ', '), ')'))
+				else
+					if ($extent and $datePart)
+				(:We have date and extent alone.:)
+					then concat(' ', $datePart)
+					else ()
+				,	
+				(: NB: We assume that there will not both be $page and $extent.:)
+				if ($extent) 
+				then concat(': ', mods:get-extent($extent[1]), '.')
+				else
+					if ($page) 
+					then concat(': ', $page[1], '.')
+					else '.'
             )
         else
             (: If there is a dateIssued (loaded in $datePart) and a place or a publisher, i.e. if the publication is an an edited volume. :)
@@ -689,12 +692,24 @@ declare function mods:get-part-and-origin($entry as element()) {
                 then concat(', Vol. ', $volume)
                 else ()
                 ,
-                if ($extent)
+                if ($extent or $page)
                 then
-                	if ($volume)
-                	then concat(': ', mods:get-extent($extent),'.')
-                	else concat(', ', mods:get-extent($extent),'.')
-                else ()
+                	if ($volume and $extent)
+                	then concat(': ', mods:get-extent($extent))
+                	else
+	                	if ($volume and $page)
+	                	then concat(': ', $page)
+	                	else
+	                		if ($extent)
+                			then concat(', ', mods:get-extent($extent))
+		                	else
+		                		if ($page)
+	                			then concat(': ', $page)
+					            else ()
+	            else 
+	            	if ($volume)
+	            	then ', '
+	            	else ()
                 ,
                 if ($place)
                 then concat('. ', mods:get-place($place))
@@ -712,6 +727,8 @@ declare function mods:get-part-and-origin($entry as element()) {
 	                	string-join($date, ' and ')
 	                )
                 else ()
+                ,
+                '.'
                 )
             (: If not a periodical and not an edited volume, we don't really know what it is and just try to extract whatever information there is. :)
             else
@@ -741,7 +758,7 @@ declare function mods:get-part-and-origin($entry as element()) {
                 else ()
                 ,
                 (: If it is a series:)
-                (:NB: polish!:)
+                (:NB: elaborate!:)
                 if ($volume)
 	            then concat(', Vol. ', $volume, '.')
 	            else ()
@@ -823,7 +840,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
         if ($name/@lang)
         then mods:get-language-label($name/@lang)
         else mods:language-of-resource($name/../mods:language)
-    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[label = $nameLanguageLabel]/nameOrder/string()
+    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:label = $nameLanguageLabel]/*:nameOrder/string()
     let $nameStyle :=
         if ($nameLanguageLabel = ('Chinese','Japanese','Korean','Vietnamese'))
         then 'EastAsian'
@@ -937,7 +954,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                         then $namePartLanguage
                         else $nameLanguageLabel
                     (: If there is lang on namePart, use that for retrieving the name order; otherwise use language on name (or, if this did not exist when it was set, the language of the resource as a whole. :)
-                    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[label = $namePartLanguageLabel]/nameOrder/string()
+                    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:label = $namePartLanguageLabel]/*:nameOrder/string()
                     
                     return
                         concat(
@@ -1145,7 +1162,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                         if ($languageScript)
                                         then $languageScript
                                         else $nameLanguageLabel
-                                    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[label = $language]/nameOrder/string()
+                                    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:label = $language]/*:nameOrder/string()
                                     return       
                                         if ($untypedScript/string())
                                         (: If the name parts are not typed, there is nothing we can do to order their sequence. When name parts are not typed, it is generally because the whole name occurs in one name part, formatted for display (usually with a comma between family and given name), but it may also be used when names that cannot be divided into family and given names are in evidence. We trust that any sequence of nameparts are meaningfully ordered and string-join them. :)
@@ -1552,18 +1569,16 @@ declare function mods:get-short-title($entry as element()) {
         else ''
         ,
         (
-        if ($titleTransliteration) 
-        then (<span xmlns="http://www.w3.org/1999/xhtml" class="title">{$titleTransliterationFormat}</span>, ' ')
+		if ($titleTransliteration) 
+        then (<span xmlns="http://www.w3.org/1999/xhtml" class="title">{string-join($titleTransliterationFormat, ' ')}</span>, ' ')
         else ()
         , 
         if ($titleTransliteration)
-        (:If there is a transliteration, the title in original script should not be italisised.:)
-        then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">{$titleFormat}</span>
+        (:If there is a transliteration, the title in original script should not be italicised.:)
+        then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">{string-join($titleFormat, '')}</span>
         else
         	if ($quotes)
-        	(:then <span class="title-no-italics">{replace(string-join($titleFormat, ''), ' :', ':')}</span>:)
-        	(:then <span class="title-no-italics">{functx:trim(string-join($titleFormat, ''))}</span>:)
-        	then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">{$titleFormat}</span>
+        	then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">{string-join($titleFormat, '')}</span>
         	else <span xmlns="http://www.w3.org/1999/xhtml" class="title">{string-join($titleFormat, '')}</span>
         ,
         if ($quotes and $titleTranslation) 
@@ -1617,17 +1632,17 @@ if ($titleInfo)
             (
             <br/>, 'Language: '
             ,
-            let $lang3 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[value = $lang]/label
+            let $lang3 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:value = $lang]/*:label
             return
                 if ($lang3)
                 then $lang3
                 else
-                    let $lang2 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTwo = $lang]/label
+                    let $lang2 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTwo = $lang]/*:label
                     return
                         if ($lang2) 
                         then $lang2
                         else
-                            let $lang3 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTwo = $titleInfo/@xml:lang]/label
+                            let $lang3 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTwo = $titleInfo/@xml:lang]/*:label
                             return
                                 if ($lang3)
                                 then $lang3
@@ -1653,7 +1668,7 @@ if ($titleInfo)
         if ($titleInfo/@transliteration and $transliteration)
         then
             (<br/>, 'Transliteration: ',
-            let $transliteration-label := doc(concat($config:edit-app-root, '/code-tables/transliteration-codes.xml'))/code-table/items/item[value = $transliteration]/label
+            let $transliteration-label := doc(concat($config:edit-app-root, '/code-tables/transliteration-codes.xml'))/*:code-table/*:items/*:item[*:value = $transliteration]/*:label
             return
                 if ($transliteration-label)
                 then $transliteration-label
@@ -1933,10 +1948,28 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     ,
     
     (: publisher :)
-    for $publisher in $entry/mods:originInfo/mods:publisher
-        return mods:simple-row(mods:get-publisher($publisher), 'Publisher')
-    ,
-    
+
+        (: If a transliterated publisher name exists, this probably means that several publisher names are simply different script forms of the same publisher name. Place the transliterated name first, then the original script name. :)
+        if ($entry/mods:originInfo/mods:publisher[@transliteration])
+        then
+	        mods:simple-row(
+	            string-join(
+		            for $publisher in $entry/mods:originInfo/mods:publisher
+		            let $order := 
+			            if ($publisher[@transliteration]) 
+			            then 0 
+			            else 1
+		        	order by $order
+		        	return mods:get-publisher($publisher)
+	        	, ' ')
+	        ,
+			'Publisher')
+		else
+		(: Otherwise we have a number of different pubishers.:)
+			for $publisher in $entry/mods:originInfo/mods:publisher
+	        return mods:simple-row(mods:get-publisher($publisher), 'Publisher')
+	,
+	
     (: dates :)
     if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:dateCreated) 
     then () 
@@ -2002,7 +2035,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     (: internetMediaType :)
     mods:simple-row(
     (
-	    let $label := doc(concat($config:edit-app-root, '/code-tables/internet-media-type-codes.xml'))/code-table/items/item[value = $entry/mods:physicalDescription[1]/mods:internetMediaType]/label
+	    let $label := doc(concat($config:edit-app-root, '/code-tables/internet-media-type-codes.xml'))/*:code-table/*:items/*:item[*:value = $entry/mods:physicalDescription[1]/mods:internetMediaType]/*:label
 	    return
 	        if ($label) 
 	        then $label
@@ -2066,19 +2099,21 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     for $genre in ($entry/mods:genre)
     let $authority := $genre/@authority/string()
     return   
-        mods:simple-row
-            (
-                if ($authority = 'local')
-                then doc(concat($config:edit-app-root, '/code-tables/genre-local-codes.xml'))/code-table/items/item[value = $genre]/label
-                else $genre/string()
-            , 
+        mods:simple-row(
+            if ($authority = 'local')
+                then doc(concat($config:edit-app-root, '/code-tables/genre-local-codes.xml'))/*:code-table/*:items/*:item[*:value = $genre]/*:label
+                else
+                	if ($authority = 'marcgt')
+                	then doc(concat($config:edit-app-root, '/code-tables/genre-marcgt-codes.xml'))/*:code-table/*:items/*:item[*:value = $genre]/*:label
+					else $genre/string()
+                , 
                 concat(
                     'Genre'
                     , 
                     if ($authority)
                     then
                         if ($authority = 'marcgt')
-                        then concat(' (', replace(doc(concat($config:edit-app-root, '/code-tables/genre-authority-codes.xml'))/code-table/items/item[value = $authority]/label, '\*', ''), ')')
+                        then ' (MARC genre terms)'
                         else concat(' (', $authority, ')')
                     else ()            
             )
@@ -2194,15 +2229,14 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         (:if ($entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:extent or $entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:detail/mods:number/text()):)
         if ($entry/mods:relatedItem[@type=('host','series')])
         then <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods:get-related-items($entry, 'hitlist')}</span>
-        else ()
-        ,
+        else 
         (: The url of the primary publication. :)
-        if ($entry/mods:location/mods:url/text())
-        then
-            for $url in $entry/mods:location/mods:url
-                return
-                    concat(' <', $url, '>')
-        else ()
+        	if ($entry/mods:location/mods:url/text())
+        	then
+            	for $url in $entry/mods:location/mods:url
+	                return
+    	                concat(' <', $url, '>', '.')
+        	else '.'
         )
     return
         mods:clean-up-punctuation(<span xmlns="http://www.w3.org/1999/xhtml" class="record">{$format}</span>)
