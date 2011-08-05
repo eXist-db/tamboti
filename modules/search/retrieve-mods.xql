@@ -331,12 +331,17 @@ declare function mods:add-part($part, $sep as xs:string) {
 declare function mods:get-publisher($publishers as element(mods:publisher)*) as item()* {
         string-join(
 	        for $publisher in $publishers
-	        return	
+	        return
 	        	(: NB: Using name here is an expansion of the MODS schema.:)
 	            if ($publisher/mods:name)
 	            then mods:retrieve-name($publisher/mods:name, 1, 'secondary', '')
 	            else $publisher
-        , ' and ')
+        , 
+        (:If there is a transliterated publisher, probably only one publisher is referred to.:)
+        if ($publishers[@transliteration] or $publishers[mods:name/@transliteration])
+        then ' '
+        else
+        ' and ')
 };
 
 
@@ -543,7 +548,11 @@ declare function mods:get-place($places as element(mods:place)*) as xs:string? {
 	                    else $place/mods:placeTerm[not(@type)]/text(),
         ' ')
     ,
-    ' and ')
+    (:If there is a transliterated place term, probably only one place is referred to.:)
+    if ($places[@transliteration] or $places[mods:placeTerm/@transliteration])
+        then ' '
+        else
+        ' and ')
 };
 
 (: NB: This function should be split up in a part and an originInfo function.:)
@@ -1965,7 +1974,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
 	        ,
 			'Publisher')
 		else
-		(: Otherwise we have a number of different pubishers.:)
+		(: Otherwise we have a number of different publishers.:)
 			for $publisher in $entry/mods:originInfo/mods:publisher
 	        return mods:simple-row(mods:get-publisher($publisher), 'Publisher')
 	,

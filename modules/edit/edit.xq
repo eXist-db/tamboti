@@ -108,7 +108,7 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
            (: Elements and attributes for insertion into the compact forms. :)
            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="instances/compact-template.xml" id='compact-template' readonly="true"/> 
            
-           <xf:instance xmlns="" id="code-tables" src="codes-for-tab.xq?tab-id={$instance-id}" readonly="true"/>
+           <xf:instance id="code-tables" src="codes-for-tab.xq?tab-id={$instance-id}" readonly="true"/>
            
            <!-- a title should ideally speaking be required, but having this bind will prevent a tab from being saved when clicking on another tab, if the user has not input a title.--> 
            <!--

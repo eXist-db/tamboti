@@ -43,14 +43,14 @@ return
             let $names := $cached//mods:name[mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator') or not(mods:role/mods:roleTerm)]
             return
                 if (count($names) gt $local:MAX_RESULTS_NAMES) then
-                    <li>Too many names. Please restrict the result set.</li>
+                    <li>There are too many names to process in a reasonable time. Please restrict the result set by performing a new search.</li>
                 else
                     let $authors :=
                         for $author in $names
                         return names:format-name($author)
                     let $distinct := distinct-values($authors)
                     for $name in $distinct
-                    order by $name
+                    order by upper-case($name) empty greatest
                     return
                         <li><a href="?filter=Name&amp;value={$name}&amp;query-tabs=advanced-search-form">{$name}</a></li>
         }
@@ -68,7 +68,7 @@ return
             	)
             return
                 if (count($dates) gt $local:MAX_RESULTS) then
-                    <li>Too many dates. Please restrict the result set.</li>
+                    <li>There are too many dates to process in a reasonable time. Please restrict the result set by performing a new search.</li>
                 else
                     let $dates :=
                         for $info in (
@@ -90,7 +90,7 @@ return
             let $log := util:log("DEBUG", ("##$subjects1): ", $subjects))
             return
                 if (count($subjects) gt $local:MAX_RESULTS_SUBJECTS) then
-                    <li>Too many subjects. Please restrict the result set.</li>
+                    <li>There are too many subjects to process in a reasonable time. Please restrict the result set by performing a new search.</li>
                 else
                     let $subjects :=
                         for $info in $cached/mods:subject

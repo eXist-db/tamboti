@@ -34,7 +34,7 @@
             <xf:repeat nodeset="instance('save-data')/mods:extension" id="extension-repeat">
             -->
             <!-- repeat not used. -->
-        <xf:group appearance="full" ref="mods:extension[not(e:template)] | mods:extension[not(e:transliterationOfResource)]">
+        <xf:group appearance="full" ref="mods:extension[not(*:template)] | mods:extension[not(*:transliterationOfResource)]">
             <xf:switch>
                 <xf:case id="extension-add-node-hide">
                     <div class="node-button">
@@ -52,7 +52,7 @@
                         </xf:trigger>
                     </div>
                     <div class="node-adds">
-                        <xf:group appearance="full" ref=".[not(e:template)] | .[not(e:transliterationOfResource)]">
+                        <xf:group appearance="full" ref=".[not(*:template)] | .[not(*:transliterationOfResource)]">
                             <xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>
                                 <!-- attribute dummy
                                     <xf:trigger ref=".[not(@type)]" class="add-button">
@@ -63,18 +63,18 @@
                                         </xf:action>
                                     </xf:trigger>
                                     -->
-                            <xf:trigger ref=".[not(e:template)]" class="add-button">
+                            <xf:trigger ref=".[not(*:template)]" class="add-button">
                                 <xf:label class="xforms-group-label-centered">Add Publication Type</xf:label>
                                 <xf:action ev:event="DOMActivate">
                                     <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
-                                    <xf:insert nodeset="e:template" at="index('extension-repeat')" position="before" origin="instance('insert-templates')/e:template"/>
+                                    <xf:insert nodeset="*:template" at="index('extension-repeat')" position="before" origin="instance('insert-templates')/*:template"/>
                                 </xf:action>
                             </xf:trigger>
-                            <xf:trigger ref=".[not(e:transliterationOfResource)]" class="add-button">
+                            <xf:trigger ref=".[not(*:transliterationOfResource)]" class="add-button">
                                 <xf:label class="xforms-group-label-centered">Add Transliteration Of Resource</xf:label>
                                 <xf:action ev:event="DOMActivate">
                                     <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
-                                    <xf:insert nodeset="e:template" at="index('extension-repeat')" position="before" origin="instance('insert-templates')/e:template"/>
+                                    <xf:insert nodeset="*:template" at="index('extension-repeat')" position="before" origin="instance('insert-templates')/*:template"/>
                                 </xf:action>
                             </xf:trigger>
                         </xf:group>
@@ -105,7 +105,7 @@
             </xf:switch>
         </xf:group>
         <xf:group appearance="full">
-            <xf:select1 ref="mods:extension/e:template">
+            <xf:select1 ref="mods:extension/*:template">
                 <xf:label>Publication Type</xf:label>
                 <xf:hint>
                     <p>Choose one of the publication types listed below. These publication types are the same as the record templates used in the pre-entry
@@ -121,7 +121,7 @@
             </xf:select1>
         </xf:group>
         <xf:group appearance="full">
-            <xf:select1 ref="mods:extension/e:transliterationOfResource">
+            <xf:select1 ref="mods:extension/*:transliterationOfResource">
                 <xf:label>Transliteration Of Resource</xf:label>
                 <xf:hint>
                     <p> Choose one of the transliteration schemes listed below. The transliteration schemes are the same as those used in the pre-entry

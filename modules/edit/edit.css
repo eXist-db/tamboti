@@ -7,6 +7,11 @@
 
 /*temporary stuff begins*/
 
+.xforms-repeat {
+	margin-bottom:1em;
+	padding-bottom:1em;
+}
+
 .xforms-repeat-item-selected,
 #subject-repeat .xforms-repeat-item-selected
 {
@@ -217,7 +222,7 @@ button {
 /*boxes begin*/
 
 fieldset {
-	padding:1.4em !important;
+	padding:1.4em 1.4em 0 1.4em !important;
 	margin:0 0 1.5em 0;
 	border:1px solid #BBBBBB;
 }
@@ -246,7 +251,7 @@ fieldset,
     width: 15em;
 }
 
-.fieldset .xforms-repeat-item {
+.compact .fieldset .xforms-repeat-item {
 	padding-bottom:1em !important;
 }
 .fieldset,
@@ -300,8 +305,11 @@ select
     padding:.2em; /*to give a little less cramped input field*/
 }
 
+.compact select {
+	margin-left:1em;
+}
+
 .join { /*rename: label-box*/
-    margin-bottom:.75em;
     font-weight:bold;
     border-style:solid;
     background-color:#EDEDED;
@@ -309,10 +317,14 @@ select
     padding:.3em 1em .3em 1em;
     width:15em;
     height:1.5em;
-    margin-top:-2.5em; /*to make the fieldset border hit the centre of the box*/
+    margin-top:-2.2em; /*to make the fieldset border hit the centre of the box*/
     margin-left:1.55em;
     margin-bottom:.75em;
     text-align:center;    
+}
+
+.compact .join {
+	margin-top:-2.5em; /*to make the fieldset border hit the centre of the box*/
 }
 
 .join .float .xforms-group .xforms-group-content
@@ -546,7 +558,7 @@ div.xforms-hint-value strong
 }
 
 .compact fieldset.level-1 .join {
-    margin-bottom: 1.5em;
+    margin-bottom: 1.25em;
     } 
 
 .compact .xforms-repeat-item-selected

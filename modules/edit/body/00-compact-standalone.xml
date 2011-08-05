@@ -26,7 +26,7 @@
                 </span>
             </div>
             <xf:repeat nodeset="./mods:name" id="name-repeat">
-                <xf:group>
+                <xf:group class="input">
                     <fieldset class="level-2">
                         <div class="join">
                             <span class="legend">Name</span>
@@ -263,7 +263,7 @@
             </xf:repeat>
         </fieldset>
     </xf:group>
-    <xf:group ref=".[not(/mods:mods/mods:extension/e:template != ('contribution-to-anthology-transliterated-compact','contribution-to-anthology-compact','book-review-latin','book-review-transliteration'))]">
+    <xf:group ref=".[/mods:mods/mods:extension/*:template = 'monograph-latin']         | .[/mods:mods/mods:extension/*:template = 'monograph-transliterated']         | .[/mods:mods/mods:extension/*:template = 'edited-volume-latin']         | .[/mods:mods/mods:extension/*:template = 'edited-volume-transliterated']">
         <fieldset class="level-1">
             <div class="join">
                 <span class="legend">Origin Information</span>

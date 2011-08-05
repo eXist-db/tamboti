@@ -83,9 +83,8 @@ declare variable $biblio:FIELDS :=
 		<field name="Abstract">mods:mods[ft:query(mods:abstract, '$q', $options)]</field>
         <field name="Note">mods:mods[ft:query(mods:note, '$q', $options)]</field>
         <field name="Subject">mods:mods[ft:query(mods:subject, '$q', $options)]</field>
-        <field name="All">(mods:mods[ft:query(.//*, '$q', $options)] union ft:search("page:$q"))</field>
+       <field name="All">(mods:mods[ft:query(.//*, '$q', $options)] union ft:search("page:$q"))</field>
         <field name="ID">mods:mods[@ID = '$q']</field>
-        <field name="FullText">ft:search("page:$q")</field>
 	</fields>;
 
 (:
@@ -136,7 +135,7 @@ declare function biblio:form-from-query($incomingQuery as element()?) as element
                     </select>
             } 
             </td>
-            <td class="label"> 
+            <td class="search-field"> 
                 <jquery:input name="input{$pos}" value="{$field/string()}">
                     <jquery:autocomplete url="autocomplete.xql"
                         width="300" multiple="false"
@@ -388,9 +387,10 @@ declare function biblio:orderByAuthor($m as element()) as xs:string?
 			    	if ($name/mods:namePart[not(@script) or @script = 'Latn']/text())
 		    		then $name/mods:namePart[@type='given'][not(@script) or @script = 'Latn'][1]/text()
 		    		else $name/mods:namePart[@type='given'][1]/text()
-    order by $sortFirst, $sortLast ascending empty greatest
+    let $sort := upper-case(concat($sortFirst, ' ', $sortLast))
+    order by upper-case($sort) ascending empty greatest
     return
-        concat($sortFirst, $sortLast)
+        $sort
 };
     
 (: Map order parameter to xpath for order by clause :)
@@ -481,7 +481,7 @@ declare function biblio:query-history() {
 declare function biblio:eval-query($query-as-xml as element(query)?, $sort0 as item()?) as xs:int {
     if ($query-as-xml) then
         let $query := string-join(biblio:generate-query($query-as-xml), '')
-        let $log := util:log("DEBUG", ("QUERY: ", $query))
+        (:let $log := util:log("DEBUG", ("QUERY: ", $query)):)
         let $sort := if ($sort0) then $sort0 else session:get-attribute("sort")
         let $results := biblio:evaluate-query($query, $sort)
         let $processed :=
