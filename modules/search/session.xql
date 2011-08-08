@@ -159,7 +159,7 @@ declare function bs:retrieve($start as xs:int, $count as xs:int) {
                                     (: if the item's collection is writable, display edit/delete and move buttons :)
                                     if ($isWritable) 
                                     then (
-                                        <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}">
+                                        <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}&amp;type={$item/mods:extension/*:template}">
                                             <img title="Edit Record" src="theme/images/page_edit.png"/>
                                         </a>
                                         ,

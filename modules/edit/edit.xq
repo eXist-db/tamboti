@@ -17,7 +17,7 @@ declare namespace e="http://www.asia-europe.uni-heidelberg.de/";
 declare function local:create-new-record($id as xs:string, $type-request as xs:string, $target-collection as xs:string) as empty() {
        (: Copy the template into data and store it with the ID as file name. :)
        let $template-doc := doc(concat($config:edit-app-root, '/instances/', $type-request, '.xml')),
-       (: store it in the right location :)
+       (: Store it in the right location :)
        $stored := xmldb:store($config:mods-temp-collection, concat($id, '.xml'), $template-doc),
        $null := sm:chmod(xs:anyURI($stored), "rwu------"),
        
@@ -33,7 +33,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
        
        $doc := doc($stored)
          
-         (: Note that we can not use "update replace" if we want to keep the default namespace. :)
+       (: Note that we can not use "update replace" if we want to keep the default namespace. :)
        return (
        
           (: Update record with ID attribute. :)
@@ -86,20 +86,20 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
           if($host)then (
               update value doc($stored)/mods:mods/mods:relatedItem/@xlink with $host,
               update value doc($stored)/mods:mods/mods:relatedItem/@type with "host"
-          )else()
+          )else ()
       )
 };
 
 declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $instance-id as xs:string) as element(xf:model) {
 
-    let $instance-src :=  concat('get-instance.xq?tab-id=', $tab-id, '&amp;id=', $id, '&amp;data=', $config:mods-temp-collection) return
+    let $instance-src :=  concat('get-instance.xq?tab-id=', $tab-id, '&amp;id=', $id, '&amp;data=', $config:mods-temp-collection)
+    return
 
         <xf:model>
            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="{$instance-src}" id="save-data"/>
            
            (: The instance insert-templates contain an almost full embodiment of the MODS schema, version 3.4; 
-           the full 3.4 schema is reflected in full-3.4-instance.xml. 
-           XForms controls are made only for elements and attributes in insert-templates.:)
+           the full 3.4 schema is reflected in full-3.4-instance.xml. :)
            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="instances/insert-templates.xml" id='insert-templates' readonly="true"/>
            
            (: A selection of elements and attributes from the MODS schema used for default records. :)
@@ -137,17 +137,19 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
 
 declare function local:create-page-content($id as xs:string, $tab-id as xs:string, $type-request as xs:string, $target-collection as xs:string, $instance-id as xs:string, $record-data as xs:string, $type-data as xs:string) as element(div) {
 
-    (: Get the relevant label and hint for the type parameter. :)
-    let $log := util:log("DEBUG", ("##$type-request): ", $type-request))
-    let $type-label := doc($type-data)/code-table/items/item[value = $type-request]/label,
+    (: Get the part of the form that belongs to the tab called. :)
+    let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id = $instance-id],
+    (: Get the relevant information to display on the top line, starting "Editing record". :)
+    $type-label := doc($type-data)/code-table/items/item[value = $type-request]/label,
     $type-hint := doc($type-data)/code-table/items/item[value = $type-request]/hint,
     (: Display the label attached to the tab to the user :)
     $tab-data := concat($config:edit-app-root, '/tab-data.xml'),
-    $bottom-tab-label := doc($tab-data)/tabs/tab[tab-id=$tab-id]/label,
-    (: This is the part of the form that belongs to the tab called. :)
-    $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id = $instance-id]
+    $bottom-tab-label := doc($tab-data)/tabs/tab[tab-id=$tab-id]/*[local-name() = $type-request],
+    $bottom-tab-label := 
+    	if ($bottom-tab-label)
+    	then $bottom-tab-label
+    	else doc($tab-data)/tabs/tab[tab-id=$tab-id]/label    	
     return
-
         <div class="content">
             <span class="info-line">
             {
@@ -160,7 +162,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">{$type-hint}</div>
                         </span>
-                    else()
+                    else ()
                 ) else
                     'Editing record'
                 ,
@@ -189,7 +191,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     <xf:label class="xforms-group-label-centered-general">Save and Close</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="save-and-close-submission"/>
-                        <xf:load resource="../../?reload=true" show="replace"/>
+                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}" show="replace"/>
                     </xf:action>
                 </xf:trigger>
              
@@ -204,10 +206,12 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                 <span class="xforms-hint">
                     <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-hint-value">
-                        <p>Every time you click one of the lower tabs, your input is saved. Your input is also saved if you click the current tab. For this reason, there is usually no need to click the &quot;Save&quot; button. </p>
-                        <p>If you plan to be away from your computer for some time, you can save what you have input so far by clicking the &quot;Save&quot; button. Be aware, however, that you are only logged in for a certain period of time and when your session times out, what you have input cannot be retrieved. If you know that you may not be able to finish a record due to some disturbance, it is best to click &quot;Save and Close&quot; and return to finish the record later.</p>
-                        <p>When you have finished editing, click the &quot;Save and Close&quot; button. The record is then saved inside the folder you marked before opening the editor.</p>
-                        <p>After you have closed the editor, you can continue editing the record by finding it and clicking the &quot;Edit Record&quot; button inside the record&apos;s detail view.</p>
+                        <p>Every time you click one of the tabs, your input is saved. For this reason, there is generally no need to click the &quot;Save&quot; button. </p>
+                        <p>Be aware, however, that you are only logged in for a certain period of time and when your session times out, what you have input cannot be retrieved. 
+                        You can keep your session alive by clicking any tab.</p> 
+                        <p>If you know that you may not be able to finish a record, it is best to click &quot;Save and Close&quot; and return to finish the record later.</p>
+                        <p>When you  click the &quot;Save and Close&quot; button, the record is saved inside the folder you marked before opening the editor or the folder from which you opened it for re-editing.</p>
+                        <p>You can continue editing the record by finding it and clicking the &quot;Edit Record&quot; button inside the record&apos;s detail view.</p>
                         <p>If you wish to discard what you have input and return to the search function, click &quot;Cancel Editing&quot;.</p>
                     </div>
                 </span>
@@ -259,7 +263,7 @@ declare function local:get-instance-id($tab-id as xs:string, $type-request as xs
 				    else 'compact-b-xlink'
 };
 
-let $title := 'MODS Record Editor'
+let $title := 'Tamboti MODS Editor'
 
 (: If a document type is specified, then we will need to use that instance as the template. :)
 let $record-id := request:get-parameter('id', '')
@@ -302,18 +306,18 @@ let $new-record := xs:boolean($id-param = '' or $id-param = 'new')
 
 (: If we do not have an incoming ID or if the record is new, then create an ID with util:uuid(). :)
 let $id :=
-    if ($new-record)then
-        concat("uuid-", util:uuid())
-   else
-        $id-param
+	if ($new-record)
+    then concat("uuid-", util:uuid())
+    else $id-param
 
 (: If we are creating a new record, then we need to call get-instance.xq with new=true to tell it to get the entire template :)
 let $create-new-from-template :=
-   if($new-record) then 
-        local:create-new-record($id, $type-request, $target-collection)
-    else if(not(doc-available(concat($config:mods-temp-collection, '/', $id, '.xml'))))then
-        xmldb:copy($target-collection, $config:mods-temp-collection, concat($id, '.xml'))
-    else()
+	if($new-record) 
+	then local:create-new-record($id, $type-request, $target-collection)
+	else 
+   		if(not(doc-available(concat($config:mods-temp-collection, '/', $id, '.xml'))))
+   		then xmldb:copy($target-collection, $config:mods-temp-collection, concat($id, '.xml'))
+   		else ()
 
 (: For a compact-b form, determine which subform to serve, based on the template. :)
 let $instance-id := local:get-instance-id($tab-id, $type-request)
@@ -322,7 +326,5 @@ let $instance-id := local:get-instance-id($tab-id, $type-request)
 let $style := <style type="text/css"><![CDATA[@namespace xf url(http://www.w3.org/2002/xforms);]]></style>
 let $model := local:create-xf-model($id, $tab-id, $instance-id)
 let $content := local:create-page-content($id, $tab-id, $type-request, $target-collection, $instance-id, $record-data, $type-data)
-
-return
-    
+return 
     style:assemble-form('', attribute {'mods:dummy'} {'dummy'}, $style, $model, $content, false())

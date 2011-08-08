@@ -17,6 +17,7 @@ declare function mods:tabs($tab-id as xs:string, $id as xs:string, $data-collect
 
 (: get the show-level param from the URL; if empty, set it to 1. :)
 let $type := request:get-parameter("type", '')
+
 (: get the show-level param from the URL; if it is empty, it is because the record has just been initialised; 
 if it is a non-basic template, set it to 2 (to show Citationforms/Title Information), 
 otherwise set it to 1 (to show Basic Input Forms/Main Publication). :)
@@ -64,7 +65,7 @@ return
                 {
                 for $tab in $tabs-data[show-level = $show-level]
                 let $tab-for-template := $tab/*[local-name() = $type]/text()
-                let $category-count := count($tabs-data[category/text() = $tab/category/text()])
+				let $category-count := count($tabs-data[category/text() = $tab/category/text()])
                 return
                 <td style="{if ($tab-id = $tab/tab-id/text()) then "background:white;border-bottom-color:white;color:#3681B3;" else "background:#EDEDED"}">{attribute{'width'}
                 {100 div $category-count}}
