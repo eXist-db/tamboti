@@ -560,7 +560,7 @@ declare function mods:get-place($places as element(mods:place)*) as xs:string? {
 (: NB: where is the relatedItem type? :)
 (: Used in list view and display of related items in list and detail view. :)
 declare function mods:get-part-and-origin($entry as element()) {
-    let $originInfo := $entry/mods:originInfo
+    let $originInfo := $entry/mods:originInfo[1]
     (: contains: place, publisher, dateIssued, dateCreated, dateCaptured, dateValid, 
        dateModified, copyrightDate, dateOther, edition, issuance, frequency. :)
     (: has: lang; xml:lang; script; transliteration. :)
@@ -814,15 +814,15 @@ declare function mods:get-part-and-origin($entry as element()) {
 (: Both the name as given in the publication and the autority name should be rendered. :)
 
 declare function mods:get-conference-hitlist($entry as element(mods:mods)) {
-    let $date := ($entry/mods:originInfo/mods:dateIssued/string()[1], $entry/mods:part/mods:date/string()[1],
-            $entry/mods:originInfo/mods:dateCreated/string())[1]
+    let $date := ($entry/mods:originInfo[1]/mods:dateIssued/string()[1], $entry/mods:part/mods:date/string()[1],
+            $entry/mods:originInfo[1]/mods:dateCreated/string())[1]
     let $conference := $entry/mods:name[@type = 'conference']/mods:namePart
     return
     if ($conference) 
     then
         concat('Paper presented at ', 
             mods:add-part($conference/string(), ', '),
-            mods:add-part($entry/mods:originInfo/mods:place/mods:placeTerm, ', '),
+            mods:add-part($entry/mods:originInfo[1]/mods:place/mods:placeTerm, ', '),
             $date
         )
     else ()
@@ -1952,18 +1952,18 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     ,
 
     (: place :)
-    for $place in $entry/mods:originInfo/mods:place
+    for $place in $entry/mods:originInfo[1]/mods:place
         return mods:simple-row(mods:get-place($place), 'Place')
     ,
     
     (: publisher :)
 
         (: If a transliterated publisher name exists, this probably means that several publisher names are simply different script forms of the same publisher name. Place the transliterated name first, then the original script name. :)
-        if ($entry/mods:originInfo/mods:publisher[@transliteration])
+        if ($entry/mods:originInfo[1]/mods:publisher[@transliteration])
         then
 	        mods:simple-row(
 	            string-join(
-		            for $publisher in $entry/mods:originInfo/mods:publisher
+		            for $publisher in $entry/mods:originInfo[1]/mods:publisher
 		            let $order := 
 			            if ($publisher[@transliteration]) 
 			            then 0 
@@ -1975,56 +1975,56 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
 			'Publisher')
 		else
 		(: Otherwise we have a number of different publishers.:)
-			for $publisher in $entry/mods:originInfo/mods:publisher
+			for $publisher in $entry/mods:originInfo[1]/mods:publisher
 	        return mods:simple-row(mods:get-publisher($publisher), 'Publisher')
 	,
 	
     (: dates :)
-    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:dateCreated) 
+    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo[1]/mods:dateCreated) 
     then () 
     else 
-        for $date in $entry/mods:originInfo/mods:dateCreated
+        for $date in $entry/mods:originInfo[1]/mods:dateCreated
             return mods:simple-row($date, 'Date Created')
     ,
-    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:copyrightDate) 
+    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo[1]/mods:copyrightDate) 
     then () 
     else 
-        for $date in $entry/mods:originInfo/mods:copyrightDate
+        for $date in $entry/mods:originInfo[1]/mods:copyrightDate
             return mods:simple-row(replace($date,'c',''), 'Copyright Date')
     ,
-    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:dateCaptured) 
+    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo[1]/mods:dateCaptured) 
     then () 
     else 
-        for $date in $entry/mods:originInfo/mods:dateCaptured
+        for $date in $entry/mods:originInfo[1]/mods:dateCaptured
             return mods:simple-row($date, 'Date Captured')
     ,
-    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:dateValid) 
+    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo[1]/mods:dateValid) 
     then () 
     else 
-        for $date in $entry/mods:originInfo/mods:dateValid
+        for $date in $entry/mods:originInfo[1]/mods:dateValid
             return mods:simple-row($date, 'Date Valid')
     ,
-    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:dateIssued) 
+    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo[1]/mods:dateIssued) 
     then () 
     else 
-        for $dateIssued in $entry/mods:originInfo/mods:dateIssued
+        for $dateIssued in $entry/mods:originInfo[1]/mods:dateIssued
             return mods:simple-row($dateIssued, 'Date Issued')
     ,
-    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:dateModified) 
+    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo[1]/mods:dateModified) 
     then () 
     else 
-        for $dateModified in $entry/mods:originInfo/mods:dateModified
+        for $dateModified in $entry/mods:originInfo[1]/mods:dateModified
             return mods:simple-row($dateModified, 'Date Modified')
     ,
-    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo/mods:dateOther) 
+    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo[1]/mods:dateOther) 
     then () 
     else 
-        for $dateOther in $entry/mods:originInfo/mods:dateOther
+        for $dateOther in $entry/mods:originInfo[1]/mods:dateOther
             return mods:simple-row($dateOther, 'Other Date')
     ,
     (: edition :)
-    if ($entry/mods:originInfo/mods:edition) 
-    then mods:simple-row($entry/mods:originInfo/mods:edition, 'Edition') 
+    if ($entry/mods:originInfo[1]/mods:edition) 
+    then mods:simple-row($entry/mods:originInfo[1]/mods:edition, 'Edition') 
     else ()
     ,
     (: extent :)

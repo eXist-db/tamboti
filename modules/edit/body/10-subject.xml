@@ -341,6 +341,7 @@
                 <!--subject/topic begins-->
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                 <!--Cluster: include-->
+            <br/>
             <xf:group appearance="full" class="fieldset level-2" ref=".[mods:topic]">
                 <div class="join">
                     <span class="legend">Topic</span>
@@ -1026,6 +1027,7 @@
                     </xf:group>
                             <!--subject/name input ends-->
                             <!--subject/name/namePart begins-->
+                    <br/>
                     <xf:group appearance="full" class="fieldset level-3" ref=".[mods:namePart]">
                         <div class="join">
                             <span class="legend">Name Part</span>

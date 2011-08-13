@@ -14,9 +14,9 @@
         <jquery:panel id="date" title="Dates" href="filters.xql?type=date"/>
         <jquery:panel id="subject" title="Subjects" href="filters.xql?type=subject"/>
     </jquery:ajax-accordion>
-    <div class="banner">
+    <!--<div class="banner">
         <a href="http://exist-db.org" target="_blank">
             <img xmlns:xi="http://www.w3.org/2001/XInclude" alt="powered by eXist" border="0" src="theme/images/powered.gif"/>
         </a>
-    </div>
+    </div>-->
 </div>

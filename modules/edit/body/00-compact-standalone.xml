@@ -164,7 +164,7 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                <xf:group ref=".[not(@script) and not(@transliteration) and not(/mods:mods/mods:language/mods:scriptTerm = 'Latn')]" class="margin-plus">
+                <xf:group ref=".[not(@script) and not(@transliteration) and not(./mods:language/mods:scriptTerm = 'Latn')]" class="margin-plus">
                     <xf:select1 ref="/mods:mods/mods:language/mods:scriptTerm">
                         <xf:label>Script<span class="xforms-help">
                                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -263,7 +263,7 @@
             </xf:repeat>
         </fieldset>
     </xf:group>
-    <xf:group ref=".[/mods:mods/mods:extension/*:template = 'monograph-latin']         | .[/mods:mods/mods:extension/*:template = 'monograph-transliterated']         | .[/mods:mods/mods:extension/*:template = 'edited-volume-latin']         | .[/mods:mods/mods:extension/*:template = 'edited-volume-transliterated']">
+    <xf:group ref=".[mods:extension/*:template = 'monograph-latin']                  | .[mods:extension/*:template = 'monograph-transliterated']                  | .[mods:extension/*:template = 'edited-volume-latin']                  | .[mods:extension/*:template = 'edited-volume-transliterated']         ">
         <fieldset class="level-1">
             <div class="join">
                 <span class="legend">Origin Information</span>

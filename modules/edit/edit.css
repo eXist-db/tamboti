@@ -1,21 +1,21 @@
 <css>
 @namespace xf url(http://www.w3.org/2002/xforms);
 
-/*colour scheme
-#EDF5FA very pale blue
-*/
-
 /*temporary stuff begins*/
+
+.label {
+	padding:.2em;
+	}
 
 .xforms-repeat {
 	margin-bottom:1em;
-	padding-bottom:1em;
+	1padding-bottom:1em;
 }
 
 .xforms-repeat-item-selected,
 #subject-repeat .xforms-repeat-item-selected
 {
-    background-color:#EDF5FA;
+    background-color:#F8F8F8;
 }
 
 .compact .xforms-group .xforms-group-content .output {
@@ -71,7 +71,7 @@ body
 
 #page-head h1 {
     color:#0A0AA0;
-    background-color:#FFF;
+    background-color:#FFFFFF;
     border:0;
     font-size:1.375em;
     font-weight:normal;
@@ -140,7 +140,6 @@ table, td, th {
     -moz-border-radius-topright:4px;
     border-top-left-radius:4px 4px;
     border-top-right-radius:4px 4px;
-
 }
 
 /*tabs end*/
@@ -184,7 +183,7 @@ button {
     background-color:#EDEDED;
     border-width:1px;
     border-style:solid;
-    border-color:gray;
+    border-color:#909090;
     padding:.2em;
     vertical-align:middle;
     text-align:center;
@@ -287,7 +286,7 @@ caption, th, td {
 }
 
 label {
-	color: gray;
+	1color: #909090;
 	white-space: nowrap;
 	font-weight: bold;
 }
@@ -314,7 +313,7 @@ select
     border-style:solid;
     background-color:#EDEDED;
     border-width:1px;
-    padding:.3em 1em .3em 1em;
+    padding:.5em 1em .3em 1em;
     width:15em;
     height:1.5em;
     margin-top:-2.2em; /*to make the fieldset border hit the centre of the box*/
@@ -517,11 +516,11 @@ div.xforms-help-value,
 div.xforms-hint-value 
     { 
     text-align:left;
-    color:gray;
+    color:#909090;
     display:none;
 	background-color:#FFFFFF;
 	position:absolute;
-	border:gray 1px solid; 
+	border:#909090 1px solid; 
 	margin:0;
 	margin-top:-3em; /*to pull up the help boxes, allowing the lower boxes to be more visible*/
 	padding-top:.5em;

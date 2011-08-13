@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--let $code-table :=
---><!--let $code-table :=
 -->
 <code-table>
     <code-table-name>hint-code</code-table-name>
@@ -155,6 +154,93 @@
         </item>
         <item>
             <help>
+                <p> The date that the resource was published, released, or issued. </p>
+            </help>
+            <hint/>
+            <value>dateIssued</value>
+            <local-name>dateIssued</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> The date of creation of the resource. </p>
+            </help>
+            <hint/>
+            <value>dateCreated</value>
+            <local-name>dateCreated</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> The date on which a digital resource was digitized or a subsequent snapshot was taken. </p>
+            </help>
+            <hint/>
+            <value>dateCaptured</value>
+            <local-name>dateCaptured</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> A date in which the content of a resource is valid. </p>
+            </help>
+            <hint/>
+            <value>dateValid</value>
+            <local-name>dateValid</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> The date in which a resource is modified or changed. </p>
+            </help>
+            <hint/>
+            <value>dateModified</value>
+            <local-name>dateModified</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> A date in which a resource is copyrighted. </p>
+            </help>
+            <hint/>
+            <value>copyrightDate</value>
+            <local-name>copyrightDate</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> A date that does not fall into another category but is important to record. </p>
+            </help>
+            <hint/>
+            <value>dateOther</value>
+            <local-name>dateOther</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Dates can be expressed in several different formats. The following values are used with the Encoding: w3cdtf,
+                    iso8601, marc. The recommended encoding is w3cdtf. </p>
+                <p> In all three encodings, a specific year (e.g. "1938") is encoded in the same way; the three standards differ in
+                    how to encode time points of time year. According to w3cdtf dates follow the pattern: YYYY-MM-DD, i.e. with
+                    dashes between year, month and day, and with all years have four, all months two and all days two digits. If
+                    hours, minutes, and seconds are needed, the following pattern is used: YYYY-MM-DDThh:mm:ss. </p>
+                <p> If Encoding is not given any value, the input is assumed to be textual. This means that any way of noting time
+                    can be used. If possible, use a coded value. </p>
+            </help>
+            <hint/>
+            <value>date-encoding</value>
+            <local-name>encoding</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
                 <p>Description contains a textual description for a name when this is necessary, for example, to distinguish it from other names.</p>
             </help>
             <hint/>
@@ -184,7 +270,7 @@
                 </p>
             </help>
             <hint>Display Label is used when additional text associated with the title is needed for display. </hint>
-            <value>name-displayLabel</value>
+            <value>displayLabel</value>
             <local-name>displayLabel</local-name>
             <parent/>
             <tab-id/>
@@ -198,6 +284,42 @@
             <hint>Display Label is used when additional text associated with the title is needed for display. </hint>
             <value>titleInfo-displayLabel</value>
             <local-name>displayLabel</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Information identifying the version of the resource. Resources that constitute the same edition generally embody essentially the same
+                    content. If no edition statement applies to the resource, leave Edition empty. </p>
+            </help>
+            <hint/>
+            <value>edition</value>
+            <local-name>edition</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> In Issuance one records how the resource is issued. It may be used with the following values: continuing and
+                monographic. </p>
+                <p> A continuing resource is issued over time with no predetermined conclusion. Continuing resources include
+                    serials/periodicals and ongoing integrating resources, i.e. those that are continuously updated. A monographic
+                    resource is either complete in one part or intended to be completed in a finite number of separate parts. </p>
+            </help>
+            <hint/>
+            <value>issuance</value>
+            <local-name>issuance</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Frequency is used to note the publication pattern of the item. It is only used if the Issuance of the resource is
+                "continuing".</p>
+            </help>
+            <hint/>
+            <value>frequency</value>
+            <local-name>frequency</local-name>
             <parent/>
             <tab-id/>
         </item>
@@ -341,6 +463,20 @@
             </help>
             <hint/>
             <value>namePart-lang</value>
+            <local-name>lang</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> The language used within Origin Information is specified here, if this language is different from the language noted in
+                    Language of Resource. The most common languages have been moved to the top of the list. </p>
+                <p> Language can be applied the Origin Information as a whole. Do this if you are using only one Language value for all Place
+                    Terms, for Publisher and for Edition. If you are using different Language values inside Origin Information, apply Language
+                    to each field and leave Language empty under Origin Information. </p>
+            </help>
+            <hint/>
+            <value>originInfo-lang</value>
             <local-name>lang</local-name>
             <parent/>
             <tab-id/>
@@ -562,6 +698,28 @@
         </item>
         <item>
             <help>
+                <p> Type indicates whether the place is expressed in a coded or textual form. </p>
+            </help>
+            <hint/>
+            <value>originInfo-type</value>
+            <local-name>type</local-name>
+            <parent>note</parent>
+            <tab-id>compact-c</tab-id>
+        </item>
+        <item>
+            <help>
+                <p> Enter here information about the publication's origin, including its place of origin or publication, its publisher, and its date of issue or
+                    date of copyright. </p>
+                <p> More input options can be found on the Origin Info tab on the Citation Forms.</p>
+            </help>
+            <hint/>
+            <value>originInfo</value>
+            <local-name>originInfo</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
                 <p> Enter here information about the publication's origin, including its place of origin or publication, its publisher, and its date of issue or
                     date of copyright. </p>
                 <p> More input options can be found on the Origin Info tab on the Citation Forms.</p>
@@ -647,11 +805,83 @@
         </item>
         <item>
             <help>
-                <p>Point is used to note whether the date noted is a start point or an end point. If no point is specified, date is assumed to be a single date.
-                </p>
+                <p> Record in Place the place names associated with the origin of a resource, i.e., its creation, publication, issuance, etc.</p>
+                <p>Place should be omitted if no information about the originating place of the resource is known.</p>
+                <p>Input in Place is performed through Place Terms. If one Place has several Place Terms, e.g. the name of a country and the name of a city,
+                    repeat Place Term as necessary, ordering them from higher to lower geographical level.</p>
+                <p>If a resource has several places of origin, repeat Place. </p>
             </help>
-            <value>temporal-point</value>
+            <hint/>
+            <value>place</value>
+            <local-name>place</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Use Place Term to record the textual or code form of the place.</p>
+                <p>If the place is a country, the name of the country can be selected from the MARC country code list or the ISO3166 standard list of country
+                    names. If the place is not a country, add Place Term and write the place name (e.g. city name) with Type set to "Text". </p>
+            </help>
+            <hint/>
+            <value>placeTerm</value>
+            <local-name>placeTerm</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Names of countries (and US states) according to the marccountry standard list. </p>
+            </help>
+            <hint/>
+            <value>placeTerm-marccountry</value>
+            <local-name>placeTerm</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Uncoded place terms, i.e. place terms that have not been chosen in an authority file. </p>
+            </help>
+            <hint/>
+            <value>placeTerm-text</value>
+            <local-name>placeTerm</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The following values are used with Point: start,
+                    end. Repeat the date field and choose "start" in one and "end" in the other repetition, and enter the
+                    appropriate dates in the two date fields. </p>
+                <p> If no point is specified, a date is assumed to be a single date. </p>
+            </help>
+            <value>point</value>
             <local-name>point</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> One can record different events that may be important in the life of a resource in a number of different date
+                    fields. When multiple date fields apply but would contain identical data, one may choose to use only one of the
+                    relevant date fields. In this case, mark one and only one such date field as a key date by choosing "date is key
+                    date" in Key Date. </p>
+            </help>
+            <value>keyDate</value>
+            <local-name>keyDate</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> When a date is uncertain or supplied by the cataloger, indicate this through the use of Qualifier rather than
+                    inserting characters such as "ca.", brackets, or a question mark as part of the date string. When only a decade
+                    is known, enter a date range for the entire decade and mark the date as questionable. When only a century is
+                    known, enter a date range for the entire century and mark the date as questionable. </p>
+            </help>
+            <value>qualifier</value>
+            <local-name>qualifier</local-name>
             <parent/>
             <tab-id/>
         </item>
@@ -800,6 +1030,20 @@
             </help>
             <hint/>
             <value>namePart-script</value>
+            <local-name>script</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> If the Origin Information is in a non-Latin script, note here the script utilised. As transliterations use the Latin script,
+                    the Transliteration field becomes unneccesary when Latin script is chosen. </p>
+                <p> Script can be applied the Origin Information as a whole. Do this if you are using only one Script value for all Place Terms,
+                    for Publisher and for Edition. If you are using different Script values inside Origin Information, apply Script to each
+                    field and leave Script empty under Origin Information. </p>
+            </help>
+            <hint/>
+            <value>originInfo-script</value>
             <local-name>script</local-name>
             <parent/>
             <tab-id/>
@@ -1119,6 +1363,20 @@
             </help>
             <hint/>
             <value>namePart-transliteration</value>
+            <local-name>transliteration</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> If the Origin Information is transliterated, note here the transliteration scheme utilised. As transliterations are
+                    romanisations, the Script field becomes unneccesary. </p>
+                <p> Transliteration can be applied the Origin Information as a whole. Do this if you are using only one Transliteration value
+                    for all Place Terms, for Publisher and for Edition. If you are using different Transliteration values inside Origin
+                    Information, apply Transliteration to each field and leave Transliteration empty under Origin Information. </p>
+            </help>
+            <hint/>
+            <value>originInfo-transliteration</value>
             <local-name>transliteration</local-name>
             <parent/>
             <tab-id/>

@@ -147,10 +147,11 @@
         </holdingSimple>
         <holdingExternal/>
     </location>
-    <extension xmlns:e="http://www.asia-europe.uni-heidelberg.de/">
-        <e:collection/>
-        <e:template/>
-        <e:scriptTypeOfResource/>
-        <e:scriptTypeOfCataloging/>
+    <extension>
+        <e:collection xmlns:e="http://www.asia-europe.uni-heidelberg.de/"/>
+        <e:template xmlns:e="http://www.asia-europe.uni-heidelberg.de/"/>
+        <e:scriptTypeOfResource xmlns:e="http://www.asia-europe.uni-heidelberg.de/"/>
+        <e:scriptTypeOfCataloging xmlns:e="http://www.asia-europe.uni-heidelberg.de/"/>
+        <e:transliterationOfResource xmlns:e="http://www.asia-europe.uni-heidelberg.de/"/>
     </extension>
 </mods>

@@ -21,17 +21,17 @@
         </role>
         <description lang="" xml:lang="" script="" transliteration=""/>
     </name>
-    <originInfo lang="" script="" transliteration="" displayLabel="" altRepGroup="">
+    <originInfo lang="" xml:lang="" script="" transliteration="" displayLabel="" altRepGroup="">
         <place supplied="">
             <placeTerm type="" authority="marccountry"/>
         </place>
-        <dateIssued encoding="w3cdtf" point="" keyDate="" qualifier=""/>
-        <dateCreated encoding="w3cdtf" point="" keyDate="" qualifier=""/>
-        <dateCaptured encoding="w3cdtf" point="" keyDate="" qualifier=""/>
-        <dateValid encoding="w3cdtf" point="" keyDate="" qualifier=""/>
-        <dateModified encoding="w3cdtf" point="" keyDate="" qualifier=""/>
-        <copyrightDate encoding="w3cdtf" point="" keyDate="" qualifier=""/>
-        <dateOther encoding="w3cdtf" point="" keyDate="" qualifier=""/>
+        <dateIssued encoding="w3cdtf" point="" keyDate="" qualifier="" lang="" xml:lang="" script="" transliteration=""/>
+        <dateCreated encoding="w3cdtf" point="" keyDate="" qualifier="" lang="" xml:lang="" script="" transliteration=""/>
+        <dateCaptured encoding="w3cdtf" point="" keyDate="" qualifier="" lang="" xml:lang="" script="" transliteration=""/>
+        <dateValid encoding="w3cdtf" point="" keyDate="" qualifier="" lang="" xml:lang="" script="" transliteration=""/>
+        <dateModified encoding="w3cdtf" point="" keyDate="" qualifier="" lang="" xml:lang="" script="" transliteration=""/>
+        <copyrightDate encoding="w3cdtf" point="" keyDate="" qualifier="" lang="" xml:lang="" script="" transliteration=""/>
+        <dateOther encoding="w3cdtf" point="" keyDate="" qualifier="" lang="" xml:lang="" script="" transliteration=""/>
         <publisher/>
         <edition/>
         <issuance/>
@@ -58,7 +58,7 @@
         <internetMediaType/>
         <extent/>
         <digitalOrigin/>
-        <note lang="eng" type="" displayLabel="" script="" transliteration=""/>
+        <note xml:lang="" lang="eng" type="" displayLabel="" script="" transliteration=""/>
     </physicalDescription>
     <targetAudience authority="marctarget"/>
     <typeOfResource collection="" manuscript=""/>
@@ -67,17 +67,17 @@
         <topic authority=""/>
         <geographic/>
         <temporal encoding="w3cdtf" point="" keyDate=""/>
-        <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="">
+        <titleInfo xml:lang="" lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="">
             <nonSort/>
             <title/>
             <subTitle/>
             <partNumber/>
             <partName/>
         </titleInfo>
-        <name type="" authority="" lang="" script="" transliteration="">
+        <name type="" authority="" xml:lang="" lang="" script="" transliteration="">
             <namePart type=""/>
         </name>
-        <genre type="code" authority="" lang="" script="" transliteration=""/>
+        <genre type="code" authority="" xml:lang="" lang="" script="" transliteration=""/>
         <hierarchicalGeographic>
             <continent/>
             <country/>
@@ -100,12 +100,12 @@
         <geographicCode authority=""/>
         <occupation/>
     </subject>
-    <classification authority="" edition="" displayLabel="" lang="eng"/>
-    <abstract lang="" script="" transliteration="" type="" displayLabel=""/>
-    <tableOfContents type="" displayLabel="" lang="" script="" transliteration="" xlink:href=""/>
-    <note lang="eng" type="" authority="" displayLabel="" script="" transliteration=""/>
+    <classification authority="" edition="" displayLabel="" xml:lang="" lang=""/>
+    <abstract xml:lang="" lang="" script="" transliteration="" type="" displayLabel=""/>
+    <tableOfContents type="" displayLabel="" xml:lang="" lang="" script="" transliteration="" xlink:href=""/>
+    <note xml:lang="" lang="eng" type="" authority="" displayLabel="" script="" transliteration=""/>
     <relatedItem type="" xlink:href="" ID="" displayLabel="">
-        <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="">
+        <titleInfo xml:lang="" lang="" script="" transliteration="" type="" authority="" displayLabel="">
             <nonSort/>
             <title/>
             <subTitle/>
@@ -130,7 +130,7 @@
     </relatedItem>
     <identifier displayLabel="" type="" invalid=""/>
     <location>
-        <physicalLocation displayLabel="" lang="eng"/>
+        <physicalLocation displayLabel="" xml:lang="" lang=""/>
         <shelfLocator/>
         <url displayLabel="" dateLastAccessed="" note="" access="" usage=""/>
         <holdingSimple>
@@ -146,7 +146,7 @@
         <holdingExternal/>
     </location>
     <accessCondition xlink:href="" lang="" type="" displayLabel="" altRepGroup="" xml:lang="" script="" transliteration=""/>
-    <recordInfo lang="eng" script="" transliteration="" type="" authority="">
+    <recordInfo xml:lang="" lang="eng" script="" transliteration="" type="" authority="">
         <recordContentSource authority=""/>
         <recordCreationDate encoding="w3cdtf" point="" keyDate="" qualifier=""/>
         <recordChangeDate encoding="w3cdtf" point="" keyDate="" qualifier=""/>

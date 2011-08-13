@@ -27,8 +27,7 @@
             </span>
         </div>
         <xf:repeat nodeset="instance('save-data')/mods:titleInfo" id="titleInfo-repeat">
-            <!--<xf:group class="show-hide" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)] | .[not(@type)] | .[not(@authority)] | .[not(@lang)] | .[not(@transliteration)] | .[not(@script)] | .[not(@displayLabel)] | .[not(@ID)]">-->
-            <xf:group class="show-hide">
+            <xf:group class="show-hide" ref="                 .[not(@altRepGroup)] |                  .[not(@authority)] |                  .[not(@authorityURI)] |                  .[not(@displayLabel)] |                  .[not(@ID)] |                 .[not(@lang)] |                  .[not(@nameTitleGroup)] |                  .[not(mods:nonSort)] |                  .[not(mods:partName)] |                  .[not(mods:partNumber)] |                  .[not(@script)] |                  .[not(mods:subTitle)] |                  .[not(@supplied)] |                  .[not(mods:title)] |                  .[not(@transliteration)] |                  .[not(@type)] |                  .[not(@usage)] |                  .[not(@valueURI)] |                  .[not(@xml:lang)] |                  .[not(@xlink:href)]                 ">
                 <xf:switch>
                     <xf:case id="titleInfo-add-node-hide">
                         <div class="node-button">
@@ -222,7 +221,7 @@
                                     <!-- X -->
                                 <xf:group ref=".[not(@xml:lang)]">
                                     <xf:trigger>
-                                        <xf:label>Add XML:Lang</xf:label>
+                                        <xf:label>Add xml:lang</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
                                             <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@xml:lang"/>
@@ -243,8 +242,6 @@
                     </xf:case>
                 </xf:switch>
             </xf:group>
-
-
                 <!--DLF/Aquifer: OPTIONAL-->
             <xf:group class="text_50 schema_3.3 schema_3.4">
                 <xf:input ref="./@ID">
@@ -260,7 +257,7 @@
                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
             <xf:group class="text_50 schema_3.3 schema_3.4">
                 <xf:input ref="./@xlink:href">
-                    <xf:label>XLink<span class="xforms-help">
+                    <xf:label>xlink:href<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
                                 <xf:output mediatype="application/xhtml+xml" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xlink:href']/help"/>
@@ -384,7 +381,7 @@
                 <!--DLF/Aquifer: NOT RECOMMENDED]-->
             <xf:group class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@xml:lang">
-                    <xf:label>XML:Lang<span class="xforms-help">
+                    <xf:label>xml:lang<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xml:lang']/help"/>

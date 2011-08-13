@@ -146,13 +146,13 @@ function initCollectionTree() {
 
 function toggleCollectionTree(show) {
     if (show) {
-        $('#collection-tree').css({width: '300px', height: 'auto', 'background-color': 'transparent'});
-        $('#main-content').css('margin-left', '310px');
+        $('#collection-tree').css({width: '250px', height: 'auto', 'background-color': 'transparent'});
+        $('#main-content').css('margin-left', '260px');
         $('#collection-tree-main').css('display', '');
         $('#simple-search-form input[name = collection-tree]').val('show');
         $('#advanced-search-form input[name = collection-tree]').val('show');
     } else {
-        $('#collection-tree').css({width: '40px', height: '400px', 'background-color': '#CCC'});
+        $('#collection-tree').css({width: '40px', height: '450px', 'background-color': '#EDEDED'});
         $('#main-content').css('margin-left', '50px');
         $('#collection-tree-main').css('display', 'none');
         $('#simple-search-form input[name = collection-tree]').val('hidden');
