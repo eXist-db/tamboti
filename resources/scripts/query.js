@@ -22,6 +22,17 @@ function hideCollectionActionButtons() {
 /* sharing dialog actions */
 $(document).ready(function(){
 
+    $('#clear-all').click(function(){
+        var form = $('#advanced-search-form > form');
+        form.find(':input').each(function() {
+            switch(this.type) {
+                case 'text':
+                    $(this).val('');
+                    break;
+            }
+        });
+    });
+
     hideCollectionActionButtons();
     
     updateSharingGroupMembers($('#group-list').val());
