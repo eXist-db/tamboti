@@ -87,7 +87,7 @@ declare variable $biblio:FIELDS :=
        		(
        		mods:mods[ft:query(.//*, '$q', $options)] 
        			union
-       		ft:search("page:$q")
+       		ft:search('page:$q')
        		)
        	</field>
         <field name="ID">mods:mods[@ID = '$q']</field>
@@ -247,7 +247,7 @@ declare function biblio:generate-query($xml as element()) as xs:string* {
                 fn:concat("collection('", $collection-path, "')//")
             )
             return
-                ($collection, replace($expr, '\$q', $xml/string()))
+                ($collection, replace($expr, '\$q', biblio:escape-search-string($xml/string())))
         case element(collection) return
             if (not($xml/..//field)) then
                 ('collection("', $xml/string(), '")//mods:mods')
@@ -255,6 +255,10 @@ declare function biblio:generate-query($xml as element()) as xs:string* {
                 ()
         default return
             ()
+};
+
+declare function biblio:escape-search-string($search-string as xs:string?) as xs:string? {
+	replace($search-string, "'", "''")
 };
 
 (:~
