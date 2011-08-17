@@ -33,6 +33,13 @@ $(document).ready(function(){
         });
     });
 
+    $("#collection-rename-folder").click(function(){
+        var node = $("#collection-tree-tree").dynatree("getActiveNode");
+        if(node != null){
+            $("#rename-new-name").val(node.data.title);
+        }
+     });
+
     hideCollectionActionButtons();
     
     updateSharingGroupMembers($('#group-list').val());

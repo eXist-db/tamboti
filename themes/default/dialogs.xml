@@ -66,7 +66,7 @@
                 <br/>
             </div>
             <div>
-                <input name="name" type="text"/>
+                <input id="rename-new-name" name="name" type="text"/>
             </div>
         </form>
     </jquery:dialog>
