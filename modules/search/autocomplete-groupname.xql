@@ -12,10 +12,10 @@ let $term := request:get-parameter("term", ()) return
 
     fn:concat("[",
         fn:string-join(
-            for $username in sm:find-users-by-name-part($term) return
+            for $groupname in sm:find-groups-where-groupname-contains($term) return
                 (: not current user, can be remote user or user from biblio users group :)
-                if(sharing:is-valid-user-for-share($username))then
-                    fn:concat("""", $username, """")
+                if(sharing:is-valid-group-for-share($groupname))then
+                    fn:concat("""", $groupname, """")
                 else(),
             ', '
         ),

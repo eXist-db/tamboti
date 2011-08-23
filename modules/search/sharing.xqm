@@ -7,226 +7,121 @@ import module namespace mail = "http://exist-db.org/xquery/mail";
 import module namespace security = "http://exist-db.org/mods/security" at "security.xqm";
 declare namespace group = "http://commons/sharing/group";
 
-declare function sharing:get-groups() as element(group:group)*
-{
-    fn:collection($config:groups-collection)/group:group
-};
-
-declare function sharing:group-exists($groupId as xs:string) as xs:boolean
-{
-    exists(fn:collection($config:groups-collection)/group:group[@id eq $groupId])
-};
-
-declare function sharing:get-group-members($groupId) as xs:string*
-{
-        let $group := sharing:__group-id-to-system-group-name($groupId) return
-            if($group)then(
-                security:get-group-members($group)
-            )else()
-};
-
-declare function sharing:get-group-managers($groupId) as xs:string*
-{
-        let $group := sharing:__group-id-to-system-group-name($groupId) return
-            if($group)then(
-                security:get-group-managers($group)
-            )else()
-};
-
-declare function sharing:get-group-id($collection as xs:string) as xs:string?
-{
-    let $security-group := security:get-group($collection) return
-        fn:string(fn:collection($config:groups-collection)/group:group[group:system/group:group eq $security-group]/@id)
-};
-
-declare function sharing:group-readable($collection as xs:string) as xs:boolean
-{
-    let $group := security:get-group($collection) return
-        if($group)then(
-            security:group-can-read-collection($group, $collection)
-        ) else (
-            false()
-        )
-};
-
-declare function sharing:group-readable($collection as xs:string, $groupId as xs:string) as xs:boolean
-{
-    let $group := sharing:__group-id-to-system-group-name($groupId) return
-        if($group)then(
-            security:group-can-read-collection($group, $collection)
-        ) else (
-            false()
-        )
-};
-
-declare function sharing:group-writeable($collection as xs:string) as xs:boolean
-{
-    let $group := security:get-group($collection) return
-        if($group)then(
-            security:group-can-write-collection($group, $collection)
-        ) else (
-            false()
-        )
-};
-
-declare function sharing:group-writeable($collection as xs:string, $groupId as xs:string) as xs:boolean
-{
-    let $group := sharing:__group-id-to-system-group-name($groupId) return
-        if($group)then(
-            security:group-can-write-collection($group, $collection)
-        ) else (
-            false()
-        )
-};
-
-declare function sharing:other-readable($collection as xs:string) as xs:boolean
-{
-    security:other-can-read-collection($collection)
-};
-
-declare function sharing:other-writeable($collection as xs:string) as xs:boolean
-{
-    security:other-can-write-collection($collection)
-};
-
-
-declare function sharing:__group-id-to-system-group-name($groupId as xs:string) as xs:string?
-{
-    fn:collection($config:groups-collection)/group:group[@id eq $groupId]/group:system/group:group
-};
-
-declare function sharing:share-with-other($collection as xs:string, $read as xs:boolean, $write as xs:boolean) as xs:boolean
-{
-    security:set-other-can-read-collection($collection, $read)
-    and
-    security:set-other-can-write-collection($collection, $write)
-};
-
-declare function sharing:share-with-group($collection as xs:string, $read as xs:boolean, $write as xs:boolean) as xs:boolean
-{
-    security:set-group-can-read-collection($collection, $read)
-    and
-    security:set-group-can-write-collection($collection, $write)
-};
-
-declare function sharing:share-with-group($collection as xs:string, $groupId as xs:string, $read as xs:boolean, $write as xs:boolean) as xs:boolean
-{
-    let $group := sharing:__group-id-to-system-group-name($groupId) return
-    if($group)then
+(: sets an ace on a collection and all the documents in that xcollection :)
+declare function sharing:set-collection-ace-writeable($collection as xs:anyURI, $id as xs:int, $is-writeable as xs:boolean) as xs:boolean {
+    
+    if(security:set-ace-writeable($collection, $id, $is-writeable))then
     (
-        security:set-group-can-read-collection($collection, $group, $read)
-        and
-        security:set-group-can-write-collection($collection, $group, $write)
+        for $resource in xmldb:get-child-resources($collection)
+        let $resource-path := fn:concat($collection, "/", $resource) return
+            if(security:set-ace-writeable($resource-path, $id, $is-writeable))then
+            ()
+            else
+                fn:error(xs:QName("sharing:set-collection-ace-writeable"), fn:concat("Could not set ace at index '", $id, "' for '", $resource-path, "'"))
+        ,
+        true()
     )
     else
-    (
         false()
-    )
 };
 
-declare function sharing:is-group-owner($group-id as xs:string, $user as xs:string) as xs:boolean
-{
-    exists(sharing:get-group($group-id)/group:system[group:owner eq $user])
-};
-
-declare function sharing:is-group-manager($group-id as xs:string, $user as xs:string) as xs:boolean
-{
-    let $group := sharing:__group-id-to-system-group-name($group-id) return
-        security:get-group-managers($group) = $user
-};
-
-declare function sharing:create-group($group-name as xs:string, $owner as xs:string, $group-member as xs:string*) as xs:string?
-{
-    let $new-group-id := util:uuid(),
-    $system-group-name := fn:concat($owner, ".", fn:lower-case(fn:replace($group-name, "[^a-zA-Z0-9]", ""))) return
+(: removes an ace on a collection and all the documents in that xcollection :)
+declare function sharing:remove-collection-ace($collection as xs:anyURI, $id as xs:int) as xs:boolean {
     
-        if(security:create-group($system-group-name, $group-member))then
-        (
-            let $group-doc := xmldb:store($config:groups-collection, (),
-                <group:group id="{$new-group-id}">
-                    <group:system>
-                        <group:owner>{$owner}</group:owner>
-                        <group:group>{$system-group-name}</group:group>
-                    </group:system>
-                    <group:name>{$group-name}</group:name>
-                </group:group>
-            ) return
-                 (: NOTE - 
-                    using $system-group-name means that users can only share with groups of which they are already a member
-                    otherwise $security:biblio-users-group could be used, allowing a user to share with any existing group (whether they are a member of that group or not!)
-                 :)
-                 security:set-resource-permissions($group-doc, $owner, $system-group-name, true(), true(), true(), false(), false(), false()),
-                 $new-group-id
-        )
-        else() 
-};
-
-declare function sharing:remove-group($group-id as xs:string) as xs:boolean {
-    let $group := sharing:get-group($group-id),
-    $sys-group-name := $group/group:system/group:group return
-        () (: TODO call securitymanager:remove-group() :)
-        
-};
-
-declare function sharing:update-group($group-id as xs:string, $group-members as xs:string*) as xs:string
-{
-    let $group := fn:collection($config:groups-collection)/group:group[@id eq $group-id],
-    $system-group := $group/group:system/group:group,
-    $existing-group-members := security:get-group-members($system-group),
-    $group-modifications := (
-        for $existing-group-member in $existing-group-members return
-            if($group-members = $existing-group-member)then
-            (
-                (: user is in both lists, do nothing :)
-            )
-            else
-            (
-                if(count(security:get-group-managers($system-group)) eq 1 and sharing:is-group-manager($group-id, $existing-group-member))then
-                (
-                    (: this user is the last group manager, so dont remove them! :)
-                )
+    let $removed := security:remove-ace($collection, $id) return
+        if(fn:not(fn:empty($removed)))then(
+            for $resource in xmldb:get-child-resources($collection)
+            let $resource-path := fn:concat($collection, "/", $resource) return
+                if(security:remove-ace($resource-path, $id))then
+                ()
                 else
-                (
-                    (: user is not in the new list, remove the user from the group :)
-                    security:remove-user-from-group($existing-group-member, $system-group),
-                    if($config:send-notification-emails)then
-                    (
-                        sharing:send-group-removal-mail($group/group:name, $existing-group-member)
-                    )else()
-                )
-            )
-        ,
-        for $group-member in $group-members return
-            if($existing-group-members = $group-member)then
-            (
-                (: user is in both lists, do nothing :)
-            )
-            else
-            (
-                (: user is not in the new list, add the user to the group :)
-                security:add-user-to-group($group-member, $system-group),
-                if($config:send-notification-emails)then
-                (
-                    sharing:send-group-invitation-mail($group/group:name, $group-member)
-                )else()
-            )
-    ) return
-        $group/@id
+                    fn:error(xs:QName("sharing:remove-collection-ace"), fn:concat("Could not remove ace at index '", $id, "' for '", $resource-path, "'"))
+            ,
+            if($removed[1] eq "USER")then
+                sharing:send-share-user-removal-mail($collection, $removed[2])
+            else if($removed[1] eq "GROUP")then
+                sharing:send-share-group-removal-mail($collection, $removed[2])
+            else(),
+            
+            true()
+        )
+        else
+            false()
 };
 
-declare function sharing:send-group-invitation-mail($group-name as xs:string, $username as xs:string) as empty()
+(: adds a user ace on a collection, and also to all the documents in that xcollection (at the same acl index) :)
+declare function sharing:add-collection-user-ace($collection as xs:anyURI, $username as xs:string) as xs:boolean {
+    
+    let $id := security:add-user-ace($collection, $username, "r--") return
+        if(fn:not(fn:empty($id)))then(
+            for $resource in xmldb:get-child-resources($collection)
+            let $resource-path := fn:concat($collection, "/", $resource) return
+                if(security:insert-user-ace($resource-path, $id, $username, "r--"))then
+                ()
+                else
+                    fn:error(xs:QName("sharing:add-collection-user-ace"), fn:concat("Could not insert ace at index '", $id, "' for '", $resource-path, "'"))
+            ,
+            
+            sharing:send-share-user-invitation-mail($collection, $username),
+            true()
+        )
+        else
+            false()
+};
+
+(: adds a group ace on a collection, and also to all the documents in that xcollection (at the same acl index) :)
+declare function sharing:add-collection-group-ace($collection as xs:anyURI, $groupname as xs:string) as xs:boolean {
+    
+    let $id := security:add-group-ace($collection, $groupname, "r--") return
+        if(fn:not(fn:empty($id)))then(
+            for $resource in xmldb:get-child-resources($collection)
+            let $resource-path := fn:concat($collection, "/", $resource) return
+                if(security:insert-group-ace($resource-path, $id, $groupname, "r--"))then
+                ()
+                else
+                    fn:error(xs:QName("sharing:add-collection-group-ace"), fn:concat("Could not insert ace at index '", $id, "' for '", $resource-path, "'"))
+            ,
+            
+            sharing:send-share-group-invitation-mail($collection, $groupname),
+            true()
+        )
+        else
+            false()
+};
+
+declare function sharing:send-share-user-invitation-mail($collection-path as xs:string, $username as xs:string) as empty()
 {
-    let $mail-template := fn:doc(fn:concat($config:search-app-root, "/group-invitation-email-template.xml")) return
-        mail:send-email(sharing:process-email-template($mail-template, $group-name, $username), $config:smtp-server, ())
+    if($config:send-notification-emails)then
+        let $mail-template := fn:doc(fn:concat($config:search-app-root, "/group-invitation-email-template.xml")) return
+            mail:send-email(sharing:process-email-template($mail-template, $collection-path, $username), $config:smtp-server, ())
+    else()
 };
 
-declare function sharing:send-group-removal-mail($group-name as xs:string, $username as xs:string) as empty()
+declare function sharing:send-share-group-invitation-mail($collection-path as xs:string, $groupname as xs:string) as empty()
 {
-    let $mail-template := fn:doc(fn:concat($config:search-app-root, "/group-removal-email-template.xml")) return
-        mail:send-email(sharing:process-email-template($mail-template, $group-name, $username), $config:smtp-server, ())
+    if($config:send-notification-emails)then
+        for $group-member in security:get-group-members($groupname) return
+            sharing:send-share-user-invitation-mail($collection-path, $group-member)
+    else()
 };
 
-declare function sharing:process-email-template($element as element(), $group-name as xs:string, $username as xs:string) as element() {
+declare function sharing:send-share-user-removal-mail($collection-path as xs:string, $username as xs:string) as empty()
+{
+    if($config:send-notification-emails)then
+        let $mail-template := fn:doc(fn:concat($config:search-app-root, "/group-removal-email-template.xml")) return
+            mail:send-email(sharing:process-email-template($mail-template, $collection-path, $username), $config:smtp-server, ())
+    else()
+};
+
+declare function sharing:send-share-group-removal-mail($collection-path as xs:string, $groupname as xs:string) as empty()
+{
+    if($config:send-notification-emails)then
+        for $group-member in security:get-group-members($groupname) return
+            sharing:send-share-user-removal-mail($collection-path, $group-member)
+    else()
+};
+
+declare function sharing:process-email-template($element as element(), $collection-path as xs:string, $username as xs:string) as element() {
     element {node-name($element) } {
         $element/@*,
         for $child in $element/node() return
@@ -240,9 +135,9 @@ declare function sharing:process-email-template($element as element(), $group-na
                 (
                     text { security:get-email-address-for-user($username) }
                 )
-                else if(fn:node-name($child) eq xs:QName("sharing:group-name"))then
+                else if(fn:node-name($child) eq xs:QName("sharing:collection-path"))then
                 (
-                    text { $group-name }
+                    text { $collection-path }
                 )
                 else if(fn:node-name($child) eq xs:QName("sharing:user-name"))then
                 (
@@ -250,7 +145,7 @@ declare function sharing:process-email-template($element as element(), $group-na
                 )
                 else
                 (
-                    sharing:process-email-template($child, $group-name, $username)
+                    sharing:process-email-template($child, $collection-path, $username)
                 )
             )
             else
@@ -260,18 +155,46 @@ declare function sharing:process-email-template($element as element(), $group-na
     }
 };
 
-declare function sharing:get-users-groups($user as xs:string) as element(group:group)*
-{
-    fn:collection($config:groups-collection)/group:group[group:system/group:group = security:get-groups($user)]       
+declare function sharing:get-shared-collection-roots($write-required as xs:boolean) as xs:string* {
+    for $child-collection in xmldb:get-child-collections($config:users-collection)
+    let $child-collection-path := fn:concat($config:users-collection, "/", $child-collection) return
+        for $user-subcollection in xmldb:get-child-collections($child-collection-path)
+        let $user-subcollection-path := fn:concat($child-collection-path, "/", $user-subcollection) return
+            
+            if($write-required)then
+                if(security:can-write-collection($user-subcollection-path))then
+                    $user-subcollection-path
+                else()
+            else
+                if(security:can-read-collection($user-subcollection-path))then
+                    $user-subcollection-path
+                else()
 };
 
-declare function sharing:get-group($group-id as xs:string) as element(group:group)?
-{
-    fn:collection($config:groups-collection)/group:group[@id eq $group-id]
+declare function sharing:get-shared-with($collection-path as xs:string) as xs:string* {
+    let $permissions := sm:get-permissions(xs:anyURI($collection-path))/sm:permission,
+    $mode := $permissions/@mode return
+    fn:string-join(
+        (
+        if(fn:matches($mode, "...r....."))then
+            "Biblio users"
+        else(),
+        if(fn:matches($mode, "......r.."))then
+            "Anyone"
+        else(),
+        for $ace in $permissions/sm:acl/sm:ace[@access_type eq "ALLOWED"] return
+            $ace/@who
+        ),
+        ", "
+    )
 };
 
-declare function sharing:find-group-collections($group-id as xs:string) as xs:string*
+declare function sharing:is-valid-user-for-share($username as xs:string) as xs:boolean
 {
-    let $system-group := sharing:__group-id-to-system-group-name($group-id) return
-        security:find-collections-with-group($config:users-collection, $system-group)
+    $username ne security:get-user-credential-from-session()[1] and (fn:contains($username, "@") or security:is-biblio-user($username))
+};
+
+declare function sharing:is-valid-group-for-share($groupname as xs:string) as xs:boolean
+{
+    $groupname != ("SYSTEM", "guest", $security:biblio-users-group)
 };

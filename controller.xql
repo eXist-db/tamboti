@@ -2,6 +2,7 @@ xquery version "1.0";
 
 import module namespace session ="http://exist-db.org/xquery/session";
 
+import module namespace config="http://exist-db.org/mods/config" at "modules/config.xqm";
 import module namespace security="http://exist-db.org/mods/security" at "modules/search/security.xqm";
 import module namespace theme="http:/exist-db.org/xquery/biblio/theme" at "modules/theme.xqm";
 
@@ -41,13 +42,13 @@ declare function local:get-item($controller as xs:string, $root as xs:string, $p
     	:)
 };
 
-declare function local:set-user($user as xs:string?, $password as xs:string?) {
+declare function local:set-user($username as xs:string?, $password as xs:string?) {
     session:create(),
     let $session-user-credential := security:get-user-credential-from-session()
     return
-        if ($user) then (
-            security:store-user-credential-in-session($user, $password),
-            <set-attribute xmlns="http://exist.sourceforge.net/NS/exist" name="xquery.user" value="{$user}"/>,
+        if ($username) then (
+            security:store-user-credential-in-session($username, $password),
+            <set-attribute xmlns="http://exist.sourceforge.net/NS/exist" name="xquery.user" value="{$username}"/>,
             <set-attribute xmlns="http://exist.sourceforge.net/NS/exist" name="xquery.password" value="{$password}"/>
         ) else if ($session-user-credential != '') then (
             <set-attribute xmlns="http://exist.sourceforge.net/NS/exist" name="xquery.user" value="{$session-user-credential[1]}"/>,
@@ -59,7 +60,11 @@ declare function local:set-user($user as xs:string?, $password as xs:string?) {
 };
 
 let 
-    $username := request:get-parameter("username",()),
+    $username :=
+        if(request:get-parameter("username",()))then
+            config:rewrite-username(request:get-parameter("username",()))
+        else()
+    ,
     $password := request:get-parameter("password",())
 return
     

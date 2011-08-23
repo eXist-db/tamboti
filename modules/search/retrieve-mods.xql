@@ -7,6 +7,7 @@ declare namespace functx = "http://www.functx.com";
 declare namespace e = "http://www.asia-europe.uni-heidelberg.de/";
 
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
+import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
 
 (: Removes titleIfo, name and relatedItem nodes that do not contain nodes required by the respective elements. :)
 declare function mods:remove-parent-with-missing-required-node($node as node()) as node() {
@@ -1933,7 +1934,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     {
     <tr>
         <td class="collection-label">In Folder:</td>
-        <td><div class="collection">{$collection-short}</div></td>
+        <td><div class="collection">{uu:unescape-collection-path($collection-short)}</div></td>
     </tr>
     ,
             (: names :)

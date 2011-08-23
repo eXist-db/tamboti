@@ -33,6 +33,7 @@ import module namespace mods="http://www.loc.gov/mods/v3" at "retrieve-mods.xql"
 import module namespace sort="http://exist-db.org/xquery/sort" at "java:org.exist.xquery.modules.sort.SortModule";
 import module namespace security="http://exist-db.org/mods/security" at "security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "sharing.xqm";
+import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
 
 declare option exist:serialize "method=xhtml media-type=application/xhtml+xml omit-xml-declaration=no enforce-xhtml=yes";
 
@@ -165,25 +166,6 @@ declare function biblio:form-from-query($incomingQuery as element()?) as element
         </tr>
 };
 
-declare function local:create-group-collections-string($group-ids as xs:string+,  $group-collections as xs:string*) as xs:string*
-{
-    if(not(empty($group-collections)))then(
-        fn:concat(
-            "collection(",
-            fn:string-join(
-                for $shared-collection in $group-collections return
-                    fn:concat("'", $shared-collection, "'")
-            , ","),
-            ")//"
-        )
-    )
-    else
-    (
-        util:log("debug", fn:concat("biblio: could not find any shared collections for the group with id: ", $group-ids)), 
-        fn:concat("collection('", $config:mods-root, "')//")
-    )
-};
-
 (:~
     Generate an XPath query string from the given XML representation
     of the query.
@@ -218,34 +200,17 @@ declare function biblio:generate-query($xml as element()) as xs:string* {
             (:let $log := util:log("DEBUG", ("$expr0: ", $expr0)):)
             let $collection-path := $xml/ancestor::query/collection/string()
             
-            let $collection := if($collection-path eq $config:groups-collection or $collection-path eq fn:replace($config:groups-collection, "/db/", ""))then
-            (
-                let $group-ids := sharing:get-users-groups(security:get-user-credential-from-session()[1])/@id return
-                    if(not(empty($group-ids)))then
-                    (
-                        let $group-collections := for $group-id in $group-ids return
-                            sharing:find-group-collections($group-id)
-                        return
-                            local:create-group-collections-string($group-ids, $group-collections)
-                    )
-                    else
-                    (
-                         util:log("debug", "biblio: could not find any shared collections for this user"), 
-                         fn:concat("collection('", $config:mods-root, "')//")
-                    )
-            )            
-            else if(fn:starts-with($collection-path, $config:groups-collection) or fn:starts-with($collection-path, fn:replace($config:groups-collection, "/db/", "")))then
-            (
-                (: search inside a group of shared collections :)
-                 let $group-id := fn:replace($collection-path, ".*/", ""),
-                 $group-collections := sharing:find-group-collections($group-id) return
-                    local:create-group-collections-string($group-id, $group-collections)
-            )
-            else
-            (
-                (: search a single collection :)
-                fn:concat("collection('", $collection-path, "')//")
-            )
+            let $collection :=
+                if($collection-path eq $config:groups-collection or $collection-path eq fn:replace($config:groups-collection, "/db/", ""))then
+                (
+                    (: searching the virtual 'groups' collection means searching the users collections :)
+                    fn:concat("collection('", $config:users-collection, "')//")
+                )
+                else
+                (
+                    (: search a single collection :)
+                    fn:concat("collection('", $collection-path, "')//")
+                )
             return
                 ($collection, replace($expr, '\$q', biblio:escape-search-string($xml/string())))
         case element(collection) return
@@ -320,7 +285,7 @@ declare function biblio:process-form-parameters($params as xs:string*) as elemen
     the query. Filter out empty parameters and take care of boolean operators.
 :)
 declare function biblio:process-form() as element(query)? {
-    let $collection := request:get-parameter("collection", theme:get-root())
+    let $collection := uu:escape-collection-path(request:get-parameter("collection", theme:get-root()))
     let $fields :=
         (:  Get a list of all input parameters which are not empty,
             ordered by input name. :)
@@ -526,12 +491,12 @@ declare function biblio:notice() as element(div)* {
         (: 1 - is there a login notice :)
         
         (: find all collections that are shared with the current user and whoose modification time is after our last login time :)
-        let $user := security:get-user-credential-from-session()[1],
-        $users-groups := sharing:get-users-groups($user) return
-        if(not(empty($users-groups)))then
+        
+        let $shared-roots := sharing:get-shared-collection-roots(false()) return
+        if(not(empty($shared-roots)))then
         (
-            let $last-login-time := security:get-last-login-time($user),
-            $collections-modified-since-last-login := local:find-sub-collections-with-group-modified-after($config:users-collection, $users-groups/group:system/group:group, $last-login-time) return
+            let $last-login-time := security:get-last-login-time(security:get-user-credential-from-session()),
+            $collections-modified-since-last-login := local:find-collections-modified-after($shared-roots, $last-login-time) return
                
                 if(not(empty($collections-modified-since-last-login)))then
                 (
@@ -539,9 +504,8 @@ declare function biblio:notice() as element(div)* {
                         <p>The following Groups have published new or updated documents since you last logged in:</p>
                         <ul>
                             {
-                                for $modified-collection in $collections-modified-since-last-login
-                                let $sharing-group-id := sharing:get-group-id($modified-collection) return
-                                    <li>{ sharing:get-group($sharing-group-id)/group:name/text() } ({ count(xmldb:get-child-resources($modified-collection)[$last-login-time lt xmldb:last-modified($modified-collection, .)]) })</li>
+                                for $modified-collection in $collections-modified-since-last-login return
+                                    <li>{ fn:replace($modified-collection, ".*/", "") } ({ count(xmldb:get-child-resources($modified-collection)[$last-login-time lt xmldb:last-modified($modified-collection, .)]) })</li>
                             }
                         </ul>
                     </div>
@@ -570,19 +534,15 @@ declare function local:get-collection-last-modified($collection-path as xs:strin
 (:~
 : Find all sub-collections that have a group and are modified after a dateTime
 :)
-declare function local:find-sub-collections-with-group-modified-after($collection-path as xs:string, $groups as xs:string+, $modified-after as xs:dateTime) as xs:string* {
-	for $child-collection in xmldb:get-child-collections($collection-path)
-	let $child-collection-path := fn:concat($collection-path, "/", $child-collection) return
+declare function local:find-collections-modified-after($collection-paths as xs:string*, $modified-after as xs:dateTime) as xs:string* {
+	
+	for $collection-path in $collection-paths return
 	(
-		if(xmldb:get-group($child-collection-path) = $groups and $modified-after lt local:get-collection-last-modified($child-collection-path))then
-		(
-			$child-collection-path
-		)
-		else()
-		
-		,
-		local:find-sub-collections-with-group-modified-after($child-collection-path, $groups, $modified-after)
-	)
+	   if($modified-after lt local:get-collection-last-modified($collection-path)) then
+	       $collection-path
+	   else(),
+       local:find-collections-modified-after(xmldb:get-child-collections($collection-path), $modified-after)
+   )
 };
 
 (:~
@@ -611,229 +571,212 @@ declare function biblio:include-resource($collection as xs:string, $id as xs:str
 :)
 declare function biblio:process-templates($collection as xs:string, $query as element()?, $hitCount as xs:integer?, $node as node()) {
     typeswitch ($node)
-        case element(biblio:notice) 
-        	return biblio:notice()
-        case element(biblio:form-select-current-user-groups) 
-        	return biblio:form-select-current-user-groups($node/@name)
-        case element(biblio:current-user) 
-        	return <span>{request:get-attribute("xquery.user")}</span>
-        case element(biblio:conditional) 
-        	return
-            	let $result := biblio:conditional($collection, $node) 
-            		return
-	                	if ($result)
-	                	then
-	                    	for $child in $result/node() return
-	                        biblio:process-templates($collection, $query, $hitCount, $child)
-	                	else ()
-        case element(biblio:is-collection-owner) 
-        	return
-            	security:is-collection-owner(security:get-user-credential-from-session()[1], request:get-parameter("collection", $config:mods-root))
-        case element(biblio:has-collection-write-permissions) 
-        	return
-            	security:can-write-collection(security:get-user-credential-from-session()[1], request:get-parameter("collection", $config:mods-root))
-        case element() 
-        	return
-            	let $classes := tokenize($node/@class, "\s")
-		            return
-	    	            if ("include" = $classes) 
-	    	            then biblio:include-resource($collection, $classes[2], $query, $hitCount)
-	                	else 
-	                		switch ($node/@id)
-	                    		case "login" 
-	                    			return
-	                        			let $user := request:get-attribute("xquery.user")
-					                        return 
-	                            if ($user eq 'guest') 
-	                            then
-	                                (
-	                                <div class="help"><a href="../../docs/index.xml" target="_blank">Help</a></div>
-	                                ,
-	                                <div class="login"><a href="#" id="login-link">Login</a></div>
-	                                )
-	                            else
-	                                (
-	                                <div class="help"><a href="../../docs/index.xml">Help</a></div>
-	                                ,
-	                                <div class="login">Logged in as <span class="username">{$user}</span>. <a href="?logout=1">Logout</a></div>
-	                                )
-	                    case "collection-path" 
-	                    	return
-	                        	let $collection := functx:replace-first(request:get-parameter("collection", theme:get-root()), "/db/", "")
-			                        return
-	                            		<input class="collection-input" type="text" name="collection" value="{$collection}" readonly="true"/>
-	                    case "form-from-query" 
-	                    	return biblio:form-from-query($query)
-	                    case "query-history-content" 
-	                    	return biblio:query-history()
-	                    case "collection-tree" 
-	                    	return
-		                        let $show := request:get-parameter("collection-tree", "hidden")
-	    		                    return
-	                            <div id="collection-tree" class="{$show}">
-	                            	{for $child in $node/node() return biblio:process-templates($collection, $query, $hitCount, $child)}
-	                            </div>
-	                    case "result-count" 
-	                    	return
-	                        	if ($hitCount != 1)
-	                        	then (<span class="hit-count">{$hitCount}</span>, ' records')
-	                        	else (<span class="hit-count">{$hitCount}</span>, ' record')
-	                    case "optimize-trigger" 
-	                    	return
-	                        	let $user := request:get-attribute("xquery.user")
-	                        		return
-	                            		if (xmldb:is-admin-user($user)) 
-	                            		then <a id="optimize-trigger" href="#">Create custom indexes for sorting</a>
-	                            		else ()
-	                    case "form-select-collection" 
-	                    	return biblio:form-select-collection($collection, $node/@class)
-	                    case "form-collection-sharing" 
-	                    	return biblio:form-collection-sharing(request:get-parameter("collection", $config:mods-root))
-	                    case "form-add-member-to-sharing-group" 
-	                    	return biblio:form-add-member-to-sharing-group()
-	                    case "form-add-sharing-group" 
-	                    	return biblio:form-add-sharing-group()
-	                    case "resource-types" 
-	                    	return
-	                        	let $classifier := $node/@class/string()
-	                        	let $code-tables := concat($config:edit-app-root, '/code-tables')
-	                        	let $document-path := concat($code-tables, '/document-type-codes.xml')
-	                        	let $language-path := concat($code-tables, '/language-3-type-codes.xml')
-	                        	let $transliteration-path := concat($code-tables, '/transliteration-short-codes.xml')
-	                        	let $script-path := concat($code-tables, '/script-codes.xml')
-	                        	let $code-table-type := doc($document-path)/code-table
-	                        	let $code-table-lang := doc($language-path)/code-table
-	                        	let $code-table-transliteration := doc($transliteration-path)/code-table
-	                        	let $code-table-script := doc($script-path)/code-table
-	                        		return 
-	                    <div class="content">
-	                        <form id="{if ($classifier eq 'stand-alone') then 'new-resource-form' else 'add-related-form'}" action="../edit/edit.xq" method="GET">
-	                            <ul>
-	                            {
-	                                for $item in $code-table-type//item[classifier = $classifier]
-	                                order by $item/sort/text(), $item/label/text()
-	                                return
-	                                    <li>
-	                                      <input type="radio" name="type" value="{$item/value/text()}"/><span> {$item/label/text()}</span>
-	                                    </li>
-	                            }
-	                            </ul>
-	                            
-	                            <div class="language-label">
-	                                <label for="languageOfResource">Resource Language: </label>
-	                            <span class="language-list">
-	                            <select name="languageOfResource">
-	                                {
-	                                    for $item in $code-table-lang//item
-	                                    let $label := $item/label/text()
-	                                    let $labelValue := $item/value/text()
-	                                    let $sortOrder := 
-	                                        if (empty($item/frequencyClassifier)) 
-	                                        then 'B' 
-	                                        else 
-	                                            if ($item/frequencyClassifier[. = 'common']) 
-	                                            then 'A' 
-	                                            (: else frequencyClassifier = 'default':)
-	                                            else ''
-	                                    order by $sortOrder, $label
-	                                    return
-	                                        <option value="{$labelValue}">{$item/label/text()}</option>
-	                                }
-	                                </select>
-	                            </span>
-	                            </div>
-	                            
-	                            <div class="language-label">
-	                                <label for="scriptOfResource">Resource Script: </label>
-	                            <span class="language-list">
-	                            <select name="scriptOfResource">
-	                                {
-	                                    for $item in $code-table-script//item
-	                                    let $label := $item/label/text()
-	                                    let $labelValue := $item/value/text()
-	                                    let $sortOrder := 
-	                                    if (empty($item/frequencyClassifier)) 
-	                                    then 'B' 
-	                                    else 
-	                                        if ($item/frequencyClassifier[. = 'common']) 
-	                                        then 'A' 
-	                                        (: else frequencyClassifier = 'default':)
-	                                        else ''
-	                                    order by $sortOrder, $label
-	                                    return
-	                                        <option value="{$labelValue}">{$item/label/text()}</option>
-	                                }
-	                                </select>
-	                            </span>
-	                            </div>
-	                            
-	                            <div class="language-label">
-	                                <label for="transliterationOfResource">Transliteration Scheme: </label>
-	                            <span class="language-list">
-	                            <select name="transliterationOfResource">
-	                                {
-	                                    for $item in $code-table-transliteration//item
-	                                    let $label := $item/label/text()
-	                                    let $labelValue := $item/value/text()
-	                                    return
-	                                        <option value="{$labelValue}">{$item/label/text()}</option>
-	                                }
-	                                </select>
-	                            </span>
-	                            </div>
-	                            
-	                            <div class="language-label">
-	                                <label for="languageOfCataloging">Cataloging Language: </label>
-	                            <span class="language-list">
-	                            <select name="languageOfCataloging">
-	                                {
-	                                    for $item in $code-table-lang//item[(frequencyClassifier)]
-	                                    let $label := $item/label/text()
-	                                    let $labelValue := $item/value/text()
-	                                    let $sortOrder :=                                  
-	                                        if ($item/frequencyClassifier[. = 'common']) 
-	                                        then 'A' 
-	                                        (: else frequencyClassifier = 'default':)
-	                                        else ''
-	                                    order by $sortOrder, $label
-	                                    return
-	                                        <option value="{$labelValue}">{$item/label/text()}</option>
-	                                }
-	                                </select>
-	                            </span>
-	                            </div>
-	                            
-	                            <div class="language-label">
-	                                <label for="scriptOfCataloging">Cataloging Script: </label>
-	                            <span class="language-list">
-	                            <select name="scriptOfCataloging">
-	                                {
-	                                    for $item in $code-table-script//item[(frequencyClassifier)]
-	                                    let $label := $item/label/text()
-	                                    let $labelValue := $item/value/text()
-	                                    let $sortOrder :=  
-	                                        if ($item/frequencyClassifier[. = 'common']) 
-	                                        then 'A' 
-	                                        (: else frequencyClassifier = 'default':)
-	                                        else ''
-	                                    order by $sortOrder, $label
-	                                    return
-	                                        <option value="{$labelValue}">{$item/label/text()}</option>
-	                                }
-	                                </select>
-	                            </span>
-	                            </div>
-	                            
-	                            <input type="hidden" name="collection"/>
-	                            <input type="hidden" name="host"/>
-	                        </form>
-	                    </div>
-	                    default return
-	                        element { node-name($node) } {
-	                            $node/@*,
-	                            for $child in $node/node() return
-	                                biblio:process-templates($collection, $query, $hitCount, $child)
-	                        }
+        case element(biblio:notice) return
+            biblio:notice()        
+        case element(biblio:current-user) return
+            <span>{request:get-attribute("xquery.user")}</span>
+        case element(biblio:conditional) return
+            let $result := biblio:conditional($collection, $node) return
+	           if($result) then
+	               for $child in $result/node() return
+	                   biblio:process-templates($collection, $query, $hitCount, $child)
+	           else()
+        
+        case element() return
+            let $classes := tokenize($node/@class, "\s")
+            return
+                if ("include" = $classes) then
+                    biblio:include-resource($collection, $classes[2], $query, $hitCount)
+                else
+                switch ($node/@id)
+                    case "login" return
+                        let $user := request:get-attribute("xquery.user")
+                        return 
+                        (
+                            if ($user eq 'guest') then
+                                (
+                                <div class="help"><a href="../../docs/index.xml" target="_blank">Help</a></div>
+                                ,
+                                <div class="login"><a href="#" id="login-link">Login</a></div>
+                                )
+                            else
+                                (
+                                <div class="help"><a href="../../docs/index.xml">Help</a></div>
+                                ,
+                                <div class="login">Logged in as <span class="username">{let $human-name := security:get-human-name-for-user($user) return if(fn:not(fn:empty($human-name)))then $human-name else $user}</span>. <a href="?logout=1">Logout</a></div>
+                                )
+                        )
+                    case "collection-path" return
+                        let $collection := functx:replace-first(uu:escape-collection-path(request:get-parameter("collection", theme:get-root())), "/db/", "")
+                        return
+                            <input class="collection-input" type="text" name="collection" value="{uu:unescape-collection-path($collection)}" readonly="true"/>
+                    case "form-from-query" return
+                        biblio:form-from-query($query)
+                    case "query-history-content" return
+                        biblio:query-history()
+                    case "collection-tree" return
+                        let $show := request:get-parameter("collection-tree", "hidden")
+                        return
+                            <div id="collection-tree" class="{$show}">
+                            {for $child in $node/node() return biblio:process-templates($collection, $query, $hitCount, $child)}
+                            </div>
+                    case "result-count" return
+                        if ($hitCount != 1)
+                        then (<span class="hit-count">{$hitCount}</span>, ' records')
+                        else (<span class="hit-count">{$hitCount}</span>, ' record')
+                    case "optimize-trigger" return
+                        let $user := request:get-attribute("xquery.user")
+                        return
+                            if (xmldb:is-admin-user($user)) then
+                                <a id="optimize-trigger" href="#">Create custom indexes for sorting</a>
+                            else
+                                ()
+                    case "form-collection-sharing" return
+                        biblio:form-collection-sharing(uu:escape-collection-path(request:get-parameter("collection", $config:mods-root)))
+                    case "form-add-user-to-share" return
+                        biblio:form-add-user-to-share()
+                    case "form-add-project-to-share" return
+                        biblio:form-add-project-to-share()
+                    case "resource-types" return
+                        let $classifier := $node/@class/string()
+                        let $code-tables := concat($config:edit-app-root, '/code-tables')
+                        let $document-path := concat($code-tables, '/document-type-codes.xml')
+                        let $language-path := concat($code-tables, '/language-3-type-codes.xml')
+                        let $transliteration-path := concat($code-tables, '/transliteration-short-codes.xml')
+                        let $script-path := concat($code-tables, '/script-codes.xml')
+                        let $code-table-type := doc($document-path)/code-table
+                        let $code-table-lang := doc($language-path)/code-table
+                        let $code-table-transliteration := doc($transliteration-path)/code-table
+                        let $code-table-script := doc($script-path)/code-table
+                        return 
+                            <div class="content">
+                                <form id="{if ($classifier eq 'stand-alone') then 'new-resource-form' else 'add-related-form'}" action="../edit/edit.xq" method="GET">
+                                    <ul>
+                                    {
+                                        for $item in $code-table-type//item[classifier = $classifier]
+                                        order by $item/sort/text(), $item/label/text()
+                                        return
+                                            <li>
+                                              <input type="radio" name="type" value="{$item/value/text()}"/><span> {$item/label/text()}</span>
+                                            </li>
+                                    }
+                                    </ul>
+                                    
+                                    <div class="language-label">
+                                        <label for="languageOfResource">Resource Language: </label>
+                                    <span class="language-list">
+                                    <select name="languageOfResource">
+                                        {
+                                            for $item in $code-table-lang//item
+                                            let $label := $item/label/text()
+                                            let $labelValue := $item/value/text()
+                                            let $sortOrder := 
+                                                if (empty($item/frequencyClassifier)) 
+                                                then 'B' 
+                                                else 
+                                                    if ($item/frequencyClassifier[. = 'common']) 
+                                                    then 'A' 
+                                                    (: else frequencyClassifier = 'default':)
+                                                    else ''
+                                            order by $sortOrder, $label
+                                            return
+                                                <option value="{$labelValue}">{$item/label/text()}</option>
+                                        }
+                                        </select>
+                                    </span>
+                                    </div>
+                                    
+                                    <div class="language-label">
+                                        <label for="scriptOfResource">Resource Script: </label>
+                                    <span class="language-list">
+                                    <select name="scriptOfResource">
+                                        {
+                                            for $item in $code-table-script//item
+                                            let $label := $item/label/text()
+                                            let $labelValue := $item/value/text()
+                                            let $sortOrder := 
+                                            if (empty($item/frequencyClassifier)) 
+                                            then 'B' 
+                                            else 
+                                                if ($item/frequencyClassifier[. = 'common']) 
+                                                then 'A' 
+                                                (: else frequencyClassifier = 'default':)
+                                                else ''
+                                            order by $sortOrder, $label
+                                            return
+                                                <option value="{$labelValue}">{$item/label/text()}</option>
+                                        }
+                                        </select>
+                                    </span>
+                                    </div>
+                                    
+                                    <div class="language-label">
+                                        <label for="transliterationOfResource">Transliteration Scheme: </label>
+                                    <span class="language-list">
+                                    <select name="transliterationOfResource">
+                                        {
+                                            for $item in $code-table-transliteration//item
+                                            let $label := $item/label/text()
+                                            let $labelValue := $item/value/text()
+                                            return
+                                                <option value="{$labelValue}">{$item/label/text()}</option>
+                                        }
+                                        </select>
+                                    </span>
+                                    </div>
+                                    
+                                    <div class="language-label">
+                                        <label for="languageOfCataloging">Cataloging Language: </label>
+                                    <span class="language-list">
+                                    <select name="languageOfCataloging">
+                                        {
+                                            for $item in $code-table-lang//item[(frequencyClassifier)]
+                                            let $label := $item/label/text()
+                                            let $labelValue := $item/value/text()
+                                            let $sortOrder :=                                  
+                                                if ($item/frequencyClassifier[. = 'common']) 
+                                                then 'A' 
+                                                (: else frequencyClassifier = 'default':)
+                                                else ''
+                                            order by $sortOrder, $label
+                                            return
+                                                <option value="{$labelValue}">{$item/label/text()}</option>
+                                        }
+                                        </select>
+                                    </span>
+                                    </div>
+                                    
+                                    <div class="language-label">
+                                        <label for="scriptOfCataloging">Cataloging Script: </label>
+                                    <span class="language-list">
+                                    <select name="scriptOfCataloging">
+                                        {
+                                            for $item in $code-table-script//item[(frequencyClassifier)]
+                                            let $label := $item/label/text()
+                                            let $labelValue := $item/value/text()
+                                            let $sortOrder :=  
+                                                if ($item/frequencyClassifier[. = 'common']) 
+                                                then 'A' 
+                                                (: else frequencyClassifier = 'default':)
+                                                else ''
+                                            order by $sortOrder, $label
+                                            return
+                                                <option value="{$labelValue}">{$item/label/text()}</option>
+                                        }
+                                        </select>
+                                    </span>
+                                    </div>
+                                    
+                                    <input type="hidden" name="collection"/>
+                                    <input type="hidden" name="host"/>
+                                </form>
+                            </div>
+                    default return
+                        element { node-name($node) } {
+                            $node/@*,
+                            for $child in $node/node() return
+                                biblio:process-templates($collection, $query, $hitCount, $child)
+                        }
         default return
             $node
 };
@@ -848,152 +791,49 @@ declare function biblio:form-select-current-user-groups($select-name as xs:strin
         </select>
 };
 
-declare function biblio:form-select-collection($current-collection as xs:string, $select-name as xs:string) as element(select) {
-
-        <select name="{$select-name}">
-        {
-            if(security:can-write-collection(security:get-user-credential-from-session()[1], "/db"))then
-            (
-                element option {
-                    if("/db" eq $current-collection)then
-                    (
-                        attribute selected { "selected" }
-                    )else(),
-                    text { "/db" }
-                }
-            )else(),
-        
-            for $sub-collection-path in biblio:get-writeable-subcollection-paths("/db") return
-                element option {
-                    if($sub-collection-path eq $current-collection)then
-                    (
-                        attribute selected { "selected" }
-                    )else(),
-                    text { $sub-collection-path }
-                }
-        }
-        </select>
-};
-
-declare function biblio:form-add-member-to-sharing-group() {
-     <jquery:dialog id="add-member-to-group-sharing-dialog" modal="true" title="Add User to Group" width="450">
+declare function biblio:form-add-user-to-share() {
+     <jquery:dialog id="add-user-to-share-dialog" modal="true" title="Add User to Share" width="450">
         <div>
-            <jquery:input name="members-list" id="members-list">
-                <jquery:autocomplete url="autocomplete-username.xql" width="300" multiple="false" matchContains="false"/>
+            <span>Enter the users name:</span>
+            <jquery:input name="user-auto-list" id="user-auto-list">
+                <jquery:autocomplete url="autocomplete-username.xql" width="300" multiple="false" matchContains="false" minLength="2"/>
             </jquery:input>
         </div>
-        <input id="add-member-to-group-button" type="button" value="Add"/>
+        <input id="add-user-to-share-button" type="button" value="Add"/>
     </jquery:dialog>
 };
 
-declare function biblio:form-add-sharing-group() {
-    <jquery:dialog id="new-group-sharing-dialog" modal="true" title="New Group" width="200">
-        <label for="new-group-name" value="Group Name"/><input type="text" id="new-group-name"/>
-        <input id="add-group-button" type="button" value="Add"/>
+declare function biblio:form-add-project-to-share() {
+    <jquery:dialog id="add-project-to-share-dialog" modal="true" title="Add Project to Share" width="450">
+        <div>
+            <span>Enter the project name:</span>
+            <jquery:input name="project-auto-list" id="project-auto-list">
+                <jquery:autocomplete url="autocomplete-groupname.xql" width="300" multiple="false" matchContains="false" minLength="2"/>
+            </jquery:input>
+        </div>
+        <input id="add-project-to-share-button" type="button" value="Add"/>
     </jquery:dialog>
 };
 
 declare function biblio:form-collection-sharing($collection as xs:string) {
-    <jquery:dialog id="sharing-collection-dialog" modal="true" title="Folder Sharing" trigger="#collection-sharing" width="550" onOpen="updateSharingDialog">
-        <jquery:button label="Update" function="updateCollectionSharing"/>
-        <jquery:button id="cancel" label="Cancel"/>
-        <form id="update-collection-sharing-form" action="operations.xql">
-            <input id="sharing-collection-path_" type="hidden" name="collection"/>
-            <div>Sharing settings for: <span id="sharing-collection-path_"></span></div>
-            <div class="sharing-option">
-                <input type="checkbox" id="sharing-collection-with-group" name="sharing-collection-with" value="group">
-                {
-                 (:   if(sharing:group-readable($collection))then(attribute checked{ "checked" })else()
-                 :)
-                 ()
-                }
-                </input>
-                <label for="sharing-collection-with-group" class="labelWithCheckboxLeft">Share with Group</label>
-                {
-                let $groups := sharing:get-groups(),
-                $collection-group-id := sharing:get-group-id($collection) return
-                    <div id="group-sharing-panel" class="sharing-panel">
-                        <div>   
-                            <span>
-                                <input id="group-sharing-permissions-write" type="checkbox" name="group-sharing-permissions" value="write">
-                                {
-                                    (:
-                                    if(sharing:group-writeable($collection))then(attribute checked{ "checked" })else()
-                                    :)
-                                    ()
-                                }
-                                </input>
-                                <label for="group-sharing-permissions-write" class="labelWithCheckboxLeft">Allow Write Access</label>
-                            </span>
-                        </div>
-                        <div>
-                            <label for="group-list">Group</label>
-                            <select id="group-list" name="group">
-                            {
-                                for $group in $groups return
-                                    if($group/@id eq $collection-group-id)then
-                                    (
-                                        <option selected="selected" value="{$group/@id}">{$group/group:name/text()}</option>
-                                    )
-                                    else
-                                    (
-                                        <option value="{$group/@id}">{$group/group:name/text()}</option>
-                                    )
-                            }
-                            </select>
-                            <input id="remove-group-button" type="button" value="Remove Group"/>
-                            <input id="new-group-button" type="button" value="New Group"/>
-                        </div>
-                        <div id="group-members">
-                            <div>
-                                <label for="group-members-list">Members</label>
-                                <ui id="group-members-list">
-                                {
-                                    (: get members of the selected group, or if none selected then the first group :)
-                                    let $selected-group := if(not(empty($groups[@id eq $collection-group-id])))then($groups[@id eq $collection-group-id])else($groups[1]) return
-                                        if($selected-group)then
-                                        (
-                                            for $group-member at $i in sharing:get-group-members($selected-group/@id) return
-                                            <li>
-                                                <input id="group-member-{$i}" type="checkbox" name="group-member" value="{$group-member}" checked="checked"/>
-                                                <label id="group-member-{$i}" class="labelWithCheckboxLeft">{$group-member}</label>
-                                            </li>
-                                        )else()
-                                }
-                                </ui>
-                            </div>
-                            <input id="add-new-member-to-group-button" type="button" value="Add Member"/>
-                        </div>
-                    </div>
-            }
-            </div>
-            <div class="sharing-option">
-                <input type="checkbox" id="sharing-collection-with-other" name="sharing-collection-with" value="other">
-                {
-                    (:
-                    if(sharing:other-readable($collection))then(attribute checked{ "checked" })else()
-                    :)
-                    ()
-                }
-                </input>
-                <label for="sharing-collection-with-other" class="labelWithCheckboxLeft">Share with Everyone</label>
-                <div id="other-sharing-panel" class="sharing-panel">
-                    <div>
-                        <span>
-                            <input id="other-sharing-permissions-write" type="checkbox" name="other-sharing-permissions" value="write">
-                            {
-                                (:
-                                if(sharing:other-writeable($collection))then(attribute checked{ "checked" })else()
-                                :)
-                                ()
-                            }
-                            </input>
-                            <label for="other-sharing-permissions-write" class="labelWithCheckboxLeft">Allow Write Access</label>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </form>
+    <jquery:dialog id="sharing-collection-dialog" modal="true" title="Folder Sharing" trigger="#collection-sharing" width="600" onOpen="updateSharingDialog">
+        <jquery:button id="cancel" label="Close"/>
+        <div>Folder <span id="sharing-collection-path_"></span> is shared with:</div>
+        <table id="collectionSharingDetails">
+            <thead>
+                <tr>
+                    <th><!-- Icon --> </th>
+                    <th>Name</th>
+                    <th>Is</th>
+                    <th>Can Write?</th>
+                    <th><!-- Action e.g. remove --></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <input id="add-new-user-to-share-button" type="button" value="Add User"/>
+        <input id="add-new-project-to-share-button" type="button" value="Add Project"/>
     </jquery:dialog>
 };
 
@@ -1002,7 +842,7 @@ declare function biblio:get-writeable-subcollection-paths($path as xs:string) {
 	for $sub in xmldb:get-child-collections($path)
 	let $col := concat($path, "/", $sub) return
 		(
-			if(security:can-write-collection(security:get-user-credential-from-session()[1], $col))then
+			if(security:can-write-collection($col))then
 			(
 			 $col
 			)else(),
@@ -1121,7 +961,7 @@ let $history := request:get-parameter("history", ())
 let $reload := request:get-parameter("reload", ())
 let $clear := request:get-parameter("clear", ())
 let $mylist := request:get-parameter("mylist", ())
-let $collection0 := request:get-parameter("collection", $config:mods-root)
+let $collection0 := uu:escape-collection-path(request:get-parameter("collection", $config:mods-root))
 let $collection := if (starts-with($collection0, "/db")) then $collection0 else concat("/db", $collection0)
 let $id := request:get-parameter("id", ())
 let $value := request:get-parameter("value",())

@@ -48,3 +48,26 @@ declare variable $config:smtp-from-address := "exist@yourdomain.com";
 declare variable $config:dba-credentials := ("admin", ());
 
 declare variable $config:allow-origin := "";
+
+(:~ 
+: Function hook which allows you to modify the username of the user
+: before they are authenticated.
+: Allows you to force a realm id etc.
+: 
+: @param username The username as entered by the user
+: @return the modified username which will be used for authentication
+:)
+declare function config:rewrite-username($username as xs:string) as xs:string {
+    
+    $username
+    
+    (: for example: :)
+    
+    (:
+    let $enforced-realm-id := "ad.uni-heidelberg.de" return
+        if(fn:ends-with(fn:lower-case($username), fn:concat("@", $enforced-realm-id)) or fn:lower-case($username) = ("admin", "editor", "guest")) then
+            $username
+        else
+            fn:concat($username, "@", $enforced-realm-id)
+    :)
+};

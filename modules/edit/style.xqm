@@ -176,6 +176,8 @@ as node()+ {
                 Tamboti Metadata Framework - MODS record editor
             Tamboti-end-->
             </title>
+            <script type="text/javascript" src="libs/scripts/jquery/jquery-1.6.2.min.js"></script> 
+            <script type="text/javascript" src="../session.js.xql"></script>
             <link rel="stylesheet" type="text/css" href="edit.css"/>
             <!--Tamboti-begin
                 <link rel="stylesheet" type="text/css" href="tamboti.css"/>

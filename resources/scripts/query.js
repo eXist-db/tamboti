@@ -22,6 +22,8 @@ function hideCollectionActionButtons() {
 /* sharing dialog actions */
 $(document).ready(function(){
 
+    bindKeyPressActions();
+
     $('#clear-all').click(function(){
         var form = $('#advanced-search-form > form');
         form.find(':input').each(function() {
@@ -32,7 +34,44 @@ $(document).ready(function(){
             }
         });
     });
+    
+    bindAdditionalDialogTriggers();
+    
+    hideCollectionActionButtons();
+    
+    prepareCollectionSharingDetails();
+    
+    //add new user to share event
+    $('#add-new-user-to-share-button').click(function(){
+        $('#add-user-to-share-dialog').dialog('open');
+    });
+    
+    $('#add-user-to-share-button').click(function(){
+        addUserToShare();
+    });
+    
+    //add new project to share event
+    $('#add-new-project-to-share-button').click(function(){
+        $('#add-project-to-share-dialog').dialog('open');
+    });
+    
+    $('#add-project-to-share-button').click(function(){
+        addProjectToShare();
+    });
+    
+    showNotices();
+});
 
+function bindAdditionalDialogTriggers() {
+    
+    $("#collection-move-folder").click(function(){
+        refreshCollectionMoveList();
+    });
+    
+    $("#collection-create-folder").click(function(){
+        $("#new-collection-name").val('');
+    });
+     
     $("#collection-rename-folder").click(function(){
         var node = $("#collection-tree-tree").dynatree("getActiveNode");
         if(node != null){
@@ -40,38 +79,44 @@ $(document).ready(function(){
         }
      });
 
-    hideCollectionActionButtons();
+}
+
+function bindKeyPressActions() {
     
-    updateSharingGroupMembers($('#group-list').val());
-    $('#group-list').change(function(){
-        updateSharingGroupMembers($('#group-list').val());
+    //login username, when enter is pressed, move to password
+    $('#loginUsername').keyup(function(e) {
+        if($('#loginUsername').val() != null && $('#loginUsername').val() != "") {
+            if(e.keyCode == 13) {
+                $('#loginPassword').focus();
+            }
+        }
     });
     
-    //add member to group events
-    $('#add-new-member-to-group-button').click(function(){
-        $('#add-member-to-group-sharing-dialog').dialog('open');
+    //login password, when enter is pressed, login
+    $('#loginPassword').keyup(function(e) {
+        if($('#loginPassword').val() != null && $('#loginPassword').val() != "") {
+            if(e.keyCode == 13) {
+                login();
+            }
+        }
     });
     
-    $('#add-member-to-group-button').click(function(){
-        addMemberToSharingGroupMembers($('#members-list').val(), true);
-        $('#add-member-to-group-sharing-dialog').dialog('close');
+    //new collection name, when enter is pressed, dont submit
+    $('#create-collection-form').submit(function() {
+        if($('#new-collection-name').val() != null && $('#new-collection-name').val() != "") {
+            createCollection($('#new-collection-dialog'));
+        }
+        return false;
     });
     
-    //add group events
-    $('#remove-group-button').click(function(){
-        removeGroup();
+    //rename collection name, when enter is pressed, dont submit
+    $('#rename-collection-form').submit(function() {
+        if($('#rename-new-name').val() != null && $('#rename-new-name').val() != "") {
+            renameCollection($('#rename-collection-dialog'));
+        }
+        return false;
     });
-    $('#new-group-button').click(function(){
-        $('#new-group-sharing-dialog').dialog('open');
-    });
-    
-    $('#add-group-button').click(function(){
-        addNewGroupToGroupList($('#new-group-name').val());
-        $('#new-group-sharing-dialog').dialog('close');
-    });
-    
-    showNotices();
-});
+}
 
 function getCurrentCollection() {
     return "/db" + $('#simple-search-form input[name = collection]').val();
@@ -205,10 +250,13 @@ function showHideCollectionControls() {
          data looks like this -
         
             <relationship user="" collection="">
-                <read></read>
-                <write></write>
-                <home></home>
-                <owner></owner>
+                <home/>
+                <owner/>
+                <read/>
+                <write/>
+                <read-parent/>
+                <write-parent/>
+                <execute-parent/>
             </relationship>
         */
     
@@ -220,6 +268,12 @@ function showHideCollectionControls() {
         
         var owner = $(data).find('owner');
         var isOwner = (owner != null && owner.text() == 'true');
+        
+        var parentWrite = $(data).find('write-parent');
+        var isParentWriteable = (parentWrite != null && parentWrite.text() == 'true');
+        
+        var parentExecute = $(data).find('execute-parent');
+        var isParentExecutable = (parentExecute != null && parentExecute.text() == 'true');
         
         //collection is writeable
         if(isWriteable){
@@ -241,10 +295,15 @@ function showHideCollectionControls() {
         if(isWriteable && !isUsersHome && isOwner) {
             $('#collection-rename-folder').show();
             $('#collection-move-folder').show();
-            $('#collection-remove-folder').show();
         } else {
             $('#collection-rename-folder').hide();
             $('#collection-move-folder').hide();
+        }
+        
+        //parent is writeable and executable and its not the current users home folder
+        if(isParentWriteable && isParentExecutable && !isUsersHome) {
+            $('#collection-remove-folder').show();
+        } else {
             $('#collection-remove-folder').hide();
         }
     });
@@ -259,6 +318,27 @@ function removeResource(dialog) {
     $.get("operations.xql", params, function (data) {
         dialog.dialog("close");
         $(location).attr('href', 'index.html?reload=true&collection=' + getCurrentCollection());
+    });
+}
+
+function refreshResourceMoveList() { 
+    
+    var collection = getCurrentCollection();
+    
+    //set the current collection on the form
+    $("#move-resource-collection-path-label").html(collection);
+    $("#move-resource-collection").val(collection);
+    
+    //get the destination collection options
+    var params = { action: 'get-move-resource-list', collection: collection };
+    $.get("operations.xql", params, function (data) {
+        
+        //clear the list
+        $("#resource-move-destinations").find("option").remove();
+        
+        $("option", data).each(function(){
+            $("#resource-move-destinations").append("<option value='" + $.trim($(this).attr("value")) + "'>" + $.trim($(this).text()) + "</option>");
+        });
     });
 }
 
@@ -363,6 +443,24 @@ function renameCollection(dialog) {
     });
 }
 
+function refreshCollectionMoveList() { 
+    var node = $("#collection-tree-tree").dynatree("getActiveNode");
+    if(node != null) {
+        var selectedCollection = node.data.key;
+        
+        var params = { action: 'get-move-folder-list', collection: selectedCollection };
+        $.get("operations.xql", params, function (data) {
+            
+            //clear the list
+            $("#collection-move-destinations").find("option").remove();
+            
+            $("option", data).each(function(){
+                $("#collection-move-destinations").append("<option value='" + $.trim($(this).attr("value")) + "'>" + $.trim($(this).text()) + "</option>");
+            });
+        });
+    }
+}
+
 /*
     Called when the user clicks on the "move" button in the move collection dialog.
  */
@@ -402,44 +500,6 @@ function removeCollection(dialog) {
         
         //reload the parent tree node
         refreshParentTreeNode();
-       
-        //close the dialog
-        dialog.dialog("close");
-    });
-}
-
-/*
-    Called when the user clicks on the "save" button in the collection sharing dialog
- */
-function updateCollectionSharing(dialog) {
-    var collection = getCurrentCollection();
-   
-    var sharingCollectionWith = [];   
-    $('input:checked[type="checkbox"][name="sharing-collection-with"]').each(function() {
-        sharingCollectionWith.push($(this).val());
-    });
-    
-    var groupList = $('#group-list').val();
-    
-    var groupMember = [];
-    $('input:checked[type="checkbox"][name="group-member"]').each(function() {
-        groupMember.push($(this).val());
-    });
-    
-    var groupSharingPermissions = [];
-    $('input:checked[type="checkbox"][name="group-sharing-permissions"]').each(function() {
-        groupSharingPermissions.push($(this).val());
-    });
-    
-    var otherSharingPermissions = [];
-    $('input:checked[type="checkbox"][name="other-sharing-permissions"]').each(function() {
-        otherSharingPermissions.push($(this).val());
-    });
-    
-    var params = { "action":"update-collection-sharing", "collection":collection, "sharingCollectionWith":sharingCollectionWith, "groupList": groupList, "groupMember": groupMember, "groupSharingPermissions": groupSharingPermissions, "otherSharingPermissions": otherSharingPermissions };
-    $.post("operations.xql", params, function (data) {
-        //reload the tree node
-        refreshCurrentTreeNode();
        
         //close the dialog
         dialog.dialog("close");
@@ -576,6 +636,7 @@ function resultsLoaded(options) {
     /** add move resource action */
     $('.actions-toolbar .move-resource', this).click(function() {
         $('#move-resource-id').val($(this).attr('href').substr(1));
+        refreshResourceMoveList();
         $('#move-resource-dialog').dialog('open');
         return false;
     });
@@ -600,205 +661,189 @@ function searchTabSelected(ev, ui) {
     }
 }
 
-//called when the collection/folder sharing dialog is opened
+//collection sharing dialog initialisation code
+function prepareCollectionSharingDetails() {
+
+    //add reloadAjax function
+    $.fn.dataTableExt.oApi.fnReloadAjax = dataTableReloadAjax;
+
+    //initialise with initial data
+    $('#collectionSharingDetails').dataTable({
+        "bProcessing": true,
+        "sPaginationType": "full_numbers",
+        "fnRowCallback": collectionSharingDetailsRowCallback,
+        "sAjaxSource": "sharing.xql"
+    });
+};
+
+//called each time the collection/folder sharing dialog is opened
 function updateSharingDialog() {
-     
-    //hide remove group button by default, may be re-enabled below if permissions are correct
-    $('#remove-group-button').hide();
-     
-     var collection = getCurrentCollection();
-     
-     //load the groups and select the current group
-     var params = { action: "get-groups", collection: collection };
-     $.get("operations.xql", params, function(data) {
-        var groups = $(data).find("groups").children();
-        if(groups != null) {
-        
-            //clear all current entries
-            var groupList = $('#group-list').find('option').remove().end();
-            groupList.append('<option disabled="disabled" value=""></option>');
-            
-            //add entries from server
-            $(groups).each(function(){
-                var v = $(this).attr('id');
-                var n = $(this).find('name').text();
-                
-                if($(this).attr('collection') != null){
-                    $(groupList).append('<option selected="selected" value="' + v + '">' + n + '</option>');
-                } else {
-                   $(groupList).append('<option value="' + v + '">' + n + '</option>');
-                }
-            });
-            
-            //update group sharing details
-            $(groups).each(function(){
-                if($(this).attr('collection') != null) {
-                    var groupId = $(this).attr('id');
-                    updateSharingGroupMembers(groupId);
-                    return false;
-                }
-            });
-        }
-     });
-     
-     //update other sharing details
-     updateSharingOtherCheckboxes();
+   $('#collectionSharingDetails').dataTable().fnReloadAjax("sharing.xql?collection=" + escape(getCurrentCollection()));
 }
 
-function updateSharingGroupMembers(groupId) {
-
-    if(groupId){
-        var params = { action: "get-sharing-group-members", groupId: groupId };
-        $.get("operations.xql", params, function(data) {
-            
-            //remove any existing members
-            $('#group-members-list').find('li').remove();
-        
-            var owner = false;
-            if($(data).find('owner true').size() == 1)
-            {
-                owner = true;
-                $('#add-new-member-to-group-button').show();
-            } else if($('#group-list :selected').val() == $('#group-list :selected').text()) {
-                owner = true;   //this is a new group i.e. we own it!
-                $('#add-new-member-to-group-button').show();
-            } else {
-                $('#add-new-member-to-group-button').hide();
-            }
-        
-            //add new members
-            $(data).find('member').each(function(){
-                addMemberToSharingGroupMembers($(this).text(), owner);
-            });
-            
-            //if we are the owner of the group, we can show a button to remove the group
-            var owner = $(data).find('members').attr('owner');
-            if(owner != null && owner == 'true') {
-                $('#remove-group-button').show();
-            } else {
-                $('#remove-group-button').hide();
-            }
-        });
-        
-        updateSharingGroupCheckboxes(groupId);
-    } else {
-        
-        //if there is no group id, we cant remove the group so hide the option
-        $('#remove-group-button').hide();
+//custom fnReloadAjax for sharing dataTable
+function dataTableReloadAjax(oSettings, sNewSource, fnCallback) {
+    if(typeof sNewSource != 'undefined'){
+        oSettings.sAjaxSource = sNewSource;
     }
-}
 
-function updateSharingGroupCheckboxes(groupId) {
-    //set the read/write checkboxes
-    var collection = getCurrentCollection();
-    var params = { action: "get-group-permissions", groupId: groupId, collection: collection };
-    $.get("operations.xql", params, function(data) {
-        
-        //set read checkbox
-        var readPermissions = $(data).find('read');
-        
-        //set write checkbox
-        var writePermissions = $(data).find('write');
-        if(writePermissions.size() == 1){
-            $('#group-sharing-permissions-write').get(0).checked = true;
-        } else {
-            $('#group-sharing-permissions-write').get(0).checked = false;
+    this.oApi._fnProcessingDisplay(oSettings, true);
+
+    var that = this;
+
+    oSettings.fnServerData( oSettings.sAjaxSource, null, function(json) {
+
+        /* Clear the old information from the table */
+        that.oApi._fnClearTable( oSettings );
+        /* Got the data - add it to the table */
+
+        for(var i = 0 ; i < json.aaData.length; i++) {
+            that.oApi._fnAddData( oSettings, json.aaData[i] );
         }
-        
-        //set sharing checkbox
-        if(readPermissions.size() + writePermissions.size() >= 1) {
-            $('#sharing-collection-with-group').get(0).checked = true;
-        } else {
-            $('#sharing-collection-with-group').get(0).checked = false;
+
+        oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+        that.fnDraw(that);
+        that.oApi._fnProcessingDisplay(oSettings, false);
+
+        /* Callback user function - for event handlers etc */
+        if( typeof fnCallback == 'function'){
+            fnCallback(oSettings);
         }
     });
 }
 
-function updateSharingOtherCheckboxes() {
-     //set the read/write checkboxes
-    var collection = getCurrentCollection();
-    var params = { action: "get-other-permissions", collection: collection };
-    $.get("operations.xql", params, function(data) {
+//custom rendered for each row of the sharing dataTable
+function collectionSharingDetailsRowCallback(nRow, aData, iDisplayIndex) {
+    //determine user or group icon for first column
+    if(aData[0] == "USER") {
+        $('td:eq(0)', nRow).html('<img alt="User Icon" src="theme/images/user.png"/>');
+    } else if(aData[0] == "GROUP") {
+        $('td:eq(0)', nRow).html('<img alt="Group Icon" src="theme/images/group.png"/>');
+    }
         
-        //set read checkbox
-        var readPermissions = $(data).find('read');
-        
-        //set write checkbox
-        var writePermissions = $(data).find('write');
-        if(writePermissions.size() == 1){
-            $('#other-sharing-permissions-write').get(0).checked = true;
-        } else {
-            $('#other-sharing-permissions-write').get(0).checked = false;
-        }
-        
-        //set sharing checkbox
-        if(readPermissions.size() + writePermissions.size() >= 1) {
-            $('#sharing-collection-with-other').get(0).checked = true;
-        } else {
-            $('#sharing-collection-with-other').get(0).checked = false;
+    //determine writeable for fourth column
+    var isWriteable = aData[3].indexOf("w") > -1;
+    //add the checkbox, with action to perform an update on the server
+    var inpWriteableId = 'inpWriteable_' + iDisplayIndex;
+    $('td:eq(3)', nRow).html('<input id="' + inpWriteableId + '" type="checkbox" value="true"' + (isWriteable ? ' checked="checked"' : '') + ' onclick="javascript: setAceWriteable(this,\'' + getCurrentCollection() + '\',' + iDisplayIndex + ', this.checked);"/>');
+    
+    //add a delete button, with action to perform an update on the server
+    var imgDeleteId = 'imgDelete_' + iDisplayIndex;
+    $('td:eq(4)', nRow).html('<img id="' + imgDeleteId + '" alt="Delete Icon" src="theme/images/cross.png" onclick="javascript: removeAce(\'' + getCurrentCollection() + '\',' + iDisplayIndex + ');"/>');
+    //add jQuery cick action to image to perform an update on the server
+    
+    return nRow;
+}
+
+//sets an ACE on a share to writeable or not
+function setAceWriteable(checkbox, collection, aceId, isWriteable) {
+    $.ajax({
+        type: 'GET',
+        url: "operations.xql",
+        data: "action=set-ace-writeable&collection=" + escape(collection) + "&id=" + aceId + "&is-writeable=" + isWriteable,
+        success: function(data, status, xhr) {
+            //do nothing
+        },
+        error: function(xhr, status, error) {
+            alert("Could not modify entry");
+            checkbox.checked = !isWriteable;
         }
     });
-}
+};
 
-function addMemberToSharingGroupMembers(member, isGroupOwner){
-
-    //dont add the item if it already exists
-    var currentMemberInputs = $('#group-members-list').find('input');
-    for(var i = 0; i <  currentMemberInputs.size(); i++){
-        if(currentMemberInputs[i].getAttribute("value") == member){
-            return;
-        }
-    }
-
-    //add the item
-    var uuid = (new Date()).getTime();
-    var li = document.createElement('li');
-    
-    var input = document.createElement('input');
-    input.setAttribute('id', 'group-member-' + uuid);
-    input.setAttribute('type', 'checkbox');
-    input.setAttribute('name', 'group-member');
-    input.setAttribute('value', member);
-    input.setAttribute('checked', 'checked');
-    if(!isGroupOwner){
-        input.setAttribute('disabled', 'disabled');
-    }
-    
-    var label = document.createElement('label');
-    label.setAttribute('for', 'group-member-_' + uuid);
-    label.setAttribute('class', 'labelWithCheckboxLeft');
-    var memberText = document.createTextNode(member);
-    label.appendChild(memberText);
-    
-    li.appendChild(input);
-    li.appendChild(label);
-
-   $('#group-members-list').append(li);
-}
-
-function addNewGroupToGroupList(groupName){
-    
-    //add the new group
-    $('#group-list').append(
-        $("<option></option>").attr("value", groupName).text(groupName)
-    );
-    
-    //select the new group
-    $('#group-list').val(groupName);
-    
-    //update the members etc
-    updateSharingGroupMembers($('#group-list').val());
-}
-
-function removeGroup() {
-    var answer = confirm("Whilst you are the Group owner, there may be other users reliant on this group. Are you sure you wish to remove the group?");
-    if(answer) {
-        var groupId = $('#group-list > option[selected = "selected"]').attr('value');
-        var params = { action: "remove-group", groupId: groupId };
-        $.get("operations.xql", params, function(data) {
-            
-            //refresh the sharing dialog
-            updateSharingDialog();
+//removes an ACE from a share
+function removeAce(collection, aceId) {
+    if(confirm("Are you sure you wish to remove this entry?")){
+        $.ajax({
+            type: 'GET',
+            url: "operations.xql",
+            data: "action=remove-ace&collection=" + escape(collection) + "&id=" + aceId,
+            success: function(data, status, xhr) {
+                //remove from dataTable
+                $('#collectionSharingDetails').dataTable().fnDeleteRow(aceId);
+            },
+            error: function(xhr, status, error) {
+                alert("Could not remove entry");
+                checkbox.checked = !isWriteable;
+            }
         });
     }
-}
+};
+
+//adds a user to a share
+function addUserToShare() {
+    //1) check this is a valid user otherwise show error
+    $.ajax({
+            type: 'GET',
+            url: "operations.xql",
+            data: "action=is-valid-user-for-share&username=" + escape($('#user-auto-list').val()),
+            success: function(data, status, xhr) {
+            
+                //2) create the ace on the server
+                $.ajax({
+                    type: 'GET',
+                    url: "operations.xql",
+                    data: "action=add-user-ace&collection=" + escape(getCurrentCollection()) + "&username=" + escape($('#user-auto-list').val()),
+                    success: function(data, status, xhr) {
+                        
+                        //3) add the row to the dataTable
+                        $('#collectionSharingDetails').dataTable().fnAddData( [
+                            "USER",
+                            $('#user-auto-list').val(),
+                            "ALLOWED",
+                            "r--",
+                            "removeMe"
+                        ]);
+            
+                        //4) close the dialog
+                        $('#add-user-to-share-dialog').dialog('close');
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Could not create entry");
+                    }
+                });
+            },
+            error: function(xhr, status, error) {
+                alert("The user '" + $('#user-auto-list').val() + "' does not exist!");
+            }
+        });
+};
+
+//adds a group to a share
+function addProjectToShare() {
+    //1) check this is a valid group otherwise show error
+    $.ajax({
+            type: 'GET',
+            url: "operations.xql",
+            data: "action=is-valid-group-for-share&groupname=" + escape($('#project-auto-list').val()),
+            success: function(data, status, xhr) {
+            
+                //2) create the ace on the server
+                $.ajax({
+                    type: 'GET',
+                    url: "operations.xql",
+                    data: "action=add-group-ace&collection=" + escape(getCurrentCollection()) + "&groupname=" + escape($('#project-auto-list').val()),
+                    success: function(data, status, xhr) {
+                        
+                        //3) add the row to the dataTable
+                        $('#collectionSharingDetails').dataTable().fnAddData( [
+                            "GROUP",
+                            $('#project-auto-list').val(),
+                            "ALLOWED",
+                            "r--",
+                            "removeMe"
+                        ]);
+            
+                        //4) close the dialog
+                        $('#add-project-to-share-dialog').dialog('close');
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Could not create entry");
+                    }
+                });
+            },
+            error: function(xhr, status, error) {
+                alert("The project '" + $('#project-auto-list').val() + "' does not exist!");
+            }
+        });
+};

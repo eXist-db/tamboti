@@ -17,7 +17,10 @@ declare variable $local:app-root := concat($exist:controller, "/../..");
 
 declare function local:set-user() {
     session:create(),
-    let $user := request:get-parameter("user", ())
+    let $user :=
+        if(request:get-parameter("user",()))then
+            config:rewrite-username(request:get-parameter("user",()))
+        else()
     let $password := request:get-parameter("password", ())
     let $session-user-credential := security:get-user-credential-from-session()
     return
@@ -56,6 +59,7 @@ else if (ends-with($exist:resource, '.html')) then
     if(request:get-parameter("logout",()))then
     (
         session:clear(),
+        session:invalidate(),
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
             <redirect url="index.html"/>
         </dispatch>

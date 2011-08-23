@@ -139,16 +139,31 @@
         </item>
         <item>
             <help>
-                <p> Note in Year of Publication the year in which the resource was published, released, or issued. </p>
-                <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The values "start" and "end" are used with Point. Repeat the Year of
-                    Publication field and choose "start" in one and "end" in the other repetition, and enter the appropriate dates in the two Year of
+                <p> Note in Date of Publication the year in which the resource was issued. </p>
+                <p> Date of Publication is typically found on the title page, in connection with place of publication and publisher. </p>
+                <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The values "start" and "end" are used with Point. Repeat the Date of
+                    Publication field and choose "start" in one and "end" in the other repetition, and enter the appropriate dates in the two Date of
                     Publication fields. </p>
-                <p> If no point is specified a year noted in Year of Publication is assumed to be a single year. </p>
-                <p> More input options can be found on the Origin Info tab on the Citation Forms.</p>
+                <p> If no point is specified a year noted in Date of Publication is assumed to be a single year. </p>
+                <p> More input options can be found on the Origin Information: Dates tab on the Citation Forms.</p>
             </help>
             <hint/>
             <value>dateIssued-compact</value>
             <local-name>dateIssued</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Note in Copyright Date the year in which copyright was claimed for the resource. </p>
+                <p> Copyright Date is typically found on the page following the title page. It occurs in connection with a copyright symbol, (c) or ©.</p>
+                <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The values "start" and "end" are used with Point. Repeat the Copyright Date field and choose "start" in one and "end" in the other repetition, and enter the appropriate dates in the two Copyright Date fields. </p>
+                <p> If no point is specified a year noted in Copyright Date is assumed to be a single year. </p>
+                <p> More input options can be found on the Origin Information: Dates tab on the Citation Forms.</p>
+            </help>
+            <hint/>
+            <value>copyrightDate-compact</value>
+            <local-name>copyrightDate</local-name>
             <parent/>
             <tab-id/>
         </item>

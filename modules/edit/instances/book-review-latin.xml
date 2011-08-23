@@ -20,6 +20,7 @@
     <targetAudience authority="marctarget">adult</targetAudience>
     <typeOfResource>text</typeOfResource>
     <genre authority="marcgt">article</genre>
+    <genre authority="marcgt">review</genre>
     <subject>
         <topic/>
         <geographic/>
@@ -91,6 +92,42 @@
             </extent>
             <date encoding="w3cdtf"/>
         </part>
+    </relatedItem>
+    <relatedItem type="references" xlink:href="">
+        <titleInfo>
+            <nonSort/>
+            <title/>
+            <subTitle/>
+            <partNumber/>
+            <partName/>
+        </titleInfo>
+        <name type="personal">
+            <namePart type="given"/>
+            <namePart type="family"/>
+            <role>
+                <roleTerm type="code" authority="marcrelator">aut</roleTerm>
+            </role>
+        </name>
+        <originInfo>
+            <place>
+                <placeTerm type="text"/>
+            </place>
+            <dateIssued encoding="w3cdtf"/>
+            <copyrightDate encoding="w3cdtf"/>
+            <publisher type="text"/>
+            <issuance>monographic</issuance>
+        </originInfo>
+        <part/>
+        <physicalDescription>
+            <extent/>
+        </physicalDescription>
+        <targetAudience authority="marctarget">adult</targetAudience>
+        <typeOfResource>text</typeOfResource>
+        <genre type="code" authority="marcgt">book</genre>
+        <classification authority="lcc"/>
+        <abstract lang="eng"/>
+        <tableOfContents lang="" script="" xlink:href=""/>
+        <note lang="" type=""/>
     </relatedItem>
     <identifier type="doi"/>
     <location>

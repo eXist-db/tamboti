@@ -36,6 +36,7 @@
     <targetAudience authority="marctarget">adult</targetAudience>
     <typeOfResource>text</typeOfResource>
     <genre authority="marcgt">article</genre>
+    <genre authority="marcgt">review</genre>
     <subject>
         <topic/>
         <geographic/>
@@ -154,6 +155,7 @@
                 <placeTerm type="text" script="Latn" transliteration=""/>
             </place>
             <dateIssued encoding="w3cdtf"/>
+            <copyrightDate encoding="w3cdtf"/>
             <publisher type="text"/>
             <publisher type="text" script="Latn" transliteration=""/>
             <issuance>monographic</issuance>

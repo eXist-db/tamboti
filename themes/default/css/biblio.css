@@ -618,10 +618,74 @@ span.readable .dynatree-title {
     font-size:.85em;
 }
 
+.labelWithCheckboxLeft {
+    padding-left: 0.25em;    
+}
+
+#sharing-collection-path_ {
+    font-style: italic;
+}
+
+#collectionSharingDetails_wrapper {
+    margin-top: 2em;
+    font-size: 80%;
+}
+
+#collectionSharingDetails {
+    border-spacing: 0px;
+    width: 100%;
+}
+
+#collectionSharingDetails td, #collectionSharingDetails th {
+    line-height: 0.8em;
+    padding: 3px 10px;
+}
+
+/** datatables styles */
+.dataTables_length {
+    width: 40%;
+    float: left;
+}
+
+.dataTables_filter {
+    width: 50%;
+    float: right;
+    text-align: right;
+}
+
+.paging_full_numbers span.paginate_active {
+    background-color: #99B3FF;
+}
+
+.paging_full_numbers span.paginate_button, .paging_full_numbers span.paginate_active {
+    border: 1px solid #AAA;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding: 2px 5px;
+    margin: 0 3px;
+    cursor: pointer;
+}
+
+.paging_full_numbers {
+    line-height: 22px;
+}
+
+.dataTables_paginate {
+    text-align: right;
+}
+
+div.dataTables_info {
+    width: 40%;
+}
+
+#collectionSharingDetails td:first-child {
+    width: 20px;
+}
+
 #login-form {
     width:30em;
     }
 
 #login-form input {
     width:20em;
-    }
+}

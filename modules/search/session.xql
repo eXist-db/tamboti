@@ -164,7 +164,7 @@ declare function bs:retrieve($start as xs:int, $count as xs:int) {
                                         </a>
                                         ,
                                         <a class="remove-resource" href="#{$id}"><img title="Delete Record" src="theme/images/delete.png"/></a>,
-                                        <a class="move-resource" href="#{$id}"><img title="Move Record" src="theme/images/shape_move_front.png"/></a>
+                                        <a id="resource-move-folder" class="move-resource" href="#{$id}"><img title="Move Record" src="theme/images/shape_move_front.png"/></a>
                                         )
                                     else ()
                                     }

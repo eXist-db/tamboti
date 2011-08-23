@@ -118,6 +118,7 @@
             </xf:group>
                 <!--relatedItem/part begins-->
                 <!-- The DLF/Aquifer Implementation Guidelines for Shareable MODS Records recommend that the part element be used in cases where the part of a resource being represented is a physical or structural part of another resource. Examples include an issue of a journal or a single story from a collection. This element is repeatable. -->
+            <br/>
             <xf:group appearance="full" class="fieldset level-2" ref=".[mods:titleInfo]">
                 <div class="join">
                     <span class="legend">Title Information</span>
@@ -856,6 +857,7 @@
                         <!--relatedItem/part/detail begins-->
                         <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                         <!--Cluster: include-->
+                    <br/>
                     <xf:group appearance="full" class="fieldset level-3" ref=".[mods:detail]">
                         <div class="join">
                             <span class="legend">Detail</span>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:jquery="http://exist-db.org/xquery/jquery" id="query-panel">
     <jquery:tabset id="query-tabs" on-select="searchTabSelected">
         <jquery:tab id="simple" label="Simple Search">
@@ -71,7 +72,7 @@
                                 field</button>
                             <button class="button" id="remove-field">
                                 <span>-</span> Remove selected search
-                            field</button>
+                                field</button>
                         </td>
                     </tr>
                     <tr>
@@ -104,7 +105,7 @@
             <p>
                 <form action="user.xql" method="POST">
                     <button class="button" id="export" name="export" type="submit" value="export">Export</button> your list items.
-        </form>
+                </form>
             </p>
         </jquery:tab>
     </jquery:tabset>

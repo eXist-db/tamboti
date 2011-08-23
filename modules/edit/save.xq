@@ -2,6 +2,13 @@ xquery version "1.0";
 
 (: XQuery script to save a new MODS record from an incoming HTTP POST :)
 
+import module namespace request = "http://exist-db.org/xquery/request";
+import module namespace sm = "http://exist-db.org/xquery/securitymanager";
+import module namespace xmldb = "http://exist-db.org/xquery/xmldb";
+
+import module namespace security = "http://exist-db.org/mods/security" at "../search/security.xqm"; (: TODO move security module up one level :)
+import module namespace uu="http://exist-db.org/mods/uri-util" at "../search/uri-util.xqm";
+
 declare namespace clean = "http:/exist-db.org/xquery/mods/cleanup";
 declare namespace xf="http://www.w3.org/2002/xforms";
 declare namespace xforms="http://www.w3.org/2002/xforms";
@@ -312,12 +319,19 @@ let $updates :=
     else
         if ($action eq 'close') 
         then
-            let $target-collection := $doc/mods:extension/e:collection/string()
+            let $target-collection := uu:escape-collection-path($doc/mods:extension/e:collection/string())
             return
                 (
                 xf:do-updates($item, $doc)
                 ,
                 xmldb:move($collection, $target-collection, $file-to-update)
+                ,
+                (: set the same permissions on the new file as the parent collection :)
+                security:apply-parent-collection-permissions(xs:anyURI(fn:concat($target-collection, "/", $file-to-update)))
+                
+                (:
+                sm:chmod(xs:anyURI(fn:concat($target-collection, "/", $file-to-update)), "rwu------")
+                :)
                 )
         else
             xf:do-updates($item, $doc)    
