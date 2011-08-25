@@ -145,7 +145,12 @@ function initCollectionTree() {
         fx: { height: "toggle", duration: 200 },
         persist: true,
         initAjax: { 
-            url: "collections.xql"
+            url: "collections.xql",
+            data: {
+            },
+            addActiveKey: true,  // add &activeKey= parameter to URL
+            addFocusedKey: true, // add &focusedKey= parameter to URL
+            addExpandedKeyList: true // add &expandedKeyList= parameter to URL
         },
         autoFocus: false,
         onActivate: function (dtnode) {

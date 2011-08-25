@@ -6,15 +6,16 @@ import module namespace request = "http://exist-db.org/xquery/request";
 import module namespace sm = "http://exist-db.org/xquery/securitymanager";
 import module namespace xmldb = "http://exist-db.org/xquery/xmldb";
 
+import module namespace config = "http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace security = "http://exist-db.org/mods/security" at "../search/security.xqm"; (: TODO move security module up one level :)
-import module namespace uu="http://exist-db.org/mods/uri-util" at "../search/uri-util.xqm";
+import module namespace uu = "http://exist-db.org/mods/uri-util" at "../search/uri-util.xqm";
 
 declare namespace clean = "http:/exist-db.org/xquery/mods/cleanup";
-declare namespace xf="http://www.w3.org/2002/xforms";
-declare namespace xforms="http://www.w3.org/2002/xforms";
-declare namespace ev="http://www.w3.org/2001/xml-events";
-declare namespace mods="http://www.loc.gov/mods/v3";
-declare namespace e="http://www.asia-europe.uni-heidelberg.de/";
+declare namespace xf = "http://www.w3.org/2002/xforms";
+declare namespace xforms = "http://www.w3.org/2002/xforms";
+declare namespace ev = "http://www.w3.org/2001/xml-events";
+declare namespace mods = "http://www.loc.gov/mods/v3";
+declare namespace e = "http://www.asia-europe.uni-heidelberg.de/";
 
 declare function clean:clean-namespaces($node as node()) {
     typeswitch ($node)
@@ -274,6 +275,20 @@ declare function xf:do-updates($item, $doc) {
     else ()
 };
 
+(: looks for a collection containing a record with a uuid
+looks in users collection and commons collection
+:)
+declare function local:find-live-collection-containing-uuid($uuid as xs:string) as xs:string? {
+    let $live-record := fn:collection($config:users-collection, $config:mods-commons)/mods:mods[@ID = $uuid] return
+        if(fn:not(fn:empty($live-record)))then
+            fn:replace(fn:document-uri(fn:root($live-record)), "(.*)/.*", "$1")
+        else()
+};
+
+declare function local:remove-new-docs-target-collection($resource-path as xs:string) {
+    update delete doc($resource-path)//e:collection
+};
+
 (: this is where the form "POSTS" documents to this XQuery using the POST method of a submission :)
 let $item := clean:clean-namespaces(request:get-data())
 
@@ -315,27 +330,34 @@ when doing an update. To remedy this, clean:clean-namespaces() is applied to the
 
 let $updates := 
     if ($action eq 'cancel') 
-    then xmldb:remove($collection, $file-to-update)
+        then xmldb:remove($collection, $file-to-update)
     else
-        if ($action eq 'close') 
-        then
-            let $target-collection := uu:escape-collection-path($doc/mods:extension/e:collection/string())
+        if($action eq 'close') then
+        
+            (: get the target collection,
+                If its an edit to an existing document we can find this by its uuid,
+                else it can be found in the e:collection element document if its a new document
+            :)
+            let $target-collection := 
+                let $live-target-collection := local:find-live-collection-containing-uuid($incoming-id) return
+                    if(fn:not(fn:empty($live-target-collection)))then
+                        $live-target-collection
+                    else
+                        $doc/mods:extension/e:collection/string()
             return
-                (
-                xf:do-updates($item, $doc)
-                ,
-                xmldb:move($collection, $target-collection, $file-to-update)
-                ,
+            (
+                xf:do-updates($item, $doc),
+            
+                xmldb:move($collection, $target-collection, $file-to-update),
+            
+                local:remove-new-docs-target-collection(fn:concat($target-collection, "/", $file-to-update)),
+            
                 (: set the same permissions on the new file as the parent collection :)
                 security:apply-parent-collection-permissions(xs:anyURI(fn:concat($target-collection, "/", $file-to-update)))
-                
-                (:
-                sm:chmod(xs:anyURI(fn:concat($target-collection, "/", $file-to-update)), "rwu------")
-                :)
-                )
+            )
         else
             xf:do-updates($item, $doc)    
 return
-<results>
-  <message>Update Status = OK</message>
-</results>
+    <results>
+        <message>Update Status = OK</message>
+    </results>
