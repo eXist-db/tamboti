@@ -238,6 +238,8 @@ declare function security:can-execute-collection($collection as xs:string) as xs
 : @param group The group name
 : @param collection The path of the collection
 :)
+
+(:
 declare function security:group-can-read-collection($group as xs:string, $collection as xs:string) as xs:boolean
 {
     if(xmldb:collection-available($collection))then
@@ -309,6 +311,7 @@ declare function security:other-can-write-collection($collection as xs:string) a
     else
         false()
 };
+:)
 
 (:~
 : Determines if the user is the collection owner
@@ -344,14 +347,17 @@ declare function security:get-group-members($group as xs:string) as xs:string*
 : @param the group name
 : @return The list of managers in the group
 :)
+(:
 declare function security:get-group-managers($group as xs:string) as xs:string*
 {
     sm:get-group-managers($group)
 };
+:)
 
 (:~
 : Gets a list of other biblio users
 :)
+(:
 declare function security:get-other-biblio-users() as xs:string*
 {
     security:get-group-members($security:biblio-users-group)[. ne security:get-user-credential-from-session()[1]]
@@ -364,7 +370,9 @@ declare function security:get-group($collection as xs:string) as xs:string?
         xmldb:get-group($collection)
     ) else()
 };
+:)
 
+(:
 declare function security:set-other-can-read-collection($collection, $read as xs:boolean) as xs:boolean
 {
     let $permissions := xmldb:permissions-to-string(xmldb:get-permissions($collection)) return
@@ -428,12 +436,14 @@ declare function security:set-group-can-write-collection($collection, $group as 
             xmldb:set-collection-permissions($collection, xmldb:get-owner($collection), $group, xmldb:string-to-permissions($new-permissions)),
             true()
 };
+:)
 
 (:~
 : Creates a security group
 :
 : Note - The currently logged in user will be the group owner
 :)
+(:
 declare function security:create-group($group-name as xs:string, $group-members as xs:string*) as xs:boolean
 {       
     (: create the group, currently logged in user will be the groups manager :)
@@ -452,7 +462,9 @@ declare function security:create-group($group-name as xs:string, $group-members 
         false()
     )
 };
+:)
 
+(:
 declare function security:add-user-to-group($username as xs:string, $group-name as xs:string) as xs:boolean
 {
     xmldb:add-user-to-group($username, $group-name)
@@ -462,7 +474,9 @@ declare function security:remove-user-from-group($username as xs:string, $group-
 {
     xmldb:remove-user-from-group($username, $group-name)
 };
+:)
 
+(:
 declare function security:set-group-can-read-resource($group-name as xs:string, $resource as xs:string, $read as xs:boolean) as xs:boolean
 {
     let $collection-uri := fn:replace($resource, "(.*)/.*", "$1"),
@@ -478,7 +492,7 @@ declare function security:set-group-can-read-resource($group-name as xs:string, 
             
             true()
 };
-
+:)
 declare function security:set-resource-permissions($resource as xs:string, $owner as xs:string, $group as xs:string, $owner-read as xs:boolean, $owner-write as xs:boolean, $group-read as xs:boolean, $group-write as xs:boolean, $other-read as xs:boolean, $other-write as xs:boolean) as empty() {
     
     let $owner-username := if($config:force-lower-case-usernames)then(fn:lower-case($owner))else($owner) return
@@ -500,6 +514,7 @@ declare function security:set-resource-permissions($resource as xs:string, $owne
                 xmldb:set-resource-permissions($collection-uri, $resource-uri, $owner-username, $group, xmldb:string-to-permissions($permissions))
 };
 
+(:
 declare function security:get-groups($user as xs:string) as xs:string*
 {
     (: TODO if you remove this line, then for some reason you get an error -
@@ -510,7 +525,9 @@ declare function security:get-groups($user as xs:string) as xs:string*
     let $username := if($config:force-lower-case-usernames)then(fn:lower-case($user))else($user) return
         xmldb:get-user-groups($username)
 };
+:)
 
+(:
 declare function security:find-collections-with-group($collection-path as xs:string, $group as xs:string) as xs:string*
 {
 	for $child-collection in xmldb:get-child-collections($collection-path)
@@ -522,6 +539,7 @@ declare function security:find-collections-with-group($collection-path as xs:str
 			security:find-collections-with-group($child-collection-path, $group)
 		)
 };
+:)
 
 declare function security:set-ace-writeable($resource as xs:anyURI, $id as xs:int, $is-writeable as xs:boolean) as xs:boolean {
     let $permissions := sm:get-permissions($resource),
@@ -529,6 +547,18 @@ declare function security:set-ace-writeable($resource as xs:anyURI, $id as xs:in
             if(empty($ace))then
                 false()
             else (
+                
+                (: TODO - write implies update until update is replaced with execute :)
+                let $regexp-replacement := if($is-writeable)then
+                    "wu"    
+                else
+                    "--"
+                ,
+                $new-mode := fn:replace($ace/@mode, "(.)..", fn:concat("$1", $regexp-replacement)),
+                $null := sm:modify-ace($resource, $id, $ace/@access_type eq 'ALLOWED', $new-mode) return
+                    true()
+            
+                (:
                 let $regexp-replacement := if($is-writeable)then
                     "w"    
                 else
@@ -537,6 +567,7 @@ declare function security:set-ace-writeable($resource as xs:anyURI, $id as xs:in
                 $new-mode := fn:replace($ace/@mode, "(.).(.)", fn:concat("$1", $regexp-replacement, "$2")),
                 $null := sm:modify-ace($resource, $id, $ace/@access_type eq 'ALLOWED', $new-mode) return
                     true()
+                :)
             )
 };
 
@@ -616,27 +647,31 @@ declare function security:grant-parent-owner-access-if-foreign-collection($colle
 declare function security:apply-parent-collection-permissions($resource as xs:anyURI) as empty() {
 
     let $parent-permissions := sm:get-permissions(xs:anyURI(fn:replace($resource, "(.*)/.*", "$1"))),
-    $this-permissions := sm:get-permissions($resource) return
-    
-        let $clear := sm:clear-acl($resource) return
+    $this-permissions := sm:get-permissions($resource),
+	$this-last-acl-index := xs:int($this-permissions/sm:permission/sm:acl/@entries) -1 return
+
         (
             for $ace in $parent-permissions/sm:permission/sm:acl/sm:ace return
-                if($ace/@target eq "USER") then
+             
+				if($ace/@target eq "USER") then
                     sm:add-user-ace($resource, $ace/@who, $ace/@access_type eq "ALLOWED", $ace/@mode)
                 else if($ace/@target eq "GROUP") then
                     sm:add-group-ace($resource, $ace/@who, $ace/@access_type eq "ALLOWED", $ace/@mode)
                 else()
-            ,
-            
+			,
             if($this-permissions/sm:permission/@owner ne $parent-permissions/sm:permission/@owner)then
                 let $owner-mode := fn:replace($parent-permissions/sm:permission/@mode, "(...).*", "$1") return
                     sm:add-user-ace($resource, $parent-permissions/sm:permission/@owner, true(), $owner-mode)
-            else(),
-    
+            else()
+    		,
             if($this-permissions/sm:permission/@group ne $parent-permissions/sm:permission/@group)then
                 let $group-mode := fn:replace($parent-permissions/sm:permission/@mode, "...(...)...", "$1") return
                 sm:add-group-ace($resource, $parent-permissions/sm:permission/@group, true(), $group-mode)
             else()
+			,
+			(: clear any prev entries :)
+			for $i in 0 to $this-last-acl-index return
+				sm:remove-ace($resource, $i)
         )
 };
 
