@@ -309,7 +309,8 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
                     if(security:home-collection-exists($user))then
                         let $home-collection-path := security:get-home-collection-uri($user),
                         $has-home-children := not(empty(xmldb:get-child-collections($home-collection-path))),
-                        $home-children := col:get-child-tree-nodes-recursive($home-collection-path, $distinct-collection-paths[fn:starts-with(., $home-collection-path)], $expanded-collections) return
+                        $home-children := col:get-child-tree-nodes-recursive($home-collection-path, $distinct-collection-paths[fn:starts-with(., $home-collection-path)], $expanded-collections)
+                        return
                             col:create-tree-node("Home", $home-collection-path, true(), $user-folder-icon, "Home Folder", true(), "userHomeSubCollection", fn:contains($expanded-collections, $home-collection-path),  (empty($home-children) and $has-home-children), $home-children)
                     else(),
                 
@@ -322,8 +323,10 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
                 (: commons collections :)
                 $public-json :=
                     for $child in xmldb:get-child-collections($config:mods-commons)
-                    let $collection-path := fn:concat($config:mods-commons, "/", $child) return
-                        <node>{col:get-collection($collection-path)/child::node()}</node>
+                    let $collection-path := fn:concat($config:mods-commons, "/", $child),
+                    $commons-child-children := col:get-child-tree-nodes-recursive($collection-path, $distinct-collection-paths[fn:starts-with(., $collection-path)], $expanded-collections)
+                    return
+                        <node>{col:get-collection($collection-path, $commons-child-children, fn:contains($expanded-collections, $collection-path))/child::node()}</node>
                 return
                 
                     (: root collection, containing home and group collection as children :)
