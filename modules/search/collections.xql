@@ -284,6 +284,13 @@ declare function col:get-child-tree-nodes-recursive($base-collection as xs:strin
 		      <node>{col:get-collection($sub-collection-path, $our-explicit-children, fn:contains($expanded-collections, $sub-collection-path))/child::node()}</node>
 };
 
+declare function col:get-child-tree-nodes-recursive-for-group($collections as xs:string*, $expanded-collections as xs:string*) as element(node)* { 
+    for $collection in $collections
+    let $base-collection := fn:replace($collection, fn:concat("(", $config:users-collection, "/[^/]*)/.*"), "$1")
+    return
+        col:get-child-tree-nodes-recursive($base-collection, $collection, $expanded-collections)
+};
+
 declare function col:prune-parents($collections as xs:string*) as xs:string* {
 	fn:distinct-values(
 		for $c in $collections return
@@ -313,12 +320,11 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
                         return
                             col:create-tree-node("Home", $home-collection-path, true(), $user-folder-icon, "Home Folder", true(), "userHomeSubCollection", fn:contains($expanded-collections, $home-collection-path),  (empty($home-children) and $has-home-children), $home-children)
                     else(),
-                
-                (: TODO apply get children to child nodes... :)
-                
+
                 (: group collection :)
                 $has-group-children := not(empty(sharing:get-shared-collection-roots(false()))),
-                $group-json := col:create-tree-node("Groups", $config:groups-collection, true(), $groups-folder-icon, "Groups", false(), (), false(), $has-group-children, ()),
+                $group-children := col:get-child-tree-nodes-recursive-for-group($distinct-collection-paths[fn:starts-with(., $config:users-collection)][fn:not(fn:starts-with(., security:get-home-collection-uri($user)))], $expanded-collections),
+                $group-json := col:create-tree-node("Groups", $config:groups-collection, true(), $groups-folder-icon, "Groups", false(), (), fn:contains($expanded-collections, $config:groups-collection), (empty($group-children) and $has-group-children), $group-children),
                 
                 (: commons collections :)
                 $public-json :=
@@ -356,10 +362,11 @@ else if(request:get-parameter("activeKey",()))then
     
     let $expanded-collections :=
         if(request:get-parameter("expandedKeyList", ()))then
-            fn:tokenize(request:get-parameter("expandedKeyList", ()), ",")
+            for $expanded-key in fn:tokenize(request:get-parameter("expandedKeyList", ()), ",") return
+                uu:escape-collection-path($expanded-key)
         else()
     return
-        col:get-from-root-for-prev-state($config:mods-root, request:get-parameter("activeKey",()), request:get-parameter("focusedKey",()), $expanded-collections)
+        col:get-from-root-for-prev-state($config:mods-root, uu:escape-collection-path(request:get-parameter("activeKey",())), uu:escape-collection-path(request:get-parameter("focusedKey",())), $expanded-collections)
 
 else
     (: no key, so its the root that we want :)
