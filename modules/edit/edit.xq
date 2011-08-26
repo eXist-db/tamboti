@@ -63,7 +63,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
           ,
           (: Save creation date and language and script of cataloguing :)
           let $recordInfo-insert:=
-              <mods:recordInfo lang="eng" script="Latn">
+              <mods:recordInfo lang="eng" script="latn">
                   <mods:recordContentSource authority="marcorg">DE-16-158</mods:recordContentSource>
                   <mods:recordCreationDate encoding="w3cdtf">
                       {current-date()}

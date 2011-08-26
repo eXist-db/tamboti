@@ -794,7 +794,7 @@ declare function biblio:form-select-current-user-groups($select-name as xs:strin
 declare function biblio:form-add-user-to-share() {
      <jquery:dialog id="add-user-to-share-dialog" modal="true" title="Add User to Share" width="450">
         <div>
-            <span>Enter the users name:</span>
+            <span>Enter the user's name:</span>
             <jquery:input name="user-auto-list" id="user-auto-list">
                 <jquery:autocomplete url="autocomplete-username.xql" width="300" multiple="false" matchContains="false" minLength="2"/>
             </jquery:input>
@@ -819,14 +819,14 @@ declare function biblio:form-collection-sharing($collection as xs:string) {
     <jquery:dialog id="sharing-collection-dialog" modal="true" title="Folder Sharing" trigger="#collection-sharing" width="600" onOpen="updateSharingDialog">
         <jquery:button id="cancel" label="Close"/>
         <div>Folder <span id="sharing-collection-path_"></span> is shared with:</div>
-        <table id="collectionSharingDetails">
+        <table id="collectionSharingDetails" border="1">
             <thead>
                 <tr>
-                    <th><!-- Icon --> </th>
+                    <th>Type</th>
                     <th>Name</th>
-                    <th>Is</th>
-                    <th>Can Write?</th>
-                    <th><!-- Action e.g. remove --></th>
+                    <th>Reading</th>
+                    <th>Write Allowed?</th>
+                    <th>Remove</th>
                 </tr>
             </thead>
             <tbody>

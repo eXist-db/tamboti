@@ -10,6 +10,7 @@ import module namespace config = "http://exist-db.org/mods/config" at "../config
 import module namespace security = "http://exist-db.org/mods/security" at "../search/security.xqm"; (: TODO move security module up one level :)
 import module namespace uu = "http://exist-db.org/mods/uri-util" at "../search/uri-util.xqm";
 
+declare namespace save = "http:/exist-db.org/xquery/mods/save";
 declare namespace clean = "http:/exist-db.org/xquery/mods/cleanup";
 declare namespace xf = "http://www.w3.org/2002/xforms";
 declare namespace xforms = "http://www.w3.org/2002/xforms";
@@ -278,14 +279,14 @@ declare function xf:do-updates($item, $doc) {
 (: looks for a collection containing a record with a uuid
 looks in users collection and commons collection
 :)
-declare function local:find-live-collection-containing-uuid($uuid as xs:string) as xs:string? {
+declare function save:find-live-collection-containing-uuid($uuid as xs:string) as xs:string? {
     let $live-record := fn:collection($config:users-collection, $config:mods-commons)/mods:mods[@ID = $uuid] return
         if(fn:not(fn:empty($live-record)))then
             fn:replace(fn:document-uri(fn:root($live-record)), "(.*)/.*", "$1")
         else()
 };
 
-declare function local:remove-new-docs-target-collection($resource-path as xs:string) {
+declare function save:remove-new-docs-target-collection($resource-path as xs:string) {
     update delete doc($resource-path)//e:collection
 };
 
@@ -339,7 +340,7 @@ let $updates :=
                 else it can be found in the e:collection element document if its a new document
             :)
             let $target-collection := 
-                let $live-target-collection := local:find-live-collection-containing-uuid($incoming-id) return
+                let $live-target-collection := save:find-live-collection-containing-uuid($incoming-id) return
                     if(fn:not(fn:empty($live-target-collection)))then
                         $live-target-collection
                     else
@@ -350,7 +351,7 @@ let $updates :=
             
                 xmldb:move($collection, $target-collection, $file-to-update),
             
-                local:remove-new-docs-target-collection(fn:concat($target-collection, "/", $file-to-update)),
+                save:remove-new-docs-target-collection(fn:concat($target-collection, "/", $file-to-update)),
             
                 (: set the same permissions on the new file as the parent collection :)
                 security:apply-parent-collection-permissions(xs:anyURI(fn:concat($target-collection, "/", $file-to-update)))

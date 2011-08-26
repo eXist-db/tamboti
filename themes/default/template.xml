@@ -8,15 +8,16 @@
         <script type="text/javascript" src="libs/scripts/jquery/jquery.dynatree-1.1.1.min.js"/>
         <script type="text/javascript" src="libs/scripts/jquery/jquery.dataTables-1.8.0.min.js"/>
         <script type="text/javascript" src="libs/scripts/jquery/jquery.cookie.js"/>
-        <script type="text/javascript" src="../session.js.xql"/>
         <script type="text/javascript" src="resources/scripts/query.js"/>
         <link rel="stylesheet" type="text/css" href="libs/styles/default-style2.css"/>
         <link rel="stylesheet" type="text/css" href="libs/scripts/jquery/skin/ui.dynatree.css"/>
         <link rel="stylesheet" type="text/css" href="theme/css/biblio.css"/>
         <link rel="stylesheet" type="text/css" href="theme/css/theme.css"/>
+        <link rel="shortcut icon" href="theme/images/favicon.ico"/>
         <link rel="unapi-server" type="application/xml" title="unAPI" href="unapi.xql"/>
     </head>
     <body>
         <div class="include dialogs"/>
+        <!--<div id="page-footer">Tamboti Metadata Framework, version 1.0, 2011-09-01. Licence: GNU-LGPL.</div>-->
     </body>
 </html>

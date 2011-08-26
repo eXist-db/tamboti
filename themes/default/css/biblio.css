@@ -1,3 +1,12 @@
+/*color scheme begins
+#000000 3 black
+#666666 6 dark gray
+#BBBBBB 4 middle gray
+#EDEDED 4 light gray
+#FFFFFF 4 white
+#5DB0E6 6 theme blue
+color scheme ends*/
+
 p, td {
     line-height:1.25em;
 }
@@ -63,6 +72,22 @@ img {border:0;
 }
 
 /*page top elements end*/
+#page-footer {
+    display:block;
+    margin:0 50px 20px 50px; 
+    background-color:#EBEBEB;
+    color:#4D4D4D;
+    text-align:center;
+    1margin-top:-7em;
+    padding:.5em;
+    border:1px solid #C7B899;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+}
+* html #page-footer {   
+    1width:860px;
+    margin-top:20px;
+}
     
 /*query panel begins*/
 
@@ -634,8 +659,16 @@ span.readable .dynatree-title {
 #collectionSharingDetails {
     border-spacing: 0px;
     width: 100%;
+    text-align:center;
 }
 
+#collectionSharingDetails table td {
+	border-color:#F5F4F2;
+	}
+
+#add-user-to-share-dialog {
+	width:30em;
+}
 #collectionSharingDetails td, #collectionSharingDetails th {
     line-height: 0.8em;
     padding: 3px 10px;
@@ -682,6 +715,10 @@ div.dataTables_info {
     width: 20px;
 }
 
+#collectionSharingDetails table td {
+	border:1px solid lightgray;
+	}
+	
 #login-form {
     width:30em;
     }
