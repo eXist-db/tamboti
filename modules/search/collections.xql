@@ -280,15 +280,19 @@ declare function col:get-child-tree-nodes-recursive($base-collection as xs:strin
 	) return
 		for $sub-collection-name in $sub-collection-names
 		let $sub-collection-path := fn:concat($base-collection, "/", $sub-collection-name) return
-		  let $our-explicit-children := col:get-child-tree-nodes-recursive($sub-collection-path, $collections[. ne $sub-collection-path][fn:starts-with(., $sub-collection-path)], $expanded-collections) return
-		      <node>{col:get-collection($sub-collection-path, $our-explicit-children, fn:contains($expanded-collections, $sub-collection-path))/child::node()}</node>
+		  if(security:can-read-collection($sub-collection-path))then
+		      let $our-explicit-children := col:get-child-tree-nodes-recursive($sub-collection-path, $collections[. ne $sub-collection-path][fn:starts-with(., $sub-collection-path)], $expanded-collections) return
+		          <node>{col:get-collection($sub-collection-path, $our-explicit-children, fn:contains($expanded-collections, $sub-collection-path))/child::node()}</node>
+          else()
 };
 
 declare function col:get-child-tree-nodes-recursive-for-group($collections as xs:string*, $expanded-collections as xs:string*) as element(node)* { 
     for $collection in $collections
     let $base-collection := fn:replace($collection, fn:concat("(", $config:users-collection, "/[^/]*)/.*"), "$1")
     return
-        col:get-child-tree-nodes-recursive($base-collection, $collection, $expanded-collections)
+        if(security:can-read-collection($collection))then
+            col:get-child-tree-nodes-recursive($base-collection, $collection, $expanded-collections)
+        else()
 };
 
 declare function col:prune-parents($collections as xs:string*) as xs:string* {

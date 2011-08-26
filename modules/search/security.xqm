@@ -229,7 +229,7 @@ declare function security:can-write-collection($collection as xs:string) as xs:b
 declare function security:can-execute-collection($collection as xs:string) as xs:boolean
 {
     (: TODO remove the 'u' when u is renamed to execute :)
-    sm:has-access($collection, "u") or sm:has-access($collection, "x")
+    (sm:has-access($collection, "u") or sm:has-access($collection, "x"))
 };
 
 (:~
