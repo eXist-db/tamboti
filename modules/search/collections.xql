@@ -58,13 +58,15 @@ declare variable $commons-folder-icon := "../skin/ltFld.png";
 :   Is this tree node writeable - i.e. can folders/resources be added to it
 : @param additional-classes
 :   Optional additional CSS classes to apply
+: @param expand
+:   Should the node be expanded
 : @param has-lazy-children
 :   Are there children for this node which can be lazily fetched?
 : @param explicit-children
 :   Any children that should be explicity displayed, ignored if has-lazy-children is true()
 :
 :)
-declare function col:create-tree-node($title as xs:string, $collection-path as xs:string, $is-folder as xs:boolean, $icon-path as xs:string?, $tooltip as xs:string?, $writeable as xs:boolean, $additonal-classes as xs:string*, $has-lazy-children as xs:boolean, $explicit-children as element(node)*) as element(node) {
+declare function col:create-tree-node($title as xs:string, $collection-path as xs:string, $is-folder as xs:boolean, $icon-path as xs:string?, $tooltip as xs:string?, $writeable as xs:boolean, $additonal-classes as xs:string*, $expand as xs:boolean, $has-lazy-children as xs:boolean, $explicit-children as element(node)*) as element(node) {
     <node>
         <title>{uu:unescape-collection-path($title)}</title>
         <key>{uu:unescape-collection-path($collection-path)}</key>
@@ -95,6 +97,7 @@ declare function col:create-tree-node($title as xs:string, $collection-path as x
             <tooltip>{$tooltip}</tooltip>
         else()
         }
+        <expand>{$expand}</expand>
         <isLazy>{$has-lazy-children}</isLazy>
         {
             if(not($has-lazy-children) and not(empty($explicit-children)))then
@@ -124,12 +127,12 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
                 if(security:home-collection-exists($user))then
                     let $home-collection-path := security:get-home-collection-uri($user),
                     $has-home-children := not(empty(xmldb:get-child-collections($home-collection-path))) return
-                        col:create-tree-node("Home", $home-collection-path, true(), $user-folder-icon , "Home Folder", true(), "userHomeSubCollection", $has-home-children, ())
+                        col:create-tree-node("Home", $home-collection-path, true(), $user-folder-icon , "Home Folder", true(), "userHomeSubCollection", false(), $has-home-children, ())
                 else(),
             
             (: group collection :)
             $has-group-children := not(empty(sharing:get-shared-collection-roots(false()))),
-            $group-json := col:create-tree-node("Groups", $config:groups-collection, true(), $groups-folder-icon, "Groups", false(), (), $has-group-children, ()),
+            $group-json := col:create-tree-node("Groups", $config:groups-collection, true(), $groups-folder-icon, "Groups", false(), (), false(), $has-group-children, ()),
             
             (: commons collections :)
             $public-json :=
@@ -139,7 +142,7 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
             return
             
                 (: root collection, containing home and group collection as children :)
-                col:create-tree-node(fn:replace($root-collection-path, ".*/", ""), $root-collection-path, true(), (), (), $can-write, (), false(), ($home-json, $group-json, $public-json))
+                col:create-tree-node(fn:replace($root-collection-path, ".*/", ""), $root-collection-path, true(), (), (), $can-write, (), false(), false(), ($home-json, $group-json, $public-json))
         else
             ()
 };
@@ -183,7 +186,7 @@ declare function col:get-child-collections($collection-path as xs:string) as ele
 :)
 declare function col:get-collection($collection-path as xs:string) as element(json:value)? {
 
-        (: perform some checks on the collection :)
+    (: perform some checks on the collection :)
     if(security:can-read-collection($collection-path))then
         let $name := fn:replace($collection-path, ".*/", ""),
         $can-write := security:can-write-collection($collection-path),
@@ -198,7 +201,30 @@ declare function col:get-collection($collection-path as xs:string) as element(js
             (: output the collection :)
             <json:value>
             {
-                col:create-tree-node($name, $collection-path, true(), (), $tooltip, $can-write, (), $has-children, ())/child::node()
+                col:create-tree-node($name, $collection-path, true(), (), $tooltip, $can-write, (), false(), $has-children, ())/child::node()
+            }
+            </json:value>
+    else()
+};
+
+declare function col:get-collection($collection-path as xs:string, $explicit-children as element(node)*, $expanded as xs:boolean) as element(json:value)? {
+
+    (: perform some checks on the collection :)
+    if(security:can-read-collection($collection-path))then
+        let $name := fn:replace($collection-path, ".*/", ""),
+        $can-write := security:can-write-collection($collection-path),
+        $has-children := not(empty(xmldb:get-child-collections($collection-path))),
+        $shared-with := sharing:get-shared-with($collection-path),
+        
+        $tooltip := 
+            if($shared-with)then
+                fn:concat("Shared With: ", $shared-with)
+            else()
+        return
+            (: output the collection :)
+            <json:value>
+            {
+                col:create-tree-node($name, $collection-path, true(), (), $tooltip, $can-write, (), $expanded, (empty($explicit-children) and $has-children), $explicit-children)/child::node()
             }
             </json:value>
     else()
@@ -227,7 +253,7 @@ declare function col:get-groups-virtual-root() as element(json:value) {
                 for $shared-root in $shared-roots return
                     <json:value>
                     {
-                        col:create-tree-node(fn:replace($shared-root, ".*/", ""), $shared-root, true(), (), (), security:can-write-collection($shared-root), (), true(), ())/child::node()
+                        col:create-tree-node(fn:replace($shared-root, ".*/", ""), $shared-root, true(), (), (), security:can-write-collection($shared-root), (), false(), true(), ())/child::node()
                     }
                     </json:value>
             }
@@ -235,11 +261,75 @@ declare function col:get-groups-virtual-root() as element(json:value) {
         else if(count($shared-roots) eq 1) then
             <json:value>
             {
-                col:create-tree-node(fn:replace($shared-roots[1], ".*/", ""), $shared-roots[1], true(), (), (), security:can-write-collection($shared-roots[1]), (), true(), ())/child::node()
+                col:create-tree-node(fn:replace($shared-roots[1], ".*/", ""), $shared-roots[1], true(), (), (), security:can-write-collection($shared-roots[1]), (), false(), true(), ())/child::node()
             }
             </json:value>
         else
             <json:value/>
+};
+
+declare function col:get-child-tree-nodes-recursive($base-collection as xs:string, $collections as xs:string*, $expanded-collections as xs:string*) as element(node)* {
+    
+    let $sub-collection-names := fn:distinct-values(
+		for $collection in $collections[. ne $base-collection]
+		let $sub-collection-path := fn:replace($collection, fn:concat($base-collection, "/"), "") return
+			if(fn:contains($sub-collection-path, "/"))then
+				fn:substring-before($sub-collection-path, "/")
+			else
+				$sub-collection-path
+	) return
+		for $sub-collection-name in $sub-collection-names
+		let $sub-collection-path := fn:concat($base-collection, "/", $sub-collection-name) return
+		  let $our-explicit-children := col:get-child-tree-nodes-recursive($sub-collection-path, $collections[. ne $sub-collection-path][fn:starts-with(., $sub-collection-path)], $expanded-collections) return
+		      <node>{col:get-collection($sub-collection-path, $our-explicit-children, fn:contains($expanded-collections, $sub-collection-path))/child::node()}</node>
+};
+
+declare function col:prune-parents($collections as xs:string*) as xs:string* {
+	fn:distinct-values(
+		for $c in $collections return
+			for $cx in $collections return
+				if($c ne $cx and fn:empty($collections[ . ne $c][fn:starts-with(., $c)]))then
+					$c
+				else()
+	)
+};
+
+declare function col:get-from-root-for-prev-state($root-collection-path as xs:string, $active-collection as xs:string, $focused-collection as xs:string?, $expanded-collections as xs:string*) as element(node) {
+    
+    let $distinct-collection-paths := col:prune-parents(($active-collection, $focused-collection, $expanded-collections))
+    
+        let $user := security:get-user-credential-from-session()[1] return
+
+            if(security:can-read-collection($root-collection-path)) then
+                let $children := xmldb:get-child-collections($root-collection-path),
+                $can-write := security:can-write-collection($root-collection-path),
+                
+                (: home collection :)
+                $home-json := 
+                    if(security:home-collection-exists($user))then
+                        let $home-collection-path := security:get-home-collection-uri($user),
+                        $has-home-children := not(empty(xmldb:get-child-collections($home-collection-path))),
+                        $home-children := col:get-child-tree-nodes-recursive($home-collection-path, $distinct-collection-paths[fn:starts-with(., $home-collection-path)], $expanded-collections) return
+                            col:create-tree-node("Home", $home-collection-path, true(), $user-folder-icon, "Home Folder", true(), "userHomeSubCollection", fn:contains($expanded-collections, $home-collection-path),  (empty($home-children) and $has-home-children), $home-children)
+                    else(),
+                
+                (: TODO apply get children to child nodes... :)
+                
+                (: group collection :)
+                $has-group-children := not(empty(sharing:get-shared-collection-roots(false()))),
+                $group-json := col:create-tree-node("Groups", $config:groups-collection, true(), $groups-folder-icon, "Groups", false(), (), false(), $has-group-children, ()),
+                
+                (: commons collections :)
+                $public-json :=
+                    for $child in xmldb:get-child-collections($config:mods-commons)
+                    let $collection-path := fn:concat($config:mods-commons, "/", $child) return
+                        <node>{col:get-collection($collection-path)/child::node()}</node>
+                return
+                
+                    (: root collection, containing home and group collection as children :)
+                    col:create-tree-node(fn:replace($root-collection-path, ".*/", ""), $root-collection-path, true(), (), (), $can-write, (), false(), false(), ($home-json, $group-json, $public-json))
+            else
+                ()
 };
 
 (:~
@@ -254,14 +344,20 @@ if(request:get-parameter("key",()))then
         if($collection-path eq $config:groups-collection) then
             (: start of groups collection - the groups collection is virtual and so receives special treatment :)
             col:get-groups-virtual-root()
-        
-          (: children of virtual group collection :)
-          (:else if(fn:starts-with($collection-path, $config:groups-collection)) then
-            col:get-group-virtual-child-collections($collection-path) :)
-            
         else
             (: just a child collection :)   
             col:get-child-collections($collection-path)
+
+(: Its a clean request for the tree, but we need to show the previous state of the tree :)
+else if(request:get-parameter("activeKey",()))then
+    
+    let $expanded-collections :=
+        if(request:get-parameter("expandedKeyList", ()))then
+            fn:tokenize(request:get-parameter("expandedKeyList", ()), ",")
+        else()
+    return
+        col:get-from-root-for-prev-state($config:mods-root, request:get-parameter("activeKey",()), request:get-parameter("focusedKey",()), $expanded-collections)
+
 else
     (: no key, so its the root that we want :)
     col:get-root-collection($config:mods-root)
