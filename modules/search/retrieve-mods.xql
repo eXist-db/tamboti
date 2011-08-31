@@ -1481,7 +1481,7 @@ declare function mods:get-short-title($entry as element()) {
     let $titleInfo := $titleInfo[not(@type)][not(@transliteration)][1]
     
     let $nonSort := $titleInfo/mods:nonSort
-    let $title := $titleInfo/mods:title
+    let $title := $titleInfo/mods:title[1]
     let $subTitle := $titleInfo/mods:subTitle
     let $partNumber := $titleInfo/mods:partNumber
     let $partName := $titleInfo/mods:partName
@@ -1713,7 +1713,7 @@ if ($titleInfo)
         	concat(
         	concat(
         	$titleInfo/mods:nonSort, ' ', 
-        	$titleInfo/mods:title), 
+        	$titleInfo/mods:title[1]), 
         		(
         			if ($titleInfo/mods:subTitle) 
         			then ': ' 
@@ -2141,27 +2141,20 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     let $displayLabel := $note/@displayLabel
     let $type := $note/@type
     return    
-	    mods:simple-row($note
-	    , 
-	    concat('Note', 
-	        (
-	        if ($displayLabel)
-	        then concat(' (', $displayLabel, ')')            
-	        else ()
-	        ,
-	        if ($type)
-	        then concat(' (', $type, ')')            
-	        else ()
-	        )
+	    mods:simple-row($note, 
+	        string-join(('Note',
+    	            if ($displayLabel)
+    	            then concat(' (', $displayLabel, ')')            
+    	            else (),
+    	            if ($type) then concat(' (', $type, ')')            
+    	            else ()
+    	        ), ""
 	        )
 	    )
     ,
     (: subject :)
     (: We assume that there are not many subjects with the first element, topic, empty. :)
-    if (normalize-space($entry/mods:subject[1]/string()))
-    then mods:format-subjects($entry, $global-transliteration)    
-    else ()
-    , 
+    if (normalize-space($entry/mods:subject[1]/string())) then mods:format-subjects($entry, $global-transliteration) else (),
     (: identifier :)
     for $item in $entry/mods:identifier
     let $type := 

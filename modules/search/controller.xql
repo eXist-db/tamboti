@@ -112,6 +112,13 @@ else if (starts-with($exist:path, "/theme")) then
             </forward>
         </dispatch>
 
+else if (starts-with($exist:path, "/images/")) then
+        let $real-resources-path := substring-after($exist:path, "/images")
+        return
+            <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+                <forward url="/images/scale/{$real-resources-path}" absolute="yes"/>
+            </dispatch>
+        
 else if (starts-with($exist:path, "/resources")) then
     let $real-resources-path := fn:concat(substring-before($exist:controller, "/modules/"), $exist:path) return
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">

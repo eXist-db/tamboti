@@ -79,9 +79,7 @@
             <div>
                 <br/>
             </div>
-            <div>
-                <select id="collection-move-destinations" name="path"/>
-            </div>
+            <div id="form-select-collection" class="path"/>
         </form>
     </jquery:dialog>
     <jquery:dialog id="remove-collection-dialog" modal="true" title="Remove Folder" trigger="#collection-remove-folder" width="450">
@@ -99,8 +97,8 @@
     <!-- end collection writeable -->
     <!-- collection owner -->
     <div id="form-collection-sharing"/>
-    <div id="form-add-user-to-share"/>
-    <div id="form-add-project-to-share"/>
+    <div id="form-add-member-to-sharing-group"/>
+    <div id="form-add-sharing-group"/>
     <!-- end collection owner -->
     <jquery:dialog id="remove-resource-dialog" modal="true" title="Remove Folder" width="450">
         <jquery:button label="Remove" function="removeResource"/>
@@ -115,12 +113,9 @@
         <jquery:button id="cancel" label="Cancel"/>
         <form id="move-resource-form" action="operations.xql">
             <div>Move record from
-                '<span id="move-resource-collection-path-label"/>' to
-                <div>
-                    <select id="resource-move-destinations" name="path"/>
-                </div>
+                '<span id="collection-path"/>' to
+                <div id="form-select-collection" class="path"/>
             </div>
-            <input id="move-resource-collection" name="collection" value="/resources/users/bob" type="hidden"/>
             <input id="move-resource-id" name="resource" type="hidden" value=""/>
         </form>
     </jquery:dialog>
@@ -135,4 +130,40 @@
         <jquery:button id="cancel" label="Cancel"/>
         <div id="resource-types" class="related-item"/>
     </jquery:dialog>
+    <div id="lightbox" class="lightbox">
+        <div class="view">
+            <div class="image">
+                <img class="content" src="dummy"/>
+                <a href="" class="next">
+                    <img src="theme/images/nextlabel.gif"/>
+                </a>
+                <a href="" class="previous">
+                    <img src="theme/images/prevlabel.gif"/>
+                </a>
+            </div>
+            <h4>Title</h4>
+            <a href="" class="close">
+                <img src="theme/images/closelabel.gif"/>
+            </a>
+        </div>
+        <a href="" class="show-metadata">Metadata</a>
+        <div class="metadata">
+            <div class="metadata-content"/>
+            <a href="" class="close">
+                <img src="theme/images/closelabel.gif"/>
+            </a>
+        </div>
+    </div>
+    <div id="filmstrip" class="filmstrip">
+        <div class="filmstripPageButtonContainer">
+            <span class="filmstripPageButton" id="film-up">&#708;</span>
+        </div>
+        <!-- div id="film-up">&#708;</div -->
+        <ul id="filmstrip-items"/>
+        <div class="filmstripPageButtonContainer">
+            <span class="filmstripPageButton" id="film-down">&#709;</span>
+        </div>
+        <!-- div id="film-down">&#709;</div -->
+        <span class="clear"/>
+    </div>
 </div>

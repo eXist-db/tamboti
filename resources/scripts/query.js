@@ -4,8 +4,38 @@ $(function() {
         return false; 
     });
     initCollectionTree();
+    
+    galleries = new tamboti.galleries.Viewer($("#lightbox"));
+    
+    // Init pagination
+    $("#results").pagination({
+        url: "retrieve",
+        totalItems: $("#results-head .hit-count").text(),
+        itemsPerPage: 10,
+        navContainer: "#results-head .navbar",
+        readyCallback: resultsLoaded,
+        params: { mode: "list" }
+    });
+    
+    $(".pagination-mode-gallery").click(function (ev) {
+        ev.preventDefault();
+        $("#results").pagination("option", "params", { mode: "gallery" });
+        $("#results").pagination("option", "itemsPerPage", 10);
+        $("#results").pagination("refresh");
+    });
+    $(".pagination-mode-grid").click(function (ev) {
+        ev.preventDefault();
+        $("#results").pagination("option", "params", { mode: "grid" });
+        $("#results").pagination("option", "itemsPerPage", 40);
+        $("#results").pagination("refresh");
+    });
+    $(".pagination-mode-list").click(function (ev) {
+        ev.preventDefault();
+        $("#results").pagination("option", "params", { mode: "list" });
+        $("#results").pagination("option", "itemsPerPage", 10);
+        $("#results").pagination("refresh");
+    });
 });
-
 
 /* collection action buttons */
 function hideCollectionActionButtons() { 
@@ -78,7 +108,6 @@ function bindAdditionalDialogTriggers() {
             $("#rename-new-name").val(node.data.title);
         }
      });
-
 }
 
 function bindKeyPressActions() {
@@ -615,11 +644,34 @@ function saveToPersonalList(anchor){
 }
 
 function resultsLoaded(options) {
-    if (options.itemsPerPage > 1)
+    if (options.itemsPerPage > 1) {
         $('tbody > tr:even > td', this).addClass('even');
+        $(".pagination-mode", $(options.navContainer)).show();
+    } else {
+        $(".pagination-mode", $(options.navContainer)).hide();
+    }
+    var tallest = 0;
+    $("#results li").each(function () {
+        if ($(this).height() > tallest) {
+            tallest = $(this).height();
+        }
+    });
+    $("#results li").each(function() {
+        $(this).height(tallest);
+    });
     $('#filters').css('display', 'block');
     $('#filters .include-target').empty();
     $('#filters .expand').removeClass('expanded');
+ 
+    // trigger image viewer when user clicks on thumbnail
+    $("#results .magnify").click(function (ev) {
+        ev.stopPropagation();
+        var num = $(this).closest(".pagination-item").find(".pagination-number").text();
+        if (num) {
+            galleries.open();
+            galleries.show(parseInt(num));
+        }
+    });
     
     //detail view
     $('.actions-toolbar .save', this).click(function (ev) {

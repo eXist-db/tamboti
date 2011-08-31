@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.0";
 
 (:~
     Handles the actual display of the search result. The pagination jQuery plugin in jquery-utils.js
@@ -24,6 +24,10 @@ declare namespace functx = "http://www.functx.com";
 declare option exist:serialize "method=xhtml media-type=application/xhtml+xml enforce-xhtml=yes";
 
 declare variable $bs:USER := security:get-user-credential-from-session()[1];
+
+declare variable $bs:THUMB_SIZE_GRID := 64;
+declare variable $bs:THUMB_SIZE_GALLERY := 128;
+declare variable $bs:THUMB_SIZE_DETAIL := 256;
 
 declare function functx:replace-first( $arg as xs:string?, $pattern as xs:string, $replacement as xs:string )  as xs:string {       
    replace($arg, concat('(^.*?)', $pattern),
@@ -52,42 +56,99 @@ declare function bs:get-item-uri($item-id as xs:string) {
     )
 };
 
-declare function bs:mods-list-view($item as node(), $id as xs:string, $currentPos as xs:int, $saved as xs:boolean) {
-    <tr xmlns="http://www.w3.org/1999/xhtml" class="list">
-        <td class="list-number">{$currentPos}</td>
-        {
-        <td class="actions-cell">
-            <a id="save_{$id}" href="#{$currentPos}" class="save">
-                <img title="Save Record to My List" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
-            </a>
-        </td>
-        }
-        <td class="list-type">
-            <img title="{$item/mods:typeOfResource/string()}" src="theme/images/{mods:return-type(string($currentPos), $item)}.png"/>
-        </td>
-        {
-        <td class="pagination-toggle">
-            <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
-            <a>
+declare function bs:view-gallery-item($mode as xs:string, $item as element(mods:mods), $currentPos as xs:int) {
+    let $thumbSize := if ($mode eq "gallery") then $bs:THUMB_SIZE_GALLERY else $bs:THUMB_SIZE_GRID
+    let $title := mods:get-short-title($item)
+    return
+        <li class="pagination-item {$mode}" xmlns="http://www.w3.org/1999/xhtml">
+            <span class="pagination-number">{ $currentPos }</span>
+            <div class="icon pagination-toggle" title="{$title}">
+                <img class="magnify icon-magnifier" src="theme/images/search.png" title="Click for full screen image"/>
+                { bs:get-icon($thumbSize, $item, $currentPos) }
+            </div>
             {
-                let $clean := clean:cleanup($item)
-                return
-                    mods:format-list-view(string($currentPos), $clean)
-                    (: Originally $item was passed to mods:format-list-view() - was there a reason for that? Performance? :)
+                if ($mode eq "gallery") then
+                    <h4>{ $title }</h4>
+                else
+                    ()
             }
-            </a>
-        </td>
-        }
-    </tr>
+        </li>
 };
 
-declare function bs:plain-list-view($item as node(), $id as xs:string, $currentPos as xs:int, $saved as xs:boolean) {
+declare function bs:detail-view-table($item as element(mods:mods), $currentPos as xs:int) {
+    let $isWritable := bs:collection-is-writable(util:collection-name($item))
+    let $id := concat(document-uri(root($item)), '#', util:node-id($item))
+    let $stored := session:get-attribute("mods-personal-list")
+    let $saved := exists($stored//*[@id = $id])
+    return
+        <tr class="pagination-item detail" xmlns="http://www.w3.org/1999/xhtml">
+            <td class="pagination-number">{$currentPos}</td>
+            <td class="actions-cell">
+                <a id="save_{$id}" href="#{$currentPos}" class="save">
+                    <img title="Save Record to My List" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+                </a>
+            </td>
+            <td class="magnify detail-type">
+            { bs:get-icon($bs:THUMB_SIZE_DETAIL, $item, $currentPos)}
+            </td>
+            <td class="detail-xml">
+                { bs:toolbar($item, $isWritable, $id) }
+                <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
+                {
+                    let $collection := util:collection-name($item)
+                    let $collection-short := functx:replace-first($collection, '/db', '')
+                    let $clean := clean:cleanup($item)
+                    return
+                        mods:format-detail-view(string($currentPos), $clean, $collection-short)
+                        (: What is $currentPos used for? :)
+                }
+            </td>
+        </tr>
+};
+
+declare function bs:mods-list-view-table($item as node(), $currentPos as xs:int) {
+    let $id := concat(document-uri(root($item)), '#', util:node-id($item))
+    let $stored := session:get-attribute("mods-personal-list")
+    let $saved := exists($stored//*[@id = $id])
+    return
+        <tr xmlns="http://www.w3.org/1999/xhtml" class="pagination-item list">
+            <td class="pagination-number">{$currentPos}</td>
+            {
+            <td class="actions-cell">
+                <a id="save_{$id}" href="#{$currentPos}" class="save">
+                    <img title="Save Record to My List" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+                </a>
+            </td>
+            }
+            <td class="list-type icon magnify">
+            { bs:get-icon($bs:THUMB_SIZE_GALLERY, $item, $currentPos)}
+            </td>
+            {
+            <td class="pagination-toggle">
+                <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
+                <a>
+                {
+                    let $clean := clean:cleanup($item)
+                    return
+                        mods:format-list-view(string($currentPos), $clean)
+                        (: Originally $item was passed to mods:format-list-view() - was there a reason for that? Performance? :)
+                }
+                </a>
+            </td>
+            }
+        </tr>
+};
+
+declare function bs:plain-list-view-table($item as node(), $currentPos as xs:int) {
     let $kwic := kwic:summarize($item/field[1], <config xmlns="" width="40"/>)
+    let $id := concat(document-uri(root($item)), '#', util:node-id($item))
+    let $stored := session:get-attribute("mods-personal-list")
+    let $saved := exists($stored//*[@id = $id])
     let $titleField := ft:get-field($item/@uri, "Title")
     let $title := if ($titleField) then $titleField else replace($item/@uri, "^.*/([^/]+)$", "$1")
     return
-        <tr xmlns="http://www.w3.org/1999/xhtml" class="list">
-            <td class="list-number">{$currentPos}</td>
+        <tr xmlns="http://www.w3.org/1999/xhtml" class="pagination-item list">
+            <td class="pagination-number">{$currentPos}</td>
             {
             <td class="actions-cell">
                 <a id="save_{$id}" href="#{$currentPos}" class="save">
@@ -96,7 +157,9 @@ declare function bs:plain-list-view($item as node(), $id as xs:string, $currentP
             </td>
             }
             <td class="list-type">
-                <a href="{substring($item/@uri, 2)}" target="_new"><img src="theme/images/file_pdf.png"/></a>
+                <a href="{substring($item/@uri, 2)}" target="_new">
+                { bs:get-icon($bs:THUMB_SIZE_GALLERY, $item, $currentPos)}
+                </a>
             </td>
             {
             <td class="pagination-toggle">
@@ -107,15 +170,111 @@ declare function bs:plain-list-view($item as node(), $id as xs:string, $currentP
         </tr>
 };
 
-declare function bs:list-view($item as node(), $id as xs:string, $currentPos as xs:int, $saved as xs:boolean) {
+declare function bs:list-view-table($item as node(), $currentPos as xs:int) {
     typeswitch ($item)
         case element(mods:mods) return
-            bs:mods-list-view($item, $id, $currentPos, $saved)
+            bs:mods-list-view-table($item, $currentPos)
         default return
-            bs:plain-list-view($item, $id, $currentPos, $saved)
+            bs:plain-list-view-table($item, $currentPos)
 };
 
+declare function bs:toolbar($item as element(mods:mods), $isWritable as xs:boolean, $id as xs:string) {
+    let $home := security:get-home-collection-uri($bs:USER)
+    return
+        <div class="actions-toolbar">
+            <a target="_new" href="source.xql?id={$item/@ID}&amp;clean=yes">
+                <img title="View XML Source of Record" src="theme/images/script_code.png"/>
+            </a>
+            {
+                (: if the item's collection is writable, display edit/delete and move buttons :)
+                if ($isWritable) 
+                then (
+                    <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}&amp;type={$item/mods:extension/*:template}">
+                        <img title="Edit Record" src="theme/images/page_edit.png"/>
+                    </a>
+                    ,
+                    <a class="remove-resource" href="#{$id}"><img title="Delete Record" src="theme/images/delete.png"/></a>,
+                    <a class="move-resource" href="#{$id}"><img title="Move Record" src="theme/images/shape_move_front.png"/></a>
+                    )
+                else ()
+            }
+            {
+                (: button to add a related item :)
+                if ($bs:USER ne "guest") 
+                then
+                    <a class="add-related" href="#{if ($isWritable) then util:collection-name($item) else $home}#{$item/@ID}">
+                        <img title="Create Related Item" src="theme/images/page_add.png"/>
+                    </a>
+                    else ()
+            }
+        </div>
+};
+
+declare function bs:get-icon-from-folder($size as xs:int, $collection as xs:string) {
+    let $thumb := xmldb:get-child-resources($collection)[1]
+    let $imgLink := concat(substring-after($collection, "/db"), "/", $thumb)
+    return
+        <img src="images/{$imgLink}?s={$size}"/>
+};
+
+(:~
+    Get an image element containing the preview icon or thumbnail for the given resource.
+:)
+declare function bs:get-icon($size as xs:int, $item as element(mods:mods), $currentPos as xs:int) {
+    let $image := 
+        ( 
+            $item/mods:location/mods:url[@access="preview"]/string(), 
+            $item/mods:location/mods:url[@displayLabel="Path to Folder"] 
+        )[1]
+    return
+        if (exists($image)) then
+            let $path := concat(util:collection-name($item), "/", xmldb:encode($image))
+            return
+                if (collection($path)) then
+                    bs:get-icon-from-folder($size, $path)
+                else
+                    let $imgLink := concat(substring-after(util:collection-name($item), "/db"), "/", $image)
+                    return
+                        <img title="{$item/mods:typeOfResource/string()}" src="images/{$imgLink}?s={$size}"/>
+        else
+            <img title="{$item/mods:typeOfResource/string()}" src="theme/images/{mods:return-type(string($currentPos), $item)}.png"/>
+};
+
+declare function bs:view-table($cached as item()*, $stored as item()*, $start as xs:int, 
+    $count as xs:int, $available as xs:int) {
+    <table xmlns="http://www.w3.org/1999/xhtml">
+    {
+        for $item at $pos in subsequence($cached, $start, $available)
+        let $currentPos := $start + $pos - 1
+        (: Why does $currentPos have a final "."? Should be removed. :)
+        return
+            if ($count eq 1 and $item instance of element(mods:mods)) then
+                bs:detail-view-table($item, $currentPos)
+            else
+                bs:list-view-table($item, $currentPos)
+    }
+    </table>
+};
+
+declare function bs:view-gallery($mode as xs:string, $cached as item()*, $stored as item()*, $start as xs:int, 
+    $count as xs:int, $available as xs:int) {
+    <ul xmlns="http://www.w3.org/1999/xhtml">
+    {
+        for $item at $pos in subsequence($cached, $start, $available)
+        let $currentPos := $start + $pos - 1
+        (: Why does $currentPos have a final "."? Should be removed. :)
+        return
+            bs:view-gallery-item($mode, $item, $currentPos)
+    }
+    </ul>
+};
+
+(:~
+    Main function: retrieves query results from session cache and
+    checks which display mode to use.
+:)
 declare function bs:retrieve($start as xs:int, $count as xs:int) {
+    let $mode := request:get-parameter("mode", "gallery")
     let $cached := session:get-attribute("mods:cached")
     let $stored := session:get-attribute("mods-personal-list")
     let $total := count($cached)
@@ -124,76 +283,18 @@ declare function bs:retrieve($start as xs:int, $count as xs:int) {
             $total - $start + 1
         else
             $count
-    let $home := security:get-home-collection-uri($bs:USER)
     return
-        <table xmlns="http://www.w3.org/1999/xhtml">
-        {
-            for $item at $pos in subsequence($cached, $start, $available)
-            let $currentPos := $start + $pos - 1
-            (: Why does $currentPos have a final "."? Should be removed. :)
-            let $id := concat(document-uri(root($item)), '#', util:node-id($item))
-            let $saved := exists($stored//*[@id = $id])
-            return
-            if ($count eq 1 and $item instance of element(mods:mods)) then
-                <tr class="detail">
-                    <td class="detail-number">{$currentPos}</td>
-                    {
-                    <td class="actions-cell">
-                        <a id="save_{$id}" href="#{$currentPos}" class="save">
-                            <img title="Save Record to My List" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
-                        </a>
-                    </td>
-                    }
-                    <td class="detail-type">
-                        <img title="{$item/mods:typeOfResource/string()}" src="theme/images/{mods:return-type(string($currentPos), $item)}.png"/>
-                    </td>
-                    {
-                    let $isWritable := bs:collection-is-writable(util:collection-name($item))
-                        return
-                            <td class="detail-xml">
-                                <div class="actions-toolbar">
-                                    <a target="_new" href="source.xql?id={$item/@ID}&amp;clean=yes">
-                                        <img title="View XML Source of Record" src="theme/images/script_code.png"/>
-                                    </a>
-                                    {
-                                    (: if the item's collection is writable, display edit/delete and move buttons :)
-                                    if ($isWritable) 
-                                    then (
-                                        <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}&amp;type={$item/mods:extension/*:template}">
-                                            <img title="Edit Record" src="theme/images/page_edit.png"/>
-                                        </a>
-                                        ,
-                                        <a class="remove-resource" href="#{$id}"><img title="Delete Record" src="theme/images/delete.png"/></a>,
-                                        <a id="resource-move-folder" class="move-resource" href="#{$id}"><img title="Move Record" src="theme/images/shape_move_front.png"/></a>
-                                        )
-                                    else ()
-                                    }
-                                    {
-                                    (: button to add a related item :)
-                                    if ($bs:USER ne "guest") 
-                                    then
-                                        <a class="add-related" href="#{if ($isWritable) then util:collection-name($item) else $home}#{$item/@ID}">
-                                            <img title="Create Related Item" src="theme/images/page_add.png"/>
-                                        </a>
-                                        else ()
-                                    }
-                                </div>
-                                <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
-                                    {
-                                    let $collection := util:collection-name($item)
-                                    let $collection-short := functx:replace-first($collection, '/db', '')
-                                    let $clean := clean:cleanup($item)
-                                    return
-                                        mods:format-detail-view(string($currentPos), $clean, $collection-short)
-                                        (: What is $currentPos used for? :)
-                                    }
-                                </td>
-                    }
-                </tr>
-            else 
-                bs:list-view($item, $id, $currentPos, $saved)
-        }
-        </table>
+        (: A single entry is always shown in table view for now :)
+        if ($mode eq "ajax" and $count eq 1) then
+            bs:view-table($cached, $stored, $start, $count, $available)
+        else
+            switch ($mode)
+                case "gallery" return
+                    bs:view-gallery($mode, $cached, $stored, $start, $count, $available)
+                case "grid" return
+                    bs:view-gallery($mode, $cached, $stored, $start, $count, $available)
+                default return
+                    bs:view-table($cached, $stored, $start, $count, $available)
 };
 
 session:create(),
