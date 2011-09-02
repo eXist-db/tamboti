@@ -1481,7 +1481,7 @@ declare function mods:get-short-title($entry as element()) {
     let $titleInfo := $titleInfo[not(@type)][not(@transliteration)][1]
     
     let $nonSort := $titleInfo/mods:nonSort
-    let $title := $titleInfo/mods:title[1]
+    let $title := $titleInfo/mods:title
     let $subTitle := $titleInfo/mods:subTitle
     let $partNumber := $titleInfo/mods:partNumber
     let $partName := $titleInfo/mods:partName
@@ -1713,7 +1713,7 @@ if ($titleInfo)
         	concat(
         	concat(
         	$titleInfo/mods:nonSort, ' ', 
-        	$titleInfo/mods:title[1]), 
+        	$titleInfo/mods:title), 
         		(
         			if ($titleInfo/mods:subTitle) 
         			then ': ' 
@@ -1920,7 +1920,7 @@ declare function mods:url($entry as element()) as element(tr)* {
                 else 'URL'
             }
             </td>
-            <td class="record"><a href="{$url}" target="_blank">{$url}</a></td>
+            <td class="record"><a href="{$url}" target="_blank">{if ((string-length($url) < 80)) then $url  else (substring($url,1,70), '...')}</a></td>
         </tr>
 };        
 
@@ -2139,22 +2139,30 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     (: note :)
     for $note in ($entry/mods:note)
     let $displayLabel := $note/@displayLabel
-    let $type := $note/@type
-    return    
-	    mods:simple-row($note, 
-	        string-join(('Note',
-    	            if ($displayLabel)
-    	            then concat(' (', $displayLabel, ')')            
-    	            else (),
-    	            if ($type) then concat(' (', $type, ')')            
-    	            else ()
-    	        ), ""
+    let $type := $note/@type 
+    return
+        (:NB: display html markup.:)    
+	    mods:simple-row(replace($note, '&lt;.*?&gt;', '')
+	    , 
+	    concat('Note', 
+	        (
+	        if ($displayLabel)
+	        then concat(' (', $displayLabel, ')')            
+	        else ()
+	        ,
+	        if ($type)
+	        then concat(' (', $type, ')')            
+	        else ()
+	        )
 	        )
 	    )
     ,
     (: subject :)
     (: We assume that there are not many subjects with the first element, topic, empty. :)
-    if (normalize-space($entry/mods:subject[1]/string())) then mods:format-subjects($entry, $global-transliteration) else (),
+    if (normalize-space($entry/mods:subject[1]/string()))
+    then mods:format-subjects($entry, $global-transliteration)    
+    else ()
+    , 
     (: identifier :)
     for $item in $entry/mods:identifier
     let $type := 
@@ -2238,7 +2246,10 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         	then
             	for $url in $entry/mods:location/mods:url
 	                return
-    	                concat(' <', $url, '>', '.')
+                    (: NB: Too long URLs do not line-wrap, forcing the display of results down, so they are not displayed. The link is anyway not clickable. :)
+	                if (string-length($url) < 100)
+	                then concat(' <', $url, '>', '.')
+    	            else ""
         	else '.'
         )
     return

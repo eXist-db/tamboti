@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" ID="">
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://kjc-fs2.kjc.uni-heidelberg.de:8600/exist/rest/db/library/resources/schemas/modsCluster.xsd" ID="">
     <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="">
         <nonSort/>
         <!--<nonSort lang="" xml:lang="" script="" transliteration=""/>-->
@@ -165,10 +165,10 @@
         <scriptTerm type="" authority=""/>
     </language>
     <extension>
-        <e:collection xmlns:e="http://www.asia-europe.uni-heidelberg.de/"/>
-        <e:template xmlns:e="http://www.asia-europe.uni-heidelberg.de/"/>
-        <e:scriptTypeOfResource xmlns:e="http://www.asia-europe.uni-heidelberg.de/"/>
-        <e:scriptTypeOfCataloging xmlns:e="http://www.asia-europe.uni-heidelberg.de/"/>
-        <e:transliterationOfResource xmlns:e="http://www.asia-europe.uni-heidelberg.de/"/>
+        <e:collection/>
+        <e:template/>
+        <e:scriptTypeOfResource/>
+        <e:scriptTypeOfCataloging/>
+        <e:transliterationOfResource/>
     </extension>
 </mods>

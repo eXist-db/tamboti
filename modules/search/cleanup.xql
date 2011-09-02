@@ -19,6 +19,17 @@ return
     else $child }
 };
 
+(: Removes empty attributes. Attributes are often left empty by the Tamboti editor. :)
+declare function clean:remove-empty-attributes-except-transliteration($element as element()) as element() {
+element { node-name($element)}
+{ $element/@*[string-length(.) ne 0 or name(.) eq 'transliteration'],
+for $child in $element/node( )
+return 
+    if ($child instance of element())
+    then clean:remove-empty-attributes($child)
+    else $child }
+};
+
 (: Removes an element if it is empty or contains whitespace only. A relatedItem should be allowed to be empty if it has an @xlink:href. :)
 (: Derived from functx:remove-elements-deep. :)
 (: Contains functx:all-whitespace. :)
@@ -36,11 +47,13 @@ declare function clean:remove-empty-elements($nodes as node()*)  as node()* {
      else $node
  } ;
 
-(: The function called in session.xql which passes search results to retrieve-mods.xql after cleaning them. It does not remove empty attributes, since the transliteration attribute is used, even if empty. :)
+(: The function called in session.xql which passes search results to retrieve-mods.xql after cleaning them. It remove all empty attributes except @transliteration, since the transliteration attribute is used, even if empty. :)
 declare function clean:cleanup($node as node()) {
         let $result := clean:remove-empty-elements($node)
         return
-            $result
+            let $result := clean:remove-empty-attributes-except-transliteration($result)
+            return
+                $result
             };
 
 (: The function called in source.xql which cleans records before presenting them in XML view, for import into other tools. This also removes empty attributes. :) 

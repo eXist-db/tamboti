@@ -18,4 +18,8 @@ return
     else
     	if ($clean eq "yes") 
     	then clean:cleanup-for-code-view($data)
-    	else $data
+    	else
+    	   if ($clean eq "soft") 
+    	   (:Leaves empty @transliteration.:)
+    	   then clean:cleanup($data)
+    	   else $data
