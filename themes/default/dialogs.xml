@@ -30,13 +30,13 @@
                 <tr>
                     <td>Username:</td>
                     <td>
-                        <input id="loginUsername" name="user" type="text"/>
+                        <input name="user" type="text"/>
                     </td>
                 </tr>
                 <tr>
                     <td>Password:</td>
                     <td>
-                        <input id="loginPassword" name="password" type="password"/>
+                        <input name="password" type="password"/>
                     </td>
                 </tr>
             </table>
@@ -46,13 +46,13 @@
     <jquery:dialog id="new-collection-dialog" modal="true" title="Create Folder" trigger="#collection-create-folder" width="450">
         <jquery:button label="Create" function="createCollection"/>
         <jquery:button id="cancel" label="Cancel"/>
-        <form id="create-collection-form" action="operations.xql" method="post">
+        <form id="create-collection-form" action="operations.xql">
             <div>Name of new folder: </div>
             <div>
                 <br/>
             </div>
             <div>
-                <input id="new-collection-name" name="name" type="text"/>
+                <input name="name" type="text"/>
             </div>
         </form>
     </jquery:dialog>
@@ -79,7 +79,9 @@
             <div>
                 <br/>
             </div>
-            <div id="form-select-collection" class="path"/>
+            <div>
+                <select id="collection-move-destinations" name="path"/>
+            </div>
         </form>
     </jquery:dialog>
     <jquery:dialog id="remove-collection-dialog" modal="true" title="Remove Folder" trigger="#collection-remove-folder" width="450">
@@ -97,8 +99,8 @@
     <!-- end collection writeable -->
     <!-- collection owner -->
     <div id="form-collection-sharing"/>
-    <div id="form-add-member-to-sharing-group"/>
-    <div id="form-add-sharing-group"/>
+    <div id="form-add-user-to-share"/>
+    <div id="form-add-project-to-share"/>
     <!-- end collection owner -->
     <jquery:dialog id="remove-resource-dialog" modal="true" title="Remove Folder" width="450">
         <jquery:button label="Remove" function="removeResource"/>
@@ -113,8 +115,10 @@
         <jquery:button id="cancel" label="Cancel"/>
         <form id="move-resource-form" action="operations.xql">
             <div>Move record from
-                '<span id="collection-path"/>' to
-                <div id="form-select-collection" class="path"/>
+                '<span id="move-resource-collection-path-label"/>' to
+                <div>
+                    <select id="resource-move-destinations" name="path"/>
+                </div>
             </div>
             <input id="move-resource-id" name="resource" type="hidden" value=""/>
         </form>
@@ -156,14 +160,14 @@
     </div>
     <div id="filmstrip" class="filmstrip">
         <div class="filmstripPageButtonContainer">
-            <span class="filmstripPageButton" id="film-up">&#708;</span>
+            <span class="filmstripPageButton" id="film-up">˄</span>
         </div>
-        <!-- div id="film-up">&#708;</div -->
+        <!-- div id="film-up">˄</div -->
         <ul id="filmstrip-items"/>
         <div class="filmstripPageButtonContainer">
-            <span class="filmstripPageButton" id="film-down">&#709;</span>
+            <span class="filmstripPageButton" id="film-down">˅</span>
         </div>
-        <!-- div id="film-down">&#709;</div -->
+        <!-- div id="film-down">˅</div -->
         <span class="clear"/>
     </div>
 </div>
