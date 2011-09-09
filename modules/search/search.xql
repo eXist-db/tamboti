@@ -955,7 +955,7 @@ declare function biblio:process-request($id as xs:string?, $collection as xs:str
 util:log("ERROR", ("search.xql called")),
 session:create(),
 (: We receive an HTML template as input :)
-let $input := request:get-data()
+let $input := request:get-data()/element()
 let $filter := request:get-parameter("filter", ())
 let $history := request:get-parameter("history", ())
 let $reload := request:get-parameter("reload", ())

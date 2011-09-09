@@ -291,7 +291,7 @@ declare function save:remove-new-docs-target-collection($resource-path as xs:str
 };
 
 (: this is where the form "POSTS" documents to this XQuery using the POST method of a submission :)
-let $item := clean:clean-namespaces(request:get-data())
+let $item := clean:clean-namespaces(request:get-data()/element())
 
 (: this service takes an incoming POST and saves the appropriate records :)
 (: note that in this version, the incoming @ID is required :)
