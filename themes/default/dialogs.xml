@@ -30,13 +30,13 @@
                 <tr>
                     <td>Username:</td>
                     <td>
-                        <input name="user" type="text"/>
+                        <input id="loginUsername" name="user" type="text"/>
                     </td>
                 </tr>
                 <tr>
                     <td>Password:</td>
                     <td>
-                        <input name="password" type="password"/>
+                        <input id="loginPassword" name="password" type="password"/>
                     </td>
                 </tr>
             </table>
@@ -46,13 +46,13 @@
     <jquery:dialog id="new-collection-dialog" modal="true" title="Create Folder" trigger="#collection-create-folder" width="450">
         <jquery:button label="Create" function="createCollection"/>
         <jquery:button id="cancel" label="Cancel"/>
-        <form id="create-collection-form" action="operations.xql">
+        <form id="create-collection-form" action="operations.xql" method="post">
             <div>Name of new folder: </div>
             <div>
                 <br/>
             </div>
             <div>
-                <input name="name" type="text"/>
+                <input id="new-collection-name" name="name" type="text"/>
             </div>
         </form>
     </jquery:dialog>
