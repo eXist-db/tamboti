@@ -100,19 +100,31 @@
                 }
                 var div = $(base.options.navContainer);
                 $(".pagination-first", div).click(function () {
+                    if (base.currentItem != 1)
                     helpers.retrievePage(base, 1);
                     return false;
                 });
-                $(".pagination-previous", div).click(function () {
-                    helpers.retrievePage(base, base.currentItem - base.options.itemsPerPage);
+                $(".pagination-previous", div).click(function () {                    
+                        if (base.options.itemsPerPage == 1) {
+                            if (base.currentItem - base.options.itemsPerPage >= base.options.itemsPerPage)
+                            helpers.retrievePage(base, base.currentItem - base.options.itemsPerPage); }
+                        else if (base.currentItem - base.options.itemsPerPage >= 0)
+                            helpers.retrievePage(base, base.currentItem - base.options.itemsPerPage);
+                        else 
+                            helpers.retrievePage(base, 1);
                     return false;
                 });
                 $(".pagination-next", div).click(function () {
+                    if (base.options.totalItems - (base.currentItem + base.options.itemsPerPage) >= 0)
                     helpers.retrievePage(base, base.currentItem + base.options.itemsPerPage);
                     return false;
                 });
                 $(".pagination-last", div).click(function () {
-                    helpers.retrievePage(base, base.options.totalItems);
+                    if (base.options.itemsPerPage == 1) {
+                        if (base.currentItem != base.options.totalItems)
+                        helpers.retrievePage(base, base.options.totalItems); }
+                    else if (base.currentItem + base.options.itemsPerPage <= base.options.totalItems)
+                            helpers.retrievePage(base, base.options.totalItems);
                     return false;
                 });
                 if (base.options.singleItemView) {
@@ -155,16 +167,23 @@
                     $(".pagination-info", div).text(recordSpan);
                 }
         
-                if (base.currentItem >= base.options.totalItems) {
+                if (base.options.totalItems - (base.currentItem + base.options.itemsPerPage) < 0) {
                     $(".pagination-next", div).addClass("inactive");
                 } else {
                     $(".pagination-next", div).removeClass("inactive");
                 }
-        
-                if (base.currentItem == base.options.totalItems) {
-                    $(".pagination-last", div).addClass("inactive");
-                } else {
-                    $(".pagination-last", div).removeClass("inactive");
+                    
+                if (base.options.itemsPerPage == 1) {
+                    if (base.currentItem == base.options.totalItems) {
+                        $(".pagination-last", div).addClass("inactive");
+                    } else {
+                        $(".pagination-last", div).removeClass("inactive");
+                    }
+                    }
+                    else if (base.currentItem + base.options.itemsPerPage > base.options.totalItems) {
+                        $(".pagination-last", div).addClass("inactive");
+                    } else {
+                        $(".pagination-last", div).removeClass("inactive");                                   
                 }
                 
                 if (base.options.singleItemView) {
