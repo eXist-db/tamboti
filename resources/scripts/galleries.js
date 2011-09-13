@@ -218,6 +218,8 @@ tamboti.galleries.FilmStrip = (function () {
 tamboti.namespace("tamboti.galleries.Viewer");
 
 tamboti.galleries.Viewer = (function () {
+
+    var MAX_IMAGE_SIZE = 360;
     
     Constr = function (container, basePath) {
         var $this = this;
@@ -291,7 +293,7 @@ tamboti.galleries.Viewer = (function () {
                     $this.item = num;
                     $this.heading.html(data.title);
                     $this.heading.toggle(true);
-                    var src = data.src + "?s=1024";
+                    var src = data.src + "?s=" + MAX_IMAGE_SIZE;
                     var image = new Image();
                     $(image).load(function () {
                         $this.img.attr("id", "viewer-image");
@@ -339,25 +341,26 @@ tamboti.galleries.Viewer = (function () {
             var w = image.width;
             var h = image.height;
             
-            var aspectRatio;
-            if(w >= h) {
-                //scale height
-                aspectRatio = h / w;
-            } else {
-                //scale width
-                aspectRatio = w / h;
-            }
+            if (h > maxHeight || w > maxWidth) {
+                var aspectRatio;
+                if(w >= h) {
+                    //scale height
+                    aspectRatio = h / w;
+                } else {
+                    //scale width
+                    aspectRatio = w / h;
+                }
             
-            if(maxWidth >= maxHeight) {
-                //scale into width
-                h = maxHeight;
-                w = maxWidth * aspectRatio;
-            } else {
-                //scale into height
-                w = maxWidth;
-                h = maxHeight * aspectRatio;
+                if(maxWidth >= maxHeight) {
+                    //scale into width
+                    h = maxHeight;
+                    w = maxWidth * aspectRatio;
+                } else {
+                    //scale into height
+                    w = maxWidth;
+                    h = maxHeight * aspectRatio;
+                }
             }
-            
             $.log("window=(" + $(window).width() + "," + $(window).height() + ") max=(" + 
                 maxWidth + "," + maxHeight +") new=(" + w + "," + h + ")");
             
@@ -397,13 +400,13 @@ tamboti.galleries.Viewer = (function () {
         },
         
         getMetadata: function () {
-            if (this.num < 0)
+            if (this.item < 0)
                 return;
             
             var $this = this;
             $.ajax({
                 url: "session.xql",
-                data: { mode: "ajax", start: $this.num, count: 1 },
+                data: { mode: "ajax", start: $this.item, count: 1 },
                 dataType: "html",
                 type: "POST",
                 success: function (data) {
