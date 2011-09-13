@@ -792,7 +792,7 @@ declare function biblio:form-select-current-user-groups($select-name as xs:strin
 };
 
 declare function biblio:form-add-user-to-share() {
-     <jquery:dialog id="add-user-to-share-dialog" modal="true" title="Add User to Share" width="450">
+     <jquery:dialog id="add-user-to-share-dialog" modal="true" title="Add User to Share With" width="550">
         <div>
             <span>Enter the user's name:</span>
             <jquery:input name="user-auto-list" id="user-auto-list">
@@ -804,9 +804,9 @@ declare function biblio:form-add-user-to-share() {
 };
 
 declare function biblio:form-add-project-to-share() {
-    <jquery:dialog id="add-project-to-share-dialog" modal="true" title="Add Project to Share" width="450">
+    <jquery:dialog id="add-project-to-share-dialog" modal="true" title="Add Project to Share With" width="550">
         <div>
-            <span>Enter the project name:</span>
+            <span>Enter the project's name:</span>
             <jquery:input name="project-auto-list" id="project-auto-list">
                 <jquery:autocomplete url="autocomplete-groupname.xql" width="300" multiple="false" matchContains="false" minLength="2"/>
             </jquery:input>
@@ -818,8 +818,8 @@ declare function biblio:form-add-project-to-share() {
 declare function biblio:form-collection-sharing($collection as xs:string) {
     <jquery:dialog id="sharing-collection-dialog" modal="true" title="Folder Sharing" trigger="#collection-sharing" width="600" onOpen="updateSharingDialog">
         <jquery:button id="cancel" label="Close"/>
-        <div>Folder <span id="sharing-collection-path_"></span> is shared with:</div>
-        <table id="collectionSharingDetails" border="1">
+        <div>Folder <strong><span id="sharing-collection-path_"></span></strong> is shared with:</div>
+        <table id="collectionSharingDetails">
             <thead>
                 <tr>
                     <th>Type</th>

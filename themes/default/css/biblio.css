@@ -8,10 +8,7 @@
 color scheme ends*/
 
 /*temporary begins*/
-.pagination-number {
-    vertical-align:top;
-    padding-top:.6em;
-    }
+
 /*temporary ends*/
 
 p, td {
@@ -233,23 +230,6 @@ td.collection-path {
     width:800px;    
 }
 
-/*collection-tree ends*/
-
-/*create new record dialog*/
-
-.language-label {
-    padding:.5em;
-}
-
-.language-list {
-    position:absolute;
-    right:2em;
-}
-
-.language-list option {
-    margin:.25em .5em .25em .5em;
-}
-
 .box {
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
@@ -268,16 +248,33 @@ td.collection-path {
     margin:4px;
 }
 
+
+/*collection-tree ends*/
+
+/*create new record dialog*/
+
+.language-label {
+    padding:.5em;
+}
+
+.language-list {
+    position:absolute;
+    right:2em;
+}
+
+.language-list option {
+    margin:.25em .5em .25em .5em;
+}
+
 #results-head {
-    margin-bottom:10px;
-    margin-top:10px;
     border-bottom:1px solid #BBBBBB;
-    padding:2px 8px 12px 2px;
+    padding:1em;
 }
 
 .records-found {
 	margin-right:1em;
 }
+
 #results {
     margin-top:.5em;
     overflow: auto;
@@ -380,7 +377,6 @@ td.collection-path {
     padding:2px 6px 2px 4px;
 }
 
-
 .pagination-last {
     margin-left:.5em;
     padding:2px 4px 2px 6px;
@@ -419,7 +415,6 @@ td.collection-path {
 .pagination-info {
     margin:10px;
     text-align:center;
-    width:11em;
 }
 
 .pagination-list-view {
@@ -442,6 +437,14 @@ td.collection-path {
     vertical-align:top;
     margin:0;
 }
+
+.pagination-number {
+    padding-top:.45em;
+    }
+
+.actions-cell {
+    padding-top:.25em;
+    }
 
 .detail-type {
     margin: 10px 0 0 0;
@@ -880,24 +883,81 @@ span.readable .dynatree-title {
     border: 1px white solid;
 }
 
-#collectionSharingDetails table td {
-	border-color:#F5F4F2;
+/* collection sharing dialog begins*/
+
+#sharing-collection-dialog div,
+#collectionSharingDetails
+    {
+    margin-bottom:1em;
+    }
+
+#collectionSharingDetails_processing,
+#collectionSharingDetails_length
+    {
+    display:none;
+    }
+
+#collectionSharingDetails, 
+#collectionSharingDetails th, 
+#collectionSharingDetails td 
+    {
+    width:100%;
+    border-collapse:collapse;
+    border:1px solid lightgray;
+    }
+
+#collectionSharingDetails td, 
+#collectionSharingDetails th 
+    {
+    line-height:0.8em;    
+    width:20%;
+    text-align:center;
 }
 
-#add-user-to-share-dialog {
-	width:30em;
+#collectionSharingDetails td {
+    padding:3px 10px 3px 10px;
 }
 
-#collectionSharingDetails td, #collectionSharingDetails th {
-    line-height: 0.8em;
-    padding: 3px 10px;
-
+#collectionSharingDetails th {
+    padding-top:10px;
+    padding-bottom:10px;
 }
 
-#collectionSharingDetails table td {
-	border:1px solid lightgray;
+#collectionSharingDetails_paginate,
+#collectionSharingDetails_info {
+    text-align:center;
 }
-	
+#collectionSharingDetails_paginate span {
+    margin:2em;
+}
+
+#collectionSharingDetails_paginate .paginate_button_disabled {
+    color:lightgray;
+}
+
+#collectionSharingDetails_paginate span .paginate_active {
+    margin-right:0;
+    font-weight:bold;
+}
+
+#user-auto-list,
+#project-auto-list
+    {
+    width:325px;
+    }
+
+#add-user-to-share-dialog input, 
+#add-project-to-share-dialog input {
+	margin-bottom:1em;
+}
+
+#collectionSharingDetails_filter {
+    float:right;
+    margin-top:-2.25em;
+    }
+
+/* collection sharing dialog ends*/
+
 #login-form {
     width:30em;
 }
