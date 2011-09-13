@@ -219,13 +219,18 @@ tamboti.namespace("tamboti.galleries.Viewer");
 
 tamboti.galleries.Viewer = (function () {
 
-    var MAX_IMAGE_SIZE = 360;
+    var MAX_IMAGE_SIZE = 1024;
     
-    Constr = function (container, basePath) {
+    Constr = function (container, basePath, maxSize) {
         var $this = this;
         $this.url = "gallery.xql";
         if (basePath) {
             $this.url = basePath + "/" + $this.url;
+        }
+        
+        $this.maxImageSize = MAX_IMAGE_SIZE;
+        if (maxSize) {
+            $this.maxImageSize = maxSize;
         }
         
         // current item
@@ -293,7 +298,7 @@ tamboti.galleries.Viewer = (function () {
                     $this.item = num;
                     $this.heading.html(data.title);
                     $this.heading.toggle(true);
-                    var src = data.src + "?s=" + MAX_IMAGE_SIZE;
+                    var src = data.src + "?s=" + $this.maxImageSize;
                     var image = new Image();
                     $(image).load(function () {
                         $this.img.attr("id", "viewer-image");
