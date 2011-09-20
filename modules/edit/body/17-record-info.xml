@@ -62,7 +62,7 @@
             </xf:group>
                     <!--DLF/Aquifer: N/A-->
                     <!--Cluster: omit-->
-            <xf:group appearance="full" ref=".[not(@script='Latn')]">
+            <xf:group appearance="full" ref=".[not(@script='latn')]">
                 <xf:select1 ref="./@transliteration" selection="open">
                     <xf:label>Transliteration</xf:label>
                     <xf:hint>

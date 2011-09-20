@@ -140,11 +140,12 @@
         <item>
             <help>
                 <p> Note in Date of Publication the year in which the resource was issued. </p>
-                <p> Date of Publication is typically found on the title page, in connection with place of publication and publisher. </p>
-                <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The values "start" and "end" are used with Point. Repeat the Date of
-                    Publication field and choose "start" in one and "end" in the other repetition, and enter the appropriate dates in the two Date of
-                    Publication fields. </p>
-                <p> If no point is specified a year noted in Date of Publication is assumed to be a single year. </p>
+                <p> The Date of Publication is typically found on the title page, in connection with place of publication and publisher. </p>
+                <p> The Date of Copyright is typically found on the reverse the title page, in connection the © or (c) symbol.</p>
+                <p> If there is a Date of Publication, use it; otherwise use the Date of Copyright.</p>
+                <p> If you wish to record a span of time, e.g. 1912-1914, repeat the Date of Publication field. The field Point will appear.</p>
+                <p> Choose "start" in one Point and "end" in the other, and enter the appropriate dates in the corresponding two fields. </p>
+                <p> If no Point is specified a year noted in Date of Publication is assumed to be a single year. </p>
                 <p> More input options can be found on the Origin Information: Dates tab on the Citation Forms.</p>
             </help>
             <hint/>
@@ -157,8 +158,10 @@
             <help>
                 <p> Note in Copyright Date the year in which copyright was claimed for the resource. </p>
                 <p> Copyright Date is typically found on the page following the title page. It occurs in connection with a copyright symbol, (c) or ©.</p>
-                <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The values "start" and "end" are used with Point. Repeat the Copyright Date field and choose "start" in one and "end" in the other repetition, and enter the appropriate dates in the two Copyright Date fields. </p>
-                <p> If no point is specified a year noted in Copyright Date is assumed to be a single year. </p>
+                <p> If there is a Date of Publication, use it; otherwise use the Date of Copyright.</p>
+                <p> If you wish to record a span of time, e.g. 1912-1914, repeat the Date of Publication field. The field Point will appear.</p>
+                <p> Choose "start" in one Point and "end" in the other, and enter the appropriate dates in the corresponding two fields. </p>
+                <p> If no Point is specified a year noted in Copyright Date is assumed to be a single year. </p>
                 <p> More input options can be found on the Origin Information: Dates tab on the Citation Forms.</p>
             </help>
             <hint/>
@@ -170,6 +173,13 @@
         <item>
             <help>
                 <p> The date that the resource was published, released, or issued. </p>
+                <p> The Date of Publication is typically found on the title page, in connection with place of publication and publisher. </p>
+                <p> The Date of Copyright is typically found on the reverse the title page, in connection the © or (c) symbol.</p>
+                <p> If there is a Date of Publication, use it; otherwise use the Date of Copyright.</p>
+                <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The values "start" and "end" are used with Point. Repeat the Date of
+                    Publication field and choose "start" in one and "end" in the other repetition, and enter the appropriate dates in the two Date of
+                    Publication fields. </p>
+                <p> If no point is specified a year noted in Date of Publication is assumed to be a single year. </p>
             </help>
             <hint/>
             <value>dateIssued</value>
@@ -356,6 +366,18 @@
                 <p> Extent may be used with electronic resources, e.g. digitised collection of slides, to show how many slides constitute the resource. </p>
             </help>
             <hint/>
+            <value>extent</value>
+            <local-name>extent</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> The number of units and the material of the units of the resource that express physical extent. Typical entries for a monograph might read "xiv, 213 p.", "21 p. : ill", "2 v.", "	3, 5, 697 p". Use 'p.' for page, 'v.' for volume and 'ill.' for illustrations.</p>
+                <p> Extent may be used with other resources the paper publications. Supply appropriate units (not necessarily abbreviated) depending on the nature of the resource.</p>
+                <p> The field is text-only and there are no more input options.</p>
+            </help>
+            <hint/>
             <value>extent-compact</value>
             <local-name>extent</local-name>
             <parent/>
@@ -399,11 +421,14 @@
         </item>
         <item>
             <help>
-                <p>Enter here primarily the International Standard Serial Number (ISSN) number of the periodical you are cataloguing and/or its Digital Object
+                <p>For monographs, enter here primarily the International Standard Book Number (ISBN) of the book you are cataloguing or its Digital Object Identifier
+                    (DOI). </p>
+                <p>Use the 13-digit version of the ISBN number, if available.</p>
+                <p>For periodicals, enter here primarily the International Standard Serial Number (ISSN) number of the periodical you are cataloguing and/or its Digital Object
                     Identifier (DOI). </p>
                 <p>If you have access to any other unique identifier, please record it.</p>
             </help>
-            <value>identifier-periodical-compact</value>
+            <value>identifier-compact</value>
             <local-name>identifier</local-name>
             <parent/>
             <tab-id/>
@@ -794,7 +819,7 @@
         </item>
         <item>
             <help>
-                <p> In this compact input format, only the Internet Media Type and the Extent of the publication are noted in Physical Description.</p>
+                <p> The Extent and (for some types of publication) the Internet Media Type of the publication are noted in Physical Description.</p>
                 <p> More input options can be found on the Physical Description tab on the Citation Forms.</p>
             </help>
             <hint/>
@@ -805,7 +830,7 @@
         </item>
         <item>
             <help>
-                <p> Record in City Name the city in which the publisher has its principal domicile, as noted on the title page. </p>
+                <p> Record in City the name of the city in which the publisher has its principal domicile, as noted on the title page. </p>
                 <p> If the publisher is housed in several cities, record the one given prominence on the title page. If all are given equal prominence, record
                     the first city name.</p>
                 <p> If the city name is in a language that is usually transliterated, enter the transliterated city name in its field. Use the transliteration
@@ -902,7 +927,7 @@
         </item>
         <item>
             <help>
-                <p> Record in Publisher Name the name of the entity that is the originator for a resource, i.e. that has published, printed, distributed,
+                <p> Record in Publisher the name of the entity that is the originator for a resource, i.e. that has published, printed, distributed,
                     released, issued, or produced it, as noted on the title page. </p>
                 <p> If the publisher name is in a language that is usually transliterated, enter the transliterated publisher name in its field. Use the
                     transliteration scheme you chose when selecting a record template. </p>
@@ -945,7 +970,6 @@
                 <p> Role contains a description of the role of the person or institution named above to the resource being catalogued.</p>
                 <p> Repeat for each new role played by the named entity, i.e. the same person or institution can have several roles in relation to one
                     resource.</p>
-                <p> The more common roles are listed at the top.</p>
                 <p> More role input options can be found on the Name Information tab on the Citation Forms.</p>
             </help>
             <hint/>
@@ -1278,11 +1302,11 @@
         </item>
         <item>
             <help>
-                <p> Enter here the title of the book, article or anthology contribution you are cataloguing. If the title divides into a main title and a
+                <p> Enter here the title of the book, article or contribution to an edited volume you are cataloguing. If the title divides into a main title and a
                     subtitle, enter each part in its separate field. If the subtitle divides into several parts, separate the parts with a semicolon. </p>
                 <p> If the title is in a language that is usually transliterated, enter the transliterated title and subtitle in their respective fields. Use
                     the transliteration scheme you chose when selecting a record template.</p>
-                <p> If you believe it is useful to supply a translation of the title, do so in the relevant fields. Note the language that the title information
+                <p> If you believe it is useful to supply a translation of the title, do so in the relevant fields. Record the language that the title information
                     is translated into (the default is English). </p>
                 <p> More input options can be found on the Title Info tab on the Citation Forms.</p>
             </help>
@@ -1416,8 +1440,10 @@
         <item>
             <help>
                 <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used.</p>
-                <p>Note that the value shown here is the value chosen when the record template was chosen. This value applies to the whole record, not just to
-                    the field above which it is noted. If you change the value, the change will apply to the whole record. </p>
+                <p>Note that the value shown here is the value chosen when the record template was chosen. 
+                    This value applies to the whole record, not just to the field above which it is noted. 
+                    </p>
+                <p>The value can be changed on the Extension subtab of the Remaining Forms tab. Note that if you change the value, the change will apply to the whole record. </p>
             </help>
             <hint>Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When specificing the
                 transliteration used, also specify the language employed. </hint>
@@ -1459,6 +1485,7 @@
         <item>
             <help>
                 <p> In URL, record the Uniform Resource Locator (URL) of a resource accessed on the Internet.</p>
+                <p>Note also the date of the last time you have accessed the resource.</p>
             </help>
             <hint/>
             <value>url-compact</value>

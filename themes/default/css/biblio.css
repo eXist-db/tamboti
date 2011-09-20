@@ -1,33 +1,41 @@
 /*color scheme begins
-#000000 3 black
+#000000 13 black
+#444444 2
 #666666 6 dark gray
-#BBBBBB 4 middle gray
-#EDEDED 4 light gray
-#FFFFFF 4 white
-#5DB0E6 6 theme blue
+#777777 1
+#888888 1
+#BBBBBB 5 middle gray
+#CCCCCC 4 middle gray
+#EDEDED 5 light gray
+#FFFFFF 11 white
+#5DB0E6 7 theme blue
 color scheme ends*/
 
 /*temporary begins*/
-
+.even {color:red;}
 /*temporary ends*/
 
-p, td {
+p, 
+td 
+    {
     line-height:1.25em;
 }
 
 a {
-    color:#555555;
+    color:#666666;
     text-decoration:none;
     font-weight:normal;    
 }
 
 a:hover {
     text-decoration:none;
-    color:#3399CC;
+    color:#5DB0E6;
     border-bottom:0
 }
 
-a:link, a:visited {
+a:link, 
+a:visited 
+    {
     color:#5DB0E6; 
     }
 
@@ -76,22 +84,6 @@ img {border:0;
 }
 
 /*page top elements end*/
-#page-footer {
-    display:block;
-    margin:0 50px 20px 50px; 
-    background-color:#EBEBEB;
-    color:#4D4D4D;
-    text-align:center;
-    1margin-top:-7em;
-    padding:.5em;
-    border:1px solid #C7B899;
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
-}
-* html #page-footer {   
-    1width:860px;
-    margin-top:20px;
-}
     
 /*query panel begins*/
 
@@ -128,7 +120,8 @@ img {border:0;
 
 #add-field,
 #remove-field,
-#clear-all {
+#clear-all 
+    {
 	padding-bottom:2px;
     padding-left:1em;
     padding-right:1em;
@@ -173,7 +166,7 @@ img {border:0;
     height:20px;
     list-style:none;
     padding:8px 0;
-    background-color:white;
+    background-color:#FFFFFF;
 	-moz-border-radius:5px;
     -webkit-border-radius:5px;
 }
@@ -193,8 +186,6 @@ img {border:0;
 }
 
 #collection-tree-main {
-	1margin-right:4em;
-	1display:block;
 	clear:left;
 	}
 
@@ -213,7 +204,7 @@ table.biblio-full td.collection-label {
 
 ul.dynatree-container {
     border:0;
-    background-color:white;/*#EDEDED !important;*/
+    background-color:#FFFFFF;
     font-size:1em;
     margin-left:5px;
     margin-right:5px;
@@ -234,7 +225,7 @@ td.collection-path {
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
     background-color:#EDEDED;
-    color:#A8A8A8;
+    color:#666666;
     margin-top:0;
     margin-bottom:5px;
     height:40px;
@@ -245,7 +236,7 @@ td.collection-path {
 }
 
 .box p {
-    margin:4px;
+    margin:12px 4px 4px 4px;
 }
 
 
@@ -277,7 +268,7 @@ td.collection-path {
 
 #results {
     margin-top:.5em;
-    overflow: auto;
+    overflow:auto;
 }
 
 .hi {
@@ -317,6 +308,11 @@ td.collection-path {
 
 #filters ul li {
 	line-height:1em;
+	display:list-item;
+}
+
+#filters li a {
+    font-weight:normal;
 }
 
 #filters .ui-accordion .ui-accordion-content {
@@ -339,12 +335,9 @@ td.collection-path {
     text-align:center;
 }
 
-#filters li a {
-    font-weight:normal;
-}
-
 .ui-accordion a,
-.ui-accordion-header a {
+.ui-accordion-header a 
+    {
 	font-weight:normal;
 }
 
@@ -359,8 +352,10 @@ td.collection-path {
 
 /*pagination begins*/
 
-.pagination-mode, .navbar .pagination-toggle {
-    margin-left: 4em;
+.pagination-mode, 
+.navbar .pagination-toggle 
+    {
+    margin-left:4em;
 }
 
 .pagination-links {
@@ -403,11 +398,11 @@ td.collection-path {
 }
 
 .pagination-view {
-    margin-left: 20px;
+    margin-left:20px;
 }
 
 .inactive {
-    border:1px solid #CCC;
+    border:1px solid #CCCCCC;
     color:#CCCCCC;
     cursor:default;
 }
@@ -447,9 +442,9 @@ td.collection-path {
     }
 
 .detail-type {
-    margin: 10px 0 0 0;
-    padding-left: 10px;
-    text-align: center;
+    margin:10px 0 0 0;
+    padding-left:10px;
+    text-align:center;
 }
 
 .pagination-n {
@@ -462,7 +457,7 @@ td.collection-path {
 
 .subject td {
     vertical-align:middle;
-    border:gray 1px;
+    border:#BBBBBB 1px;
     padding:0;    
 }
 
@@ -472,75 +467,75 @@ td.collection-path {
 
 /*main structures for display of search results begins*/
 #results ul {
-    list-style: none;
-    margin-top: 2px;
+    list-style:none;
+    margin-top:2px;
 }
 
 #results li {
-    float: left;
-    padding: 4px 4px;
-    margin: -2px 0 0 -2px;
-    text-align: center;
-    position: relative;
-    border: 2px solid #CCC;
+    float:left;
+    padding:4px 4px;
+    margin:-2px 0 0 -2px;
+    text-align:center;
+    position:relative;
+    border:2px solid #CCCCCC;
 }
 
 #results li.gallery {
-    width: 196px;
+    width:196px;
 }
 
 #results li.gallery .icon {
-    position: relative;
-    display: inline-block;
-    height: 128px;
-    line-height: 128px;
-    width: 196px;
-    text-align: center;
-    overflow: hidden;
+    position:relative;
+    display:inline-block;
+    height:128px;
+    line-height:128px;
+    width:196px;
+    text-align:center;
+    overflow:hidden;
 }
 
 #results li img.icon-magnifier {
-    position: absolute;
-    top: 8px;
-    right: 5px;
-    z-index: 100;
-    display: none;
-    padding: 6px;
-    border: 1px solid #777;
-    background: #888;
+    position:absolute;
+    top:8px;
+    right:5px;
+    z-index:100;
+    display:none;
+    padding:6px;
+    border:1px solid #777777;
+    background:#888888;
 }
 
 #results li .icon:hover .icon-magnifier {
-    display: block;
+    display:block;
 }
 
 .magnify {
-    cursor: pointer;
+    cursor:pointer;
 }
 
 #results li.grid .icon {
-    display: inline-block;
-    height: 72px;
-    line-height: 72px;
-    width: 72px;
-    text-align: center;
-    overflow: hidden;
+    display:inline-block;
+    height:72px;
+    line-height:72px;
+    width:72px;
+    text-align:center;
+    overflow:hidden;
 }
 
 #results li img {
-    display: inline;
-    cursor: pointer;
-    vertical-align: middle;
+    display:inline;
+    cursor:pointer;
+    vertical-align:middle;
 }
 
 #results li h4 {
-    margin: 0;
-    font-size: 75%;
-    font-weight: normal;
+    margin:0;
+    font-size:75%;
+    font-weight:normal;
 }
 
 li .pagination-number {
-    display: none;
+    display:none;
 }
 
 table .biblio-full {
@@ -590,7 +585,7 @@ table .biblio-full .sublabel {
     text-align:right;
     padding-right:1em;
     vertical-align:middle;
-    color:gray;
+    color:#BBBBBB;
     width:5em;
 }
 
@@ -604,7 +599,7 @@ table .biblio-full .host {
 table .biblio-full .deemph {
     text-align:right;
     vertical-align:middle;
-    color:gray;
+    color:#BBBBBB;
     width:10em;
 }
 
@@ -616,14 +611,15 @@ table .biblio-full .subrecord {
 }
 
 table .biblio-full .record table,
-table .biblio-full .subrecord table {
+table .biblio-full .subrecord table 
+    {
 	margin:0;
 }
 
 table .biblio-full .related td {
     margin:10em;
     line-height:3.4em;
-    border-top:1px solid gray;
+    border-top:1px solid #BBBBBB;
 }
 
 /*main structures for display of search results ends*/
@@ -654,7 +650,9 @@ td .relatedItem-label {}
     vertical-align:top;
 }
 
-.save img, .actions-toolbar img {
+.save img, 
+.actions-toolbar img 
+{
     border:0;
     margin:0;
 }
@@ -684,7 +682,7 @@ span.readable .dynatree-title {
 /*folder sharing dialog begins*/
 
 .sharing-panel {
-    border:1px black solid;
+    border:1px #000000 solid;
     padding:1em;
     margin-bottom:2em;
     margin-bottom:.5em;
@@ -705,9 +703,9 @@ span.readable .dynatree-title {
 
 #group-members-list {
     font-size:90%;
-    background-color:white;
+    background-color:#FFFFFF;
     border:1px solid #CCCCCC;
-    color:black;
+    color:#000000;
     height:5em;
     list-style:none;
     overflow:auto;
@@ -744,143 +742,146 @@ span.readable .dynatree-title {
     
 /* image gallery lightbox */
 .overlay {
-    display: none;
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    background-color: black;
+    display:none;
+    position:fixed;
+    top:0%;
+    left:0%;
+    width:100%;
+    height:100%;
+    background-color:#000000;
     z-index:1001;
-    -moz-opacity: 0.9;
+    -moz-opacity:0.9;
     opacity:.90;
-    filter: alpha(opacity=90);
+    filter:alpha(opacity=90);
 }
 
 .lightbox .view {
-    position: fixed;
-    top: 50%;
-    text-align: center;
+    position:fixed;
+    top:50%;
+    text-align:center;
     z-index:2002;
     
-    padding: 16px;
-    border: 0;
-    background-color: white;
+    padding:16px;
+    border:0;
+    background-color:#FFFFFF;
     border-radius:10px;
     overflow:auto;
-    box-shadow:0px 0px 15px black;/*CSS3 shadow: 30px blurred shadow all around form*/ 
-    -webkit-box-shadow:0px 0px 15px black;/*Safari shadow version*/ 
-    -moz-box-shadow:0px 0px 15px black;/* Mozilla shadow version*/
+    box-shadow:0px 0px 15px #000000;/*CSS3 shadow:30px blurred shadow all around form*/ 
+    -webkit-box-shadow:0px 0px 15px #000000;/*Safari shadow version*/ 
+    -moz-box-shadow:0px 0px 15px #000000;/* Mozilla shadow version*/
 }
 
 .lightbox .image {
-    position: relative;
-    margin: 0 auto;
-    height: 100%;
-    width: 100%;
+    position:relative;
+    margin:0 auto;
+    height:100%;
+    width:100%;
     text-align:center;
 }
 
 #viewer-image {
     /* scale to parent container */
-    max-width: 100%;
-    max-height: 100%;
+    max-width:100%;
+    max-height:100%;
 }
 
 .lightbox h4 {
-    color: #666;
-    font-weight: normal;
-    font-size: 125%;
-    margin: 10px auto 0 auto;
+    color:#666666;
+    font-weight:normal;
+    font-size:125%;
+    margin:10px auto 0 auto;
 }
 
-.lightbox .next, .lightbox .previous {
-    position: absolute;
-    display: none;
-    padding: 0 10px 10px 10px;
-    background-color: white;
-    color: #444;
-    font-size: 200%;
-    font-weight: bold;
-    -moz-opacity: 0.8;
+.lightbox .next, 
+.lightbox .previous 
+{
+    position:absolute;
+    display:none;
+    padding:0 10px 10px 10px;
+    background-color:#FFFFFF;
+    color:#444444;
+    font-size:200%;
+    font-weight:bold;
+    -moz-opacity:0.8;
     opacity:.80;
-    filter: alpha(opacity=80);
+    filter:alpha(opacity=80);
 }
 
 .lightbox .image:hover .close,
 .lightbox .image:hover .next,
-.lightbox .image:hover .previous {
-    display: block;
+.lightbox .image:hover .previous 
+{
+    display:block;
 }
 
 .lightbox .close {
-    position: absolute;
-    bottom: 5px;
-    right: 10px;
+    position:absolute;
+    bottom:5px;
+    right:10px;
 }
 
 .lightbox .next {
-    top: 33%;
-    right: 0;
+    top:33%;
+    right:0;
 }
 
 .lightbox .previous {
-    top: 33%;
-    left: 0;
+    top:33%;
+    left:0;
 }
 
 .filmstrip {
-    position: fixed;
-    display: none;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    z-index: 2001;
-    overflow: hidden;
+    position:fixed;
+    display:none;
+    bottom:20px;
+    left:20px;
+    right:20px;
+    z-index:2001;
+    overflow:hidden;
 }
 
 .filmstrip ul {
-    list-style: none;
-    /* height: 140px; */
-    margin: 0;
-    padding: 0;
-    vertical-align: middle;
-    background: black;
+    list-style:none;
+    /* height:140px; */
+    margin:0;
+    padding:0;
+    vertical-align:middle;
+    background:#000000;
 }
 
 .filmstrip li {
-    display: inline-block;
-    height: 64px;
-    width: 64px;
-    line-height: 64px;
-    border: 2px solid black;
-    text-align: center;
-    margin: 0;
+    display:inline-block;
+    height:64px;
+    width:64px;
+    line-height:64px;
+    border:2px solid #000000;
+    text-align:center;
+    margin:0;
 }
 
 .filmstrip li img {
-    display: inline-block;
-    vertical-align: middle;
+    display:inline-block;
+    vertical-align:middle;
 }
 
 .filmstrip .highlighted {
-    border: 2px solid #FFF;
+    border:2px solid #FFFFFF;
 }
 
 .filmstripPageButtonContainer {
-    text-align: center;
+    text-align:center;
 }
 
 .filmstripPageButton {
-    font-size: 20pt;
-    color: white;
-    padding-left: 4em;
-    padding-right: 4em;
+    font-size:20pt;
+    color:#FFFFFF;
+    padding-left:4em;
+    padding-right:4em;
 }
 
 .filmstripPageButton:hover {
-    background-color: black;
-    border: 1px white solid;
+    background-color:#000000;
+    border:1px #FFFFFF solid;
 }
 
 /* collection sharing dialog begins*/
@@ -889,27 +890,27 @@ span.readable .dynatree-title {
 #collectionSharingDetails
     {
     margin-bottom:1em;
-    }
+}
 
 #collectionSharingDetails_processing,
 #collectionSharingDetails_length
-    {
+{
     display:none;
-    }
-
+}
 #collectionSharingDetails, 
 #collectionSharingDetails th, 
 #collectionSharingDetails td 
-    {
+{
     width:100%;
     border-collapse:collapse;
-    border:1px solid lightgray;
+    border:1px solid #EDEDED;
     }
 
 #collectionSharingDetails td, 
 #collectionSharingDetails th 
-    {
-    line-height:0.8em;    
+{
+    line-height:0.8em;
+    
     width:20%;
     text-align:center;
 }
@@ -923,16 +924,12 @@ span.readable .dynatree-title {
     padding-bottom:10px;
 }
 
-#collectionSharingDetails_paginate,
-#collectionSharingDetails_info {
-    text-align:center;
-}
 #collectionSharingDetails_paginate span {
-    margin:2em;
+    margin-right:2em;
 }
 
 #collectionSharingDetails_paginate .paginate_button_disabled {
-    color:lightgray;
+    color:#EDEDED;
 }
 
 #collectionSharingDetails_paginate span .paginate_active {
@@ -940,21 +937,13 @@ span.readable .dynatree-title {
     font-weight:bold;
 }
 
-#user-auto-list,
-#project-auto-list
-    {
-    width:325px;
-    }
+
 
 #add-user-to-share-dialog input, 
-#add-project-to-share-dialog input {
-	margin-bottom:1em;
+#add-project-to-share-dialog input 
+{
+	margin:1em;
 }
-
-#collectionSharingDetails_filter {
-    float:right;
-    margin-top:-2.25em;
-    }
 
 /* collection sharing dialog ends*/
 
@@ -963,36 +952,35 @@ span.readable .dynatree-title {
 }
 
 .metadata {
-    position: fixed;
-    right: 20px;
-    top: 20px;
-    bottom: 100px;
-    width: 50%;
-    display: none;
-    z-index: 2002;
+    position:fixed;
+    right:20px;
+    top:20px;
+    bottom:100px;
+    width:50%;
+    display:none;
+    z-index:2002;
     
-    padding: 16px;
-    border: 0;
-    background-color: white;
+    padding:16px;
+    border:0;
+    background-color:#FFFFFF;
     border-radius:10px;
     overflow:auto;
-    box-shadow:0px 0px 15px black;/*CSS3 shadow: 30px blurred shadow all around form*/ 
-    -webkit-box-shadow:0px 0px 15px black;/*Safari shadow version*/ 
-    -moz-box-shadow:0px 0px 15px black;/* Mozilla shadow version*/
+    box-shadow:0px 0px 15px #000000;/*CSS3 shadow:30px blurred shadow all around form*/ 
+    -webkit-box-shadow:0px 0px 15px #000000;/*Safari shadow version*/ 
+    -moz-box-shadow:0px 0px 15px #000000;/* Mozilla shadow version*/
 }
 
 .show-metadata {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    display: none;
-    z-index: 2002;
+    position:fixed;
+    top:10px;
+    right:10px;
+    display:none;
+    z-index:2002;
     
-    padding: 16px;
-    background-color: white;
-    color: #000;
+    padding:16px;
+    background-color:#FFFFFF;
+    color:#000000;
 }
 
 .clear {
-    clear: both;
 }

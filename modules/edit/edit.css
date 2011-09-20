@@ -286,7 +286,6 @@ caption, th, td {
 }
 
 label {
-	1color: #909090;
 	white-space: nowrap;
 	font-weight: bold;
 }
@@ -516,11 +515,11 @@ div.xforms-help-value,
 div.xforms-hint-value 
     { 
     text-align:left;
-    color:#909090;
+    color:#666666;
     display:none;
 	background-color:#FFFFFF;
 	position:absolute;
-	border:#909090 1px solid; 
+	border:#666666 1px solid; 
 	margin:0;
 	margin-top:-3em; /*to pull up the help boxes, allowing the lower boxes to be more visible*/
 	padding-top:.5em;

@@ -5,7 +5,7 @@ $(function() {
     });
     initCollectionTree();
     
-    galleries = new tamboti.galleries.Viewer($("#lightbox"), null, 360);
+    galleries = new tamboti.galleries.Viewer($("#lightbox"));
     
     // Init pagination
     $("#results").pagination({
@@ -243,8 +243,8 @@ function initCollectionTree() {
 
 function toggleCollectionTree(show) {
     if (show) {
-        $('#collection-tree').css({width: '250px', height: 'auto', 'background-color': 'transparent'});
-        $('#main-content').css('margin-left', '260px');
+        $('#collection-tree').css({width: '310px', height: 'auto', 'background-color': 'transparent'});
+        $('#main-content').css('margin-left', '320px');
         $('#collection-tree-main').css('display', '');
         $('#simple-search-form input[name = collection-tree]').val('show');
         $('#advanced-search-form input[name = collection-tree]').val('show');
@@ -632,10 +632,10 @@ function saveToPersonalList(anchor){
     if (img.hasClass('stored')) {
         var id = anchor.id;
         img.removeClass('stored');
-        img.attr('src', '../../../resources/images/disk.gif');
+        img.attr('src', 'theme/images/disk.gif');
         $.get('user.xql', { list: 'remove', id: id });
     } else {
-        img.attr('src', '../../../resources/images/disk_gew.gif');
+        img.attr('src', 'theme/images/disk_gew.gif');
         img.addClass('stored');
         $.get('user.xql', { list: 'add', pos: pos });
     }
@@ -739,34 +739,41 @@ function updateSharingDialog() {
 }
 
 //custom fnReloadAjax for sharing dataTable
-function dataTableReloadAjax(oSettings, sNewSource, fnCallback) {
-    if(typeof sNewSource != 'undefined'){
+function dataTableReloadAjax(oSettings, sNewSource, fnCallback, bStandingRedraw) {
+    if(typeof sNewSource != 'undefined' && sNewSource != null) {
         oSettings.sAjaxSource = sNewSource;
     }
 
     this.oApi._fnProcessingDisplay(oSettings, true);
 
     var that = this;
+    var iStart = oSettings._iDisplayStart;
 
-    oSettings.fnServerData( oSettings.sAjaxSource, null, function(json) {
+    oSettings.fnServerData(oSettings.sAjaxSource, [], function(json) {
 
         /* Clear the old information from the table */
-        that.oApi._fnClearTable( oSettings );
+        that.oApi._fnClearTable(oSettings);
+        
         /* Got the data - add it to the table */
-
         for(var i = 0 ; i < json.aaData.length; i++) {
-            that.oApi._fnAddData( oSettings, json.aaData[i] );
+            that.oApi._fnAddData(oSettings, json.aaData[i]);
         }
 
         oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
-        that.fnDraw(that);
+        that.fnDraw();
+        
+        if(typeof bStandingRedraw != 'undefined' && bStandingRedraw === true) {
+			oSettings._iDisplayStart = iStart;
+			that.fnDraw(false);
+		}
+        
         that.oApi._fnProcessingDisplay(oSettings, false);
 
         /* Callback user function - for event handlers etc */
-        if( typeof fnCallback == 'function'){
+        if(typeof fnCallback == 'function' && fnCallback != null){
             fnCallback(oSettings);
         }
-    });
+    }, oSettings);
 }
 
 //custom rendered for each row of the sharing dataTable

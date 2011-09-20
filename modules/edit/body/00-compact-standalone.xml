@@ -65,9 +65,9 @@
                             <xf:group class="margin-plus">
                                 <xf:select1 ref="./@type">
                                     <xf:label>
-                                        <xf:group ref="../.[@script='Latn']">Transliterated<span class="xforms-hint-icon opaque"/>
+                                        <xf:group ref="../.[@script='latn']">Transliterated<span class="xforms-hint-icon opaque"/>
                                         </xf:group>
-                                        <xf:group ref="../.[not(@script='Latn')]"/>
+                                        <xf:group ref="../.[not(@script='latn')]"/>
                                     </xf:label>
                                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-part-type-compact-code']/items/item">
                                         <xf:label ref="label"/>
@@ -89,7 +89,7 @@
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <!-- why cannot this select name's higher than 8 (when there are 10)? -->
+                                        <!-- why cannot this select name's go higher than 8 (when there are 10 available)? -->
                                         <xf:insert nodeset="instance('save-data')/mods:role" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:name[8]/mods:role"/>
                                     </xf:action>
                                 </xf:trigger>
@@ -164,7 +164,7 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                <xf:group ref=".[not(@script) and not(@transliteration) and not(./mods:language/mods:scriptTerm = 'Latn')]" class="margin-plus">
+                <xf:group ref=".[not(@script) and not(@transliteration) and (./mods:language/mods:scriptTerm = 'latn')]" class="margin-plus">
                     <xf:select1 ref="/mods:mods/mods:language/mods:scriptTerm">
                         <xf:label>Script<span class="xforms-help">
                                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -263,7 +263,7 @@
             </xf:repeat>
         </fieldset>
     </xf:group>
-    <xf:group ref=".[mods:extension/*:template = 'monograph-latin']                  | .[mods:extension/*:template = 'monograph-transliterated']                  | .[mods:extension/*:template = 'edited-volume-latin']                  | .[mods:extension/*:template = 'edited-volume-transliterated']         ">
+    <xf:group ref=".[string(mods:extension/e:template) = 'monograph-latin'] | .[string(mods:extension/e:template) = 'monograph-transliterated'] | .[string(mods:extension/e:template) = 'edited-volume-latin'] | .[string(mods:extension/e:template) = 'edited-volume-transliterated']">
         <fieldset class="level-1">
             <div class="join">
                 <span class="legend">Origin Information</span>
@@ -338,6 +338,14 @@
                     <fieldset class="level-2">
                         <div class="join">
                             <span class="legend">Date of Publication</span>
+                            <span class="join-button">
+                                <xf:trigger>
+                                    <xf:label>+</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:insert nodeset="mods:dateIssued" at="index('dateIssued-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:dateIssued"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
                             <span class="xforms-help">
                                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
@@ -346,7 +354,7 @@
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:dateIssued" id="dateIssued-repeat">
-                            <xf:group>
+                            <xf:group class="margin-plus" ref=".[count(../mods:dateIssued) &gt; 1]">
                                 <xf:select1 ref="./@point">
                                     <xf:label>Point</xf:label>
                                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='date-point-code']/items/item">
@@ -367,6 +375,14 @@
                     <fieldset class="level-2">
                         <div class="join">
                             <span class="legend">Copyright Date</span>
+                            <span class="join-button">
+                                <xf:trigger>
+                                    <xf:label>+</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:insert nodeset="mods:copyrightDate" at="index('copyrightDate-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:copyrightDate"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
                             <span class="xforms-help">
                                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
@@ -375,7 +391,7 @@
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:copyrightDate" id="copyrightDate-repeat">
-                            <xf:group>
+                            <xf:group class="margin-plus" ref=".[count(../mods:copyrightDate) &gt; 1]">
                                 <xf:select1 ref="./@point">
                                     <xf:label>Point</xf:label>
                                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='date-point-code']/items/item">
@@ -511,7 +527,7 @@
                 <span class="xforms-help">
                     <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-help-value">
-                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='identifier-monograph-compact']/help"/>
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='identifier-compact']/help"/>
                     </div>
                 </span>
             </div>

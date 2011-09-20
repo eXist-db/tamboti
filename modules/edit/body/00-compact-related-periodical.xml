@@ -169,8 +169,8 @@
                                         <xf:group>
                                             <!--<xf:select1 ref="./@type" class="right">
                                                     <xf:label>
-                                                        <xf:group ref="../.[@script='Latn']">Transliterated</xf:group>
-                                                        <xf:group ref="../.[not(@script='Latn')]"/>
+                                                        <xf:group ref="../.[@script='latn']">Transliterated</xf:group>
+                                                        <xf:group ref="../.[not(@script='latn')]"/>
                                                     </xf:label>
                                                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-part-type-compact-code']/items/item">
                                                         <xf:label ref="label"/>
@@ -179,8 +179,8 @@
                                                 </xf:select1>-->
                                             <xf:input ref="." class="text_100 margin-plus">
                                                 <xf:label>
-                                                    <xf:group ref=".[@script='Latn']">Transliterated</xf:group>
-                                                    <xf:group ref=".[not(@script='Latn')]"/>
+                                                    <xf:group ref=".[@script='latn']">Transliterated</xf:group>
+                                                    <xf:group ref=".[not(@script='latn')]"/>
                                                 </xf:label>
                                             </xf:input>
                                         </xf:group>

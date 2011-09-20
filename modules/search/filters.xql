@@ -87,7 +87,6 @@ return
         <ul xmlns="http://www.w3.org/1999/xhtml">
         {
             let $subjects := $cached/mods:subject
-            let $log := util:log("DEBUG", ("##$subjects1): ", $subjects))
             return
                 if (count($subjects) gt $local:MAX_RESULTS_SUBJECTS) then
                     <li>There are too many subjects to process in a reasonable time. Please restrict the result set by performing a new search.</li>
@@ -96,7 +95,6 @@ return
                         for $info in $cached/mods:subject
                         return
                             ($info/mods:topic | $info/mods:geographic | $info/mods:temporal)
-                    let $log := util:log("DEBUG", ("##$subjects2): ", $subjects))
                     for $subject in distinct-values($subjects)
                     order by $subject ascending
                     return

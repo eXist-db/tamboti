@@ -1,6 +1,6 @@
 module namespace mods="http://www.loc.gov/mods/v3";
 
-declare namespace mads="http://www.loc.gov/mads/";
+declare namespace mads="http://www.loc.gov/mads/v2";
 declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace fo="http://www.w3.org/1999/XSL/Format";
 declare namespace functx = "http://www.functx.com";
@@ -883,14 +883,14 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                         	for $item in $name/*:namePart 
                         	where exists($item/@transliteration) 
                         	return $item
-                        , ' ')
+                        , ', ')
                         
                         , ' ', 
                         string-join(
                         	for $item in $name/*:namePart 
                         	where not($item/@transliteration) 
                         	return $item
-                        , ' ')
+                        , ', ')
                     )
                 (: The assumption is that any sequence of corporate name parts is meaningfully constructed, e.g. with more general term first. :)
                 (: NB: this is the same as no type. :)
@@ -927,7 +927,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                     Filtering like this would leave out names where Westerners have Chinese names, and in order to catch these, we require that they have language set to English. :)
                     let $nameBasic :=
 	                    if (not($nameContainsTransliteration))
-	                    then <name>{$name/*:namePart[not(@transliteration) and (not(@script) or @script = ('Latn', 'Latin'))]}</name>
+	                    then <name>{$name/*:namePart[not(@transliteration) and (not(@script) or @script = ('Latn', 'latn', 'Latin'))]}</name>
                     	else <name>{$name/*:namePart[@lang = 'eng']}</name>
                     	
                     (: If there is transliteration, there are nameParts with transliteration. 
@@ -937,7 +937,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                     (: NB: Should English names be filtered away?:)
                     let $nameTransliteration := 
                     	if ($nameContainsTransliteration)
-                    	then <name>{$name/*:namePart[@transliteration and (not(@script) or (@script = ('Latn', 'Latin')))]}</name>
+                    	then <name>{$name/*:namePart[@transliteration and (not(@script) or (@script = ('Latn', 'latn', 'Latin')))]}</name>
                     	else ()
                     
                     (: If there is transliteration, the presumption must be that all nameParts which are not transliterations (and which do not have the language set to English) are names in non-Latin script. We filter for nameParts
@@ -946,7 +946,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                     which do not have English as their language. :)
                     let $nameScript := 
 	                    if ($nameContainsTransliteration)
-	                    then <name>{$name/*:namePart[(not(@transliteration) or string-length(@transliteration) = 0) and not(@script = ('Latn', 'Latin')) and not(@lang='eng')]}</name>
+	                    then <name>{$name/*:namePart[(not(@transliteration) or string-length(@transliteration) = 0) and not(@script = ('Latn', 'latn', 'Latin')) and not(@lang='eng')]}</name>
 	                    else ()
                     (: We assume that there is only one date name part. The date name parts with transliteration and script are rather theoretical. This date is attached at the end of the name. :)
                     let $dateBase := $name/*:namePart[@type = 'date'][1]
@@ -1256,8 +1256,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
 declare function mods:get-authority-name-from-mads($mads as element(), $caller as xs:string) {
     let $auth := $mads/mads:authority/mads:name
     return
-        mods:format-name($auth, 1, $caller, '')
-   
+        mods:format-name($auth, 1, $caller, '')   
 };
 
 (: NB: also used in search.xql :)
@@ -1265,24 +1264,26 @@ declare function mods:get-authority-name-from-mads($mads as element(), $caller a
 declare function mods:retrieve-name($name as element(), $pos as xs:int, $caller as xs:string, $global-transliteration as xs:string) {    
     let $mods-name := mods:format-name($name, $pos, $caller, $global-transliteration)
     let $mads-reference := replace($name/@xlink:href, '^#?(.*)$', '$1')
-    (: NB: What if there are several xlink:href values? :)
-    (: NB: The following could be optimised. :)
-    let $mads-record :=
-        if (empty($mads-reference)) 
-        then ()        
-        else collection($config:mads-collection)/mads:mads[@ID = $mads-reference]/mads:authority
-    let $mads-preferred-name :=
-        if (empty($mads-record)) 
-        then ()
-        else mods:format-name($mads-record/mads:name, 1, $caller, $global-transliteration)
-    let $mads-preferred-name-display :=
-        if (empty($mads-preferred-name))
-        then ()
-        else concat(' (', $mads-preferred-name,')')
     return
-        if ($mads-preferred-name eq $mods-name)
-        then $mods-name
-        else concat($mods-name, $mads-preferred-name-display)
+        if ($mads-reference)
+        then
+            let $mads-record :=
+                if (empty($mads-reference)) 
+                then ()        
+                else collection($config:mads-collection)/mads:mads[@ID = $mads-reference]/mads:authority
+            let $mads-preferred-name :=
+                if (empty($mads-record)) 
+                then ()
+                else mods:format-name($mads-record/mads:name, 1, $caller, $global-transliteration)
+            let $mads-preferred-name-display :=
+                if (empty($mads-preferred-name))
+                then ()
+                else concat(' (', $mads-preferred-name,')')
+            return
+                if ($mads-preferred-name eq $mods-name)
+                then $mods-name
+                else concat($mods-name, $mads-preferred-name-display)
+        else $mods-name
 };
 
 (:~
@@ -1902,28 +1903,6 @@ declare function mods:simple-row($data as item()?, $label as xs:string) as eleme
         </tr>
 };
 
-(:~
-: Prepares the clickable url for mods:entry-full. A variation of mods:simple-row. 
-: @param $entry
-: @param $label
-: @return element(tr)
-: @see mods:simple-row
-:)
-declare function mods:url($entry as element()) as element(tr)* {
-    for $url in $entry/mods:location/mods:url
-    return
-        <tr xmlns="http://www.w3.org/1999/xhtml">
-            <td class="label"> 
-            {
-                if ($url/@displayLabel)
-                then $url/@displayLabel/text()
-                else 'URL'
-            }
-            </td>
-            <td class="record"><a href="{$url}" target="_blank">{if ((string-length($url) < 80)) then $url  else (substring($url,1,70), '...')}</a></td>
-        </tr>
-};        
-
 (: Creates view for detail view. :)
 (: NB: "mods:format-detail-view()" is referenced in session.xql. :)
 declare function mods:format-detail-view($id as xs:string, $entry as element(mods:mods), $collection-short as xs:string) {
@@ -1937,7 +1916,8 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         <td><div class="collection">{uu:unescape-collection-path($collection-short)}</div></td>
     </tr>
     ,
-            (: names :)
+    
+    (: names :)
     if ($entry/mods:name)
     then mods:names-full($entry, $global-transliteration)
     else ()
@@ -2029,12 +2009,38 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     else ()
     ,
     (: extent :)
-    if ($entry/mods:physicalDescription/mods:extent) 
-    then mods:simple-row(mods:get-extent($entry/mods:physicalDescription/mods:extent), 'Extent') 
-    else ()
+    let $extent := $entry/mods:physicalDescription/mods:extent
+    return
+        if ($extent) 
+        then mods:simple-row(
+            mods:get-extent($extent), 
+            concat('Extent', 
+                if($extent/@unit) 
+                then concat(' (', functx:capitalize-first($extent/@unit), ')') 
+                else ()
+                )
+            )    
+        else ()
     ,
     (: URL :)
-    mods:url($entry)
+    for $url in $entry/mods:location/mods:url
+    return
+        <tr xmlns="http://www.w3.org/1999/xhtml">
+            <td class="label"> 
+            {
+                concat(
+                    if ($url/@displayLabel)
+                    then $url/@displayLabel/text()
+                    else 'URL'
+                ,
+                    if ($url/@dateLastAccessed)
+                    then concat(' (Last Accessed: ', $url/@dateLastAccessed, ')')
+                    else ''
+                )
+            }
+            </td>
+            <td class="record"><a href="{$url}" target="_blank">{if ((string-length($url) < 80)) then $url  else (substring($url,1,70), '...')}</a></td>
+        </tr>
     ,
     (: relatedItem :)
     mods:get-related-items($entry, 'detail')

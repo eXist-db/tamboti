@@ -792,7 +792,7 @@ declare function biblio:form-select-current-user-groups($select-name as xs:strin
 };
 
 declare function biblio:form-add-user-to-share() {
-     <jquery:dialog id="add-user-to-share-dialog" modal="true" title="Add User to Share With" width="550">
+     <jquery:dialog id="add-user-to-share-dialog" modal="true" title="Add a User to Share With" width="450">
         <div>
             <span>Enter the user's name:</span>
             <jquery:input name="user-auto-list" id="user-auto-list">
@@ -804,7 +804,7 @@ declare function biblio:form-add-user-to-share() {
 };
 
 declare function biblio:form-add-project-to-share() {
-    <jquery:dialog id="add-project-to-share-dialog" modal="true" title="Add Project to Share With" width="550">
+    <jquery:dialog id="add-project-to-share-dialog" modal="true" title="Add a Project to Share With" width="450">
         <div>
             <span>Enter the project's name:</span>
             <jquery:input name="project-auto-list" id="project-auto-list">

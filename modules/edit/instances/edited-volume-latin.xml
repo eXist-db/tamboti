@@ -7,7 +7,7 @@
         <partNumber/>
         <partName/>
     </titleInfo>
-    <name type="personal">
+    <name type="personal" xlink:href="">
         <namePart type="given"/>
         <namePart type="family"/>
         <role>
@@ -39,7 +39,7 @@
             <title/>
             <subTitle/>
         </titleInfo>
-        <name type="personal">
+        <name type="personal" xlink:href="">
             <namePart type="given"/>
             <namePart type="family"/>
         </name>
@@ -56,14 +56,14 @@
             <partNumber/>
             <partName/>
         </titleInfo>
-        <name type="personal">
+        <name type="personal" xlink:href="">
             <namePart type="given"/>
             <namePart type="family"/>
             <role>
                 <roleTerm type="code" authority="marcrelator">edt</roleTerm>
             </role>
         </name>
-        <originInfo script="Latn">
+        <originInfo script="latn">
             <place>
                 <placeTerm type="text"/>
             </place>

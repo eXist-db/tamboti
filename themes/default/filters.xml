@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:jquery="http://exist-db.org/xquery/jquery" id="filters">
     <jquery:ajax-accordion id="facets">
-        <jquery:panel id="keywords" title="Words" on-select="loadIndexTerms">
+        <jquery:panel id="keywords" title="Title Words" on-select="loadIndexTerms">
             <div class="keyword-prefix">
                 <form id="keyword-form">
                     <input type="text" name="input-keyword-prefix" size="8" value="a" title="Change prefix to view more terms."/>

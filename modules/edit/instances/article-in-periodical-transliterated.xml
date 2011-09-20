@@ -7,25 +7,25 @@
         <partNumber/>
         <partName/>
     </titleInfo>
-    <titleInfo script="Latn" transliteration="" type="translated">
+    <titleInfo script="latn" transliteration="" type="translated">
         <nonSort/>
         <title/>
         <subTitle/>
         <partNumber/>
         <partName/>
     </titleInfo>
-    <titleInfo lang="eng" script="Latn" type="translated">
+    <titleInfo lang="eng" script="latn" type="translated">
         <nonSort/>
         <title/>
         <subTitle/>
         <partNumber/>
         <partName/>
     </titleInfo>
-    <name type="personal">
+    <name type="personal" xlink:href="">
         <namePart type="given"/>
         <namePart type="family"/>
-        <namePart type="given" script="Latn" transliteration=""/>
-        <namePart type="family" script="Latn" transliteration=""/>
+        <namePart type="given" script="latn" transliteration=""/>
+        <namePart type="family" script="latn" transliteration=""/>
         <role>
             <roleTerm type="code" authority="marcrelator">aut</roleTerm>
         </role>
@@ -47,7 +47,7 @@
             <partNumber/>
             <partName/>
         </titleInfo>
-        <titleInfo script="Latn" transliteration="" type="translated">
+        <titleInfo script="latn" transliteration="" type="translated">
             <nonSort/>
             <title/>
             <subTitle/>
@@ -61,13 +61,13 @@
             <partNumber/>
             <partName/>
         </titleInfo>
-        <name type="personal">
+        <name type="personal" xlink:href="">
             <namePart type="given"/>
             <namePart type="family"/>
-            <namePart type="given" script="Latn" transliteration=""/>
-            <namePart type="family" script="Latn" transliteration=""/>
+            <namePart type="given" script="latn" transliteration=""/>
+            <namePart type="family" script="latn" transliteration=""/>
         </name>
-        <name type="corporate">
+        <name type="corporate" xlink:href="">
             <namePart script=""/>
             <namePart script=""/>
             <namePart transliteration=""/>
@@ -84,21 +84,21 @@
             <title/>
             <subTitle/>
         </titleInfo>
-        <titleInfo script="Latn" transliteration="" type="translated">
+        <titleInfo script="latn" transliteration="" type="translated">
             <nonSort/>
             <title/>
             <subTitle/>
         </titleInfo>
-        <titleInfo lang="" script="Latn" type="translated">
+        <titleInfo lang="" script="latn" type="translated">
             <nonSort/>
             <title/>
             <subTitle/>
         </titleInfo>
-        <name type="corporate">
+        <name type="corporate" xlink:href="">
             <namePart type=""/>
             <namePart type=""/>
-            <namePart script="Latn" transliteration=""/>
-            <namePart script="Latn" transliteration=""/>
+            <namePart script="latn" transliteration=""/>
+            <namePart script="latn" transliteration=""/>
             <role>
                 <roleTerm type="code" authority="marcrelator">edt</roleTerm>
             </role>
@@ -106,13 +106,13 @@
         <originInfo>
             <place>
                 <placeTerm type="text"/>
-                <placeTerm type="text" script="Latn" transliteration=""/>
+                <placeTerm type="text" script="latn" transliteration=""/>
             </place>
             <dateIssued encoding="w3cdtf"/>
             <publisher/>
-            <publisher script="Latn" transliteration=""/>
+            <publisher script="latn" transliteration=""/>
             <edition/>
-            <edition script="Latn" transliteration=""/>
+            <edition script="latn" transliteration=""/>
             <issuance>continuing</issuance>
         </originInfo>
         <genre type="code" authority="marcgt">periodical</genre>
