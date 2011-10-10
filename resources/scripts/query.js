@@ -243,8 +243,8 @@ function initCollectionTree() {
 
 function toggleCollectionTree(show) {
     if (show) {
-        $('#collection-tree').css({width: '310px', height: 'auto', 'background-color': 'transparent'});
-        $('#main-content').css('margin-left', '320px');
+        $('#collection-tree').css({width: '270px', height: 'auto', 'background-color': 'transparent'});
+        $('#main-content').css('margin-left', '280px');
         $('#collection-tree-main').css('display', '');
         $('#simple-search-form input[name = collection-tree]').val('show');
         $('#advanced-search-form input[name = collection-tree]').val('show');

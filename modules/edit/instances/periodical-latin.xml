@@ -4,22 +4,39 @@
         <nonSort/>
         <title/>
         <subTitle/>
-        <partNumber/>
-        <partName/>
     </titleInfo>
+    <name type="corporate" xlink:href="">
+        <namePart type=""/>
+        <namePart type=""/>
+        <role>
+            <roleTerm type="code" authority="marcrelator">edt</roleTerm>
+        </role>
+    </name>
     <name type="personal" xlink:href="">
         <namePart type="given"/>
         <namePart type="family"/>
         <role>
-            <roleTerm type="code" authority="marcrelator">aut</roleTerm>
+            <roleTerm type="code" authority="marcrelator">edt</roleTerm>
         </role>
     </name>
-    <originInfo/>
+    <originInfo script="latn">
+        <place>
+            <placeTerm type="text"/>
+        </place>
+        <publisher/>
+        <dateIssued encoding="w3cdtf" point="start"/>
+        <dateIssued encoding="w3cdtf" point="end"/>
+        <issuance>continuing</issuance>
+        <frequency/>
+    </originInfo>
     <part/>
-    <physicalDescription/>
+    <physicalDescription>
+        <form authority="marcform">print</form>
+        <extent/>
+    </physicalDescription>
     <targetAudience authority="marctarget">adult</targetAudience>
     <typeOfResource>text</typeOfResource>
-    <genre authority="marcgt">article</genre>
+    <genre type="code" authority="marcgt">periodical</genre>
     <subject>
         <topic/>
         <geographic/>
@@ -34,7 +51,7 @@
             <title/>
             <subTitle/>
         </titleInfo>
-        <titleInfo lang="eng" script="latn" type="translated">
+        <titleInfo lang="" script="latn" type="translated">
             <nonSort/>
             <title/>
             <subTitle/>
@@ -42,28 +59,25 @@
         <name type="personal" xlink:href="">
             <namePart type="given"/>
             <namePart type="family"/>
+        </name>
+        <name type="corporate" xlink:href="">
+            <namePart type=""/>
+            <namePart type=""/>
         </name>
     </subject>
     <classification authority="lcc"/>
     <abstract lang=""/>
     <tableOfContents lang="" script="" xlink:href=""/>
     <note lang="" type="content"/>
-    <relatedItem type="host" xlink:href="">
+    <relatedItem type="preceeding" xlink:href="">
         <titleInfo>
             <nonSort/>
             <title/>
             <subTitle/>
         </titleInfo>
-        <name type="personal" xlink:href="">
-            <namePart type="given"/>
-            <namePart type="family"/>
-            <role>
-                <roleTerm type="code" authority="marcrelator">edt</roleTerm>
-            </role>
-        </name>
         <name type="corporate" xlink:href="">
-            <namePart/>
-            <namePart/>
+            <namePart type=""/>
+            <namePart type=""/>
             <role>
                 <roleTerm type="code" authority="marcrelator">edt</roleTerm>
             </role>
@@ -72,17 +86,19 @@
             <place>
                 <placeTerm type="text"/>
             </place>
-            <dateIssued encoding="w3cdtf"/>
-            <copyrightDate encoding="w3cdtf"/>
             <publisher/>
-            <edition/>
-            <issuance>monographic</issuance>
+            <issuance>continuing</issuance>
         </originInfo>
-        <identifier type="isbn"/>
-        <genre type="code" authority="marcgt">book</genre>
+        <genre type="code" authority="marcgt">periodical</genre>
+        <identifier type="issn"/>
+        <identifier type="doi"/>
         <part>
             <detail type="volume">
                 <number/>
+            </detail>
+            <detail type="issue">
+                <number/>
+                <caption>no.</caption>
             </detail>
             <extent unit="pages">
                 <start/>
@@ -92,21 +108,48 @@
             </extent>
             <date encoding="w3cdtf"/>
         </part>
-        <relatedItem type="series" xlink:href="">
-            <titleInfo>
-                <nonSort/>
-                <title/>
-                <subTitle/>
-            </titleInfo>
-            <part>
-                <detail type="volume">
-                    <number/>
-                </detail>
-                <date encoding="w3cdtf"/>
-            </part>
-        </relatedItem>
     </relatedItem>
-    <identifier type="isbn"/>
+    <relatedItem type="succeeding" xlink:href="">
+        <titleInfo>
+            <nonSort/>
+            <title/>
+            <subTitle/>
+        </titleInfo>
+        <name type="corporate" xlink:href="">
+            <namePart type=""/>
+            <namePart type=""/>
+            <role>
+                <roleTerm type="code" authority="marcrelator">edt</roleTerm>
+            </role>
+        </name>
+        <originInfo script="latn">
+            <place>
+                <placeTerm type="text"/>
+            </place>
+            <publisher/>
+            <issuance>continuing</issuance>
+        </originInfo>
+        <genre type="code" authority="marcgt">periodical</genre>
+        <identifier type="issn"/>
+        <identifier type="doi"/>
+        <part>
+            <detail type="volume">
+                <number/>
+            </detail>
+            <detail type="issue">
+                <number/>
+                <caption>no.</caption>
+            </detail>
+            <extent unit="pages">
+                <start/>
+                <end/>
+                <total/>
+                <list/>
+            </extent>
+            <date encoding="w3cdtf"/>
+        </part>
+    </relatedItem>
+    <identifier type="issn"/>
     <identifier type="doi"/>
     <location>
         <url dateLastAccessed=""/>

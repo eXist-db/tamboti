@@ -220,20 +220,6 @@ button {
 
 /*boxes begin*/
 
-fieldset {
-	padding:1.4em 1.4em 0 1.4em !important;
-	margin:0 0 1.5em 0;
-	border:1px solid #BBBBBB;
-}
-
-.fieldset,/*delete*/
-fieldset,
-.xforms-repeat-item,
-.xforms-repeat-item-selected
-{
-    border-color:#CCCCCC;
-}
-
 .node-adds, 
 .node-adds-title, 
 .xforms-label,
@@ -253,6 +239,22 @@ fieldset,
 .compact .fieldset .xforms-repeat-item {
 	padding-bottom:1em !important;
 }
+
+.fieldset,/*delete*/
+fieldset,
+.xforms-repeat-item,
+.xforms-repeat-item-selected
+{
+    border-color:#CCCCCC;
+}
+
+/*fieldset {
+	padding:1.4em 1.4em 0 1.4em !important;
+	margin:0 0 1.5em 0;
+	border:1px solid #BBBBBB;
+}
+*/
+
 .fieldset,
 fieldset,
 .block-form .xforms-repeat-item,
@@ -267,7 +269,7 @@ fieldset,
     padding-bottom:0;
     padding-left:1em !important;
     padding-right:1em !important;
-    margin-top:.5em !important;
+    margin-top:1.5em !important;
     margin-bottom:1.5em !important;
     -moz-border-radius:.75em;
     border-bottom-left-radius:10px 10px;

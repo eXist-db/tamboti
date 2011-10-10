@@ -102,6 +102,7 @@ declare function mods:clean-up-punctuation($element as node()) as node() {
       }
 };
 
+
 (: ### general functions end ###:)
 
 
@@ -121,27 +122,27 @@ declare function mods:clean-up-punctuation($element as node()) as node() {
 :)
 declare function mods:get-language-label($language as item()*) as xs:string* {
         let $languageTerm :=
-            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:value = $language]/*:label
+            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:value eq $language]/*:label
             return
                 if ($languageTerm)
                 then $languageTerm
                 else
-                    let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTwo = $language]/*:label
+                    let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTwo eq $language]/*:label
                     return
                         if ($languageTerm)
                         then $languageTerm
                         else
-                            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTerm = $language]/*:label
+                            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTerm eq $language]/*:label
                             return
                                 if ($languageTerm)
                                 then $languageTerm
                                 else
-                                    let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) = $language/upper-case(*:label)]/*:label
+                                    let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) eq $language/upper-case(*:label)]/*:label
                                     return
                                         if ($languageTerm)
                                         then $languageTerm
                                         else
-                                            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) = upper-case($language)]/*:label
+                                            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) eq upper-case($language)]/*:label
                                             return
                                                 if ($languageTerm)
                                                 then $languageTerm
@@ -157,12 +158,12 @@ declare function mods:get-language-label($language as item()*) as xs:string* {
 :)
 declare function mods:get-script-term($language as node()*) as xs:string* {
         let $scriptTerm :=
-            let $scriptTerm := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/*:code-table/*:items/*:item[*:value = $language/mods:scriptTerm[@authority]]/*:label
+            let $scriptTerm := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/*:code-table/*:items/*:item[*:value eq $language/mods:scriptTerm[@authority]]/*:label
             return
                 if ($scriptTerm)
                 then $scriptTerm
                 else
-                    let $scriptTerm := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/*:code-table/*:items/*:item[*:value = $language/mods:scriptTerm]/*:label
+                    let $scriptTerm := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/*:code-table/*:items/*:item[*:value eq $language/mods:scriptTerm]/*:label
                     return
                         if ($scriptTerm)
                         then $scriptTerm
@@ -238,14 +239,14 @@ declare function mods:language-of-cataloging($language as element(mods:languageO
 declare function mods:get-role-label-for-detail-view($roleTerm as item()?) as item()? {        
         let $roleLabel :=
             (: Is the roleTerm a role label? :)
-            let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) = upper-case($roleTerm)]/*:label
+            let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) eq upper-case($roleTerm)]/*:label
             (: Prefer the label proper, since it contains the form presented in the detail view, e.g. "Editor" instead of "edited by". :)
             return
                 if ($roleLabel)
                 then $roleLabel
                 else
                     (: Is the roleTerm a role term @code? :)
-                    let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[*:value = $roleTerm]/*:label
+                    let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[*:value eq $roleTerm]/*:label
                     return
                         if ($roleLabel)
                         then $roleLabel
@@ -266,7 +267,7 @@ declare function mods:get-roles-for-detail-view($name as element()*) as item()* 
                 )
     else
         (: Default values in the absence of $roleTerm. :)
-        if ($name/@type = 'corporate')
+        if ($name/@type eq 'corporate')
         then 'Corporation'
         else 'Author'
 };
@@ -297,24 +298,24 @@ declare function mods:get-role-terms-for-detail-view($role as element()*) as ite
 :)
 declare function mods:get-role-label-for-list-view($roleTerm as xs:string*) as xs:string* {
         let $roleLabel :=
-            let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) = upper-case($roleTerm)]/*:labelSecondary
+            let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) eq upper-case($roleTerm)]/*:labelSecondary
             (: Prefer labelSecondary, since it contains the form presented in the list view output, e.g. "edited by" instead of "editor". :)
             return
                 if ($roleLabel)
                 then $roleLabel
                 else
-                    let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[*:value = $roleTerm]/*:labelSecondary
+                    let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[*:value eq $roleTerm]/*:labelSecondary
                     return
                         if ($roleLabel)
                         then $roleLabel
                         else
-                            let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) = upper-case($roleTerm)]/*:label
+                            let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) eq upper-case($roleTerm)]/*:label
                             (: If there is no labelSecondary, take the label. :)
                             return
                                 if ($roleLabel)
                                 then $roleLabel
                                 else
-                                    let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[*:value = $roleTerm]/*:label
+                                    let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/*:code-table/*:items/*:item[*:value eq $roleTerm]/*:label
                                     return
                                         if ($roleLabel)
                                         then $roleLabel
@@ -338,7 +339,7 @@ declare function mods:get-publisher($publishers as element(mods:publisher)*) as 
 	            then mods:retrieve-name($publisher/mods:name, 1, 'secondary', '')
 	            else $publisher
         , 
-        (:If there is a transliterated publisher, probably only one publisher is referred to.:)
+        (: If there is a transliterated publisher, probably only one publisher is referred to. :)
         if ($publishers[@transliteration] or $publishers[mods:name/@transliteration])
         then ' '
         else
@@ -384,16 +385,16 @@ declare function mods:format-subjects($entry as element(), $global-transliterati
             (: If there is a child. :)
             if ($item/mods:*) 
             then
-            	(:If it is a name.:)
-                if ($item/name() = 'name')
+            	(: If it is a name. :)
+                if ($item/name() eq 'name')
                 then mods:format-name($item, 1, 'primary', $global-transliteration)
                 else
-                	(:If it is a titleInfo.:)
-                    if ($item/name() = 'titleInfo')
-                    (:NB: What if there is more than one titleInfo? Here one steps out of the iteration.:)
+                	(: If it is a titleInfo. :)
+                    if ($item/name() eq 'titleInfo')
+                    (: NB: What if there is more than one titleInfo? Here one steps out of the iteration. :)
                     then string-join(mods:get-short-title($item/..), '')
                     else
-                    	(:If it is something else, such as topic (caught by $subitem/name()).:)
+                    	(: If it is something else, such as topic (caught by $subitem/name()). :)
                         for $subitem in ($item/mods:*)
                         let $authority := 
                             if ($subitem/@authority/string()) 
@@ -447,7 +448,7 @@ return
         else ()
         ,
         :)
-        if ($start != $end)
+        if ($start ne $end)
         then concat($start, '-', $end)
         else $start        
     else 
@@ -468,16 +469,18 @@ return
 declare function mods:get-date($date as element()*) as xs:string* {
     (: contains no subelements. :)
     (: has: encoding; point; qualifier. :)
-    (: some dates have keyDate. :)
-let $start := $date[@point = 'start']/text()
-let $end := $date[@point = 'end']/text()
-let $qualifier := $date/@qualifier
+    (: NB: some dates have keyDate. :)
+
+let $start := $date[@point eq 'start']/text()
+let $end := $date[@point eq 'end']/text()
+let $qualifier := $date/@qualifier/text()
+
 let $encoding := $date/@encoding
 return
     (
     if ($start and $end) 
     then 
-        if ($start != $end)
+        if ($start ne $end)
         then concat($start, '-', $end)
         else $start        
     else 
@@ -531,7 +534,7 @@ declare function mods:get-place($places as element(mods:place)*) as xs:string? {
 	            else 1
 	        order by $order
 	        	return
-	            if ($placeTerm[@type = 'text']/text()) 
+	            if ($placeTerm[@type eq 'text']/text()) 
 	            then concat
 	            	(
 	                $placeTerm[@transliteration]/text()
@@ -541,15 +544,15 @@ declare function mods:get-place($places as element(mods:place)*) as xs:string? {
 	                $placeTerm[not(@transliteration)]/text()
 	                )
 	            else
-	                if ($placeTerm[@authority = 'marccountry']/text()) 
-	                then doc(concat($config:edit-app-root, '/code-tables/marc-country-codes.xml'))/*:code-table/*:items/*:item[*:value = $placeTerm]/*:label
+	                if ($placeTerm[@authority eq 'marccountry']/text()) 
+	                then doc(concat($config:edit-app-root, '/code-tables/marc-country-codes.xml'))/*:code-table/*:items/*:item[*:value eq $placeTerm]/*:label
 	                else 
-	                    if ($placeTerm[@authority = 'iso3166']/text()) 
-	                    then doc(concat($config:edit-app-root, '/code-tables/iso3166-country-codes.xml'))/*:code-table/*:items/*:item[*:value = $placeTerm]/*:label
+	                    if ($placeTerm[@authority eq 'iso3166']/text()) 
+	                    then doc(concat($config:edit-app-root, '/code-tables/iso3166-country-codes.xml'))/*:code-table/*:items/*:item[*:value eq $placeTerm]/*:label
 	                    else $place/mods:placeTerm[not(@type)]/text(),
         ' ')
     ,
-    (:If there is a transliterated place term, probably only one place is referred to.:)
+    (: If there is a transliterated place term, probably only one place is referred to. :)
     if ($places[@transliteration] or $places[mods:placeTerm/@transliteration])
         then ' '
         else
@@ -590,7 +593,7 @@ declare function mods:get-part-and-origin($entry as element()) {
     let $dateModified := $originInfo/mods:dateModified
     (: contains no subelements. :)
     (: has: encoding; point; keyDate; qualifier. :)
-    let $copyrightDate := replace($originInfo/mods:copyrightDate, 'c', '')
+    let $copyrightDate := $originInfo/mods:copyrightDate
     (: contains no subelements. :)
     (: has: encoding; point; keyDate; qualifier. :)
     let $dateOther := $originInfo/mods:dateOther
@@ -619,7 +622,7 @@ declare function mods:get-part-and-origin($entry as element()) {
 						        if ($dateOther) 
 						        then $dateOther 
 						        else ()
-	(: handled by get-date(). :)
+	let $dateOriginInfo := mods:get-date($dateOriginInfo)
 	
     (: NB: this should iterate over part, since there are e.g. multi-part installments of articles. :)
     let $part := $entry/mods:part[1]
@@ -634,7 +637,7 @@ declare function mods:get-part-and-origin($entry as element()) {
         	then $detail[@type='volume']/mods:number/text()
 			(: NB: to accommodate erroneous Zotero export. Only number is valid. :)
         	else $detail[@type='volume']/mods:text/text()
-        (:NB: Does $page exist?:)
+        (: NB: Does $page exist? :)
         let $page := $detail[@type='page']/mods:number/text()
         (: $page resembles list. :)
     
@@ -646,11 +649,10 @@ declare function mods:get-part-and-origin($entry as element()) {
     (: NB: If the date of a periodical issue is wrongly put in originInfo/dateIssued. Delete when MODS export is corrected.:)
     let $datePart := 
 	    if ($part/mods:date) 
-	    then $part/mods:date
+	    then mods:get-date($part/mods:date)
 	    else $dateOriginInfo
     (: contains no subelements. :)
     (: has: encoding; point; qualifier. :)
-    (: handled by mods:get-date(). :)
     
     let $text := $part/mods:text
     (: contains no subelements. :)
@@ -667,7 +669,7 @@ declare function mods:get-part-and-origin($entry as element()) {
             if ($volume and $issue)
             then concat($volume, ', no. ', $issue
             	,
-            	concat(' (', string-join(mods:get-date($datePart), ' '), ')')    
+            	concat(' (', $datePart, ')')    
 			    )
             (: concat((if ($part/mods:detail/mods:caption) then $part/mods:detail/mods:caption/string() else '/'), $part/mods:detail[@type='issue']/mods:number) :)
             else
@@ -676,12 +678,12 @@ declare function mods:get-part-and-origin($entry as element()) {
                 (: If the year is used as volume. :)
 	                if ($issue)
 	                then concat(
-	                	concat(' ', mods:get-date($datePart))
+	                	concat(' ', $datePart)
 			            , ', no. ', $issue)
 	                else concat($volume, concat(' (', string-join($datePart, ', '), ')'))
 				else
 					if ($extent and $datePart)
-				(:We have date and extent alone.:)
+				(: We have date and extent alone. :)
 					then concat(' ', $datePart)
 					else ()
 				,	
@@ -732,7 +734,7 @@ declare function mods:get-part-and-origin($entry as element()) {
                 if ($datePart)
                 then
 	                (', ',
-	                for $date in $dateOriginInfo
+	                for $date in $datePart
 	                return
 	                	string-join($date, ' and ')
 	                )
@@ -756,7 +758,7 @@ declare function mods:get-part-and-origin($entry as element()) {
                 	)
                 else ()
                 , 
-                mods:add-part(mods:get-date(<date>{$dateOriginInfo}</date>)
+                mods:add-part($dateOriginInfo
                 , 
                 if (exists($entry/mods:relatedItem[@type='host']/mods:part/mods:extent) or exists($entry/mods:relatedItem[@type='host']/mods:part/mods:detail))
                 then '.'
@@ -768,7 +770,7 @@ declare function mods:get-part-and-origin($entry as element()) {
                 else ()
                 ,
                 (: If it is a series:)
-                (:NB: elaborate!:)
+                (: NB: elaborate! :)
                 if ($volume)
 	            then concat(', Vol. ', $volume, '.')
 	            else ()
@@ -817,7 +819,7 @@ declare function mods:get-part-and-origin($entry as element()) {
 declare function mods:get-conference-hitlist($entry as element(mods:mods)) {
     let $date := ($entry/mods:originInfo[1]/mods:dateIssued/string()[1], $entry/mods:part/mods:date/string()[1],
             $entry/mods:originInfo[1]/mods:dateCreated/string())[1]
-    let $conference := $entry/mods:name[@type = 'conference']/mods:namePart
+    let $conference := $entry/mods:name[@type eq 'conference']/mods:namePart
     return
     if ($conference) 
     then
@@ -830,10 +832,10 @@ declare function mods:get-conference-hitlist($entry as element(mods:mods)) {
 };
 
 declare function mods:get-conference-detail-view($entry as element()) {
-    (:let $date := ($entry/mods:originInfo/mods:dateIssued/string()[1], $entry/mods:part/mods:date/string()[1],
+    (: let $date := ($entry/mods:originInfo/mods:dateIssued/string()[1], $entry/mods:part/mods:date/string()[1],
             $entry/mods:originInfo/mods:dateCreated/string())[1]
-    return:)
-    let $conference := $entry/mods:name[@type = 'conference']/mods:namePart
+    return :)
+    let $conference := $entry/mods:name[@type eq 'conference']/mods:namePart
     return
     if ($conference) 
     then
@@ -850,7 +852,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
         if ($name/@lang)
         then mods:get-language-label($name/@lang)
         else mods:language-of-resource($name/../mods:language)
-    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:label = $nameLanguageLabel]/*:nameOrder/string()
+    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:label eq $nameLanguageLabel]/*:nameOrder/string()
     let $nameStyle :=
         if ($nameLanguageLabel = ('Chinese','Japanese','Korean','Vietnamese'))
         then 'EastAsian'
@@ -871,12 +873,12 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
         (: If the name is typed :)
         else    
             (: If the name is type conference. :)
-        	if ($nameType = 'conference') 
+        	if ($nameType eq 'conference') 
         	then ()
         	(: Do nothing, since get-conference-detail-view and get-conference-hitlist take care of conference. :)
             else    
                 (: If the name is type corporate. :)
-                if ($nameType = 'corporate') 
+                if ($nameType eq 'corporate') 
                 then
                     concat(
                         string-join(
@@ -922,13 +924,13 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
     						if ($global-transliteration)
     						then 1
     						else 0
-                    (:If the name does not contain a namePart with transliteration, it is a basic name, i.e. a name where the distinction between the name in native script and in transliteration does not arise. 
+                    (: If the name does not contain a namePart with transliteration, it is a basic name, i.e. a name where the distinction between the name in native script and in transliteration does not arise. 
                     Typical examples are Western names, but also include Eastern names where no effort has been taken to distinguish between native script and transliteration. 
                     Filtering like this would leave out names where Westerners have Chinese names, and in order to catch these, we require that they have language set to English. :)
                     let $nameBasic :=
 	                    if (not($nameContainsTransliteration))
 	                    then <name>{$name/*:namePart[not(@transliteration) and (not(@script) or @script = ('Latn', 'latn', 'Latin'))]}</name>
-                    	else <name>{$name/*:namePart[@lang = 'eng']}</name>
+                    	else <name>{$name/*:namePart[@lang eq 'eng']}</name>
                     	
                     (: If there is transliteration, there are nameParts with transliteration. 
                     To filter these, we seek nameParts
@@ -946,14 +948,14 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                     which do not have English as their language. :)
                     let $nameScript := 
 	                    if ($nameContainsTransliteration)
-	                    then <name>{$name/*:namePart[(not(@transliteration) or string-length(@transliteration) = 0) and not(@script = ('Latn', 'latn', 'Latin')) and not(@lang='eng')]}</name>
+	                    then <name>{$name/*:namePart[(not(@transliteration) or string-length(@transliteration) eq 0) and not(@script = ('Latn', 'latn', 'Latin')) and not(@lang='eng')]}</name>
 	                    else ()
                     (: We assume that there is only one date name part. The date name parts with transliteration and script are rather theoretical. This date is attached at the end of the name. :)
-                    let $dateBase := $name/*:namePart[@type = 'date'][1]
+                    let $dateBase := $name/*:namePart[@type eq 'date'][1]
                     
                     (: We try only the most obvious place for a lang and script attribute on namePart. :)
                     (: NB: Only the first value is chosen, so names cannot have several language. :)
-                    let $namePartFamilyLanguage := $name/*:namePart[type = 'family'][1]/@lang
+                    let $namePartFamilyLanguage := $name/*:namePart[type eq 'family'][1]/@lang
                     let $namePartLanguage :=
                         if ($namePartFamilyLanguage)
                         then mods:get-language-label($namePartFamilyLanguage)
@@ -964,7 +966,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                         then $namePartLanguage
                         else $nameLanguageLabel
                     (: If there is lang on namePart, use that for retrieving the name order; otherwise use language on name (or, if this did not exist when it was set, the language of the resource as a whole. :)
-                    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:label = $namePartLanguageLabel]/*:nameOrder/string()
+                    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:label eq $namePartLanguageLabel]/*:nameOrder/string()
                     
                     return
                         concat(
@@ -974,10 +976,10 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                         then
                         (: Filter the name parts according to type. :)
                             let $untyped := <name>{$nameBasic/*:namePart[not(@type)]}</name>
-                            let $family := <name>{$nameBasic/*:namePart[@type = 'family']}</name>
-                            let $given := <name>{$nameBasic/*:namePart[@type = 'given']}</name>
-                            let $termsOfAddress := <name>{$nameBasic/*:namePart[@type = 'termsOfAddress']}</name>
-                            (: let $date := <name>{$nameBasic/*:namePart[@type = 'date']}</name> :)
+                            let $family := <name>{$nameBasic/*:namePart[@type eq 'family']}</name>
+                            let $given := <name>{$nameBasic/*:namePart[@type eq 'given']}</name>
+                            let $termsOfAddress := <name>{$nameBasic/*:namePart[@type eq 'termsOfAddress']}</name>
+                            (: let $date := <name>{$nameBasic/*:namePart[@type eq 'date']}</name> :)
                             
                             return
                                 if ($untyped/string())
@@ -985,7 +987,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                 then string-join($untyped/*:namePart, ' ') 
                                 else
                                 (: If the name parts are typed, we have here a name divided into given and family name (and so on), a name that is not a transliteration and that is not in a non-Latin script: an ordinary (Western) name. :)
-                                    if ($pos = 1 and $caller = 'primary')
+                                    if ($pos eq 1 and $caller eq 'primary')
                                     (: If the name occurs first in primary position (i.e. first in author position in list view) and the name is not a name that occurs in family-given sequence (is not an Oriental or Hungarian name), then format it with a comma between the family name and the given name, with the family name placed first, and append the term of address. :)
                                     (: Dates are appended last, once for the whole name. :)
                                     (: Example: "Freud, Sigmund, Dr. (1856-1939)". :)
@@ -997,7 +999,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                             if ($family/string() and $given/string())
                                             (: If only one of family and given are evidenced, no comma is needed. :)
                                             then
-                                                if ($nameOrder = 'family-given')
+                                                if ($nameOrder eq 'family-given')
                                                 (: If the name is Hungarian, use a space; otherwise (i.e. in most cases) use a comma. :)
                                                 then ' '
                                                 else ', '
@@ -1017,7 +1019,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                             :)
                                         )
                                     else
-                                        if ($nameOrder = 'family-given')
+                                        if ($nameOrder eq 'family-given')
                                         (: If the name is Hungarian and does not occur in primary position. :)
                                         then 
                                             concat(
@@ -1066,8 +1068,8 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                         , 
                         ' '
                         , 
-                        (:If there is an "English" name, enclose the transliterated and Eastern script name in parenthesis.:)
-                        if ($name/*:namePart[@lang = 'eng'])
+                        (: If there is an "English" name, enclose the transliterated and Eastern script name in parenthesis. :)
+                        if ($name/*:namePart[@lang eq 'eng'])
                         then ' ('
                         else ()
                         ,
@@ -1076,17 +1078,17 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                         (: We have a name in transliteration. This can e.g. be a Chinese name or a Russian name. :)
                         then
                             let $untypedTransliteration := <name>{$nameTransliteration/*:namePart[not(@type)]}</name>
-                            let $familyTransliteration := <name>{$nameTransliteration/*:namePart[@type = 'family']}</name>
-                            let $givenTransliteration := <name>{$nameTransliteration/*:namePart[@type = 'given']}</name>
-                            let $termsOfAddressTransliteration := <name>{$nameTransliteration/*:namePart[@type = 'termsOfAddress']}</name>
-                            (: let $dateTransliteration := <name>{$nameTransliteration/*:namePart[@type = 'date']}</name> :)
+                            let $familyTransliteration := <name>{$nameTransliteration/*:namePart[@type eq 'family']}</name>
+                            let $givenTransliteration := <name>{$nameTransliteration/*:namePart[@type eq 'given']}</name>
+                            let $termsOfAddressTransliteration := <name>{$nameTransliteration/*:namePart[@type eq 'termsOfAddress']}</name>
+                            (: let $dateTransliteration := <name>{$nameTransliteration/*:namePart[@type eq 'date']}</name> :)
                             
                             return       
                                 if ($untypedTransliteration/string())
                                 then string-join($untypedTransliteration/*:namePart, ' ') 
                                 else
                                 (: The name parts are typed, so we have a name that is a transliteration and that is divided into given and family name. If the name order is family-given, we have an ordinary Oriental name in transliteration, if the name order is givenfamily, we have e.g. a Russian name in transliteration. :)
-                                    if ($pos = 1 and $caller = 'primary' and $nameOrder != 'family-given')
+                                    if ($pos eq 1 and $caller eq 'primary' and $nameOrder ne 'family-given')
                                     (: If the name occurs first in primary position (i.e. first in list view) and the name is not a name that occurs in family-given sequence, e.g. a Russian name, format it with a comma between family name and given name, with family name placed first. :)
                                     then
                                     concat(
@@ -1111,7 +1113,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                     else
                                     (: In all other situations, the name order is given-family; the difference is whether there is a space between the name parts and the order of name proper and the address. :)
                                     (: Example: "Dr. Sigmund Freud (1856-1939)". :)
-                                        if ($nameOrder != 'family-given')
+                                        if ($nameOrder ne 'family-given')
                                         (: If it is e.g. a Russian name. :)
                                         then
                                             concat(
@@ -1160,10 +1162,10 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                 if ($nameScript/string())
                                 then
                                     let $untypedScript := <name>{$nameScript/*:namePart[not(@type)]}</name>
-                                    let $familyScript := <name>{$nameScript/*:namePart[@type = 'family']}</name>
-                                    let $givenScript := <name>{$nameScript/*:namePart[@type = 'given']}</name>
-                                    let $termsOfAddressScript := <name>{$nameScript/*:namePart[@type = 'termsOfAddress']}</name>
-                                    (: let $dateScript := <name>{$nameScript/*:namePart[@type = 'date']}</name> :)
+                                    let $familyScript := <name>{$nameScript/*:namePart[@type eq 'family']}</name>
+                                    let $givenScript := <name>{$nameScript/*:namePart[@type eq 'given']}</name>
+                                    let $termsOfAddressScript := <name>{$nameScript/*:namePart[@type eq 'termsOfAddress']}</name>
+                                    (: let $dateScript := <name>{$nameScript/*:namePart[@type eq 'date']}</name> :)
                                     let $languageScript :=
                                         if ($familyScript/@lang)
                                         then mods:get-language-label($familyScript/@lang)
@@ -1172,14 +1174,14 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                         if ($languageScript)
                                         then $languageScript
                                         else $nameLanguageLabel
-                                    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:label = $language]/*:nameOrder/string()
+                                    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:label eq $language]/*:nameOrder/string()
                                     return       
                                         if ($untypedScript/string())
                                         (: If the name parts are not typed, there is nothing we can do to order their sequence. When name parts are not typed, it is generally because the whole name occurs in one name part, formatted for display (usually with a comma between family and given name), but it may also be used when names that cannot be divided into family and given names are in evidence. We trust that any sequence of nameparts are meaningfully ordered and string-join them. :)
                                         then string-join($untypedScript, ' ') 
                                         else
                                         (: The name parts are typed, so we have a name that is not a transliteration, that is not in a non-Latin script and that is divided into given and family name. An ordinary Western name. :)
-                                            if ($pos = 1 and $caller = 'primary' and $nameOrder != 'family-given')
+                                            if ($pos eq 1 and $caller eq 'primary' and $nameOrder ne 'family-given')
                                             (: If the name occurs first in primary position (i.e. first in list view) and the name is not a name that occurs in family-given sequence, format it with a comma between family name and given name, with family name placed first. :)
                                             then
                                             concat(
@@ -1202,7 +1204,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                                 :)
                                             )
                                             else
-                                                if ($nameOrder != 'family-given')
+                                                if ($nameOrder ne 'family-given')
                                                 (: If the name does not occur first in primary position (i.e. first in list view) and if the name does not occur in family-given sequence, format it with a space between given name and family name, with given name placed first. This would be the case with Russian names that are not first in author position in the list view. :)
                                                 then
                                                     concat(
@@ -1225,7 +1227,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                                         :)
                                                     )
                                                 else
-                                                (: $nameOrder = 'family-given'. Here we have e.g. Chinese names which are the same wherever they occur, with no space or comma between given and family name. :)
+                                                (: $nameOrder eq 'family-given'. Here we have e.g. Chinese names which are the same wherever they occur, with no space or comma between given and family name. :)
                                                     concat(
                                                         string-join($familyScript, '')
                                                         ,
@@ -1242,7 +1244,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                 else ()
                             ,     
 	                        (: Close Chinese alias.:)
-	                        if ($name/*:namePart[@lang = 'eng'])
+	                        if ($name/*:namePart[@lang eq 'eng'])
 	                        then ') '
 	                        else ()
 	                        ,
@@ -1270,7 +1272,7 @@ declare function mods:retrieve-name($name as element(), $pos as xs:int, $caller 
             let $mads-record :=
                 if (empty($mads-reference)) 
                 then ()        
-                else collection($config:mads-collection)/mads:mads[@ID = $mads-reference]/mads:authority
+                else collection($config:mads-collection)/mads:mads[@ID eq $mads-reference]/mads:authority
             let $mads-preferred-name :=
                 if (empty($mads-record)) 
                 then ()
@@ -1297,7 +1299,7 @@ declare function mods:retrieve-mads-names($name as element(), $pos as xs:int, $c
     let $mads-record :=
         if (empty($mads-reference)) 
         then ()        
-        else collection($config:mads-collection)/mads:mads[@ID = $mads-reference]
+        else collection($config:mads-collection)/mads:mads[@ID eq $mads-reference]
     let $mads-preferred-name :=
         if (empty($mads-record)) 
         then ()
@@ -1317,7 +1319,7 @@ declare function mods:retrieve-mads-names($name as element(), $pos as xs:int, $c
         		(
         		' (Preferred Name: ', 
         		$mads-preferred-name-formatted, 
-        			if ($mads-variant-name-nos = 1) 
+        			if ($mads-variant-name-nos eq 1) 
         			then '; Variant Name: ' 
         			else '; Variant Names: '
         		, 
@@ -1459,8 +1461,9 @@ declare function mods:get-genre() {
 
 declare function mods:get-title-translated($entry as element(mods:mods), $titleInfo as element(mods:titleInfo)?) {
     let $titleInfo :=
-        if ($titleInfo/@lang = 'ja' or $titleInfo/@lang = 'zh') 
-        then string-join(($entry/mods:titleInfo[@lang = 'en']/mods:title, $entry/mods:titleInfo[@lang = 'en']/mods:subTitle), ' ')
+        if ($titleInfo/@lang = ('ja', 'jpn', 'zh', 'chi', 'kor')) 
+        (: NB: check language terms! :)
+        then string-join(($entry/mods:titleInfo[@lang = ('en', 'eng')]/mods:title, $entry/mods:titleInfo[@lang = ('en', 'eng')]/mods:subTitle), ' ')
         else ()
     return
         if ($titleInfo) 
@@ -1501,24 +1504,24 @@ declare function mods:get-short-title($entry as element()) {
         
     let $titleFormat := 
         (
-        if ($nonSort) 
+        if ($nonSort/string()) 
         then concat($nonSort, ' ' , $title)
-        (:NB: Why need to trim?:)
+        (: NB: Why need to trim? :)
         else functx:trim($title)
         , 
-        if ($subTitle) 
+        if ($subTitle/string()) 
         then concat(': ', $subTitle)
         else ()
         ,
-        if ($partNumber or $partName)
+        if ($partNumber/string() or $partName/string())
         then
-            if ($partNumber and $partName) 
+            if ($partNumber/string() and $partName/string()) 
             then concat('. ', $partNumber, ': ', $partName)
             else
-                if ($partNumber)
+                if ($partNumber/string())
                 then concat('. ', $partNumber)
                 else
-                    if ($partName)
+                    if ($partName/string())
                     then concat('. ', $partName)
             		else ()
         else ()
@@ -1575,7 +1578,7 @@ declare function mods:get-short-title($entry as element()) {
     return
         ( 
         if ($quotes)
-        (:Do not use ordinary quotation marks, in order not to conflict with the cleanup function.:)
+        (: Do not use ordinary quotation marks, in order not to conflict with the cleanup function. :)
         then ' “'
         else ''
         ,
@@ -1585,7 +1588,7 @@ declare function mods:get-short-title($entry as element()) {
         else ()
         , 
         if ($titleTransliteration)
-        (:If there is a transliteration, the title in original script should not be italicised.:)
+        (: If there is a transliteration, the title in original script should not be italicised. :)
         then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">{string-join($titleFormat, '')}</span>
         else
         	if ($quotes)
@@ -1617,16 +1620,16 @@ if ($titleInfo)
     <tr xmlns="http://www.w3.org/1999/xhtml">
         <td class="label">
         {
-            if (($titleInfo/@type = 'translated') and not($titleInfo/@transliteration)) 
+            if (($titleInfo/@type eq 'translated') and not($titleInfo/@transliteration)) 
             then 'Translated Title'
             else 
-                if ($titleInfo/@type = 'abbreviated') 
+                if ($titleInfo/@type eq 'abbreviated') 
                 then 'Abbreviated Title'
                 else 
-                    if ($titleInfo/@type = 'alternative') 
+                    if ($titleInfo/@type eq 'alternative') 
                     then 'Alternative Title'
                     else 
-                        if ($titleInfo/@type = 'uniform') 
+                        if ($titleInfo/@type eq 'uniform') 
                         then 'Uniform Title'
                         else 
                             if ($titleInfo[@transliteration]) 
@@ -1643,17 +1646,17 @@ if ($titleInfo)
             (
             <br/>, 'Language: '
             ,
-            let $lang3 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:value = $lang]/*:label
+            let $lang3 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:value eq $lang]/*:label
             return
                 if ($lang3)
                 then $lang3
                 else
-                    let $lang2 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTwo = $lang]/*:label
+                    let $lang2 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTwo eq $lang]/*:label
                     return
                         if ($lang2) 
                         then $lang2
                         else
-                            let $lang3 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTwo = $titleInfo/@xml:lang]/*:label
+                            let $lang3 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTwo eq $titleInfo/@xml:lang]/*:label
                             return
                                 if ($lang3)
                                 then $lang3
@@ -1679,7 +1682,7 @@ if ($titleInfo)
         if ($titleInfo/@transliteration and $transliteration)
         then
             (<br/>, 'Transliteration: ',
-            let $transliteration-label := doc(concat($config:edit-app-root, '/code-tables/transliteration-codes.xml'))/*:code-table/*:items/*:item[*:value = $transliteration]/*:label
+            let $transliteration-label := doc(concat($config:edit-app-root, '/code-tables/transliteration-codes.xml'))/*:code-table/*:items/*:item[*:value eq $transliteration]/*:label
             return
                 if ($transliteration-label)
                 then $transliteration-label
@@ -1740,9 +1743,10 @@ if ($titleInfo)
 
 declare function mods:get-related-items($entry as element(mods:mods), $caller as xs:string) {
     for $item in $entry/mods:relatedItem
-    let $collection := util:collection-name($config:mods-root)
     let $type := $item/@type
+    let $ID := $item/@ID
     let $displayLabel := $item/@displayLabel
+    let $titleInfo := $item/mods:titleInfo
     let $labelDisplayed :=
         string(
         if ($displayLabel)
@@ -1753,15 +1757,17 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
             else 'Related Item'
         )
     let $xlink := $item/@xlink:href
+    let $part := $item/mods:part
     let $xlinkRecord :=
         (: Any MODS record in /db/resources is retrieved if there is a @xlink:href/@ID match and the relatedItem has no string value. If there should be duplicated, only the first record is retrieved.:)
-        if (($item/@xlink:href) and (collection($config:mods-root)//mods:mods[@ID = $item/@xlink:href]) and (not($item/string()))) 
-        then collection($config:mods-root)//mods:mods[@ID = $item/@xlink:href][1]
+        if (($xlink) and (collection($config:mods-root)//mods:mods[@ID eq $xlink]) and (not($titleInfo))) 
+        then collection($config:mods-root)//mods:mods[@ID eq $item/@xlink:href][1]
         else ()
     let $relatedItem :=
-        (: NB: If there is a xlink on relatedItem and relatedItem has a part, the xlink record should be merged with part. :)
     	if ($xlinkRecord) 
-    	then $xlinkRecord 
+    	(: NB: There must be a smarter way to merge the retrieved relatedItem with the native part! :)
+    	(:update insert $part into $xlinkRecord:)
+    	then <mods:relatedItem ID="{$ID}" displayLabel ="{$displayLabel}" type="{$type}" xlink:href="{$xlink}">{($xlinkRecord/mods:titleInfo, $part)}</mods:relatedItem> 
     	else
     		if ($item/mods:titleInfo/mods:title/text())
     		then $item
@@ -1772,13 +1778,13 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
         then
 	        if ($type = ('host', 'series'))
 	        then
-	            if ($caller = 'hitlist')
+	            if ($caller eq 'hitlist')
 	            then
 	                <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">
 	                	<span class="relatedItem-record">{mods:format-related-item($relatedItem)}</span>
 	                </span>
 	            else
-	                if ($caller = 'detail' and string($xlink))
+	                if ($caller eq 'detail' and string($xlink))
 	                then
 	                    <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
 							<td class="url label relatedItem-label">
@@ -1789,7 +1795,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
 	                        </td>
 	                    </tr>
 	                else
-	                    if ($caller = 'detail')
+	                    if ($caller eq 'detail')
 	                    then
 	                    <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
 							<td class="url label relatedItem-label">In:</td>
@@ -1800,7 +1806,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
 	                    else ()
 	        (: if @type is not 'host' or 'series':)
 	        else
-	            if ($caller = 'detail' and string($xlink))
+	            if ($caller eq 'detail' and string($xlink))
 	            then
 	                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
 						<td class="url label relatedItem-label">
@@ -1811,7 +1817,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
 	                    </td>
 	                </tr>
 	            else
-	                if ($caller = 'detail')
+	                if ($caller eq 'detail')
 	                then
 	                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
 	                    <td class="url label relatedItem-label">
@@ -1841,7 +1847,7 @@ declare function mods:format-related-item($relatedItem as element()) {
         for $roleTerm in distinct-values($roleTerms)
             where $roleTerm = ('com', 'compiler', 'editor', 'edt', 'trl', 'translator', 'annotator', 'ann')        
                 return
-                    let $names := <entry>{$relatedItem/mods:name[mods:role/mods:roleTerm = $roleTerm]}</entry>
+                    let $names := <entry>{$relatedItem/mods:name[mods:role/mods:roleTerm eq $roleTerm]}</entry>
                         return
                             if ($names/string())
                             then
@@ -1867,7 +1873,8 @@ declare function mods:format-related-item($relatedItem as element()) {
 (: ### <relatedItem> ends ### :)
 
 declare function mods:names-full($entry as element(), $global-transliteration) {
-        let $names := $entry/*:name[@type = 'personal' or @type = 'corporate' or @type = 'family' or not(@type)]
+        (: NB: conference? :)
+        let $names := $entry/*:name[@type = ('personal', 'corporate', 'family') or not(@type)]
         for $name in $names
         return
                 <tr xmlns="http://www.w3.org/1999/xhtml"><td class="label">
@@ -1906,6 +1913,7 @@ declare function mods:simple-row($data as item()?, $label as xs:string) as eleme
 (: Creates view for detail view. :)
 (: NB: "mods:format-detail-view()" is referenced in session.xql. :)
 declare function mods:format-detail-view($id as xs:string, $entry as element(mods:mods), $collection-short as xs:string) {
+	let $ID := $entry/@ID
 	let $entry := mods:remove-parent-with-missing-required-node($entry)
 	let $global-transliteration := $entry/mods:extension/e:transliterationOfResource/text()
 	return
@@ -1938,7 +1946,6 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     ,
     
     (: publisher :)
-
         (: If a transliterated publisher name exists, this probably means that several publisher names are simply different script forms of the same publisher name. Place the transliterated name first, then the original script name. :)
         if ($entry/mods:originInfo[1]/mods:publisher[@transliteration])
         then
@@ -1961,47 +1968,84 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
 	,
 	
     (: dates :)
-    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo[1]/mods:dateCreated) 
-    then () 
+    (:If a related item has a date, use it instead of a date in originInfo:)   
+    if ($entry/mods:relatedItem[@type eq 'host']/mods:originInfo[1]/mods:dateCreated) 
+    then ()
     else 
         for $date in $entry/mods:originInfo[1]/mods:dateCreated
-            return mods:simple-row($date, 'Date Created')
+            return mods:simple-row($date, 
+            concat('Date Created',
+                if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
+                if ($date/@qualifier) then concat(' (', functx:capitalize-first($date/@qualifier), ')') else ()
+                )
+            )
     ,
-    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo[1]/mods:copyrightDate) 
+    if ($entry/mods:relatedItem[@type eq 'host']/mods:originInfo[1]/mods:copyrightDate) 
     then () 
     else 
         for $date in $entry/mods:originInfo[1]/mods:copyrightDate
-            return mods:simple-row(replace($date,'c',''), 'Copyright Date')
+            return mods:simple-row($date, 
+            concat('Copyright Date',
+                if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
+                if ($date/@qualifier) then concat(' (', functx:capitalize-first($date/@qualifier), ')') else ()
+                )
+            )
     ,
-    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo[1]/mods:dateCaptured) 
+    if ($entry/mods:relatedItem[@type eq 'host']/mods:originInfo[1]/mods:dateCaptured) 
     then () 
     else 
         for $date in $entry/mods:originInfo[1]/mods:dateCaptured
-            return mods:simple-row($date, 'Date Captured')
+            return mods:simple-row($date, 
+            concat('Date Captured',
+                if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
+                if ($date/@qualifier) then concat(' (', functx:capitalize-first($date/@qualifier), ')') else ()
+                )
+            )            
     ,
-    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo[1]/mods:dateValid) 
+    if ($entry/mods:relatedItem[@type eq 'host']/mods:originInfo[1]/mods:dateValid) 
     then () 
     else 
         for $date in $entry/mods:originInfo[1]/mods:dateValid
-            return mods:simple-row($date, 'Date Valid')
+            return mods:simple-row($date, 
+            concat('Date Valid',
+                if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
+                if ($date/@qualifier) then concat(' (', functx:capitalize-first($date/@qualifier), ')') else ()
+                )
+            )
     ,
-    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo[1]/mods:dateIssued) 
+    if ($entry/mods:relatedItem[@type eq 'host']/mods:originInfo[1]/mods:dateIssued) 
     then () 
     else 
-        for $dateIssued in $entry/mods:originInfo[1]/mods:dateIssued
-            return mods:simple-row($dateIssued, 'Date Issued')
+        for $date in $entry/mods:originInfo[1]/mods:dateIssued
+            return mods:simple-row($date, 
+            concat(
+                'Date Issued', 
+                if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
+                if ($date/@qualifier) then concat(' (', functx:capitalize-first($date/@qualifier), ')') else ()
+                )
+            )
     ,
-    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo[1]/mods:dateModified) 
+    if ($entry/mods:relatedItem[@type eq 'host']/mods:originInfo[1]/mods:dateModified) 
     then () 
     else 
-        for $dateModified in $entry/mods:originInfo[1]/mods:dateModified
-            return mods:simple-row($dateModified, 'Date Modified')
+        for $date in $entry/mods:originInfo[1]/mods:dateModified
+            return mods:simple-row($date, 
+            concat('Date Modified',
+                if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
+                if ($date/@qualifier) then concat(' (', functx:capitalize-first($date/@qualifier), ')') else ()
+                )
+            )
     ,
-    if ($entry/mods:relatedItem[@type = 'host']/mods:originInfo[1]/mods:dateOther) 
+    if ($entry/mods:relatedItem[@type eq 'host']/mods:originInfo[1]/mods:dateOther) 
     then () 
     else 
-        for $dateOther in $entry/mods:originInfo[1]/mods:dateOther
-            return mods:simple-row($dateOther, 'Other Date')
+        for $date in $entry/mods:originInfo[1]/mods:dateOther
+            return mods:simple-row($date, 
+            concat('Other Date',
+                if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
+                if ($date/@qualifier) then concat(' (', functx:capitalize-first($date/@qualifier), ')') else ()
+                )
+            )            
     ,
     (: edition :)
     if ($entry/mods:originInfo[1]/mods:edition) 
@@ -2051,7 +2095,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     (: internetMediaType :)
     mods:simple-row(
     (
-	    let $label := doc(concat($config:edit-app-root, '/code-tables/internet-media-type-codes.xml'))/*:code-table/*:items/*:item[*:value = $entry/mods:physicalDescription[1]/mods:internetMediaType]/*:label
+	    let $label := doc(concat($config:edit-app-root, '/code-tables/internet-media-type-codes.xml'))/*:code-table/*:items/*:item[*:value eq $entry/mods:physicalDescription[1]/mods:internetMediaType]/*:label
 	    return
 	        if ($label) 
 	        then $label
@@ -2116,11 +2160,11 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     let $authority := $genre/@authority/string()
     return   
         mods:simple-row(
-            if ($authority = 'local')
-                then doc(concat($config:edit-app-root, '/code-tables/genre-local-codes.xml'))/*:code-table/*:items/*:item[*:value = $genre]/*:label
+            if ($authority eq 'local')
+                then doc(concat($config:edit-app-root, '/code-tables/genre-local-codes.xml'))/*:code-table/*:items/*:item[*:value eq $genre]/*:label
                 else
-                	if ($authority = 'marcgt')
-                	then doc(concat($config:edit-app-root, '/code-tables/genre-marcgt-codes.xml'))/*:code-table/*:items/*:item[*:value = $genre]/*:label
+                	if ($authority eq 'marcgt')
+                	then doc(concat($config:edit-app-root, '/code-tables/genre-marcgt-codes.xml'))/*:code-table/*:items/*:item[*:value eq $genre]/*:label
 					else $genre/string()
                 , 
                 concat(
@@ -2128,7 +2172,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
                     , 
                     if ($authority)
                     then
-                        if ($authority = 'marcgt')
+                        if ($authority eq 'marcgt')
                         then ' (MARC genre terms)'
                         else concat(' (', $authority, ')')
                     else ()            
@@ -2147,7 +2191,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     let $displayLabel := $note/@displayLabel
     let $type := $note/@type 
     return
-        (:NB: display html markup.:)    
+        (: NB: display html markup! :)    
 	    mods:simple-row(replace($note, '&lt;.*?&gt;', '')
 	    , 
 	    concat('Note', 
@@ -2184,6 +2228,29 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         then concat(' (', ($item/@authority/string()), ')') 
         else ()
     return mods:simple-row($item, concat('Classification', $authority))
+    ,
+    (: records referring to current record if current record is a periodical or an edited volume :)
+    if ($entry/mods:genre = 'periodical') 
+    then
+        let $linkedRecords := collection($config:mods-root)//mods:mods[mods:relatedItem/@xlink:href eq $ID]
+        let $log := util:log("DEBUG", ("##$linkedRecords): ", $linkedRecords))
+        for $linkedRecord in $linkedRecords
+        let $log := util:log("DEBUG", ("##$linkedRecord): ", $linkedRecord))
+        let $linkID := $linkedRecord/@ID
+        let $linkContents := 
+            if ($linkedRecord/mods:titleInfo/mods:title/string()) 
+            then mods:format-list-view((), $linkedRecord) 
+            else ()
+        return
+        <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
+            <td class="url label relatedItem-label">
+                <a href="?filter=ID&amp;value={$linkID}">&lt;&lt; Article Contained in Periodical:</a>
+            </td>
+            <td class="relatedItem-record">
+                <span class="relatedItem-span">{$linkContents}</span>
+            </td>
+        </tr>
+    else ()
     }
     </table>
 };
@@ -2197,7 +2264,8 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
     let $format :=
         (
         (: The author, etc. of the primary publication. :)
-        let $names := <entry>{$entry/mods:name[@type = 'personal' or @type = 'corporate' or @type = 'family' or not(@type)][(mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator')) or not(mods:role/mods:roleTerm)]}</entry>
+        (: NB: conference? :)
+        let $names := <entry>{$entry/mods:name[@type = ('personal', 'corporate', 'family') or not(@type)][(mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator')) or not(mods:role/mods:roleTerm)]}</entry>
         return
 	        if ($names/string())
 	        then (mods:format-multiple-names($names, 'primary', $global-transliteration)
@@ -2209,7 +2277,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         ,
         let $roleTerms := $entry/mods:name/mods:role/mods:roleTerm[. = ('com', 'compiler', 'Compiler', 'editor', 'Editor', 'edt', 'trl', 'translator', 'Translator', 'annotator', 'Annotator', 'ann')]
         return
-	        (if (not($entry/mods:relatedItem[@type = 'host']) and not($roleTerms)) 
+	        (if (not($entry/mods:relatedItem[@type eq 'host']) and not($roleTerms)) 
 	        then '.'
 	        else ''
 	    ,
@@ -2217,7 +2285,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         for $roleTerm in distinct-values($roleTerms)        
             return
                 (: NB: Can the wrapper be avoided? :)
-                let $names := <entry>{$entry/mods:name[mods:role/mods:roleTerm = $roleTerm]}</entry>
+                let $names := <entry>{$entry/mods:name[mods:role/mods:roleTerm eq $roleTerm]}</entry>
                 return
                     (
                     (: Introduce secondary role with comma. :)
@@ -2229,7 +2297,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
                     mods:format-multiple-names($names, 'secondary', $global-transliteration)
                     (: Terminate secondary role with period. :)
                     ,
-			        if (not($entry/mods:relatedItem[@type = 'host']) and ($roleTerms)) 
+			        if (not($entry/mods:relatedItem[@type eq 'host']) and ($roleTerms)) 
 			        then ''
 			        else '.'
                     )
@@ -2237,13 +2305,13 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         , ' '
         ,
         (: The conference of the primary publication, containing originInfo and part information. :)
-        if ($entry/mods:name[@type = 'conference']) 
+        if ($entry/mods:name[@type eq 'conference']) 
         then mods:get-conference-hitlist($entry)
         (: If not a conference publication, get originInfo and part information for the primary publication. :)
         else mods:get-part-and-origin($entry)    
         ,
         (: The periodical, edited volume or series that the primary publication occurs in. :)
-        (:if ($entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:extent or $entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:detail/mods:number/text()):)
+        (: if ($entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:extent or $entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:detail/mods:number/text()) :)
         if ($entry/mods:relatedItem[@type=('host','series')])
         then <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods:get-related-items($entry, 'hitlist')}</span>
         else 
@@ -2260,5 +2328,5 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         )
     return
         mods:clean-up-punctuation(<span xmlns="http://www.w3.org/1999/xhtml" class="record">{$format}</span>)
-        (:$format:)
+        (: $format :)
 };

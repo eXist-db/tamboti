@@ -1,6 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <code-table>
     <code-table-name>document-type-code</code-table-name>
     <items>
+        <item>
+            <label>Periodical</label>
+            <value>periodical-latin</value>
+            <classifier>stand-alone</classifier>
+            <sort>1</sort>
+        </item>
+        <item>
+            <label>Periodical With Transliteration</label>
+            <value>periodical-transliterated</value>
+            <classifier>stand-alone</classifier>
+            <sort>1</sort>
+        </item>
         <item>
             <label>Edited Volume</label>
             <value>edited-volume-latin</value>
@@ -69,7 +82,7 @@
         </item>
         <item>
             <label>Article in Periodical</label>
-            <value>related-article-in-serial</value>
+            <value>related-article-in-periodical</value>
             <classifier>related-item</classifier>
             <sort>1</sort>
         </item>
@@ -86,7 +99,7 @@
             <sort>1</sort>
         </item>
         <item>
-            <label>Contribution to Edited Volume</label>
+            <label>Contribution to Edited Volume With Transliteration</label>
             <value>related-contribution-to-edited-volume-transliterated</value>
             <classifier>related-item</classifier>
             <sort>1</sort>

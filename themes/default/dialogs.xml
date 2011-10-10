@@ -106,7 +106,7 @@
         <jquery:button label="Remove" function="removeResource"/>
         <jquery:button id="cancel" label="Cancel"/>
         <form id="remove-resource-form" action="operations.xql">
-            <div>Are you sure you wish to remove the record?</div>
+            <div>Are you sure you wish to remove the current record?</div>
             <input id="remove-resource-id" name="resource" type="hidden" value=""/>
         </form>
     </jquery:dialog>

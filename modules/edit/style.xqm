@@ -1,10 +1,9 @@
 xquery version "1.0";
 
 (: 
-        to change from eXist to Tamboti, 
+        to change from eXist to Tamboti "theme", 
         close all eXist-begin and eXist-end, 
         and open all Tamboti-begin and Tamboti-end.
-        Make corresponding change in /db/org/library/apps/mods/search/index.xml.
 :)
 
 module namespace style = "http://exist-db.org/mods-style";

@@ -92,10 +92,13 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
               </extension>
           into $doc/mods:mods
           ,
-          if($host)then (
-              update value doc($stored)/mods:mods/mods:relatedItem/@xlink with $host,
-              update value doc($stored)/mods:mods/mods:relatedItem/@type with "host"
-          )else ()
+          if ($host)
+          then
+            (
+                update value doc($stored)/mods:mods/mods:relatedItem/@xlink:href with $host,
+                update value doc($stored)/mods:mods/mods:relatedItem/@type with "host"
+            )
+          else ()
       )
 };
 
@@ -229,25 +232,40 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
             <!-- Import the correct form body for the tab called. -->
             {$form-body}
             
-            <xf:submit submission="save-submission">
-                <xf:label class="xforms-group-label-centered-general">Save</xf:label>
-            </xf:submit>
-            
-            <!--
-            <div class="debug">
-                <xf:output value="count(instance('save-data')/*)">
-                   <xf:label>Root Element Count: </xf:label>
-                </xf:output>
-                <br/>
-                <xf:output ref="instance('save-results')//message ">
-                   <xf:label>Message: </xf:label>
-                </xf:output>
-                
-                <xf:output ref="instance('save-results')//mods:message ">
-                   <xf:label>MODS Message: </xf:label>
-                </xf:output>
+            <div class="save-buttons">    
+                <xf:submit submission="save-submission">
+                    <xf:label class="xforms-group-label-centered-general">Save</xf:label>
+                </xf:submit>
+             
+                <xf:trigger>
+                    <xf:label class="xforms-group-label-centered-general">Save and Close</xf:label>
+                    <xf:action ev:event="DOMActivate">
+                        <xf:send submission="save-and-close-submission"/>
+                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={replace($target-collection, '/db', '')}" show="replace"/>
+                    </xf:action>
+                </xf:trigger>
+             
+                <xf:trigger>
+                    <xf:label class="xforms-group-label-centered-general">Cancel Editing</xf:label>
+                    <xf:action ev:event="DOMActivate">
+                        <xf:send submission="cancel-submission"/>
+                        <xf:load resource="../../?reload=true" show="replace"/>
+                    </xf:action>
+                 </xf:trigger>
+             
+                <span class="xforms-hint">
+                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                    <div class="xforms-hint-value">
+                        <p>Every time you click one of the tabs, your input is saved. For this reason, there is generally no need to click the &quot;Save&quot; button. </p>
+                        <p>Be aware, however, that you are only logged in for a certain period of time and when your session times out, what you have input cannot be retrieved. 
+                        You can keep your session alive by clicking any tab.</p> 
+                        <p>If you know that you may not be able to finish a record, it is best to click &quot;Save and Close&quot; and return to finish the record later.</p>
+                        <p>When you  click the &quot;Save and Close&quot; button, the record is saved inside the folder you marked before opening the editor or the folder from which you opened it for re-editing.</p>
+                        <p>You can continue editing the record by finding it and clicking the &quot;Edit Record&quot; button inside the record&apos;s detail view.</p>
+                        <p>If you wish to discard what you have input and return to the search function, click &quot;Cancel Editing&quot;.</p>
+                    </div>
+                </span>
             </div>
-            -->
         </div>
 };
 

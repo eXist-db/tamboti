@@ -19,7 +19,7 @@
     <physicalDescription/>
     <targetAudience authority="marctarget">adult</targetAudience>
     <typeOfResource>text</typeOfResource>
-    <genre authority="marcgt">article</genre>
+    <genre>article</genre>
     <subject authority="" xlink:href="" lang="" script="" transliteration="">
         <topic authority=""/>
         <geographic/>
@@ -33,13 +33,16 @@
             <namePart type=""/>
         </name>
     </subject>
-    <classification authority="lcc" displayLabel="" lang=""/>
-    <abstract/>
+    <classification authority="lcc"/>
+    <abstract lang=""/>
     <tableOfContents lang="" script="" xlink:href=""/>
-    <note lang="" type=""/>
+    <note lang="" type="content"/>
     <relatedItem type="host" xlink:href="">
         <part>
             <detail type="volume">
+                <number/>
+            </detail>
+            <detail type="issue">
                 <number/>
             </detail>
             <extent unit="pages">
@@ -51,8 +54,9 @@
             <date encoding="w3cdtf"/>
         </part>
     </relatedItem>
-    <identifier displayLabel="" type="local"/>
-    <location dateLastAccessed="" displayLabel="" note="" access="" usage=""/>
+    <identifier type="doi"/>
+    <location>
+        <url dateLastAccessed=""/>
+    </location>
     <accessCondition/>
-    <note/>
 </mods>

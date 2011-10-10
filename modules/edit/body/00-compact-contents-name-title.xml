@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- insert does not work with name -->
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-d">
+<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-d" e:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
             <div class="join">
@@ -193,8 +193,8 @@
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
-                            <xf:group ref=".[string-length(/mods:mods/mods:extension/*:transliterationOfResource) &gt; 0 and @transliteration and string-length(@transliteration) &lt; 1]" class="margin-plus">
-                                <xf:select1 ref="/mods:mods/mods:extension/*:transliterationOfResource">
+                            <xf:group ref=".[string-length(/mods:mods/mods:extension/e:transliterationOfResource) &gt; 0 and @transliteration and string-length(@transliteration) &lt; 1]" class="margin-plus">
+                                <xf:select1 ref="/mods:mods/mods:extension/e:transliterationOfResource">
                                     <xf:label>Global Transliteration<span class="xforms-help">
                                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
@@ -301,13 +301,13 @@
                             <div class="join">
                                 <span class="legend">Person(s) as Topic</span>
                                 <span class="join-button">
-                                    <xf:trigger ref="/mods:mods/mods:extension[*:scriptTypeOfResource='Latin']">
+                                    <xf:trigger ref="/mods:mods/mods:extension[e:scriptTypeOfResource='Latin']">
                                         <xf:label>+</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:insert nodeset="instance('save-data')/mods:name" at="index('subject-name-person-repeat')" position="before" origin="instance('compact-template')/mods:name[1]"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref="/mods:mods/mods:extension[*:scriptTypeOfResource='not Latin']">
+                                    <xf:trigger ref="/mods:mods/mods:extension[e:scriptTypeOfResource='not Latin']">
                                         <xf:label>+</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:insert nodeset="instance('save-data')/mods:name" at="index('subject-name-person-repeat')" position="before" origin="instance('compact-template')/mods:name[2]"/>
@@ -333,8 +333,8 @@
                                                 </div>
                                             </span>
                                         </div>
-                                        <xf:group ref=".[string-length(/mods:mods/mods:extension/*:transliterationOfResource) &gt; 0 and mods:namePart/@transliteration and string-length(mods:namePart/@transliteration) &lt; 1]" class="margin-plus">
-                                            <xf:select1 ref="/mods:mods/mods:extension/*:transliterationOfResource">
+                                        <xf:group ref=".[string-length(/mods:mods/mods:extension/e:transliterationOfResource) &gt; 0 and mods:namePart/@transliteration and string-length(mods:namePart/@transliteration) &lt; 1]" class="margin-plus">
+                                            <xf:select1 ref="/mods:mods/mods:extension/e:transliterationOfResource">
                                                 <xf:label>Global Transliteration<span class="xforms-help">
                                                         <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                         <div class="xforms-help-value">
@@ -389,13 +389,13 @@
                             <div class="join">
                                 <span class="legend">Institutions(s) as Topic</span>
                                 <span class="join-button">
-                                    <xf:trigger ref="/mods:mods/mods:extension[*:scriptTypeOfResource='Latin']">
+                                    <xf:trigger ref="/mods:mods/mods:extension[e:scriptTypeOfResource='Latin']">
                                         <xf:label>+</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:insert nodeset="instance('save-data')/mods:name" at="index('subject-name-institution-repeat')" position="before" origin="instance('compact-template')/mods:name[1]"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref="/mods:mods/mods:extension[*:scriptTypeOfResource='not Latin']">
+                                    <xf:trigger ref="/mods:mods/mods:extension[e:scriptTypeOfResource='not Latin']">
                                         <xf:label>+</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:insert nodeset="instance('save-data')/mods:name" at="index('subject-name-institution-repeat')" position="before" origin="instance('compact-template')/mods:name[2]"/>
@@ -452,8 +452,8 @@
                                                 </xf:itemset>
                                             </xf:select1>
                                         </xf:group>
-                                        <xf:group ref=".[string-length(/mods:mods/mods:extension/*:transliterationOfResource) &gt; 0 and mods:namePart/@transliteration and string-length(mods:namePart/@transliteration) &lt; 1]" class="margin-plus">
-                                            <xf:select1 ref="/mods:mods/mods:extension/*:transliterationOfResource">
+                                        <xf:group ref=".[string-length(/mods:mods/mods:extension/e:transliterationOfResource) &gt; 0 and mods:namePart/@transliteration and string-length(mods:namePart/@transliteration) &lt; 1]" class="margin-plus">
+                                            <xf:select1 ref="/mods:mods/mods:extension/e:transliterationOfResource">
                                                 <xf:label>Global Transliteration<span class="xforms-help">
                                                         <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                         <div class="xforms-help-value">

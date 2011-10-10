@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="title block-form" tab-id="title">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="title block-form" tab-id="title" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group class="fieldset level-1">
         <div class="join">
             <span class="legend">Title Information</span>
@@ -27,7 +27,7 @@
             </span>
         </div>
         <xf:repeat nodeset="instance('save-data')/mods:titleInfo" id="titleInfo-repeat">
-            <xf:group class="show-hide" ref="                 .[not(@altRepGroup)] |                  .[not(@authority)] |                  .[not(@authorityURI)] |                  .[not(@displayLabel)] |                  .[not(@ID)] |                 .[not(@lang)] |                  .[not(@nameTitleGroup)] |                  .[not(mods:nonSort)] |                  .[not(mods:partName)] |                  .[not(mods:partNumber)] |                  .[not(@script)] |                  .[not(mods:subTitle)] |                  .[not(@supplied)] |                  .[not(mods:title)] |                  .[not(@transliteration)] |                  .[not(@type)] |                  .[not(@usage)] |                  .[not(@valueURI)] |                  .[not(@xml:lang)] |                  .[not(@xlink:href)]                 ">
+            <xf:group class="show-hide" ref=".[not(@altRepGroup)] | .[not(@authority)] | .[not(@authorityURI)] | .[not(@displayLabel)] | .[not(@ID)] | .[not(@lang)] | .[not(@nameTitleGroup)] | .[not(mods:nonSort)] | .[not(mods:partName)] | .[not(mods:partNumber)] | .[not(@script)] | .[not(mods:subTitle)] | .[not(@supplied)] | .[not(mods:title)] | .[not(@transliteration)] | .[not(@type)] | .[not(@usage)] | .[not(@valueURI)] | .[not(@xml:lang)] | .[not(@xlink:href)]                 ">
                 <xf:switch>
                     <xf:case id="titleInfo-add-node-hide">
                         <div class="node-button">

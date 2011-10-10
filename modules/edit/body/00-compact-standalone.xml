@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-a">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-a" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group ref=".[mods:name]">
         <fieldset class="level-1">
             <div class="join">
                 <span class="legend">Names and Roles</span>
                 <span class="join-button">
-                    <xf:trigger ref="./mods:extension[*:scriptTypeOfResource='Latin']">
+                    <xf:trigger ref="./mods:extension[e:scriptTypeOfResource = 'Latin']">
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:name[1]"/>
                         </xf:action>
                     </xf:trigger>
-                    <xf:trigger ref="./mods:extension[*:scriptTypeOfResource='not Latin']">
+                    <xf:trigger ref="./mods:extension[e:scriptTypeOfResource='not Latin']">
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:name[2]"/>
@@ -47,7 +47,7 @@
                             </xf:select1>
                         </xf:group>
                         <xf:group ref=".[mods:namePart/@transliteration]" class="margin-plus">
-                            <xf:select1 ref="/mods:mods/mods:extension/*:transliterationOfResource">
+                            <xf:select1 ref="/mods:mods/mods:extension/e:transliterationOfResource">
                                 <xf:label>Transliteration<span class="xforms-help">
                                         <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">
@@ -150,7 +150,7 @@
                     </xf:select1>
                 </xf:group>
                 <xf:group ref=".[@transliteration]" class="margin-plus">
-                    <xf:select1 ref="/mods:mods/mods:extension/*:transliterationOfResource">
+                    <xf:select1 ref="/mods:mods/mods:extension/e:transliterationOfResource">
                         <xf:label>Transliteration<span class="xforms-help">
                                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
@@ -263,7 +263,7 @@
             </xf:repeat>
         </fieldset>
     </xf:group>
-    <xf:group ref=".[string(mods:extension/e:template) = 'monograph-latin'] | .[string(mods:extension/e:template) = 'monograph-transliterated'] | .[string(mods:extension/e:template) = 'edited-volume-latin'] | .[string(mods:extension/e:template) = 'edited-volume-transliterated']">
+    <xf:group ref=".[string(mods:extension/e:template) = 'monograph-latin'] | .[string(mods:extension/e:template) = 'monograph-transliterated'] | .[string(mods:extension/e:template) = 'edited-volume-latin'] | .[string(mods:extension/e:template) = 'edited-volume-transliterated'] | .[string(mods:extension/e:template) = 'periodical-latin'] | .[string(mods:extension/e:template) = 'periodical-transliterated']">
         <fieldset class="level-1">
             <div class="join">
                 <span class="legend">Origin Information</span>
