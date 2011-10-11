@@ -95,7 +95,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
           if ($host)
           then
             (
-                update value doc($stored)/mods:mods/mods:relatedItem/@xlink:href with $host,
+                update value doc($stored)/mods:mods/mods:relatedItem/@xlink:href with concat('#', $host),
                 update value doc($stored)/mods:mods/mods:relatedItem/@type with "host"
             )
           else ()

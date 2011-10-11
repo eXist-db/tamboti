@@ -122,27 +122,27 @@ declare function mods:clean-up-punctuation($element as node()) as node() {
 :)
 declare function mods:get-language-label($language as item()*) as xs:string* {
         let $languageTerm :=
-            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:value eq $language]/*:label
+            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:value = $language]/*:label
             return
                 if ($languageTerm)
                 then $languageTerm
                 else
-                    let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTwo eq $language]/*:label
+                    let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTwo = $language]/*:label
                     return
                         if ($languageTerm)
                         then $languageTerm
                         else
-                            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTerm eq $language]/*:label
+                            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTerm = $language]/*:label
                             return
                                 if ($languageTerm)
                                 then $languageTerm
                                 else
-                                    let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) eq $language/upper-case(*:label)]/*:label
+                                    let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) = $language/upper-case(*:label)]/*:label
                                     return
                                         if ($languageTerm)
                                         then $languageTerm
                                         else
-                                            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) eq upper-case($language)]/*:label
+                                            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[upper-case(*:label) = upper-case($language)]/*:label
                                             return
                                                 if ($languageTerm)
                                                 then $languageTerm
@@ -487,8 +487,8 @@ return
         if ($start or $end) 
         then 
             if ($start)
-            then ($start, '-')
-            else ('-', $end)
+            then concat($start, '-?')
+            else concat('?-', $end)
         (: if neither $start nor $end. :)
         else $date
     ,
@@ -1756,12 +1756,12 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
             then functx:capitalize-first(functx:camel-case-to-words($type, ' '))
             else 'Related Item'
         )
-    let $xlink := $item/@xlink:href
     let $part := $item/mods:part
+    let $xlink := replace($item/@xlink:href, '^#?(.*)$', '$1')
     let $xlinkRecord :=
         (: Any MODS record in /db/resources is retrieved if there is a @xlink:href/@ID match and the relatedItem has no string value. If there should be duplicated, only the first record is retrieved.:)
         if (($xlink) and (collection($config:mods-root)//mods:mods[@ID eq $xlink]) and (not($titleInfo))) 
-        then collection($config:mods-root)//mods:mods[@ID eq $item/@xlink:href][1]
+        then collection($config:mods-root)//mods:mods[@ID eq $xlink]
         else ()
     let $relatedItem :=
     	if ($xlinkRecord) 
