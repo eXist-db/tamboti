@@ -29,6 +29,11 @@ declare variable $bs:THUMB_SIZE_GRID := 64;
 declare variable $bs:THUMB_SIZE_GALLERY := 128;
 declare variable $bs:THUMB_SIZE_DETAIL := 256;
 
+declare function functx:capitalize-first($arg as xs:string?) as xs:string? {       
+   concat(upper-case(substring($arg,1,1)),
+             substring($arg,2))
+};
+
 declare function functx:replace-first( $arg as xs:string?, $pattern as xs:string, $replacement as xs:string )  as xs:string {       
    replace($arg, concat('(^.*?)', $pattern),
              concat('$1',$replacement))
@@ -96,7 +101,7 @@ declare function bs:detail-view-table($item as element(mods:mods), $currentPos a
                 <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
                 {
                     let $collection := util:collection-name($item)
-                    let $collection-short := functx:replace-first($collection, '/db', '')
+                    let $collection-short := functx:replace-first($collection, '/db/', '')
                     let $clean := clean:cleanup($item)
                     return
                         mods:format-detail-view(string($currentPos), $clean, $collection-short)
@@ -237,7 +242,7 @@ declare function bs:get-icon($size as xs:int, $item as element(mods:mods), $curr
                     return
                         <img title="{$item/mods:typeOfResource/string()}" src="images/{$imgLink}?s={$size}"/>
         else
-            <img title="{$item/mods:typeOfResource/string()}" src="theme/images/{mods:return-type(string($currentPos), $item)}.png"/>
+            <img title="{functx:capitalize-first($item/mods:typeOfResource/string())}" src="theme/images/{mods:return-type(string($currentPos), $item)}.png"/>
 };
 
 declare function bs:view-table($cached as item()*, $stored as item()*, $start as xs:int, 

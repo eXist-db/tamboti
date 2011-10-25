@@ -3,6 +3,9 @@
 
 /*temporary stuff begins*/
 
+#dateIssued-repeat {
+    margin-left:0;
+}
 .label {
 	padding:.2em;
 	}
@@ -269,7 +272,7 @@ fieldset,
     padding-bottom:0;
     padding-left:1em !important;
     padding-right:1em !important;
-    margin-top:1.5em !important;
+    margin-top:2em !important;
     margin-bottom:1.5em !important;
     -moz-border-radius:.75em;
     border-bottom-left-radius:10px 10px;
@@ -306,7 +309,7 @@ select
 }
 
 .compact select {
-	margin-left:1em;
+	1margin-left:1em;
 }
 
 .join { /*rename: label-box*/
@@ -593,7 +596,7 @@ div.xforms-hint-value strong
 .compact .level-2 .margin-plus input,
 .compact .level-1 .margin-plus input
 	{
-    margin-left:1em;
+    1margin-left:1em;
 }
 
 .compact .level-1 .margin-plus .xforms-select1 {

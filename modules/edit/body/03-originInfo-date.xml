@@ -4,7 +4,7 @@
         <div class="join extra-wide">
             <span class="legend">Origin Information: Dates</span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:originInfo]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:insert nodeset="mods:originInfo" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo"/>
@@ -12,7 +12,7 @@
                 </xf:trigger>
             </span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:originInfo]">
                     <xf:label>–</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo" at="index('origininfo-repeat')"/>
@@ -672,7 +672,7 @@
                                     </xf:trigger>
                                 </div>
                                 <div class="node-adds">
-                                    <xf:group appearance="full" ref=".[not(@altRepGroup)] |                                          .[not(mods:copyrightDate)] |                                          .[not(mods:dateCaptured)] |                                          .[not(mods:dateCaptured)] |                                          .[not(mods:dateCaptured)] |                                          .[not(mods:dateModified)] |                                          .[not(mods:dateOther)] |                                          .[not(mods:dateValid)] |                                          .[not(@displayLabel)] |                                          .[not(mods:edition)] |                                          .[not(mods:frequency)] |                                          .[not(mods:issuance)] |                                          .[not(@lang)] |                                          .[not(mods:place)] |                                          .[not(mods:publisher)] |                                          .[not(@script)] |                                          .[not(@transliteration)] |                                          .[not(@xml:lang)]                                         ">
+                                    <xf:group appearance="full" ref=".[not(@altRepGroup)] | .[not(mods:copyrightDate)] | .[not(mods:dateCaptured)] | .[not(mods:dateCaptured)] | .[not(mods:dateCaptured)] | .[not(mods:dateModified)] | .[not(mods:dateOther)] | .[not(mods:dateValid)] | .[not(@displayLabel)] | .[not(mods:edition)] | .[not(mods:frequency)] | .[not(mods:issuance)] | .[not(@lang)] | .[not(mods:place)] | .[not(mods:publisher)] | .[not(@script)] | .[not(@transliteration)] | .[not(@xml:lang)]">
                                         <xf:group appearance="full" ref=".[not(@encoding)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Encoding</xf:label>
@@ -1908,8 +1908,8 @@
                 </xf:repeat>
             </xf:group>
         </xf:repeat>
-        <xf:group appearance="full" ref=".[not(./mods:originInfo)]">
-            <xf:trigger ref=".[not(mods:originInfo)]" class="add-button">
+        <xf:group appearance="full" ref=".[not(mods:originInfo)]">
+            <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Origin Information</xf:label>
                 <xf:action ev:event="DOMActivate">
                     <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:originInfo"/>

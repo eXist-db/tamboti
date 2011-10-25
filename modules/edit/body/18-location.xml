@@ -6,7 +6,7 @@
         <div class="join">
             <span class="legend">Locations</span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:location]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:insert nodeset="mods:location" at="index('location-repeat')" position="before"/>
@@ -14,7 +14,7 @@
                 </xf:trigger>
             </span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:location]">
                     <xf:label>–</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location" at="index('location-repeat')"/>
@@ -323,7 +323,7 @@
                         </xf:textarea>
                     </xf:group>
                     <xf:group appearance="full" ref=".">
-                        <xf:input ref="." class="text_50">
+                        <xf:input ref="." class="text_100">
                             <xf:label>URL</xf:label>
                             <xf:hint>
                                 <p> In URL, record the Uniform Resource Locator (URL) of the networked location of a resource. It is recommended that all URLs used with the Location element be persistent. </p>
@@ -770,11 +770,11 @@
                     <!--holdingExternal ends-->
         </xf:repeat>
             <!--location repeat ends-->
-        <xf:group appearance="full" ref=".[not(./mods:location)]">
-            <xf:trigger ref=".[not(mods:location)]" class="add-button">
+        <xf:group appearance="full" ref=".[not(mods:location)]">
+            <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Location</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:location"/>
+                    <xf:insert nodeset="instance('save-data')/mods:location" origin="instance('new-instance')/mods:location"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

@@ -5,7 +5,7 @@
         <div class="join">
             <span class="legend">Parts</span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:part]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:insert nodeset="mods:part" at="index('part-repeat')" position="before"/>
@@ -13,7 +13,7 @@
                 </xf:trigger>
             </span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:part]">
                     <xf:label>–</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part" at="index('part-repeat')"/>
@@ -212,9 +212,9 @@
                     <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@altRepGroup]">
                 <xf:select1 ref="./@altRepGroup">
-                    <xf:label>Alternate Representation Groups</xf:label>
+                    <xf:label>Alternate Representation Group</xf:label>
                     <xf:hint>
-                        <p>Alternate Representation Groups is used to link alternate representations of the same element content, such as different
+                        <p>Alternate Representation Group is used to link alternate representations of the same element content, such as different
                                     scripts, transliterations, and translations. The same attribute value is applied to each of the element instances to be
                                     linked.</p>
                     </xf:hint>
@@ -579,8 +579,8 @@
                     <!--part/text ends-->
         </xf:repeat>
                 <!--part repeat ends-->
-        <xf:group appearance="full" ref=".[not(./mods:part)]">
-            <xf:trigger ref=".[not(mods:part)]" class="add-button">
+        <xf:group appearance="full" ref=".[not(mods:part)]">
+            <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Part</xf:label>
                 <xf:action ev:event="DOMActivate">
                     <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:part"/>

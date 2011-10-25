@@ -5,7 +5,7 @@
         <div class="join">
             <span class="legend">Physical Description</span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:physicalDescription]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:insert nodeset="mods:physicalDescription" at="index('physicalDescription-repeat')" position="before"/>
@@ -13,7 +13,7 @@
                 </xf:trigger>
             </span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:physicalDescription]">
                     <xf:label>–</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:physicalDescription" at="index('physicalDescription-repeat')"/>
@@ -566,11 +566,11 @@
                     <!--note ends-->
         </xf:repeat>
             <!--physicalDescription repeat ends-->
-        <xf:group appearance="full" ref=".[not(./mods:physicalDescription)]">
-            <xf:trigger ref=".[not(mods:physicalDescription)]" class="add-button">
+        <xf:group appearance="full" ref=".[not(mods:physicalDescription)]">
+            <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Physical Description</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:physicalDescription"/>
+                    <xf:insert nodeset="instance('save-data')/mods:physicalDescription" origin="instance('new-instance')/mods:physicalDescription"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

@@ -10,6 +10,8 @@ import module namespace names="http://exist-db.org/xquery/biblio/names"
 
 declare namespace mods="http://www.loc.gov/mods/v3";
 
+declare option exist:serialize "method=xhtml enforce-xhtml=yes";
+
 declare variable $local:MAX_RESULTS := 1500;
 declare variable $local:MAX_RESULTS_NAMES := 1500;
 declare variable $local:MAX_TERMS := 50;

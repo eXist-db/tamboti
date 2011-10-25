@@ -7,7 +7,7 @@
         <div class="join">
             <span class="legend">Resource Types</span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:typeOfResource]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:insert nodeset="mods:typeOfResource" at="index('type-of-resource-repeat')" position="before"/>
@@ -15,7 +15,7 @@
                 </xf:trigger>
             </span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:typeOfResource]">
                     <xf:label>–</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:typeOfResource" at="index('type-of-resource-repeat')"/>
@@ -119,9 +119,9 @@
             </xf:group>
             <xf:group appearance="full" ref=".[@altRepGroup]" schema_3.4="yes">
                 <xf:select1 ref="./@altRepGroup">
-                    <xf:label>Alternate Representation Groups</xf:label>
+                    <xf:label>Alternate Representation Group</xf:label>
                     <xf:hint>
-                        <p>Alternate Representation Groups is used to link alternate representations of the same element content, such as different scripts, transliterations, and translations. 
+                        <p>Alternate Representation Group is used to link alternate representations of the same element content, such as different scripts, transliterations, and translations. 
                                 The same attribute value is applied to each of the element instances to be linked.</p>
                     </xf:hint>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='altRepGroup-code']/items/item">
@@ -171,11 +171,11 @@
                 <!--typeOfResource input ends-->
         </xf:repeat>
             <!--typeOfResource repeat ends-->
-        <xf:group appearance="full" ref=".[not(./mods:typeOfResource)]">
-            <xf:trigger ref=".[not(mods:typeOfResource)]" class="add-button">
+        <xf:group appearance="full" ref=".[not(mods:typeOfResource)]">
+            <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Resource Type</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:typeOfResource"/>
+                    <xf:insert nodeset="instance('save-data')/mods:typeOfResource" origin="instance('new-instance')/mods:typeOfResource"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

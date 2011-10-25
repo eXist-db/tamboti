@@ -4,7 +4,7 @@
         <div class="join">
             <span class="legend">Names</span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:name]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="before" origin="instance('new-instance')/mods:name"/>
@@ -12,7 +12,7 @@
                 </xf:trigger>
             </span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:name]">
                     <xf:label>–</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:delete nodeset="instance('save-data')/mods:name" at="index('name-repeat')"/>
@@ -381,7 +381,7 @@
                 </xf:group>
                 <xf:group appearance="full schema_3.4">
                     <xf:select1 ref="./@altRepGroup">
-                        <xf:label>Alternate Representation Groups<span class="xforms-help">
+                        <xf:label>Alternate Representation Group<span class="xforms-help">
                                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='altRepGroup']/help"/>
@@ -1436,11 +1436,11 @@
                 </xf:repeat>
             </xf:group>
         </xf:repeat>
-        <xf:group appearance="full" ref=".[not(./mods:name)]">
-            <xf:trigger ref=".[not(mods:name)]" class="add-button">
+        <xf:group appearance="full" ref=".[not(mods:name)]">
+            <xf:trigger class="add-button">
                 <xf:label>Add Missing Name</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:name"/>
+                    <xf:insert nodeset="instance('save-data')/mods:name" origin="instance('new-instance')/mods:name"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

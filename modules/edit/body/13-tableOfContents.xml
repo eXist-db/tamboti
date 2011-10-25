@@ -7,7 +7,7 @@
         <div class="join">
             <span class="legend">Table Of Contents</span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:tableOfContents]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:insert nodeset="mods:tableOfContents" at="index('tableOfContents-repeat')" position="before"/>
@@ -15,7 +15,7 @@
                 </xf:trigger>
             </span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:tableOfContents]">
                     <xf:label>–</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:tableOfContents" at="index('tableOfContents-repeat')"/>
@@ -142,11 +142,11 @@
             <!--tableOfContents input ends-->
         </xf:repeat>
         <!--tableOfContents repeat ends-->
-        <xf:group appearance="full" ref=".[not(./mods:tableOfContents)]">
-            <xf:trigger ref=".[not(mods:tableOfContents)]" class="add-button">
+        <xf:group appearance="full" ref=".[not(mods:tableOfContents)]">
+            <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Table Of Contents</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:tableOfContents"/>
+                    <xf:insert nodeset="instance('save-data')/mods:tableOfContents" origin="instance('new-instance')/mods:tableOfContents"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

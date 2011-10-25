@@ -13,7 +13,7 @@ declare option exist:serialize "method=text media-type=application/javascript";
 : or logout
 :)
 
-if(security:get-user-credential-from-session()[1] ne $security:GUEST_CREDENTIALS[1])then
+if (security:get-user-credential-from-session()[1] ne $security:GUEST_CREDENTIALS[1]) then
     text {
         (
             fn:concat('var sessionTimeout = ', session:get-max-inactive-interval() * 1000, ';'),
@@ -25,9 +25,9 @@ if(security:get-user-credential-from-session()[1] ne $security:GUEST_CREDENTIALS
             var timeoutId = setTimeout(showWarning, sessionWarningTimeout);
             
             function getIndexPath() {
-                if(window.location.toString().indexOf('/search/') > -1){
+                if (window.location.toString().indexOf('/search/') > -1){
                     return 'index.html';
-                } else if(window.location.toString().indexOf('/edit/') > -1) {
+                } else if (window.location.toString().indexOf('/edit/') > -1) {
                     return '../search/index.html';
                 } else {
                     return 'search/index.html';
@@ -38,10 +38,10 @@ if(security:get-user-credential-from-session()[1] ne $security:GUEST_CREDENTIALS
             
                 var beforeWarningTime = new Date().getTime();
                 
-                if(confirm('Your session is about to timeout, do you want to continue using the application? If not, then Clicking \'Cancel\' will log you out!')) {
+                if (confirm('Your session is about to expire. Do you want to continue using Tamboti?' + '\n\n' + 'If you do, click \'OK\'.' + '\n\n' + 'If you do not, then clicking \'Cancel\' will log you out.' + '\n\n' + 'If you postpone replying for five minutes, you will have to log in again.')) {
                     
-                    if(new Date().getTime() - beforeWarningTime >= beforeTimeout) {
-                        alert('You waited too long before confirming, you have been logged out!');
+                    if (new Date().getTime() - beforeWarningTime >= beforeTimeout) {
+                        alert('You have waited too long before confirming your intention to stay logged in to Tamboti, so you have been logged out.' + '\n\n' + 'A Tamboti session lasts 30 minutes.');
                         window.location = getIndexPath() + '?logout=1';
                     } else {
                         var params = { action: 'no-op' };
@@ -49,7 +49,7 @@ if(security:get-user-credential-from-session()[1] ne $security:GUEST_CREDENTIALS
                             resetSessionTimeoutWarning();
                         });
                     }
-                } else{
+                } else {
                     window.location = getIndexPath() + '?logout=1';
                 }
             }
@@ -61,11 +61,11 @@ if(security:get-user-credential-from-session()[1] ne $security:GUEST_CREDENTIALS
             
             //intercept ajax requests and reset the session warning
             $(window).ajaxComplete(function() {
-                if(typeof sessionWarningTimeout != 'undefined') {
+                if (typeof sessionWarningTimeout != 'undefined') {
                     resetSessionTimeoutWarning();
                 }
             });
             "
         )
     }
-else()
+else ()

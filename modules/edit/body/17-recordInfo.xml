@@ -6,6 +6,22 @@
     <xf:group appearance="full" class="fieldset level-1">
         <div class="join">
             <span class="legend">Record Information</span>
+            <span class="join-button">
+                <xf:trigger ref=".[mods:recordInfo]">
+                    <xf:label>+</xf:label>
+                    <xf:action ev:event="DOMActivate">
+                        <xf:insert nodeset="mods:recordInfo" at="index('recordInfo-repeat')" position="before"/>
+                    </xf:action>
+                </xf:trigger>
+            </span>
+            <span class="join-button">
+                <xf:trigger ref=".[mods:recordInfo]">
+                    <xf:label>–</xf:label>
+                    <xf:action ev:event="DOMActivate">
+                        <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:recordInfo" at="index('recordInfo-repeat')"/>
+                    </xf:action>
+                </xf:trigger>
+            </span>
             <span class="xforms-hint">
                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
@@ -507,11 +523,11 @@
                     <!--descriptionStandard ends-->
         </xf:repeat>
             <!--recordInfo repeat ends-->
-        <xf:group appearance="full" ref=".[not(./mods:recordInfo)]">
-            <xf:trigger ref=".[not(mods:recordInfo)]" class="add-button">
+        <xf:group appearance="full" ref=".[not(mods:recordInfo)]">
+            <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Record Information</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:recordInfo"/>
+                    <xf:insert nodeset="instance('save-data')/mods:recordInfo" origin="instance('new-instance')/mods:recordInfo"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

@@ -1232,12 +1232,11 @@
                 </xf:group>
                     <!--relatedItem/part ends-->
             </xf:repeat>
-                <!--title repeat ends-->
-            <xf:group ref=".[not(./mods:relatedItem)]">
-                <xf:trigger ref=".[not(mods:relatedItem)]" class="add-button">
+            <xf:group ref=".[not(mods:relatedItem)]">
+                <xf:trigger class="add-button">
                     <xf:label class="xforms-group-label-centered">Add Missing Related Item</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="instance('save-data')/mods:form" at="index('relatedItem-repeat')" position="before" origin="instance('insert-templates')/mods:relatedItem"/>
+                        <xf:insert nodeset="instance('save-data')/mods:relatedItem" at="index('relatedItem-repeat')" origin="instance('new-instance')/mods:relatedItem"/>
                     </xf:action>
                 </xf:trigger>
             </xf:group>

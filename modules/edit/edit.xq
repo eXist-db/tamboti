@@ -27,9 +27,6 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
        (: TEMP whilst eXist-db permissions remain rwu, once they are rwx - this can be changed to rw :)
        $null := sm:chmod(xs:anyURI($stored), "rwu------"),
        
-       (: TEMP whilst eXist-db permissions remain rwu, once they are rwx - this can be removed :)
-       (: $null := sm:chmod(xs:anyURI($stored), "rwur--r--"), :) 
-       
        (: Get the remaining parameters. :)
        $host := request:get-parameter('host', ()),
        $languageOfResource := request:get-parameter("languageOfResource", ""),
@@ -37,6 +34,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
        $transliterationOfResource := request:get-parameter("transliterationOfResource", ""),
        $languageOfCataloging := request:get-parameter("languageOfCataloging", ""),
        $scriptOfCataloging := request:get-parameter("scriptOfCataloging", ""),
+       (: Determine if script is Latin or not. :)
        $scriptTypeOfResource := doc(concat($config:edit-app-root, "/code-tables/language-3-type-codes.xml"))/code-table/items/item[value = $languageOfResource]/data(scriptClassifier),
        $scriptTypeOfCataloging := doc(concat($config:edit-app-root, "/code-tables/language-3-type-codes.xml"))/code-table/items/item[value = $languageOfCataloging]/data(scriptClassifier),
        
@@ -59,7 +57,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
                   </mods:scriptTerm>
               </mods:language>
           return
-            update insert $language-insert into $doc/mods:mods
+          update insert $language-insert into $doc/mods:mods
           ,
           (: Save creation date and language and script of cataloguing :)
           let $recordInfo-insert:=
@@ -79,7 +77,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
                   </mods:languageOfCataloging>
               </mods:recordInfo>            
           return
-            update insert $recordInfo-insert into $doc/mods:mods
+          update insert $recordInfo-insert into $doc/mods:mods
           ,
           (: Save name of user collection, name of template used, script type and transliteration scheme used into mods:extension. :)
           update insert
@@ -151,7 +149,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
 
     (: Get the part of the form that belongs to the tab called. :)
     let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id = $instance-id],
-    (: Get the relevant information to display on the top line, starting "Editing record". :)
+    (: Get the relevant information to display on the top line, starting with "Editing record". :)
     $type-label := doc($type-data)/code-table/items/item[value = $type-request]/label,
     $type-hint := doc($type-data)/code-table/items/item[value = $type-request]/hint,
     (: Display the label attached to the tab to the user :)
@@ -165,29 +163,29 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
         <div class="content">
             <span class="info-line">
             {
-                if($type-request)then(
+                if ($type-request)
+                then (
                     'Editing record of type ', 
                     <strong>{$type-label}</strong>,
-                    
-                    if ($type-hint) then
+                    if ($type-hint) 
+                    then
                         <span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">{$type-hint}</div>
                         </span>
                     else ()
-                ) else
-                    'Editing record'
+                ) else 'Editing record'
                 ,
                 let $publication-title := concat(doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) = 0][1]/mods:nonSort, ' ', doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) = 0][1]/mods:title) return
-                    if ($publication-title != ' ') then(
-                        ' with the title ', <strong>{$publication-title}</strong>
-                    ) else ()
+                    if ($publication-title != ' ') 
+                    then (' with the title ', <strong>{$publication-title}</strong>) 
+                    else ()
                 }, on the <strong>{$bottom-tab-label}</strong> tab, to be saved in <strong> {
-                    let $target-collection-display := replace(replace($target-collection, '/db/resources/users/', ''), '/db/resources/commons/', '') return
-                        if($target-collection-display eq security:get-user-credential-from-session()[1])then
-                            'resources/Home'
-                        else
-                            fn:concat('resources/', $target-collection-display)
+                    let $target-collection-display := replace(replace($target-collection, '/db/resources/users/', ''), '/db/resources/commons/', '') 
+                    return
+                        if ($target-collection-display eq security:get-user-credential-from-session()[1])
+                        then 'resources/Home'
+                        else concat('resources/', $target-collection-display)
                 }</strong>.
             </span>
             
@@ -220,9 +218,9 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     <div class="xforms-hint-value">
                         <p>Every time you click one of the tabs, your input is saved. For this reason, there is generally no need to click the &quot;Save&quot; button. </p>
                         <p>Be aware, however, that you are only logged in for a certain period of time and when your session times out, what you have input cannot be retrieved. 
-                        You can keep your session alive by clicking any tab.</p> 
+                        You can keep your session alive by clicking any tab. When your session is about to expire, you are prompted to keep it alive.</p> 
                         <p>If you know that you may not be able to finish a record, it is best to click &quot;Save and Close&quot; and return to finish the record later.</p>
-                        <p>When you  click the &quot;Save and Close&quot; button, the record is saved inside the folder you marked before opening the editor or the folder from which you opened it for re-editing.</p>
+                        <p>When you click the &quot;Save and Close&quot; button, the record is saved inside the folder you marked before opening the editor or the folder from which you opened it for re-editing.</p>
                         <p>You can continue editing the record by finding it and clicking the &quot;Edit Record&quot; button inside the record&apos;s detail view.</p>
                         <p>If you wish to discard what you have input and return to the search function, click &quot;Cancel Editing&quot;.</p>
                     </div>
@@ -258,9 +256,9 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     <div class="xforms-hint-value">
                         <p>Every time you click one of the tabs, your input is saved. For this reason, there is generally no need to click the &quot;Save&quot; button. </p>
                         <p>Be aware, however, that you are only logged in for a certain period of time and when your session times out, what you have input cannot be retrieved. 
-                        You can keep your session alive by clicking any tab.</p> 
+                        You can keep your session alive by clicking any tab. When your session is about to expire, you are prompted to keep it alive.</p> 
                         <p>If you know that you may not be able to finish a record, it is best to click &quot;Save and Close&quot; and return to finish the record later.</p>
-                        <p>When you  click the &quot;Save and Close&quot; button, the record is saved inside the folder you marked before opening the editor or the folder from which you opened it for re-editing.</p>
+                        <p>When you click the &quot;Save and Close&quot; button, the record is saved inside the folder you marked before opening the editor or the folder from which you opened it for re-editing.</p>
                         <p>You can continue editing the record by finding it and clicking the &quot;Edit Record&quot; button inside the record&apos;s detail view.</p>
                         <p>If you wish to discard what you have input and return to the search function, click &quot;Cancel Editing&quot;.</p>
                     </div>
@@ -290,8 +288,6 @@ declare function local:get-instance-id($tab-id as xs:string, $type-request as xs
 				    else 'compact-b-xlink'
 };
 
-let $title := 'Tamboti MODS Editor'
-
 (: If a document type is specified, then we will need to use that instance as the template. :)
 let $record-id := request:get-parameter('id', '')
 let $record-data := concat($config:mods-temp-collection, "/", $record-id,'.xml')
@@ -313,13 +309,12 @@ let $type-data := concat($config:edit-app-root, '/code-tables/document-type-code
 (: If $sort is 'a', it is a compact form and the Basic Input Forms should be shown. :)
 let $type-sort := doc($type-data)/code-table/items/item[value = $type-request]/sort
 
-(: Get the tab-id parameter. If no tab is specified, default to the compact-a tab in the case of a template to be used with Basic Input Forms;
-otherwise default to title. :)
+(: Get the default tab-id. If no tab is specified, default to the compact-a tab in the case of a template to be used with Basic Input Forms;
+otherwise default to Title Information. :)
 let $default-tab-id :=
-    if ($type-sort = 1 or not($type-request))then
-        'compact-a'
-    else
-        'title'
+    if ($type-sort = 1 or not($type-request))
+    then 'compact-a'
+    else 'title'
         
 let $tab-id := request:get-parameter('tab-id', $default-tab-id)
 

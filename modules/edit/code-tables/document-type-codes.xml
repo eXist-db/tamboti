@@ -3,6 +3,10 @@
     <code-table-name>document-type-code</code-table-name>
     <items>
         <item>
+            <label>(none selected)</label>
+            <value/>
+        </item>
+        <item>
             <label>Periodical</label>
             <value>periodical-latin</value>
             <classifier>stand-alone</classifier>
@@ -200,6 +204,12 @@
             <value>new-instance</value>
             <classifier>stand-alone</classifier>
             <sort>2</sort>
+        </item>
+        <item>
+            <label>MADS record</label>
+            <value>mads</value>
+            <classifier>stand-alone</classifier>
+            <sort>3</sort>
         </item>
     </items>
 </code-table>

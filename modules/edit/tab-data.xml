@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <tabs>
     <tab>
-        <category>Basic Input Forms</category>
+        <top-tab-label>Basic Input Forms</top-tab-label>
         <label>Main Publication</label>
         <tab-id>compact-a</tab-id>
-        <show-level>1</show-level>
+        <top-tab-number>1</top-tab-number>
         <monograph-latin>Monograph</monograph-latin>
         <monograph-transliterated>Monograph</monograph-transliterated>
         <edited-volume-latin>Edited Volume</edited-volume-latin>
@@ -24,10 +23,10 @@
         <path>language</path>
     </tab>
     <tab>
-        <category>Basic Input Forms</category>
+        <top-tab-label>Basic Input Forms</top-tab-label>
         <label>Container Publication</label>
         <tab-id>compact-b</tab-id>
-        <show-level>1</show-level>
+        <top-tab-number>1</top-tab-number>
         <monograph-latin>Monograph Series</monograph-latin>
         <monograph-transliterated>Monograph Series</monograph-transliterated>
         <edited-volume-latin>Book Series Containing Edited Volume</edited-volume-latin>
@@ -42,10 +41,10 @@
         <path>language</path>
     </tab>
     <tab>
-        <category>Basic Input Forms</category>
+        <top-tab-label>Basic Input Forms</top-tab-label>
         <label>Contents of Main Publication</label>
         <tab-id>compact-c</tab-id>
-        <show-level>1</show-level>
+        <top-tab-number>1</top-tab-number>
         <monograph-latin>Contents of Monograph</monograph-latin>
         <monograph-transliterated>Contents of Monograph</monograph-transliterated>
         <edited-volume-latin>Contents of Edited Volume</edited-volume-latin>
@@ -61,150 +60,157 @@
         <path>abstract</path>
     </tab>
     <tab>
-        <category>Citation Forms</category>
+        <top-tab-label>Citation Forms</top-tab-label>
         <label>Title Information</label>
         <tab-id>title</tab-id>
         <path>titleInfo</path>
-        <show-level>2</show-level>
+        <top-tab-number>2</top-tab-number>
     </tab>
     <tab>
-        <category>Citation Forms</category>
+        <top-tab-label>Citation Forms</top-tab-label>
         <label>Name Information</label>
         <tab-id>name</tab-id>
-        <show-level>2</show-level>
+        <top-tab-number>2</top-tab-number>
         <path>name</path>
     </tab>
     <tab>
-        <category>Citation Forms</category>
+        <top-tab-label>Citation Forms</top-tab-label>
         <label>Origin Information</label>
         <tab-id>origin</tab-id>
-        <show-level>2</show-level>
+        <top-tab-number>2</top-tab-number>
         <path>originInfo</path>
     </tab>
     <tab>
-        <category>Citation Forms</category>
+        <top-tab-label>Citation Forms</top-tab-label>
         <label>Origin Information: Dates</label>
         <tab-id>origin-date</tab-id>
-        <show-level>2</show-level>
+        <top-tab-number>2</top-tab-number>
         <path>originInfo</path>
     </tab>
     <tab>
-        <category>Citation Forms</category>
+        <top-tab-label>Citation Forms</top-tab-label>
         <label>Parts</label>
         <tab-id>part</tab-id>
-        <show-level>2</show-level>
+        <top-tab-number>2</top-tab-number>
         <path>part</path>
     </tab>
     <tab>
-        <category>Citation Forms</category>
+        <top-tab-label>Citation Forms</top-tab-label>
         <label>Physical Description</label>
         <tab-id>physical-description</tab-id>
-        <show-level>2</show-level>
+        <top-tab-number>2</top-tab-number>
         <path>physicalDescription</path>
     </tab>
     <tab>
-        <category>Content Description Forms</category>
+        <top-tab-label>Content Description Forms</top-tab-label>
         <label>Subjects</label>
         <tab-id>subject</tab-id>
-        <show-level>3</show-level>
+        <top-tab-number>3</top-tab-number>
         <path>subject</path>
     </tab>
     <tab>
-        <category>Content Description Forms</category>
+        <top-tab-label>Content Description Forms</top-tab-label>
         <label>Abstracts</label>
         <tab-id>abstract</tab-id>
-        <show-level>3</show-level>
+        <top-tab-number>3</top-tab-number>
         <path>abstract</path>
     </tab>
     <tab>
-        <category>Content Description Forms</category>
+        <top-tab-label>Content Description Forms</top-tab-label>
         <label>TOCs</label>
         <tab-id>table-of-contents</tab-id>
-        <show-level>3</show-level>
+        <top-tab-number>3</top-tab-number>
         <path>tableOfContents</path>
     </tab>
     <tab>
-        <category>Content Description Forms</category>
+        <top-tab-label>Content Description Forms</top-tab-label>
         <label>Target Audiences</label>
         <tab-id>target-audience</tab-id>
-        <show-level>3</show-level>
+        <top-tab-number>3</top-tab-number>
         <path>targetAudience</path>
     </tab>
     <tab>
-        <category>Content Description Forms</category>
+        <top-tab-label>Content Description Forms</top-tab-label>
         <label>Resource Languages</label>
         <tab-id>language</tab-id>
-        <show-level>3</show-level>
+        <top-tab-number>3</top-tab-number>
         <path>language</path>
     </tab>
     <tab>
-        <category>Content Description Forms</category>
+        <top-tab-label>Content Description Forms</top-tab-label>
         <label>Resource Types</label>
         <tab-id>type</tab-id>
-        <show-level>3</show-level>
+        <top-tab-number>3</top-tab-number>
         <path>typeOfResource</path>
     </tab>
     <tab>
-        <category>Content Description Forms</category>
+        <top-tab-label>Content Description Forms</top-tab-label>
         <label>Genres</label>
         <tab-id>genre</tab-id>
-        <show-level>3</show-level>
+        <top-tab-number>3</top-tab-number>
         <path>genre</path>
     </tab>
     <tab>
-        <category>Content Description Forms</category>
+        <top-tab-label>Content Description Forms</top-tab-label>
         <label>Classifications</label>
         <tab-id>classification</tab-id>
-        <show-level>3</show-level>
+        <top-tab-number>3</top-tab-number>
         <path>classification</path>
     </tab>
     <tab>
-        <category>Remaining Forms</category>
+        <top-tab-label>Remaining Forms</top-tab-label>
         <label>Notes</label>
         <tab-id>note</tab-id>
-        <show-level>4</show-level>
+        <top-tab-number>4</top-tab-number>
         <path>note</path>
     </tab>
     <tab>
-        <category>Remaining Forms</category>
+        <top-tab-label>Remaining Forms</top-tab-label>
         <label>Related Items</label>
         <tab-id>related</tab-id>
-        <show-level>4</show-level>
+        <top-tab-number>4</top-tab-number>
         <path>relatedItem</path>
     </tab>
     <tab>
-        <category>Remaining Forms</category>
+        <top-tab-label>Remaining Forms</top-tab-label>
         <label>Identifiers</label>
         <tab-id>identifier</tab-id>
-        <show-level>4</show-level>
+        <top-tab-number>4</top-tab-number>
         <path>identifier</path>
     </tab>
     <tab>
-        <category>Remaining Forms</category>
+        <top-tab-label>Remaining Forms</top-tab-label>
         <label>Record Information</label>
         <tab-id>record-info</tab-id>
-        <show-level>4</show-level>
+        <top-tab-number>4</top-tab-number>
         <path>recordInfo</path>
     </tab>
     <tab>
-        <category>Remaining Forms</category>
+        <top-tab-label>Remaining Forms</top-tab-label>
         <label>Locations</label>
         <tab-id>location</tab-id>
-        <show-level>4</show-level>
+        <top-tab-number>4</top-tab-number>
         <path>location</path>
     </tab>
     <tab>
-        <category>Remaining Forms</category>
+        <top-tab-label>Remaining Forms</top-tab-label>
         <label>Access Conditions</label>
         <tab-id>access-condition</tab-id>
-        <show-level>4</show-level>
+        <top-tab-number>4</top-tab-number>
         <path>accessCondition</path>
     </tab>
     <tab>
-        <category>Remaining Forms</category>
+        <top-tab-label>Remaining Forms</top-tab-label>
         <label>Extension</label>
         <tab-id>extension</tab-id>
-        <show-level>4</show-level>
+        <top-tab-number>4</top-tab-number>
         <path>extension</path>
+    </tab>
+    <tab>
+        <top-tab-label>MADS</top-tab-label>
+        <label>MADS</label>
+        <tab-id>mads</tab-id>
+        <top-tab-number>4</top-tab-number>
+        <path>mads</path>
     </tab>
 </tabs>

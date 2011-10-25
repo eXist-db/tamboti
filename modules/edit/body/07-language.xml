@@ -9,7 +9,7 @@
         <div class="join wide">
             <span class="legend">Resource Languages</span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:language]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:insert nodeset="mods:language" at="index('language-repeat')" position="before"/>
@@ -17,7 +17,7 @@
                 </xf:trigger>
             </span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:language]">
                     <xf:label>–</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:language" at="index('language-repeat')"/>
@@ -204,7 +204,7 @@
                     <!--Cluster: hide-->
             <xf:group appearance="full" ref=".[@altRepGroup]">
                 <xf:select1 ref="./@altRepGroup" selection="open">
-                    <xf:label>altRepGroup</xf:label>
+                    <xf:label>Alternate Representation Group</xf:label>
                     <xf:hint>Hint</xf:hint>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='nameTitleGroup-code']/items/item">
                         <xf:label ref="label"/>
@@ -576,11 +576,11 @@
                     <!--scriptTerm ends-->
         </xf:repeat>
             <!--language repeat ends-->
-        <xf:group appearance="full" ref=".[not(./mods:language)]">
-            <xf:trigger ref=".[not(mods:language)]" class="add-button">
+        <xf:group appearance="full" ref=".[not(mods:language)]">
+            <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Resource Language</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:language"/>
+                    <xf:insert nodeset="instance('save-data')/mods:language" origin="instance('new-instance')/mods:language"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

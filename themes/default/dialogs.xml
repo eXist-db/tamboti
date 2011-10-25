@@ -102,7 +102,7 @@
     <div id="form-add-user-to-share"/>
     <div id="form-add-project-to-share"/>
     <!-- end collection owner -->
-    <jquery:dialog id="remove-resource-dialog" modal="true" title="Remove Folder" width="450">
+    <jquery:dialog id="remove-resource-dialog" modal="true" title="Remove Record" width="450">
         <jquery:button label="Remove" function="removeResource"/>
         <jquery:button id="cancel" label="Cancel"/>
         <form id="remove-resource-form" action="operations.xql">
@@ -123,12 +123,13 @@
             <input id="move-resource-id" name="resource" type="hidden" value=""/>
         </form>
     </jquery:dialog>
-    <!-- Dialogs are created search.xql, biblio:process-templates(). -->
+    <!-- Dialog is created in search.xql, biblio:process-templates(). -->
     <jquery:dialog id="new-resource-dialog" modal="true" title="Create Stand-Alone Record" trigger="#collection-create-resource" width="550">
         <jquery:button id="create" label="Create" function="newResource"/>
         <jquery:button id="cancel" label="Cancel"/>
         <div id="resource-types" class="stand-alone"/>
     </jquery:dialog>
+    <!-- Dialog is created in search.xql, biblio:process-templates(). -->
     <jquery:dialog id="add-related-dialog" modal="true" title="Create Related Record" width="550">
         <jquery:button id="create" label="Create" function="newRelatedResource"/>
         <jquery:button id="cancel" label="Cancel"/>

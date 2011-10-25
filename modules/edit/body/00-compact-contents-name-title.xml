@@ -41,8 +41,8 @@
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:topic" id="topic-repeat">
-                            <xf:group ref="." class="hide-label margin-plus">
-                                <xf:input ref="." class="text_100">
+                            <xf:group ref="." class="hide-label margin-plus text_100">
+                                <xf:input ref=".">
                                     <xf:label>Topic</xf:label>
                                 </xf:input>
                             </xf:group>
@@ -69,8 +69,8 @@
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:geographic" id="geographic-repeat">
-                            <xf:group ref="." class="hide-label margin-plus">
-                                <xf:input ref="." class="text_100">
+                            <xf:group ref="." class="hide-label margin-plus text_100">
+                                <xf:input ref=".">
                                     <xf:label>Geographic</xf:label>
                                 </xf:input>
                             </xf:group>
@@ -127,8 +127,8 @@
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
-                            <xf:group ref="." class="hide-label margin-plus">
-                                <xf:input ref="." class="text_50">
+                            <xf:group ref="." class="hide-label margin-plus text_50">
+                                <xf:input ref=".">
                                     <xf:label>Date</xf:label>
                                 </xf:input>
                             </xf:group>
@@ -256,7 +256,8 @@
                             <xf:group>
                                 <xf:input ref="./mods:nonSort" class="text_10 margin-plus">
                                     <xf:label>
-                                        <xf:group ref=".[string-length(../@type) = 0]">Non Sort</xf:group>
+                                        <xf:group ref=".[string-length(../@type) = 0]">Non
+                                            Sort</xf:group>
                                         <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Non Sort</xf:group>
                                         <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non Sort</xf:group>
                                     </xf:label>
@@ -364,7 +365,7 @@
                                             </xf:select1>
                                         </xf:group>
                                         <xf:repeat nodeset="./mods:namePart" id="subject-namePart-person-repeat">
-                                            <xf:group class="margin-plus">
+                                            <xf:group class="margin-plus text_100">
                                                 <xf:select1 ref="./@type">
                                                     <xf:label>
                                                         <xf:group ref="../.[@script='latn']">Transliterated<span class="xforms-hint-icon opaque"/>
@@ -376,7 +377,7 @@
                                                         <xf:value ref="value"/>
                                                     </xf:itemset>
                                                 </xf:select1>
-                                                <xf:input ref="." class="text_100">
+                                                <xf:input ref=".">
                                                     <xf:label/>
                                                 </xf:input>
                                             </xf:group>
@@ -483,8 +484,8 @@
                                             </xf:select1>
                                         </xf:group>
                                         <xf:repeat nodeset="./mods:namePart" id="subject-namePart-person-repeat">
-                                            <xf:group class="margin-plus">
-                                                <xf:input ref="." class="text_100">
+                                            <xf:group class="margin-plus text_100">
+                                                <xf:input ref=".">
                                                     <xf:label>
                                                         <xf:group ref=".[@transliteration]">Transliterated</xf:group>
                                                         <xf:group ref=".[@script]"/>
@@ -524,7 +525,7 @@
             </div>
             <xf:repeat nodeset="./mods:note" id="note-repeat">
                 <xf:group class="margin-plus">
-                    <xf:select1 ref="./@type" selection="open" class="margin-plus">
+                    <xf:select1 ref="./@type" selection="open">
                         <xf:label>Type<span class="xforms-hint-icon opaque"/>
                         </xf:label>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='note-type-code']/items/item">
@@ -533,8 +534,8 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                <xf:group class="hide-label margin-plus">
-                    <xf:textarea ref="." class="textarea">
+                <xf:group class="hide-label margin-plus textarea">
+                    <xf:textarea ref=".">
                         <xf:label>Note</xf:label>
                     </xf:textarea>
                 </xf:group>
@@ -566,8 +567,8 @@
                 </span>
             </div>
             <xf:repeat nodeset="./mods:abstract" id="abstract-repeat">
-                <xf:group>
-                    <xf:textarea ref="." class="textarea hide-label margin-plus">
+                <xf:group class="textarea hide-label margin-plus">
+                    <xf:textarea ref=".">
                         <xf:label>Abstract</xf:label>
                     </xf:textarea>
                 </xf:group>

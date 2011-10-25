@@ -4,44 +4,61 @@
         <nonSort/>
         <title/>
         <subTitle/>
-        <partNumber/>
-        <partName/>
     </titleInfo>
     <titleInfo script="latn" transliteration="" type="translated">
         <nonSort/>
         <title/>
         <subTitle/>
-        <partNumber/>
-        <partName/>
     </titleInfo>
     <titleInfo lang="eng" script="latn" type="translated">
         <nonSort/>
         <title/>
         <subTitle/>
-        <partNumber/>
-        <partName/>
     </titleInfo>
-    <name type="personal" xlink:href="">
-        <namePart type="given"/>
-        <namePart type="family"/>
-        <namePart type="given" script="latn" transliteration=""/>
-        <namePart type="family" script="latn" transliteration=""/>
+    <name type="corporate" xlink:href="">
+        <namePart type=""/>
+        <namePart type=""/>
+        <namePart type="" script="latn" transliteration=""/>
+        <namePart type="" script="latn" transliteration=""/>
         <role>
-            <roleTerm type="code" authority="marcrelator">aut</roleTerm>
+            <roleTerm type="code" authority="marcrelator">edt</roleTerm>
         </role>
     </name>
-    <originInfo/>
+    <originInfo script="latn">
+        <place>
+            <placeTerm type="text"/>
+            <placeTerm type="text" script="latn" transliteration=""/>
+        </place>
+        <publisher/>
+        <publisher script="latn" transliteration=""/>
+        <dateIssued encoding="w3cdtf" point="start"/>
+        <dateIssued encoding="w3cdtf" point="end"/>
+        <issuance>continuing</issuance>
+        <frequency/>
+    </originInfo>
     <part/>
-    <physicalDescription/>
+    <physicalDescription>
+        <form authority="marcform">print</form>
+        <extent/>
+    </physicalDescription>
     <targetAudience authority="marctarget">adult</targetAudience>
     <typeOfResource>text</typeOfResource>
-    <genre authority="marcgt">article</genre>
-    <genre authority="marcgt">review</genre>
+    <genre type="code" authority="marcgt">periodical</genre>
     <subject>
         <topic/>
         <geographic/>
         <temporal encoding="w3cdtf" point=""/>
         <titleInfo>
+            <nonSort/>
+            <title/>
+            <subTitle/>
+        </titleInfo>
+        <titleInfo script="latn" transliteration="" type="translated">
+            <nonSort/>
+            <title/>
+            <subTitle/>
+        </titleInfo>
+        <titleInfo lang="" script="latn" type="translated">
             <nonSort/>
             <title/>
             <subTitle/>
@@ -58,8 +75,8 @@
     <classification authority="lcc"/>
     <abstract lang=""/>
     <tableOfContents lang="" script="" xlink:href=""/>
-    <note lang="" type=""/>
-    <relatedItem type="host" xlink:href="">
+    <note lang="" type="content"/>
+    <relatedItem type="preceeding" xlink:href="">
         <titleInfo>
             <nonSort/>
             <title/>
@@ -78,36 +95,31 @@
         <name type="corporate" xlink:href="">
             <namePart type=""/>
             <namePart type=""/>
-            <namePart script="latn" transliteration=""/>
-            <namePart script="latn" transliteration=""/>
+            <namePart type="" script="latn" transliteration=""/>
+            <namePart type="" script="latn" transliteration=""/>
             <role>
                 <roleTerm type="code" authority="marcrelator">edt</roleTerm>
             </role>
         </name>
-        <originInfo>
+        <originInfo script="latn">
             <place>
                 <placeTerm type="text"/>
                 <placeTerm type="text" script="latn" transliteration=""/>
             </place>
-            <dateIssued encoding="w3cdtf"/>
             <publisher/>
             <publisher script="latn" transliteration=""/>
-            <edition/>
-            <edition script="latn" transliteration=""/>
             <issuance>continuing</issuance>
         </originInfo>
         <genre type="code" authority="marcgt">periodical</genre>
         <identifier type="issn"/>
         <identifier type="doi"/>
-        <location>
-            <url dateLastAccessed=""/>
-        </location>
         <part>
             <detail type="volume">
                 <number/>
             </detail>
             <detail type="issue">
                 <number/>
+                <caption>no.</caption>
             </detail>
             <extent unit="pages">
                 <start/>
@@ -118,78 +130,61 @@
             <date encoding="w3cdtf"/>
         </part>
     </relatedItem>
-    <relatedItem type="references" xlink:href="">
+    <relatedItem type="succeeding" xlink:href="">
         <titleInfo>
             <nonSort/>
             <title/>
             <subTitle/>
-            <partNumber/>
-            <partName/>
         </titleInfo>
         <titleInfo script="latn" transliteration="" type="translated">
             <nonSort/>
             <title/>
             <subTitle/>
-            <partNumber/>
-            <partName/>
         </titleInfo>
         <titleInfo lang="eng" script="latn" type="translated">
             <nonSort/>
             <title/>
             <subTitle/>
-            <partNumber/>
-            <partName/>
         </titleInfo>
-        <name type="personal" xlink:href="">
-            <namePart type="given"/>
-            <namePart type="family"/>
-            <namePart type="given" script="latn" transliteration=""/>
-            <namePart type="family" script="latn" transliteration=""/>
+        <name type="corporate" xlink:href="">
+            <namePart type=""/>
+            <namePart type=""/>
+            <namePart type="" script="latn" transliteration=""/>
+            <namePart type="" script="latn" transliteration=""/>
             <role>
-                <roleTerm type="code" authority="marcrelator">aut</roleTerm>
+                <roleTerm type="code" authority="marcrelator">edt</roleTerm>
             </role>
         </name>
-        <originInfo>
+        <originInfo script="latn">
             <place>
                 <placeTerm type="text"/>
                 <placeTerm type="text" script="latn" transliteration=""/>
             </place>
-            <dateIssued encoding="w3cdtf"/>
-            <copyrightDate encoding="w3cdtf"/>
             <publisher/>
             <publisher script="latn" transliteration=""/>
-            <issuance>monographic</issuance>
+            <issuance>continuing</issuance>
         </originInfo>
-        <part/>
-        <physicalDescription>
-            <extent unit="pages"/>
-        </physicalDescription>
-        <targetAudience authority="marctarget">adult</targetAudience>
-        <typeOfResource>text</typeOfResource>
-        <genre type="code" authority="marcgt">book</genre>
-        <subject>
-            <topic/>
-            <geographic/>
-            <temporal encoding="w3cdtf" point=""/>
-            <titleInfo>
-                <nonSort/>
-                <title/>
-                <subTitle/>
-            </titleInfo>
-            <name type="personal" xlink:href="">
-                <namePart type="given"/>
-                <namePart type="family"/>
-            </name>
-            <name type="corporate" xlink:href="">
-                <namePart/>
-                <namePart/>
-            </name>
-        </subject>
-        <classification authority="lcc"/>
-        <abstract lang="eng"/>
-        <tableOfContents lang="" script="" xlink:href=""/>
-        <note lang="" type=""/>
+        <genre type="code" authority="marcgt">periodical</genre>
+        <identifier type="issn"/>
+        <identifier type="doi"/>
+        <part>
+            <detail type="volume">
+                <number/>
+            </detail>
+            <detail type="issue">
+                <number/>
+                <caption>no.</caption>
+            </detail>
+            <extent unit="pages">
+                <start/>
+                <end/>
+                <total/>
+                <list/>
+            </extent>
+            <date encoding="w3cdtf"/>
+        </part>
     </relatedItem>
+    <identifier type="issn"/>
     <identifier type="doi"/>
     <location>
         <url dateLastAccessed=""/>

@@ -11,9 +11,25 @@
 #5DB0E6 7 theme blue
 color scheme ends*/
 
-/*temporary begins*/
-.even {color:red;}
-/*temporary ends*/
+/*new or temporary stuff begins*/
+#move-resource-dialog,
+#resource-move-destinations,
+#remove-resource-form
+    {
+    margin-top:1em;
+    }
+
+#new-resource-form {
+    margin-top:1.5em;
+    }
+    
+#add-field {
+    margin-right:2.2em;
+}
+#new-resource-form li input {
+    margin-right:1em;
+}
+/*new or temporary stuff ends*/
 
 p, 
 td 
@@ -946,6 +962,11 @@ span.readable .dynatree-title {
 }
 
 /* collection sharing dialog ends*/
+
+#personal-list button {
+    padding:2px 4px 2px 4px;
+    margin-right:4px;
+}
 
 #login-form {
     width:30em;

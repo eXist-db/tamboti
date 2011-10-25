@@ -94,8 +94,8 @@
             <div id="query-history-content"/>
         </jquery:tab>
         <jquery:tab id="personal-list" label="My List">
+            <p>You have <span id="personal-list-size"/> in your list.</p>
             <form class="search-form" action="?" name="lists" method="POST">
-                <p>You have <span id="personal-list-size">0</span> items in your list.</p>
                 <p>
                     <input type="hidden" name="query-tabs" value="personal-list"/>
                     <button class="button" name="mylist" type="submit" value="clear">Clear</button>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--node insertions: OK, except xml:lang and xlink:href--><!--missing element insertion: OK.--><!--hints moved to code-table: OK--><!--saving of all nodes: OK--><!--schema instatiated: n/a--><!--schema notations added: OK-->
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="title block-form" tab-id="title" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group class="fieldset level-1">
         <div class="join">
@@ -10,7 +11,7 @@
                 </div>
             </span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:titleInfo]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:insert nodeset="instance('save-data')/mods:titleInfo" at="index('titleInfo-repeat')" position="before" origin="instance('new-instance')/mods:titleInfo"/>
@@ -18,7 +19,7 @@
                 </xf:trigger>
             </span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:titleInfo]">
                     <xf:label>–</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:delete nodeset="instance('save-data')/mods:titleInfo" at="index('titleInfo-repeat')"/>
@@ -49,7 +50,7 @@
                                     <!-- A -->
                                 <xf:group ref=".[not(@altRepGroup)]">
                                     <xf:trigger>
-                                        <xf:label>Add altRepGroup</xf:label>
+                                        <xf:label>Add Alternate Representation Group</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
                                             <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@altRepGroup"/>
@@ -534,11 +535,11 @@
                 </xf:textarea>
             </xf:group>
         </xf:repeat>
-        <xf:group class="missing">
-            <xf:trigger ref=".[not(mods:titleInfo)]">
+        <xf:group appearance="full" ref=".[not(mods:titleInfo)]">
+            <xf:trigger class="add-button">
                 <xf:label>Add Missing Title Information</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:titleInfo"/>
+                    <xf:insert nodeset="instance('save-data')/mods:titleInfo" origin="instance('new-instance')/mods:titleInfo"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

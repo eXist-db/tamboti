@@ -5,7 +5,7 @@
         <div class="join">
             <span class="legend">Related Items</span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:relatedItem]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:insert nodeset="mods:relatedItem" at="index('relatedItem-repeat')" position="before"/>
@@ -13,7 +13,7 @@
                 </xf:trigger>
             </span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:relatedItem]">
                     <xf:label>–</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:relatedItem" at="index('relatedItem-repeat')"/>
@@ -1221,12 +1221,11 @@
             </xf:group>
                <!--relatedItem/part ends-->
         </xf:repeat>
-        <!--title repeat ends-->
-        <xf:group appearance="full" ref=".[not(./mods:relatedItem)]">
-            <xf:trigger ref=".[not(mods:relatedItem)]" class="add-button">
+        <xf:group ref=".[not(mods:relatedItem)]">
+            <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Related Item</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:relatedItem"/>
+                    <xf:insert nodeset="instance('save-data')/mods:relatedItem" origin="instance('insert-templates')/mods:relatedItem"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

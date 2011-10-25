@@ -7,7 +7,7 @@
         <div class="join">
             <span class="legend">Subjects</span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:subject]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:insert nodeset="mods:subject" at="index('subject-repeat')" position="before"/>
@@ -15,7 +15,7 @@
                 </xf:trigger>
             </span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:subject]">
                     <xf:label>–</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:subject" at="index('subject-repeat')"/>
@@ -84,7 +84,7 @@
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(@altRepGroup)]" class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Add altRepGroup</xf:label>
+                                    <xf:label class="xforms-group-label-centered">Add Alternate Representation Group</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/@altRepGroup"/>
@@ -1660,12 +1660,12 @@
                 <!--subject/occupation ends-->
         </xf:repeat>
             <!--subject repeat ends-->
-        <xf:group appearance="full" ref=".[not(./mods:subject)]">
-            <xf:trigger ref=".[not(mods:subject)]" class="add-button">
+        <xf:group appearance="full" ref=".[not(mods:subject)]">
+            <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Subject</xf:label>
                 <xf:action ev:event="DOMActivate">
                     <!-- NB: does not work. -->
-                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:subject"/>
+                    <xf:insert nodeset="instance('save-data')/mods:subject" origin="instance('insert-templates')/mods:subject"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

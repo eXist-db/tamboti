@@ -179,8 +179,8 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                <xf:group>
-                    <xf:input ref="./mods:nonSort" class="text_10 margin-plus">
+                <xf:group class="text_10 margin-plus">
+                    <xf:input ref="./mods:nonSort">
                         <xf:label>
                             <xf:group ref=".[string-length(../@type) = 0]">Non Sort<span class="xforms-help">
                                     <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -206,8 +206,8 @@
                         </xf:label>
                     </xf:input>
                 </xf:group>
-                <xf:group>
-                    <xf:input ref="./mods:title" class="text_150 margin-plus">
+                <xf:group class="text_150 margin-plus">
+                    <xf:input ref="./mods:title">
                         <xf:label>
                             <xf:group ref=".[string-length(../@type) = 0]">Title<span class="xforms-help">
                                     <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -233,8 +233,8 @@
                         </xf:label>
                     </xf:input>
                 </xf:group>
-                <xf:group>
-                    <xf:input ref="./mods:subTitle" class="text_150 margin-plus">
+                <xf:group class="text_150 margin-plus">
+                    <xf:input ref="./mods:subTitle">
                         <xf:label>
                             <xf:group ref=".[string-length(../@type) = 0]">Subtitle<span class="xforms-help">
                                     <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -293,13 +293,13 @@
                             <xf:group ref=".[mods:placeTerm]">
                                 <fieldset class="level-3">
                                     <xf:repeat nodeset="./mods:placeTerm" id="placeTerm-repeat">
-                                        <xf:group ref=".[not(@transliteration)]" class="margin-plus">
-                                            <xf:input ref="." class="text_100 hide-label">
+                                        <xf:group ref=".[not(@transliteration)]" class="margin-plus text_100 hide-label">
+                                            <xf:input ref=".">
                                                 <xf:label>City Name</xf:label>
                                             </xf:input>
                                         </xf:group>
-                                        <xf:group ref=".[@transliteration]" class="margin-plus">
-                                            <xf:input ref="." class="text_100">
+                                        <xf:group ref=".[@transliteration]" class="margin-plus text_100">
+                                            <xf:input ref=".">
                                                 <xf:label>Transliterated</xf:label>
                                             </xf:input>
                                         </xf:group>
@@ -326,8 +326,8 @@
                                     <xf:label>Name of Publisher</xf:label>
                                 </xf:input>
                             </xf:group>
-                            <xf:group ref=".[@transliteration]" class="margin-plus">
-                                <xf:input ref="." class="text_100">
+                            <xf:group ref=".[@transliteration]" class="margin-plus text_100">
+                                <xf:input ref=".">
                                     <xf:label>Transliterated</xf:label>
                                 </xf:input>
                             </xf:group>
@@ -354,7 +354,7 @@
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:dateIssued" id="dateIssued-repeat">
-                            <xf:group class="margin-plus" ref=".[count(../mods:dateIssued) &gt; 1]">
+                            <xf:group ref=".[count(../mods:dateIssued) &gt; 1]" class="margin-plus">
                                 <xf:select1 ref="./@point">
                                     <xf:label>Point</xf:label>
                                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='date-point-code']/items/item">
@@ -362,8 +362,6 @@
                                         <xf:value ref="value"/>
                                     </xf:itemset>
                                 </xf:select1>
-                            </xf:group>
-                            <xf:group>
                                 <xf:input ref="." class="text_10 hide-label margin-plus">
                                     <xf:label>Date Issued</xf:label>
                                 </xf:input>
@@ -400,8 +398,8 @@
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
-                            <xf:group>
-                                <xf:input ref="." class="text_10 hide-label margin-plus">
+                            <xf:group class="text_10 hide-label margin-plus">
+                                <xf:input ref=".">
                                     <xf:label>Copyright Date</xf:label>
                                 </xf:input>
                             </xf:group>
@@ -459,8 +457,8 @@
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:extent" id="extent-repeat">
-                            <xf:group class="hide-label margin-plus">
-                                <xf:input ref="." class="text_10">
+                            <xf:group class="hide-label margin-plus text_10">
+                                <xf:input ref=".">
                                     <xf:label>Extent</xf:label>
                                 </xf:input>
                             </xf:group>
@@ -494,13 +492,13 @@
             <xf:repeat nodeset="./mods:location" id="location-repeat">
                 <xf:repeat nodeset="./mods:url" id="url-repeat">
                     <xf:group class="margin-plus">
-                        <xf:group>
-                            <xf:input ref="./@dateLastAccessed" class="text_10">
+                        <xf:group class="text_10">
+                            <xf:input ref="./@dateLastAccessed">
                                 <xf:label>Last Accessed</xf:label>
                             </xf:input>
                         </xf:group>
-                        <xf:group>
-                            <xf:input ref="." class="text_150">
+                        <xf:group class="text_150">
+                            <xf:input ref=".">
                                 <xf:label>URL</xf:label>
                             </xf:input>
                         </xf:group>
@@ -532,7 +530,7 @@
                 </span>
             </div>
             <xf:repeat nodeset="./mods:identifier" id="identifier-repeat">
-                <xf:group class="hide-label margin-plus">
+                <xf:group class="hide-label margin-plus text_50">
                     <xf:select1 ref="./@type">
                         <xf:label>Type</xf:label>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='identifier-type-code']/items/item">
@@ -540,7 +538,7 @@
                             <xf:value ref="value"/>
                         </xf:itemset>
                     </xf:select1>
-                    <xf:input ref="." class="text_50">
+                    <xf:input ref=".">
                         <xf:label/>
                     </xf:input>
                 </xf:group>

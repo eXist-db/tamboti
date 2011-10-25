@@ -7,7 +7,7 @@
         <div class="join">
             <span class="legend">Notes</span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:note]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:insert nodeset="mods:note" at="index('note-repeat')" position="before"/>
@@ -15,7 +15,7 @@
                 </xf:trigger>
             </span>
             <span class="join-button">
-                <xf:trigger>
+                <xf:trigger ref=".[mods:note]">
                     <xf:label>–</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:note" at="index('note-repeat')"/>
@@ -149,11 +149,11 @@
                     <!--note input ends-->
         </xf:repeat>
             <!--note repeat ends-->
-        <xf:group appearance="full" ref=".[not(./mods:note)]">
-            <xf:trigger ref=".[not(mods:note)]" class="add-button">
+        <xf:group appearance="full" ref=".[not(mods:note)]">
+            <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Note</xf:label>
                 <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="instance('save-data')/mods:mods" origin="instance('new-instance')/mods:note"/>
+                    <xf:insert nodeset="instance('save-data')/mods:note" origin="instance('new-instance')/mods:note"/>
                 </xf:action>
             </xf:trigger>
         </xf:group>

@@ -1,5 +1,7 @@
 xquery version "1.0";
 
+(: How much of this is really needed? Isn't it enough to xmldb:decode-uri() and xmldb:encode-uri()? :)
+
 module namespace uu = "http://exist-db.org/mods/uri-util";
 
 declare variable $uu:encodings := (
