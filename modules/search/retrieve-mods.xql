@@ -1396,14 +1396,14 @@ declare function mods:format-multiple-names($entry as element()*, $caller as xs:
 declare function mods:return-type($id as xs:string, $entry ) {
     let $type := $entry/mods:typeOfResource[1]/string()
     return
-        if (fn:string-length($type) > 0) (:check if the file type is retrieved in mods file:)
+        if (exists($type)) (:check if the file type is retrieved in mods file:)
     then  
         replace(replace(
         if ($type)
         then $type
         else 'text'
         ,' ','_'),',','')
-    else 'file_pdf'
+    else 'text-x-changelog'
 };
 
 (: ### <typeOfResource> ends ### :)

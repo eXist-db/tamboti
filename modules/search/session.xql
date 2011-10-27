@@ -225,7 +225,7 @@ declare function bs:get-icon-from-folder($size as xs:int, $collection as xs:stri
 (:~
     Get an image element containing the preview icon or thumbnail for the given resource.
 :)
-declare function bs:get-icon($size as xs:int, $item as element(mods:mods), $currentPos as xs:int) {
+declare function bs:get-icon($size as xs:int, $item, $currentPos as xs:int) {
     let $image := 
         ( 
             $item/mods:location/mods:url[@access="preview"]/string(), 
