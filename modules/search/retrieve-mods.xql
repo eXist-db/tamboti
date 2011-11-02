@@ -578,7 +578,7 @@ declare function mods:get-part-and-origin($entry as element()) {
     (: has no attributes. :)
     (: handled by get-publisher(). :)
     
-    let $dateIssued := $originInfo/mods:dateIssued
+    let $dateIssued := $originInfo/mods:dateIssued[1]
     (: contains no subelements. :)
     (: has: encoding; point; keyDate; qualifier. :)
     let $dateCreated := $originInfo/mods:dateCreated
@@ -631,7 +631,7 @@ declare function mods:get-part-and-origin($entry as element()) {
     let $detail := $part/mods:detail
     (: contains: number, caption, title. :)
     (: has: type, level. :)
-        let $issue := $detail[@type=('issue', 'number')]/mods:number/text()
+        let $issue := $detail[@type=('issue', 'number')]/mods:number[1]/text()
         let $volume := 
         	if ($detail[@type='volume']/mods:number/text())
         	then $detail[@type='volume']/mods:number/text()
@@ -2086,6 +2086,8 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
                 )
             }
             </td>
+         
+            
             <td class="record"><a href="{$url}" target="_blank">{if ((string-length($url) < 80)) then $url  else (substring($url,1,70), '...')}</a></td>
         </tr>
     ,
@@ -2192,19 +2194,19 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     (: note :)
     for $note in ($entry/mods:note)
     let $displayLabel := $note/@displayLabel
-    let $type := $note/@type 
+    let $type := $note/@type
     return
         (: NB: display html markup! :)    
 	    mods:simple-row(replace($note, '&lt;.*?&gt;', '')
 	    , 
 	    concat('Note', 
 	        (
-	        if ($displayLabel)
-	        then concat(' (', $displayLabel, ')')            
+	        if ($displayLabel/text())
+	        then concat(' (', $displayLabel/text(), ')')            
 	        else ()
 	        ,
 	        if ($type)
-	        then concat(' (', $type, ')')            
+	        then concat(' (', $type/text(), ')')            
 	        else ()
 	        )
 	        )
@@ -2272,6 +2274,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     </table>
 };
 
+
 (: Creates view for hitlist. :)
 (: NB: "mods:format-list-view()" is referenced in session.xql. :)
 declare function mods:format-list-view($id as xs:string, $entry as element(mods:mods)) {
@@ -2331,18 +2334,18 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         (: if ($entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:extent or $entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:detail/mods:number/text()) :)
         if ($entry/mods:relatedItem[@type = ('host','series')])
         then <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods:get-related-items($entry, 'hitlist')}</span>
-        else 
+        else () 
         (: The url of the primary publication. :)
-        	if ($entry/mods:location/mods:url/text())
+(:        	if ($entry/mods:location/mods:url/text())
         	then
             	for $url in $entry/mods:location/mods:url
 	                return
-                    (: NB: Too long URLs do not line-wrap, forcing the display of results down below the folder view, so do not display too long URLs. The link is anyway not clickable. :)
+                    (\: NB: Too long URLs do not line-wrap, forcing the display of results down below the folder view, so do not display too long URLs. The link is anyway not clickable. :\)
 	                if (string-length($url) < 90)
 	                then concat(' <', $url, '>', '.')
     	            else ""
         	else '.'
-        )
+:)        )
     return
         mods:clean-up-punctuation(<span xmlns="http://www.w3.org/1999/xhtml" class="record">{$format}</span>)
 };

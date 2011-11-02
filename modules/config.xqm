@@ -22,6 +22,7 @@ declare variable $config:app-root :=
 
 declare variable $config:mods-root := "/db/resources";
 declare variable $config:mods-commons := fn:concat($config:mods-root, "/commons");
+declare variable $config:content-root := fn:concat($config:mods-root, "/commons/Transcultural%20Studies");
 
 declare variable $config:search-app-root := concat($config:app-root, "/modules/search");
 declare variable $config:edit-app-root := concat($config:app-root, "/modules/edit");
@@ -59,15 +60,15 @@ declare variable $config:allow-origin := "";
 :)
 declare function config:rewrite-username($username as xs:string) as xs:string {
     
-    $username
+  
     
     (: for example: :)
     
-    (:
+    
     let $enforced-realm-id := "ad.uni-heidelberg.de" return
         if(fn:ends-with(fn:lower-case($username), fn:concat("@", $enforced-realm-id)) or fn:lower-case($username) = ("admin", "editor", "guest")) then
             $username
         else
             fn:concat($username, "@", $enforced-realm-id)
-    :)
+    
 };
