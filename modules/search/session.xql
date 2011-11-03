@@ -133,9 +133,11 @@ declare function bs:mods-list-view-table($item as node(), $currentPos as xs:int)
                 <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
                 <a>
                 {
+                    let $collection := util:collection-name($item)
+                    let $collection-short := functx:replace-first($collection, '/db/', '')
                     let $clean := clean:cleanup($item)
                     return
-                        mods:format-list-view(string($currentPos), $clean)
+                        mods:format-list-view(string($currentPos), $clean, $collection-short)
                         (: Originally $item was passed to mods:format-list-view() - was there a reason for that? Performance? :)
                 }
                 </a>
