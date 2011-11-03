@@ -1978,8 +1978,10 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         for $date in $entry/mods:originInfo[1]/mods:dateCreated
             return mods:simple-row($date, 
             concat('Date Created',
+                concat(
                 if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
                 if ($date/@qualifier) then concat(' (', functx:capitalize-first($date/@qualifier), ')') else ()
+                )
                 )
             )
     ,
@@ -1989,8 +1991,10 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         for $date in $entry/mods:originInfo[1]/mods:copyrightDate
             return mods:simple-row($date, 
             concat('Copyright Date',
+                concat(
                 if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
                 if ($date/@qualifier) then concat(' (', functx:capitalize-first($date/@qualifier), ')') else ()
+                )
                 )
             )
     ,
@@ -2000,8 +2004,10 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         for $date in $entry/mods:originInfo[1]/mods:dateCaptured
             return mods:simple-row($date, 
             concat('Date Captured',
+                concat(
                 if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
                 if ($date/@qualifier) then concat(' (', functx:capitalize-first($date/@qualifier), ')') else ()
+                )
                 )
             )            
     ,
@@ -2011,8 +2017,10 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         for $date in $entry/mods:originInfo[1]/mods:dateValid
             return mods:simple-row($date, 
             concat('Date Valid',
+                concat(
                 if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
                 if ($date/@qualifier) then concat(' (', functx:capitalize-first($date/@qualifier), ')') else ()
+                )
                 )
             )
     ,
@@ -2023,8 +2031,10 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
             return mods:simple-row($date, 
             concat(
                 'Date Issued', 
+                concat(
                 if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
                 if ($date/@qualifier) then concat(' (', functx:capitalize-first($date/@qualifier), ')') else ()
+                )
                 )
             )
     ,
@@ -2034,8 +2044,10 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         for $date in $entry/mods:originInfo[1]/mods:dateModified
             return mods:simple-row($date, 
             concat('Date Modified',
+                concat(
                 if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
                 if ($date/@qualifier) then concat(' (', functx:capitalize-first($date/@qualifier), ')') else ()
+                )
                 )
             )
     ,
@@ -2045,8 +2057,10 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         for $date in $entry/mods:originInfo[1]/mods:dateOther
             return mods:simple-row($date, 
             concat('Other Date',
+                concat(
                 if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
                 if ($date/@qualifier) then concat(' (', functx:capitalize-first($date/@qualifier), ')') else ()
+                )
                 )
             )            
     ,
@@ -2062,7 +2076,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         then mods:simple-row(
             mods:get-extent($extent), 
             concat('Extent', 
-                if($extent/@unit) 
+                if ($extent/@unit) 
                 then concat(' (', functx:capitalize-first($extent/@unit), ')') 
                 else ()
                 )
@@ -2077,7 +2091,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
             {
                 concat(
                     if ($url/@displayLabel)
-                    then $url/@displayLabel/text()
+                    then $url/@displayLabel
                     else 'URL'
                 ,
                     if ($url/@dateLastAccessed)
@@ -2086,9 +2100,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
                 )
             }
             </td>
-         
-            
-            <td class="record"><a href="{$url}" target="_blank">{if ((string-length($url) < 80)) then $url  else (substring($url,1,70), '...')}</a></td>
+            <td class="record"><a href="{mods:format-url($entry, $collection-short)}" target="_blank">{if ((string-length($url) < 80)) then $url  else (substring($url,1,70), '...')}</a></td>
         </tr>
     ,
     (: relatedItem :)
@@ -2193,20 +2205,20 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     
     (: note :)
     for $note in ($entry/mods:note)
-    let $displayLabel := $note/@displayLabel
+    let $displayLabel := $note/@displayLabel    
     let $type := $note/@type
     return
-        (: NB: display html markup! :)    
+        (: NB: some notes contain escaped html markup! :)    
 	    mods:simple-row(replace($note, '&lt;.*?&gt;', '')
 	    , 
 	    concat('Note', 
-	        (
-	        if ($displayLabel/text())
-	        then concat(' (', $displayLabel/text(), ')')            
+	        concat(
+	        if ($displayLabel)
+	        then concat(' (', $displayLabel, ')')            
 	        else ()
 	        ,
 	        if ($type)
-	        then concat(' (', $type/text(), ')')            
+	        then concat(' (', $type, ')')            
 	        else ()
 	        )
 	        )
@@ -2258,7 +2270,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
             let $link-ID := $linked-record/@ID
             let $link-contents := 
                 if ($linked-record/mods:titleInfo/mods:title/text()) 
-                then mods:format-list-view((), $linked-record) 
+                then mods:format-list-view((), $linked-record, '') 
                 else ()
             return
             <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
@@ -2274,10 +2286,15 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     </table>
 };
 
+declare function mods:format-url($entry as element(mods:mods) , $collection-short as xs:string){
+let $url   := $entry/mods:location/mods:url
+let $myurl := if ($url/@access='preview')  then (concat('images/',$collection-short,'/',$url,'?s',$config:url-image-size)) else($url)
+return $myurl
 
+};
 (: Creates view for hitlist. :)
 (: NB: "mods:format-list-view()" is referenced in session.xql. :)
-declare function mods:format-list-view($id as xs:string, $entry as element(mods:mods)) {
+declare function mods:format-list-view($id as xs:string, $entry as element(mods:mods), $collection-short as xs:string) {
 	let $entry := mods:remove-parent-with-missing-required-node($entry)
 	let $global-transliteration := $entry/mods:extension/e:transliterationOfResource/text()
 	return
@@ -2334,18 +2351,19 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         (: if ($entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:extent or $entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:detail/mods:number/text()) :)
         if ($entry/mods:relatedItem[@type = ('host','series')])
         then <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods:get-related-items($entry, 'hitlist')}</span>
-        else () 
+        else 
         (: The url of the primary publication. :)
-(:        	if ($entry/mods:location/mods:url/text())
+        	if (contains($collection-short, 'Priya')) then () else
+        	if ($entry/mods:location/mods:url/text())
         	then
             	for $url in $entry/mods:location/mods:url
 	                return
-                    (\: NB: Too long URLs do not line-wrap, forcing the display of results down below the folder view, so do not display too long URLs. The link is anyway not clickable. :\)
+                    (: NB: Too long URLs do not line-wrap, forcing the display of results down below the folder view, so do not display too long URLs. The link is anyway not clickable. :)
 	                if (string-length($url) < 90)
 	                then concat(' <', $url, '>', '.')
     	            else ""
         	else '.'
-:)        )
+        )
     return
         mods:clean-up-punctuation(<span xmlns="http://www.w3.org/1999/xhtml" class="record">{$format}</span>)
 };

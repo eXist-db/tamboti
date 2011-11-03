@@ -22,7 +22,8 @@ declare variable $config:app-root :=
 
 declare variable $config:mods-root := "/db/resources";
 declare variable $config:mods-commons := fn:concat($config:mods-root, "/commons");
-declare variable $config:content-root := fn:concat($config:mods-root, "/commons/Transcultural%20Studies");
+declare variable $config:content-root := fn:concat($config:mods-root, "/commons");
+declare variable $config:url-image-size := "256";
 
 declare variable $config:search-app-root := concat($config:app-root, "/modules/search");
 declare variable $config:edit-app-root := concat($config:app-root, "/modules/edit");
