@@ -22,7 +22,10 @@ otherwise set it to 1 (to show Basic Input Forms/Main Publication). :)
 let $top-tab-number := xs:integer(request:get-parameter("top-tab-number", 
     if ($type = ('insert-templates','new-instance'))
     then 2
-    else 1
+    else
+        if ($type = 'mads')
+        then 5
+        else 1
     ))
 
 (: get the sequence of tabs from the tabs file :)
@@ -66,7 +69,7 @@ return
                 <tr>
                 {
                 for $tab in $tabs-data[top-tab-number = $top-tab-number]
-                let $tab-for-template := $tab/*[local-name() = $type]/text()
+                let $tab-for-type := $tab/*[local-name() = $type]/text()
 				let $top-tab-count := count($tabs-data[top-tab-label/text() = $tab/top-tab-label/text()])
                 return
                 <td style="{
@@ -83,8 +86,8 @@ return
                                 then "color:#3681B3;font-weight:bold;" 
                                 else "color:darkgray;font-weight:bold"
                             }">{
-                        if ($tab-for-template) 
-                        then $tab-for-template 
+                        if ($tab-for-type) 
+                        then $tab-for-type 
                         else $tab/label
                         }</div>
                         </xf:label>

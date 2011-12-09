@@ -1,34 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--node insertions: --><!--missing element insertion: --><!--hints moved to code-table: --><!--saving of all nodes: OK--><!--schema instatiated: n/a--><!--schema notations added: n/a-->
+<!--node insertions: insertion and deletion does not work--><!--missing element insertion: does not work--><!--hints moved to code-table: OK--><!--saving of all nodes: OK--><!--schema instatiated: n/a--><!--schema notations added: n/a-->
 <div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001f/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="extension block-form" tab-id="extension" e:dummy="dummy">
     <xf:group appearance="full" class="fieldset level-1">
         <div class="join">
             <span class="legend">Extension</span>
             <span class="join-button">
-                <!--does not work-->
                 <xf:trigger ref=".[mods:extension]">
                     <xf:label>–</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:extension" at="index('extension-repeat')"/>
+                        <xf:delete nodeset="instance('save-data')/mods:extension" at="index('extension-repeat')"/>
                     </xf:action>
                 </xf:trigger>
             </span>
             <span class="xforms-hint">
                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
-                    <p>Here you have access to a number of fields that we have added to the MODS schema.</p>
-                    <p>If the record you are viewing has not been made with Tamboti, it may not have
-                        Extension. If it lacks Extension, you can add it by using the button
-                        below.</p>
-                    <p>If you change the values of the fields Publication Type and Transliteration
-                        of Resource, parts of the Basic Input Forms will display differently in accordance
-                        with your choice.</p>
+                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='extension']/help"/>
                 </div>
             </span>
         </div>
         <xf:repeat nodeset="instance('save-data')/mods:extension" id="extension-repeat">
             <!-- repeat not used. -->
-            <xf:group appearance="full" ref=".[not(*:template)] | .[not(*:transliterationOfResource)]">
+            <xf:group appearance="full" ref=".[not(e:template)] | .[not(e:transliterationOfResource)]">
                 <xf:switch>
                     <xf:case id="extension-add-node-hide">
                         <div class="node-button">
@@ -70,17 +63,13 @@
             </xf:group>
             <xf:group appearance="full">
                 <xf:select1 ref="e:template">
-                    <xf:label>Publication Type</xf:label>
-                    <xf:hint>
-                        <p>Choose one of the publication types listed below. These publication types
-                            are the same as the record templates used in the pre-entry options. </p>
-                        <p> If a record has not been made by use of Tamboti, you can assign a
-                            publication type to it here.</p>
-                        <p> If you have assigned a wrong publication type in the pre-entry dialogue,
-                            you can change it here. Changing it here will however not change the
-                            options displayed in the Basic Input Forms until you save the record and
-                            reopen it.</p>
-                    </xf:hint>
+                    <xf:label>Publication Type<span class="xforms-help">
+                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='template']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='document-type-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
@@ -89,23 +78,13 @@
             </xf:group>
             <xf:group appearance="full">
                 <xf:select1 ref="e:transliterationOfResource">
-                    <xf:label>Transliteration Of Resource</xf:label>
-                    <xf:hint>
-                        <p> Choose one of the transliteration schemes listed below. The
-                            transliteration schemes are the same as those used in the pre-entry
-                            options. </p>
-                        <p> If a record has not been made by use of Tamboti, if will not have this
-                            field, but you can assign a transliteration scheme to it here. Doing so
-                            will make it unneccesary to note which transliteration scheme is used
-                            for individual fields, i.e. you can set this value once and for all
-                            here. Adding a transliteration scheme here will not cause the Basic
-                            Input Forms to display transliteration fields. If you wish to add
-                            transliterations for titles, names, etc., you have to use the Citation
-                            Forms.</p>
-                        <p> If you have assigned the wrong transliteration scheme in the pre-entry
-                            dialogue, you can change it here. The Basic Input Forms will still
-                            display fields for the transliteration of titles, names, etc.</p>
-                    </xf:hint>
+                    <xf:label>Transliteration Of Resource<span class="xforms-help">
+                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliterationOfResource']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
@@ -114,7 +93,6 @@
             </xf:group>
         </xf:repeat>
         <xf:group appearance="full" ref=".[not(mods:extension)]">
-            <!--does not work-->
             <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Extension</xf:label>
                 <xf:action ev:event="DOMActivate">

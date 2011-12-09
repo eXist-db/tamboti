@@ -48,10 +48,10 @@
                         </xf:group>
                         <xf:group ref=".[mods:namePart/@transliteration]" class="margin-plus">
                             <xf:select1 ref="/mods:mods/mods:extension/e:transliterationOfResource">
-                                <xf:label>Transliteration<span class="xforms-help">
+                                <xf:label>Global Transliteration<span class="xforms-help">
                                         <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">
-                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration-compact']/help"/>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration-global-compact']/help"/>
                                         </div>
                                     </span>
                                 </xf:label>
@@ -151,10 +151,10 @@
                 </xf:group>
                 <xf:group ref=".[@transliteration]" class="margin-plus">
                     <xf:select1 ref="/mods:mods/mods:extension/e:transliterationOfResource">
-                        <xf:label>Transliteration<span class="xforms-help">
+                        <xf:label>Global Transliteration<span class="xforms-help">
                                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration-compact']/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration-global-compact']/help"/>
                                 </div>
                             </span>
                         </xf:label>
@@ -196,7 +196,8 @@
                                     </div>
                                 </span>
                             </xf:group>
-                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non Sort<span class="xforms-help">
+                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non
+                                    Sort<span class="xforms-help">
                                     <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/help"/>
@@ -223,7 +224,8 @@
                                     </div>
                                 </span>
                             </xf:group>
-                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Title<span class="xforms-help">
+                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated
+                                    Title<span class="xforms-help">
                                     <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title-compact']/help"/>
@@ -250,7 +252,8 @@
                                     </div>
                                 </span>
                             </xf:group>
-                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Subtitle<span class="xforms-help">
+                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated
+                                    Subtitle<span class="xforms-help">
                                     <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subTitle-compact']/help"/>
@@ -362,10 +365,10 @@
                                         <xf:value ref="value"/>
                                     </xf:itemset>
                                 </xf:select1>
-                                <xf:input ref="." class="text_10 hide-label margin-plus">
-                                    <xf:label>Date Issued</xf:label>
-                                </xf:input>
                             </xf:group>
+                            <xf:input ref="." class="text_10 hide-label margin-plus">
+                                <xf:label>Date Issued</xf:label>
+                            </xf:input>
                         </xf:repeat>
                     </fieldset>
                 </xf:group>

@@ -225,26 +225,47 @@ declare function bs:get-icon-from-folder($size as xs:int, $collection as xs:stri
 };
 
 (:~
-    Get an image element containing the preview icon or thumbnail for the given resource.
+    Get the preview icon for a linked image resource or get the thumbnail showing the resource type.
 :)
 declare function bs:get-icon($size as xs:int, $item, $currentPos as xs:int) {
-    let $image := 
+    let $image-url := 
         ( 
             $item/mods:location/mods:url[@access="preview"]/string(), 
             $item/mods:location/mods:url[@displayLabel="Path to Folder"] 
         )[1]
-    return
-        if (exists($image)) then
-            let $path := concat(util:collection-name($item), "/", xmldb:encode($image))
-            return
-                if (collection($path)) then
-                    bs:get-icon-from-folder($size, $path)
-                else
-                    let $imgLink := concat(substring-after(util:collection-name($item), "/db"), "/", $image)
-                    return
-                        <img title="{$item/mods:typeOfResource/string()}" src="images/{$imgLink}?s={$size}"/>
+    let $title := $item/mods:typeOfResource/string()
+    let $title := 
+        if ($title)
+        then functx:capitalize-first($title)
         else
-            <img title="{functx:capitalize-first($item/mods:typeOfResource/string())}" src="theme/images/{mods:return-type(string($currentPos), $item)}.png"/>
+            if (in-scope-prefixes($item) = 'xml')
+            then 'Unknown Type'
+            else 'Extracted Text'
+    return
+        if (exists($image-url)) 
+        then
+            let $image-path := concat(util:collection-name($item), "/", xmldb:encode($image-url))
+            return
+                if (collection($image-path)) 
+                then bs:get-icon-from-folder($size, $image-path)
+                else
+                    let $imgLink := concat(substring-after(util:collection-name($item), "/db"), "/", $image-url)
+                    return
+                        <img title="{$title}" src="images/{$imgLink}?s={$size}"/>
+        else
+            let $type := $item/mods:typeOfResource[1]/string()           
+            let $type := 
+                (: If there is a typeOfResource, render the icon for it. :)
+                if ($type)
+                then replace(replace($type,' ','_'),',','')
+                else
+                    (: If there is no typeOfResource, but the resource is XML, render the default icon for it. :)
+                    if (in-scope-prefixes($item) = 'xml')
+                    then 'shape_square'
+                    (: Otherwise it is non-XML contents extracted from a document by tika. This could be a PDF, a Word document, etc. :) 
+                    else 'text-x-changelog'
+            return 
+                <img title="{$title}" src="theme/images/{$type}.png"/>
 };
 
 declare function bs:view-table($cached as item()*, $stored as item()*, $start as xs:int, 
@@ -253,7 +274,6 @@ declare function bs:view-table($cached as item()*, $stored as item()*, $start as
     {
         for $item at $pos in subsequence($cached, $start, $available)
         let $currentPos := $start + $pos - 1
-        (: Why does $currentPos have a final "."? Should be removed. :)
         return
             if ($count eq 1 and $item instance of element(mods:mods)) then
                 bs:detail-view-table($item, $currentPos)

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--node insertions: OK, except xml:lang and xlink:href--><!--missing element insertion: OK.--><!--hints moved to code-table: OK--><!--saving of all nodes: OK--><!--schema instatiated: n/a--><!--schema notations added: OK-->
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="name block-form" tab-id="name" e:dummy="dummy">
     <xf:group appearance="full" class="fieldset level-1">
         <div class="join">
@@ -26,8 +27,13 @@
                 </div>
             </span>
         </div>
+        <!-- attributes: ID; xlink; lang; xml:lang; script; transliteration; authority; authorityURI; valueURI; displayLabel; usage; altRepGroup; nameTitleGroup. Full -->
+        <!-- subelements: namePart; displayForm; affiliation; role; description. Full. -->
+        <!-- node-adds: works, except xlink:href and xml:lang. -->
+        <!-- element deletion: works. -->
+        <!-- element repetition: works. -->
         <xf:repeat nodeset="instance('save-data')/mods:name" id="name-repeat">
-            <xf:group appearance="full" ref="                 .[not(mods:affiliation)] |                  .[not(@altRepGroup)] |                  .[not(@authority)] |                  .[not(@authorityURI)] |                  .[not(mods:description)] |                  .[not(mods:displayForm)] |                  .[not(@displayLabel)] |                  .[not(@ID)] |                  .[not(@lang)] |                  .[not(mods:namePart)] |                  .[not(@nameTitleGroup)] |                  .[not(mods:role)] |                  .[not(@script)] |                  .[not(@transliteration)] |                  .[not(@type)] |                  .[not(@usage)] |                 .[not(@valueURI)] |                  .[not(@xlink:href)] |                  .[not(@xml:lang)]                 ">
+            <xf:group appearance="full" ref=".[not(mods:affiliation)] | .[not(@altRepGroup)] | .[not(@authority)] | .[not(@authorityURI)] | .[not(mods:description)] | .[not(mods:displayForm)] | .[not(@displayLabel)] | .[not(@ID)] | .[not(@lang)] | .[not(mods:namePart)] | .[not(@nameTitleGroup)] | .[not(mods:role)] | .[not(@script)] | .[not(@transliteration)] | .[not(@type)] | .[not(@usage)] |.[not(@valueURI)] | .[not(@xlink:href)] | .[not(@xml:lang)]">
                 <xf:switch>
                     <xf:case id="name-add-node-hide">
                         <div class="node-button">
@@ -358,7 +364,7 @@
                         <xf:label>Transliteration<span class="xforms-help">
                                 <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-transliteration']/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration']/help"/>
                                 </div>
                             </span>
                         </xf:label>
@@ -452,8 +458,13 @@
                         </div>
                     </span>
                 </div>
+                <!-- attributes: type; lang; xml:lang; script; transliteration. -->
+                <!-- subelements: none. -->
+                <!-- node-adds: work, except for xml:lang. -->
+                <!-- element deletion: works. -->
+                <!-- element repetition: works. -->
                 <xf:repeat nodeset="./mods:namePart" id="namePart-repeat">
-                    <xf:group appearance="full" ref="                         .[not(@lang)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@type)] |                          .[not(@xml:lang)]                         ">
+                    <xf:group appearance="full" ref=".[not(@lang)] | .[not(@script)] | .[not(@transliteration)] | .[not(@type)] | .[not(@xml:lang)]">
                         <xf:switch>
                             <xf:case id="namePart-add-node-hide">
                                 <div class="node-button">
@@ -477,6 +488,7 @@
                                             <xf:label>Add Language</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:name/mods:namePart/@lang"/>
+                                                <xf:toggle case="namePart-add-node-hide" ev:event="DOMActivate"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <!-- S -->
@@ -484,6 +496,7 @@
                                             <xf:label>Add Script</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:name/mods:namePart/@script"/>
+                                                <xf:toggle case="namePart-add-node-hide" ev:event="DOMActivate"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <!-- T -->
@@ -491,12 +504,14 @@
                                             <xf:label>Add Transliteration</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:name/mods:namePart/@transliteration"/>
+                                                <xf:toggle case="namePart-add-node-hide" ev:event="DOMActivate"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@type)]" class="add-button">
                                             <xf:label>Add Type</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:name/mods:namePart/@type"/>
+                                                <xf:toggle case="namePart-add-node-hide" ev:event="DOMActivate"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <!-- X -->
@@ -504,6 +519,7 @@
                                             <xf:label>Add xml:lang</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:name/mods:namePart/@xml:lang"/>
+                                                <xf:toggle case="namePart-add-node-hide" ev:event="DOMActivate"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
@@ -576,7 +592,7 @@
                             <xf:label>Transliteration<span class="xforms-help">
                                     <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-transliteration']/help"/>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration']/help"/>
                                     </div>
                                 </span>
                             </xf:label>
@@ -625,11 +641,16 @@
                         </div>
                     </span>
                 </div>
+                <!-- attributes: none -->
+                <!-- subelements: roleTerm. -->
+                <!-- node-adds: works. -->
+                <!-- element deletion: works. -->
+                <!-- element repetition: works. -->
                 <xf:repeat nodeset="./mods:role" id="role-repeat">
                     <xf:group appearance="full" ref=".[not(mods:roleTerm)]">
                         <xf:switch>
                             <xf:case id="role-add-node-hide">
-                                <div class="node-adds-title">
+                                <div class="node-button">
                                     <xf:trigger class="add-button">
                                         <xf:label>&gt;</xf:label>
                                         <xf:toggle case="role-add-node-unhide" ev:event="DOMActivate"/>
@@ -637,7 +658,7 @@
                                 </div>
                             </xf:case>
                             <xf:case id="role-add-node-unhide">
-                                <div class="node-adds-title">
+                                <div class="node-button">
                                     <xf:trigger>
                                         <xf:label>&lt;</xf:label>
                                         <xf:toggle case="role-add-node-hide" ev:event="DOMActivate"/>
@@ -683,8 +704,13 @@
                                 </div>
                             </span>
                         </div>
+                        <!-- attributes: type; authority; authorityURI; valueURI; lang; xml:lang; script; transliteration. -->
+                        <!-- subelements: none -->
+                        <!-- node-adds: work. except xml:lang. -->
+                        <!-- element deletion: works. -->
+                        <!-- element repetition: works. -->
                         <xf:repeat nodeset="./mods:roleTerm" id="roleTerm-repeat">
-                            <xf:group appearance="full" ref="                                 .[not(@authority)] |                                  .[not(@authorityURI)] |                                  .[not(@lang)] |                                  .[not(@script)] |                                  .[not(@transliteration)] |                                  .[not(@type)] |                                  .[not(@valueURI)] |                                 .[not(@xml:lang)]                                 ">
+                            <xf:group appearance="full" ref=".[not(@authority)] | .[not(@authorityURI)] | .[not(@lang)] | .[not(@script)] | .[not(@transliteration)] | .[not(@type)] | .[not(@valueURI)] |.[not(@xml:lang)]">
                                 <xf:switch>
                                     <xf:case id="roleTerm-add-node-hide">
                                         <div class="node-button">
@@ -889,7 +915,7 @@
                                     <xf:label>Transliteration<span class="xforms-help">
                                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
-                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart-transliteration']/help"/>
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration']/help"/>
                                             </div>
                                         </span>
                                     </xf:label>
@@ -915,6 +941,7 @@
                                 </xf:select1>
                             </xf:group>
                             <xf:group class=" schema_3.3 schema_3.4" appearance="full" ref=".[@type='code' and not(@authority ='marcrelator')]">
+                                <!-- NB: selection="open" -->
                                 <xf:input ref="." selection="open">
                                     <xf:label>Role Term (code)<span class="xforms-help">
                                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -925,23 +952,8 @@
                                     </xf:label>
                                 </xf:input>
                             </xf:group>
-                            <!--<xf:group class=" schema_3.3 schema_3.4" appearance="full" ref=".[not(@type='code')]">
-                                <xf:select1 ref="." selection="open">
-                                    <xf:label>Role Term (text)<span class="xforms-help">
-                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-help-value">
-                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='roleTerm-text']/help"/>
-                                            </div>
-                                        </span>
-                                    </xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='role-code']/items/item">
-                                        <xf:label ref="label"/>
-                                        <xf:value ref="label"/>
-                                    </xf:itemset>
-                                </xf:select1>
-                            </xf:group>-->
                             <xf:group class=" schema_3.3 schema_3.4" appearance="full" ref=".[not(@type='code')]">
-                                <xf:input ref="." selection="open">
+                                <xf:input ref=".">
                                     <xf:label>Role Term (text)<span class="xforms-help">
                                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
@@ -962,7 +974,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="instance('save-data')/mods:displayForm" at="index('displayForm-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:displayForm"/>
+                                <xf:insert nodeset="mods:displayForm" at="index('displayForm-repeat')" position="before"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -981,8 +993,13 @@
                         </div>
                     </span>
                 </div>
+                <!-- attributes: lang; xml:lang; script; transliteration. Full. -->
+                <!-- subelements: none. -->
+                <!-- node-adds: work, except xml:lang. -->
+                <!-- element deletion: works. -->
+                <!-- element repetition: works. -->
                 <xf:repeat nodeset="./mods:displayForm" id="displayForm-repeat">
-                    <xf:group appearance="full" ref="                         .[not(@lang)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">
+                    <xf:group appearance="full" ref=".[not(@lang)] | .[not(@script)] | .[not(@transliteration)] | .[not(@xml:lang)]">
                         <xf:switch>
                             <xf:case id="displayForm-add-node-hide">
                                 <div class="node-button">
@@ -1113,7 +1130,6 @@
                     </xf:input>
                 </xf:repeat>
             </xf:group>
-            <!--NB: this can be repeated according to schema 3.3 and 3.4.-->
             <xf:group appearance="full" class="fieldset level-2" ref=".[mods:affiliation]">
                 <div class="join">
                     <span class="legend">Affiliation</span>
@@ -1140,8 +1156,13 @@
                         </div>
                     </span>
                 </div>
+                <!-- attributes: lang; xml:lang; script; transliteration. -->
+                <!-- subelements: none. -->
+                <!-- node-adds: work, except xml:lang. -->
+                <!-- element deletion: works. -->
+                <!-- element repetition: works. -->
                 <xf:repeat nodeset="./mods:affiliation" id="affiliation-repeat">
-                    <xf:group appearance="full" ref="                         .[not(@lang)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">
+                    <xf:group appearance="full" ref=".[not(@lang)] | .[not(@script)] | .[not(@transliteration)] | .[not(@xml:lang)]">
                         <xf:switch>
                             <xf:case id="affiliation-add-node-hide">
                                 <div class="node-button">
@@ -1274,7 +1295,6 @@
                     </xf:group>
                 </xf:repeat>
             </xf:group>
-            <!--NB: this can be repeated according to schema 3.3 and 3.4.-->
             <xf:group appearance="full" class="fieldset level-2" ref=".[mods:description]">
                 <div class="join">
                     <span class="legend">Description</span>
@@ -1282,7 +1302,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:name" at="index('name-repeat')" position="before"/>
+                                <xf:insert nodeset="mods:description" at="index('name-repeat')" position="before" origin="instance('insert-templates')/mods:name/mods:description"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1290,7 +1310,7 @@
                         <xf:trigger>
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:description" at="index('description-repeat')" position="before"/>
+                                <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:name/mods:description" at="index('description-repeat')"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1301,8 +1321,13 @@
                         </div>
                     </span>
                 </div>
+                <!-- attributes: lang; xml:lang; script; transliteration. Full. -->
+                <!-- subelements: none. -->
+                <!-- node-adds: work, except xml:lang. -->
+                <!-- element deletion: works. -->
+                <!-- element repetition: works. -->
                 <xf:repeat nodeset="./mods:description" id="description-repeat">
-                    <xf:group appearance="full" ref="                         .[not(@lang)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">
+                    <xf:group appearance="full" ref=".[not(@lang)] | .[not(@script)] | .[not(@transliteration)] | .[not(@xml:lang)]">
                         <xf:switch>
                             <xf:case id="description-add-node-hide">
                                 <div class="node-button">

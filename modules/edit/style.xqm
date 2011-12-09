@@ -25,8 +25,7 @@ declare variable $style:web-path-to-app :=
             style:substring-before-last-slash(style:substring-before-last-slash(substring-after(request:get-uri(), '/rest')))
 ;
 declare variable $style:db-path-to-site  := concat('xmldb:exist://',  $style:web-path-to-site);
-declare variable $style:db-path-to-app  := concat('xmldb:exist://', $style:web-path-to-app) ;
-declare variable $style:db-path-to-app-data := concat($style:db-path-to-app, '/data');
+declare variable $style:db-path-to-app  := concat('xmldb:exist://', $style:web-path-to-app);
 
 declare variable $style:site-resources := concat(request:get-context-path(), '/rest', $style:web-path-to-site, '/resources');
 declare variable $style:site-styles := concat(request:get-context-path(), '/rest', $style:web-path-to-site, '/styles');
@@ -56,10 +55,10 @@ as element() {
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <title>
             <!--eXist-begin-->
-                eXist Bibliographical Demo
+                eXist Bibliographical Demo - MODS Editor
                 <!--eXist-end-->
             <!--Tamboti-begin
-                Tamboti Metadata Framework
+                Tamboti Metadata Framework - MODS Editor
             Tamboti-end-->
             </title>
          { style:css('xhtml') }
@@ -169,10 +168,10 @@ as node()+ {
             
             <title>
             <!--eXist-begin-->
-                eXist Bibliographical Demo - MODS record editor
+                eXist Bibliographical Demo - MODS Editor
                 <!--eXist-end-->
             <!--Tamboti-begin
-                Tamboti Metadata Framework - MODS record editor
+                Tamboti Metadata Framework - MODS Editor
             Tamboti-end-->
             </title>
             <script type="text/javascript" src="libs/scripts/jquery/jquery-1.6.2.min.js"></script> 

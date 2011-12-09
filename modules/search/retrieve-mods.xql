@@ -1393,17 +1393,17 @@ declare function mods:format-multiple-names($entry as element()*, $caller as xs:
 
 (: ### <typeOfResource> begins ### :)
 
-declare function mods:return-type($id as xs:string, $entry ) {
+declare function mods:return-type($entry ) {
     let $type := $entry/mods:typeOfResource[1]/string()
     return
-        if (exists($type)) (:check if the file type is retrieved in mods file:)
-    then  
-        replace(replace(
-        if ($type)
-        then $type
-        else 'text'
-        ,' ','_'),',','')
-    else 'text-x-changelog'
+        if (exists($type))
+        then  
+            replace(replace(
+            if ($type)
+            then $type
+            else 'text'
+            ,' ','_'),',','')
+        else 'text-x-changelog'
 };
 
 (: ### <typeOfResource> ends ### :)
@@ -1746,7 +1746,7 @@ if ($titleInfo)
 
 declare function mods:get-related-items($entry as element(mods:mods), $caller as xs:string) {
     for $item in $entry/mods:relatedItem
-    let $type := $item/@type
+    let $type := $item/@type/string()
     let $ID := $item/@ID
     let $displayLabel := $item/@displayLabel
     let $titleInfo := $item/mods:titleInfo
@@ -1820,11 +1820,12 @@ declare function mods:get-related-items($entry as element(mods:mods), $caller as
 	                    </td>
 	                </tr>
 	            else
+	                (: If there is no xlink :)
 	                if ($caller eq 'detail')
 	                then
 	                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
 	                    <td class="url label relatedItem-label">
-	                        {$type}
+	                        {functx:capitalize-first(functx:camel-case-to-words($type, ' '))}
 	                    </td>
 	                    <td class="relatedItem-record">
 	                        <span class="relatedItem-span">{mods:format-related-item($relatedItem)}</span>
@@ -2247,7 +2248,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     return mods:simple-row($item, concat('Classification', $authority))
     ,
     (: records referring to current record if current record is a periodical or an edited volume :)
-    if (1)(:($entry/mods:genre = ('periodical', 'editedVolume', 'newspaper', 'journal', 'festschrift', 'encyclopedia', 'conference publication')):) 
+    if ($entry/mods:genre = ('periodical', 'editedVolume', 'newspaper', 'journal', 'festschrift', 'encyclopedia', 'conference publication', 'canonical scripture')) 
     then
         let $linked-ID := concat('#',$ID)
         let $linked-records := collection($config:mods-root)//mods:mods[mods:relatedItem[@type eq 'host']/@xlink:href eq $linked-ID]
@@ -2261,7 +2262,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
                     <a href="?action=&amp;filter=XLink&amp;value={$linked-ID}">&lt;&lt; Catalogued Contents:</a>
                 </td>
                 <td class="relatedItem-record">
-                    <span class="relatedItem-span">{$linked-records-count}</span>
+                    <span class="relatedItem-span">{$linked-records-count} records</span>
                 </td>
             </tr>
         else
@@ -2290,8 +2291,8 @@ declare function mods:format-url($entry as element(mods:mods) , $collection-shor
 let $url   := $entry/mods:location/mods:url
 let $myurl := if ($url/@access='preview')  then (concat('images/',$collection-short,'/',$url,'?s',$config:url-image-size)) else($url)
 return $myurl
-
 };
+
 (: Creates view for hitlist. :)
 (: NB: "mods:format-list-view()" is referenced in session.xql. :)
 declare function mods:format-list-view($id as xs:string, $entry as element(mods:mods), $collection-short as xs:string) {

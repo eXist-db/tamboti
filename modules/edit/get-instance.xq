@@ -2,73 +2,46 @@ xquery version "1.0";
 import module namespace style = "http://exist-db.org/mods-style" at "style.xqm";
 import module namespace config = "http://exist-db.org/mods/config" at "../config.xqm";
 declare namespace mods = "http://www.loc.gov/mods/v3";
+declare namespace mads = "http://www.loc.gov/mads/";
 
 (: get-instance.xq - gets the instance data to load into the editor and prunes the mods record to only load the instance data that is needed for a given tab.
 Note that the instance that this script returns MUST include an ID for saving.
 :)
 
-(: This is the document we are going to edit if we are not creating a new record :)
+(: This is the id of the document we are going to edit if we are not creating a new record :)
 let $id := request:get-parameter('id', '')
+(:called once:)
 
 (: This is the ID of the tab but we just use tab in the URL. If no tab-id is
    specified, then we use the title tab.  :)
 let $tab-id := request:get-parameter('tab-id', 'title')
 
-let $debug := request:get-parameter('debug', 'false')
+let $collection := $config:mods-temp-collection
 
-(: The data collection passed in the URL :)
-let $collection := request:get-parameter('data', ())
+(: Get the document with the parameter id in temp. :)
+let $instance := collection($collection)//mods:mods[@ID = $id]
 
-let $app-collection := $style:db-path-to-app
-let $data-collection :=
-    if ($collection) then
-        $collection
-    else
-        $style:db-path-to-app-data
+(: Get the tab data for the tab-id. :)
+let $tab-data := doc(concat($config:edit-app-root, '/tab-data.xml'))/tabs/tab[tab-id = $tab-id]
 
-(: If we are creating a new form, then just get the part of the new-instance.  Else get the data from the correct document
-   in the mods data collection that has the correct collection id :)
-let $full-instance :=
-   if ($id='')
-      then doc(concat($config:edit-app-root, '/new-instance.xml'))/mods:mods
-      else collection($data-collection)//mods:mods[@ID = $id]
-
-(: open the tab database so for a given tab, we go into the tab database and get the right path :)
-let $tab-data := doc(concat($config:edit-app-root, '/tab-data.xml'))/tabs
-
-(: get the tab data for this tab. :)
-let $tab-data := $tab-data/tab[tab-id = $tab-id]
-
-(: get a list of all the XPath expressions to include in this instance used by the form :)
-let $paths := $tab-data/path/text()
+(: Get a list of all the XPath expressions to include in this instance used by the form :)
+let $paths := $tab-data/path
 
 (: build up a string of prefix:element pairs for doing an eval :)
-let $path-string :=
-string-join((
-    for $path in $paths
-    return 
-      concat('mods:', $path),
-    'mods:extension')  
-  , ', ')
+let $path-string := string-join($paths, ', ')
 
 (: now get the eval string ready for use :)
-let $eval-string := concat('$full-instance/', '(', $path-string, ')')
-
+let $eval-string := concat('$instance/', '(', $path-string, ')')
+let $log := util:log("DEBUG", ("##$eval-string): ", $eval-string))
 return
-<mods:mods ID="{$id}">
-
-  { (: this is used for debugging only.  Just add "debug=true" to the URL and it will be added to the output :) 
-  if ($debug = 'true')
-    then <debug>
-      <id>{$id}</id>
-      <tab-id>{$tab-id}</tab-id>
-      <instance>{$full-instance}</instance>
-      <path-string>{$path-string}</path-string>
-      <eval-string>{$eval-string}</eval-string>
-    </debug> else ()
-  }
-  
-  { (: this is where we run the query that gets just the data we need for this tab :)
-  util:eval($eval-string)}
-  
-</mods:mods>
+if ($tab-id eq 'mads')
+then 
+    <mads:mads ID="{$id}">
+      { (: this is where we run the query that gets just the data we need for this tab :)
+      util:eval($eval-string)}
+    </mads:mads>
+else
+    <mods:mods ID="{$id}">
+      { (: this is where we run the query that gets just the data we need for this tab :)
+      util:eval($eval-string)}
+    </mods:mods>

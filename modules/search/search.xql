@@ -113,12 +113,13 @@ declare variable $biblio:TEMPLATE_QUERY :=
     Regenerate the HTML form to match the query, e.g. after adding more filter
     clauses.
 :)
-declare function biblio:form-from-query($incomingQuery as element()?) as element()+ {
-    let $query := if ($incomingQuery//field) then $incomingQuery else $biblio:TEMPLATE_QUERY
+(: NB: why can only two filters be added? Clicking on a filter adds it to the search, but adding a third filter does not work. :)
+declare function biblio:form-from-query($incoming-query as element()?) as element()+ {
+    let $query := if ($incoming-query//field) then $incoming-query else $biblio:TEMPLATE_QUERY
     for $field at $pos in $query//field
     return
         <tr class="repeat">
-            <td class="label">
+            <td class="operator">
             {
                 let $operator := 
                     if ($field/preceding-sibling::*) then
@@ -144,7 +145,7 @@ declare function biblio:form-from-query($incomingQuery as element()?) as element
                     </select>
             } 
             </td>
-            <td class="search-field"> 
+            <td class="search-term"> 
                 <jquery:input name="input{$pos}" value="{$field/string()}">
                     <jquery:autocomplete url="autocomplete.xql"
                         width="300" multiple="false"
@@ -153,8 +154,9 @@ declare function biblio:form-from-query($incomingQuery as element()?) as element
                     </jquery:autocomplete>
                 </jquery:input>
             </td>
-            <td class="label">
-                in <select name="field{$pos}">
+            <td class="search-field">
+                in 
+                <select name="field{$pos}">
                 {
                     for $f in $biblio:FIELDS/field
                     return
@@ -176,9 +178,9 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
     typeswitch ($query-as-xml)
         case element(query) return
             for $child in $query-as-xml/*
-            (:the query is decomposed into collection and field:)
-                        return
-                biblio:generate-query($child)
+            (: The query is decomposed into collection and field. Why does this not include sort? :)
+                return
+                    biblio:generate-query($child)
         case element(and) return
             (
                 biblio:generate-query($query-as-xml/*[1]), 
@@ -214,12 +216,12 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 (:if ($collection-path eq $config:groups-collection or $collection-path eq fn:replace($config:groups-collection, "/db/", "")):)
                 then
                 (
-                    (: searching the virtual 'groups' collection means searching the users collection. :)
+                    (: searching the virtual 'groups' collection means searching the users collection. ??? :)
                     fn:concat("collection('", $config:users-collection, "')//")
                 )
                 else
                 (
-                    (: search one of the user's own collection or a commons collection. :)
+                    (: search one of the user's own collections or a commons collection. :)
                     fn:concat("collection('", $collection-path, "')//")
                 )
             return
@@ -325,7 +327,7 @@ declare function biblio:process-form() as element(query)? {
     Helper function used to sort by name within the "order by"
     clause of the query.
 :)
-declare function biblio:orderByAuthor($m as element()) as xs:string?
+declare function biblio:order-by-author($m as element()) as xs:string?
 {
     (: Pick the first name of an author/creator. :)
     let $names := $m/mods:name[mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator') or not(mods:role/mods:roleTerm)][1] 
@@ -364,12 +366,10 @@ declare function biblio:orderByAuthor($m as element()) as xs:string?
 	    			else $name/mods:namePart[1]/text()
 	let $sortLast :=
 	    	if ($name/mods:namePart[@lang = ('eng', 'fre', 'ger')]/text())
-	    	then
-	    		$name/mods:namePart[@lang = ('eng', 'fre', 'ger')][@type='given'][1]/text()
+	    	then $name/mods:namePart[@lang = ('eng', 'fre', 'ger')][@type='given'][1]/text()
 	    	else
 		    	if ($name/mods:namePart[@transliteration]/text())
-		    	then
-		    		$name/mods:namePart[@type='given'][@transliteration][1]/text()
+		    	then $name/mods:namePart[@type='given'][@transliteration][1]/text()
 			    else
 			    	if ($name/mods:namePart[not(@script) or @script = 'Latn']/text())
 		    		then $name/mods:namePart[@type='given'][not(@script) or @script = 'Latn'][1]/text()
@@ -381,41 +381,47 @@ declare function biblio:orderByAuthor($m as element()) as xs:string?
 };
     
 (: Map order parameter to xpath for order by clause :)
-declare function biblio:orderExpr($field as xs:string?) as xs:string
+(: NB: It does not make sense to use Score if there is no search term to score on. :)
+declare function biblio:construct-order-by-expression($field as xs:string?) as xs:string
 {
-    if (sort:has-index('mods:name')) then
-        if ($field eq "Score") then
-            "ft:score($hit) descending"
-        else if ($field = "Author") then
-            "sort:index('mods:name', $hit)"
-        else if ($field = "Title") then
-            "sort:index('mods:title', $hit)"
-        else
-            "sort:index('mods:date', $hit)"
+    if (sort:has-index('mods:name')) 
+    (: If there is an index on name, there will be an index on the other options. ??? :)
+    then
+        if ($field eq "Score") 
+        then "ft:score($hit) descending"
+        else 
+            if ($field = "Author") 
+            then "sort:index('mods:name', $hit)"
+            else 
+                if ($field = "Title")
+                then "sort:index('mods:title', $hit)"
+                (: Defaulting to $field = "Date" :)
+                else "sort:index('mods:date', $hit)"
     else
-        if ($field eq "Score") then
-            "ft:score($hit) descending"
-        else if ($field = "Author") then
-            "biblio:orderByAuthor($hit)"
-        else if ($field = "Title") then
-            "$hit/mods:titleInfo[not(@type)][1]/mods:title[1] ascending empty greatest"
-        else
-            "$hit/mods:originInfo[1]/mods:dateIssued[1]/number() descending empty least"
+        if ($field eq "Score") 
+        then "ft:score($hit) descending"
+        else 
+            if ($field = "Author") 
+            then "biblio:order-by-author($hit)"
+            else 
+                if ($field = "Title") 
+                then "$hit/mods:titleInfo[not(@type)][1]/mods:title[1] ascending empty greatest"
+                else "$hit/mods:originInfo[1]/mods:dateIssued[1]/number() descending empty least"
 };
 
 (:~
     Evaluate the actual XPath query and order the results
 :)
 declare function biblio:evaluate-query($query-as-string as xs:string, $sort as xs:string?) {
-    let $sortExpr := biblio:orderExpr($sort)
-    let $orderedQuery :=
-            concat("for $hit in ", $query-as-string, " order by ", $sortExpr, " return $hit")
+    let $order-by-expression := biblio:construct-order-by-expression($sort)
+    let $query-with-order-by-expression :=
+            concat("for $hit in ", $query-as-string, " order by ", $order-by-expression, " return $hit")
     let $options :=
         <options>
             <default-operator>and</default-operator>
         </options>
     return
-        util:eval($orderedQuery)
+        util:eval($query-with-order-by-expression)
 };
 
 (:~
@@ -974,6 +980,7 @@ let $mylist := request:get-parameter("mylist", ())
 let $collection := uu:escape-collection-path(request:get-parameter("collection", $config:mods-root))
 let $collection := if (starts-with($collection, "/db")) then $collection else concat("/db", $collection)
 let $id := request:get-parameter("id", ())
+(:the search term passed in the url:)
 let $value := request:get-parameter("value",())
 let $sort := request:get-parameter("sort", ())
 return

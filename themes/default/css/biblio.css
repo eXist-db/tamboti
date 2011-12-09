@@ -12,6 +12,10 @@
 color scheme ends*/
 
 /*new or temporary stuff begins*/
+#keyword-form input {
+    margin-right:1em;
+}
+
 #move-resource-dialog,
 #resource-move-destinations,
 #remove-resource-form
@@ -26,6 +30,7 @@ color scheme ends*/
 #add-field {
     margin-right:2.2em;
 }
+
 #new-resource-form li input {
     margin-right:1em;
 }
@@ -291,11 +296,13 @@ td.collection-path {
 	background-color:#5DB0E6;
 }
 
-.label select {
+.operator select,
+.search-field select
+{
 	margin-left:.5em;
 }
 
-.search-field {
+.search-term {
 	width:10em;
 }
 
@@ -562,6 +569,7 @@ table .pagination-toggle {
     cursor:pointer;
     text-decoration:none;
     line-height:1.8em;
+    padding-top:1px;
     padding-left:.5em;
     padding-right:.5em;
     -moz-border-radius-topright:4px;

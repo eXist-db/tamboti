@@ -4,19 +4,14 @@
         <jquery:panel id="keywords" title="Title Words" on-select="loadIndexTerms">
             <div class="keyword-prefix">
                 <form id="keyword-form">
-                    <input type="text" name="input-keyword-prefix" size="8" value="a" title="Change prefix to view more terms."/>
+                    <input type="text" name="input-keyword-prefix" size="8" value="a" title="Enter one or more characters to view title words that begin with them."/>
                     <input type="submit" value="Show"/>
                 </form>
             </div>
             <div id="keywords-result"/>
         </jquery:panel>
-        <jquery:panel id="author" title="Authors" href="filters.xql?type=author"/>
+        <jquery:panel id="author" title="Names" href="filters.xql?type=author"/>
         <jquery:panel id="date" title="Dates" href="filters.xql?type=date"/>
         <jquery:panel id="subject" title="Subjects" href="filters.xql?type=subject"/>
     </jquery:ajax-accordion>
-    <!--<div class="banner">
-        <a href="http://exist-db.org" target="_blank">
-            <img xmlns:xi="http://www.w3.org/2001/XInclude" alt="powered by eXist" border="0" src="theme/images/powered.gif"/>
-        </a>
-    </div>-->
 </div>

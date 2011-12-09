@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <tabs>
     <tab>
         <top-tab-label>Basic Input Forms</top-tab-label>
@@ -14,13 +15,14 @@
         <book-review-transliterated>Book Review Article</book-review-transliterated>
         <contribution-to-edited-volume-latin>Contribution</contribution-to-edited-volume-latin>
         <contribution-to-edited-volume-transliterated>Contribution</contribution-to-edited-volume-transliterated>
-        <path>titleInfo</path>
-        <path>name</path>
-        <path>originInfo</path>
-        <path>physicalDescription</path>
-        <path>identifier</path>
-        <path>location</path>
-        <path>language</path>
+        <path>mods:titleInfo</path>
+        <path>mods:name</path>
+        <path>mods:originInfo</path>
+        <path>mods:physicalDescription</path>
+        <path>mods:identifier</path>
+        <path>mods:location</path>
+        <path>mods:language</path>
+        <path>mods:extension</path>
     </tab>
     <tab>
         <top-tab-label>Basic Input Forms</top-tab-label>
@@ -37,8 +39,9 @@
         <book-review-transliterated>Periodical With Book Review and Book Reviewed</book-review-transliterated>
         <contribution-to-edited-volume-latin>Edited Volume</contribution-to-edited-volume-latin>
         <contribution-to-edited-volume-transliterated>Edited Volume</contribution-to-edited-volume-transliterated>
-        <path>relatedItem</path>
-        <path>language</path>
+        <path>mods:relatedItem</path>
+        <path>mods:language</path>
+        <path>mods:extension</path>
     </tab>
     <tab>
         <top-tab-label>Basic Input Forms</top-tab-label>
@@ -55,15 +58,16 @@
         <book-review-transliterated>Contents of Article With Book Review</book-review-transliterated>
         <contribution-to-edited-volume-latin>Contents of Contribution</contribution-to-edited-volume-latin>
         <contribution-to-edited-volume-transliterated>Contents of Contribution</contribution-to-edited-volume-transliterated>
-        <path>subject</path>
-        <path>note</path>
-        <path>abstract</path>
+        <path>mods:subject</path>
+        <path>mods:note</path>
+        <path>mods:abstract</path>
+        <path>mods:extension</path>
     </tab>
     <tab>
         <top-tab-label>Citation Forms</top-tab-label>
         <label>Title Information</label>
         <tab-id>title</tab-id>
-        <path>titleInfo</path>
+        <path>mods:titleInfo</path>
         <top-tab-number>2</top-tab-number>
     </tab>
     <tab>
@@ -71,146 +75,146 @@
         <label>Name Information</label>
         <tab-id>name</tab-id>
         <top-tab-number>2</top-tab-number>
-        <path>name</path>
+        <path>mods:name</path>
     </tab>
     <tab>
         <top-tab-label>Citation Forms</top-tab-label>
         <label>Origin Information</label>
         <tab-id>origin</tab-id>
         <top-tab-number>2</top-tab-number>
-        <path>originInfo</path>
+        <path>mods:originInfo</path>
     </tab>
     <tab>
         <top-tab-label>Citation Forms</top-tab-label>
         <label>Origin Information: Dates</label>
         <tab-id>origin-date</tab-id>
         <top-tab-number>2</top-tab-number>
-        <path>originInfo</path>
+        <path>mods:originInfo</path>
     </tab>
     <tab>
         <top-tab-label>Citation Forms</top-tab-label>
         <label>Parts</label>
         <tab-id>part</tab-id>
         <top-tab-number>2</top-tab-number>
-        <path>part</path>
+        <path>mods:part</path>
     </tab>
     <tab>
         <top-tab-label>Citation Forms</top-tab-label>
         <label>Physical Description</label>
         <tab-id>physical-description</tab-id>
         <top-tab-number>2</top-tab-number>
-        <path>physicalDescription</path>
+        <path>mods:physicalDescription</path>
+    </tab>
+    <tab>
+        <top-tab-label>Content Description Forms</top-tab-label>
+        <label>Notes</label>
+        <tab-id>note</tab-id>
+        <top-tab-number>3</top-tab-number>
+        <path>mods:note</path>
     </tab>
     <tab>
         <top-tab-label>Content Description Forms</top-tab-label>
         <label>Subjects</label>
         <tab-id>subject</tab-id>
         <top-tab-number>3</top-tab-number>
-        <path>subject</path>
+        <path>mods:subject</path>
     </tab>
     <tab>
         <top-tab-label>Content Description Forms</top-tab-label>
         <label>Abstracts</label>
         <tab-id>abstract</tab-id>
         <top-tab-number>3</top-tab-number>
-        <path>abstract</path>
+        <path>mods:abstract</path>
     </tab>
     <tab>
         <top-tab-label>Content Description Forms</top-tab-label>
         <label>TOCs</label>
         <tab-id>table-of-contents</tab-id>
         <top-tab-number>3</top-tab-number>
-        <path>tableOfContents</path>
+        <path>mods:tableOfContents</path>
     </tab>
     <tab>
         <top-tab-label>Content Description Forms</top-tab-label>
         <label>Target Audiences</label>
         <tab-id>target-audience</tab-id>
         <top-tab-number>3</top-tab-number>
-        <path>targetAudience</path>
+        <path>mods:targetAudience</path>
     </tab>
     <tab>
         <top-tab-label>Content Description Forms</top-tab-label>
         <label>Resource Languages</label>
         <tab-id>language</tab-id>
         <top-tab-number>3</top-tab-number>
-        <path>language</path>
+        <path>mods:language</path>
     </tab>
     <tab>
         <top-tab-label>Content Description Forms</top-tab-label>
         <label>Resource Types</label>
         <tab-id>type</tab-id>
         <top-tab-number>3</top-tab-number>
-        <path>typeOfResource</path>
+        <path>mods:typeOfResource</path>
     </tab>
     <tab>
         <top-tab-label>Content Description Forms</top-tab-label>
         <label>Genres</label>
         <tab-id>genre</tab-id>
         <top-tab-number>3</top-tab-number>
-        <path>genre</path>
+        <path>mods:genre</path>
     </tab>
     <tab>
         <top-tab-label>Content Description Forms</top-tab-label>
         <label>Classifications</label>
         <tab-id>classification</tab-id>
         <top-tab-number>3</top-tab-number>
-        <path>classification</path>
+        <path>mods:classification</path>
     </tab>
     <tab>
-        <top-tab-label>Remaining Forms</top-tab-label>
-        <label>Notes</label>
-        <tab-id>note</tab-id>
-        <top-tab-number>4</top-tab-number>
-        <path>note</path>
-    </tab>
-    <tab>
-        <top-tab-label>Remaining Forms</top-tab-label>
+        <top-tab-label>Related Items</top-tab-label>
         <label>Related Items</label>
         <tab-id>related</tab-id>
         <top-tab-number>4</top-tab-number>
-        <path>relatedItem</path>
+        <path>mods:relatedItem</path>
     </tab>
     <tab>
         <top-tab-label>Remaining Forms</top-tab-label>
         <label>Identifiers</label>
         <tab-id>identifier</tab-id>
-        <top-tab-number>4</top-tab-number>
-        <path>identifier</path>
+        <top-tab-number>5</top-tab-number>
+        <path>mods:identifier</path>
     </tab>
     <tab>
         <top-tab-label>Remaining Forms</top-tab-label>
         <label>Record Information</label>
         <tab-id>record-info</tab-id>
-        <top-tab-number>4</top-tab-number>
-        <path>recordInfo</path>
+        <top-tab-number>5</top-tab-number>
+        <path>mods:recordInfo</path>
     </tab>
     <tab>
         <top-tab-label>Remaining Forms</top-tab-label>
         <label>Locations</label>
         <tab-id>location</tab-id>
-        <top-tab-number>4</top-tab-number>
-        <path>location</path>
+        <top-tab-number>5</top-tab-number>
+        <path>mods:location</path>
     </tab>
     <tab>
         <top-tab-label>Remaining Forms</top-tab-label>
         <label>Access Conditions</label>
         <tab-id>access-condition</tab-id>
-        <top-tab-number>4</top-tab-number>
-        <path>accessCondition</path>
+        <top-tab-number>5</top-tab-number>
+        <path>mods:accessCondition</path>
     </tab>
     <tab>
         <top-tab-label>Remaining Forms</top-tab-label>
         <label>Extension</label>
         <tab-id>extension</tab-id>
-        <top-tab-number>4</top-tab-number>
-        <path>extension</path>
+        <top-tab-number>5</top-tab-number>
+        <path>mods:extension</path>
     </tab>
-    <tab>
+    <!--<tab>
         <top-tab-label>MADS</top-tab-label>
         <label>MADS</label>
         <tab-id>mads</tab-id>
-        <top-tab-number>4</top-tab-number>
-        <path>mads</path>
-    </tab>
+        <top-tab-number>6</top-tab-number>
+        <path>mads:mads</path>
+    </tab>-->
 </tabs>

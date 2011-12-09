@@ -27,6 +27,11 @@
                 </xf:trigger>
             </span>
         </div>
+        <!-- attributes: ID; xlink; lang; xml:lang; script; transliteration; type; authority; authorityURI; valueURI; displayLabel; supplied; usage; altRepGroup; nameTitleGroup. Full. -->
+        <!-- subelements: title, subTitle, partNumber, partName, nonSort. Full. -->
+        <!-- node-adds: work, except xml:lang and xlink:href. -->
+        <!-- element deletion: works. -->
+        <!-- element repetition: works. -->
         <xf:repeat nodeset="instance('save-data')/mods:titleInfo" id="titleInfo-repeat">
             <xf:group class="show-hide" ref=".[not(@altRepGroup)] | .[not(@authority)] | .[not(@authorityURI)] | .[not(@displayLabel)] | .[not(@ID)] | .[not(@lang)] | .[not(@nameTitleGroup)] | .[not(mods:nonSort)] | .[not(mods:partName)] | .[not(mods:partNumber)] | .[not(@script)] | .[not(mods:subTitle)] | .[not(@supplied)] | .[not(mods:title)] | .[not(@transliteration)] | .[not(@type)] | .[not(@usage)] | .[not(@valueURI)] | .[not(@xml:lang)] | .[not(@xlink:href)]                 ">
                 <xf:switch>
@@ -243,7 +248,6 @@
                     </xf:case>
                 </xf:switch>
             </xf:group>
-                <!--DLF/Aquifer: OPTIONAL-->
             <xf:group class="text_50 schema_3.3 schema_3.4">
                 <xf:input ref="./@ID">
                     <xf:label>ID<span class="xforms-help">
@@ -255,7 +259,6 @@
                     </xf:label>
                 </xf:input>
             </xf:group>
-                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
             <xf:group class="text_50 schema_3.3 schema_3.4">
                 <xf:input ref="./@xlink:href">
                     <xf:label>xlink:href<span class="xforms-help">
@@ -267,7 +270,6 @@
                     </xf:label>
                 </xf:input>
             </xf:group>
-                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
             <xf:group class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@type">
                     <xf:label>Type<span class="xforms-help">
@@ -283,13 +285,12 @@
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
             <xf:group class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@authority" selection="open">
                     <xf:label>Abbreviated Title Authorities<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
-                                <xf:output mediatype="application/xhtml+xml" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='abbreviated-title-authority']/help"/>
+                                <xf:output mediatype="application/xhtml+xml" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='authority']/help"/>
                             </div>
                         </span>
                     </xf:label>
@@ -299,7 +300,6 @@
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
             <xf:group class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@authority" selection="open">
                     <xf:label>Name-Title Authorities<span class="xforms-help">
@@ -363,7 +363,6 @@
                     </xf:label>
                 </xf:input>
             </xf:group>
-                <!--DLF/Aquifer: REQUIRED IF APPLICABLE-->
             <xf:group class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@lang">
                     <xf:label>Language<span class="xforms-help">
@@ -379,7 +378,6 @@
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-                <!--DLF/Aquifer: NOT RECOMMENDED]-->
             <xf:group class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@xml:lang">
                     <xf:label>xml:lang<span class="xforms-help">
@@ -395,13 +393,12 @@
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-                <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
             <xf:group class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@transliteration" selection="open">
                     <xf:label>Transliteration<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
-                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-transliteration']/help"/>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration']/help"/>
                             </div>
                         </span>
                     </xf:label>
@@ -411,7 +408,6 @@
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-                <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
             <xf:group class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@script">
                     <xf:label>Script
@@ -428,25 +424,23 @@
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-                <!--DLF/Aquifer: OPTIONAL]]-->
             <xf:group class="text_100 schema_3.3 schema_3.4">
                 <xf:input ref="./@displayLabel">
                     <xf:label>Display Label<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
-                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-displayLabel']/help"/>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='displayLabel']/help"/>
                             </div>
                         </span>
                     </xf:label>
                 </xf:input>
             </xf:group>
-                <!--DLF/Aquifer: N/A]]-->
             <xf:group class="schema_3.4">
                 <xf:select1 ref="./@nameTitleGroup" selection="open">
                     <xf:label>Name-Title Group<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
-                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-displayLabel']/help"/>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='displayLabel']/help"/>
                             </div>
                         </span>
                     </xf:label>
@@ -456,7 +450,6 @@
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-                <!--DLF/Aquifer: N/A]]-->
             <xf:group class="schema_3.4 select">
                 <xf:select1 ref="./@usage">
                     <xf:label>Usage<span class="xforms-help">
@@ -472,9 +465,12 @@
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-
-                <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]]-->
             <xf:group class="schema_3.3 schema_3.4 set">
+                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                <!-- subelements: none. -->
+                <!-- node-adds: n/a. -->
+                <!-- element deletion: n/a. -->
+                <!-- element repetition: n/a. -->
                 <xf:input ref="./mods:nonSort" class="text_10">
                     <xf:label>Non Sort<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -485,9 +481,12 @@
                     </xf:label>
                 </xf:input>
             </xf:group>
-
-                <!--DLF/Aquifer: [REQUIRED]-->
             <xf:group class="textarea schema_3.3 schema_3.4">
+                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                <!-- subelements: none. -->
+                <!-- node-adds: n/a. -->
+                <!-- element deletion: n/a. -->
+                <!-- element repetition: n/a. -->
                 <xf:textarea ref="./mods:title">
                     <xf:label>Title<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -498,8 +497,12 @@
                     </xf:label>
                 </xf:textarea>
             </xf:group>
-                <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
             <xf:group class="textarea schema_3.3 schema_3.4">
+                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                <!-- subelements: none. -->
+                <!-- node-adds: n/a. -->
+                <!-- element deletion: n/a. -->
+                <!-- element repetition: n/a. -->
                 <xf:textarea ref="./mods:subTitle">
                     <xf:label>Subtitle<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -510,8 +513,12 @@
                     </xf:label>
                 </xf:textarea>
             </xf:group>
-                <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
             <xf:group class="text_50 schema_3.3 schema_3.4">
+                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                <!-- subelements: none. -->
+                <!-- node-adds: n/a. -->
+                <!-- element deletion: n/a. -->
+                <!-- element repetition: n/a. -->
                 <xf:input ref="./mods:partNumber">
                     <xf:label>Part Number<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -522,8 +529,12 @@
                     </xf:label>
                 </xf:input>
             </xf:group>
-                <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
             <xf:group class="textarea schema_3.3 schema_3.4">
+                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                <!-- subelements: none. -->
+                <!-- node-adds: n/a. -->
+                <!-- element deletion: n/a. -->
+                <!-- element repetition: n/a. -->
                 <xf:textarea ref="./mods:partName">
                     <xf:label>Part Name<span class="xforms-help">
                             <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
