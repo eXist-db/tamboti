@@ -170,7 +170,7 @@ declare function bs:plain-list-view-table($item as node(), $currentPos as xs:int
             </td>
             {
             <td class="pagination-toggle">
-                <h3>{$title}</h3>
+                <h3>{xmldb:decode-uri($title)}</h3>
                 { $kwic }
             </td>
             }
