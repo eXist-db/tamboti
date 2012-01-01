@@ -153,6 +153,9 @@ declare function bs:plain-list-view-table($item as node(), $currentPos as xs:int
     let $saved := exists($stored//*[@id = $id])
     let $titleField := ft:get-field($item/@uri, "Title")
     let $title := if ($titleField) then $titleField else replace($item/@uri, "^.*/([^/]+)$", "$1")
+    let $clean := clean:cleanup($item)
+    let $collection := util:collection-name($item)
+    let $collection-short := functx:replace-first($collection, '/db/', '')
     return
         <tr xmlns="http://www.w3.org/1999/xhtml" class="pagination-item list">
             <td class="pagination-number">{$currentPos}</td>
@@ -170,7 +173,8 @@ declare function bs:plain-list-view-table($item as node(), $currentPos as xs:int
             </td>
             {
             <td class="pagination-toggle">
-                <h3>{xmldb:decode-uri($title)}</h3>
+                <span>{mods:format-list-view(string($currentPos), $clean, $collection-short)}</span>
+                <h4>{xmldb:decode-uri($title)}</h4>
                 { $kwic }
             </td>
             }

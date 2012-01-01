@@ -810,8 +810,8 @@ declare function biblio:form-select-current-user-groups($select-name as xs:strin
 
 declare function biblio:form-add-user-to-share() {
      <jquery:dialog id="add-user-to-share-dialog" modal="true" title="Add a User to Share With" width="450">
-        <div>
-            <span>Enter the user's name:</span>
+        <div>Enter the user's name:</div>
+        <div>    
             <jquery:input name="user-auto-list" id="user-auto-list">
                 <jquery:autocomplete url="autocomplete-username.xql" width="300" multiple="false" matchContains="false" minLength="2"/>
             </jquery:input>
@@ -833,7 +833,7 @@ declare function biblio:form-add-project-to-share() {
 };
 
 declare function biblio:form-collection-sharing($collection as xs:string) {
-    <jquery:dialog id="sharing-collection-dialog" modal="true" title="Folder Sharing" trigger="#collection-sharing" width="600" onOpen="updateSharingDialog">
+    <jquery:dialog id="sharing-collection-dialog" modal="true" title="Folder Sharing" trigger="#collection-sharing" width="625" onOpen="updateSharingDialog">
         <jquery:button id="cancel" label="Close"/>
         <div>Folder <strong><span id="sharing-collection-path_"></span></strong> is shared with:</div>
         <table id="collectionSharingDetails">
@@ -842,7 +842,7 @@ declare function biblio:form-collection-sharing($collection as xs:string) {
                     <th>Type</th>
                     <th>Name</th>
                     <th>Reading</th>
-                    <th>Write Allowed?</th>
+                    <th>Writing Allowed?</th>
                     <th>Remove</th>
                 </tr>
             </thead>

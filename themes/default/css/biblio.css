@@ -12,6 +12,7 @@
 color scheme ends*/
 
 /*new or temporary stuff begins*/
+
 #keyword-form input {
     margin-right:1em;
 }
@@ -910,6 +911,9 @@ span.readable .dynatree-title {
 
 /* collection sharing dialog begins*/
 
+#collectionSharingDetails_filter {float:right;
+margin-top:-2.5em;}
+
 #sharing-collection-dialog div,
 #collectionSharingDetails
     {
@@ -921,6 +925,7 @@ span.readable .dynatree-title {
 {
     display:none;
 }
+
 #collectionSharingDetails, 
 #collectionSharingDetails th, 
 #collectionSharingDetails td 
@@ -952,6 +957,10 @@ span.readable .dynatree-title {
     margin-right:2em;
 }
 
+#collectionSharingDetails_paginate {
+    vertical-align:middle;
+}
+
 #collectionSharingDetails_paginate .paginate_button_disabled {
     color:#EDEDED;
 }
@@ -961,20 +970,56 @@ span.readable .dynatree-title {
     font-weight:bold;
 }
 
+#add-new-user-to-share-button {
+    margin-right:1em;
+}
 
+#project-auto-list,
+#user-auto-list {
+    width:20em;
+}
 
 #add-user-to-share-dialog input, 
 #add-project-to-share-dialog input 
 {
-	margin:1em;
+	margin:1em 1em 1em 0;
+	display:block;
 }
 
 /* collection sharing dialog ends*/
+
+/*Zotero notes markup begins*/
+
+#results .record p,
+#results .record ol li,
+#results .record ul li 
+    {
+    margin:0;
+    border:0;
+    float:none;
+    padding:0;
+    text-align:left;
+}
+
+#results .record h1,
+#results .record h2,
+#results .record h3,
+#results .record h4,
+#results .record h5,
+#results .record h6
+    {
+    background-color:white;
+    color:black;
+    padding:0;
+    }
+
 
 #personal-list button {
     padding:2px 4px 2px 4px;
     margin-right:4px;
 }
+
+/*Zotero notes markup ends*/
 
 #login-form {
     width:30em;

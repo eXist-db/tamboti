@@ -1910,7 +1910,7 @@ declare function mods:simple-row($data as item()?, $label as xs:string) as eleme
     return
         <tr xmlns="http://www.w3.org/1999/xhtml">
             <td class="label">{$label}</td>
-            <td class="record">{string($d)}</td>
+            <td class="record">{$d}</td>
         </tr>
 };
 
@@ -2205,12 +2205,15 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     ,
     
     (: note :)
-    for $note in ($entry/mods:note)
+    for $note in $entry/mods:note
     let $displayLabel := $note/@displayLabel    
     let $type := $note/@type
+    let $text := $note/text()
+    let $double-escapes-fixed := replace(replace(replace($text, '&amp;nbsp;', '&#160;'), '&amp;gt;', '&gt;'), '&amp;lt;', '&lt;')
+    let $wrapped-with-span := concat('&lt;span>', $double-escapes-fixed, '</span>')
     return
-        (: NB: some notes contain escaped html markup! :)    
-	    mods:simple-row(replace($note, '&lt;.*?&gt;', '')
+        (: This renders html markup in Zotero exports. Stylesheet should be changed to accommodate standard markup. :)
+        mods:simple-row(util:parse($wrapped-with-span)
 	    , 
 	    concat('Note', 
 	        concat(
