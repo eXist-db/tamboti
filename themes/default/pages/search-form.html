@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<div xmlns:jquery="http://exist-db.org/xquery/jquery">
+<div xmlns:jquery="http://exist-db.org/xquery/jquery" id="query-panel">
     <jquery:tabset id="query-tabs" on-select="searchTabSelected">
         <jquery:tab id="simple" label="Simple Search">
             <form id="simple-search-form" class="search-form" action="?" name="simple-search" method="POST">
@@ -45,11 +45,11 @@
                         <td/>
                         <td colspan="2">Search for</td>
                     </tr>
-                    <tr id="form-from-query"/>
+                    <tr class="biblio:form-from-query"/>
                     <tr>
                         <td class="label">inside </td>
                         <td colspan="2">
-                            <span id="collection-path"/>
+                            <input class="biblio:collection-path collection-input" type="text" name="collection" readonly="true"/>
                         </td>
                     </tr>
                     <tr>
@@ -91,7 +91,7 @@
             </form>
         </jquery:tab>
         <jquery:tab id="query-history" label="Query History">
-            <div id="query-history-content"/>
+            <ul class="biblio:query-history"/>
         </jquery:tab>
         <jquery:tab id="personal-list" label="My List">
             <p>You have <span id="personal-list-size"/> in your list.</p>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns:jquery="http://exist-db.org/xquery/jquery" id="filters">
+    <jquery:ajax-accordion id="facets">
+        <jquery:panel id="keywords" title="Title Words" on-select="loadIndexTerms">
+            <div class="keyword-prefix">
+                <form id="keyword-form">
+                    <input type="text" name="input-keyword-prefix" size="8" value="a" title="Enter one or more characters to view title words that begin with them."/>
+                    <input type="submit" value="Show"/>
+                </form>
+            </div>
+            <div id="keywords-result"/>
+        </jquery:panel>
+        <jquery:panel id="author" title="Names" href="filters.xql?type=author"/>
+        <jquery:panel id="date" title="Dates" href="filters.xql?type=date"/>
+        <jquery:panel id="subject" title="Subjects" href="filters.xql?type=subject"/>
+    </jquery:ajax-accordion>
+</div>
