@@ -21,7 +21,7 @@ declare function local:get-item($controller as xs:string, $root as xs:string, $p
     let $item-id := fn:replace($path, $local:item-uri-regexp, "$1") return
     
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">        
-            <forward url="{theme:resolve($prefix, $root, 'pages/index.html')}">
+            <forward url="{theme:resolve-uri($prefix, $root, 'pages/index.html')}">
                 { local:set-user($username, $password) }
             </forward>
             <view>
@@ -93,7 +93,7 @@ return
             </dispatch>
 
     else if (starts-with($exist:path, "/item/theme")) then
-        let $path := theme:resolve($exist:prefix, $exist:root, substring-after($exist:path, "/item/theme"))
+        let $path := theme:resolve-uri($exist:prefix, $exist:root, substring-after($exist:path, "/item/theme"))
         let $themePath := replace($path, "^(.*)/[^/]+$", "$1")
         return
             <dispatch xmlns="http://exist.sourceforge.net/NS/exist">

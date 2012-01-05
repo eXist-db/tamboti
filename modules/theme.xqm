@@ -16,7 +16,7 @@ declare variable $theme:error := QName("http:/exist-db.org/xquery/tamboti", "err
  : @return resolved path to the resource to be used for forwarding in controller
  :)
 
-declare function theme:resolve($prefix as xs:string?, $root as xs:string, $resource as xs:string) {
+declare function theme:resolve-uri($prefix as xs:string?, $root as xs:string, $resource as xs:string) {
     let $theme := theme:theme-for-resource($prefix, $resource)
     let $path :=
         concat(
@@ -25,6 +25,32 @@ declare function theme:resolve($prefix as xs:string?, $root as xs:string, $resou
             $resource
         )
     let $log := util:log("DEBUG", ("resolved theme path: ", $path))
+    return
+        $path
+};
+
+(:~
+ : Locate the specified resource for the selected theme. The theme is determined
+ : from the URL prefix. If a resource cannot be found within the theme collection,
+ : the function falls back to the theme "default" and tries to locate the resource
+ : there.
+ :
+ : @param $prefix the URL prefix as passed in from the controller
+ : @param $root the db root of this app as passed in from the controller
+ : @param $resource path to a resource in the theme collection
+ : @return resolved path to the resource to be used for forwarding in controller
+ :)
+
+declare function theme:resolve($prefix as xs:string?, $root as xs:string, $resource as xs:string) {
+    let $theme := theme:theme-for-resource($prefix, $resource)
+    let $path :=
+        concat(
+            $config:themes,
+            "/", $theme, "/",
+            $resource
+        )
+    let $log := util:log("DEBUG", ("resolved theme path: ", $path, " prefix: ", $prefix, " root: ", $root,
+        " $config:themes: ", $config:themes))
     return
         $path
 };

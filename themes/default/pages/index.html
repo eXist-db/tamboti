@@ -1,47 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html>
-    <head>
-        <title>eXist - Bibliographic Demo</title>
-    </head>
-    <body>
-        <div id="page-head">
-            <a href="/exist/">
-                <img src="theme/images/logo.jpg" title="eXist-db: Open Source Native XML Database" alt="eXist-db: Open Source Native XML Database"/>
-            </a>
-            <div id="navbar">
-                <h1>Open Source Native XML Database</h1>
-            </div>
-        </div>
-        <div id="content1col">
-            <div id="login"/>
-            <div class="include query-panel"/>
-            <div class="include collection-tree"/>
-            <div id="main-content">
-                <div id="results-head">
-                    <span class="records-found">
-                        <span id="result-count"/> found</span>
-                    <span class="navbar">
-                        <span class="pagination-first">|&lt;</span>
-                        <span class="pagination-previous">&lt;</span>
-                        <span class="pagination-info"/>
-                        <span class="pagination-next">&gt;</span>
-                        <span class="pagination-last">&gt;|</span>
-                        <a class="pagination-toggle" href="#">List view</a>
-                        <span class="pagination-mode">
-                            View as: 
-                            <a href="" class="pagination-mode-list">List</a> |
-                            <a href="" class="pagination-mode-gallery">Gallery</a> |
-                            <a href="" class="pagination-mode-grid">Grid</a>
-                        </span>
+<div id="content1col" class="templates:surround?with=pages/page.html&amp;at=content1col">
+    <div class="biblio:login"/>
+    <div class="biblio:query">
+        <div class="templates:include?path=pages/search-form.html"/>
+        <div class="templates:include?path=pages/collection-tree.html"/>
+        <div id="main-content">
+            <div id="results-head">
+                <span class="records-found">
+                    <span class="biblio:result-count"/> found</span>
+                <span class="navbar">
+                    <span class="pagination-first">|&lt;</span>
+                    <span class="pagination-previous">&lt;</span>
+                    <span class="pagination-info"/>
+                    <span class="pagination-next">&gt;</span>
+                    <span class="pagination-last">&gt;|</span>
+                    <a class="pagination-toggle" href="#">List view</a>
+                    <span class="pagination-mode">
+                        View as: 
+                        <a href="" class="pagination-mode-list">List</a> |
+                        <a href="" class="pagination-mode-gallery">Gallery</a> |
+                        <a href="" class="pagination-mode-grid">Grid</a>
                     </span>
-                    <div id="optimize-trigger"/>
-                    <div class="navbar"/>
-                </div>
-                <div id="result-container">
-                    <div class="include filters"/>
-                    <div class="include pagination"/>
+                </span>
+                <div id="optimize-trigger"/>
+                <div class="navbar"/>
+            </div>
+            <div id="result-container">
+                <div class="templates:include?path=pages/filters.html"/>
+                <div id="pagination">
+                    <div id="results"/>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+</div>

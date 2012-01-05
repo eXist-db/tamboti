@@ -67,11 +67,11 @@ else if (ends-with($exist:resource, '.html')) then
     else
     (
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-            <forward url="{theme:resolve($exist:prefix, $exist:root, concat('pages/', $exist:resource))}">
+            <forward url="{theme:resolve-uri($exist:prefix, $exist:root, concat('pages/', $exist:resource))}">
                 { local:set-user() }
             </forward>
             <view>
-                <forward url="search.xql">
+                <forward url="../view.xql">
                     <!-- Errors should be passed through instead of terminating the request -->
                     { local:set-user() }
             		<set-attribute name="xquery.report-errors" value="yes"/>
@@ -92,7 +92,7 @@ else if ($exist:resource eq 'retrieve') then
 
 	<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
 	   { local:set-user() }
-		<forward url="{$exist:controller}/session.xql">
+		<forward url="{ theme:resolve-uri($exist:prefix, $exist:root, 'modules/session.xql') }">
 		</forward>
 	</dispatch>
 
@@ -103,7 +103,7 @@ else if (starts-with($exist:path, "/libs/")) then
     </dispatch>
 
 else if (starts-with($exist:path, "/theme")) then
-    let $path := theme:resolve($exist:prefix, $exist:root, substring-after($exist:path, "/theme"))
+    let $path := theme:resolve-uri($exist:prefix, $exist:root, substring-after($exist:path, "/theme"))
     let $themePath := replace($path, "^(.*)/[^/]+$", "$1")
     return
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
