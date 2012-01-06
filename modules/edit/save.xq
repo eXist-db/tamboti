@@ -35,12 +35,13 @@ declare function clean:clean-namespaces($node as node()) {
 };
 
 declare function xf:do-updates($item, $doc) {
-    (: This checks to see if we have a titleInfo in the saved document.  
+    (: This first checks to see if we have a titleInfo in the saved document.  
     If we do then it first deletes the titleInfo in the saved document.
-    Next it goes through each titleInfo in the incoming record and inserts it in the saved document. 
-    If name (the "next" element in the canonical order) occurs in the saved document, the titleInfo is inserted before name, maintaining order in the document.
-    (: The canonical order is: titleInfo, name, originInfo, part, physicalDescription, targetAudience, typeOfResource, genre, subject, classification, abstract, tableOfContents, note, relatedItem, identifier, location, accessCondition, language, recordInfo, extension. :)
-    If name does not occur, titleInfo is inserted at the end of the saved document.:)
+    Then it goes through each titleInfo in the incoming record and inserts it in the saved document. 
+    If name (the "next" element in the canonical order) occurs in the saved document, titleInfo is inserted before name, maintaining order.
+    If name does not occur, titleInfo is inserted at the default position, i.e. at the end of the saved document.
+    The canonical order is: titleInfo, name, originInfo, part, physicalDescription, targetAudience, typeOfResource, genre, subject, classification, abstract, tableOfContents, note, relatedItem, identifier, location, accessCondition, language, recordInfo, extension. 
+    This is then repeated for the remaining elements in the canonical order.:)
     
     if ($item/mods:titleInfo)
     then
@@ -279,73 +280,77 @@ declare function xf:do-updates($item, $doc) {
     else ()
 };
 
-(: looks for a collection containing a record with the uuid in users collection and commons collection. :)
+(: Look for the collection containing the record with the uuid in the users collection and in the commons collection.
+This means that the record temporarily in the temp collection is not found. :)
 declare function save:find-live-collection-containing-uuid($uuid as xs:string) as xs:string? {
-    let $live-record := fn:collection($config:users-collection, $config:mods-commons)/mods:mods[@ID = $uuid] 
+    let $live-record := collection($config:users-collection, $config:mods-commons)/mods:mods[@ID = $uuid] 
     return
-        if (fn:not(fn:empty($live-record))) 
-        then fn:replace(fn:document-uri(fn:root($live-record)), "(.*)/.*", "$1")
+        if (not(empty($live-record))) 
+        then replace(document-uri(root($live-record)), "(.*)/.*", "$1")
         else ()
 };
 
-(: NB: Why must this information be created in edit.xq, only to be destroyed here, after being read below, at let $target-collection? The value of $target-collection in edit.xq is correctlt set. :) 
+(: NB: Why must this information be created in edit.xq, only to be removed here, after being read below at let $target-collection? 
+The value of $target-collection in edit.xq is correctly set. :) 
 declare function save:remove-new-docs-target-collection($resource-path as xs:string) {
     update delete doc($resource-path)//e:collection
 };
 
-(: this is where the form "POSTS" documents to this XQuery using the POST method of a submission :)
+(: This is where the form "POSTS" documents to this XQuery using the POST method of a submission :)
 let $item := clean:clean-namespaces(request:get-data()/element())
 
 (: This service takes an incoming POST and saves the appropriate records :)
 (: Note that the incoming @ID is required :)
 
-(: Why does this return the temp collection, when the URL contains the target collection as "collection"? :)
+(: NB: Why does this return the temp collection, when the URL contains the target collection as "collection"? :)
 let $collection := request:get-parameter('collection', ())
 
 let $action := request:get-parameter('action', 'save')
 
-(: check to see if we have an indentifier in the incoming post :)
 let $incoming-id := $item/@ID
 
-(: if we do not have an ID then throw an error :) 
+(: If we do not have an ID, then throw an error :) 
 return
-    if ( string-length($incoming-id) = 0 )
+    if (string-length($incoming-id) eq 0)
     then
         <error>
             <message class="warning">ERROR! Attempted to save a record with no ID specified.</message>
         </error>
     else
-        (: else we are doing an update to an existing file with an ID :)
+        (: otherwise, we are doing an update to an existing file with an ID (unless the action is cancel). :)
         let $file-to-update := concat($incoming-id, '.xml')
+        (: This always resolves to /db/resources/temp/ :)
         let $file-path := concat($collection, '/', $file-to-update)
-        (: This is the document on disk to be updated :)
+        (: This is the document in temp to be updated :)
         let $doc := doc($file-path)/mods:mods
-        (: If the incoming has any part then we update it in the document.
-        Note that is has the side effect of adding the mods prefix in the data files. 
+        (: If the incoming has any part then we update it in the document with do-updates.
+        This has the side effect of adding the mods namespace prefix in the data files. 
         To remedy this, clean:clean-namespaces() is applied to the record. :)
         (: TODO: figure out some way to pass the element name to an XQuery function and then do an eval on the update :)
         let $updates := 
-            if ($action eq 'cancel') 
+            if ($action eq 'cancel')
+            (: Remove the document from temp. :)
             then xmldb:remove($collection, $file-to-update)
             else
-                if ($action eq 'close') 
+                if ($action eq 'close')
+                (: If the user terminates editing. :)
                 then        
-                    (: get the target collection. If its an edit to an existing document we can find this by its uuid,
-                    otherwise it can be found in the e:collection element of the document. :)
+                    (: Get the target collection. If it's an edit to an existing document, we can find this by its uuid,
+                    otherwise it can be found in the e:collection element of the document, added in edit.xq. :)
                     (: NB: it should not be required to use e:collection. :)
                     let $target-collection := 
                         let $live-target-collection := save:find-live-collection-containing-uuid($incoming-id) 
                         return
-                            if (fn:not(fn:empty($live-target-collection)))
+                            if (not(empty($live-target-collection)))
                             then $live-target-collection
                             else $doc/mods:extension/e:collection/string()
                     return
                     (
                         xf:do-updates($item, $doc),
                         xmldb:move($collection, $target-collection, $file-to-update),
-                        save:remove-new-docs-target-collection(fn:concat($target-collection, "/", $file-to-update)),
-                        (: set the same permissions on the new file as the parent collection :)
-                        security:apply-parent-collection-permissions(xs:anyURI(fn:concat($target-collection, "/", $file-to-update)))
+                        save:remove-new-docs-target-collection(concat($target-collection, "/", $file-to-update)),
+                        (: Set the same permissions on the new file as the parent collection :)
+                        security:apply-parent-collection-permissions(xs:anyURI(concat($target-collection, "/", $file-to-update)))
                     )
                 else xf:do-updates($item, $doc)    
         return ()

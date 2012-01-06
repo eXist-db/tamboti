@@ -32,7 +32,7 @@ let $path-string := string-join($paths, ', ')
 
 (: now get the eval string ready for use :)
 let $eval-string := concat('$instance/', '(', $path-string, ')')
-let $log := util:log("DEBUG", ("##$eval-string): ", $eval-string))
+(:let $log := util:log("DEBUG", ("##$eval-string): ", $eval-string)):)
 return
 if ($tab-id eq 'mads')
 then 

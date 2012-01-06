@@ -18,37 +18,35 @@ declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace e="http://www.asia-europe.uni-heidelberg.de/";
 declare namespace mads="http://www.loc.gov/mads/";
 
-declare function local:get-target-collection($target-collection as xs:string) as xs:string {
-    let $target-collection := uu:escape-collection-path(request:get-parameter("collection", ""))
-    return $target-collection};
-
 declare function local:create-new-record($id as xs:string, $type-request as xs:string, $target-collection as xs:string) as empty() {
-       (: Copy the template into data and store it with the ID as file name. :)
-       let $log := util:log("DEBUG", ("##$id-edit1): ", $id))
-       let $log := util:log("DEBUG", ("##$target-collection1): ", $target-collection))
-       let $template-doc := doc(concat($config:edit-app-root, '/instances/', $type-request, '.xml')),
-       (: Store it in the right location :)
-       (:$log := util:log("DEBUG", ("##$type-request): ", $type-request)),:)
-       $stored := xmldb:store($config:mods-temp-collection, concat($id, '.xml'), $template-doc),
-       
-       (: TEMP whilst eXist-db permissions remain rwu, once they are rwx - this can be changed to rw :)
-       $null := sm:chmod(xs:anyURI($stored), "rwu------"),
-       
-       (: Get the remaining parameters. :)
-       (: Parameter 'host' is used when related records are created. :)
-       $host := request:get-parameter('host', ""),
-       $languageOfResource := request:get-parameter("languageOfResource", ""),
-       $scriptOfResource := request:get-parameter("scriptOfResource", ""),
-       $transliterationOfResource := request:get-parameter("transliterationOfResource", ""),
-       $languageOfCataloging := request:get-parameter("languageOfCataloging", ""),
-       $scriptOfCataloging := request:get-parameter("scriptOfCataloging", ""),
-       (: Determine if script is Latin or not. :)
-       (:$scriptTypeOfResource := doc(concat($config:edit-app-root, "/code-tables/language-3-type-codes.xml"))/code-table/items/item[value = $languageOfResource]/data(scriptClassifier),:)
-       (:$scriptTypeOfCataloging := doc(concat($config:edit-app-root, "/code-tables/language-3-type-codes.xml"))/code-table/items/item[value = $languageOfCataloging]/data(scriptClassifier),:)
-       
-       $doc := doc($stored)
-         
-       (: Note that we can not use "update replace" if we want to keep the default namespace. :)
+    (: Copy the template into data and store it with the ID as file name. :)
+    (:let $log := util:log("DEBUG", ("##$id-edit1): ", $id)):)
+    (:let $log := util:log("DEBUG", ("##$target-collection1): ", $target-collection)):)
+    let $transliterationOfResource := request:get-parameter("transliterationOfResource", "")
+    let $type-request := 
+        if ($type-request = ('related-article-in-periodical', 'related-book-chapter','suebs-tibetan', 'insert-templates', 'new-instance', 'mads'))
+        (: These document types do not (yet) divide into latin and transliterated. :)
+        then $type-request
+        else
+            if ($transliterationOfResource) 
+            then concat($type-request, '-transliterated') 
+            else concat($type-request, '-latin') 
+    let $template-doc := doc(concat($config:edit-app-root, '/instances/', $type-request, '.xml'))
+    (: Store it in the right location :)
+    let $stored := xmldb:store($config:mods-temp-collection, concat($id, '.xml'), $template-doc)   
+    (: NB: TEMP whilst eXist-db permissions remain rwu, once they are rwx - this can be changed to rw :)
+    let $null := sm:chmod(xs:anyURI($stored), "rwu------")
+    
+    (: Get the remaining parameters. :)
+    (: Parameter 'host' is used when related records are created. :)
+    let $host := request:get-parameter('host', "")
+    let $scriptOfResource := request:get-parameter("scriptOfResource", "")
+    let $languageOfResource := request:get-parameter("languageOfResource", "")
+    let $languageOfCataloging := request:get-parameter("languageOfCataloging", "")
+    let $scriptOfCataloging := request:get-parameter("scriptOfCataloging", "")       
+    let $doc := doc($stored)
+    
+    (: Note that we cannot use "update replace" if we want to keep the default namespace. :)
        return (
        
           (: Update record with ID attribute. :)
@@ -68,7 +66,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
           return
           update insert $language-insert into $doc/mods:mods
           ,
-          (: Save creation date and language and script of cataloguing :)
+          (: Save library reference, creation date, and language and script of cataloguing :)
           let $recordInfo-insert:=
               <mods:recordInfo lang="eng" script="latn">
                   <mods:recordContentSource authority="marcorg">DE-16-158</mods:recordContentSource>
@@ -88,7 +86,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
           return
           update insert $recordInfo-insert into $doc/mods:mods
           ,
-          (: Save name of user collection, name of template used, script type and transliteration scheme used into mods:extension. :)
+          (: Save name of user collection, name of template used, and transliteration scheme used into mods:extension. :)
           (: NB: it should not be necessary to save $target-collection in the document, to be picked up in save.xq and then removed! :)  
           update insert
               <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://www.asia-europe.uni-heidelberg.de/">
@@ -111,8 +109,8 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
 declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $instance-id as xs:string) as element(xf:model) {
 
     let $instance-src := concat('get-instance.xq?tab-id=', $tab-id, '&amp;id=', $id, '&amp;data=', $config:mods-temp-collection)
-    let $log := util:log("DEBUG", ("##-$tab-id): ", $tab-id))
-    let $log := util:log("DEBUG", ("##$id-edit2): ", $id))
+    (:let $log := util:log("DEBUG", ("##-$tab-id): ", $tab-id)):)
+    (:let $log := util:log("DEBUG", ("##$id-edit2): ", $id)):)
     return
 
         <xf:model>
@@ -122,7 +120,7 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
            the full 3.4 schema is reflected in full-3.4-instance.xml. :)
            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="instances/insert-templates.xml" id='insert-templates' readonly="true"/>
            
-           (: A selection of elements and attributes from the MODS schema used for default records. :)
+           (: A fairly full selection of elements and attributes from the MODS schema used for default records. :)
            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="instances/new-instance.xml" id='new-instance' readonly="true"/>
            
            (: A selection of elements and attributes from the MADS schema used for default records. :)
@@ -159,8 +157,8 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
 };
 
 declare function local:create-page-content($id as xs:string, $tab-id as xs:string, $type-request as xs:string, $target-collection as xs:string, $instance-id as xs:string, $record-data as xs:string, $type-data as xs:string) as element(div) {
-let $log := util:log("DEBUG", ("##$id-edit3): ", $id))
-let $log := util:log("DEBUG", ("##$target-collection2): ", $target-collection))
+(:let $log := util:log("DEBUG", ("##$id-edit3): ", $id)):)
+(:let $log := util:log("DEBUG", ("##$target-collection2): ", $target-collection)):)
     (: Get the part of the form that belongs to the tab called. :)
     let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id = $instance-id],
     (: Get the relevant information to display on the top line, starting with "Editing record". :)
@@ -307,12 +305,12 @@ declare function local:get-instance-id($tab-id as xs:string, $type-request as xs
 
 (: If a document type is specified, then we will need to use that instance as the template. :)
 let $record-id := request:get-parameter('id', '')
-let $record-data := concat($config:mods-temp-collection, "/", $record-id,'.xml')
+let $temp-record-path := concat($config:mods-temp-collection, "/", $record-id,'.xml')
 
 (: If the record has been made with Tamoboti, it will have a template. 
 If the record is being opened from the search interface, the template name has to be retrieved in order to serve the right subform. :)
 (: NB: $stored-template has no value when a stored record is loaded for the first time. :)
-let $stored-template := doc($record-data)/mods:mods/mods:extension/e:template
+let $stored-template := doc($temp-record-path)/mods:mods/mods:extension/e:template
 (: Get the type parameter which shows which record template has been chosen.:) 
 let $type-request := request:get-parameter('type', $stored-template)
 (: If there is no type parameter, use the stored template instead. :)
@@ -327,7 +325,7 @@ let $type-data := concat($config:edit-app-root, '/code-tables/document-type-code
 if type-sort is 3, it is a mads record and the MADS forms should be shown; 
 otherwise it is an unspecified instance and Title Information should be shown. :)
 let $type-sort := doc($type-data)/code-table/items/item[value = $type-request]/sort
-let $log := util:log("DEBUG", ("##$type-sort): ", $type-sort))
+(:let $log := util:log("DEBUG", ("##$type-sort): ", $type-sort)):)
 (: Get the default tab-id. If no tab is specified, default to the compact-a tab in the case of a template to be used with Basic Input Forms;
 otherwise default to Title Information. :)
 let $default-tab-id :=
@@ -341,7 +339,7 @@ let $default-tab-id :=
 let $tab-id := request:get-parameter('tab-id', $default-tab-id)
 
 let $target-collection := uu:escape-collection-path(request:get-parameter("collection", ""))
-let $log := util:log("DEBUG", ("##$target-collection3): ", $target-collection))
+(:let $log := util:log("DEBUG", ("##$target-collection3): ", $target-collection)):)
 (: Get id parameter. Default to "new" if empty. :)
 let $id-param := request:get-parameter('id', 'new')
 
@@ -355,7 +353,8 @@ let $id :=
     else $id-param
 
 (: If we are creating a new record, then we need to call get-instance.xq with new=true to tell it to get the entire template; 
-if not, we copy the record from the target collection to temp. :)
+if we are editing an existing record, we copy the record from the target collection to temp, unless there is already a record in temp. :)
+(: What if A edits a certain record, leaving it is temp, and B edits the same record - does B then start off where A left off? :)
 let $create-new-from-template :=
 	if ($new-record) 
 	then local:create-new-record($id, $type-request, $target-collection)
@@ -367,11 +366,11 @@ let $create-new-from-template :=
 (: For a compact-b form, determine which subform to serve, based on the template. :)
 let $instance-id := local:get-instance-id($tab-id, $type-request)
 
-(: $style appears to be introduced in order to use the xf namespace in css. :)
+(: NB: $style appears to be introduced in order to use the xf namespace in css. :)
 let $style := <style type="text/css"><![CDATA[@namespace xf url(http://www.w3.org/2002/xforms);]]></style>
 let $model := local:create-xf-model($id, $tab-id, $instance-id)
-let $content := local:create-page-content($id, $tab-id, $type-request, $target-collection, $instance-id, $record-data, $type-data)
-let $log := util:log("DEBUG", ("##$target-collection4): ", $target-collection))
+let $content := local:create-page-content($id, $tab-id, $type-request, $target-collection, $instance-id, $temp-record-path, $type-data)
+(:let $log := util:log("DEBUG", ("##$target-collection4): ", $target-collection)):)
 return 
     style:assemble-form('', attribute {'mods:dummy'} {'dummy'}, $style, $model, $content, false())
     
