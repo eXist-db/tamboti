@@ -27,6 +27,7 @@ declare namespace util="http://exist-db.org/xquery/util";
 declare namespace xmldb="http://exist-db.org/xquery/xmldb";
 declare namespace functx = "http://www.functx.com";
 declare namespace xlink="http://www.w3.org/1999/xlink";
+declare namespace mods="http://www.loc.gov/mods/v3";
 
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace theme="http:/exist-db.org/xquery/biblio/theme" at "../theme.xqm";
@@ -34,7 +35,6 @@ import module namespace templates="http://exist-db.org/xquery/templates" at "../
 
 import module namespace jquery="http://exist-db.org/xquery/jquery" at "resource:org/exist/xquery/lib/jquery.xql";
 
-import module namespace mods="http://www.loc.gov/mods/v3" at "retrieve-mods.xql";
 import module namespace sort="http://exist-db.org/xquery/sort" at "java:org.exist.xquery.modules.sort.SortModule";
 import module namespace security="http://exist-db.org/mods/security" at "security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "sharing.xqm";
