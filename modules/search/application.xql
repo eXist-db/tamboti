@@ -613,7 +613,8 @@ declare function biblio:result-count($node as node(), $params as element(paramet
 };
 
 declare function biblio:resource-types($node as node(), $params as element(parameters)?, $model as item()*) {
-    let $classifier := $node/@class/string()
+    let $classifier := tokenize($node/@class, "\s")
+    let $classifier := $classifier[2]
     let $code-tables := concat($config:edit-app-root, '/code-tables')
     let $document-path := concat($code-tables, '/document-type-codes.xml')
     let $language-path := concat($code-tables, '/language-3-type-codes.xml')
