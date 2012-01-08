@@ -786,9 +786,9 @@ declare function biblio:get-writeable-subcollection-paths($path as xs:string) {
     clause with "and".
 :)
 declare function biblio:apply-filter($filter as xs:string, $value as xs:string) {
-    let $prevQuery := session:get-attribute("query") return
-    
-        if (not($prevQuery/field)) then
+    let $prevQuery := session:get-attribute("query")
+    return
+        if (empty($prevQuery//field)) then
             <query>
                 { $prevQuery/collection }
                 <field name="{$filter}">{$value}</field>
