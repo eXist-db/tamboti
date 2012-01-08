@@ -17,7 +17,8 @@ import module namespace security="http://exist-db.org/mods/security" at "../../.
 import module namespace sharing="http://exist-db.org/mods/sharing" at "../../../modules/search/sharing.xqm";
 import module namespace clean="http:/exist-db.org/xquery/mods/cleanup" at "../../../modules/search/cleanup.xql";
 import module namespace kwic="http://exist-db.org/xquery/kwic" at "resource:org/exist/xquery/lib/kwic.xql";
-    
+import module namespace modsCommon="http://exist-db.org/mods/common" at "../../../modules/mods-common.xql";
+
 declare namespace bs="http://exist-db.org/xquery/biblio/session";
 declare namespace functx = "http://www.functx.com";
 
@@ -63,7 +64,7 @@ declare function bs:get-item-uri($item-id as xs:string) {
 
 declare function bs:view-gallery-item($mode as xs:string, $item as element(mods:mods), $currentPos as xs:int) {
     let $thumbSize := if ($mode eq "gallery") then $bs:THUMB_SIZE_GALLERY else $bs:THUMB_SIZE_GRID
-    let $title := mods:get-short-title($item)
+    let $title := modsCommon:get-short-title($item)
     return
         <li class="pagination-item {$mode}" xmlns="http://www.w3.org/1999/xhtml">
             <span class="pagination-number">{ $currentPos }</span>
