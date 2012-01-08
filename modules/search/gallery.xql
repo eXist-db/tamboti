@@ -6,7 +6,9 @@ import module namespace request = "http://exist-db.org/xquery/request";
 import module namespace session = "http://exist-db.org/xquery/session";
 import module namespace util = "http://exist-db.org/xquery/util";
 
-import module namespace mods="http://www.loc.gov/mods/v3" at "retrieve-mods.xql";
+import module namespace modsCommon="http://exist-db.org/mods/common" at "../mods-common.xql";
+
+declare namespace mods="http://www.loc.gov/mods/v3";
 
 declare option exist:serialize "method=json media-type=text/javascript";
 
@@ -112,7 +114,7 @@ declare function local:image($item as xs:int) {
             return
                 <image>
                     <src>{ $imgLink }</src>
-                    <title>{ string-join(mods:get-short-title($entry), " ") }</title>
+                    <title>{ string-join(modsCommon:get-short-title($entry), " ") }</title>
                 </image>
         else
             ()
