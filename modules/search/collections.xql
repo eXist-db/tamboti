@@ -119,8 +119,7 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
     let $user := security:get-user-credential-from-session()[1] return
 
         if(security:can-read-collection($root-collection-path)) then
-            let $children := xmldb:get-child-collections($root-collection-path),
-            $can-write := security:can-write-collection($root-collection-path),
+            let $can-write := security:can-write-collection($root-collection-path),
             
             (: home collection :)
             $home-json := 
@@ -137,7 +136,9 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
             (: commons collections :)
             $public-json :=
                 for $child in xmldb:get-child-collections($config:mods-commons)
-                let $collection-path := fn:concat($config:mods-commons, "/", $child) return
+                let $collection-path := fn:concat($config:mods-commons, "/", $child)
+                order by $child
+                return
                     <node>{col:get-collection($collection-path)/child::node()}</node>
             return
             
@@ -164,7 +165,9 @@ declare function col:get-child-collections($collection-path as xs:string) as ele
                 <json:value>
                 {
                     for $child in $children
-                    let $child-collection-path := fn:concat($collection-path, "/", $child) return
+                    let $child-collection-path := fn:concat($collection-path, "/", $child)
+                    order by $child
+                    return
                     
                         (: output the child :)
                         col:get-collection($child-collection-path)
@@ -312,8 +315,7 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
         let $user := security:get-user-credential-from-session()[1] return
 
             if(security:can-read-collection($root-collection-path)) then
-                let $children := xmldb:get-child-collections($root-collection-path),
-                $can-write := security:can-write-collection($root-collection-path),
+                let $can-write := security:can-write-collection($root-collection-path),
                 
                 (: home collection :)
                 $home-json := 
@@ -333,8 +335,9 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
                 (: commons collections :)
                 $public-json :=
                     for $child in xmldb:get-child-collections($config:mods-commons)
-                    let $collection-path := fn:concat($config:mods-commons, "/", $child),
-                    $commons-child-children := col:get-child-tree-nodes-recursive($collection-path, $distinct-collection-paths[fn:starts-with(., $collection-path)], $expanded-collections)
+                    let $collection-path := fn:concat($config:mods-commons, "/", $child)
+                    let $commons-child-children := col:get-child-tree-nodes-recursive($collection-path, $distinct-collection-paths[fn:starts-with(., $collection-path)], $expanded-collections)
+                    order by $child
                     return
                         <node>{col:get-collection($collection-path, $commons-child-children, fn:contains($expanded-collections, $collection-path))/child::node()}</node>
                 return
