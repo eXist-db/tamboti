@@ -597,6 +597,8 @@ function loadIndexTerms() {
 }
 
 function autocompleteCallback(node, params) {
+    params.collection = getCurrentCollection();
+    
     var name = node.attr('name');
     var select = node.parent().parent().find('select[name ^= field]');
     if (select.length == 1) {

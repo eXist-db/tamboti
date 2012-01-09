@@ -16,6 +16,7 @@ declare function local:key($key, $options) {
     concat('"', $key, '"')
 };
 
+let $collection := request:get-parameter("collection", $local:COLLECTION)
 let $term := request:get-parameter("term", ())
 let $field := request:get-parameter("field", "All")
 let $qnames :=
@@ -27,7 +28,7 @@ let $callback := util:function(xs:QName("local:key"), 2)
 return
     concat("[",
         string-join(
-            collection($local:COLLECTION)/util:index-keys-by-qname($qnames, $term, $callback, 20, "lucene-index"),
+            collection($collection)/util:index-keys-by-qname($qnames, $term, $callback, 20, "lucene-index"),
             ', '
         ),
         "]")
