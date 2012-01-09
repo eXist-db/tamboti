@@ -16,7 +16,7 @@ declare function local:key($key, $options) {
     concat('"', $key, '"')
 };
 
-let $collection := request:get-parameter("collection", $local:COLLECTION)
+let $collection := xmldb:encode(request:get-parameter("collection", $local:COLLECTION))
 let $term := request:get-parameter("term", ())
 let $field := request:get-parameter("field", "All")
 let $qnames :=
