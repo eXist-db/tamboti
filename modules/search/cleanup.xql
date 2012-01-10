@@ -19,14 +19,15 @@ return
     else $child }
 };
 
-(: Removes empty attributes. Attributes are often left empty by the Tamboti editor. :)
+(: Removes empty attributes except @transliteration. Since transliterated title have @type value "translated", just as translated titles, the existence of @transliteration is necessary to distinguish between the two-
+Attributes are often left empty by the Tamboti editor. :)
 declare function clean:remove-empty-attributes-except-transliteration($element as element()) as element() {
 element { node-name($element)}
 { $element/@*[string-length(.) ne 0 or name(.) eq 'transliteration'],
 for $child in $element/node( )
 return 
     if ($child instance of element())
-    then clean:remove-empty-attributes($child)
+    then clean:remove-empty-attributes-except-transliteration($child)
     else $child }
 };
 
@@ -50,13 +51,15 @@ declare function clean:remove-empty-elements($nodes as node()*)  as node()* {
 (: The function called in session.xql which passes search results to retrieve-mods.xql after cleaning them. It remove all empty attributes except @transliteration, since the transliteration attribute is used, even if empty. :)
 declare function clean:cleanup($node as node()) {
         let $result := clean:remove-empty-elements($node)
+        let $log := util:log("DEBUG", ("##$result1): ", $result))
         return
             let $result := clean:remove-empty-attributes-except-transliteration($result)
+            let $log := util:log("DEBUG", ("##$result2): ", $result))
             return
                 $result
             };
 
-(: The function called in source.xql which cleans records before presenting them in XML view, for import into other tools. This also removes empty attributes. :) 
+(: The function called in source.xql which cleans records before presenting them in XML view, for import into other tools. This removes all empty attributes. :) 
  declare function clean:cleanup-for-code-view($node as node()) {
     let $result := clean:remove-empty-attributes($node)
     return

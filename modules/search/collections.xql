@@ -137,7 +137,7 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
             $public-json :=
                 for $child in xmldb:get-child-collections($config:mods-commons)
                 let $collection-path := fn:concat($config:mods-commons, "/", $child)
-                order by $child
+                order by upper-case($child)
                 return
                     <node>{col:get-collection($collection-path)/child::node()}</node>
             return
@@ -166,7 +166,7 @@ declare function col:get-child-collections($collection-path as xs:string) as ele
                 {
                     for $child in $children
                     let $child-collection-path := fn:concat($collection-path, "/", $child)
-                    order by $child
+                    order by upper-case($child)
                     return
                     
                         (: output the child :)
@@ -337,7 +337,7 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
                     for $child in xmldb:get-child-collections($config:mods-commons)
                     let $collection-path := fn:concat($config:mods-commons, "/", $child)
                     let $commons-child-children := col:get-child-tree-nodes-recursive($collection-path, $distinct-collection-paths[fn:starts-with(., $collection-path)], $expanded-collections)
-                    order by $child
+                    order by upper-case($child)
                     return
                         <node>{col:get-collection($collection-path, $commons-child-children, fn:contains($expanded-collections, $collection-path))/child::node()}</node>
                 return

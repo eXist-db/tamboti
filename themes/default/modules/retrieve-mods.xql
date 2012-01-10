@@ -1721,7 +1721,7 @@ declare function mods:format-related-item($relatedItem as element()) {
                                 ,
                                 mods:format-multiple-names($names, 'secondary', $global-transliteration)
                                 )
-                            else ()
+                            else '.'
     ,
     mods:get-part-and-origin($relatedItem)
     ,                
@@ -2165,24 +2165,28 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         (
         (: The author, etc. of the primary publication. :)
         (: NB: conference? :)
-        let $names := <entry>{$entry/mods:name[@type = ('personal', 'corporate', 'family') or not(@type)][(mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator')) or not(mods:role/mods:roleTerm)]}</entry>
+        let $names := $entry/mods:name
+        let $names-primary := <entry>{$names[@type = ('personal', 'corporate', 'family') or not(@type)][(mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator')) or not(mods:role/mods:roleTerm)]}</entry>
         return
-	        if ($names/string())
-	        then (mods:format-multiple-names($names, 'primary', $global-transliteration)
+	        if ($names-primary/string())
+	        then (mods:format-multiple-names($names-primary, 'primary', $global-transliteration)
 	        , '. ')
 	        else ()
         ,
         (: The title of the primary publication. :)
         modsCommon:get-short-title($entry)
         ,
-        let $roleTerms := $entry/mods:name/mods:role/mods:roleTerm[. = ('com', 'compiler', 'Compiler', 'editor', 'Editor', 'edt', 'trl', 'translator', 'Translator', 'annotator', 'Annotator', 'ann')]
+        let $names := $entry/mods:name
+        let $roleTerms-secondary := $names/mods:role/mods:roleTerm[. = ('com', 'compiler', 'Compiler', 'editor', 'Editor', 'edt', 'trl', 'translator', 'Translator', 'annotator', 'Annotator', 'ann')]
+        let $log := util:log("DEBUG", ("##$roleTerms): ", $roleTerms-secondary))
         return
-	        (if (not($entry/mods:relatedItem[@type eq 'host']) and not($roleTerms)) 
+	        (
+	        if (not($roleTerms-secondary)) 
 	        then '.'
 	        else ''
 	    ,
         (: The editor, etc. of the primary publication. :)
-        for $roleTerm in distinct-values($roleTerms)        
+        for $roleTerm in distinct-values($roleTerms-secondary)        
             return
                 (: NB: Can the wrapper be avoided? :)
                 let $names := <entry>{$entry/mods:name[mods:role/mods:roleTerm eq $roleTerm]}</entry>
@@ -2197,7 +2201,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
                     mods:format-multiple-names($names, 'secondary', $global-transliteration)
                     (: Terminate secondary role with period. :)
                     ,
-			        if (not($entry/mods:relatedItem[@type eq 'host']) and ($roleTerms)) 
+			        if (not($entry/mods:relatedItem[@type eq 'host']) and ($roleTerms-secondary)) 
 			        then ''
 			        else '.'
                     )
