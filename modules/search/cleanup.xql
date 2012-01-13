@@ -51,10 +51,8 @@ declare function clean:remove-empty-elements($nodes as node()*)  as node()* {
 (: The function called in session.xql which passes search results to retrieve-mods.xql after cleaning them. It remove all empty attributes except @transliteration, since the transliteration attribute is used, even if empty. :)
 declare function clean:cleanup($node as node()) {
         let $result := clean:remove-empty-elements($node)
-        let $log := util:log("DEBUG", ("##$result1): ", $result))
         return
             let $result := clean:remove-empty-attributes-except-transliteration($result)
-            let $log := util:log("DEBUG", ("##$result2): ", $result))
             return
                 $result
             };

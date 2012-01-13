@@ -106,123 +106,6 @@ declare function mods:clean-up-punctuation($element as node()) as node() {
 
 (: ### general functions end ###:)
 
-
-(:~
-: The <b>mods:get-language-term</b> function returns 
-: the <b>human-readable label</b> of the language value passed to it.  
-: This value can set in many mods elements and attributes. 
-: languageTerm can have two types, text and code.
-: Type code can use two different authorities, 
-: recorded in the code tables language-2-type-codes.xml and language-3-type-codes.xml, 
-: as well as the authority valueTerm noted in language-3-type-codes.xml.
-: The most commonly used values are checked first, letting the function exit quickly.
-: The function returns the human-readable label, based on searches in the code values and in the label.  
-:
-: @param $node A mods element or attribute recording a value, in textual or coded form
-: @return The language label string
-:)
-declare function mods:get-language-label($language as item()*) as xs:string* {
-        let $languageTerm :=
-            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[value = $language]/label
-            return
-                if ($languageTerm)
-                then $languageTerm
-                else
-                    let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTwo = $language]/label
-                    return
-                        if ($languageTerm)
-                        then $languageTerm
-                        else
-                            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTerm = $language]/label
-                            return
-                                if ($languageTerm)
-                                then $languageTerm
-                                else
-                                    let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[upper-case(label) = $language/upper-case(label)]/label
-                                    return
-                                        if ($languageTerm)
-                                        then $languageTerm
-                                        else
-                                            let $languageTerm := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[upper-case(label) = upper-case($language)]/label
-                                            return
-                                                if ($languageTerm)
-                                                then $languageTerm
-                                                else $language
-        return $languageTerm
-};
-
-(:~
-: The <b>mods:get-script-term</b> function returns 
-: the <b>human-readable label</b> of the script value passed to it.  
-: @param
-: @return
-:)
-declare function mods:get-script-term($language as node()*) as xs:string* {
-        let $scriptTerm :=
-            let $scriptTerm := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/code-table/items/item[value = $language/mods:scriptTerm[@authority]]/label
-            return
-                if ($scriptTerm)
-                then $scriptTerm
-                else
-                    let $scriptTerm := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/code-table/items/item[value = $language/mods:scriptTerm]/label
-                    return
-                        if ($scriptTerm)
-                        then $scriptTerm
-                        else ()
-        return $scriptTerm
-};
-
-(:~
-: The <b>mods:language-of-resource</b> function returns 
-: the <b>string</b> value of the language for the resource.  
-: This value is set in mods/language/languageTerm.
-: The function feeds this value to the function mods:get-language.
-: It is assumed that if two languageTerm's exist under one language, these are equivalent.
-: It is possible to have multiple mods/language for resources, just as it is possible to set the code value to 'mul', meaning Multiple languages.
-: The value is set in the dialogue which leads to the creation of a new records.
-:
-: @see xqdoc/xqdoc-display;get-language
-: @param $language The MODS languageTerm element, child of the top-level language element
-: @return The language label string
-:)
-declare function mods:language-of-resource($language as element()*) as xs:anyAtomicType* {
-        let $languageTerm := $language/mods:languageTerm[1]
-        return
-            if ($languageTerm) 
-            then mods:get-language-label($languageTerm)
-            else ()
-};
-
-declare function mods:script-of-resource($language as element()*) as xs:anyAtomicType* {
-        let $scriptTerm := $language/mods:scriptTerm
-        return
-            if ($scriptTerm) 
-            then mods:get-script-term($language)
-            else ()
-};
-
-
-(:~
-: The <b>mods:language-of-cataloging</b> function returns 
-: the <b>$string</b> value of the language for cataloguing the resource.  
-: This value is set in mods/recordInfo/languageOfCataloging.
-: The function feeds this value to the function mods:get-language.
-: It is assumed that if two languageTerm's exist under one language, these are equivalent.
-: It is possible to have multiple mods/language, for resources, just as it is possible to set the code value to 'mul', meaning Multiple languages.
-: The value is set in the dialogue which leads to the creation of a new records.
-:
-: @see xqdoc/xqdoc-display;get-language
-: @param $entry The MODS languageOfCataloging element, child of the top-level recordInfo element
-: @return The language label string
-:)
-declare function mods:language-of-cataloging($language as element(mods:languageOfCataloging)*) as xs:anyAtomicType? {
-        let $languageTerm := $language/mods:languageTerm[1]
-        return
-            if ($languageTerm) 
-            then mods:get-language-label($languageTerm)
-            else ()
-};
-
 (:~
 : The <em>mods:get-role-label-for-detail-view</em> function returns 
 : the <em>human-readable value</em> of the roleTerm passed to it.
@@ -851,8 +734,10 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
 	(: $nameLanguageLabel is retrieved only in order to get the name order. :)
 	let $nameLanguageLabel :=
         if ($name/@lang)
-        then mods:get-language-label($name/@lang)
-        else mods:language-of-resource($name/../mods:language)
+        then modsCommon:get-language-label($name/@lang/string())
+        (: If there are more language, we go by the first. :)
+        else modsCommon:get-language-label($name/../mods:language[1]/mods:languageTerm/string())
+    let $log := util:log("DEBUG", ("##$nameLanguageLabel): ", $nameLanguageLabel))
     let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[label eq $nameLanguageLabel]/nameOrder/string()
     let $nameStyle :=
         if ($nameLanguageLabel = ('Chinese','Japanese','Korean','Vietnamese'))
@@ -959,7 +844,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                     let $namePartFamilyLanguage := $name/*:namePart[type eq 'family'][1]/@lang
                     let $namePartLanguage :=
                         if ($namePartFamilyLanguage)
-                        then mods:get-language-label($namePartFamilyLanguage)
+                        then modsCommon:get-language-label($namePartFamilyLanguage/string())
                         else ()
                     let $namePartLanguageLabel :=
                         (: If there is language on namePart, use that; otherwise use language on name. :)
@@ -1169,7 +1054,7 @@ declare function mods:format-name($name as element()?, $pos as xs:integer, $call
                                     (: let $dateScript := <name>{$nameScript/*:namePart[@type eq 'date']}</name> :)
                                     let $languageScript :=
                                         if ($familyScript/@lang)
-                                        then mods:get-language-label($familyScript/@lang)
+                                        then modsCommon:get-language-label($familyScript/@lang/string())
                                         else ()
                                     let $language :=
                                         if ($languageScript)
@@ -1505,31 +1390,14 @@ if ($titleInfo)
         return
             if ($lang or $xml-lang)
             then        
-            (
-            <br/>, 'Language: '
-            ,
-            let $lang3 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:value eq $lang]/*:label
-            return
-                if ($lang3)
-                then $lang3
-                else
-                    let $lang2 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTwo eq $lang]/*:label
-                    return
-                        if ($lang2) 
-                        then $lang2
-                        else
-                            let $lang3 := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/*:code-table/*:items/*:item[*:valueTwo eq $titleInfo/@xml:lang]/*:label
-                            return
-                                if ($lang3)
-                                then $lang3
-                                else
-                                    if ($lang)
-                                    then $lang
-                                    else
-                                        if ($xml-lang)
-                                        then $xml-lang
-                                        else ()
-            ) 
+                (
+                <br/>, 'Language: '
+                ,
+                (: Prefer @lang to @xml:lang. :)
+                let $lang := if ($lang) then $lang else $xml-lang
+                return
+                modsCommon:get-language-label($lang)
+                )
             else ()
         }
         {
@@ -1983,25 +1851,28 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     (: language :)
     if ($entry/mods:language)
     then
-        mods:simple-row(string-join(
-            for $language in $entry/mods:language
+        mods:simple-row(
+        string-join(
+            for $languageTerm in distinct-values($entry/mods:language/mods:languageTerm/string())
             return
-            mods:language-of-resource($language)
+            modsCommon:get-language-label($languageTerm)
             , ', ')
         , 
-        if (count($entry/mods:language) > 1) 
+        if (count(distinct-values($entry/mods:language/mods:languageTerm/string())) > 1) 
         then 'Languages of Resource' 
         else 'Language of Resource'
         )
     else
         if ($entry/mods:relatedItem/mods:language)
         then
-            mods:simple-row(string-join(
-                for $language in $entry/mods:relatedItem/mods:language
+            mods:simple-row(
+            string-join(
+                for $languageTerm in distinct-values($entry/mods:relatedItem/mods:language/mods:languageTerm/string())
                 return
-                mods:language-of-resource($language), ', ')
+                modsCommon:get-language-label($languageTerm)
+                , ', ')
                 ,
-                if (count($entry/mods:relatedItem/mods:language) > 1) 
+                if (count(distinct-values($entry/mods:relatedItem/mods:language/mods:languageTerm/string())) > 1) 
                 then 'Languages of Resource' 
                 else 'Language of Resource'
             )
@@ -2011,24 +1882,40 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     (: script :)
     if ($entry/mods:language)
     then
-        for $language in $entry/mods:language
-        return
-        mods:simple-row(mods:script-of-resource($language), 'Script of Resource')
+        mods:simple-row(
+        string-join(
+            for $scriptTerm in distinct-values($entry/mods:language/mods:scriptTerm/string())
+            return
+            modsCommon:get-script-label($scriptTerm)
+        , ', ')
+        , 
+        if (count(distinct-values($entry/mods:language/mods:scriptTerm/string())) > 1) 
+        then 'Scripts of Resource' 
+        else 'Script of Resource'
+        )
     else
         if ($entry/mods:relatedItem/mods:language)
         then
-            for $language in $entry/mods:relatedItem/mods:language
-            return
-            mods:simple-row(mods:script-of-resource($language), 'Script of Resource')
+            mods:simple-row(
+            string-join(
+                for $scriptTerm in distinct-values($entry/mods:relatedItem/mods:language/mods:scriptTerm/string())
+                return
+                modsCommon:get-script-label($scriptTerm)
+                , ', ')
+                ,
+                if (count(distinct-values($entry/mods:relatedItem/mods:language/mods:scriptTerm/string())) > 1) 
+                then 'Scripts of Resource' 
+                else 'Script of Resource'
+            )
         else ()
     ,
 
     (: languageOfCataloging :)
     for $language in ($entry/mods:recordInfo/mods:languageOfCataloging)
-    let $languageTerm := $language/mods:languageTerm 
+    let $languageTerm := $language/mods:languageTerm/string() 
     return    
 	    if ($languageTerm)
-	    then mods:simple-row(mods:language-of-cataloging($language), 'Language of Cataloging')
+	    then mods:simple-row(modsCommon:get-language-label($languageTerm), 'Language of Cataloging')
 	    else ()
     ,
 
@@ -2114,7 +2001,6 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     then
         let $linked-ID := concat('#',$ID)
         let $linked-records := collection($config:mods-root)//mods:mods[mods:relatedItem[@type eq 'host']/@xlink:href eq $linked-ID]
-        (:let $log := util:log("DEBUG", ("##$linked-records): ", $linked-records)):)
         let $linked-records-count := count($linked-records) 
         return
         if ($linked-records-count gt 5)
@@ -2129,7 +2015,6 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
             </tr>
         else
             for $linked-record in $linked-records
-            (:let $log := util:log("DEBUG", ("##$linked-record): ", $linked-record)):)
             let $link-ID := $linked-record/@ID
             let $link-contents := 
                 if ($linked-record/mods:titleInfo/mods:title/text()) 
@@ -2178,10 +2063,9 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         ,
         let $names := $entry/mods:name
         let $roleTerms-secondary := $names/mods:role/mods:roleTerm[. = ('com', 'compiler', 'Compiler', 'editor', 'Editor', 'edt', 'trl', 'translator', 'Translator', 'annotator', 'Annotator', 'ann')]
-        let $log := util:log("DEBUG", ("##$roleTerms): ", $roleTerms-secondary))
         return
 	        (
-	        if (not($roleTerms-secondary)) 
+	        if ((:not($entry/mods:relatedItem[@type eq 'host']) and:) not($roleTerms-secondary)) 
 	        then '.'
 	        else ''
 	    ,

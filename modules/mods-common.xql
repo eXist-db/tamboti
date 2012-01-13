@@ -2,7 +2,22 @@ module namespace modsCommon="http://exist-db.org/mods/common";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
 
-(: Constructs a compact title for list view, for subject in detail view, and for related items in list and detail view. :)
+import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
+
+(:~
+: The <b>modsCommon:get-short-title</b> function returns 
+: a compact title for list view, for subject in detail view, and for related items in list and detail view.
+: The function at present seeks to approach the Chicago style.
+:
+: @author Wolfgang M. Meier
+: @author Jens Østergaard Petersen
+: @see http://www.loc.gov/standards/mods/userguide/titleinfo.html
+: @see http://www.loc.gov/standards/mods/userguide/relateditem.html
+: @see http://www.loc.gov/standards/mods/userguide/subject.html#titleinfo
+: @param $entry The MODS entry as a whole or a relatedItem element.
+: @return The titleInfo formatted as XHTML.
+:)
+
 declare function modsCommon:get-short-title($entry as element()) {
     (: If the entry has a related item of @type host with an extent in part, it is a periodical article or a contribution to an edited volume and the title should be enclosed in quotation marks. :)
     (: In order to avoid having to iterate through the (extremely rare) instances of multiple elements and in order to guard against cardinality errors in faulty records duplicating elements that are supposed to be unique, a lot of filtering for first child is performed. :)
@@ -117,11 +132,11 @@ declare function modsCommon:get-short-title($entry as element()) {
             		else ()
         else ()
         )
-    (: Construct the full short title to display. :)    
+    (: Assemble the full short title to display. :)    
     return
         ( 
 		if ($title-transliterated)
-		(: Though it may seem illogical, it is standard (at least in Sinology and Japanology) to first render the transliterated title, then the title in native script. :)
+		(: It is standard (at least in Sinology and Japanology) to first render the transliterated title, then the title in native script. :)
         then (<span xmlns="http://www.w3.org/1999/xhtml" class="title">{$title-transliterated-formatted}</span>, ' ')
         else ()
         , 
@@ -144,3 +159,80 @@ declare function modsCommon:get-short-title($entry as element()) {
         else ()
         )
 };
+
+(:~
+: The <b>modsCommon:get-language-label</b> function returns 
+: the <b>human-readable label</b> of the language value passed to it.  
+: This value can set in many MODS elements and attributes. 
+: The language-string can have two types, text and code.
+: Type code can use two different authorities, 
+: recorded in the code tables language-2-type-codes.xml and language-3-type-codes.xml, 
+: as well as the authority valueTerm noted in language-3-type-codes.xml.
+: The function disregards the two types and the various authorities and proceeds by brute force, 
+: checking the more common code types first to let the function exit quickly.
+: The function returns the human-readable label, based on consecutive searches in the code values and in the label.
+:
+: @author Jens Østergaard Petersen
+: @see http://www.loc.gov/standards/mods/userguide/generalapp.html#top_level
+: @see http://www.loc.gov/standards/mods/userguide/language.html
+: @param $language-string The string value of an attribute or element recording the language used within a certain element or in the MODS record as a whole, in textual or coded form
+: @return $language-label A human-readable language label
+:)
+declare function modsCommon:get-language-label($language-string as xs:string) as xs:string? {
+        let $language-label :=
+            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[value = $language-string]/label
+            return
+                if ($language-label)
+                then $language-label
+                else
+                    let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTwo = $language-string]/label
+                    return
+                        if ($language-label)
+                        then $language-label
+                        else
+                            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTerm = $language-string]/label
+                            return
+                                if ($language-label)
+                                then $language-label
+                                else
+                                    let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[upper-case(label) = upper-case($language-string)[1]]/label
+                                    return
+                                        if ($language-label)
+                                        then $language-label
+                                        else
+                                            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[upper-case(label) = upper-case($language-string)]/label
+                                            return
+                                                if ($language-label)
+                                                then $language-label
+                                                else concat($language-string, ' (unidentified)')
+        return $language-label
+};
+
+(:~
+: The <b>modsCommon:get-script-label</b> function returns 
+: the <b>human-readable label</b> of the script value passed to it.
+: This value can set in many MODS elements and attributes. 
+: The language-string can have two types, text and code.
+:
+: @author Jens Østergaard Petersen 
+: @see http://www.loc.gov/standards/mods/userguide/generalapp.html#top_level
+: @see http://www.loc.gov/standards/mods/userguide/language.html
+: @param $scriptTerm The string value of an element or attribute recording a script, in textual or coded form
+: @return $scrupt-label A human-readable script label
+:)
+declare function modsCommon:get-script-label($scriptTerm as xs:string?) as xs:string? {
+        let $scriptTerm-upper-case := upper-case($scriptTerm)
+        let $script-label :=
+            let $script-label := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/code-table/items/item[upper-case(value) = $scriptTerm-upper-case]/label
+            return
+                if ($script-label)
+                then $script-label
+                else 
+                    let $script-label := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/code-table/items/item[upper-case(label) = $scriptTerm-upper-case]/label
+                    return
+                        if ($script-label)
+                        then $script-label
+                        else concat($scriptTerm, ' (unidentified)')
+        return $script-label
+};
+
