@@ -303,13 +303,14 @@ td.collection-path {
 	margin-left:.5em;
 }
 
-.search-term {
-	width:10em;
+.operator select,
+.search-field select option
+{
+	padding-left:.25em; /*needed in FF*/
 }
 
-.hit-count {
-	1color:#5DB0E6;
-	1font-weight:bold;
+.search-term {
+	width:10em;
 }
 
 /*facets begin*/
