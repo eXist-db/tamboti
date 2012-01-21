@@ -1,8 +1,42 @@
 module namespace modsCommon="http://exist-db.org/mods/common";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
+declare namespace functx = "http://www.functx.com";
 
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
+
+(:~
+: Used to capitalize the first character of $arg.   
+: @param $arg A string
+: @return A string
+: @see http://http://www.xqueryfunctions.com/xq/functx_capitalize-first.html
+:)
+declare function functx:capitalize-first($arg as xs:string?) as xs:string? {       
+   concat(upper-case(substring($arg,1,1)),
+             substring($arg,2))
+};
+
+(:~
+: Used to transform the camel-case names of MODS elements into space-separated words.  
+: @param $arg A string
+: @param $delim A string
+: @return A string
+: @see http://www.xqueryfunctions.com/xq/functx_camel-case-to-words.html
+:)
+declare function functx:camel-case-to-words($arg as xs:string?, $delim as xs:string ) as xs:string? {
+   concat(substring($arg,1,1), replace(substring($arg,2),'(\p{Lu})', concat($delim, '$1')))
+};
+
+(:~
+: Used to remove whitespace at the beginning and end of a string.   
+: @param $arg A string
+: @return A string
+: @see http://http://www.xqueryfunctions.com/xq/functx_trim.html
+:)
+declare function functx:trim($arg as xs:string?) as xs:string {       
+   replace(replace($arg,'\s+$',''),'^\s+','')
+};
+ 
 
 (:~
 : The <b>modsCommon:get-short-title</b> function returns 
@@ -693,4 +727,105 @@ declare function modsCommon:get-name-order($namePart-language as xs:string?, $na
                     else ()
     let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[value eq $language]/nameOrder/string()
     return $nameOrder
+};
+
+(:~
+: The <b>modsCommon:format-subjects</b> function returns 
+: a table-formatted representation of each mods subject.
+: The values for topic, geographic, temporal, titleInfo, name, 
+: genre, hierarchicalGeographic, cartographics, geographicCode, occupation are represented in subtables.
+:
+: @author Jens Østergaard Petersen
+: @param $entry The subject element
+: @param $global-transliteration  The value set for the transliteration scheme to be used in the record as a whole, set in e:extension
+: @param $global-language The string value of mods/language/languageTerm
+: @see http://www.loc.gov/standards/mods/userguide/subject.html
+: @return $nameOrder The string 'family-given' or the empty string
+:)
+declare function modsCommon:format-subjects($entry as element(), $global-transliteration as xs:string, $global-language as xs:string) as element()+ {
+    for $subject in $entry/mods:subject
+    let $authority := 
+        if ($subject/@authority/string()) 
+        then concat('(', ($subject/@authority/string()), ')') 
+        else ()
+    return
+        <tr xmlns="http://www.w3.org/1999/xhtml">
+            <td class="label subject">Subject {$authority}</td>
+            <td class="record">    
+            {
+            for $item in $subject/mods:*[string-length(functx:trim(.)) gt 0]
+            let $authority := 
+                if ($item/@authority/string()) 
+                then concat('(', ($item/@authority/string()), ')') 
+                else ()
+            let $encoding := 
+                if ($item/@encoding/string()) 
+                then concat('(', ($item/@encoding/string()), ')') 
+                else ()
+            let $type := 
+                if ($item/@type/string()) 
+                then concat('(', ($item/@type/string()), ')') 
+                else ()        
+            return
+                <table class="subject">
+                    <tr><td class="sublabel">
+                        {
+                        replace(functx:capitalize-first(replace($item/name(), 'mods:','')),'Info',''),
+                        $authority, $encoding, $type
+                        }
+                        </td>
+                        {
+                        (: If there is a child. :)
+                        if ($item/mods:*)
+                        then
+                        <td class="subrecord">
+                        {
+                        (: If it is a name. :)
+                            if ($item/name() eq 'name')
+                            then modsCommon:format-name($item, 1, 'list-first', $global-transliteration, $global-language)
+                            else
+                                (: If it is a titleInfo. :)
+                                if ($item/name() eq 'titleInfo')
+                                then string-join(modsCommon:get-short-title(<titleInfo>{$item}</titleInfo>), '')
+                                else
+                                    (: If it is something else, no special rendering takes place. :)
+                                    for $subitem in ($item/mods:*)
+                                    let $authority := 
+                                        if ($subitem/@authority/string()) 
+                                        then concat('(', ($subitem/@authority/string()), ')') 
+                                        else ()
+                                    let $encoding := 
+                                        if ($subitem/@encoding/string()) 
+                                        then concat('(', ($subitem/@encoding/string()), ')') 
+                                        else ()
+                                    let $type := 
+                                        if ($subitem/@type/string()) 
+                                        then concat('(', ($subitem/@type/string()), ')') 
+                                        else ()    
+                                    return
+                                        <table>
+                                            <tr>
+                                                <td class="sublabel">
+                                                {functx:capitalize-first(functx:camel-case-to-words(replace($subitem/name(), 'mods:',''), ' ')),
+                                                $authority, $encoding}
+                                                </td>
+                                                <td>
+                                                <td class="subrecord">                
+                                                {$subitem/string()}
+                                                </td>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    }
+                        </td>
+                        else
+                            if ($item) then
+                            <table><tr><td class="subrecord" colspan="2">{$item/string()}</td></tr></table>
+                            else ()
+                        }
+                    </tr>
+                </table>
+            }
+            </td>
+        </tr>
 };

@@ -4,7 +4,7 @@ xquery version "1.0";
     Returns the list of distinct title words, names, dates, and subjects occurring in the result set.
     The query is called via AJAX when the user expands one of the headings in the
     "filter" box.
-    The title words are derived from the Lucene index. The names rely on names:format-name() and is therefore expensive.
+    The title words are derived from the Lucene index. The names rely on names:format-name() and are therefore expensive.
 :)
 import module namespace names="http://exist-db.org/xquery/biblio/names"
     at "names.xql";
@@ -48,7 +48,7 @@ let $record-count := count(session:get-attribute("mods:cached"))
 (: There is a load problem with setting this variable to the cache each time a facet button is clicked. 
 10,000 records amount to about 20 MB and several people could easily access this function at the same time. 
 Even if the cache contains too many items and we do not allow it to be processed, it still takes up memory. 
-The size has been set to 11,000, to accommodate the largest collection. 
+The size has been set to 13,000, to accommodate the largest collection. 
 If the result set is larger than that, a message is shown. :)
 let $cached := 
     if ($record-count gt $local:MAX_RECORD_COUNT) 
@@ -59,11 +59,13 @@ return
     then
         <ul>
         {
-            let $names := distinct-values($cached//mods:name)
+            let $names := $cached//mods:name
+            (: Here we count to string values of the name element, not the formatted result. :)
+            let $names-count := count(distinct-values($names))
             return
-                if (count($names) gt $local:MAX_RESULTS_NAMES) 
+                if ($names-count gt $local:MAX_RESULTS_NAMES) 
                 then
-                    <li>There are too many names ({count(distinct-values($names))}) to process without overloading the server. Please restrict the result set by performing a narrower search. The maximum number is {$local:MAX_RESULTS_NAMES}.</li>
+                    <li>There are too many names ({$names-count}) to process without overloading the server. Please restrict the result set by performing a narrower search. The maximum number is {$local:MAX_RESULTS_NAMES}.</li>
                 else
                     if ($record-count gt $local:MAX_RECORD_COUNT)
                     then
@@ -73,7 +75,7 @@ return
                             for $author in $names
                             return 
                                 names:format-name($author)
-                                    let $distinct := $authors
+                                    let $distinct := distinct-values($authors)
                                     for $name in $distinct
                                     order by upper-case($name) empty greatest
                                     return
@@ -96,10 +98,11 @@ return
                     	$cached/mods:relatedItem/mods:part/mods:date
                 	)
                 	)
+                let $dates-count := count($dates)
                 return
-                    if (count($dates) gt $local:MAX_RESULTS_DATES) 
+                    if ($dates-count gt $local:MAX_RESULTS_DATES) 
                     then
-                        <li>There are too many dates ({count(distinct-values($dates))}) to process without overloading the server. Please restrict the result set by performing a narrower search. The maximum number is {$local:MAX_RESULTS_DATES}.</li>
+                        <li>There are too many dates ({$dates-count}) to process without overloading the server. Please restrict the result set by performing a narrower search. The maximum number is {$local:MAX_RESULTS_DATES}.</li>
                     else
                         if ($record-count gt $local:MAX_RECORD_COUNT) 
                         then
@@ -116,13 +119,14 @@ return
             then
                 <ul>
                 {
-                    let $subjects := distinct-values($cached/mods:subject)                    
+                    let $subjects := distinct-values($cached/mods:subject)
+                    let $subjects-count := count($subjects)
                     return
-                        if (count($subjects) gt $local:MAX_RESULTS_SUBJECTS) 
+                        if ($subjects-count gt $local:MAX_RESULTS_SUBJECTS)
                         then
-                            <li>There are too many subjects ({count(distinct-values($subjects))}) to process without overloading the server. Please restrict the result set by performing a narrower search. The maximum number is {$local:MAX_RESULTS_SUBJECTS}.</li>
+                            <li>There are too many subjects ({$subjects-count}) to process without overloading the server. Please restrict the result set by performing a narrower search. The maximum number is {$local:MAX_RESULTS_SUBJECTS}.</li>
                         else
-                            if ($record-count gt $local:MAX_RECORD_COUNT) 
+                            if ($record-count gt $local:MAX_RECORD_COUNT)
                             then
                                 <li>There are too many records ({$record-count}) to process without overloading the server. Please restrict the result set by performing a narrower search. The maximum number is {$local:MAX_RECORD_COUNT}.</li>
                             else
@@ -132,7 +136,7 @@ return
                                     <li><a href="?filter=Subject&amp;value={$subject}&amp;query-tabs=advanced-search-form">{$subject}</a></li>
                  }
                  </ul>
-             else 
-                 if ($type eq 'keywords') 
+             else
+                 if ($type eq 'keywords')
                  then local:keywords($cached, $record-count)
                  else ()

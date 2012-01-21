@@ -41,7 +41,7 @@ declare function functx:substring-before-last-match($arg as xs:string?, $regex a
    replace($arg,concat('^(.*)',$regex,'.*'),'$1')
 } ;
  
- (:~
+(:~
 : Used to transform the camel-case names of MODS elements into space-separated words.  
 : @param
 : @return
@@ -229,86 +229,6 @@ declare function mods:get-publisher($publishers as element(mods:publisher)*) as 
         else
         ' and ')
 };
-
-
-(: ### <subject> begins ### :)
-
-(: format subject :)
-declare function mods:format-subjects($entry as element(), $global-transliteration as xs:string, $global-language as xs:string) {
-    for $subject in ($entry/mods:subject)
-    let $authority := 
-        if ($subject/@authority/string()) 
-        then concat('(', ($subject/@authority/string()), ')') 
-        else ()
-    return
-    <tr xmlns="http://www.w3.org/1999/xhtml">
-    <td class="label subject">Subject {$authority}</td>
-    <td class="record"><table class="subject">
-    {
-    for $item in ($subject/mods:*)
-    let $authority := 
-        if ($item/@authority/string()) 
-        then concat('(', ($item/@authority/string()), ')') 
-        else ()
-    let $encoding := 
-        if ($item/@encoding/string()) 
-        then concat('(', ($item/@encoding/string()), ')') 
-        else ()
-    let $type := 
-        if ($item/@type/string()) 
-        then concat('(', ($item/@type/string()), ')') 
-        else ()        
-    return
-        <tr><td class="sublabel">
-            {
-            replace(functx:capitalize-first(functx:capitalize-first(functx:camel-case-to-words(replace($item/name(), 'mods:',''), ' '))),'Info',''),
-            $authority, $encoding, $type
-            }
-        </td><td class="subrecord">
-            {
-            (: If there is a child. :)
-            if ($item/mods:*) 
-            then
-            	(: If it is a name. :)
-                if ($item/name() eq 'name')
-                then modsCommon:format-name($item, 1, 'list-first', $global-transliteration, $global-language)
-                else
-                	(: If it is a titleInfo. :)
-                    if ($item/name() eq 'titleInfo')
-                    (: NB: What if there is more than one titleInfo? Here one steps out of the iteration. :)
-                    then string-join(modsCommon:get-short-title($item/..), '')
-                    else
-                    	(: If it is something else, such as topic (caught by $subitem/name()). :)
-                        for $subitem in ($item/mods:*)
-                        let $authority := 
-                            if ($subitem/@authority/string()) 
-                            then concat('(', ($subitem/@authority/string()), ')') 
-                            else ()
-                        let $encoding := 
-                            if ($subitem/@encoding/string()) 
-                            then concat('(', ($subitem/@encoding/string()), ')') 
-                            else ()
-                        let $type := 
-                            if ($subitem/@type/string()) 
-                            then concat('(', ($subitem/@type/string()), ')') 
-                            else ()    
-                        return
-                        <table><tr><td class="sublabel">
-                            {functx:capitalize-first(functx:camel-case-to-words(replace($subitem/name(), 'mods:',''), ' ')),
-                        $authority, $encoding}
-                        </td><td><td class="subrecord">                
-                            {$subitem/string()}
-                        </td></td></tr></table>
-            else
-	            <table><tr><td class="subrecord" colspan="2">{$item/string()}</td></tr></table>
-            }
-            </td></tr>
-    }
-    </table></td>
-    </tr>
-};
-
-(: ### <subject> ends ### :)
 
 (: ### <extent> begins ### :)
 
@@ -1568,7 +1488,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     (: subject :)
     (: We assume that there are not many subjects with the first element, topic, empty. :)
     if (normalize-space($entry/mods:subject[1]/string()))
-    then mods:format-subjects($entry, $global-transliteration, $global-language)    
+    then modsCommon:format-subjects($entry, $global-transliteration, $global-language)    
     else ()
     , 
     (: identifier :)
