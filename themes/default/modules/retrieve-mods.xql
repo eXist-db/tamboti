@@ -1423,7 +1423,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
 
     (: languageOfCataloging :)
     for $language in ($entry/mods:recordInfo/mods:languageOfCataloging)
-    let $languageTerm := $language/mods:languageTerm/string() 
+    let $languageTerm := $language/mods:languageTerm[1]/string() 
     return    
 	    if ($languageTerm)
 	    then mods:simple-row(modsCommon:get-language-label($languageTerm), 'Language of Cataloging')
@@ -1466,6 +1466,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     let $displayLabel := $note/@displayLabel    
     let $type := $note/@type
     let $text := $note/text()
+    (:Do $double-escapes occur?:)
     let $double-escapes-fixed := replace(replace(replace($text, '&amp;nbsp;', '&#160;'), '&amp;gt;', '&gt;'), '&amp;lt;', '&lt;')
     let $wrapped-with-span := concat('&lt;span>', $double-escapes-fixed, '</span>')
     return
@@ -1541,6 +1542,8 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
                 </td>
             </tr>
     else ()
+    ,
+    mods:simple-row(concat('http://kjc-fs2.kjc.uni-heidelberg.de:8600/exist/apps/tamboti/modules/search/index.html?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
     }
     </table>
 };
