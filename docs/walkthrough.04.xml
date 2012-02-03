@@ -1,7 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book xmlns:xi="http://www.w3.org/2001/XInclude">
-    <xi:include href="header.xml"/>
-    <xi:include href="sidebar.xml"/>
+    <bookinfo>
+        <graphic fileref="theme/images/tamboti.png"/>
+        <graphic fileref="theme/images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>
+        <productname>Tamboti</productname>
+        <title>Tamboti Walkthrough</title>
+        <date>February 2012</date>
+        <author>
+            <firstname>Dulip</firstname>
+            <surname>Withanage</surname>
+            <affiliation>
+                <address format="linespecific">
+                    <email>withanage@asia-europe.uni-heidelberg.de</email>
+                </address>
+                <orgname>Heidelberg Research Architecture</orgname>
+                <orgname>"Asia and Europe in a Global Context"</orgname>
+                <orgname>Heidelberg University</orgname>
+            </affiliation>
+        </author>
+        <author>
+            <firstname>Jens Østergaard</firstname>
+            <surname>Petersen</surname>
+            <affiliation>
+                <address format="linespecific">
+                    <email>petersen@asia-europe.uni-heidelberg.de</email>
+                </address>
+                <orgname>Heidelberg Research Architecture</orgname>
+                <orgname>"Asia and Europe in a Global Context"</orgname>
+                <orgname>Heidelberg University</orgname>
+            </affiliation>
+        </author>
+    </bookinfo>
+    <sidebar xmlns="http://exist-db.org/NS/sidebar" title="Navigation">
+        <group name="Tamboti">
+            <item>
+                <link href="">What is Tamboti?</link>
+            </item>
+            <item>
+                <link href="">Who are we?</link>
+            </item>
+        </group>
+        <group name="Documentation">
+            <item>
+                <link href="walkthrough.xml">Walkthrough</link>
+            </item>
+            <item>
+                <link href="">Search Functions</link>
+            </item>
+            <item>
+                <link href="">Editor</link>
+            </item>
+            <item>
+                <link href="security-manager.xml">Sharing</link>
+            </item>
+        </group>
+        <group name="MODS">
+            <item>
+                <link href="">Overview</link>
+            </item>
+            <item>
+                <link href="">Examples</link>
+            </item>
+            <item>
+                <link href="">Links</link>
+            </item>
+        </group>
+        <group name="Feedback">
+            <item>
+                <link href="http://kjc-fs-cluster.kjc.uni-heidelberg.de/helpdesk/" target="blank">Ticket System</link>
+            </item>
+        </group>
+        <group name="Development">
+            <item>
+                <link href="">How to Join</link>
+            </item>
+            <item>
+                <link href="">Changelog</link>
+            </item>
+        </group>
+        <banner>
+            <link href="http://exist-db.org">
+                <img alt="powered by eXist" border="0" src="../themes/default/images/powered.gif"/>
+            </link>
+        </banner>
+    </sidebar>
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
     <chapter>
         <title>The Search Interface</title>
@@ -47,10 +129,10 @@
                 <listitem>Below the Tamboti logo, you will find the buttons for "Login" and "Help" - presumably you are now reading this tutorial because
                         you have clicked the latter one.</listitem>
                 <listitem>Below that, you will find a set of tabs. The tabs open by default on Simple Search: the other tabs are Advanced Search, Query
-                        History and My List. The functions that these tabs give access twill be explained below; they are similar to functions found in most
+                        History and My List. The functions that these tabs give access to will be explained below; they are similar to functions found in most
                         library catalogues.</listitem>
                 <listitem>Below the area controlled by the tabs, you will find a grey vertical column, headed by the Folder View button.</listitem>
-                <listitem>To the right of the Folder View button, you will find the found count for the current search and the links for navigating from one group of search hits (composed of ten records) to another group.</listitem>
+                <listitem>To the right of the Folder View button, you will find the found count for the current search and the links for navigating to the next and previous groups of search hits (composed of ten records), as well as to the first and last groups.</listitem>
             </itemizedlist>
         </para>
         <para>

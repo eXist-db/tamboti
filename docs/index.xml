@@ -5,7 +5,7 @@
         <graphic fileref="theme/images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>
         <productname>Tamboti</productname>
         <title>Tamboti Walkthrough</title>
-        <date>March 2011</date>
+        <date>February 2012</date>
         <author>
             <firstname>Dulip</firstname>
             <surname>Withanage</surname>
@@ -80,7 +80,7 @@
         </group>
         <banner>
             <link href="http://exist-db.org">
-                <img alt="powered by eXist" border="0" src="theme/images/powered.gif"/>
+                <img alt="powered by eXist" border="0" src="../themes/default/images/powered.gif"/>
             </link>
         </banner>
     </sidebar>
@@ -94,19 +94,18 @@
             <a href="http://www.uni-heidelberg.de/index_e.html" target="_blank">Heidelberg University</a>, 
             in close cooperation with 
             <a href="http://www.existsolutions.com/" target="_blank">eXist Solutions GmbH</a>. </para>
-        <para>Tamboti is part of the 
-            <a href="http://exist.sourceforge.net/" target="_blank">eXist</a>, an Open Source XML database.</para>
+        <para>Tamboti is part of <a href="http://exist.sourceforge.net/" target="_blank">eXist-db</a>, an Open Source XML database.</para>
         <para>Tamboti has three main functions. 
             <itemizedlist>
                 <listitem>
-                    <para>to make it possible to <emphasis role="bold">search</emphasis> for existing metadata records </para>
+                    <para>to make it possible to <emphasis>search</emphasis> for existing metadata records </para>
                 </listitem>
                 <listitem>
-                    <para>to make it possible to <emphasis role="bold">create</emphasis> new metadata records and <emphasis role="bold">edit</emphasis>
+                    <para>to make it possible to <emphasis>create</emphasis> new metadata records and <emphasis>edit</emphasis>
                     existing ones. </para>
                 </listitem>
                 <listitem>
-                    <para>to make it possible to <emphasis role="bold">annotate</emphasis> and <emphasis role="bold">comment</emphasis> on metadata entries in a manner that facilitates cross-cultural and cross-lingual research. </para>
+                    <para>to make it possible to <emphasis>annotate</emphasis> metadata entries in a manner that facilitates cross-cultural and cross-lingual research, by means of <emphasis>comments</emphasis> and <emphasis>classifications</emphasis> (to be implemented in 2012).</para>
                 </listitem>
             </itemizedlist>
         </para>

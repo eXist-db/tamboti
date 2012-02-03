@@ -54,12 +54,12 @@ as element() {
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <title>
-            <!--eXist-begin-->
+            <!--eXist-begin
                 eXist Bibliographical Demo - MODS Editor
-                <!--eXist-end-->
-            <!--Tamboti-begin
+                eXist-end-->
+            <!--Tamboti-begin-->
                 Tamboti Metadata Framework - MODS Editor
-            Tamboti-end-->
+            <!--Tamboti-end-->
             </title>
          { style:css('xhtml') }
             { $style }
@@ -167,19 +167,19 @@ as node()+ {
         <head>
             
             <title>
-            <!--eXist-begin-->
+            <!--eXist-begin
                 eXist Bibliographical Demo - MODS Editor
-                <!--eXist-end-->
-            <!--Tamboti-begin
+                eXist-end-->
+            <!--Tamboti-begin-->
                 Tamboti Metadata Framework - MODS Editor
-            Tamboti-end-->
+            <!--Tamboti-end-->
             </title>
             <script type="text/javascript" src="libs/scripts/jquery/jquery-1.6.2.min.js"></script> 
             <script type="text/javascript" src="../session.js.xql"></script>
             <link rel="stylesheet" type="text/css" href="edit.css"/>
-            <!--Tamboti-begin
+            <!--Tamboti-begin-->
                 <link rel="stylesheet" type="text/css" href="tamboti.css"/>
-            Tamboti-end-->
+            <!--Tamboti-end-->
             { style:css('xforms') }
             { $style }
             { $model }
@@ -187,11 +187,11 @@ as node()+ {
         <body>
         <div id="page-head">
         
-        <!--Tamboti-begin
+        <!--Tamboti-begin-->
         <div id="page-head-left">
             <a href="../.." style="text-decoration: none">
                 <img 
-                    src="theme/images/tamboti.png" 
+                    src="../../themes/tamboti/images/tamboti.png" 
                     title="Tamboti Metadata Framework" 
                     alt="Tamboti Metadata Framework" 
                     style="border-style: none;"/>
@@ -202,24 +202,22 @@ as node()+ {
         <div id="page-head-right">
             <a href="http://www.asia-europe.uni-heidelberg.de/en/home.html" target="_blank">
                 <img 
-                    src="theme/images/logovjc.gif" 
+                    src="../../themes/tamboti/images/cluster_logo.png" 
                     title="The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University" 
                     alt="The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University" 
-                    width="75" 
-                    height="69" 
-                    style="border-style: none"/>
+                    width="200" style="border-style: none"/>
             </a>
         </div>
-        Tamboti-end-->
-        <!--eXist-begin-->
+        <!--Tamboti-end-->
+        <!--eXist-begin
                 <a href="../.." style="text-decoration: none">
-                    <img src="theme/images/logo.jpg" title="eXist-db: Open Source Native XML Database" style="border-style: none;text-decoration: none"/>
+                    <img src="../../themes/default/images/logo.jpg" title="eXist-db: Open Source Native XML Database" style="border-style: none;text-decoration: none"/>
                 </a>
                 <div id="navbar">
                     <h1>Open Source Native XML Database</h1>
                 </div>
                 <div class="documentation"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
-            <!--eXist-end-->
+            eXist-end-->
             
             </div>
             <div id="content1col">
@@ -241,10 +239,10 @@ declare function style:css($page-type as xs:string)
 as node()+ {
     if ($page-type eq 'xhtml') then 
         (
-        <link rel="stylesheet" href="theme/css/style.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="../../themes/default/css/style.css" type="text/css" media="screen, projection" />
     )
     else if ($page-type eq 'xforms') then (
-        <link rel="stylesheet" href="theme/css/xforms.css.xq" type="text/css" />
+        <link rel="stylesheet" href="../../themes/default/css/xforms.css.xq" type="text/css" />
     ) else ()
 };
 

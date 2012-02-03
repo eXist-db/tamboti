@@ -1,7 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book xmlns:xi="http://www.w3.org/2001/XInclude">
-    <xi:include href="header.xml"/>
-    <xi:include href="sidebar.xml"/>
+    <bookinfo>
+        <graphic fileref="theme/images/tamboti.png"/>
+        <graphic fileref="theme/images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>
+        <productname>Tamboti</productname>
+        <title>Tamboti Walkthrough</title>
+        <date>February 2012</date>
+        <author>
+            <firstname>Dulip</firstname>
+            <surname>Withanage</surname>
+            <affiliation>
+                <address format="linespecific">
+                    <email>withanage@asia-europe.uni-heidelberg.de</email>
+                </address>
+                <orgname>Heidelberg Research Architecture</orgname>
+                <orgname>"Asia and Europe in a Global Context"</orgname>
+                <orgname>Heidelberg University</orgname>
+            </affiliation>
+        </author>
+        <author>
+            <firstname>Jens Østergaard</firstname>
+            <surname>Petersen</surname>
+            <affiliation>
+                <address format="linespecific">
+                    <email>petersen@asia-europe.uni-heidelberg.de</email>
+                </address>
+                <orgname>Heidelberg Research Architecture</orgname>
+                <orgname>"Asia and Europe in a Global Context"</orgname>
+                <orgname>Heidelberg University</orgname>
+            </affiliation>
+        </author>
+    </bookinfo>
+    <sidebar xmlns="http://exist-db.org/NS/sidebar" title="Navigation">
+        <group name="Tamboti">
+            <item>
+                <link href="">What is Tamboti?</link>
+            </item>
+            <item>
+                <link href="">Who are we?</link>
+            </item>
+        </group>
+        <group name="Documentation">
+            <item>
+                <link href="walkthrough.xml">Walkthrough</link>
+            </item>
+            <item>
+                <link href="">Search Functions</link>
+            </item>
+            <item>
+                <link href="">Editor</link>
+            </item>
+            <item>
+                <link href="security-manager.xml">Sharing</link>
+            </item>
+        </group>
+        <group name="MODS">
+            <item>
+                <link href="">Overview</link>
+            </item>
+            <item>
+                <link href="">Examples</link>
+            </item>
+            <item>
+                <link href="">Links</link>
+            </item>
+        </group>
+        <group name="Feedback">
+            <item>
+                <link href="http://kjc-fs-cluster.kjc.uni-heidelberg.de/helpdesk/" target="blank">Ticket System</link>
+            </item>
+        </group>
+        <group name="Development">
+            <item>
+                <link href="">How to Join</link>
+            </item>
+            <item>
+                <link href="">Changelog</link>
+            </item>
+        </group>
+        <banner>
+            <link href="http://exist-db.org">
+                <img alt="powered by eXist" border="0" src="images/powered.gif"/>
+            </link>
+        </banner>
+    </sidebar>
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
     <chapter>
         <title>Paths</title>
@@ -41,23 +123,19 @@
         </table>
         <para>
             If you click on the first button at the top 
-            &#160;<graphic fileref="theme/images/arrow_out.png" align="center" valign="middle"/>&#160;, 
-            all folders are opened fully, where all folders close up if you click the second
-            &#160;<graphic fileref="theme/images/arrow_in.png" align="center" valign="middle"/>&#160;. 
+            &#160;<graphic fileref="../themes/default/images/arrow_out.png" align="center" valign="middle"/>&#160;, 
+            all folders are opened fully, whereas all folders close if you click the second
+            &#160;<graphic fileref="../themes/default/images/arrow_in.png" align="center" valign="middle"/>&#160;. 
             The third button
-            &#160;<graphic fileref="theme/images/arrow_refresh.png" align="center" valign="middle"/>&#160;, 
+            &#160;<graphic fileref="../themes/default/images/arrow_refresh.png" align="center" valign="middle"/>&#160;, 
             the one for reloading the folder view, is only needed if you work for a long time on the database and new folders that you can see have been created (or deleted) by others since you logged in - these you will only be able to see if you reload the Folder View.
         </para>
         <para>
-            When you click on a folder or a folder name and thereby select it, you will see that the "path" leading to the folder from the base folder, "mods", separated by slashes, in the manner of "/mods/Cluster_publications", in the search panel. 
-        </para>
+            When you click on a folder or a folder name and thereby select it, you will see that the "path" leading to the folder in the search panel. Here the path leads from the base folder, "resources", to the folder "commons" and then to the folder "Cluster Publications", each step separated by slashes.</para>
+        <para>The folder called "commons" is used for all resources that are not particular to specific users or groups, but are meant to be general Cluster resources.</para>
         <para>
             Clicking on a folder in this way is how you determine where to perform a search. If you search for something, it will be searched for inside the path you have chosen. 
         </para>
-        <!--<para>
-            You can at the present moment only choose one path to search in at a time. If you choose "/mods" as your search path, a search will search through all material available to you in the database.
-        </para>
-        -->
         <para>
             <graphic fileref="images/walk-through.06.png" align="center" valign="middle"/>
         </para>

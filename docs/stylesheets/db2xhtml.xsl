@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sidebar="http://exist-db.org/NS/sidebar" xmlns:xf="http://www.w3.org/2002/xforms" version="1.0">
     <xsl:output method="xhtml" media-type="application/xml" omit-xml-declaration="yes"/>
     <xsl:param name="xslt.table-of-contents" select="'yes'"/>
@@ -334,11 +335,12 @@
                     <div id="page-head-left">
                         <a href="../modules/search/index.html" style="text-decoration: none">
 <!--<img src="{$pathToWebapp}{graphic/@fileref}" title="Tamboti Metadata Framework" style="border-style: none;text-decoration: none"/>-->
-                            <img src="images/tamboti.png" title="Tamboti Metadata Framework" style="border-style: none;text-decoration: none"/>                        </a>
+                            <img src="images/tamboti.png" title="Tamboti Metadata Framework" style="border-style: none;text-decoration: none"/>
+                        </a>
                     </div>
                     <div id="page-head-right">
                         <a href="http://www.asia-europe.uni-heidelberg.de/en/home.html" target="_blank">
-                            <!--<img src="theme/images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>-->
+                            <!--<img src="theme/images/logovjc.gif" title="The Cluster of Excellence "Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows" at Heidelberg University" alt="The Cluster of Excellence "Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows" at Heidelberg University" width="75" height="69" style="border-style: none"/>-->
                             <img src="images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>
                         </a>
                     </div>
@@ -351,7 +353,7 @@
                     </div>
                     <div id="page-head-right">
                         <a href="http://www.asia-europe.uni-heidelberg.de/en/home.html" target="_blank">
-                            <!--<img src="theme/images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>-->
+                            <!--<img src="theme/images/logovjc.gif" title="The Cluster of Excellence "Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows" at Heidelberg University" alt="The Cluster of Excellence "Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows" at Heidelberg University" width="75" height="69" style="border-style: none"/>-->
                             <img src="images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>
                         </a>
                     </div>

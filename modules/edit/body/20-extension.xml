@@ -13,7 +13,7 @@
                 </xf:trigger>
             </span>
             <span class="xforms-hint">
-                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='extension']/help"/>
                 </div>
@@ -64,7 +64,7 @@
             <xf:group appearance="full">
                 <xf:select1 ref="e:template">
                     <xf:label>Publication Type<span class="xforms-help">
-                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='template']/help"/>
                             </div>
@@ -79,7 +79,7 @@
             <xf:group appearance="full">
                 <xf:select1 ref="e:transliterationOfResource">
                     <xf:label>Transliteration Of Resource<span class="xforms-help">
-                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliterationOfResource']/help"/>
                             </div>

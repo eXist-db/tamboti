@@ -20,8 +20,6 @@ declare namespace mads="http://www.loc.gov/mads/";
 
 declare function local:create-new-record($id as xs:string, $type-request as xs:string, $target-collection as xs:string) as empty() {
     (: Copy the template into data and store it with the ID as file name. :)
-    (:let $log := util:log("DEBUG", ("##$id-edit1): ", $id)):)
-    (:let $log := util:log("DEBUG", ("##$target-collection1): ", $target-collection)):)
     let $transliterationOfResource := request:get-parameter("transliterationOfResource", "")
     let $type-request := 
         if ($type-request = ('related-article-in-periodical', 'related-book-chapter','suebs-tibetan', 'insert-templates', 'new-instance', 'mads'))
@@ -109,8 +107,6 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
 declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $instance-id as xs:string) as element(xf:model) {
 
     let $instance-src := concat('get-instance.xq?tab-id=', $tab-id, '&amp;id=', $id, '&amp;data=', $config:mods-temp-collection)
-    (:let $log := util:log("DEBUG", ("##-$tab-id): ", $tab-id)):)
-    (:let $log := util:log("DEBUG", ("##$id-edit2): ", $id)):)
     return
 
         <xf:model>
@@ -157,17 +153,27 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
 };
 
 declare function local:create-page-content($id as xs:string, $tab-id as xs:string, $type-request as xs:string, $target-collection as xs:string, $instance-id as xs:string, $record-data as xs:string, $type-data as xs:string) as element(div) {
-(:let $log := util:log("DEBUG", ("##$id-edit3): ", $id)):)
-(:let $log := util:log("DEBUG", ("##$target-collection2): ", $target-collection)):)
     (: Get the part of the form that belongs to the tab called. :)
-    let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id = $instance-id],
+    let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id = $instance-id]
+    
     (: Get the relevant information to display on the top line, starting with "Editing record". :)
-    $type-label := doc($type-data)/code-table/items/item[value = $type-request]/label,
-    $type-hint := doc($type-data)/code-table/items/item[value = $type-request]/hint,
-    (: Display the label attached to the tab to the user :)
-    $tab-data := concat($config:edit-app-root, '/tab-data.xml'),
-    $bottom-tab-label := doc($tab-data)/tabs/tab[tab-id=$tab-id]/*[local-name() = $type-request],
-    $bottom-tab-label := 
+    let $transliterationOfResource := request:get-parameter("transliterationOfResource", "")
+    let $type-request-long := 
+        if ($type-request = ('related-article-in-periodical', 'related-book-chapter','suebs-tibetan', 'insert-templates', 'new-instance', 'mads'))
+        (: These document types do not (yet) divide into latin and transliterated. :)
+        then $type-request
+        else
+            if ($transliterationOfResource) 
+            then concat($type-request, '-transliterated') 
+            else concat($type-request, '-latin')
+    let $type-request := replace(replace($type-request-long, '-latin', ''), '-transliterated', '')
+    let $type-label := doc($type-data)/code-table/items/item[value = $type-request]/label
+    let $type-hint := doc($type-data)/code-table/items/item[value = $type-request]/hint
+    
+    (: Display the label attached to the tab :)
+    let $tab-data := concat($config:edit-app-root, '/tab-data.xml')
+    let $bottom-tab-label := doc($tab-data)/tabs/tab[tab-id=$tab-id]/*[local-name() = $type-request-long]
+    let $bottom-tab-label := 
     	if ($bottom-tab-label)
     	then $bottom-tab-label
     	else doc($tab-data)/tabs/tab[tab-id=$tab-id]/label    	
@@ -182,7 +188,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     if ($type-hint) 
                     then
                         <span class="xforms-help">
-                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">{$type-hint}</div>
                         </span>
                     else ()
@@ -226,7 +232,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                  </xf:trigger>
              
                 <span class="xforms-hint">
-                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-hint-value">
                         <p>Every time you click one of the tabs, your input is saved. For this reason, there is generally no need to click the &quot;Save&quot; button. </p>
                         <p>Be aware, however, that you are only logged in for a certain period of time and when your session times out, what you have input cannot be retrieved. 
@@ -264,7 +270,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                  </xf:trigger>
              
                 <span class="xforms-hint">
-                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-hint-value">
                         <p>Every time you click one of the tabs, your input is saved. For this reason, there is generally no need to click the &quot;Save&quot; button. </p>
                         <p>Be aware, however, that you are only logged in for a certain period of time and when your session times out, what you have input cannot be retrieved. 
@@ -280,27 +286,31 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
 };
 
 declare function local:get-instance-id($tab-id as xs:string, $type-request as xs:string) {
+    (: If tab-id is 'compact-b', a special form has to be served; otherwise tab-id becomes instance-id. :) 
     if ($tab-id ne 'compact-b')
     then $tab-id
     else 
 	    if ($type-request = ('article-in-periodical-latin', 'article-in-periodical-transliterated'))
-	    then 'compact-b-periodical' 
+	    then 'compact-b-article' 
 	    else 
 		    if ($type-request = ('contribution-to-edited-volume-latin', 'contribution-to-edited-volume-transliterated'))
-		    then 'compact-b-anthology'
+		    then 'compact-b-edited-volume'
 		    else
-		    if ($type-request = ('monograph-latin', 'monograph-transliterated', 'edited-volume-latin', 'edited-volume-transliterated'))
-		    then 'compact-b-series'
+		    if ($type-request = ('monograph', 'monograph-transliterated', 'edited-volume-latin', 'edited-volume-transliterated'))
+		    then 'compact-b-monograph'
 		    else 
 			    if ($type-request = ('book-review-latin', 'book-review-transliterated'))
 			    then 'compact-b-review'
-			    else 
-				    if ($type-request = 'suebs-tibetan')
-				    then 'compact-b-suebs-tibetan'
-				    else
-				        if ($type-request = 'mads')
-				        then 'mads'
-				        else 'compact-b-xlink'
+			    else
+			        if ($type-request = ('periodical-latin', 'periodical-transliterated'))
+			        then 'compact-b-periodical'				        
+			        else 
+    				    if ($type-request = 'suebs-tibetan')
+    				    then 'compact-b-suebs-tibetan'
+    				    else
+    				        if ($type-request = 'mads')
+    				        then 'mads'
+    				        else 'compact-b-xlink'
 };
 
 (: If a document type is specified, then we will need to use that instance as the template. :)
@@ -318,15 +328,15 @@ let $type-request :=
 	if ($type-request)
 	then $type-request
 	else $stored-template
-
+let $type-request := replace(replace($type-request, '-latin', ''), '-transliterated', '')
 let $type-data := concat($config:edit-app-root, '/code-tables/document-type-codes.xml')
 
 (: If type-sort is '1', it is a compact form and the Basic Input Forms should be shown; 
 if type-sort is 3, it is a mads record and the MADS forms should be shown; 
 otherwise it is an unspecified instance and Title Information should be shown. :)
 let $type-sort := doc($type-data)/code-table/items/item[value = $type-request]/sort
-(:let $log := util:log("DEBUG", ("##$type-sort): ", $type-sort)):)
-(: Get the default tab-id. If no tab is specified, default to the compact-a tab in the case of a template to be used with Basic Input Forms;
+(: Get the default tab-id. 
+If no tab is specified, default to the compact-a tab in the case of a template to be used with Basic Input Forms;
 otherwise default to Title Information. :)
 let $default-tab-id :=
     if ($type-sort = 1 or not($type-request))
@@ -339,7 +349,6 @@ let $default-tab-id :=
 let $tab-id := request:get-parameter('tab-id', $default-tab-id)
 
 let $target-collection := uu:escape-collection-path(request:get-parameter("collection", ""))
-(:let $log := util:log("DEBUG", ("##$target-collection3): ", $target-collection)):)
 (: Get id parameter. Default to "new" if empty. :)
 let $id-param := request:get-parameter('id', 'new')
 
@@ -354,7 +363,7 @@ let $id :=
 
 (: If we are creating a new record, then we need to call get-instance.xq with new=true to tell it to get the entire template; 
 if we are editing an existing record, we copy the record from the target collection to temp, unless there is already a record in temp. :)
-(: What if A edits a certain record, leaving it is temp, and B edits the same record - does B then start off where A left off? :)
+(: What if A edits a certain record, leaving it is temp, and B edits the same record - does B then start off where A leaves off? :)
 let $create-new-from-template :=
 	if ($new-record) 
 	then local:create-new-record($id, $type-request, $target-collection)
@@ -365,12 +374,10 @@ let $create-new-from-template :=
 
 (: For a compact-b form, determine which subform to serve, based on the template. :)
 let $instance-id := local:get-instance-id($tab-id, $type-request)
-
 (: NB: $style appears to be introduced in order to use the xf namespace in css. :)
 let $style := <style type="text/css"><![CDATA[@namespace xf url(http://www.w3.org/2002/xforms);]]></style>
 let $model := local:create-xf-model($id, $tab-id, $instance-id)
 let $content := local:create-page-content($id, $tab-id, $type-request, $target-collection, $instance-id, $temp-record-path, $type-data)
-(:let $log := util:log("DEBUG", ("##$target-collection4): ", $target-collection)):)
 return 
     style:assemble-form('', attribute {'mods:dummy'} {'dummy'}, $style, $model, $content, false())
     

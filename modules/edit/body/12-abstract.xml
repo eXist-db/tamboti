@@ -20,7 +20,7 @@
                 </xf:trigger>
             </span>
             <span class="xforms-hint">
-                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
                     <p> Abstract is used to record a succinct summary of some aspect of the content of the resource. </p>
                     <p> Use one Abstract in every record, except when Title Informaiton serves as an adequate summary of the content of the resource. </p>

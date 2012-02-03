@@ -5,7 +5,7 @@
         <graphic fileref="theme/images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>
         <productname>Tamboti</productname>
         <title>Tamboti Walkthrough</title>
-        <date>March 2011</date>
+        <date>February 2012</date>
         <author>
             <firstname>Dulip</firstname>
             <surname>Withanage</surname>
@@ -80,7 +80,7 @@
         </group>
         <banner>
             <link href="http://exist-db.org">
-                <img alt="powered by eXist" border="0" src="theme/images/powered.gif"/>
+                <img alt="powered by eXist" border="0" src="../themes/default/images/powered.gif"/>
             </link>
         </banner>
     </sidebar>
@@ -122,15 +122,18 @@
             </tgroup>
         </table>
         <para>Tamboti does not run with any version of Internet Explorer. It is our hope that the search interface will work with Internet Explorer 9, but it is not to be expected that the editor will work with Internet Explorer 9. The reason for this is the lack of standards compliance on the part of Internet Explorer.</para>
-        <para>Please use any of the following web browsers:</para>
+        <para>Please use recent versions of any of the following web browsers:</para>
         <itemizedlist>
-            <listitem>Firefox 3.6 on Windows, Mac OS and Linux (Firefox 4 does not work with the editor).</listitem>
-            <listitem>Safari 5 on Windows and Mac OS.</listitem>
-            <listitem>Chrome 10 on Windows, Mac OS and Linux (and Chromium on Linux).</listitem>
-            <listitem>Opera 10 on Windows, Mac OS and Linux.</listitem>
+            <ulink href="http://www.mozilla.org/en-US/firefox/new/">
+                <listitem>Firefox</listitem>
+            </ulink>
+            <ulink href="http://www.apple.com/safari/download/">
+                <listitem>Safari</listitem>
+            </ulink>
+            <ulink href="https://www.google.com/chrome/?hl=en&amp;brand=chmo">
+                <listitem>Chrome</listitem>
+            </ulink>
         </itemizedlist>
-        <para>For search, these web browsers work the same.</para>
-        <para>For editing, these web browsers also work the same, but with differing speed. Chrome and Safari are 2.5 to 3 times faster than Firefox and Opera. The reason for this is the JavaScript engine used by these browsers. The forms for editing MODS records place high demands on the browser's JavaScript engine.</para>
-        <para> When using the Basic Input Forms, the (legendary) slowness of Firefox should not be much of a problem, but when using the other input forms, our recommendation is to use Chrome or Safari.</para>
+        <para>The editor does not work with <ulink href="http://www.opera.com/browser/download/">Opera</ulink>.</para>
     </chapter>
 </book>

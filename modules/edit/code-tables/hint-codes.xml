@@ -337,7 +337,7 @@
         </item>
         <item>
             <help>
-                <p> Display Label is used when additional text associated with the a field is needed
+                <p> Display Label is used when additional text associated with a field is needed
                     for display. Display Label may be used whenever appropriate to indicate the
                     preferred labeling when displayed. Include the text preferred and
                     capitalisation, but do not include delimiters such as colons. </p>
@@ -479,10 +479,36 @@
                 <p>For periodicals, enter here primarily the International Standard Serial Number
                     (ISSN) number of the periodical you are cataloguing and/or its Digital Object
                     Identifier (DOI). </p>
-                <p>If you have access to any other unique identifier, please record it.</p>
+                <p>If you have access to any other unique identifier, please record it by choosing its Type.</p>
+                <p>The identifier element should refer to the digital resource being described or to its analog equivalent. 
+                    The identifier should identify the object universally; local call numbers or other identifiers, therefore, are not generally suitable. </p>
             </help>
-            <value>identifier-compact</value>
+            <value>identifier</value>
             <local-name>identifier</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Type identifies the type of identifier that is recorded</p>
+                <!--<p>Suggested values include: hdl, doi, isbn, isrc, ismn, issn, issue number, istc, lccn, local,
+                    matrix number, music publisher, music plate, sici, uri, upc, videorecording identifier,
+                    stock number.</p>-->
+            </help>
+            <value>identifier-type</value>
+            <local-name>type</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> This field signifies a canceled or invalid identifier. It should be used
+                    with the value Yes. This value is used only when recording a canceled or
+                    invalid identifier. If Invalid= "Yes" is not present, the identifier is
+                    assumed to be valid. </p>
+            </help>
+            <value>identifier-invalid</value>
+            <local-name>invalid</local-name>
             <parent/>
             <tab-id/>
         </item>

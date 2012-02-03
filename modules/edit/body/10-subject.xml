@@ -23,7 +23,7 @@
                 </xf:trigger>
             </span>
             <span class="xforms-hint">
-                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
                     <p> A subject is a term or a phrase that represents the primary topic(s) on which a work is focused. Use at least one subject field in each record. Enter as many specific terms as necessary to capture the subject content, and be consistent in the formatting of subject terms. </p>
                     <p> Values for subject indicate what content is found within or represented by the work, and typically answer such questions as who, what, where, and when. </p>
@@ -362,7 +362,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Use Topic to indicate any primary topical/abstract subjects that do not fit into the Geographic, Temporal, Title
                                         Information, or Name subfields. In general, abstract nouns should be used. While it is highly recommended that subject
@@ -411,7 +411,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Use Geographic for geographic subject terms that are not parsed within the Hierarchical Geographic field. If the
                                         geographic name is part of a corporate body (for example, United States. Senate), it is coded as Name, not Geographic.
@@ -458,7 +458,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Use Temporal for chronological subject terms or temporal coverage. It may be expressed as a controlled subject term
                                         (e.g. "Middle Ages") or as a structured date (e.g. "2001-09-11"). </p>
@@ -473,7 +473,7 @@
                     <xf:group appearance="full" ref=".[@encoding]">
                         <xf:select1 ref="./@encoding">
                             <xf:label>Encoding<span class="xforms-help">
-                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='temporal-encoding']/help"/>
                                     </div>
@@ -490,7 +490,7 @@
                     <xf:group appearance="full" ref=".[@point]">
                         <xf:select1 ref="./@point">
                             <xf:label>Point<span class="xforms-help">
-                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='temporal-point']/help"/>
                                     </div>
@@ -541,7 +541,7 @@
                         </span>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Title Information is used under Subject to note when a resource is about another resource with a title, e.g. a book
                                         about another book. </p>
@@ -851,7 +851,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Names contain the names of persons, organisations, or events (conferences, meetings, etc.) associated in some way with
                                         the resource catalogued. </p>
@@ -1032,7 +1032,7 @@
                         <div class="join">
                             <span class="legend">Name Part</span>
                             <span class="xforms-hint">
-                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-hint-value"/>
                             </span>
                         </div>
@@ -1111,7 +1111,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> One or more terms that designate a category characterising a particular style, form, or content, such as artistic,
                                         musical, literary composition, etc. Genre contains terms that give more specificity than the broad terms used in Type Of
@@ -1302,7 +1302,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> This subfield includes a hierarchical form of a place name relating to the content of the resource that is both readable
                                         by humans and parsable by machines. This form can be applied to the degree of specificity that is known or relevant and
@@ -1506,7 +1506,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Cartographics is a wrapper field that includes cartographic data indicating spatial coverage. </p>
                         </div>
@@ -1572,7 +1572,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p>Geographic Code includes a geographic area code associated with a resource. A geographic code that represents the same
                                         entity as a term in Geographic is included within the same Subject field.</p>
@@ -1632,7 +1632,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Occupation includes a term that is descriptive of the occupation reflected in the contents of the described materials.
                                         It is not used to list the occupations of the creators of the described materials, unless those occupations are

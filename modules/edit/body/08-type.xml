@@ -23,7 +23,7 @@
                 </xf:trigger>
             </span>
             <span class="xforms-hint">
-                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
                     <p> A term that specifies the characteristics and general type of the content of the resource being catalogued. This field includes a
                             high-level type that categorizes the material in a general way. More specific typing is done in the Genre field. </p>

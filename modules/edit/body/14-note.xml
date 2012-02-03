@@ -23,7 +23,7 @@
                 </xf:trigger>
             </span>
             <span class="xforms-hint">
-                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
                     <p> General information relating to a resource. </p>
                     <p> Note should be used only for information that cannot be encoded in another, more specific, ways. </p>

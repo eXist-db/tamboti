@@ -20,7 +20,7 @@
                 </xf:trigger>
             </span>
             <span class="xforms-hint">
-                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
                     <p> One or more terms that characterise the resource as having a particular style, form, or content, such as artistic, musical, literary composition, etc. </p>
                     <p> Genre contains terms that give more specificity than the broad terms used in Type Of Resource. </p>

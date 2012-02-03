@@ -21,7 +21,7 @@
                 </xf:trigger>
             </span>
             <span class="xforms-hint">
-                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
                     <p> Physical Description contains all subfields relating to the physical description information of the resource described. Data is input only within each subfield. </p>
                 </div>
@@ -187,7 +187,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> A designation of a particular physical presentation of a resource. Form includes information that specifies the physical form or medium of material for a resource. Form should be used to characterize the resource itself rather than the content of the resource, which would be Genre. Either a controlled list of values or free text may be used. </p>
                         </div>
@@ -259,7 +259,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p>Reformatting Quality indicates an overall assessment of the physical quality of an electronic resource in relation to its intended use.</p>
                             <p>The following values may be used: access, preservation and replacement.</p>
@@ -312,7 +312,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> An identification of the electronic format type, or the data representation of the resource. Internet Media Type specifies the electronic format type, such as text/html, ASCII, Postscript file, executable application or JPEG image. It is roughly equivalent to MARC 21 field 856 subfield $q, although subfield $q may also contain other designations of electronic format. The Internet Media Type value is generally taken from a controlled list, especially from the Internet Media types (MIME types) (see: www.iana.org/assignments/media-types/index.html for a complete list). </p>
                         </div>
@@ -359,7 +359,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> A statement of the number and specific material of the units of the resource that express physical extent. Extent may be used with electronic resources, e.g. digitised collection of slides, to show how many slides constitute the resource. </p>
                         </div>
@@ -402,7 +402,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> A designation of the source of a digital file important to its creation, use and management. Digital Origin may indicate the source of a digital file important to its creation, use and management. </p>
                         </div>
@@ -449,7 +449,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> A designation of a particular physical presentation of a resource. Form includes innoteation that specifies the physical note or medium of material for a resource. Either a controlled list of values or free text may be used. </p>
                         </div>

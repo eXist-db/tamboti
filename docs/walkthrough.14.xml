@@ -1,7 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book xmlns:xi="http://www.w3.org/2001/XInclude">
-    <xi:include href="header.xml"/>
-    <xi:include href="sidebar.xml"/>
+    <bookinfo>
+        <graphic fileref="theme/images/tamboti.png"/>
+        <graphic fileref="theme/images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>
+        <productname>Tamboti</productname>
+        <title>Tamboti Walkthrough</title>
+        <date>February 2012</date>
+        <author>
+            <firstname>Dulip</firstname>
+            <surname>Withanage</surname>
+            <affiliation>
+                <address format="linespecific">
+                    <email>withanage@asia-europe.uni-heidelberg.de</email>
+                </address>
+                <orgname>Heidelberg Research Architecture</orgname>
+                <orgname>"Asia and Europe in a Global Context"</orgname>
+                <orgname>Heidelberg University</orgname>
+            </affiliation>
+        </author>
+        <author>
+            <firstname>Jens Østergaard</firstname>
+            <surname>Petersen</surname>
+            <affiliation>
+                <address format="linespecific">
+                    <email>petersen@asia-europe.uni-heidelberg.de</email>
+                </address>
+                <orgname>Heidelberg Research Architecture</orgname>
+                <orgname>"Asia and Europe in a Global Context"</orgname>
+                <orgname>Heidelberg University</orgname>
+            </affiliation>
+        </author>
+    </bookinfo>
+    <sidebar xmlns="http://exist-db.org/NS/sidebar" title="Navigation">
+        <group name="Tamboti">
+            <item>
+                <link href="">What is Tamboti?</link>
+            </item>
+            <item>
+                <link href="">Who are we?</link>
+            </item>
+        </group>
+        <group name="Documentation">
+            <item>
+                <link href="walkthrough.xml">Walkthrough</link>
+            </item>
+            <item>
+                <link href="">Search Functions</link>
+            </item>
+            <item>
+                <link href="">Editor</link>
+            </item>
+            <item>
+                <link href="security-manager.xml">Sharing</link>
+            </item>
+        </group>
+        <group name="MODS">
+            <item>
+                <link href="">Overview</link>
+            </item>
+            <item>
+                <link href="">Examples</link>
+            </item>
+            <item>
+                <link href="">Links</link>
+            </item>
+        </group>
+        <group name="Feedback">
+            <item>
+                <link href="http://kjc-fs-cluster.kjc.uni-heidelberg.de/helpdesk/" target="blank">Ticket System</link>
+            </item>
+        </group>
+        <group name="Development">
+            <item>
+                <link href="">How to Join</link>
+            </item>
+            <item>
+                <link href="">Changelog</link>
+            </item>
+        </group>
+        <banner>
+            <link href="http://exist-db.org">
+                <img alt="powered by eXist" border="0" src="../themes/default/images/powered.gif"/>
+            </link>
+        </banner>
+    </sidebar>
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
     <chapter>
         <title>Types of Bibliographical Entries</title>
@@ -17,40 +99,74 @@
                         <entry>
                             <ulink href="walkthrough.13.xml">
                                 <div>
-                                    <graphic fileref="images/resultset_previous.png" align="left" alt="Go To Previous"/>
-                                    &#160;</div>
+                                    <graphic fileref="images/resultset_previous.png" align="left" alt="Go To Previous"/> &#160;</div>
                             </ulink>
                         </entry>
                         <entry>
                             <ulink href="walkthrough.toc.xml">
                                 <div class="toc">
-                                    <graphic fileref="images/text_list_bullets.png" align="center" alt="Table of Contents"/>&#160;
-                                </div>
+                                    <graphic fileref="images/text_list_bullets.png" align="center" alt="Table of Contents"/>&#160; </div>
                             </ulink>
                         </entry>
                         <entry>
                             <ulink href="walkthrough.15.xml">
                                 <div>
-                                    <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next"/>
-                                    &#160;</div>
+                                    <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next"/> &#160;</div>
                             </ulink>
                         </entry>
                     </row>
                 </tbody>
             </tgroup>
         </table>
-        <para> Before introducing Tamboti's Basic Input forms, we need to talk a little about the structure of bibliographical entries in general. </para>
-        <para> Bibliographical entries basically divide into three blocks of information, that is, information
-            concerning </para>
+        <para> Before introducing Tamboti's Basic Input forms, we need to talk a little about the
+            structure of bibliographical entries in general. </para>
+        <para>There are many different kinds of bibliographical items, but for our purposes the most
+            important among them are 
+            <itemizedlist>
+                <listitem>monographs, works of writing upon a single subject, published as one or
+                    more book volumes, often referred to simply as a "book," which may occur in
+                    monograph series</listitem>
+                <listitem>articles, works of writing upon a single subject, published in a
+                    periodical</listitem>
+                <listitem>publications which resemble articles, but which occur (along with other
+                    similar publications) in books, books which are thematically unified and have an
+                    editor - we call these "contributions to edited volumes", but they are often
+                    referred to as "book chapters" or "chapters of edited volumes"</listitem>
+            </itemizedlist>
+        </para>
+        <para>From this we can see that we at least have to operate with three further
+            categories:
+            <itemizedlist>
+                <listitem>monograph series</listitem>
+                <listitem>periodicals</listitem>
+                <listitem>edited volumes</listitem>
+            </itemizedlist>
+        </para>
+        <para> Bibliographical entries basically divide into three blocks of information, that is,
+            information concerning </para>
         <ul>
-            <li>the publication itself, </li>
-            <li>the container that the publication occurs in, and</li>
+            <li>the publication itself
+                <itemizedlist>
+                    <listitem>a monograph</listitem>
+                    <listitem>an article</listitem>
+                    <listitem>a contribution to an edited volume</listitem>
+                </itemizedlist>
+            </li>
+            <li>the container that the publication occurs in
+                <itemizedlist>
+                    <listitem>a monograph series</listitem>
+                    <listitem>a periodical</listitem>
+                    <listitem>an edited volume</listitem>
+                </itemizedlist>
+            </li>
             <li>the location of the publication inside its container.</li>
         </ul>
-        <para> Monographs that belong in a monograph series, articles that belong in a periodical and contributions to edited volumes that belong in an anthology all follow
-            this pattern. Monographs that occur on their own, monographs that are not part of any series, only have the first block
-            of information, but that presents no complications: the last two blocks are simply left empty. 
-            The same applies to descriptions of series and periodicals as such.</para>
+        <para> Monographs that belong in a monograph series, articles that belong in a periodical
+            and contributions that belong in an edited volume all follow this pattern. Monographs
+            that occur on their own, that is, monographs that are not part of any series, only have
+            the first block of information, but that presents no complications: the last two blocks
+            are simply left empty. The same applies to descriptions of series and periodicals as
+            such.</para>
         <table cellspacing="0" cellpadding="3" border="1" width="75%" class="center">
             <col width="25%"/>
             <col width="25%"/>
@@ -74,6 +190,12 @@
                     <td align="center" valign="middle">X</td>
                     <td align="center" valign="middle">X</td>
                     <td align="center" valign="middle">X</td>
+                </tr>
+                <tr>
+                    <td>Monograph series</td>
+                    <td align="center" valign="middle">X</td>
+                    <td align="center" valign="middle"/>
+                    <td align="center" valign="middle"/>
                 </tr>
                 <tr>
                     <td>Periodicals</td>
@@ -107,7 +229,10 @@
                 </tr>
             </tbody>
         </table>
-        <para> The Basic Input Forms accommodate these types of bibliographical entries. This means that it can deal with the larger part of standard
-            bibliographical entries. More types will be added.</para>
+        <para>(Since an edited volume can be part of a series, just like a monograph, the situation
+            is even more involved: we can have a contribution contained in an edited volume contained in a
+            series ….)</para>
+        <para> The Basic Input Forms accommodate these types of bibliographical entries (and a few more). This means
+            that it can deal with the larger part of standard bibliographical entries. New forms can be made for specific purposes, to accommodate more bibliographical types or to suit the needs of specific projects.</para>
     </chapter>
 </book>

@@ -8,17 +8,30 @@ declare namespace xf="http://www.w3.org/2002/xforms";
 declare namespace xforms="http://www.w3.org/2002/xforms";
 declare namespace ev="http://www.w3.org/2001/xml-events";
 
-declare variable $mods:tabs-file := concat($config:edit-app-root, '/tab-data.xml');
+declare variable $mods:tabs-data := concat($config:edit-app-root, '/tab-data.xml');
 
 (: Display the tabs in a div using triggers that hide or show sub-tabs and tabs. :)
 declare function mods:tabs($tab-id as xs:string, $record-id as xs:string, $data-collection as xs:string) as node()  {
 
-(: get the type param from the URL. :)
+(: Get the type and transliterationOfResource params from the URL. :)
 let $type := request:get-parameter("type", '')
-
-(: get the top-tab-number param from the URL; if it is empty, it is because the record has just been initialised; 
-if it is a non-basic template, set it to 2 (to show Citation Forms/Title Information), 
-otherwise set it to 1 (to show Basic Input Forms/Main Publication). :)
+let $transliterationOfResource := request:get-parameter("transliterationOfResource", "")
+(: Construct the full types. :)
+let $type := 
+        if ($type = ('related-article-in-periodical', 'related-book-chapter','suebs-tibetan', 'insert-templates', 'new-instance', 'mads'))
+        (: These document types do not (yet) divide into latin and transliterated. :)
+        then $type
+        else
+            if (contains($type, '-transliterated') or contains($type, '-latin')) 
+            then $type
+            else
+                if ($transliterationOfResource) 
+                then concat($type, '-transliterated') 
+                else concat($type, '-latin') 
+(: Get the top-tab-number param from the URL.
+If it is empty, it is because the record has just been initialised; 
+if it is a non-basic template, set it to 2 to show Citation Forms/Title Information, 
+otherwise set it to 1 to show Basic Input Forms/Main Publication. :)
 let $top-tab-number := xs:integer(request:get-parameter("top-tab-number", 
     if ($type = ('insert-templates','new-instance'))
     then 2
@@ -28,9 +41,8 @@ let $top-tab-number := xs:integer(request:get-parameter("top-tab-number",
         else 1
     ))
 
-(: get the sequence of tabs from the tabs file :)
-let $tabs-data := doc($mods:tabs-file)/tabs/tab
-
+(: Get the tabs data. :)
+let $tabs-data := doc($mods:tabs-data)/tabs/tab
 return
 <div class="tabs">
     <table class="top-tabs" width="100%">
@@ -70,7 +82,9 @@ return
                 {
                 for $tab in $tabs-data[top-tab-number = $top-tab-number]
                 let $tab-for-type := $tab/*[local-name() = $type]/text()
-				let $top-tab-count := count($tabs-data[top-tab-label/text() = $tab/top-tab-label/text()])
+				let $tab-count := count($tabs-data[top-tab-label/text() = $tab/top-tab-label/text()])
+                (: There are no containers for periodicals. :)
+                where $tab-for-type != ('periodical-latin', 'periodical-transliterated') or $top-tab-number gt 1
                 return
                 <td style="{
                     if ($tab-id = $tab/tab-id/text()) 
@@ -78,7 +92,7 @@ return
                     else "background:#EDEDED"}
                     ">
                     {attribute{'width'}
-                    {100 div $top-tab-count}}
+                    {100 div $tab-count}}
                     <xf:trigger appearance="minimal">
                         <xf:label>
                             <div class="label" style="{

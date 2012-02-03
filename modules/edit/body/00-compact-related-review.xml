@@ -7,7 +7,7 @@
                     <div class="join">
                         <span class="legend">Location of Book Review</span>
                         <span class="xforms-help">
-                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
                                 <p> The Container information for a book review falls into two parts.</p>
                                 <p>The first part is the information regarding where the book review itself has been published. This is the same as
@@ -27,7 +27,7 @@
                             <div class="join">
                                 <span class="legend">Periodical Title</span>
                                 <span class="xforms-help">
-                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <p> Enter here the title of the series you are cataloguing. If the title divides into a main title and a subtitle,
                                                 enter each part in its separate field. </p>
@@ -98,7 +98,7 @@
                             <div class="join wide">
                                 <span class="legend">Location of Review in Periodical</span>
                                 <span class="xforms-help">
-                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <p> Note here in which volume and issue and on which pages the article you are cataloguing occurs in the
                                                 periodical.</p>
@@ -115,7 +115,7 @@
                                         <div class="join">
                                             <span class="legend">Volume and Issue</span>
                                             <span class="xforms-help">
-                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             </span>
                                         </div>
                                             <!--relatedItem/part/detail repeat begins-->
@@ -209,7 +209,7 @@
                                     </xf:trigger>
                                 </span>
                                 <span class="xforms-help">
-                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='isbn']/help"/>
                                     </div>
@@ -250,7 +250,7 @@
                             </span>
                         </span>
                         <span class="xforms-help">
-                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
                                 <p> The Container information for a book review falls into two parts.</p>
                                 <p>The first part is the information regarding where the book review itself has been published. This is the same as
@@ -282,7 +282,7 @@
                                     </xf:trigger>
                                 </span>
                                 <span class="xforms-help">
-                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <p> In Names and Roles, catalogue the names of each person, corporation or conference associated with the
                                                 resource.</p>
@@ -306,7 +306,7 @@
                                         <div class="join">
                                             <span class="legend">Name</span>
                                             <span class="xforms-help">
-                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
                                                     <p> Analyse each name into separate name parts.</p>
                                                     <p> If possible, analyse each personal name into Given Name and Family Name. If this is not possible,
@@ -378,7 +378,7 @@
                                                 </xf:trigger>
                                             </span>
                                             <span class="xforms-help">
-                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
                                                     <p> Role contains a description of the role of the person or institution named above to the resource
                                                             being catalogued.</p>
@@ -423,7 +423,7 @@
                             <div class="join">
                                 <span class="legend">Title of Book Reviewed</span>
                                 <span class="xforms-help">
-                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <p> Enter here the title of the series you are cataloguing. If the title divides into a main title and a subtitle,
                                                 enter each part in its separate field. </p>
@@ -494,7 +494,7 @@
                             <div class="join">
                                 <span class="legend">Origin Information</span>
                                 <span class="xforms-help">
-                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <p> Enter here information about the book's origin, including its place of origin or publication, its publisher, and
                                                 its date of issue. </p>
@@ -513,7 +513,7 @@
                                         <div class="join">
                                             <span class="legend">City</span>
                                             <span class="xforms-help">
-                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
                                                     <p> Record in City Name the city in which the publisher has its principal domicile, as noted on the
                                                             title page. </p>
@@ -565,7 +565,7 @@
                                         <div class="join">
                                             <span class="legend">Publisher</span>
                                             <span class="xforms-help">
-                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
                                                     <p> Record in Publisher Name the name of the entity that is the originator for a resource, i.e. that has
                                                             published, printed, distributed, released, issued, or produced it, as noted on the title page. </p>
@@ -602,7 +602,7 @@
                                         <div class="join">
                                             <span class="legend">Year of Publication</span>
                                             <span class="xforms-help">
-                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
                                                     <p> Note in Year of Publication the year in which the resource was published, released, or issued. </p>
                                                     <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The values "start" and "end" are
@@ -650,7 +650,7 @@
                             <div class="join">
                                 <span class="legend">Physical Description</span>
                                 <span class="xforms-help">
-                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <p> In this compact input format, only the Internet Media Type and the Extent of the publication are noted in
                                                 Physical Description.</p>
@@ -666,7 +666,7 @@
                                         <div class="join">
                                             <span class="legend">Internet Media Type</span>
                                             <span class="xforms-help">
-                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
                                                     <p> Use this field if the resource is electronic. An identification of the electronic format type, or
                                                             the data representation of the resource. Internet Media Type specifies the electronic format type of
@@ -698,7 +698,7 @@
                                         <div class="join">
                                             <span class="legend">Extent</span>
                                             <span class="xforms-help">
-                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
                                                     <p> A statement of the number and specific material of the units of the resource that express physical
                                                             extent. A typical entry for a book might read "xiv, 213 p."</p>
@@ -732,7 +732,7 @@
                                     <span class="legend">URL</span>
                                 </span>
                                 <span class="xforms-help">
-                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <p> In URL, record the Uniform Resource Locator (URL) of a resource accessed on the Internet.</p>
                                     </div>
@@ -766,7 +766,7 @@
                                     </xf:trigger>
                                 </span>
                                 <span class="xforms-help">
-                                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='isbn']/help"/>
                                     </div>

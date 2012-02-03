@@ -25,7 +25,7 @@
                 </xf:trigger>
             </span>
             <span class="xforms-hint">
-                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
                     <p> Here the language of the contents of the described resource as a whole is noted. </p>
                     <p> Language may also be expressed in relation to a single field, by means of the Language field, in order to note the language used in
@@ -250,7 +250,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Language Term specifies the language(s) of the content of the resource.
                                             <!--NB: revise after question of two types of input is solved.--> It may be expressed in textual or coded form. If
@@ -432,7 +432,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p>Hint</p>
                         </div>

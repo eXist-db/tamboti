@@ -20,6 +20,7 @@ return
             <forward url="/{substring-after($exist:path, 'libs/')}" absolute="yes"/>
         </dispatch>
     else if (ends-with($uri, '.xml')) then
+        let $log := util:log("DEBUG", ("controller: ", $exist:root))
         return
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
 			<view>

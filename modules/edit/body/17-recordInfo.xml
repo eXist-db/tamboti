@@ -23,7 +23,7 @@
                 </xf:trigger>
             </span>
             <span class="xforms-hint">
-                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
                     <p> Information about the metadata record. This type of administrative information can help establish the provenance of a metadata record and may enable better interpretation of the content of the record. Record Information may also include information that is relevant only to the creating or managing institution. This type of administrative information can help establish the provenance of a metadata record and may enable better interpretation of the content of the record. </p>
                 </div>
@@ -120,7 +120,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> The code or name of the organization that either created or modified the original record. This information can be useful to trace the provenance of a particular metadata record. The name or code should be pulled from an authoritative list and indicated in Authority. Record Content Source should be repeated for each code or name recorded. </p>
                         </div>
@@ -170,7 +170,7 @@
                 <div class="join">
                     <span class="legend">Record Creation Date</span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p>The date on which the record was first created.</p>
                         </div>
@@ -277,7 +277,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p>The date(s) on which the record has been changed.</p>
                         </div>
@@ -362,7 +362,7 @@
                 <div class="join">
                     <span class="legend">Record Identifier</span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Record Identifier is used to record the system control number assigned by the organization creating, using, or distributing the record. Consult <a href="http://www.loc.gov/marc/organizations/org-search.php">MARC Code List for Organizations</a> and <a href="http://www.oclc.org/contacts/libraries/">OCLC Participating Institutions</a>
                             </p>
@@ -408,7 +408,7 @@
                 <div class="join">
                     <span class="legend">Record Origin</span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Record Origin is intended to show the origin, or provenance of the record. Note the original format and transformation process if the record has been transformed from a record in another format. </p>
                         </div>
@@ -434,7 +434,7 @@
                 <div class="join">
                     <span class="legend">Cataloging Language</span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Note here the language used in cataloging the current record. Use both Text and Code input. </p>
                         </div>
@@ -491,7 +491,7 @@
                 <div class="join">
                     <span class="legend">Description Standard</span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p>Here are noted any specific rules used for the description.</p>
                         </div>

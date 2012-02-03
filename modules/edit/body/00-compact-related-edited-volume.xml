@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-anthology" e:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-edited-volume" e:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
             <div class="join">
@@ -7,7 +7,7 @@
                     <span class="legend">Edited Volume</span>
                 </span>
                 <span class="xforms-help">
-                    <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-help-value">
                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='edited-volume-compact']/help"/>
                     </div>
@@ -20,7 +20,7 @@
                         <div class="join">
                             <span class="legend">Title of Edited Volume</span>
                             <span class="xforms-help">
-                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='edited-volume-titleInfo-compact']/help"/>
                                 </div>
@@ -84,7 +84,7 @@
                         <div class="join">
                             <span class="legend">Editor(s) of Edited Volume</span>
                             <span class="xforms-help">
-                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='edited-volume-name-compact']/help"/>
                                 </div>
@@ -110,7 +110,7 @@
                                         </xf:trigger>
                                     </span>
                                     <span class="xforms-help">
-                                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">
                                             <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart-compact']/help"/>
                                         </div>
@@ -165,7 +165,7 @@
                                         </xf:trigger>
                                     </span>
                                     <span class="xforms-help">
-                                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">
                                             <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart-institution-compact']/help"/>
                                         </div>
@@ -209,7 +209,7 @@
                         <div class="join wide">
                             <span class="legend">Edited Volume Origin Information</span>
                             <span class="xforms-help">
-                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='originInfo-compact']/help"/>
                                 </div>
@@ -223,7 +223,7 @@
                                     <div class="join">
                                         <span class="legend">City Name</span>
                                         <span class="xforms-help">
-                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='place-compact']/help"/>
                                             </div>
@@ -265,7 +265,7 @@
                                     <div class="join">
                                         <span class="legend">Publisher</span>
                                         <span class="xforms-help">
-                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='publisher-compact']/help"/>
                                             </div>
@@ -293,7 +293,7 @@
                                     <div class="join">
                                         <span class="legend">Year of Publication</span>
                                         <span class="xforms-help">
-                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='dateIssued-compact']/help"/>
                                             </div>
@@ -334,7 +334,7 @@
                         <div class="join extra-wide">
                             <span class="legend">Location of Contribution in Edited Volume</span>
                             <span class="xforms-help">
-                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='originIfo-compact']/help"/>
                                 </div>
@@ -415,7 +415,7 @@
                                 </xf:trigger>
                             </span>
                             <span class="xforms-help">
-                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='identifier-monograph-compact']/help"/>
                                 </div>
@@ -444,7 +444,7 @@
                                 <span class="legend">Monograph Series of Edited Volume</span>
                             </span>
                             <span class="xforms-help">
-                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <p> Enter here information related to the monograph series that the monograph you are cataloguing occurs in. This
                                         information falls into two groups: general information on the monograph series and specific information on the location
@@ -459,7 +459,7 @@
                                     <div class="join">
                                         <span class="legend">Series Title</span>
                                         <span class="xforms-help">
-                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <p> Enter here the title of the series you are cataloguing. If the title divides into a main title and a
                                                     subtitle, enter each part in its separate field. </p>
@@ -521,7 +521,7 @@
                                     <div class="join extra-wide">
                                         <span class="legend">Location of Edited Volume in Monograph Series</span>
                                         <span class="xforms-help">
-                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <p> Use this field to indicate the volume of the series that the edited volume you are cataloguing occurs in.
                                                 </p>
@@ -538,7 +538,7 @@
                                                 <div class="join">
                                                     <span class="legend">Volume</span>
                                                     <span class="xforms-help">
-                                                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                         <div class="xforms-help-value">
                                                             <p> Use this field to indicate the volume the edited volume that the edited volume contribution you
                                                                 are cataloguing occurs in. </p>

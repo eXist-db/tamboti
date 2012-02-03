@@ -21,7 +21,7 @@
                 </xf:trigger>
             </span>
             <span class="xforms-hint">
-                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
                     <p> The designation of physical parts of a resource in a detailed form. Part is used to provide detailed description of the physical
                                 parts of a resource. It may be used as a top level field to designate physical parts or under Related Item. If used under
@@ -250,7 +250,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Use Detail to indicate the numbering and type of designation of the part in relation to the parent item. Detail
                                             contains the numbering and type of designation of the part in relation to the host/parent item in which a host item
@@ -357,7 +357,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Use this subfield to indicate the measured units making up the part (for example pages, minutes, etc.). </p>
                         </div>
@@ -458,7 +458,7 @@
                         </span>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Date contains date information relevant to the part described. </p>
                         </div>
@@ -553,7 +553,7 @@
                         </xf:trigger>
                     </span>
                     <span class="xforms-hint">
-                        <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
                             <p> Use this subfield to record information in textual form. Use this subfield when other subfields will not capture the
                                             appropriate information. </p>
