@@ -232,8 +232,8 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 ($collection, replace($expr, '\$q', biblio:escape-search-string($query-as-xml/string())))
         case element(collection) 
             return
-                if (not($query-as-xml/..//field)) 
-                then ('collection("', $query-as-xml/string(), '")//mods:mods')
+                if (not($query-as-xml/..//field) and not($config:require-query)) then
+                    ('collection("', $query-as-xml/string(), '")//mods:mods')
                 else ()
             default 
                 return ()
@@ -386,7 +386,7 @@ declare function biblio:order-by-author($m as element()) as xs:string?
     
 (: Map order parameter to xpath for order by clause :)
 (: NB: It does not make sense to use Score if there is no search term to score on. :)
-declare function biblio:construct-order-by-expression($field as xs:string?) as xs:string
+declare function biblio:construct-order-by-expression($field as xs:string?) as xs:string?
 {
     if (sort:has-index('mods:name')) 
     (: If there is an index on name, there will be an index on the other options. ??? :)
@@ -419,7 +419,10 @@ declare function biblio:construct-order-by-expression($field as xs:string?) as x
 declare function biblio:evaluate-query($query-as-string as xs:string, $sort as xs:string?) {
     let $order-by-expression := biblio:construct-order-by-expression($sort)
     let $query-with-order-by-expression :=
+        if ($order-by-expression) then
             concat("for $hit in ", $query-as-string, " order by ", $order-by-expression, " return $hit")
+        else
+            $query-as-string
     let $options :=
         <options>
             <default-operator>and</default-operator>

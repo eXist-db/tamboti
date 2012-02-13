@@ -41,6 +41,12 @@ declare variable $config:theme-config := concat($config:themes, "/configuration.
 declare variable $config:resources := concat($config:app-root, "/resources");
 declare variable $config:images := concat($config:app-root, "/resources/images");
 
+(: If the user has not specified a query, should he see the entire collection contents?
+ : Set to true() if a query must be specified, false() to list the entire collection.
+ : On large databases, false() will most likely lead to problems.
+ :)
+declare variable $config:require-query := true();
+
 (: email invitation settings :)
 declare variable $config:send-notification-emails := false();
 declare variable $config:smtp-server := "smtp.yourdomain.com";
