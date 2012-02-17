@@ -2,24 +2,24 @@
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-xlink" e:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
-            <div class="join">
-                <span class="legend">Related Items</span>
-                <span class="join-button">
+            <div class="join extra-wide">
+                <span class="legend">Location of Article, Contribution or Chapter</span>
+                <!--<span class="join-button">
                     <xf:trigger>
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:insert nodeset="instance('save-data')/mods:relatedItem" at="index('relatedItem-repeat')" position="before"/>
                         </xf:action>
                     </xf:trigger>
-                </span>
-                <span class="join-button">
+                </span>-->
+                <!--<span class="join-button">
                     <xf:trigger>
                         <xf:label>–</xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:relatedItem" at="index('relatedItem-repeat')"/>
                         </xf:action>
                     </xf:trigger>
-                </span>
+                </span>-->
                 <span class="xforms-help">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-help-value">
@@ -31,7 +31,7 @@
             <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-repeat">
                     <!--relatedItem node-add begins-->
                     <!--NB: attributes do not work-->
-                <xf:group ref=".[not(mods:part)]">
+                <!--<xf:group ref=".[not(mods:part)]">
                     <xf:switch>
                         <xf:case id="relatedItem-add-node-hide">
                             <div class="node-adds-title">
@@ -50,7 +50,7 @@
                             </div>
                             <div class="node-adds">
                                 <xf:group ref=".[not(mods:part)]">
-                                        <!--<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-->
+                                        <!-\-<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-\->
                                     <xf:trigger ref=".[not(mods:part)]" class="add-button">
                                         <xf:label class="xforms-group-label-centered">Add Part</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -62,7 +62,7 @@
                             </div>
                         </xf:case>
                     </xf:switch>
-                </xf:group>
+                </xf:group>-->
                     <!--relatedItem node-add ends-->
                     <!--relatedItem input begins-->
                     <!--DLF/Aquifer: OPTIONAL-->
@@ -76,12 +76,7 @@
                         </xf:hint>
                     </xf:input>
                 </xf:group>
-                    <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
-                    <!--Cluster: require-->
-                    <!-- Use the xlink:href field to link to external resources. These guidelines recommend that this field, when used, contain the URI of a MODS record or an OAI GetRecord request, if available, for a related resource. The 'info' URI scheme supported by the Library of Congress can also be used to encode an external link here using an LCCN or DOI (see http://www.loc.gov/standards/uri/info.html for more information). These guidelines also recommend that no subelements appear under <relatedItem> when this field is used. -->
-                    <!--DLF/Aquifer: REQUIRED-->
-                    <!--Cluster: include-->
-                <xf:group ref=".[@type]">
+                <!--<xf:group ref=".[@type]">
                     <xf:select1 ref="./@type">
                         <xf:label>Type:</xf:label>
                         <xf:hint>
@@ -97,7 +92,7 @@
                             <xf:value ref="value"/>
                         </xf:itemset>
                     </xf:select1>
-                </xf:group>
+                </xf:group>-->
                 <br/>
                 <xf:group ref=".[@xlink]">
                     <xf:input ref="./@xlink" class="text_50">
@@ -728,7 +723,7 @@
                         <xf:repeat nodeset="./mods:part" id="related-item-part-repeat">
                                 <!--part node-add begins-->
                                 <!--NB: attributes do not work-->
-                            <xf:group ref=".[not(mods:detail)] | .[not(mods:extent)] | .[not(mods:date)] | .[not(mods:text)]">
+                            <!--<xf:group ref=".[not(mods:detail)] | .[not(mods:extent)] | .[not(mods:date)] | .[not(mods:text)]">
                                 <xf:switch>
                                     <xf:case id="part-add-node-hide">
                                         <div class="node-adds-title">
@@ -747,8 +742,8 @@
                                         </div>
                                         <div class="node-adds">
                                             <xf:group ref=".[not(mods:detail)] | .[not(mods:extent)] | .[not(mods:date)] | .[not(mods:text)]">
-                                                    <!--<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-->
-                                                    <!--
+                                                    <!-\-<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-\->
+                                                    <!-\-
                                                             <xf:trigger ref=".[not(@type)]" class="add-button">
                                                             <xf:label class="xforms-group-label-centered">Add Type</xf:label>
                                                             <xf:action ev:event="DOMActivate">
@@ -763,7 +758,7 @@
                                                             <xf:insert context="." origin="instance('insert-templates')/mods:part/@authority"/>
                                                             </xf:action>
                                                             </xf:trigger>
-                                                        -->
+                                                        -\->
                                                 <xf:trigger ref=".[not(mods:detail)]" class="add-button">
                                                     <xf:label class="xforms-group-label-centered">Add Detail</xf:label>
                                                     <xf:action ev:event="DOMActivate">
@@ -793,7 +788,7 @@
                                                     </xf:action>
                                                 </xf:trigger>
                                             </xf:group>
-                                                <!-- 
+                                                <!-\- 
                                                         <xf:group ref=".[not(@ID)]">
                                                         <xf:label class="xforms-group-label-centered">Optional Fields</xf:label>
                                                         <xf:trigger ref=".[not(@ID)]" class="add-button">
@@ -804,15 +799,15 @@
                                                         </xf:action>
                                                         </xf:trigger>
                                                         </xf:group> 
-                                                    -->
-                                                <!--
+                                                    -\->
+                                                <!-\-
                                                         <xf:group>
                                                         </xf:group> 
-                                                    -->
+                                                    -\->
                                         </div>
                                     </xf:case>
                                 </xf:switch>
-                            </xf:group>
+                            </xf:group>-->
                                 <!--part node-add ends-->
                                 <!--relatedItem/part input begins-->
                                 <!--DLF/Aquifer: OPTIONAL-->
@@ -965,10 +960,106 @@
                                         <!--relatedItem/part/detail repeat ends-->
                                 </fieldset>
                             </xf:group>
-                                <!--relatedItem/part/detail ends-->
-                                <!--relatedItem/part/extent begins-->
-                                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
-                                <!--Cluster: include-->
+                            <xf:group ref=".[mods:date]">
+                                <fieldset class="level-3">
+                                    <div class="join">
+                                        <span class="legend">Date</span>
+                                        <span class="join-button">
+                                            <xf:trigger>
+                                                <xf:label>+</xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xf:insert nodeset="instance('save-data')/mods:date" at="index('related-item-part-date-repeat')" position="before"/>
+                                                </xf:action>
+                                            </xf:trigger>
+                                        </span>
+                                        <span class="join-button">
+                                            <xf:trigger>
+                                                <xf:label>–</xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:relatedItem/mods:part/mods:date" at="index('related-item-part-date-repeat')"/>
+                                                </xf:action>
+                                            </xf:trigger>
+                                        </span>
+                                        <span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <p> Date contains date information relevant to the part described. </p>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <!--relatedItem/part/date repeat begins-->
+                                    <xf:repeat nodeset="./mods:date" id="related-item-part-date-repeat">
+                                        
+                                        <!--relatedItem/part/date input begins-->
+                                        <!--DLF/Aquifer: RECOMMENDED-->
+                                        <!--Cluster: include-->
+                                        <!-- NB: 3.4 adds languageAttributeGroup -->
+                                        <xf:group ref=".[@encoding]">
+                                            <xf:select1 ref="./@encoding">
+                                                <xf:label>Encoding:</xf:label>
+                                                <xf:hint>
+                                                    <p> If a structured date is used, indicate the formatting source using the encoding field. These
+                                                        guidelines recommend using the following value for the encoding field: "w3cdtf" This encoding is
+                                                        used to specify YYYY-MM-DD date patterns. "iso8601" is used for formatted dates which use pattern:
+                                                        YYYYMMDD (hours, minutes, seconds may also be added). "marc" is used only for dates coded according
+                                                        to MARC 21 rules in field 008/07-14 for dates of publication/issuance. Thus, this would only apply
+                                                        to the field in Date Issued. Examples include: 19uu (a MARC convention to show unknown digits in a
+                                                        date), 9999 (a MARC convention showing that the end date has not occurred or is not known). </p>
+                                                </xf:hint>
+                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='date-encoding-code']/items/item">
+                                                    <xf:label ref="label"/>
+                                                    <xf:value ref="value"/>
+                                                </xf:itemset>
+                                            </xf:select1>
+                                        </xf:group>
+                                        
+                                        <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                                        <!--Cluster: include-->
+                                        <xf:group ref=".[@point]">
+                                            <xf:select1 ref="./@point">
+                                                <xf:label>Point:</xf:label>
+                                                <xf:hint>
+                                                    <p> The point field can be used to encode date ranges using the following values: "start" and "end". If
+                                                        no point is specified, date is assumed to be a single date. </p>
+                                                </xf:hint>
+                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='start-end-code']/items/item">
+                                                    <xf:label ref="label"/>
+                                                    <xf:value ref="value"/>
+                                                </xf:itemset>
+                                            </xf:select1>
+                                        </xf:group>
+                                        <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                                        <!--Cluster: include-->
+                                        <xf:group ref=".[@qualifier]">
+                                            <xf:select1 ref="./@qualifier">
+                                                <xf:label>Qualifier:</xf:label>
+                                                <xf:hint>
+                                                    <p> The Qualifier field has three allowed values: approximate, inferred, and questionable. Best practice
+                                                        is to use this field with the appropriate value when a date is approximate, inferred, or
+                                                        questionable, rather than inserting characters such as "ca.", brackets or a question mark within the
+                                                        date string. </p>
+                                                </xf:hint>
+                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='date-qualifier-code']/items/item">
+                                                    <xf:label ref="label"/>
+                                                    <xf:value ref="value"/>
+                                                </xf:itemset>
+                                            </xf:select1>
+                                        </xf:group>
+                                        <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                                        <!--Cluster: include-->
+                                        <xf:group ref=".">
+                                            <xf:input ref="." class="text_50">
+                                                <xf:label>Date: </xf:label>
+                                                <xf:hint>
+                                                    <p> Date contains date information relevant to the part described. </p>
+                                                </xf:hint>
+                                            </xf:input>
+                                        </xf:group>
+                                        <!--relatedItem/part/date input ends-->
+                                    </xf:repeat>
+                                    <!--relatedItem/part/date repeat ends-->
+                                </fieldset>
+                            </xf:group>
                             <xf:group ref=".[mods:extent]">
                                 <fieldset class="level-3">
                                     <div class="join">
@@ -1076,110 +1167,6 @@
                                 </fieldset>
                             </xf:group>
                                 <!--relatedItem/part/extent ends-->
-                                <!--relatedItem/part/date begins-->
-                                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
-                                <!--Cluster: include-->
-                            <xf:group ref=".[mods:date]">
-                                <fieldset class="level-3">
-                                    <div class="join">
-                                        <span class="legend">Date</span>
-                                        <span class="join-button">
-                                            <xf:trigger>
-                                                <xf:label>+</xf:label>
-                                                <xf:action ev:event="DOMActivate">
-                                                    <xf:insert nodeset="instance('save-data')/mods:date" at="index('related-item-part-date-repeat')" position="before"/>
-                                                </xf:action>
-                                            </xf:trigger>
-                                        </span>
-                                        <span class="join-button">
-                                            <xf:trigger>
-                                                <xf:label>–</xf:label>
-                                                <xf:action ev:event="DOMActivate">
-                                                    <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:relatedItem/mods:part/mods:date" at="index('related-item-part-date-repeat')"/>
-                                                </xf:action>
-                                            </xf:trigger>
-                                        </span>
-                                        <span class="xforms-help">
-                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-help-value">
-                                                <p> Date contains date information relevant to the part described. </p>
-                                            </div>
-                                        </span>
-                                    </div>
-                                        <!--relatedItem/part/date repeat begins-->
-                                    <xf:repeat nodeset="./mods:date" id="related-item-part-date-repeat">
-
-                                            <!--relatedItem/part/date input begins-->
-                                            <!--DLF/Aquifer: RECOMMENDED-->
-                                            <!--Cluster: include-->
-                                            <!-- NB: 3.4 adds languageAttributeGroup -->
-                                        <xf:group ref=".[@encoding]">
-                                            <xf:select1 ref="./@encoding">
-                                                <xf:label>Encoding:</xf:label>
-                                                <xf:hint>
-                                                    <p> If a structured date is used, indicate the formatting source using the encoding field. These
-                                                            guidelines recommend using the following value for the encoding field: "w3cdtf" This encoding is
-                                                            used to specify YYYY-MM-DD date patterns. "iso8601" is used for formatted dates which use pattern:
-                                                            YYYYMMDD (hours, minutes, seconds may also be added). "marc" is used only for dates coded according
-                                                            to MARC 21 rules in field 008/07-14 for dates of publication/issuance. Thus, this would only apply
-                                                            to the field in Date Issued. Examples include: 19uu (a MARC convention to show unknown digits in a
-                                                            date), 9999 (a MARC convention showing that the end date has not occurred or is not known). </p>
-                                                </xf:hint>
-                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='date-encoding-code']/items/item">
-                                                    <xf:label ref="label"/>
-                                                    <xf:value ref="value"/>
-                                                </xf:itemset>
-                                            </xf:select1>
-                                        </xf:group>
-
-                                            <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
-                                            <!--Cluster: include-->
-                                        <xf:group ref=".[@point]">
-                                            <xf:select1 ref="./@point">
-                                                <xf:label>Point:</xf:label>
-                                                <xf:hint>
-                                                    <p> The point field can be used to encode date ranges using the following values: "start" and "end". If
-                                                            no point is specified, date is assumed to be a single date. </p>
-                                                </xf:hint>
-                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='start-end-code']/items/item">
-                                                    <xf:label ref="label"/>
-                                                    <xf:value ref="value"/>
-                                                </xf:itemset>
-                                            </xf:select1>
-                                        </xf:group>
-                                            <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
-                                            <!--Cluster: include-->
-                                        <xf:group ref=".[@qualifier]">
-                                            <xf:select1 ref="./@qualifier">
-                                                <xf:label>Qualifier:</xf:label>
-                                                <xf:hint>
-                                                    <p> The Qualifier field has three allowed values: approximate, inferred, and questionable. Best practice
-                                                            is to use this field with the appropriate value when a date is approximate, inferred, or
-                                                            questionable, rather than inserting characters such as "ca.", brackets or a question mark within the
-                                                            date string. </p>
-                                                </xf:hint>
-                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='date-qualifier-code']/items/item">
-                                                    <xf:label ref="label"/>
-                                                    <xf:value ref="value"/>
-                                                </xf:itemset>
-                                            </xf:select1>
-                                        </xf:group>
-                                            <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
-                                            <!--Cluster: include-->
-                                        <xf:group ref=".">
-                                            <xf:input ref="." class="text_50">
-                                                <xf:label>Date: </xf:label>
-                                                <xf:hint>
-                                                    <p> Date contains date information relevant to the part described. </p>
-                                                </xf:hint>
-                                            </xf:input>
-                                        </xf:group>
-                                            <!--relatedItem/part/date input ends-->
-                                    </xf:repeat>
-                                        <!--relatedItem/part/date repeat ends-->
-                                </fieldset>
-                            </xf:group>
-                                <!--relatedItem/part/date ends-->
                                 <!--relatedItem/part/text begins-->
                             <xf:group ref=".[mods:text]">
                                 <fieldset class="level-3">

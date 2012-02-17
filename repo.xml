@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <repo:meta xmlns="http://exist-db.org/xquery/repo" xmlns:repo="http://exist-db.org/xquery/repo">
+    <repo:author>Adam Retter</repo:author>
+    <repo:author>Dan McCreary</repo:author>
+    <repo:author>Dulip Withanage</repo:author>
     <repo:author>Jens Østergaard Petersen</repo:author>
     <repo:author>Wolfgang Meier</repo:author>
-    <repo:author>Adam Retter</repo:author>
-    <repo:author>Dulip Withanage</repo:author>
     <repo:website>http://exist-db.org</repo:website>
     <repo:license>GNU-LGPL</repo:license>
     <repo:copyright>true</repo:copyright>
@@ -13,5 +14,5 @@
     <repo:permissions user="editor" password="editor" group="biblio.users" mode="0444"/>
     <repo:status>stable</repo:status>
     <repo:prepare>pre-install.xql</repo:prepare>
-    <repo:deployed>2011-08-22T22:05:51.105+02:00</repo:deployed>
+    <deployed>2012-02-07T21:32:14.129+01:00</deployed>
 </repo:meta>

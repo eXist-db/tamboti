@@ -34,7 +34,7 @@
     <xi:include href="sidebar.xml"/>
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
     <chapter>
-        <title>Access</title>
+        <title>Advanced Search Options</title>
         <table frame="all" width="25%" border="0" class="center">
             <title/>
             <tgroup cols="4">
@@ -45,9 +45,10 @@
                 <tbody>
                     <row>
                         <entry>
-                            <ulink href="walkthrough.02.5.xml">
+                            <ulink href="walkthrough.xml">
                                 <div>
-                                    <graphic fileref="images/resultset_previous.png" align="left" alt="Go To Previous"/>&#160; </div>
+                                    <graphic fileref="images/resultset_previous.png" align="left" alt="Go To Previous"/>&#160;
+                                </div>
                             </ulink>
                         </entry>
                         <entry>
@@ -58,25 +59,43 @@
                             </ulink>
                         </entry>
                         <entry>
-                            <ulink href="walkthrough.04.xml">
+                            <ulink href="walkthrough.02.xml">
                                 <div>
-                                    <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next"/>&#160; </div>
+                                    <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next"/>&#160;
+                                </div>
                             </ulink>
                         </entry>
                     </row>
                 </tbody>
             </tgroup>
         </table>
-        <para> When you access Tamboti without logging in, you are able to search in material that is open to everybody, to all "guests." </para>
-        <para>When you have logged in, you can additionally search in material that is open to you alone and in material that is open to groups to which you
-            belong.</para>
-        <para>Even after you have logged log in, you will not see all material in the database, since it is likely that there are other users who keep at least
-            some of their records private to themselves.</para>
-        <para>The material that you wish to keep to yourself cannot be seen by anybody else, unless you choose to allow this. Below, it will be explained how
-            you go about sharing your material, should you choose to do so.</para>
-        <para>When searches are performed, only material open to a certain user is retrieved: the rest of the database could just as well not have existed.
-            Needless to say, the parts that outsiders cannot see cannot be edited by them. </para>
-        <para>Though, generally speaking, it is hard to imagine why one would not want to share one's bibliographical records with everybody, Tamboti makes this
-            possible. In other frameworks where we will apply the same user model, the benefits of this flexibility will be more evident.</para>
+        <para>
+            Tamboti supports the use of wildcards. 
+            "?" can be used for a single character and "*" for zero, one or more characters: "Japan" and "Japon" are thus found with "Jap?n" and "Chinese" and "China" are found with "Chin*". 
+            You cannot use "*" and "?" in the beginning of a word.
+        </para>
+        <para>
+            Fuzzy searches are performed by putting a tilde ("~") at the end of a search term, 
+            making it possible to retrieve "Wegner" through "Wagner~". 
+            One can quantify the fuzziness, by appending a number between 0.0 (totally fuzzy) and 0.9 (little fuzziness). 
+            The default is 0.5.
+        </para>
+        <para>One can perform boolean searches (searches involving "and", "or", and "not"), by using Advanced Search, 
+            but this is also possible in Simple Search.</para>
+        <para>One can use "AND" and "OR" between terms. 
+            If one searches for "China AND Japan", one will retrieve all records which contain both these terms, 
+            and if one searches for "China OR Japan", one will find all records in which one or both of these term occur. 
+            "NOT" can also be used: "China NOT Japan" retrieves records in which "China" occurs, 
+            but "Japan" does not occur. 
+            Note that these operators have to be written in upper-case.
+        </para>
+        <para>
+            Operators can be grouped with parentheses, as in "(China OR Japan) NOT modern". One can also combine boolean operators with wildcard searches and fuzzy searches. </para>
+        <para>
+            Phrases can be searched for by putting them in quotation marks. 
+            If one searches for "Modern China" (with quotation marks) one will find all records in which this precise string occurs, 
+            whereas if one searches for "Modern China" (without quotation marks), 
+            one will find all records in which the two words "China" and "Modern" occur, in any order.
+        </para>
     </chapter>
 </book>

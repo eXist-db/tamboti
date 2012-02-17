@@ -232,7 +232,7 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 ($collection, replace($expr, '\$q', biblio:escape-search-string($query-as-xml/string())))
         case element(collection) 
             return
-                if (not($query-as-xml/..//field) and not($config:require-query)) then
+                if (not($query-as-xml/..//field)(: and not($config:require-query):)) then
                     ('collection("', $query-as-xml/string(), '")//mods:mods')
                 else ()
             default 
@@ -419,6 +419,7 @@ declare function biblio:construct-order-by-expression($field as xs:string?) as x
 declare function biblio:evaluate-query($query-as-string as xs:string, $sort as xs:string?) {
     let $order-by-expression := biblio:construct-order-by-expression($sort)
     let $query-with-order-by-expression :=
+        (:The condition should be added that there is a search term. This will address comment in 388 :)
         if ($order-by-expression) then
             concat("for $hit in ", $query-as-string, " order by ", $order-by-expression, " return $hit")
         else

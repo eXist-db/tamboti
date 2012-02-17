@@ -12,13 +12,14 @@ declare variable $mods:tabs-data := concat($config:edit-app-root, '/tab-data.xml
 
 (: Display the tabs in a div using triggers that hide or show sub-tabs and tabs. :)
 declare function mods:tabs($tab-id as xs:string, $record-id as xs:string, $data-collection as xs:string) as node()  {
-
 (: Get the type and transliterationOfResource params from the URL. :)
 let $type := request:get-parameter("type", '')
+(: When a new Tamboti record is created, '-latin', and '-transliterated' are not appended, but in old Tamboti records they are. The easiest thing is to strip them, if there, and construct them again. :)
+let $type := replace(replace($type, '-latin', ''), '-transliterated', '')
 let $transliterationOfResource := request:get-parameter("transliterationOfResource", "")
 (: Construct the full types. :)
 let $type := 
-        if ($type = ('related-article-in-periodical', 'related-book-chapter','suebs-tibetan', 'insert-templates', 'new-instance', 'mads'))
+        if ($type = ('related-article-in-periodical', 'related-monograph-chapter','related-contribution-to-edited-volume','suebs-tibetan', 'insert-templates', 'new-instance', 'mads'))
         (: These document types do not (yet) divide into latin and transliterated. :)
         then $type
         else
@@ -27,20 +28,30 @@ let $type :=
             else
                 if ($transliterationOfResource) 
                 then concat($type, '-transliterated') 
-                else concat($type, '-latin') 
+                else 
+                    if ($type)
+                    then concat($type, '-latin')
+                    else ()
 (: Get the top-tab-number param from the URL.
-If it is empty, it is because the record has just been initialised; 
-if it is a non-basic template, set it to 2 to show Citation Forms/Title Information, 
-otherwise set it to 1 to show Basic Input Forms/Main Publication. :)
-let $top-tab-number := xs:integer(request:get-parameter("top-tab-number", 
-    if ($type = ('insert-templates','new-instance'))
-    then 2
+If it is empty, it is because the record has just been initialised, because a record not made with Tamboti is loaded; 
+or because it is a non-basic template - set it to 2 to show Citation Forms/Title Information (and hide the Basic Input Forms tab). 
+Otherwise set it to 1 to show Basic Input Forms/Main Publication. :)
+let $top-tab-number := xs:integer(request:get-parameter("top-tab-number", 0))
+let $top-tab-number := 
+    (: If a top-tab-number is passed, use it. :)
+    if ($top-tab-number) 
+    then $top-tab-number 
     else
-        if ($type = 'mads')
-        then 5
-        else 1
-    ))
-
+        (: If a top-tab-number is not passed, construct it.
+        If the record is not made in Tamboti (does not have a type) or if the type is not one that Basic Forms handle, serve the second tab (Citation Forms). :)
+        if ($type = ('insert-templates','new-instance') or not($type))
+        then 2
+        else
+            (: For (future) mads records, serve the mads tab. :)
+            if ($type = 'mads')
+            then 5
+            else 1
+            
 (: Get the tabs data. :)
 let $tabs-data := doc($mods:tabs-data)/tabs/tab
 return
@@ -49,6 +60,8 @@ return
         <tr>
             {
             for $top-tab-label in distinct-values($tabs-data/top-tab-label)
+            (: Do not show the Basic Input Forms tab for records not created in Tamboti. These records have no type. :)
+            where not(not($type) and $top-tab-label eq 'Basic Input Forms')
             return
             <td style="{
                 if ($tabs-data[top-tab-label = $top-tab-label]/top-tab-number = $top-tab-number) 
@@ -87,7 +100,7 @@ return
                 where $tab-for-type != ('periodical-latin', 'periodical-transliterated') or $top-tab-number gt 1
                 return
                 <td style="{
-                    if ($tab-id = $tab/tab-id/text()) 
+                    if ($tab-id eq $tab/tab-id) 
                     then "background:white;border-bottom-color:white;color:#3681B3;" 
                     else "background:#EDEDED"}
                     ">
@@ -96,7 +109,7 @@ return
                     <xf:trigger appearance="minimal">
                         <xf:label>
                             <div class="label" style="{
-                                if ($tab-id = $tab/tab-id/text()) 
+                                if ($tab-id eq $tab/tab-id) 
                                 then "color:#3681B3;font-weight:bold;" 
                                 else "color:darkgray;font-weight:bold"
                             }">{

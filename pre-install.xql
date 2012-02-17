@@ -111,7 +111,7 @@ util:log($log-level, fn:concat("Config: Creating commons collection '", $commons
     for $col in ($commons-samples-collection, $commons-exist-collection, $commons-mads-collection) return
     (
         local:mkcol($db-root, local:strip-prefix($col, fn:concat($db-root, "/"))),
-        xdb:set-collection-permissions($col, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8))
+        xdb:set-collection-permissions($col, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0744, 8))
     ),
     util:log($log-level, "...Config: Uploading samples data..."),
         xdb:store-files-from-pattern($commons-samples-collection, $home, "samples/mods/*.xml"),
