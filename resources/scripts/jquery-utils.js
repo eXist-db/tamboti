@@ -212,10 +212,10 @@
                     type: "GET",
                     url: base.options.url,
                     data: params,
-                    dataType: "xml",
+                    dataType: "html",
                     success: function(data) { 
                         base.currentItem = start;
-                        helpers.displayPage(base, data.documentElement); 
+                        helpers.displayPage(base, data); 
                     },
                     error: function (req, status, errorThrown) {
                         alert(status);
@@ -369,7 +369,34 @@
     }
 })(jQuery);
 
+(function($) {
+    $.each(['log','warn'], function(i,fn) {
+        $[fn] = function() {
+            if (!window.console) return;
+            var p = [], a = arguments;
+            for (var i=0; i<a.length; i++)
+                p.push(a[i]) && (i+1<a.length) && p.push(' ');
+            Function.prototype.bind.call(console[fn], console)
+                .apply(this, p);
+        };
+        
+        $.fn[fn] = function() {
+            var p = [this], a = arguments;
+            for (var i=0; i<a.length; i++) p.push(a[i]);
+            $[fn].apply(this, p);
+            return this;
+        };
+    });
+    $.assert = function() {
+        window.console
+            && Function.prototype.bind.call(console.assert, console)
+               .apply(console, arguments);
+    };
+})(jQuery);
+
+
 /* Debug and logging functions */
+/*
 (function($) {
     $.log = function() {
 //      if (typeof console == "undefined" || typeof console.log == "undefined") {
@@ -382,4 +409,6 @@
         $.log(this);
         return this;
     }
+  
 })(jQuery);
+  */

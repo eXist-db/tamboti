@@ -24,7 +24,7 @@ color scheme ends*/
     margin-top:1em;
     }
 
-#new-resource-form, #add-related-form {
+#new-resource-form {
     margin-top:1.5em;
     }
     
@@ -32,19 +32,9 @@ color scheme ends*/
     margin-right:2.2em;
 }
 
-#new-resource-form li input,
-#add-related-form li input
-{
+#new-resource-form li input {
     margin-right:1em;
 }
-
-#new-resource-dialog,
-#add-related-dialog
-{
-    font-size:.85em;
-}
-
-
 /*new or temporary stuff ends*/
 
 p, 
@@ -292,6 +282,7 @@ td.collection-path {
 #results-head {
     border-bottom:1px solid #BBBBBB;
     padding:1em;
+    
 }
 
 .records-found {
@@ -301,6 +292,11 @@ td.collection-path {
 #results {
     margin-top:.5em;
     overflow:auto;
+    
+}
+#results table {
+width : 
+100%;
 }
 
 .hi {
@@ -763,6 +759,10 @@ span.readable .dynatree-title {
 }
 
 /*folder sharing dialog ends*/
+
+#new-resource-dialog {
+    font-size:.85em;
+}
 
 #login-form {
     width:30em;

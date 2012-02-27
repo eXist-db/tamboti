@@ -117,7 +117,8 @@ declare function modsCommon:get-short-title($entry as element()) {
             		else ()
         else ()
         )
-        
+    let $title-formatted := string-join($title-formatted, '')
+    
     let $title-transliterated-formatted := 
         (
         if ($nonSort-transliterated) 
@@ -141,7 +142,8 @@ declare function modsCommon:get-short-title($entry as element()) {
             		else ()
         else ()
         )
-        
+    let $title-transliterated-formatted := string-join($title-transliterated-formatted, '')    
+    
     let $title-translated-formatted := 
         (
         if ($nonSort-translated) 
@@ -165,6 +167,8 @@ declare function modsCommon:get-short-title($entry as element()) {
             		else ()
         else ()
         )
+    let $title-translated-formatted := string-join($title-translated-formatted, '')
+    
     (: Assemble the full short title to display. :)    
     return
         ( 
