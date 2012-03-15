@@ -42,7 +42,16 @@ import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm"
 
 declare option exist:serialize "method=xhtml media-type=application/xhtml+xml omit-xml-declaration=no enforce-xhtml=yes";
 
-declare function functx:replace-first($arg as xs:string?, $pattern as xs:string, $replacement as xs:string ) as xs:string {       
+declare function functx:substring-before-if-contains 
+  ( $arg as xs:string? ,
+    $delim as xs:string )  as xs:string? {
+       
+   if (contains($arg,$delim))
+   then substring-before($arg,$delim)
+   else $arg
+ } ;
+ 
+ declare function functx:replace-first($arg as xs:string?, $pattern as xs:string, $replacement as xs:string ) as xs:string {       
    replace($arg, concat('(^.*?)', $pattern),
              concat('$1',$replacement))
  } ;
@@ -85,7 +94,7 @@ declare variable $biblio:FIELDS :=
 			mods:mods[ft:query(mods:relatedItem/mods:part/mods:date, '$q*', $options)]
 			)
 		</field>
-		<field name="Identifier">mods:mods[ft:query(mods:identifier, '$q', $options)]</field>
+		<field name="Identifier">mods:mods[mods:identifier = '$q']</field>
 		<field name="Abstract">mods:mods[ft:query(mods:note, '$q', $options)]</field>
         <field name="Note">mods:mods[ft:query(mods:note, '$q', $options)]</field>
         <field name="Subject">mods:mods[ft:query(mods:subject, '$q', $options)]</field>
@@ -383,34 +392,48 @@ declare function biblio:order-by-author($m as element()) as xs:string?
     return
         $sort
 };
-    
+
+declare function biblio:get-year($hit as element()) as xs:string? {
+(:number() is used to filter out string values like "unknown".:)
+    if ($hit/mods:originInfo[1]/mods:dateIssued[1]/number()) 
+    then functx:substring-before-if-contains($hit/mods:originInfo[1]/mods:dateIssued[1],'-') 
+    else 
+        if ($hit/mods:originInfo[1]/mods:copyrightDate[1]/number()) 
+        then functx:substring-before-if-contains($hit/mods:originInfo[1]/mods:copyrightDate[1],'-') 
+        else
+            if ($hit/mods:originInfo[1]/mods:dateCreated[1]/number()) 
+            then functx:substring-before-if-contains($hit/mods:originInfo[1]/mods:dateCreated[1],'-') 
+            else
+                if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateIssued[1]/number()) 
+                then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateIssued[1],'-') 
+                else
+                    if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:copyrightDate[1]/number()) 
+                    then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:copyrightDate[1],'-') 
+                    else
+                        if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateCreated[1]/number()) 
+                        then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateCreated[1],'-') 
+                        else
+                            if ($hit/mods:relatedItem[1]/mods:part[1]/mods:date[1]/number()) 
+                            then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:part[1]/mods:date[1],'-') 
+                            else ()
+};
+
+
+
 (: Map order parameter to xpath for order by clause :)
 (: NB: It does not make sense to use Score if there is no search term to score on. :)
-declare function biblio:construct-order-by-expression($field as xs:string?) as xs:string?
+declare function biblio:construct-order-by-expression($sort as xs:string?) as xs:string?
 {
-    if (sort:has-index('mods:name')) 
-    (: If there is an index on name, there will be an index on the other options. ??? :)
-    then
-        if ($field eq "Score") 
-        then "ft:score($hit) descending"
+    if ($sort eq "Score") 
+    then "ft:score($hit) descending"
+    else 
+        if ($sort = "Author") 
+        then "biblio:order-by-author($hit)"
         else 
-            if ($field = "Author") 
-            then "sort:index('mods:name', $hit)"
-            else 
-                if ($field = "Title")
-                then "sort:index('mods:title', $hit)"
-                (: Defaulting to $field = "Date" :)
-                else "sort:index('mods:date', $hit)"
-    else
-        if ($field eq "Score") 
-        then "ft:score($hit) descending"
-        else 
-            if ($field = "Author") 
-            then "biblio:order-by-author($hit)"
-            else 
-                if ($field = "Title") 
-                then "$hit/mods:titleInfo[not(@type)][1]/mods:title[1] ascending empty greatest"
-                else "$hit/mods:originInfo[1]/mods:dateIssued[1]/number() descending empty least"
+            if ($sort = "Title") 
+            then "$hit/mods:titleInfo[not(@type)][1]/mods:title[1] ascending empty greatest"
+            (:Default: if ($sort = "Year"):)
+            else "biblio:get-year($hit) descending empty least"
 };
 
 (:~
@@ -479,10 +502,10 @@ declare function biblio:query-history($node as node(), $params as element(parame
     Evaluate the query given as XML and store its results into the HTTP session
     for later reference.
 :)
-declare function biblio:eval-query($query-as-xml as element(query)?, $sort0 as item()?) as xs:int {
+declare function biblio:eval-query($query-as-xml as element(query)?, $sort as item()?) as xs:int {
     if ($query-as-xml) then
         let $query := string-join(biblio:generate-query($query-as-xml), '')
-        let $sort := if ($sort0) then $sort0 else session:get-attribute("sort")
+        let $sort := if ($sort) then $sort else session:get-attribute("sort")
         let $results := biblio:evaluate-query($query, $sort)
         let $processed :=
             for $item in $results

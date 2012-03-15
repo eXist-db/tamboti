@@ -264,7 +264,7 @@
                     <xf:group appearance="full" ref=".[not(mods:placeTerm)]">
                         <xf:switch>
                             <xf:case id="place-add-node-hide">
-                                <div class="node-adds-title">
+                                <div class="node-button">
                                     <xf:trigger class="add-button">
                                         <xf:label class="xforms-group-label-centered">Show Additional Fields</xf:label>
                                         <xf:toggle case="place-add-node-unhide" ev:event="DOMActivate"/>
@@ -272,7 +272,7 @@
                                 </div>
                             </xf:case>
                             <xf:case id="place-add-node-unhide">
-                                <div class="node-adds-title">
+                                <div class="node-button">
                                     <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Hide Additional Fields</xf:label>
                                         <xf:toggle case="place-add-node-hide" ev:event="DOMActivate"/>

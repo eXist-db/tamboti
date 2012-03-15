@@ -69,8 +69,7 @@
                 </tbody>
             </tgroup>
         </table>
-        <para>Tamboti does not run with any version of Internet Explorer. It is our hope that the search interface will work with Internet Explorer 9, but it is not to be expected that the editor will work with Internet Explorer 9. The reason for this is the lack of standards compliance on the part of Internet Explorer.</para>
-        <para>Please use recent versions of any of the following web browsers:</para>
+        <para>Tamboti run with recent versions of all major browsers: </para>
         <itemizedlist>
             <ulink href="http://www.mozilla.org/en-US/firefox/new/">
                 <listitem>Firefox</listitem>
@@ -81,7 +80,11 @@
             <ulink href="https://www.google.com/chrome/?hl=en&amp;brand=chmo">
                 <listitem>Chrome</listitem>
             </ulink>
+            <ulink href="http://www.microsoft.com/download/en/details.aspx?id=13950">
+                <listitem>Internet Explorer 8 &amp; 9</listitem>
+            </ulink>
         </itemizedlist>
         <para>The editor does not work with <ulink href="http://www.opera.com/browser/download/">Opera</ulink>.</para>
+        <para>Please note that since late 2011, most browsers have accellerated their update cycle. This may create problems with new browser versions, especially from development branches, since they are not always thoroughly tested. If you run into a problem, please let us know.</para>
     </chapter>
 </book>

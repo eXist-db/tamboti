@@ -740,7 +740,7 @@ declare function modsCommon:get-name-order($namePart-language as xs:string?, $na
 : genre, hierarchicalGeographic, cartographics, geographicCode, occupation are represented in subtables.
 :
 : @author Jens Østergaard Petersen
-: @param $entry The subject element
+: @param $entry A subject element in a mods record
 : @param $global-transliteration  The value set for the transliteration scheme to be used in the record as a whole, set in e:extension
 : @param $global-language The string value of mods/language/languageTerm
 : @see http://www.loc.gov/standards/mods/userguide/subject.html
@@ -753,7 +753,7 @@ declare function modsCommon:format-subjects($entry as element(), $global-transli
         then concat('(', ($subject/@authority/string()), ')') 
         else ()
     return
-        <tr xmlns="http://www.w3.org/1999/xhtml">
+        <tr>
             <td class="label subject">Subject {$authority}</td>
             <td class="record">    
             {
@@ -792,7 +792,7 @@ declare function modsCommon:format-subjects($entry as element(), $global-transli
                                 if ($item/name() eq 'titleInfo')
                                 then string-join(modsCommon:get-short-title(<titleInfo>{$item}</titleInfo>), '')
                                 else
-                                    (: If it is something else, no special rendering takes place. :)
+                                    (: If it is something else, no special formatting takes place. :)
                                     for $subitem in ($item/mods:*)
                                     let $authority := 
                                         if ($subitem/@authority/string()) 
@@ -824,7 +824,7 @@ declare function modsCommon:format-subjects($entry as element(), $global-transli
                         </td>
                         else
                             if ($item) then
-                            <table><tr><td class="subrecord" colspan="2">{$item/string()}</td></tr></table>
+                            <td class="subrecord" colspan="2">{$item/string()}</td>
                             else ()
                         }
                     </tr>

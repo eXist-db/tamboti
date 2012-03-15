@@ -14,7 +14,9 @@
         </item>
         <item>
             <help>
-                <p> Type Identifies the type of location recorded. Use Type to indicate different kinds of locations if more specificity is needed, e.g. current, discovery, former, creation. </p>
+                <p> Type Identifies the type of location recorded. Use Type to indicate different
+                    kinds of locations if more specificity is needed, e.g. current, discovery,
+                    former, creation. </p>
             </help>
             <value>location-type</value>
             <local-name>type</local-name>
@@ -28,11 +30,6 @@
                     name of a corporation or the name of a conference (or an event similar to a
                     conference).</p>
             </help>
-            <hint> Type identifies what type of Title Information is recorded, if this information
-                is special. If the title is recorded as it appears on the title page, it does not
-                have Type and Type should be left empty. Use a value for Type if the title is
-                abbreviated, translated, alternative, or uniform (a transliteration is here regarded
-                as a form of translation). </hint>
             <value>name-type</value>
             <local-name/>
             <tab-id>type</tab-id>
@@ -95,7 +92,10 @@
         </item>
         <item>
             <help>
-                <p> The name of the authoritative list for a controlled value is recorded here. </p>
+                <p> The name of the authoritative list for a controlled value is recorded here. An
+                    authority field is used to indicate that a field has been entered by reference
+                    to a record in an authority file. If you are not using an authority file, leave
+                    this field blank. </p>
             </help>
             <hint/>
             <value>authority</value>
@@ -154,9 +154,27 @@
             <tab-id/>
         </item>
         <item>
+            <help>
+                <p> The name of the authoritative list for the abbreviated title is recorded here. </p>
+            </help>
+            <hint/>
+            <value>titleInfo-authority-abbreviated</value>
+            <local-name>authority</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
             <help/>
             <hint/>
             <value>titleInfo-authorityURI</value>
+            <local-name>authorityURI</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help/>
+            <hint/>
+            <value>authorityURI</value>
             <local-name>authorityURI</local-name>
             <parent/>
             <tab-id/>
@@ -337,8 +355,8 @@
         </item>
         <item>
             <help>
-                <p> Display Label is used when additional text associated with a field is needed
-                    for display. Display Label may be used whenever appropriate to indicate the
+                <p> Display Label is used when additional text associated with a field is needed for
+                    display. Display Label may be used whenever appropriate to indicate the
                     preferred labeling when displayed. Include the text preferred and
                     capitalisation, but do not include delimiters such as colons. </p>
             </help>
@@ -439,6 +457,10 @@
                 <p>The relation between the different fields is not specified, but one may start
                     with more abstract terms and move to more specific terms, within the same
                     Subject.</p>
+                <p>If the geographic name is part of a corporate body (for example, United States.
+                    Senate), it is coded as Name, not Geographic.</p>
+                <p>It is also possible to parse geographic subject within the Hierarchical
+                    Geographic field.</p>
                 <p> More input options can be accessed by clicking the Subjects tab on Context
                     Description Forms.</p>
             </help>
@@ -479,9 +501,12 @@
                 <p>For periodicals, enter here primarily the International Standard Serial Number
                     (ISSN) number of the periodical you are cataloguing and/or its Digital Object
                     Identifier (DOI). </p>
-                <p>If you have access to any other unique identifier, please record it by choosing its Type.</p>
-                <p>The identifier element should refer to the digital resource being described or to its analog equivalent. 
-                    The identifier should identify the object universally; local call numbers or other identifiers, therefore, are not generally suitable. </p>
+                <p>If you have access to any other unique identifier, please record it by choosing
+                    its Type.</p>
+                <p>The identifier element should refer to the digital resource being described or to
+                    its analog equivalent. The identifier should identify the object universally;
+                    local call numbers or other identifiers, therefore, are not generally suitable.
+                </p>
             </help>
             <value>identifier</value>
             <local-name>identifier</local-name>
@@ -502,10 +527,10 @@
         </item>
         <item>
             <help>
-                <p> This field signifies a canceled or invalid identifier. It should be used
-                    with the value Yes. This value is used only when recording a canceled or
-                    invalid identifier. If Invalid= "Yes" is not present, the identifier is
-                    assumed to be valid. </p>
+                <p> This field signifies a canceled or invalid identifier. It should be used with
+                    the value Yes. This value is used only when recording a canceled or invalid
+                    identifier. If Invalid= "Yes" is not present, the identifier is assumed to be
+                    valid. </p>
             </help>
             <value>identifier-invalid</value>
             <local-name>invalid</local-name>
@@ -804,7 +829,7 @@
                     parse the parts of a corporate name. </p>
                 <p> The parsing performed is indicated by the Type field. This field takes the
                     following values: Date, Family, Given, Terms Of Address. </p>
-                <p> Date is used to note dates that are not integral parts of a name. For dates
+                <p> "Date" is used to note dates that are not integral parts of a name. For dates
                     within e.g. a conference name, do not use this field to separate the date, since
                     it is an integral part of the name of the conference. The birthdate associated
                     with a personal name, however, is not an integral part of the name, but can be
@@ -816,7 +841,7 @@
                     name, such as "Jr.", "II", etc. </p>
                 <p> If you do not know how to break up a name or if a name is not constructed
                     according to the family name/given name pattern, leave the Type of the Name Part
-                    blank and enter the whole name as it occurs. </p>
+                    blank and enter the whole name as it occurs in one Name Part. </p>
             </help>
             <hint/>
             <value>namePart-type</value>
@@ -853,11 +878,11 @@
         </item>
         <item>
             <help>
-                <p> General information relating to a resource. </p>
-                <p> Note should be used only for information that cannot be encoded in another, more
+                <p> A note contains general information relating to a resource. </p>
+                <p> Notes should be used only for information that cannot be encoded in another, more
                     specific, ways. </p>
-                <p> More input options can be accessed by clicking the Subjects tab on Context
-                    Description Forms.</p>
+                <!--<p> More input options can be accessed by clicking the Subjects tab on Context
+                    Description Forms.</p>-->
             </help>
             <hint/>
             <value>note</value>
@@ -868,12 +893,245 @@
         <item>
             <help>
                 <p>Identifies what type of note is recorded.</p>
+                <p>One can either select a value from the dropdown menu or enter a free-text value.</p>
             </help>
             <hint/>
             <value>note-type</value>
             <local-name>type</local-name>
             <parent>note</parent>
             <tab-id>compact-c</tab-id>
+        </item>
+        <item>
+            <help>
+                <p>(missing)</p>
+            </help>
+            <value>genre-type</value>
+            <local-name>type</local-name>
+            <parent>genre</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> One or more terms that designate a category characterising a
+                    particular style, form, or content, such as artistic,
+                    musical, literary composition, etc. Genre contains terms
+                    that give more specificity than the broad terms used in Type
+                    Of Resource. </p>
+            </help>
+            <value>genre</value>
+            <local-name>genre</local-name>
+            <parent>subject</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Includes Asia, Africa, Europe, North America, South America.</p>
+            </help>
+            <value>continent</value>
+            <local-name>continent</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Name of a country, i.e. a political entity considered a
+                    country. </p>
+            </help>
+            <value>country</value>
+            <local-name>country</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Includes first order political divisions called provinces
+                within a country, e.g. Canada. </p>
+            </help>
+            <value>province</value>
+            <local-name>province</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Includes regions that have status as a jurisdiction, usually
+                    incorporating more than one first level jurisdiction. </p>
+            </help>
+            <value>region</value>
+            <local-name>region</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Includes first order political divisions called states
+                    within a country, e.g. in U.S., Argentina, Italy. Use also
+                    for France département. </p>
+            </help>
+            <value>state</value>
+            <local-name>state</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Name of a geographical area belonging to or under the
+                jurisdiction of a governmental authority. </p>
+            </help>
+            <value>territory</value>
+            <local-name>territory</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Name of the largest local administrative unit in various
+                    countries, e.g. England. </p>
+            </help>
+            <value>county</value>
+            <local-name>county</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Name of an inhabited place incorporated as a city, town,
+                    etc. </p>
+            </help>
+            <value>city</value>
+            <local-name>city</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Name of a smaller unit within a populated place, e.g.,
+                    neighborhoods, parks or streets. </p>
+            </help>
+            <value>citySection</value>
+            <local-name>citySection</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Name of a tract of land surrounded by water and smaller than
+                    a continent but is not itself a separate country. </p>
+            </help>
+            <value>genre</value>
+            <local-name>island</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Name of a non-jurisdictional geographic entity. </p>
+            </help>
+            <value>area</value>
+            <local-name>area</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Name of any extraterrestrial entity or space, including
+                    solar systems, galaxies, star systems, and planets as well
+                    as geographic features of individual planets. </p>
+            </help>
+            <value>extraterrestrialArea</value>
+            <local-name>extraterrestrialArea</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> This subfield includes a hierarchical form of a place name
+                    relating to the content of the resource that is both readable by
+                    humans and parsable by machines. This form can be applied to the
+                    degree of specificity that is known or relevant and used to
+                    generate browseable hierarchies even when values are specified
+                    to different levels. Explicit inclusion of the complete
+                    hierarchy is of potential benefit for automated consultation of
+                    a gazetteer to derive map coordinates or to support a map-based
+                    interface for searching by country or state. This subfield has
+                    no fields. </p>
+            </help>
+            <value>hierarchicalGeographic</value>
+            <local-name>hierarchicalGeographic</local-name>
+            <parent>subject</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Cartographics is a wrapper field that includes cartographic data
+                    indicating spatial coverage. </p>
+            </help>
+            <value>cartographics</value>
+            <local-name>cartographics</local-name>
+            <parent>subject</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Coordinates contains a statement of coordinates covered by
+                    the resource. One or more statements may be supplied. If one
+                    is supplied, it is a point (i.e., a single location); if
+                    two, it is a line; if more than two, it is a n-sided polygon
+                    where n=number of coordinates assigned. No three points
+                    should be co-linear, and coordinates should be supplied in
+                    polygon-traversal order. </p>
+            </help>
+            <value>coordinates</value>
+            <local-name>coordinates</local-name>
+            <parent>cartographics</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Scale provides a statement of scale. It may include any
+                    equivalency statements, vertical scales or vertical
+                    exaggeration statements for relief models and other
+                    three-dimensional items. </p>
+            </help>
+            <value>scale</value>
+            <local-name>scale</local-name>
+            <parent>cartographics</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Projection provides a statement of projection. </p>
+            </help>
+            <value>projection</value>
+            <local-name>projection</local-name>
+            <parent>cartographics</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Geographic Code includes a geographic area code associated with a
+                    resource. A geographic code that represents the same entity as a
+                    term in Geographic is included within the same Subject
+                    field.</p>
+            </help>
+            <value>geographicCode</value>
+            <local-name>geographicCode</local-name>
+            <parent>subject</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Occupation includes a term that is descriptive of the occupation
+                    reflected in the contents of the described materials. It is not
+                    used to list the occupations of the creators of the described
+                    materials, unless those occupations are significantly reflected
+                    in the materials themselves or bear some relationship to the
+                    materials. </p>
+            </help>
+            <value>occupation</value>
+            <local-name>occupation</local-name>
+            <parent>subject</parent>
+            <tab-id/>
         </item>
         <item>
             <help>
@@ -1381,7 +1639,7 @@
                     leave the Date field blank. </p>
                 <p> In Time one can also use period designations, such as "the Middle Ages" and
                     "Industrialisation," with the dangers of differing construals that this implies.
-                    If you enter a time designation which uses a designaitn of this type, choose
+                    If you enter a time designation which uses a designation of this type, choose
                     "text" in type.</p>
                 <p> More input options can be accessed by clicking the Subjects tab on Context
                     Description Forms.</p>
@@ -1501,6 +1759,25 @@
         </item>
         <item>
             <help>
+                <p> Title Information is used under Subject to note when a resource is about another resource with a title, e.g. a book
+                    about another book or an article about a work of art. </p>
+                <p> If you use Title Information, at least one Title inside a Title Information is required. </p>
+                <p> Title Information can be repeated for alternative, translated, transliterated or uniform titles. These values are chosen
+                    in Type. </p>
+                <p> For the basic Title Information entry, use the default value "Basic Title Information". If, in addition to the basic
+                    title, there is also an alternative, translated, transliterated or uniform title, add a Title Information and choose the
+                    relevant Type. Repeat Title Information as many times as necessary. </p>
+                <p> A Title Information consists of a Title and fields that relate to it. A Title may have a Subtitle, usually an expansion
+                    of the Title proper. If the Title begins with a word according to which it should not be sorted (such as "The" or "A"
+                    and the like), enter this word in Non Sort and remove it from Title. If a publication consists of several parts, parts
+                    that are either numbered or named, use Part Number and/or Part Name. A "History of Europe" may have several numbered
+                    parts, such as "Part One. Ancient Greece." Enter "Part One" in Part Number and "Ancient Grecce" in Part Name. </p>
+                <p> If an alternative, translated or transliterated title is recorded, choose the relevant Type for each separate Title
+                    Information. </p>
+                <p> If a uniform or abbreviated title is entered, choose the appropriate value in Type and note in which authority file the
+                    uniform or abbreviated title in Authority has been found. Authority files are only used in connection with uniform and
+                    abbreviated titles. </p>
+                <p> Record the language of the title information by choosing the Language used in the resource. </p>
                 <p> Enter here the title of the book or the work of art that serves as topic for the
                     resource you are cataloguing. If the title divides into a main title and a
                     subtitle, enter each part in its separate field. If the subtitle divides into
@@ -1603,7 +1880,7 @@
             </help>
             <hint/>
             <value>titleInfo-type</value>
-            <local-name>titleInfo</local-name>
+            <local-name>type</local-name>
             <parent/>
             <tab-id/>
         </item>
@@ -1636,6 +1913,9 @@
                     within the same Subject.</p>
                 <p> More input options can be accessed by clicking the Subjects tab on Context
                     Description Forms.</p>
+                <p>While it is highly recommended that subject values be parsed into subfields, they
+                    may also be listed as a string, divided by e.g. dashes, as in Library of
+                    Congress Subject Headings.</p>
             </help>
             <hint/>
             <value>topic</value>
@@ -1655,7 +1935,7 @@
                     information on these transliteration schemes, see <a href="http://www.loc.gov/catdir/cpso/roman.html">ALA-LC Romanization
                         Tables</a>. </p>
                 <p> If you wish to employ a transliteration scheme not in the list, please contact
-                        &lt;tamboti-admins@asia-europe.uni-heidelberg.de&gt;. </p>
+                    &lt;tamboti-admins@asia-europe.uni-heidelberg.de&gt;. </p>
                 <p> Apply transliteration as high as possible. For instance it is possible to apply
                     a transliteration to Origin Information as a whole. Do this if you are using
                     only one Transliteration value for all Place Terms, for Publisher and for
@@ -1762,6 +2042,14 @@
             <tab-id/>
         </item>
         <item>
+            <help/>
+            <hint/>
+            <value>valueURI</value>
+            <local-name>valueURI</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
             <help>
                 <p> XLink is used to reference an external resource, such as a second metadata
                     record, a Related Item or a Table of Contents. </p>
@@ -1814,9 +2102,11 @@
         </item>
         <item>
             <help>
-                <p>Use the type attribute to indicate the type of restrictions (or lack thereof) on use of the resource and/or restrictions on access to the material.</p>
-                <p>There is no controlled list of types for Access Condition. Suggested values are: "restriction on access" and "use and reproduction". 
-                    Choose the value appropriate or enter a type of your own. </p>
+                <p>Use the type attribute to indicate the type of restrictions (or lack thereof) on
+                    use of the resource and/or restrictions on access to the material.</p>
+                <p>There is no controlled list of types for Access Condition. Suggested values are:
+                    "restriction on access" and "use and reproduction". Choose the value appropriate
+                    or enter a type of your own. </p>
             </help>
             <hint/>
             <value>accessCondition-type</value>
@@ -1826,10 +2116,14 @@
         </item>
         <item>
             <help>
-                <p> The XLink field is used to reference an external resource, such as a second metadata record, a Related Item or a Table Of Contents. </p>
-                <p> An XLink may be supplied in lieu of or in addition to the content noted in Access Condition. 
-                    If, for example, you maintain rights information relating to specific resources on a website, you may provide a URL for that website in lieu of a textual rights statement. 
-                    When doing so, you should provide enough textual explanation in Access Condition, along with the URL, to make the purpose of the URL clear to end users. </p>
+                <p> The XLink field is used to reference an external resource, such as a second
+                    metadata record, a Related Item or a Table Of Contents. </p>
+                <p> An XLink may be supplied in lieu of or in addition to the content noted in
+                    Access Condition. If, for example, you maintain rights information relating to
+                    specific resources on a website, you may provide a URL for that website in lieu
+                    of a textual rights statement. When doing so, you should provide enough textual
+                    explanation in Access Condition, along with the URL, to make the purpose of the
+                    URL clear to end users. </p>
             </help>
             <hint/>
             <value>accessCondition-xlink:href</value>
@@ -1839,12 +2133,13 @@
         </item>
         <item>
             <help>
-                <p>In Extension you have access to a number of fields that we have added to the MODS schema.</p>
+                <p>In Extension you have access to a number of fields that we have added to the MODS
+                    schema.</p>
                 <p>If the record you are viewing has not been made with Tamboti, it may not have
-                    Extension - at least it does not have our Extension. If it lacks Extension, you can add it by using the button
-                    below.</p>
-                <p>If you change the values of the fields Publication Type and Transliteration
-                    of Resource, parts of the Basic Input Forms will display differently in accordance
+                    Extension - at least it does not have our Extension. If it lacks Extension, you
+                    can add it by using the button below.</p>
+                <p>If you change the values of the fields Publication Type and Transliteration of
+                    Resource, parts of the Basic Input Forms will display differently in accordance
                     with your choice.</p>
             </help>
             <hint/>
@@ -1855,14 +2150,13 @@
         </item>
         <item>
             <help>
-                <p>Choose one of the publication types listed below. These publication types
-                    are the same as the record templates used in the pre-entry options. </p>
-                <p> If a record has not been made by use of Tamboti, you can assign a
-                    publication type to it here.</p>
-                <p> If you have assigned a wrong publication type in the pre-entry dialogue,
-                    you can change it here. Changing it here will however not change the
-                    options displayed in the Basic Input Forms until you save the record and
-                    reopen it.</p>
+                <p>Choose one of the publication types listed below. These publication types are the
+                    same as the record templates used in the pre-entry options. </p>
+                <p> If a record has not been made by use of Tamboti, you can assign a publication
+                    type to it here.</p>
+                <p> If you have assigned a wrong publication type in the pre-entry dialogue, you can
+                    change it here. Changing it here will however not change the options displayed
+                    in the Basic Input Forms until you save the record and reopen it.</p>
             </help>
             <hint/>
             <value>template</value>
@@ -1872,20 +2166,18 @@
         </item>
         <item>
             <help>
-                <p> Choose one of the transliteration schemes listed below. The
-                    transliteration schemes are the same as those used in the pre-entry
-                    options. </p>
-                <p> If a record has not been made by use of Tamboti, if will not have this
-                    field, but you can assign a transliteration scheme to it here. Doing so
-                    will make it unneccesary to note which transliteration scheme is used
-                    for individual fields, i.e. you can set this value once and for all
-                    here. Adding a transliteration scheme here will not cause the Basic
-                    Input Forms to display transliteration fields. If you wish to add
-                    transliterations for titles, names, etc., you have to use the Citation
-                    Forms.</p>
-                <p> If you have assigned the wrong transliteration scheme in the pre-entry
-                    dialogue, you can change it here. The Basic Input Forms will still
-                    display fields for the transliteration of titles, names, etc.</p>
+                <p> Choose one of the transliteration schemes listed below. The transliteration
+                    schemes are the same as those used in the pre-entry options. </p>
+                <p> If a record has not been made by use of Tamboti, if will not have this field,
+                    but you can assign a transliteration scheme to it here. Doing so will make it
+                    unneccesary to note which transliteration scheme is used for individual fields,
+                    i.e. you can set this value once and for all here. Adding a transliteration
+                    scheme here will not cause the Basic Input Forms to display transliteration
+                    fields. If you wish to add transliterations for titles, names, etc., you have to
+                    use the Citation Forms.</p>
+                <p> If you have assigned the wrong transliteration scheme in the pre-entry dialogue,
+                    you can change it here. The Basic Input Forms will still display fields for the
+                    transliteration of titles, names, etc.</p>
             </help>
             <hint/>
             <value>transliterationOfResource</value>
@@ -1895,8 +2187,14 @@
         </item>
         <item>
             <help>
-                <p> Location identifies the institution or repository holding the resource, or a remote location in the form of a URL where the resource is available. In the case of a physical resource, information is noted about what the institution identified in Physical Location holds of the resource in question and its specific location within the institution. </p>
-                <p> Holdings information consists of copy-specific information about the resource, information about the specific location within an institution, version information, and other information that is peculiar to the institution. </p>
+                <p> Location identifies the institution or repository holding the resource, or a
+                    remote location in the form of a URL where the resource is available. In the
+                    case of a physical resource, information is noted about what the institution
+                    identified in Physical Location holds of the resource in question and its
+                    specific location within the institution. </p>
+                <p> Holdings information consists of copy-specific information about the resource,
+                    information about the specific location within an institution, version
+                    information, and other information that is peculiar to the institution. </p>
             </help>
             <hint/>
             <value>location</value>
@@ -1906,8 +2204,14 @@
         </item>
         <item>
             <help>
-                <p> Record in Physical Location the institution or repository that holds the resource or where it is available. Physical Location may be expressed as text and/or as a code. If expressed as code, use the Authority field to designate the source of the code. </p>
-                <p> Physical Location typically includes specific information used to locate a resource within a collection, such as the name or code of an institution/repository, and perhaps subcollection. A shelf number is given in Shelf Locator. </p>
+                <p> Record in Physical Location the institution or repository that holds the
+                    resource or where it is available. Physical Location may be expressed as text
+                    and/or as a code. If expressed as code, use the Authority field to designate the
+                    source of the code. </p>
+                <p> Physical Location typically includes specific information used to locate a
+                    resource within a collection, such as the name or code of an
+                    institution/repository, and perhaps subcollection. A shelf number is given in
+                    Shelf Locator. </p>
             </help>
             <hint/>
             <value>physicalLocation</value>
@@ -1917,7 +2221,9 @@
         </item>
         <item>
             <help>
-                <p> Shelf Locator records a shelfmark or other shelving designation that indicates the location identifier for a copy. If more detailed holdings information is given at the item level, use Shelf Locator under Holding Simple. </p>
+                <p> Shelf Locator records a shelfmark or other shelving designation that indicates
+                    the location identifier for a copy. If more detailed holdings information is
+                    given at the item level, use Shelf Locator under Holding Simple. </p>
             </help>
             <hint/>
             <value>shelfLocator</value>
@@ -1927,7 +2233,9 @@
         </item>
         <item>
             <help>
-                <p> In URL, record the Uniform Resource Locator (URL) of the networked location of a resource. It is recommended that all URLs used with the Location element be persistent. </p>
+                <p> In URL, record the Uniform Resource Locator (URL) of the networked location of a
+                    resource. It is recommended that all URLs used with the Location element be
+                    persistent. </p>
             </help>
             <hint/>
             <value>location-url</value>

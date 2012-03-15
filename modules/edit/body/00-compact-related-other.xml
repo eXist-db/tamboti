@@ -34,7 +34,7 @@
                 <!--<xf:group ref=".[not(mods:part)]">
                     <xf:switch>
                         <xf:case id="relatedItem-add-node-hide">
-                            <div class="node-adds-title">
+                            <div class="node-button">
                                 <xf:trigger class="add-button">
                                     <xf:label class="xforms-group-label-centered">Show Additional Fields</xf:label>
                                     <xf:toggle case="relatedItem-add-node-unhide" ev:event="DOMActivate"/>
@@ -42,7 +42,7 @@
                             </div>
                         </xf:case>
                         <xf:case id="relatedItem-add-node-unhide">
-                            <div class="node-adds-title">
+                            <div class="node-button">
                                 <xf:trigger>
                                     <xf:label class="xforms-group-label-centered">Hide Additional Fields</xf:label>
                                     <xf:toggle case="relatedItem-add-node-hide" ev:event="DOMActivate"/>
@@ -726,7 +726,7 @@
                             <!--<xf:group ref=".[not(mods:detail)] | .[not(mods:extent)] | .[not(mods:date)] | .[not(mods:text)]">
                                 <xf:switch>
                                     <xf:case id="part-add-node-hide">
-                                        <div class="node-adds-title">
+                                        <div class="node-button">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Show Additional Fields</xf:label>
                                                 <xf:toggle case="part-add-node-unhide" ev:event="DOMActivate"/>
@@ -734,7 +734,7 @@
                                         </div>
                                     </xf:case>
                                     <xf:case id="part-add-node-unhide">
-                                        <div class="node-adds-title">
+                                        <div class="node-button">
                                             <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Hide Additional Fields</xf:label>
                                                 <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/>

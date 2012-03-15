@@ -250,7 +250,8 @@
             </xf:group>
             <xf:group class="text_50 schema_3.3 schema_3.4">
                 <xf:input ref="./@ID">
-                    <xf:label>ID<span class="xforms-help">
+                    <xf:label>ID
+                        <span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
                                 <xf:output mediatype="application/xhtml+xml" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='ID']/help"/>
@@ -290,7 +291,7 @@
                     <xf:label>Abbreviated Title Authorities<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
-                                <xf:output mediatype="application/xhtml+xml" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='authority']/help"/>
+                                <xf:output mediatype="application/xhtml+xml" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-authority-abbreviated']/help"/>
                             </div>
                         </span>
                     </xf:label>

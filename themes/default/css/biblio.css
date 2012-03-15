@@ -24,7 +24,9 @@ color scheme ends*/
     margin-top:1em;
     }
 
-#new-resource-form {
+#new-resource-form, 
+#add-related-form 
+{
     margin-top:1.5em;
     }
     
@@ -32,7 +34,8 @@ color scheme ends*/
     margin-right:2.2em;
 }
 
-#new-resource-form li input {
+#new-resource-form li input,
+#add-related-form li input {
     margin-right:1em;
 }
 /*new or temporary stuff ends*/
@@ -760,7 +763,8 @@ span.readable .dynatree-title {
 
 /*folder sharing dialog ends*/
 
-#new-resource-dialog {
+#new-resource-dialog,	 
+ #add-related-dialog {
     font-size:.85em;
 }
 

@@ -1496,9 +1496,9 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     for $item in $entry/mods:identifier
     let $type := 
         if ($item/@type/string()) 
-        then concat(' (', ($item/@type/string()), ')') 
+        then concat(' (', functx:capitalize-first($item/@type/string()), ')') 
         else ()
-    return mods:simple-row($item, concat('Identifier', upper-case($type)))
+    return mods:simple-row($item, concat('Identifier', $type))
     ,
     (: classification :)
     for $item in $entry/mods:classification
