@@ -35,6 +35,8 @@ $(function() {
         $("#results").pagination("option", "itemsPerPage", 10);
         $("#results").pagination("refresh");
     });
+    
+    pingSession();
 });
 
 /* collection action buttons */
@@ -91,6 +93,17 @@ $(document).ready(function(){
     
     showNotices();
 });
+
+function pingSession() {
+    $.getJSON("check-session.xql", function (result) {
+        if (result) {
+            setTimeout(pingSession, 120000);
+            $("#login-since").html(result);
+        } else {
+            $("#login-message").html("<a href=\"#\" id=\"login-link\">Login</a>");
+        }
+    });
+}
 
 function bindAdditionalDialogTriggers() {
     
@@ -709,9 +722,11 @@ function resultsLoaded(options) {
     });
     
     //notify zotero that the dom has changed
+    if (document.createEvent){
     var ev = document.createEvent('HTMLEvents');
     ev.initEvent('ZoteroItemUpdated', true, true);
     document.dispatchEvent(ev);
+    }
 }
 
 function searchTabSelected(ev, ui) {
