@@ -81,7 +81,7 @@ declare function theme:resolve-by-id($root as xs:string, $id as xs:string) {
                 )
             let $log := util:log("DEBUG", ("resolved theme path: ", $path))
             return
-                xcollection($path)//*[@id = $id]
+                collection($path)//*[@id = $id]
 };
 
 (:~
