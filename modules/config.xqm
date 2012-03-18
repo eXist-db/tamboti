@@ -27,7 +27,9 @@ declare variable $config:url-image-size := "256";
 
 declare variable $config:search-app-root := concat($config:app-root, "/modules/search");
 declare variable $config:edit-app-root := concat($config:app-root, "/modules/edit");
+
 declare variable $config:force-lower-case-usernames as xs:boolean := true();
+declare variable $config:enforced-realm-id := "ad.uni-heidelberg.de";
 
 declare variable $config:users-collection := fn:concat($config:mods-root, "/users");
 declare variable $config:groups-collection := fn:concat($config:mods-root, "/groups");
@@ -67,15 +69,14 @@ declare variable $config:allow-origin := "";
 :)
 declare function config:rewrite-username($username as xs:string) as xs:string {
     
-  
+    let $username := if($config:force-lower-case-usernames)then
+        fn:lower-case($username)
+    else
+        $username
+    return
     
-    (: for example: :)
-    
-    
-    let $enforced-realm-id := "ad.uni-heidelberg.de" return
-        if(fn:ends-with(fn:lower-case($username), fn:concat("@", $enforced-realm-id)) or fn:lower-case($username) = ("admin", "editor", "guest")) then
+        if(fn:ends-with(fn:lower-case($username), fn:concat("@", $config:enforced-realm-id)) or fn:lower-case($username) = ("admin", "editor", "guest")) then
             $username
         else
-            fn:concat($username, "@", $enforced-realm-id)
-    
+            fn:concat($username, "@", $config:enforced-realm-id)
 };
