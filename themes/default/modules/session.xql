@@ -11,6 +11,7 @@ xquery version "3.0";
     4) the data to display.
 :)
 
+import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
 import module namespace mods="http://www.loc.gov/mods/v3" at "retrieve-mods.xql";
 import module namespace jquery="http://exist-db.org/xquery/jquery" at "resource:org/exist/xquery/lib/jquery.xql";
 import module namespace security="http://exist-db.org/mods/security" at "../../../modules/search/security.xqm";
@@ -41,10 +42,10 @@ declare function functx:replace-first( $arg as xs:string?, $pattern as xs:string
  } ;
 
 declare function bs:collection-is-writable($collection as xs:string) {
-    (:if ($collection eq $sharing:groups-collection) then:)
-        true ()(:false()
+    if ($collection eq $config:groups-collection) then
+        false()
     else
-        security:can-write-collection($bs:USER, $collection):)
+        security:can-write-collection($collection)
 };
 
 declare function bs:get-item-uri($item-id as xs:string) {
