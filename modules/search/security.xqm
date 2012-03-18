@@ -144,7 +144,7 @@ declare function security:create-home-collection($user as xs:string) as xs:strin
                     TODO do we need the group 'read' to allow sub-collections to be enumerated?
                         NOTE - this will need to be updated to 'execute' when permissions are finalised in trunk
                     :)
-                    let $null := sm:chmod(xs:anyURI($collection-uri), "rwur-----"),
+                    let $null := sm:chmod(xs:anyURI($collection-uri), "rwxr-----"),
                     
                     (: set the group as biblio users group, so that other users can enumerate our sub-collections :)
                     $null := sm:chgrp(xs:anyURI($collection-uri), $security:biblio-users-group),
@@ -168,7 +168,7 @@ declare function security:create-user-metadata($user-collection-uri as xs:string
              <security:login-time>{$login-time}</security:login-time>
          </security:metadata>
         ) return
-            let $null := sm:chmod($metadata-doc-uri, "rwu------") return
+            let $null := sm:chmod($metadata-doc-uri, "rwx------") return
                 $metadata-doc-uri
 };
 
@@ -637,7 +637,7 @@ declare function security:grant-parent-owner-access-if-foreign-collection($colle
     $parent-collection-owner := sm:get-permissions(xs:anyURI($parent-collection))/sm:permission/@owner return
     
         if(string($collection-owner) ne string($parent-collection-owner))then
-            sm:add-user-ace(xs:anyURI($collection), $parent-collection-owner, true(), "rwu")
+            sm:add-user-ace(xs:anyURI($collection), $parent-collection-owner, true(), "rwx")
         else()
 };
 
