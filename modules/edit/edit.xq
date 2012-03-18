@@ -33,8 +33,8 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
     let $template-doc := doc(concat($config:edit-app-root, '/instances/', $template-request, '.xml'))
     (: Then store it in the right location :)
     let $stored := xmldb:store($config:mods-temp-collection, concat($id, '.xml'), $template-doc)   
-    (: NB: TEMP whilst eXist-db permissions remain rwu, once they are rwx - this can be changed to rw :)
-    let $null := sm:chmod(xs:anyURI($stored), "rwu------")
+    
+    let $null := sm:chmod(xs:anyURI($stored), "rwx------")
     
     (: Parameter 'host' is used when related records are created. :)
     let $host := request:get-parameter('host', "")
