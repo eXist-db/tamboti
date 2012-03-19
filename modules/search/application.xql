@@ -100,7 +100,7 @@ declare variable $biblio:FIELDS :=
         <field name="Subject">mods:mods[ft:query(mods:subject, '$q', $options)]</field>
        	<field name="All">
        		(
-       		mods:mods[ft:query(.//*, '$q', $options)] 
+       		mods:mods[ft:query(., '$q', $options)] 
        			union
        		ft:search('page:$q')
        		)

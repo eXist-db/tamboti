@@ -335,19 +335,18 @@ return
                 if ($action eq 'close')
                 (: If the user terminates editing. :)
                 then        
-                    (: Get the target collection. If it's an edit to an existing document, we can find this by its uuid,
-                    otherwise it can be found in the e:collection element of the document, added in edit.xq. :)
-                    (: NB: it should not be required to use e:collection. :)
-                    let $target-collection := 
-                        let $live-target-collection := save:find-live-collection-containing-uuid($incoming-id) 
-                        return
-                            if (not(empty($live-target-collection)))
+                    (: Get the target collection. If it's an edit to an existing document, we can find its location by means of its uuid,
+                    otherwise it can be captured as the collection parameter passed in the URL. :)
+                    let $live-target-collection := save:find-live-collection-containing-uuid($incoming-id)
+                    let $new-target-collection := uu:escape-collection-path(request:get-parameter("collection", ""))
+                    let $target-collection :=
+                            if ($live-target-collection)
                             then $live-target-collection
-                            else $doc/mods:extension/e:collection/string()
+                            else $new-target-collection
                     return
                     (
                         xf:do-updates($item, $doc),
-                        xmldb:move($collection, $target-collection, $file-to-update),
+                        xmldb:move($config:mods-temp-collection, $target-collection, $file-to-update),
                         save:remove-new-docs-target-collection(concat($target-collection, "/", $file-to-update)),
                         (: Set the same permissions on the new file as the parent collection :)
                         security:apply-parent-collection-permissions(xs:anyURI(concat($target-collection, "/", $file-to-update)))

@@ -102,7 +102,8 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
       )
 };
 
-declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $instance-id as xs:string) as element(xf:model) {
+declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $instance-id as xs:string, $target-collection as xs:string) as element(xf:model) {
+    (:NB: $id, $tab-id not used.:)
     let $instance-src := concat('get-instance.xq?tab-id=', $tab-id, '&amp;id=', $id, '&amp;data=', $config:mods-temp-collection)
     return
         <xf:model>
@@ -136,7 +137,7 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
            
            <xf:submission id="save-and-close-submission" method="post"
               ref="instance('save-data')"
-              action="save.xq?collection={$config:mods-temp-collection}&amp;action=close" replace="instance"
+              action="save.xq?collection={$target-collection}&amp;action=close" replace="instance"
               instance="save-results">
            </xf:submission>
            
@@ -241,7 +242,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     <xf:label class="xforms-group-label-centered-general">Save and Close</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="save-and-close-submission"/>
-                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={replace($target-collection, '/db', '')}" show="replace"/>
+                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>
                     </xf:action>
                 </xf:trigger>
              
@@ -349,7 +350,8 @@ if we are editing an existing record, we copy the record from the target collect
 let $create-new-from-template :=
 	if ($new-record) 
 	then local:create-new-record($id, $type-request, $target-collection)
-	else 
+	else
+	    (: If the document is not in temp already, copy it there. :)
    		if (not(doc-available(concat($config:mods-temp-collection, '/', $id, '.xml'))))
    		then xmldb:copy($target-collection, $config:mods-temp-collection, concat($id, '.xml'))
    		else ()
@@ -358,8 +360,7 @@ let $create-new-from-template :=
 let $instance-id := local:get-tab-id($tab-id, $type-request)
 (: NB: $style appears to be introduced in order to use the xf namespace in css. :)
 let $style := <style type="text/css"><![CDATA[@namespace xf url(http://www.w3.org/2002/xforms);]]></style>
-let $model := local:create-xf-model($id, $tab-id, $instance-id)
+let $model := local:create-xf-model($id, $tab-id, $instance-id, $target-collection)
 let $content := local:create-page-content($id, $tab-id, $type-request, $target-collection, $instance-id, $temp-record-path, $type-data)
 return 
     style:assemble-form('', attribute {'mods:dummy'} {'dummy'}, $style, $model, $content, false())
-    
