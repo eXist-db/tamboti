@@ -45,8 +45,6 @@ declare variable $commons-samples-collection := fn:concat($commons-collection, "
 declare variable $commons-exist-collection := fn:concat($commons-collection, "/", $commons-exist-collection-name);
 declare variable $commons-mads-collection := fn:concat($commons-collection, "/", $commons-mads-collection-name);
 
-(: TODO $EXIST_HOME/webapp/packages should be removed, esp. $EXIST_HOME/webapp/packages/library :)
-
 declare function local:mkcol-recursive($collection, $components) {
     if (fn:exists($components)) then
         let $newColl := fn:concat(
@@ -111,13 +109,13 @@ util:log($log-level, fn:concat("Config: Creating commons collection '", $commons
     for $col in ($commons-samples-collection, $commons-exist-collection, $commons-mads-collection) return
     (
         local:mkcol($db-root, local:strip-prefix($col, fn:concat($db-root, "/"))),
-        xdb:set-collection-permissions($col, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0744, 8))
+        xdb:set-collection-permissions($col, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8))
     ),
     util:log($log-level, "...Config: Uploading samples data..."),
         xdb:store-files-from-pattern($commons-samples-collection, $home, "samples/mods/*.xml"),
-        local:set-collection-resource-permissions($commons-samples-collection, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0744, 8)),
+        local:set-collection-resource-permissions($commons-samples-collection, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8)),
         xdb:store-files-from-pattern($commons-exist-collection, $home, "samples/mods/eXist/*.xml"),
-        local:set-collection-resource-permissions($commons-exist-collection, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0744, 8)),
+        local:set-collection-resource-permissions($commons-exist-collection, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8)),
     util:log($log-level, "...Config: Done Uploading samples data."),
 util:log($log-level, "Config: Done."), 
 

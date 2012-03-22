@@ -176,8 +176,7 @@ declare function local:assemble-form($dummy-attributes as attribute()*, $style a
             <!--Tamboti-begin-->
                 Tamboti Metadata Framework - MODS Editor
             <!--Tamboti-end-->
-            </title>
-            <script type="text/javascript" src="libs/scripts/jquery/jquery-1.6.2.min.js"></script> 
+            </title> 
             <script type="text/javascript" src="../session.js.xql"></script>
             <link rel="stylesheet" type="text/css" href="edit.css"/>
             <!--Tamboti-begin-->

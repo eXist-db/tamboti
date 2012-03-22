@@ -1,5 +1,5 @@
 /*Code adapted from Chris Coyier's jquery.ie6blocker.js, <http://css-tricks.com/ie-6-blocker-script/>*/
-var IE = (navigator.userAgent.indexOf("MSIE")>=0) ? true: false;
+var IE = (navigator.userAgent.indexOf("MSIE 6")>=0 || navigator.userAgent.indexOf("MSIE 7">=0)>=0) ? true: false;
 if(IE){
 
 	$(function(){
@@ -17,7 +17,7 @@ if(IE){
 			})
 			.appendTo("body");
 			
-		$("<div><p><br /><strong>Sorry! Tamboti does not work with Internet Explorer.</strong><br /><br />We are looking for ways to remedy this.<br /><br />If you would like to access Tamboti, please use <a href='http://getfirefox.org'>Firefox</a>, <a href='https://www.google.com/chrome/'>Chrome</a>, or <a href='http://www.apple.com/safari/download/'>Safari</a> instead.</p>")
+		$("<div><p><br /><strong>Sorry! Tamboti does not work with versions of Internet Explorer below version 8.</strong><br /><br />If you would like to access Tamboti, please use a recent version of <a href='http://windows.microsoft.com/en-US/internet-explorer/products/ie/home'>Internet Explorer</a>, <a href='http://getfirefox.org'>Firefox</a>, <a href='https://www.google.com/chrome/'>Chrome</a>, or <a href='http://www.apple.com/safari/download/'>Safari</a>.</p>")
 			.css({
 				'font-size':'125%',
 				backgroundColor: 'white',
