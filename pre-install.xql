@@ -126,7 +126,7 @@ util:log($log-level, fn:concat("Config: Creating users '", $resources-users-coll
     for $col in ($resources-users-collection, $resources-groups-collection) return
     (
         local:mkcol($db-root, local:strip-prefix($col, fn:concat($db-root, "/"))),
-        xdb:set-collection-permissions($col, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0770, 8))
+        xdb:set-collection-permissions($col, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0771, 8))
     ),
 util:log($log-level, "Config: Done."),
 
