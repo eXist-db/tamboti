@@ -77,28 +77,28 @@
         <name type="" authority="" xml:lang="" lang="" script="" transliteration="">
             <namePart type=""/>
         </name>
-        <genre type="code" authority="" xml:lang="" lang="" script="" transliteration=""/>
-        <hierarchicalGeographic>
-            <continent/>
-            <country/>
-            <province/>
-            <region/>
-            <state/>
-            <territory/>
-            <county/>
-            <city/>
-            <citySection/>
-            <island/>
-            <area/>
-            <extraterrestrialArea/>
+        <genre authority="" authorityURI="" valueURI="" xml:lang="" lang="" script="" transliteration=""/>
+        <hierarchicalGeographic authority="" authorityURI="" valueURI="">
+            <continent xml:lang="" lang="" script="" transliteration=""/>
+            <country xml:lang="" lang="" script="" transliteration=""/>
+            <province xml:lang="" lang="" script="" transliteration=""/>
+            <region xml:lang="" lang="" script="" transliteration=""/>
+            <state xml:lang="" lang="" script="" transliteration=""/>
+            <territory xml:lang="" lang="" script="" transliteration=""/>
+            <county xml:lang="" lang="" script="" transliteration=""/>
+            <city xml:lang="" lang="" script="" transliteration=""/>
+            <citySection xml:lang="" lang="" script="" transliteration=""/>
+            <island xml:lang="" lang="" script="" transliteration=""/>
+            <area xml:lang="" lang="" script="" transliteration=""/>
+            <extraterrestrialArea xml:lang="" lang="" script="" transliteration=""/>
         </hierarchicalGeographic>
         <cartographics>
             <scale/>
             <coordinates/>
             <projection/>
         </cartographics>
-        <geographicCode authority=""/>
-        <occupation/>
+        <geographicCode authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
+        <occupation authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
     </subject>
     <classification authority="" edition="" displayLabel="" xml:lang="" lang=""/>
     <abstract xml:lang="" lang="" script="" transliteration="" type="" displayLabel=""/>

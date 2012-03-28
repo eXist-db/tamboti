@@ -18,7 +18,7 @@
 .xforms-repeat-item-selected,
 #subject-repeat .xforms-repeat-item-selected
 {
-    background-color:#F8F8F8;
+    background-color:#FCFCFC;
 }
 
 .compact .xforms-group .xforms-group-content .output {
@@ -47,7 +47,7 @@ body
 }
 
 #page-head {
-    height:16em;
+    height:12em;
     margin-bottom:2.5em;
     margin-left:50px;
     margin-right:50px;
@@ -60,16 +60,13 @@ body
     left:4.15em;
 }
 
-#page-head-right { /*used for Tamboti*/
-    position:absolute;
-    right:4.15em;
-    margin-top:1.5em;
-}
+#page-head-right {display:none;}
 
-#page-head #navbar {
+#navbar {
     margin:10px 0 0 0;
     border-top:1px solid #DEDEDE;
     border-bottom:1px solid #DEDEDE;
+    display: block;
 }
 
 #page-head h1 {

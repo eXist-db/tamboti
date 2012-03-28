@@ -16,8 +16,20 @@ declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace e="http://www.asia-europe.uni-heidelberg.de/";
 declare namespace mads="http://www.loc.gov/mads/";
 
+(:These variable introduce a kind of theming in local:assemble-form():)
+declare variable $uri := substring-before(substring-after(request:get-url(), "/apps/"), "/modules/edit/edit.xq");
+declare variable $header-title := if ($uri eq "tamboti") then "Tamboti Metadata Framework - MODS Editor" else "eXist Bibliographical Demo - MODS Editor";
+declare variable $tamboti-css := if ($uri eq "tamboti") then "tamboti.css" else ();
+declare variable $img-left-src := if ($uri eq "tamboti") then "../../themes/tamboti/images/tamboti.png" else "../../themes/default/images/logo.jpg";
+declare variable $img-left-title := if ($uri eq "tamboti") then "Tamboti Metadata Framework" else "eXist-db: Open Source Native XML Database";
+declare variable $img-left-alt := if ($uri eq "tamboti") then "Tamboti Metadata Framework" else "eXist-db: Open Source Native XML Database";
+declare variable $img-right-href := if ($uri eq "tamboti") then "http://www.asia-europe.uni-heidelberg.de/en/home.html" else "";
+declare variable $img-right-src := if ($uri eq "tamboti") then "../../themes/tamboti/images/cluster_logo.png" else "";
+declare variable $img-right-title := if ($uri eq "tamboti") then "The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University" else "";
+declare variable $img-right-alt := if ($uri eq "tamboti") then "The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University" else "";
+declare variable $img-right-width := if ($uri eq "tamboti") then "200" else "";
+
 (:TODO: Code related to MADS files.:)
-(:TODO: Theming of editor.:)
 
 declare function local:create-new-record($id as xs:string, $type-request as xs:string, $target-collection as xs:string) as empty() {
     (:Copy the template into data and store it with the ID as file name.:)
@@ -33,10 +45,16 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
             then concat($type-request, '-transliterated') 
             else concat($type-request, '-latin') 
     let $template-path := doc(concat($config:edit-app-root, '/instances/', $template-request, '.xml'))
+    
     (:Then give it a name, store it in the temp location and set the right permissions on it.:)
     let $doc-name := concat($id, '.xml')
     let $stored := xmldb:store($config:mods-temp-collection, $doc-name, $template-path)   
     let $null := sm:chmod(xs:anyURI($stored), "rwx------")
+    (:If records are created in a collection inside commons, it should be visible to all.:)
+    let $null := 
+        if (contains($target-collection, "/commons/")) 
+        then xmldb:set-resource-permissions($config:mods-temp-collection, $doc-name, "editor", "biblio.users", xmldb:string-to-permissions("rwxr-xr-x"))
+        else ()
     
     (:Get the remaining parameters that are to be stored (aside from transliterationOfResource fetched above).:)
     let $scriptOfResource := request:get-parameter("scriptOfResource", '')
@@ -120,7 +138,7 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="instances/new-instance.xml" id='new-instance' readonly="true"/>
            
            <!--A selection of elements and attributes from the MADS schema used for default records.-->
-           <xf:instance xmlns="http://www.loc.gov/mads/" src="instances/mads.xml" id='mads' readonly="true"/>
+           <!--<xf:instance xmlns="http://www.loc.gov/mads/" src="instances/mads.xml" id='mads' readonly="true"/>-->
     
            <!--Elements and attributes for insertion into the compact forms.-->
            <!--NB: These will all be in insert-templates.xml and are not needed.-->
@@ -153,12 +171,8 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
            </xf:submission>
         </xf:model>
 };
-(:To change from eXist to Tamboti "theme" in the editor, close all eXist-begin and eXist-end, and open all Tamboti-begin and Tamboti-end.:)
 declare function local:assemble-form($dummy-attributes as attribute()*, $style as node()*, $model as node(), $content as node()+, $debug as xs:boolean) as node()+ 
 {
-    let $log := util:log("DEBUG", ("##$dummy-attributes): ", $dummy-attributes))
-    let $log := util:log("DEBUG", ("##$dummy-attributes): ", $dummy-attributes))
-    return
     util:declare-option('exist:serialize', 'method=xhtml media-type=text/xml indent=yes process-xsl-pi=no')
     ,
     processing-instruction xml-stylesheet {concat('type="text/xsl" href="', request:get-context-path(), '/xforms/xsltforms/xsltforms.xsl"')}
@@ -170,56 +184,28 @@ declare function local:assemble-form($dummy-attributes as attribute()*, $style a
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:mods="http://www.loc.gov/mods/v3">{$dummy-attributes}
         <head>
             <title>
-            <!--eXist-begin
-                eXist Bibliographical Demo - MODS Editor
-                eXist-end-->
-            <!--Tamboti-begin-->
-                Tamboti Metadata Framework - MODS Editor
-            <!--Tamboti-end-->
+                {$header-title}
             </title> 
             <script type="text/javascript" src="../session.js.xql"></script>
             <link rel="stylesheet" type="text/css" href="edit.css"/>
-            <!--Tamboti-begin-->
-                <link rel="stylesheet" type="text/css" href="tamboti.css"/>
-            <!--Tamboti-end-->        
+            <link rel="stylesheet" type="text/css" href="{$tamboti-css}"/>        
             {$style}
             {$model}
         </head>
         <body>
-        <div id="page-head">
-        
-        <!--Tamboti-begin-->
+    <div id="page-head">
         <div id="page-head-left">
             <a href="../.." style="text-decoration: none">
-                <img 
-                    src="../../themes/tamboti/images/tamboti.png" 
-                    title="Tamboti Metadata Framework" 
-                    alt="Tamboti Metadata Framework" 
-                    style="border-style: none;"/>
-            
+                <img src="{$img-left-src}" title="{$img-left-title}" alt="{$img-left-alt}" style="border-style: none;"/>
             </a>
-        <div class="documentation"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
+            <div class="documentation"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
         </div>
         <div id="page-head-right">
-            <a href="http://www.asia-europe.uni-heidelberg.de/en/home.html" target="_blank">
-                <img 
-                    src="../../themes/tamboti/images/cluster_logo.png" 
-                    title="The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University" 
-                    alt="The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University" 
-                    width="200" style="border-style: none"/>
+            <a href="{$img-right-href}" target="_blank">
+                <img src="{$img-right-src}" title="{$img-right-title}" alt="{$img-right-alt}" width="{$img-right-width}" style="border-style: none"/>
             </a>
         </div>
-        <!--Tamboti-end-->
-        <!--eXist-begin
-                <a href="../.." style="text-decoration: none">
-                    <img src="../../themes/default/images/logo.jpg" title="eXist-db: Open Source Native XML Database" style="border-style: none;text-decoration: none"/>
-                </a>
-                <div id="navbar">
-                    <h1>Open Source Native XML Database</h1>
-                </div>
-                <div class="documentation"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
-            eXist-end-->            
-            </div>
+    </div>
             <div>
             <div class="container">
                 <div>
