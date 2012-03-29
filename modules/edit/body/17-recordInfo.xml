@@ -56,7 +56,7 @@
                         <p> This attribute is used to specify the language used within a field, using specifications in RFC 3066. RFC 3066 uses the two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in 639-1. </p>
                         <p> The recommendation is not to use xml:lang, but to use the above Language attribute. </p>
                     </xf:hint>
-                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>

@@ -158,7 +158,7 @@
                             </div>
                         </span>
                     </xf:label>
-                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>

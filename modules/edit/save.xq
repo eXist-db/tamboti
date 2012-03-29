@@ -290,12 +290,6 @@ declare function save:find-live-collection-containing-uuid($uuid as xs:string) a
         else ()
 };
 
-(: NB: Why must this information be created in edit.xq, only to be removed here, after being read below at let $target-collection? 
-The value of $target-collection in edit.xq is correctly set. :) 
-declare function save:remove-new-docs-target-collection($resource-path as xs:string) {
-    update delete doc($resource-path)//e:collection
-};
-
 (: This is where the form "POSTS" documents to this XQuery using the POST method of a submission :)
 let $item := clean:clean-namespaces(request:get-data()/element())
 
@@ -305,6 +299,7 @@ let $item := clean:clean-namespaces(request:get-data()/element())
 (: NB: Why does this return the temp collection, when the URL contains the target collection as "collection"? :)
 let $collection := request:get-parameter('collection', ())
 
+(:The default action is save, which means that the recrod is saved in temp each time a tab is clicked.:)
 let $action := request:get-parameter('action', 'save')
 
 let $incoming-id := $item/@ID
@@ -347,7 +342,6 @@ return
                     (
                         xf:do-updates($item, $doc),
                         xmldb:move($config:mods-temp-collection, $target-collection, $file-to-update),
-                        save:remove-new-docs-target-collection(concat($target-collection, "/", $file-to-update)),
                         (: Set the same permissions on the new file as the parent collection :)
                         security:apply-parent-collection-permissions(xs:anyURI(concat($target-collection, "/", $file-to-update)))
                     )

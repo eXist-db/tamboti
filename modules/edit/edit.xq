@@ -16,18 +16,16 @@ declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace e="http://www.asia-europe.uni-heidelberg.de/";
 declare namespace mads="http://www.loc.gov/mads/";
 
-(:These variable introduce a kind of theming in local:assemble-form():)
+(:These variable are used for a kind of theming in local:assemble-form():)
 declare variable $uri := substring-before(substring-after(request:get-url(), "/apps/"), "/modules/edit/edit.xq");
 declare variable $header-title := if ($uri eq "tamboti") then "Tamboti Metadata Framework - MODS Editor" else "eXist Bibliographical Demo - MODS Editor";
 declare variable $tamboti-css := if ($uri eq "tamboti") then "tamboti.css" else ();
 declare variable $img-left-src := if ($uri eq "tamboti") then "../../themes/tamboti/images/tamboti.png" else "../../themes/default/images/logo.jpg";
 declare variable $img-left-title := if ($uri eq "tamboti") then "Tamboti Metadata Framework" else "eXist-db: Open Source Native XML Database";
-declare variable $img-left-alt := if ($uri eq "tamboti") then "Tamboti Metadata Framework" else "eXist-db: Open Source Native XML Database";
 declare variable $img-right-href := if ($uri eq "tamboti") then "http://www.asia-europe.uni-heidelberg.de/en/home.html" else "";
-declare variable $img-right-src := if ($uri eq "tamboti") then "../../themes/tamboti/images/cluster_logo.png" else "";
-declare variable $img-right-title := if ($uri eq "tamboti") then "The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University" else "";
-declare variable $img-right-alt := if ($uri eq "tamboti") then "The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University" else "";
-declare variable $img-right-width := if ($uri eq "tamboti") then "200" else "";
+declare variable $img-right-src := if ($uri eq "tamboti") then "../../themes/tamboti/images/cluster_logo.png" else ();
+declare variable $img-right-title := if ($uri eq "tamboti") then "The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University" else ();
+declare variable $img-right-width := if ($uri eq "tamboti") then "200" else ();
 
 (:TODO: Code related to MADS files.:)
 
@@ -36,7 +34,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
     (:First, get the right template, based on the type-request and the presence or absence of transliteration.:)
     let $transliterationOfResource := request:get-parameter("transliterationOfResource", '')
     let $template-request := 
-        if ($type-request = ('related-article-in-periodical', 'related-monograph-chapter', 'related-contribution-to-edited-volume', 'suebs-tibetan', 'insert-templates', 'new-instance', 'mads'))
+        if ($type-request = ('related-article-in-periodical', 'related-contribution-to-edited-volume', 'suebs-tibetan', 'insert-templates', 'new-instance', 'mads'))
         (:These document types do not (yet) divide into latin and transliterated.:)
         then $type-request
         else
@@ -49,14 +47,15 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
     (:Then give it a name, store it in the temp location and set the right permissions on it.:)
     let $doc-name := concat($id, '.xml')
     let $stored := xmldb:store($config:mods-temp-collection, $doc-name, $template-path)   
+    (:Make the record accessible to the user alone, as default.:)
     let $null := sm:chmod(xs:anyURI($stored), "rwx------")
-    (:If records are created in a collection inside commons, it should be visible to all.:)
+    (:If the record is created in a collection inside commons, it should be visible to all.:)
     let $null := 
         if (contains($target-collection, "/commons/")) 
         then xmldb:set-resource-permissions($config:mods-temp-collection, $doc-name, "editor", "biblio.users", xmldb:string-to-permissions("rwxr-xr-x"))
         else ()
     
-    (:Get the remaining parameters that are to be stored (aside from transliterationOfResource fetched above).:)
+    (:Get the remaining parameters that are to be stored (in addition to transliterationOfResource which was fetched above).:)
     let $scriptOfResource := request:get-parameter("scriptOfResource", '')
     let $languageOfResource := request:get-parameter("languageOfResource", '')
     let $languageOfCataloging := request:get-parameter("languageOfCataloging", '')
@@ -112,8 +111,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
               </extension>
           into $doc/mods:mods
           ,
-          (:If the user requests to create a related record, a record which refers to the current record being browsed, 
-          insert the ID into @xlink:href on <relatedItem>:)
+          (:If the user requests to create a related record, a record which refers to the record being browsed, insert the ID into @xlink:href on <relatedItem> in the new record.:)
           if ($host)
           then
             (
@@ -196,13 +194,13 @@ declare function local:assemble-form($dummy-attributes as attribute()*, $style a
     <div id="page-head">
         <div id="page-head-left">
             <a href="../.." style="text-decoration: none">
-                <img src="{$img-left-src}" title="{$img-left-title}" alt="{$img-left-alt}" style="border-style: none;"/>
+                <img src="{$img-left-src}" title="{$img-left-title}" alt="{$img-left-title}" style="border-style: none;"/>
             </a>
             <div class="documentation"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
         </div>
         <div id="page-head-right">
             <a href="{$img-right-href}" target="_blank">
-                <img src="{$img-right-src}" title="{$img-right-title}" alt="{$img-right-alt}" width="{$img-right-width}" style="border-style: none"/>
+                <img src="{$img-right-src}" title="{$img-right-title}" alt="{$img-right-title}" width="{$img-right-width}" style="border-style: none"/>
             </a>
         </div>
     </div>
@@ -219,14 +217,15 @@ declare function local:assemble-form($dummy-attributes as attribute()*, $style a
 
 declare function local:create-page-content($id as xs:string, $tab-id as xs:string, $type-request as xs:string, $target-collection as xs:string, $instance-id as xs:string, $record-data as xs:string, $type-data as xs:string) as element(div) {
     (:Get the part of the form that belongs to the active tab.:)
-    let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id = $instance-id],
+    let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id = $instance-id]
     (:Get the relevant information to display in the info-line, the label for the tamplate chosen (if any) and the hint belonging to it (if any).:)
-    $type-label := doc($type-data)/code-table/items/item[value = $type-request]/label,
-    $type-hint := doc($type-data)/code-table/items/item[value = $type-request]/hint,
+    let $type-label := doc($type-data)/code-table/items/item[value = $type-request]/label
+    let $type-hint := doc($type-data)/code-table/items/item[value = $type-request]/hint
+    let $save-hint := doc($type-data)/code-table/items/item[value = "save"]/hint
     (:Display the bottom tabs belonging to the active tab.:)
-    $tab-data := concat($config:edit-app-root, '/tab-data.xml'),
-    $bottom-tab-label := doc($tab-data)/tabs/tab[tab-id=$tab-id]/*[local-name() = $type-request],
-    $bottom-tab-label := 
+    let $tab-data := concat($config:edit-app-root, '/tab-data.xml')
+    let $bottom-tab-label := doc($tab-data)/tabs/tab[tab-id=$tab-id]/*[local-name() = $type-request]
+    let $bottom-tab-label := 
     	if ($bottom-tab-label)
     	then $bottom-tab-label
     	else doc($tab-data)/tabs/tab[tab-id=$tab-id]/label    	
@@ -282,17 +281,10 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                         <xf:load resource="../../?reload=true" show="replace"/>
                     </xf:action>
                  </xf:trigger>
-             
                 <span class="xforms-hint">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-hint-value">
-                        <p>There is generally no need to click the &quot;Save&quot; button. </p>
-                        <p>Be aware, however, that you are only logged in for a certain period of time (30 minutes) and when your session times out, what you have input cannot be retrieved. 
-                        You can keep your session alive by clicking any tab. When your session is about to expire, you are prompted to keep it alive.</p> 
-                        <p>If you know that you may not be able to finish a record, it is best to click &quot;Save and Close&quot; and return to finish the record later.</p>
-                        <p>When you click the &quot;Save and Close&quot; button, the record is saved inside the folder you marked before opening the editor or the folder from which you opened it for re-editing.</p>
-                        <p>You can continue editing the record by finding it and clicking the &quot;Edit Record&quot; button inside the record&apos;s detail view.</p>
-                        <p>If you wish to discard what you have input and return to the search function, click &quot;Cancel Editing&quot;.</p>
+                        {$save-hint}
                     </div>
                 </span>
             </div>
@@ -325,13 +317,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                 <span class="xforms-hint">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-hint-value">
-                        <p>There is generally no need to click the &quot;Save&quot; button. </p>
-                        <p>Be aware, however, that you are only logged in for a certain period of time (30 minutes) and when your session times out, what you have input cannot be retrieved. 
-                        You can keep your session alive by clicking any tab. When your session is about to expire, you are prompted to keep it alive.</p> 
-                        <p>If you know that you may not be able to finish a record, it is best to click &quot;Save and Close&quot; and return to finish the record later.</p>
-                        <p>When you click the &quot;Save and Close&quot; button, the record is saved inside the folder you marked before opening the editor or the folder from which you opened it for re-editing.</p>
-                        <p>You can continue editing the record by finding it and clicking the &quot;Edit Record&quot; button inside the record&apos;s detail view.</p>
-                        <p>If you wish to discard what you have input and return to the search function, click &quot;Cancel Editing&quot;.</p>
+                        {$save-hint}
                     </div>
                 </span>
             </div>
@@ -382,10 +368,6 @@ If a new record is being created, the template name has to be retrieved from the
 
 (:Get the type parameter which shows which record template has been chosen.:) 
 let $type-request := request:get-parameter('type', ())
-
-(:Clean it for any '-latin' and '-transliterated' suffixes.:)
-(:NB: Is this necessary?:)
-let $type-request := replace(replace($type-request, '-latin', ''), '-transliterated', '')
 
 (:Get the path to the document containing the document type information.:)
 let $type-data := concat($config:edit-app-root, '/code-tables/document-type-codes.xml')

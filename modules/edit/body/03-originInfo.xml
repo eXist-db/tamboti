@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="origin block-form" tab-id="origin" e:dummy="dummy">
     <xf:group appearance="full" class="fieldset level-1">
         <div class="join">
             <span class="legend">Origin Information</span>
-            <span class="join-button">
-                <!-- NB: Does it makes sense to say that the resource may have several origins? -->
+            <!-- NB: It does not make sense to say that a resource may have several origins. -->
+            <!--<span class="join-button">
                 <xf:trigger ref=".[mods:originInfo]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
@@ -19,7 +18,7 @@
                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo" at="index('origininfo-repeat')"/>
                     </xf:action>
                 </xf:trigger>
-            </span>
+            </span>-->
             <span class="xforms-hint">
                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
@@ -233,7 +232,6 @@
                     </xf:label>
                 </xf:input>
             </xf:group>
-            <br/>
             <xf:group appearance="full" class="fieldset level-2" ref=".[mods:place]">
                 <div class="join">
                     <span class="legend">Place</span>

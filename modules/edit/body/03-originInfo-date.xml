@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!--All language  fields are commented out. Still slow.-->
 <div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="origin block-form" tab-id="origin-date" e:dummy="dummy">
     <xf:group appearance="full" class="fieldset level-1">
         <div class="join extra-wide">
             <span class="legend">Origin Information: Dates</span>
-            <span class="join-button">
+            <!-- NB: It does not make sense to say that a resource may have several origins. -->
+            <!--<span class="join-button">
                 <xf:trigger ref=".[mods:originInfo]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
@@ -18,7 +19,7 @@
                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo" at="index('origininfo-repeat')"/>
                     </xf:action>
                 </xf:trigger>
-            </span>
+            </span>-->
             <span class="xforms-hint">
                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
@@ -27,7 +28,6 @@
             </span>
         </div>
         <xf:repeat nodeset="instance('save-data')/mods:originInfo" id="origininfo-repeat">
-            <br/>
             <xf:group appearance="full" ref=".[not(mods:dateIssued)] | .[not(mods:dateCreated)] | .[not(mods:dateCaptured)] | .[not(mods:dateValid)] | .[not(mods:dateModified)] | .[not(mods:copyrightDate)] | .[not(mods:dateOther)]">
                 <xf:switch>
                     <xf:case id="originInfo-add-node-hide">
@@ -115,7 +115,7 @@
                     </xf:case>
                 </xf:switch>
             </xf:group>
-            <xf:group ref=".[mods:dateIssued]" appearance="full" class="fieldset level-2">
+            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:dateIssued]">
                 <div class="join">
                     <span class="legend">Date Issued</span>
                     <span class="join-button">
@@ -142,7 +142,8 @@
                     </span>
                 </div>
                 <xf:repeat nodeset="./mods:dateIssued" id="dateIssued-repeat">
-                    <xf:group appearance="full" ref="                         .[not(@encoding)] |                          .[not(@keyDate)] |                          .[not(@lang)] |                          .[not(@point)] |                          .[not(@qualifier)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">
+                    <xf:group appearance="full" ref=".[not(@encoding)] | .[not(@keyDate)] | .[not(@point)] | .[not(@qualifier)]">
+                        <!--<xf:group appearance="full" ref=".[not(@encoding)] | .[not(@keyDate)] | .[not(@lang)] | .[not(@point)] | .[not(@qualifier)] | .[not(@script)] | .[not(@transliteration)] | .[not(@xml:lang)]">-->
                         <xf:switch>
                             <xf:case id="dateIssued-add-node-hide">
                                 <div class="node-button">
@@ -179,7 +180,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@lang)]">
+                                        <!--<xf:group appearance="full" ref=".[not(@lang)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -187,7 +188,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateIssued/@lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
+                                        </xf:group>-->
                                         <xf:group appearance="full" ref=".[not(@point)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Point</xf:label>
@@ -206,7 +207,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@script)]">
+                                        <!--<xf:group appearance="full" ref=".[not(@script)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -214,8 +215,8 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateIssued/@script"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@transliteration)]">
+                                        </xf:group>-->
+                                        <!--<xf:group appearance="full" ref=".[not(@transliteration)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -223,8 +224,8 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateIssued/@transliteration"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@xml:lang)]">
+                                        </xf:group>-->
+                                        <!--<xf:group appearance="full" ref=".[not(@xml:lang)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -232,7 +233,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateIssued/@xml:lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
+                                        </xf:group>-->
                                     </xf:group>
                                 </div>
                             </xf:case>
@@ -309,7 +310,7 @@
                             </xf:label>
                         </xf:input>
                     </xf:group>
-                    <xf:group appearance="full" ref=".[@lang]">
+                    <!--<xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
                             <xf:label>Language<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -323,8 +324,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@xml:lang]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
                             <xf:label>xml:lang<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -338,8 +339,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@script]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@script]">
                         <xf:select1 ref="./@script">
                             <xf:label>Script<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -353,8 +354,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@transliteration]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@transliteration]">
                         <xf:select1 ref="./@transliteration">
                             <xf:label>Transliteration<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -368,7 +369,7 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
+                    </xf:group>-->
                 </xf:repeat>
             </xf:group>
             <xf:group appearance="full" class="fieldset level-2" ref=".[mods:dateCreated]">
@@ -398,7 +399,8 @@
                     </span>
                 </div>
                 <xf:repeat nodeset="./mods:dateCreated" id="dateCreated-repeat">
-                    <xf:group appearance="full" ref="                         .[not(@encoding)] |                          .[not(@keyDate)] |                          .[not(@lang)] |                          .[not(@point)] |                          .[not(@qualifier)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">
+                    <!--<xf:group appearance="full" ref="                         .[not(@encoding)] |                          .[not(@keyDate)] |                          .[not(@lang)] |                          .[not(@point)] |                          .[not(@qualifier)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">-->
+                    <xf:group appearance="full" ref=".[not(@encoding)] | .[not(@keyDate)] | .[not(@point)] | .[not(@qualifier)]">
                         <xf:switch>
                             <xf:case id="dateCreated-add-node-hide">
                                 <div class="node-button">
@@ -435,7 +437,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@lang)]">
+                                        <!--<xf:group appearance="full" ref=".[not(@lang)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -443,7 +445,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCreated/@lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
+                                        </xf:group>-->
                                         <xf:group appearance="full" ref=".[not(@point)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Point</xf:label>
@@ -462,7 +464,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@script)]">
+                                        <!--<xf:group appearance="full" ref=".[not(@script)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -470,8 +472,8 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCreated/@script"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@transliteration)]">
+                                        </xf:group>-->
+                                        <!--<xf:group appearance="full" ref=".[not(@transliteration)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -479,8 +481,8 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCreated/@transliteration"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@xml:lang)]">
+                                        </xf:group>-->
+                                        <!--<xf:group appearance="full" ref=".[not(@xml:lang)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -488,7 +490,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCreated/@xml:lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
+                                        </xf:group>-->
                                     </xf:group>
                                 </div>
                             </xf:case>
@@ -554,7 +556,7 @@
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                    <xf:group appearance="full" ref=".[@lang]">
+                    <!--<xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
                             <xf:label>Language<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -568,8 +570,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@xml:lang]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
                             <xf:label>xml:lang<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -583,8 +585,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@script]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@script]">
                         <xf:select1 ref="./@script">
                             <xf:label>Script<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -598,8 +600,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@transliteration]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@transliteration]">
                         <xf:select1 ref="./@transliteration">
                             <xf:label>Transliteration<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -613,7 +615,7 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
+                    </xf:group>-->
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_10">
                             <xf:label>Date Created<span class="xforms-help">
@@ -654,7 +656,8 @@
                     </span>
                 </div>
                 <xf:repeat nodeset="./mods:dateCaptured" id="dateCaptured-repeat">
-                    <xf:group appearance="full" ref="                         .[not(@encoding)] |                          .[not(@keyDate)] |                          .[not(@lang)] |                          .[not(@point)] |                          .[not(@qualifier)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">
+                    <!--<xf:group appearance="full" ref="                         .[not(@encoding)] |                          .[not(@keyDate)] |                          .[not(@lang)] |                          .[not(@point)] |                          .[not(@qualifier)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">-->
+                    <xf:group appearance="full" ref=".[not(@encoding)] | .[not(@keyDate)] | .[not(@point)] | .[not(@qualifier)]">
                         <xf:switch>
                             <xf:case id="dateCaptured-add-node-hide">
                                 <div class="node-button">
@@ -691,7 +694,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@lang)]">
+                                        <!--<xf:group appearance="full" ref=".[not(@lang)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -699,7 +702,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCaptured/@lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
+                                        </xf:group>-->
                                         <xf:group appearance="full" ref=".[not(@point)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Point</xf:label>
@@ -718,7 +721,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@script)]">
+                                        <!--<xf:group appearance="full" ref=".[not(@script)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -726,8 +729,8 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCaptured/@script"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@transliteration)]">
+                                        </xf:group>-->
+                                        <!--<xf:group appearance="full" ref=".[not(@transliteration)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -735,8 +738,8 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCaptured/@transliteration"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@xml:lang)]">
+                                        </xf:group>-->
+                                        <!--<xf:group appearance="full" ref=".[not(@xml:lang)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -744,7 +747,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCaptured/@xml:lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
+                                        </xf:group>-->
                                     </xf:group>
                                 </div>
                             </xf:case>
@@ -810,7 +813,7 @@
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                    <xf:group appearance="full" ref=".[@lang]">
+                    <!--<xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
                             <xf:label>Language<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -824,8 +827,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@xml:lang]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
                             <xf:label>xml:lang<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -839,8 +842,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@script]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@script]">
                         <xf:select1 ref="./@script">
                             <xf:label>Script<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -854,8 +857,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@transliteration]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@transliteration]">
                         <xf:select1 ref="./@transliteration">
                             <xf:label>Transliteration<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -869,7 +872,7 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
+                    </xf:group>-->
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_10">
                             <xf:label>Date Captured<span class="xforms-help">
@@ -910,7 +913,8 @@
                     </span>
                 </div>
                 <xf:repeat nodeset="./mods:dateValid" id="dateValid-repeat">
-                    <xf:group appearance="full" ref="                         .[not(@encoding)] |                          .[not(@keyDate)] |                          .[not(@lang)] |                          .[not(@point)] |                          .[not(@qualifier)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">
+                    <!--<xf:group appearance="full" ref="                         .[not(@encoding)] |                          .[not(@keyDate)] |                          .[not(@lang)] |                          .[not(@point)] |                          .[not(@qualifier)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">-->
+                    <xf:group appearance="full" ref=".[not(@encoding)] | .[not(@keyDate)] | .[not(@point)] | .[not(@qualifier)]">
                         <xf:switch>
                             <xf:case id="dateValid-add-node-hide">
                                 <div class="node-button">
@@ -947,7 +951,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@lang)]">
+                                        <!--<xf:group appearance="full" ref=".[not(@lang)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -955,7 +959,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateValid/@lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
+                                        </xf:group>-->
                                         <xf:group appearance="full" ref=".[not(@point)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Point</xf:label>
@@ -974,7 +978,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@script)]">
+                                        <!--<xf:group appearance="full" ref=".[not(@script)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -982,8 +986,8 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateValid/@script"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@transliteration)]">
+                                        </xf:group>-->
+                                        <!--<xf:group appearance="full" ref=".[not(@transliteration)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -991,8 +995,8 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateValid/@transliteration"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@xml:lang)]">
+                                        </xf:group>-->
+                                        <!--<xf:group appearance="full" ref=".[not(@xml:lang)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1000,7 +1004,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateValid/@xml:lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
+                                        </xf:group>-->
                                     </xf:group>
                                 </div>
                             </xf:case>
@@ -1066,7 +1070,7 @@
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                    <xf:group appearance="full" ref=".[@lang]">
+                    <!--<xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
                             <xf:label>Language<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1080,8 +1084,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@xml:lang]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
                             <xf:label>xml:lang<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1095,8 +1099,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@script]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@script]">
                         <xf:select1 ref="./@script">
                             <xf:label>Script<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1110,8 +1114,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@transliteration]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@transliteration]">
                         <xf:select1 ref="./@transliteration">
                             <xf:label>Transliteration<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1125,7 +1129,7 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
+                    </xf:group>-->
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_10">
                             <xf:label>Date Valid<span class="xforms-help">
@@ -1166,7 +1170,8 @@
                     </span>
                 </div>
                 <xf:repeat nodeset="./mods:dateModified" id="dateModified-repeat">
-                    <xf:group appearance="full" ref="                         .[not(@encoding)] |                          .[not(@keyDate)] |                          .[not(@lang)] |                          .[not(@point)] |                          .[not(@qualifier)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">
+                    <!--<xf:group appearance="full" ref="                         .[not(@encoding)] |                          .[not(@keyDate)] |                          .[not(@lang)] |                          .[not(@point)] |                          .[not(@qualifier)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">-->
+                    <xf:group appearance="full" ref=".[not(@encoding)] | .[not(@keyDate)] | .[not(@point)] | .[not(@qualifier)]">
                         <xf:switch>
                             <xf:case id="dateModified-add-node-hide">
                                 <div class="node-button">
@@ -1203,7 +1208,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@lang)]">
+                                        <!--<xf:group appearance="full" ref=".[not(@lang)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1211,7 +1216,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateModified/@lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
+                                        </xf:group>-->
                                         <xf:group appearance="full" ref=".[not(@point)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Point</xf:label>
@@ -1230,7 +1235,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@script)]">
+                                        <!--<xf:group appearance="full" ref=".[not(@script)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1238,8 +1243,8 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateModified/@script"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@transliteration)]">
+                                        </xf:group>-->
+                                        <!--<xf:group appearance="full" ref=".[not(@transliteration)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1247,8 +1252,8 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateModified/@transliteration"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@xml:lang)]">
+                                        </xf:group>-->
+                                        <!--<xf:group appearance="full" ref=".[not(@xml:lang)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1256,7 +1261,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateModified/@xml:lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
+                                        </xf:group>-->
                                     </xf:group>
                                 </div>
                             </xf:case>
@@ -1322,7 +1327,7 @@
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                    <xf:group appearance="full" ref=".[@lang]">
+                    <!--<xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
                             <xf:label>Language<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1336,8 +1341,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@xml:lang]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
                             <xf:label>xml:lang<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1351,8 +1356,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@script]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@script]">
                         <xf:select1 ref="./@script">
                             <xf:label>Script<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1366,8 +1371,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@transliteration]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@transliteration]">
                         <xf:select1 ref="./@transliteration">
                             <xf:label>Transliteration<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1381,7 +1386,7 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
+                    </xf:group>-->
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_10">
                             <xf:label>Date Modified<span class="xforms-help">
@@ -1422,7 +1427,8 @@
                     </span>
                 </div>
                 <xf:repeat nodeset="./mods:copyrightDate" id="copyrightDate-repeat">
-                    <xf:group appearance="full" ref="                         .[not(@encoding)] |                          .[not(@keyDate)] |                          .[not(@lang)] |                          .[not(@point)] |                          .[not(@qualifier)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">
+                    <!--<xf:group appearance="full" ref="                         .[not(@encoding)] |                          .[not(@keyDate)] |                          .[not(@lang)] |                          .[not(@point)] |                          .[not(@qualifier)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">-->
+                    <xf:group appearance="full" ref=".[not(@encoding)] | .[not(@keyDate)] | .[not(@point)] | .[not(@qualifier)]">
                         <xf:switch>
                             <xf:case id="copyrightDate-add-node-hide">
                                 <div class="node-button">
@@ -1459,7 +1465,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@lang)]">
+                                        <!--<xf:group appearance="full" ref=".[not(@lang)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1467,7 +1473,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:copyrightDate/@lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
+                                        </xf:group>-->
                                         <xf:group appearance="full" ref=".[not(@point)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Point</xf:label>
@@ -1486,7 +1492,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@script)]">
+                                        <!--<xf:group appearance="full" ref=".[not(@script)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1494,8 +1500,8 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:copyrightDate/@script"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@transliteration)]">
+                                        </xf:group>-->
+                                        <!--<xf:group appearance="full" ref=".[not(@transliteration)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1503,8 +1509,8 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:copyrightDate/@transliteration"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@xml:lang)]">
+                                        </xf:group>-->
+                                        <!--<xf:group appearance="full" ref=".[not(@xml:lang)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1512,7 +1518,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:copyrightDate/@xml:lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
+                                        </xf:group>-->
                                     </xf:group>
                                 </div>
                             </xf:case>
@@ -1578,7 +1584,7 @@
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                    <xf:group appearance="full" ref=".[@lang]">
+                    <!--<xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
                             <xf:label>Language<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1592,8 +1598,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@xml:lang]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
                             <xf:label>xml:lang<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1607,8 +1613,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@script]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@script]">
                         <xf:select1 ref="./@script">
                             <xf:label>Script<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1622,8 +1628,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@transliteration]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@transliteration]">
                         <xf:select1 ref="./@transliteration">
                             <xf:label>Transliteration<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1637,7 +1643,7 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
+                    </xf:group>-->
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_10">
                             <xf:label>Copyright Date<span class="xforms-help">
@@ -1678,7 +1684,8 @@
                     </span>
                 </div>
                 <xf:repeat nodeset="./mods:dateOther" id="dateOther-repeat">
-                    <xf:group appearance="full" ref="                         .[not(@encoding)] |                          .[not(@keyDate)] |                          .[not(@lang)] |                          .[not(@point)] |                          .[not(@qualifier)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">
+                    <!--<xf:group appearance="full" ref=".[not(@encoding)] | .[not(@keyDate)] |                          .[not(@lang)] |                          .[not(@point)] |                          .[not(@qualifier)] |                          .[not(@script)] |                          .[not(@transliteration)] |                          .[not(@xml:lang)]                         ">-->
+                    <xf:group appearance="full" ref=".[not(@encoding)] | .[not(@keyDate)] | .[not(@point)] | .[not(@qualifier)]">
                         <xf:switch>
                             <xf:case id="dateOther-add-node-hide">
                                 <div class="node-button">
@@ -1715,7 +1722,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@lang)]">
+                                        <!--<xf:group appearance="full" ref=".[not(@lang)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1723,7 +1730,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateOther/@lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
+                                        </xf:group>-->
                                         <xf:group appearance="full" ref=".[not(@point)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Point</xf:label>
@@ -1742,7 +1749,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@script)]">
+                                        <!--<xf:group appearance="full" ref=".[not(@script)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1750,8 +1757,8 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateOther/@script"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@transliteration)]">
+                                        </xf:group>-->
+                                        <!--<xf:group appearance="full" ref=".[not(@transliteration)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1759,8 +1766,8 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateOther/@transliteration"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
-                                        <xf:group appearance="full" ref=".[not(@xml:lang)]">
+                                        </xf:group>-->
+                                        <!--<xf:group appearance="full" ref=".[not(@xml:lang)]">
                                             <xf:trigger class="add-button">
                                                 <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1768,7 +1775,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateOther/@xml:lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>
+                                        </xf:group>-->
                                     </xf:group>
                                 </div>
                             </xf:case>
@@ -1834,7 +1841,7 @@
                             </xf:itemset>
                         </xf:select1>
                     </xf:group>
-                    <xf:group appearance="full" ref=".[@lang]">
+                    <!--<xf:group appearance="full" ref=".[@lang]">
                         <xf:select1 ref="./@lang">
                             <xf:label>Language<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1848,8 +1855,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@xml:lang]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@xml:lang]">
                         <xf:select1 ref="./@xml:lang">
                             <xf:label>xml:lang<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1863,8 +1870,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@script]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@script]">
                         <xf:select1 ref="./@script">
                             <xf:label>Script<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1878,8 +1885,8 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@transliteration]">
+                    </xf:group>-->
+                    <!--<xf:group appearance="full" ref=".[@transliteration]">
                         <xf:select1 ref="./@transliteration">
                             <xf:label>Transliteration<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1893,7 +1900,7 @@
                                 <xf:value ref="value"/>
                             </xf:itemset>
                         </xf:select1>
-                    </xf:group>
+                    </xf:group>-->
                     <xf:group appearance="full">
                         <xf:input ref="." class="text_10">
                             <xf:label>Other Date<span class="xforms-help">

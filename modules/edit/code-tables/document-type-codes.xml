@@ -1,7 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <code-table>
     <code-table-name>document-type-code</code-table-name>
     <items>
+        <item>
+            <hint>
+                <p>There is usually no need to click the "Save" button, since every time you click a tab, you input is saved. </p>
+                <p>Be aware, however, that you are only logged in for a certain period of time (30 minutes) and when your session times out, what you have input cannot be retrieved. 
+                    You can keep your session alive by clicking any tab. When your session is about to expire, you are prompted to keep it alive.</p>
+                <p>If you know that you may not be able to finish a record, it is best to click "Save and Close" and return to finish the record later.</p>
+                <p>When you click the "Save and Close" button, the record is saved inside the folder you marked before opening the editor or the folder from which you opened it for re-editing.</p>
+                <p>You can continue editing the record by finding it and clicking the "Edit Record" button inside the record's detail view.</p>
+                <p>If you wish to discard what you have input and return to the search function, click "Cancel Editing".</p>
+            </hint>
+            <value>save</value>
+        </item>
         <item>
             <label>(none selected)</label>
             <value/>
@@ -50,12 +61,12 @@
             <classifier>related-item</classifier>
             <sort>1</sort>
         </item>
-        <item>
+        <!--<item>
             <label>Monograph Chapter</label>
             <value>related-monograph-chapter</value>
             <classifier>related-item</classifier>
             <sort>1</sort>
-        </item>
+        </item>-->
         <item>
             <label>Contribution to Edited Volume</label>
             <value>related-contribution-to-edited-volume</value>

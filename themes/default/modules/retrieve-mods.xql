@@ -1543,7 +1543,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
             </tr>
     else ()
     ,
-    mods:simple-row(concat('http://kjc-fs2.kjc.uni-heidelberg.de:8600/exist/apps/tamboti/modules/search/index.html?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
+    mods:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
     }
     </table>
 };

@@ -132,7 +132,7 @@
                                     639-1. </p>
                         <p> The recommendation is not to use xml:lang, but to use the Language. </p>
                     </xf:hint>
-                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>
@@ -289,7 +289,7 @@
                                                 codes for those languages not given in 639-1. </p>
                                 <p> The recommendation is not to use xml:lang, but to use the Language. </p>
                             </xf:hint>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                                 <xf:label ref="label"/>
                                 <xf:value ref="value"/>
                             </xf:itemset>
