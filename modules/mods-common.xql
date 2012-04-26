@@ -6,18 +6,72 @@ declare namespace functx = "http://www.functx.com";
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
 
 (:~
-: Used to capitalize the first character of $arg.   
+: Prepares one or more rows for the detail view.
+:
+: @author Wolfgang M. Meier
+: @param $data
+: @param $label
+: @return element(tr)
+:)
+declare function modsCommon:simple-row($data as item()?, $label as xs:string) as element(tr)? {
+    for $d in $data
+    return
+        <tr xmlns="http://www.w3.org/1999/xhtml">
+            <td class="label">{$label}</td>
+            <td class="record">{$d}</td>
+        </tr>
+};
+
+(:~
+: Serialises lists according to Oxford/Harvard comma rule. 
+: One item is rendered as it is; two items have an ' and ' inserted in between them, 
+: three or more items have ', and ' before the last item and ', ' before the rest, except the first.
+:
+: @author Wolfgang M. Meier
+: @author Jens Østergaard Petersen
+: @param $sequence A sequence of names or labels
+: @param $sequence-count The count of this sequence (also used by the calling function)
+: @return A string
+:)
+declare function modsCommon:serialize-list($sequence as item()+, $sequence-count as xs:integer) as xs:string {       
+    if ($sequence-count eq 1)
+        then $sequence
+        else
+            if ($sequence-count eq 2)
+            then concat(
+                subsequence($sequence, 1, $sequence-count - 1),
+                (:Places " and " before last item.:)
+                ' and ',
+                $sequence[$sequence-count]
+                )
+            else concat(
+                (:Places ", " after all items that do not come last.:)
+                string-join(subsequence($sequence, 1, $sequence-count - 1)
+                , ', ')
+                ,
+                (:Places ", and " before item that comes last.:)
+                ', and ',
+                $sequence[$sequence-count]
+                )
+};
+
+(:~
+: Capitalizes the first character of a string.   
+:
+: @author Jenny Tennison
 : @param $arg A string
 : @return A string
 : @see http://http://www.xqueryfunctions.com/xq/functx_capitalize-first.html
 :)
 declare function functx:capitalize-first($arg as xs:string?) as xs:string? {       
-   concat(upper-case(substring($arg,1,1)),
-             substring($arg,2))
+   concat(upper-case(substring($arg,1,1)), substring($arg,2))
 };
 
 (:~
-: Used to transform the camel-case names of MODS elements into space-separated words.  
+: Transforms to the camel-case a string.
+: Used to camel-case the names of MODS elements into space-separated words.  
+:
+: @author Jenny Tennison
 : @param $arg A string
 : @param $delim A string
 : @return A string
@@ -28,7 +82,9 @@ declare function functx:camel-case-to-words($arg as xs:string?, $delim as xs:str
 };
 
 (:~
-: Used to remove whitespace at the beginning and end of a string.   
+: Removes whitespace at the beginning and end of a string.   
+:
+: @author Jenny Tennison
 : @param $arg A string
 : @return A string
 : @see http://http://www.xqueryfunctions.com/xq/functx_trim.html
@@ -215,33 +271,33 @@ declare function modsCommon:get-short-title($entry as element()) {
 : @param $language-string The string value of an attribute or element recording the language used within a certain element or in the MODS record as a whole, in textual or coded form
 : @return $language-label A human-readable language label
 :)
-declare function modsCommon:get-language-label($language-string as xs:string) as xs:string? {
+declare function modsCommon:get-language-label($languageTerm as xs:string) as xs:string? {
         let $language-label :=
-            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[value = $language-string]/label
+            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[value = $languageTerm]/label
             return
                 if ($language-label)
                 then $language-label
                 else
-                    let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTwo = $language-string]/label
+                    let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTwo = $languageTerm]/label
                     return
                         if ($language-label)
                         then $language-label
                         else
-                            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTerm = $language-string]/label
+                            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTerm = $languageTerm]/label
                             return
                                 if ($language-label)
                                 then $language-label
                                 else
-                                    let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[upper-case(label) = upper-case($language-string)[1]]/label
+                                    let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[upper-case(label) = upper-case($languageTerm)[1]]/label
                                     return
                                         if ($language-label)
                                         then $language-label
                                         else
-                                            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[upper-case(label) = upper-case($language-string)]/label
+                                            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[upper-case(label) = upper-case($languageTerm)]/label
                                             return
                                                 if ($language-label)
                                                 then $language-label
-                                                else concat($language-string, ' (unidentified)')
+                                                else concat($languageTerm, ' (unidentified)')
         return $language-label
 };
 
@@ -257,15 +313,17 @@ declare function modsCommon:get-language-label($language-string as xs:string) as
 : @param $scriptTerm The string value of an element or attribute recording a script, in textual or coded form
 : @return $script-label A human-readable script label
 :)
-declare function modsCommon:get-script-label($scriptTerm as xs:string?) as xs:string? {
+declare function modsCommon:get-script-label($scriptTerm as xs:string) as xs:string? {
         let $scriptTerm-upper-case := upper-case($scriptTerm)
+        let $log := util:log("DEBUG", ("##$scriptTerm-upper-case): ", $scriptTerm-upper-case))
+
         let $script-label :=
-            let $script-label := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/code-table/items/item[upper-case(value) = $scriptTerm-upper-case]/label
+            let $script-label := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/code-table/items/item[upper-case(value) eq $scriptTerm-upper-case]/label
             return
                 if ($script-label)
                 then $script-label
                 else 
-                    let $script-label := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/code-table/items/item[upper-case(label) = $scriptTerm-upper-case]/label
+                    let $script-label := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/code-table/items/item[upper-case(label) eq $scriptTerm-upper-case]/label
                     return
                         if ($script-label)
                         then $script-label

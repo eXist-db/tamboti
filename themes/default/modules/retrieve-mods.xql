@@ -10,26 +10,8 @@ import module namespace config="http://exist-db.org/mods/config" at "../../../mo
 import module namespace uu="http://exist-db.org/mods/uri-util" at "../../../modules/search/uri-util.xqm";
 import module namespace modsCommon="http://exist-db.org/mods/common" at "../../../modules/mods-common.xql";
 
-(: Removes titleIfo, name and relatedItem nodes that do not contain nodes required by the respective elements. :)
-declare function mods:remove-parent-with-missing-required-node($node as node()) as node() {
-element {node-name($node)} 
-{
-for $element in $node/*
-return
-    if ($element instance of element(mods:titleInfo) and not($element/mods:title/text())) 
-    then ()
-    else
-        if ($element instance of element(mods:name) and not($element/mods:namePart/text()))
-        then ()
-        else
-            if ($element instance of element(mods:relatedItem))
-            then 
-            	if (not(((string-length($element) > 0) or ($element/@xlink:href))))
-            	then ()
-            	else $element
-	        else $element
-}
-};
+(:The $mods:author-roles values are lower-cased when compared.:)
+declare variable $mods:author-roles := ('aut', 'author', 'cre', 'creator', 'composer', 'cmp', 'artist', 'art', 'director', 'drt');
 
 declare option exist:serialize "media-type=text/xml";
 
@@ -107,64 +89,104 @@ declare function mods:clean-up-punctuation($element as node()) as node() {
 (: ### general functions end ###:)
 
 (:~
-: The <em>mods:get-role-label-for-detail-view</em> function returns 
-: the <em>human-readable value</em> of the roleTerm passed to it.
-: Whereas mods:get-role-label-for-detail-view returns the author/creator roles that are placed in front of the title in detail view,
-: mods:get-role-label-for-detail-view returns the secondary roles that are placed after the title in list view and in relatedItem in detail view.
-: The value occurs in mods/name/role/roleTerm.
-: It can have two types, text and code.
-: Type code can use the marcrelator authority, recorded in the code table role-codes.xml.
-: The most commonly used values are checked first, letting the function exit quickly.
-: The function returns the human-readable label, based on searches in the code values and in the label values.  
-:
-: @param $node A mods element or attribute recording a role term value, in textual or coded form
-: @return The role term label string
+: The <em>mods:remove-parent-with-missing-required-node()</em> function removes titleIfo, name and relatedItem elements that do not contain children required by the respective elements. 
+: @param $node A mods element, either mods:mods or mods:relatedItem.
+: @return The same element, with parents with children without required children removed.
 :)
-declare function mods:get-role-label-for-detail-view($roleTerm as item()?) as item()? {        
-        let $roleLabel :=
-            (: Is the roleTerm a role label? :)
-            let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/code-table/items/item[upper-case(label) eq upper-case($roleTerm)]/label
-            (: Prefer the label proper, since it contains the form presented in the detail view, e.g. "Editor" instead of "edited by". :)
-            return
-                if ($roleLabel)
-                then $roleLabel
-                else
-                    (: Is the roleTerm a role term @code? :)
-                    let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/code-table/items/item[value eq $roleTerm]/label
-                    return
-                        if ($roleLabel)
-                        then $roleLabel
-                        else $roleTerm
-        return  functx:capitalize-first($roleLabel)
+declare function mods:remove-parent-with-missing-required-node($node as element()) as element() {
+element {node-name($node)} 
+{
+for $element in $node/*
+return
+    if ($element instance of element(mods:titleInfo) and not($element/mods:title/text())) 
+    then ()
+    else
+        if ($element instance of element(mods:name) and not($element/mods:namePart/text()))
+        then ()
+        else
+            if ($element instance of element(mods:relatedItem))
+            then 
+            	if (not($element/mods:title/text() or $element/@xlink:href))
+            	then ()
+            	else $element
+	        else $element
+}
 };
 
-declare function mods:get-roles-for-detail-view($name as element()*) as item()* {
+(:~
+: The <em>mods:get-roles-for-detail-view()</em> function returns the roles of the name passed to it.
+: It is used in mods:names-full().
+: It sends these to mods:get-role-terms-for-detail-view() to obtain the terms used to designate the roles, 
+: and for each of these terms a human-readbale label is found by mods:get-role-term-label-for-detail-view().
+: Whereas mods:get-roles-for-detail-view() returns the author/creator roles that are placed in front of the title in detail view,
+: mods:get-role-label-for-list-view() returns the secondary roles that are placed after the title in list view and in relatedItem in detail view.
+:
+: @param $element A mods element recording a name
+: @return The role term label string
+:)
+declare function mods:get-roles-for-detail-view($name as element()*) as xs:string* {
     if ($name/mods:role/mods:roleTerm/text())
     then
-        let $roles := $name/mods:role    
-            for $role at $position in $name/mods:role
+        let $distinct-role-labels := distinct-values(mods:get-role-terms-for-detail-view($name/mods:role))
+        let $distinct-role-labels-count := count($distinct-role-labels)
             return
-                distinct-values(
-                    if ($position eq 1)
-                    then mods:get-role-terms-for-detail-view($role)
-                    else (' and ', mods:get-role-terms-for-detail-view($role))
-                )
+                if ($distinct-role-labels-count gt 0)
+                then
+                    modsCommon:serialize-list($distinct-role-labels, $distinct-role-labels-count)
+                else ()
     else
-        (: Default values in the absence of $roleTerm. :)
+        (: Supply default values in the absence of any role term. :)
         if ($name/@type eq 'corporate')
-        then 'Corporation'
+        then 'Corporate Author'
         else 'Author'
 };
 
-declare function mods:get-role-terms-for-detail-view($role as element()*) as item()* {
+(:~
+: The <em>mods:get-role-terms-for-detail-view()</em> function returns the role terms of the roles passed to it.
+: It is used in mods:get-roles-for-detail-view().
+: It sends these to mods:get-role-term-label-for-detail-view() to obtain a human-readbale label.
+: Whereas mods:get-roles-for-detail-view() returns the author/creator roles that are placed in front of the title in detail view,
+: mods:get-role-label-for-list-view() returns the secondary roles that are placed after the title in list view and in relatedItem in detail view.
+: The function returns a sequences of human-readable labels, based on searches in the code values and in the label values.  
+:
+: @param $element A mods element recording a role
+: @return The role term string
+:)
+declare function mods:get-role-terms-for-detail-view($role as element()*) as xs:string* {
     let $roleTerms := $role/mods:roleTerm
-    for $roleTerm at $position in distinct-values($roleTerms)
-    
-    return
-	    if ($roleTerm)
-	    then mods:get-role-label-for-detail-view($roleTerm)
-	    else ()
+    for $roleTerm in distinct-values($roleTerms)
+        return
+    	    if ($roleTerm)
+    	    then mods:get-role-term-label-for-detail-view($roleTerm)
+    	    else ()
+};
 
+(:~
+: The <em>mods:get-role-term-label-for-detail-view(</em> function returns the <em>human-readable value</em> of the role term passed to it.
+: It is used in mods:get-role-terms-for-detail-view().
+: Type code can use the marcrelator authority, recorded in the code table role-codes.xml.
+: The most commonly used values are checked first, letting the function exit quickly.
+: The function returns the human-readable label, based on look-ups in the code values and in the label values.  
+:
+: @param $node A role term value string
+: @return The role term label string
+:)
+declare function mods:get-role-term-label-for-detail-view($roleTerm as xs:string?) as xs:string? {        
+        let $roleTermLabel :=
+            (: Is the roleTerm itself a role label, i.e. is the full form used in the document? :)
+            let $roleTermLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/code-table/items/item[upper-case(label) eq upper-case($roleTerm)]/label
+            (: Prefer the label proper, since it contains the form presented in the detail view, e.g. "Editor" instead of "edited by". :)
+            return
+                if ($roleTermLabel)
+                then $roleTermLabel
+                else
+                    (: Is the roleTerm a coded role term? :)
+                    let $roleTermLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/code-table/items/item[value eq $roleTerm]/label
+                    return
+                        if ($roleTermLabel)
+                        then $roleTermLabel
+                        else $roleTerm
+        return  functx:capitalize-first($roleTermLabel)
 };
 
 (:~
@@ -205,7 +227,7 @@ declare function mods:get-role-label-for-list-view($roleTerm as xs:string*) as x
                                         then $roleLabel
                                             else $roleTerm
                                             (: Do not present default values in case of absence of $roleTerm, since primary roles are not displayed in list view. :)
-        return ($roleLabel, ' ')
+        return concat($roleLabel, ' ')
 };
 
 declare function mods:add-part($part, $sep as xs:string) {
@@ -745,45 +767,20 @@ declare function mods:retrieve-names($entry as element()*, $destination as xs:st
 : The names positioned before the title are not marked explicitly by use of any role terms.
 : The role terms that lead to a name being positioned before the title are author and creator.
 : The absence of a role term is also interpreted as the attribution of authorship, so a name without a role term will also be positioned before the title.
-: @param
-: @return
-: @see
+: @param $entry A mods entry
+: @param $destination A string indication whether the name is to be formatted for use in 'list' or 'detail' view 
+: @param $global-transliteration The value set for the transliteration scheme to be used in the record as a whole, set in e:extension
+: @param $global-language The value set for the language of the resource catalogued, set in language/languageTerm
+: @return The string rendition of the name
 :)
-declare function mods:format-multiple-names($entry as element()*, $destination as xs:string, $global-transliteration as xs:string, $global-language as xs:string) {
+declare function mods:format-multiple-names($entry as element()*, $destination as xs:string, $global-transliteration as xs:string, $global-language as xs:string) as xs:string? {
     let $names := mods:retrieve-names($entry, $destination, $global-transliteration, $global-language)
     let $nameCount := count($names)
     let $formatted :=
-        if ($nameCount eq 0) 
-        then ()
-        else 
-            if ($nameCount eq 1) 
-            then
-                if (ends-with(normalize-space($names), '.')) 
-                (: Removes period after author name if it ends with a term of address ending in period, such as "Jr." or "Dr.", since a period will be inserted after the list-first name. :)
-                then functx:substring-before-last-match($names, '\.')
-                else $names
-            else
-                if ($nameCount eq 2)
-                then
-	                concat(
-	                    subsequence($names, 1, $nameCount - 1),
-	                    (: Places "and" before last name. :)
-	                    ' and ',
-	                    if (ends-with(normalize-space($names[$nameCount]), '.'))
-	                    then functx:substring-before-last-match($names[$nameCount], '\.')
-	                    else $names[$nameCount]
-	                )
-                else 
-                    concat(
-                        string-join(subsequence($names, 1, $nameCount - 1), 
-                        (: Places ", " after all names that do not come last. :)', ')
-                        ,
-                        (: Places ", and" before name that comes last. :)
-                        ', and ',
-                        if (ends-with(normalize-space($names[$nameCount]), '.'))
-	                    then functx:substring-before-last-match($names[$nameCount], '\.')
-	                    else $names[$nameCount]
-                        )
+        if ($nameCount gt 0) 
+        then modsCommon:serialize-list($names, $nameCount)
+        (:NB: Original function removed any trailing periods, with functx:substring-before-last-match($names, '\.'). Move to function called.:)
+        else ()
     return <span xmlns="http://www.w3.org/1999/xhtml" class="name">{normalize-space($formatted)}</span>
 };
 
@@ -1077,7 +1074,7 @@ declare function mods:format-related-item($relatedItem as element(), $global-lan
 	let $global-transliteration := $relatedItem/../mods:extension/e:transliterationOfResource/text()
 	return
     mods:clean-up-punctuation(<result>{(
-    if ($relatedItem/mods:name/mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator') or not($relatedItem/mods:name/mods:role/mods:roleTerm))
+    if (lower-case($relatedItem/mods:name/mods:role/mods:roleTerm) = $mods:author-roles or not($relatedItem/mods:name/mods:role/mods:roleTerm/text()))
     then mods:format-multiple-names($relatedItem, 'list-first', $global-transliteration, $global-language)
     else ()
     ,
@@ -1136,25 +1133,12 @@ declare function mods:names-full($entry as element(), $global-transliteration, $
 };
 
 
-(:~
-: Prepares one or more rows for the detail view.
-: @param $data
-: @param $label
-: @return element(tr)
-:)
-declare function mods:simple-row($data as item()?, $label as xs:string) as element(tr)? {
-    for $d in $data
-    return
-        <tr xmlns="http://www.w3.org/1999/xhtml">
-            <td class="label">{$label}</td>
-            <td class="record">{$d}</td>
-        </tr>
-};
 
 (: Creates view for detail view. :)
 (: NB: "mods:format-detail-view()" is referenced in session.xql. :)
 declare function mods:format-detail-view($id as xs:string, $entry as element(mods:mods), $collection-short as xs:string) {
 	let $ID := $entry/@ID
+	(:let $log := util:log("DEBUG", ("##$ID): ", $ID)):)
 	let $entry := mods:remove-parent-with-missing-required-node($entry)
 	let $global-transliteration := $entry/mods:extension/e:transliterationOfResource/text()
 	let $global-language := $entry/mods:language[1]/mods:languageTerm[1]/text()
@@ -1162,8 +1146,8 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     <table xmlns="http://www.w3.org/1999/xhtml" class="biblio-full">
     {
     <tr>
-        <td class="collection-label">In Folder:</td>
-        <td><div class="collection">{uu:unescape-collection-path($collection-short)}</div></td>
+        <td class="collection-label">Record Location</td>
+        <td><div class="collection">{replace(replace(uu:unescape-collection-path($collection-short), '^resources/commons/', 'resources/'),'^resources/users/', 'resources/')}</div></td>
     </tr>
     ,
     
@@ -1179,19 +1163,19 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     ,
     
     (: conferences :)
-    mods:simple-row(mods:get-conference-detail-view($entry), 'Conference')
+    modsCommon:simple-row(mods:get-conference-detail-view($entry), 'Conference')
     ,
 
     (: place :)
     for $place in $entry/mods:originInfo[1]/mods:place
-        return mods:simple-row(mods:get-place($place), 'Place')
+        return modsCommon:simple-row(mods:get-place($place), 'Place')
     ,
     
     (: publisher :)
         (: If a transliterated publisher name exists, this probably means that several publisher names are simply different script forms of the same publisher name. Place the transliterated name first, then the original script name. :)
         if ($entry/mods:originInfo[1]/mods:publisher[@transliteration])
         then
-	        mods:simple-row(
+	        modsCommon:simple-row(
 	            string-join(
 		            for $publisher in $entry/mods:originInfo[1]/mods:publisher
 		            let $order := 
@@ -1206,7 +1190,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
 		else
 		(: Otherwise we have a number of different publishers.:)
 			for $publisher in $entry/mods:originInfo[1]/mods:publisher
-	        return mods:simple-row(mods:get-publisher($publisher), 'Publisher')
+	        return modsCommon:simple-row(mods:get-publisher($publisher), 'Publisher')
 	,
 	
     (: dates :)
@@ -1215,7 +1199,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     then ()
     else 
         for $date in $entry/mods:originInfo[1]/mods:dateCreated
-            return mods:simple-row($date, 
+            return modsCommon:simple-row($date, 
             concat('Date Created',
                 concat(
                 if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
@@ -1228,7 +1212,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     then () 
     else 
         for $date in $entry/mods:originInfo[1]/mods:copyrightDate
-            return mods:simple-row($date, 
+            return modsCommon:simple-row($date, 
             concat('Copyright Date',
                 concat(
                 if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
@@ -1241,7 +1225,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     then () 
     else 
         for $date in $entry/mods:originInfo[1]/mods:dateCaptured
-            return mods:simple-row($date, 
+            return modsCommon:simple-row($date, 
             concat('Date Captured',
                 concat(
                 if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
@@ -1254,7 +1238,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     then () 
     else 
         for $date in $entry/mods:originInfo[1]/mods:dateValid
-            return mods:simple-row($date, 
+            return modsCommon:simple-row($date, 
             concat('Date Valid',
                 concat(
                 if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
@@ -1267,7 +1251,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     then () 
     else 
         for $date in $entry/mods:originInfo[1]/mods:dateIssued
-            return mods:simple-row($date, 
+            return modsCommon:simple-row($date, 
             concat(
                 'Date Issued', 
                 concat(
@@ -1281,7 +1265,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     then () 
     else 
         for $date in $entry/mods:originInfo[1]/mods:dateModified
-            return mods:simple-row($date, 
+            return modsCommon:simple-row($date, 
             concat('Date Modified',
                 concat(
                 if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
@@ -1294,7 +1278,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     then () 
     else 
         for $date in $entry/mods:originInfo[1]/mods:dateOther
-            return mods:simple-row($date, 
+            return modsCommon:simple-row($date, 
             concat('Other Date',
                 concat(
                 if ($date/@point) then concat(' (', functx:capitalize-first($date/@point), ')') else (),
@@ -1305,14 +1289,14 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     ,
     (: edition :)
     if ($entry/mods:originInfo[1]/mods:edition) 
-    then mods:simple-row($entry/mods:originInfo[1]/mods:edition, 'Edition') 
+    then modsCommon:simple-row($entry/mods:originInfo[1]/mods:edition, 'Edition') 
     else ()
     ,
     (: extent :)
     let $extent := $entry/mods:physicalDescription/mods:extent
     return
         if ($extent) 
-        then mods:simple-row(
+        then modsCommon:simple-row(
             mods:get-extent($extent), 
             concat('Extent', 
                 if ($extent/@unit) 
@@ -1346,10 +1330,10 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     mods:get-related-items($entry, 'detail', $global-language)
     ,
     (: typeOfResource :)
-    mods:simple-row($entry/mods:typeOfResource[1]/string(), 'Type of Resource')
+    modsCommon:simple-row($entry/mods:typeOfResource[1]/string(), 'Type of Resource')
     ,
     (: internetMediaType :)
-    mods:simple-row(
+    modsCommon:simple-row(
     (
 	    let $label := doc(concat($config:edit-app-root, '/code-tables/internet-media-type-codes.xml'))/*:code-table/*:items/*:item[*:value eq $entry/mods:physicalDescription[1]/mods:internetMediaType]/*:label
 	    return
@@ -1360,81 +1344,70 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     ,
     
     (: language :)
-    if ($entry/mods:language)
-    then
-        mods:simple-row(
-        string-join(
-            for $languageTerm in distinct-values($entry/mods:language/mods:languageTerm/string())
-            return
-            modsCommon:get-language-label($languageTerm)
-            , ', ')
-        , 
-        if (count(distinct-values($entry/mods:language/mods:languageTerm/string())) > 1) 
-        then 'Languages of Resource' 
-        else 'Language of Resource'
+    let $distinct-language-labels := distinct-values(
+        for $language in $entry/mods:language
+        for $languageTerm in $language/mods:languageTerm
+        return modsCommon:get-language-label($languageTerm/text())
         )
-    else
-        if ($entry/mods:relatedItem/mods:language)
-        then
-            mods:simple-row(
-            string-join(
-                for $languageTerm in distinct-values($entry/mods:relatedItem/mods:language/mods:languageTerm/string())
-                return
-                modsCommon:get-language-label($languageTerm)
-                , ', ')
+    let $distinct-language-labels-count := count($distinct-language-labels)
+        return
+            if ($distinct-language-labels-count gt 0)
+            then
+                modsCommon:simple-row(
+                    modsCommon:serialize-list($distinct-language-labels, $distinct-language-labels-count)
                 ,
-                if (count(distinct-values($entry/mods:relatedItem/mods:language/mods:languageTerm/string())) > 1) 
+                if ($distinct-language-labels-count gt 1) 
                 then 'Languages of Resource' 
                 else 'Language of Resource'
-            )
-        else ()
+                    )
+            else ()
     ,
 
     (: script :)
-    if ($entry/mods:language)
-    then
-        mods:simple-row(
-        string-join(
-            for $scriptTerm in distinct-values($entry/mods:language/mods:scriptTerm/string())
-            return
-            modsCommon:get-script-label($scriptTerm)
-        , ', ')
-        , 
-        if (count(distinct-values($entry/mods:language/mods:scriptTerm/string())) > 1) 
-        then 'Scripts of Resource' 
-        else 'Script of Resource'
+
+    let $distinct-script-labels := distinct-values(
+        for $language in $entry/mods:language
+        for $scriptTerm in $language/mods:scriptTerm
+        return modsCommon:get-script-label($scriptTerm/text())
         )
-    else
-        if ($entry/mods:relatedItem/mods:language)
-        then
-            mods:simple-row(
-            string-join(
-                for $scriptTerm in distinct-values($entry/mods:relatedItem/mods:language/mods:scriptTerm/string())
-                return
-                modsCommon:get-script-label($scriptTerm)
-                , ', ')
+    let $distinct-script-labels-count := count($distinct-script-labels)
+        return
+            if ($distinct-script-labels-count gt 0)
+            then
+                modsCommon:simple-row(
+                    modsCommon:serialize-list($distinct-script-labels, $distinct-script-labels-count)
                 ,
-                if (count(distinct-values($entry/mods:relatedItem/mods:language/mods:scriptTerm/string())) > 1) 
+                if ($distinct-script-labels-count gt 1) 
                 then 'Scripts of Resource' 
                 else 'Script of Resource'
-            )
-        else ()
+                    )
+            else ()
     ,
 
     (: languageOfCataloging :)
-    for $language in ($entry/mods:recordInfo/mods:languageOfCataloging)
-    let $languageTerm := $language/mods:languageTerm[1]/string() 
-    return    
-	    if ($languageTerm)
-	    then mods:simple-row(modsCommon:get-language-label($languageTerm), 'Language of Cataloging')
-	    else ()
+    let $distinct-language-labels := distinct-values(
+        for $language in $entry/mods:recordInfo/mods:languageOfCataloging
+        return modsCommon:get-language-label($language/mods:languageTerm/text())
+        )
+    let $distinct-language-labels-count := count($distinct-language-labels)
+        return
+            if ($distinct-language-labels-count gt 0)
+            then
+                modsCommon:simple-row(
+                    modsCommon:serialize-list($distinct-language-labels, $distinct-language-labels-count)
+                ,
+                if ($distinct-language-labels-count gt 1) 
+                then 'Languages of Cataloging' 
+                else 'Language of Cataloging'
+                    )
+            else ()
     ,
 
     (: genre :)
     for $genre in ($entry/mods:genre)
     let $authority := $genre/@authority/string()
     return   
-        mods:simple-row(
+        modsCommon:simple-row(
             if ($authority eq 'local')
                 then doc(concat($config:edit-app-root, '/code-tables/genre-local-codes.xml'))/*:code-table/*:items/*:item[*:value eq $genre]/*:label
                 else
@@ -1458,7 +1431,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     (: abstract :)
     for $abstract in ($entry/mods:abstract)
     return
-    mods:simple-row($abstract, 'Abstract')
+    modsCommon:simple-row($abstract, 'Abstract')
     ,
     
     (: note :)
@@ -1471,7 +1444,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     let $wrapped-with-span := concat('&lt;span>', $double-escapes-fixed, '</span>')
     return
         (: This renders html markup in Zotero exports. Stylesheet should be changed to accommodate standard markup. :)
-        mods:simple-row(util:parse($wrapped-with-span)
+        modsCommon:simple-row(util:parse($wrapped-with-span)
 	    , 
 	    concat('Note', 
 	        concat(
@@ -1498,7 +1471,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         if ($item/@type/string()) 
         then concat(' (', functx:capitalize-first($item/@type/string()), ')') 
         else ()
-    return mods:simple-row($item, concat('Identifier', $type))
+    return modsCommon:simple-row($item, concat('Identifier', $type))
     ,
     (: classification :)
     for $item in $entry/mods:classification
@@ -1506,7 +1479,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         if ($item/@authority/string()) 
         then concat(' (', ($item/@authority/string()), ')') 
         else ()
-    return mods:simple-row($item, concat('Classification', $authority))
+    return modsCommon:simple-row($item, concat('Classification', $authority))
     ,
     (: records referring to current record if current record is a periodical or an edited volume :)
     if ($entry/mods:genre = ('periodical', 'editedVolume', 'newspaper', 'journal', 'festschrift', 'encyclopedia', 'conference publication', 'canonical scripture')) 
@@ -1543,7 +1516,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
             </tr>
     else ()
     ,
-    mods:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
+    modsCommon:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
     }
     </table>
 };
@@ -1566,7 +1539,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         (: The author, etc. of the primary publication. :)
         (: NB: conference? :)
         let $names := $entry/mods:name
-        let $names-primary-publication := <entry>{$names[@type = ('personal', 'corporate', 'family') or not(@type)][(mods:role/mods:roleTerm = ('aut', 'author', 'Author', 'cre', 'creator', 'Creator')) or not(mods:role/mods:roleTerm)]}</entry>
+        let $names-primary-publication := <entry>{$names[@type = ('personal', 'corporate', 'family') or not(@type)][lower-case(mods:role/mods:roleTerm) = $mods:author-roles or not(mods:role/mods:roleTerm/text())]}</entry>
         return
 	        if ($names-primary-publication/string())
 	        then (mods:format-multiple-names($names-primary-publication, 'list-first', $global-transliteration, $global-language)
@@ -1588,7 +1561,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         for $roleTerm in distinct-values($roleTerms-secondary)        
             return
                 (: NB: Can the wrapper be avoided? :)
-                let $names := <entry>{$entry/mods:name[mods:role/mods:roleTerm eq $roleTerm]}</entry>
+                let $names := <entry>{$entry/mods:name[mods:role/mods:roleTerm = $roleTerm]}</entry>
                 return
                     (
                     (: Introduce secondary role with comma. :)
