@@ -5,6 +5,8 @@ declare namespace functx = "http://www.functx.com";
 
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
 
+declare variable $modsCommon:western-languages := ('eng', 'fre', 'ger', 'ita', 'por', 'spa');
+
 (:~
 : Prepares one or more rows for the detail view.
 :
@@ -315,7 +317,6 @@ declare function modsCommon:get-language-label($languageTerm as xs:string) as xs
 :)
 declare function modsCommon:get-script-label($scriptTerm as xs:string) as xs:string? {
         let $scriptTerm-upper-case := upper-case($scriptTerm)
-        let $log := util:log("DEBUG", ("##$scriptTerm-upper-case): ", $scriptTerm-upper-case))
 
         let $script-label :=
             let $script-label := doc(concat($config:edit-app-root, '/code-tables/script-codes.xml'))/code-table/items/item[upper-case(value) eq $scriptTerm-upper-case]/label
@@ -430,14 +431,15 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                         (: NB: If the name is translated from one language to another (e.g. William the Conqueror, Guillaume le Conquérant), there will be two $name-basic, one for each language. This is not handled. :)
                         (: NB: If the name is transliterated in two ways, there will be two $name-in-transliteration, one for each transliteration scheme. This is not handled. :)
                         (: NB: If the name is rendered in two scripts, there will be two $name-in-non-latin-script, one for each script. This is not handled. :)
-        				let $name-contains-transliteration := 
-        					(: We allow the transliteration attribute to be empty. :)
-        					if ($name[*:namePart[@transliteration]])
+        				let $name-contains-transliteration :=         					
+        					(:We allow the transliteration attribute to be on name itself. 
+        					We allow it to be empty, because we use it with $global-transliteration to signal that a name or namePart is transliterated or contains transliteration.:)
+        					if ($name[*:namePart[@transliteration]] or $name[@transliteration])
         					then 1
         					else
-        						(: If the record as a whole is marked as having transliteration, use this instead. :)
+        						(: If the record as a whole is marked as having transliteration, use this instead.:)
         						if ($global-transliteration)
-        						then 1
+        						then 0
         						else 0
                         (: If the name does not contain a namePart with transliteration, it is a basic name, 
                         i.e. a name where the distinction between the name in native script and in transliteration does not arise. 
@@ -448,8 +450,10 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                         (: NB: Only coded language terms are treated here. :)
                         let $name-basic :=
     	                    if (not($name-contains-transliteration))
-    	                    then <name>{$name/*:namePart[not(@transliteration) and (not(@script) or @script = ('Latn', 'latn', 'Latin'))]}</name>
-                        	else <name>{$name/*:namePart[@lang = ('eng', 'fre', 'ger', 'ita', 'por', 'spa')]}</name>
+    	                    (:If we know for sure that no transliteration is used somehwere in the name, then grab the parts in which Western script is used.:) 
+    	                    then <name>{$name/*:namePart[not(@transliteration)][(not(@script) or @script = ('Latn', 'latn', 'Latin'))]}</name>
+                        	(:If we know for sure that transliteration is used somehwere in the name, then grab the untransliterated parts.:)
+                        	else <name>{$name/*:namePart[@lang = $modsCommon:western-languages or not(@lang)]}</name>
                         (: If there is transliteration, there are nameParts with transliteration. 
                         To filter these, we seek nameParts which contain the transliteration attribute, 
                         even though this may be empty 
@@ -459,16 +463,16 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                         (: NB: Should English names be filtered away?:)
                         let $name-in-transliteration := 
                         	if ($name-contains-transliteration)
-                        	then <name>{$name/*:namePart[@transliteration and (not(@script) or (@script = ('Latn', 'latn', 'Latin')))]}</name>
+                        	then <name>{$name/*:namePart[@transliteration][(not(@script) or (@script = ('Latn', 'latn', 'Latin')))]}</name>
                         	else ()
                         (: If there is transliteration, the presumption must be that all nameParts which are not transliterations (and which do not have the language set to a European language) are names in non-Latin script. 
                         We filter for nameParts which do no have the transliteration attribute or have one with no contents, 
                         and which do not have script set to Latin, and which do not have English as their language. :)
                         let $name-in-non-latin-script := 
     	                    if ($name-contains-transliteration)
-    	                    then <name>{$name/*:namePart[(not(@transliteration) or string-length(@transliteration) eq 0) and (@script) and not(@script = ('Latn', 'latn', 'Latin')) and not(@lang = ('eng', 'fre', 'ger', 'ita', 'por', 'spa'))]}</name>
+    	                    then <name>{$name/*:namePart[(not(@transliteration) or string-length(@transliteration) eq 0)][(@script)][not(@script = ('Latn', 'latn', 'Latin'))][not(@lang = $modsCommon:western-languages)]}</name>
     	                    else ()
-                        (: We assume that there is only one date name part, in $name-basic. 
+                        (: We assume that there is only one date name part in $name-basic. 
                         Date name parts with transliteration and script are rather theoretical. 
                         This date is attached at the end of the name, to distinguish between identical names. That is why it is set here, not below. :)
                         let $date-basic := $name-basic/*:namePart[@type eq 'date']
@@ -583,7 +587,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                             , 
                             (: ## 2 ##:)
                             (: If there is a "European" name, enclose the transliterated and Eastern script name in parenthesis. :)
-                            if ($name/*:namePart[@lang  = ('eng', 'fre', 'ger', 'ita', 'por', 'spa')])
+                            if ($name/*:namePart[@lang  = $modsCommon:western-languages])
                             then ' ('
                             else ()
                             ,

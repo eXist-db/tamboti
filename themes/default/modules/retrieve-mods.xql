@@ -67,7 +67,7 @@ declare function mods:clean-up-punctuation($element as node()) as node() {
 			return
 				if ($child instance of text())
 				then 
-					replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
+					replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
 						($child)
 					(:, '\s*\)', ')'):) (:, '\s*;', ';'):) (:, ',,', ','):) (:, '”\.', '.”'):) (:, '\. ,', ','):) (:, ',\s*\.', ''):) (:,'\.\.', '.'):) (:,'\.”,', ',”'):)
 					, '\s*\.', '.')
@@ -81,6 +81,9 @@ declare function mods:clean-up-punctuation($element as node()) as node() {
 					,'\.”\.', '.”')
 					,' \)', ')')
 					,'\( ', '(')
+					, '\.,', ',')
+					, '\?:', '?')
+					, '\?', '?')
 				else mods:clean-up-punctuation($child)
       }
 };
@@ -121,7 +124,7 @@ return
 : Whereas mods:get-roles-for-detail-view() returns the author/creator roles that are placed in front of the title in detail view,
 : mods:get-role-label-for-list-view() returns the secondary roles that are placed after the title in list view and in relatedItem in detail view.
 :
-: @param $element A mods element recording a name
+: @param $name A mods element recording a name, in code or as a human-readable label
 : @return The role term label string
 :)
 declare function mods:get-roles-for-detail-view($name as element()*) as xs:string* {
@@ -135,7 +138,7 @@ declare function mods:get-roles-for-detail-view($name as element()*) as xs:strin
                     modsCommon:serialize-list($distinct-role-labels, $distinct-role-labels-count)
                 else ()
     else
-        (: Supply default values in the absence of any role term. :)
+        (: Supply a default value in the absence of any role term. :)
         if ($name/@type eq 'corporate')
         then 'Corporate Author'
         else 'Author'
@@ -867,7 +870,8 @@ declare function mods:get-title-translated($entry as element(mods:mods), $titleI
         else ()
 };
 
-(: Constructs title for the detail view. :)
+(: Constructs title for the detail view. 
+It is called by mods:format-detail-view(), which iterates through a sequence of titleInfo elements. :)
 declare function mods:title-full($titleInfo as element(mods:titleInfo)) {
 if ($titleInfo)
     then
@@ -877,45 +881,48 @@ if ($titleInfo)
             if (($titleInfo/@type eq 'translated') and not($titleInfo/@transliteration)) 
             then 'Translated Title'
             else 
-                if ($titleInfo/@type eq 'abbreviated') 
-                then 'Abbreviated Title'
+                if ($titleInfo/@type eq 'alternative') 
+                then 'Alternative Title'
                 else 
-                    if ($titleInfo/@type eq 'alternative') 
-                    then 'Alternative Title'
+                    if ($titleInfo/@type eq 'uniform') 
+                    then 'Uniform Title'
                     else 
-                        if ($titleInfo/@type eq 'uniform') 
-                        then 'Uniform Title'
-                        else 
-                            if ($titleInfo[@transliteration]) 
-                            then 'Transliterated Title'
+                        if ($titleInfo/@transliteration)
+                        then 'Transliterated Title'
+                        else
+                            (:NB: In mods:format-detail-view(), titleInfo with @type eq 'abbreviated' are removed.:) 
+                            if ($titleInfo/@type eq 'abbreviated') 
+                            then 'Abbreviated Title'
+                            (:Default value.:)
                             else 'Title'
         }
         <span class="deemph">
         {
         let $lang := $titleInfo/@lang/string()
         let $xml-lang := $titleInfo/@xml:lang/string()
+        (: Prefer @lang to @xml:lang. :)
+        let $lang := if ($lang) then $lang else $xml-lang
         return
-            if ($lang or $xml-lang)
+            if ($lang)
             then        
                 (
                 <br/>, 'Language: '
                 ,
-                (: Prefer @lang to @xml:lang. :)
-                let $lang := if ($lang) then $lang else $xml-lang
-                return
                 modsCommon:get-language-label($lang)
                 )
             else ()
         }
         {
-        
         let $transliteration := $titleInfo/@transliteration/string()
-        let $recordTransliteration := $titleInfo/../mods:extension/e:transliterationOfResource
+        let $global-transliteration := $titleInfo/../mods:extension/e:transliterationOfResource
+        (:Prefer local transliteration to global.:)
         let $transliteration := 
         	if ($transliteration)
         	then $transliteration
-        	else $recordTransliteration
+        	else $global-transliteration
         return
+        (:The local transliteration attribute may be empty, so we check if it is there anyway. 
+        If it is there, but empty, we use the global value.:)
         if ($titleInfo/@transliteration and $transliteration)
         then
             (<br/>, 'Transliteration: ',
@@ -980,81 +987,90 @@ if ($titleInfo)
 
 declare function mods:get-related-items($entry as element(mods:mods), $destination as xs:string, $global-language as xs:string) {
     for $item in $entry/mods:relatedItem
-    let $type := $item/@type/string()
-    let $ID := $item/@ID
-    let $displayLabel := $item/@displayLabel
-    let $titleInfo := $item/mods:titleInfo
-    let $labelDisplayed :=
-        string(
-        if ($displayLabel)
-        then $displayLabel
-        else
-            if ($type)
-            then functx:capitalize-first(functx:camel-case-to-words($type, ' '))
-            else 'Related Item'
-        )
-    let $part := $item/mods:part
-    let $xlink := replace($item/@xlink:href, '^#?(.*)$', '$1')
-    let $xlinkRecord :=
-        (: Any MODS record in /db/resources is retrieved if there is a @xlink:href/@ID match and the relatedItem has no string value. If there should be duplicated, only the first record is retrieved.:)
-        if (($xlink) and (collection($config:mods-root)//mods:mods[@ID eq $xlink]) and (not($titleInfo))) 
-        then collection($config:mods-root)//mods:mods[@ID eq $xlink]
-        else ()
-    let $relatedItem :=
-    	if ($xlinkRecord) 
-    	(: NB: There must be a smarter way to merge the retrieved relatedItem with the native part! :)
-    	(:update insert $part into $xlinkRecord:)
-    	then <mods:relatedItem ID="{$ID}" displayLabel ="{$displayLabel}" type="{$type}" xlink:href="{$xlink}">{($xlinkRecord/mods:titleInfo, $part)}</mods:relatedItem> 
-    	else
-    		if ($item/mods:titleInfo/mods:title/text())
-    		then $item
-    		else ()
+        let $type := $item/@type/string()
+        (:NB: do we use @ID on relatedItem?:) 
+        let $ID := $item/@ID/string()
+        let $titleInfo := $item/mods:titleInfo
+        let $displayLabel := $item/@displayLabel/string()
+        let $label-displayed :=
+            string(
+                if ($displayLabel)
+                then $displayLabel
+                else
+                    if ($type)
+                    then functx:capitalize-first(functx:camel-case-to-words($type, ' '))
+                    else 'Related Item'
+            )
+        let $part := $item/mods:part
+        let $xlinked-ID := replace($item/@xlink:href, '^#?(.*)$', '$1')
+        let $xlinked-record :=
+            (: Any MODS record in /db/resources is retrieved if there is a @xlink:href/@ID match and the relatedItem has no string value. If there should be duplicated IDs, only the first record is retrieved.:)
+            if (exists($xlinked-ID) and not($titleInfo))
+            then collection($config:mods-root)//mods:mods[@ID eq $xlinked-ID][1]
+            else ()
+        let $related-item :=
+        	(:If the related item is noted in another record than the current record.:)
+        	if ($xlinked-record) 
+        	(: NB: There must be a smarter way to merge the retrieved relatedItem with the native part! :)
+        	(:update insert $part into $xlinked-record:)
+        	then 
+        	   <mods:relatedItem ID="{$ID}" displayLabel ="{$displayLabel}" type="{$type}" xlink:href="{$xlinked-ID}">
+        	       {($xlinked-record/mods:titleInfo, $part)}
+        	   </mods:relatedItem> 
+        	else
+        	(:If the related item is noted in the current record.:)
+        		(:If there is no title, then discard.:)
+        		if ($item/mods:titleInfo/mods:title/text())
+        		then $item
+        		else ()
     return
         (: Check for the most common types first. :)
-        if ($relatedItem)
+        if ($related-item)
         then
+            (:If the related item is a periodical, an edited volume, or a series.:) 
 	        if ($type = ('host', 'series'))
 	        then
 	            if ($destination eq 'list')
 	            then
 	                <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">
-	                	<span class="relatedItem-record">{mods:format-related-item($relatedItem, $global-language)}</span>
+	                	<span class="relatedItem-record">{mods:format-related-item($related-item, $global-language)}</span>
 	                </span>
 	            else
-	                if ($destination eq 'detail' and string($xlink))
+	                (:If not 'list', $destination will be 'detail'.:)
+	                (:If the related item is pulled in with an xlink, use this to make a link.:) 
+	                if (string($xlinked-ID))
 	                then
 	                    <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
 							<td class="url label relatedItem-label">
-	                            <a href="?filter=ID&amp;value={$xlink}">&lt;&lt; In:</a>
+	                            <a href="?filter=ID&amp;value={$xlinked-ID}">&lt;&lt; In:</a>
 	                        </td>
 	                        <td class="relatedItem-record">
-								<span class="relatedItem-span">{mods:format-related-item($relatedItem, $global-language)}</span>
+								<span class="relatedItem-span">{mods:format-related-item($related-item, $global-language)}</span>
 	                        </td>
 	                    </tr>
 	                else
-	                    if ($destination eq 'detail')
-	                    then
+                        (:If the related item is in the record itself, format it without a link.:)	                
 	                    <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
 							<td class="url label relatedItem-label">In:</td>
 	                        <td class="relatedItem-record">
-								<span class="relatedItem-span">{mods:format-related-item($relatedItem, $global-language)}</span>
+								<span class="relatedItem-span">{mods:format-related-item($related-item, $global-language)}</span>
 	                        </td>
 	                    </tr>
-	                    else ()
 	        (: if @type is not 'host' or 'series':)
 	        else
-	            if ($destination eq 'detail' and string($xlink))
+	            (:If the related item is pulled in with an xlink, use this to make a link.:) 
+	            if ($destination eq 'detail' and string($xlinked-ID))
 	            then
 	                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
 						<td class="url label relatedItem-label">
-	                        <a href="?filter=ID&amp;value={$xlink}">&lt;&lt; {$labelDisplayed}</a>
+	                        <a href="?filter=ID&amp;value={$xlinked-ID}">&lt;&lt; {$label-displayed}</a>
 	                    </td>
 	                    <td class="relatedItem-record">
-							<span class="relatedItem-span">{mods:format-related-item($relatedItem, $global-language)}</span>
+							<span class="relatedItem-span">{mods:format-related-item($related-item, $global-language)}</span>
 	                    </td>
 	                </tr>
 	            else
-	                (: If there is no xlink :)
+	                (:If the related item is in the record itself, format it without a link.:)
 	                if ($destination eq 'detail')
 	                then
 	                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
@@ -1062,9 +1078,10 @@ declare function mods:get-related-items($entry as element(mods:mods), $destinati
 	                        {functx:capitalize-first(functx:camel-case-to-words($type, ' '))}
 	                    </td>
 	                    <td class="relatedItem-record">
-	                        <span class="relatedItem-span">{mods:format-related-item($relatedItem, $global-language)}</span>
+	                        <span class="relatedItem-span">{mods:format-related-item($related-item, $global-language)}</span>
 	                    </td>
 	                </tr>
+	                (:Only @type 'host' and 'series' are displayed in list view.:)
 	                else ()
         else ()
 };
@@ -1132,7 +1149,14 @@ declare function mods:names-full($entry as element(), $global-transliteration, $
                 </tr>
 };
 
-
+declare function mods:format-url($url as element(mods:url), $collection-short as xs:string){
+let $url := 
+    if ($url/@access eq 'preview')
+    (:Special formatting for image collections.:)
+    then concat('images/',$collection-short,'/',$url,'?s',$config:url-image-size) 
+    else $url
+return $url
+};
 
 (: Creates view for detail view. :)
 (: NB: "mods:format-detail-view()" is referenced in session.xql. :)
@@ -1158,7 +1182,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     ,
     
     (: titles :)
-    for $titleInfo in $entry/mods:titleInfo
+    for $titleInfo in $entry/mods:titleInfo[not(@type eq 'abbreviated')]
     return mods:title-full($titleInfo)
     ,
     
@@ -1323,7 +1347,15 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
                 )
             }
             </td>
-            <td class="record"><a href="{mods:format-url($entry, $collection-short)}" target="_blank">{if ((string-length($url) < 80)) then $url  else (substring($url,1,70), '...')}</a></td>
+            <td class="record">
+            <a href="{mods:format-url($url, $collection-short)}" target="_blank">
+                {
+                    if ((string-length($url) le 70))
+                    then $url
+                    (:avoid too long urls that do not line-wrap:)
+                    else (substring($url, 1, 70), '...')
+                }
+                </a></td>
         </tr>
     ,
     (: relatedItem :)
@@ -1421,7 +1453,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
                     if ($authority)
                     then
                         if ($authority eq 'marcgt')
-                        then ' (MARC genre terms)'
+                        then ' (MARC Genre Terms)'
                         else concat(' (', $authority, ')')
                     else ()            
             )
@@ -1436,14 +1468,14 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     
     (: note :)
     for $note in $entry/mods:note
-    let $displayLabel := $note/@displayLabel    
-    let $type := $note/@type
+    let $displayLabel := $note/@displayLabel/string()
+    let $type := $note/@type/string()
     let $text := $note/text()
+    (: The following serves to render html markup in Zotero exports. Stylesheet should be changed to accommodate standard markup. :)
     (:Do $double-escapes occur?:)
     let $double-escapes-fixed := replace(replace(replace($text, '&amp;nbsp;', '&#160;'), '&amp;gt;', '&gt;'), '&amp;lt;', '&lt;')
     let $wrapped-with-span := concat('&lt;span>', $double-escapes-fixed, '</span>')
-    return
-        (: This renders html markup in Zotero exports. Stylesheet should be changed to accommodate standard markup. :)
+    return        
         modsCommon:simple-row(util:parse($wrapped-with-span)
 	    , 
 	    concat('Note', 
@@ -1460,16 +1492,53 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
 	    )
     ,
     (: subject :)
-    (: We assume that there are not many subjects with the first element, topic, empty. :)
+    (: We assume that there are no subjects with an empty topic element. If it is empty, we skip processing.:)
     if (normalize-space($entry/mods:subject[1]/string()))
     then modsCommon:format-subjects($entry, $global-transliteration, $global-language)    
     else ()
     , 
+    (: table of contents :)
+    for $table-of-contents in $entry/mods:tableOfContents
+    return
+        <tr xmlns="http://www.w3.org/1999/xhtml">
+            <td class="label"> 
+            {
+                concat(
+                    if ($table-of-contents/@displayLabel)
+                    then $table-of-contents/@displayLabel
+                    else 'Table of Contents'
+                ,
+                    if ($table-of-contents/@dateLastAccessed)
+                    then concat(' (Last Accessed: ', $table-of-contents/@dateLastAccessed, ')')
+                    else ''
+                )
+            }
+            </td>
+            <td class="record">
+            {
+            (:Possibly, both text and link could be displayed.:)
+            if ($table-of-contents/text())
+            then $table-of-contents/text()
+            else
+                if ($table-of-contents/@xlink:href/string())
+                then
+                    <a href="{$table-of-contents/@xlink:href/string()}" target="_blank">
+                    {
+                        if ((string-length($table-of-contents/@xlink:href/string()) le 70)) 
+                        then $table-of-contents
+                        (:avoid too long urls that do not line-wrap:)
+                        else (substring($table-of-contents/@xlink:href/string(), 1, 70), '...')}
+                    </a>
+                else ()
+            }
+            </td>
+        </tr>
+    ,
     (: identifier :)
     for $item in $entry/mods:identifier
     let $type := 
         if ($item/@type/string()) 
-        then concat(' (', functx:capitalize-first($item/@type/string()), ')') 
+        then concat(' (', upper-case($item/@type/string()), ')') 
         else ()
     return modsCommon:simple-row($item, concat('Identifier', $type))
     ,
@@ -1481,12 +1550,12 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         else ()
     return modsCommon:simple-row($item, concat('Classification', $authority))
     ,
-    (: records referring to current record if current record is a periodical or an edited volume :)
+    (: find records that refer to the current record if this records a periodical or an edited volume or a similar kind of publication. :)
     if ($entry/mods:genre = ('periodical', 'editedVolume', 'newspaper', 'journal', 'festschrift', 'encyclopedia', 'conference publication', 'canonical scripture')) 
     then
         let $linked-ID := concat('#',$ID)
-        let $linked-records := collection($config:mods-root)//mods:mods[mods:relatedItem[@type eq 'host']/@xlink:href eq $linked-ID]
-        let $linked-records-count := count($linked-records) 
+        let $linked-records := collection($config:mods-root)//mods:mods[mods:relatedItem[@type = ('host', 'series', 'otherFormat')]/@xlink:href eq $linked-ID]
+        let $linked-records-count := count($linked-records)
         return
         if ($linked-records-count gt 5)
         then
@@ -1521,12 +1590,6 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     </table>
 };
 
-declare function mods:format-url($entry as element(mods:mods) , $collection-short as xs:string){
-let $url   := $entry/mods:location/mods:url
-let $myurl := if ($url/@access='preview')  then (concat('images/',$collection-short,'/',$url,'?s',$config:url-image-size)) else($url)
-return $myurl
-};
-
 (: Creates view for hitlist. :)
 (: NB: "mods:format-list-view()" is referenced in session.xql. :)
 declare function mods:format-list-view($id as xs:string, $entry as element(mods:mods), $collection-short as xs:string) {
@@ -1554,6 +1617,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         return
 	        (
 	        if ((:not($entry/mods:relatedItem[@type eq 'host']) and:) not($roleTerms-secondary)) 
+	        (:NB: If the title ends in '?' or '!', the period should not be inserted. How can this be done?:)
 	        then '.'
 	        else ''
 	    ,
