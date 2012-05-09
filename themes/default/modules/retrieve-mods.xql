@@ -1503,15 +1503,9 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         <tr xmlns="http://www.w3.org/1999/xhtml">
             <td class="label"> 
             {
-                concat(
-                    if ($table-of-contents/@displayLabel)
-                    then $table-of-contents/@displayLabel
-                    else 'Table of Contents'
-                ,
-                    if ($table-of-contents/@dateLastAccessed)
-                    then concat(' (Last Accessed: ', $table-of-contents/@dateLastAccessed, ')')
-                    else ''
-                )
+                if ($table-of-contents/@displayLabel)
+                then $table-of-contents/@displayLabel
+                else 'Table of Contents'
             }
             </td>
             <td class="record">
@@ -1525,7 +1519,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
                     <a href="{$table-of-contents/@xlink:href/string()}" target="_blank">
                     {
                         if ((string-length($table-of-contents/@xlink:href/string()) le 70)) 
-                        then $table-of-contents
+                        then $table-of-contents/@xlink:href/string()
                         (:avoid too long urls that do not line-wrap:)
                         else (substring($table-of-contents/@xlink:href/string(), 1, 70), '...')}
                     </a>
@@ -1551,7 +1545,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     return modsCommon:simple-row($item, concat('Classification', $authority))
     ,
     (: find records that refer to the current record if this records a periodical or an edited volume or a similar kind of publication. :)
-    if ($entry/mods:genre = ('periodical', 'editedVolume', 'newspaper', 'journal', 'festschrift', 'encyclopedia', 'conference publication', 'canonical scripture')) 
+    if ($entry/mods:genre = ('series', 'periodical', 'editedVolume', 'newspaper', 'journal', 'festschrift', 'encyclopedia', 'conference publication', 'canonical scripture')) 
     then
         let $linked-ID := concat('#',$ID)
         let $linked-records := collection($config:mods-root)//mods:mods[mods:relatedItem[@type = ('host', 'series', 'otherFormat')]/@xlink:href eq $linked-ID]

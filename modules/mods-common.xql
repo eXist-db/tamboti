@@ -439,7 +439,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
         					else
         						(: If the record as a whole is marked as having transliteration, use this instead.:)
         						if ($global-transliteration)
-        						then 0
+        						then 1
         						else 0
                         (: If the name does not contain a namePart with transliteration, it is a basic name, 
                         i.e. a name where the distinction between the name in native script and in transliteration does not arise. 
@@ -450,9 +450,9 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                         (: NB: Only coded language terms are treated here. :)
                         let $name-basic :=
     	                    if (not($name-contains-transliteration))
-    	                    (:If we know for sure that no transliteration is used somehwere in the name, then grab the parts in which Western script is used.:) 
+    	                    (:If we know for sure that no transliteration is used anywhere in the name, then grab the parts in which Western script is used.:) 
     	                    then <name>{$name/*:namePart[not(@transliteration)][(not(@script) or @script = ('Latn', 'latn', 'Latin'))]}</name>
-                        	(:If we know for sure that transliteration is used somehwere in the name, then grab the untransliterated parts.:)
+                        	(:If we know for sure that transliteration is used somewhere in the name, then grab the untransliterated parts.:)
                         	else <name>{$name/*:namePart[@lang = $modsCommon:western-languages or not(@lang)]}</name>
                         (: If there is transliteration, there are nameParts with transliteration. 
                         To filter these, we seek nameParts which contain the transliteration attribute, 

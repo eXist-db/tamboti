@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <code-table>
     <code-table-name>internet-media-type-code</code-table-name>
     <status>finished</status>
@@ -28,43 +27,39 @@
             <value>audio/vorbis</value>
         </item>
         <item>
-            <label>audio/x-ms-wma, Windows Media Audio</label>
+            <label>Windows Media Audio</label>
             <value>audio/x-ms-wma</value>
         </item>
         <item>
-            <label>audio/x-ms-wax, Windows Media Audio Redirector</label>
-            <value>audio/x-ms-wax</value>
-        </item>
-        <item>
-            <label>audio/vnd.rn-realaudio, RealAudio</label>
+            <label>RealAudio</label>
             <value>audio/vnd.rn-realaudio</value>
         </item>
         <item>
-            <label>audio/vnd.wave, WAV audio</label>
+            <label>WAV audio</label>
             <value>audio/vnd.wave</value>
         </item>
         <item>
-            <label>image/gif, GIF image</label>
+            <label>GIF image</label>
             <value>image/gif</value>
         </item>
         <item>
-            <label>image/jpeg, JPEG JFIF image</label>
+            <label>JPEG or JFIF image</label>
             <value>image/jpeg</value>
         </item>
         <item>
-            <label>image/png, Portable Network Graphics</label>
+            <label>Portable Network Graphics (PNG) image</label>
             <value>image/png</value>
         </item>
         <item>
-            <label>image/svg+xml, image/svg+xmlSVG vector image</label>
+            <label>SVG vector image</label>
             <value>image/svg+xml</value>
         </item>
         <item>
-            <label>image/tiff, Tag Image File Format</label>
+            <label>Tag Image File Format (TIF or TIFF) image</label>
             <value>image/tiff</value>
         </item>
         <item>
-            <label>image/vnd.microsoft.icon, ICO image</label>
+            <label>ICO image</label>
             <value>image/vnd.microsoft.icon</value>
         </item>
         <item>
@@ -84,95 +79,87 @@
             <value>multipart/form-data</value>
         </item>
         <item>
-            <label>multipart/signed, </label>
-            <value>multipart/signed</value>
-        </item>
-        <item>
-            <label>multipart/encrypted</label>
-            <value>multipart/encrypted</value>
-        </item>
-        <item>
-            <label>text/css, Cascading Style Sheets</label>
-            <value>text/css</value>
-        </item>
-        <item>
-            <label>text/csv, Comma-separated values</label>
+            <label>Comma-separated values (CSV)</label>
             <value>text/csv</value>
         </item>
         <item>
-            <label>text/html, HTML</label>
+            <label>HTML</label>
             <value>text/html</value>
         </item>
         <item>
-            <label>text/javascript, JavaScript (Obsolete)</label>
-            <value>text/javascript</value>
-        </item>
-        <item>
-            <label>text/plain, Textual data</label>
+            <label>Plain Text</label>
             <value>text/plain</value>
         </item>
         <item>
-            <label>text/xml, Extensible Markup Language</label>
+            <label>XML</label>
             <value>text/xml</value>
         </item>
         <item>
-            <label>video/mpeg, MPEG-1 video with multiplexed audio</label>
+            <label>MPEG-1 video with multiplexed audio</label>
             <value>video/mpeg</value>
         </item>
         <item>
-            <label>video/mp4, MP4 video</label>
+            <label>MP4 video</label>
             <value>video/mp4</value>
         </item>
         <item>
-            <label>video/ogg, Ogg Theora or other video (with audio)</label>
+            <label>Ogg Theora or other video (with audio)</label>
             <value>video/ogg</value>
         </item>
         <item>
-            <label>video/quicktime, QuickTime video</label>
+            <label>QuickTime video</label>
             <value>video/quicktime</value>
         </item>
         <item>
-            <label>video/x-ms-wmv, Windows Media Video</label>
+            <label>Windows Media Video</label>
             <value>video/x-ms-wmv</value>
         </item>
         <item>
-            <label>application/vnd.oasis.opendocument.text, OpenDocument Text</label>
+            <label>Portable Document Format (PDF)</label>
+            <value>application/pdf</value>
+        </item>
+        <item>
+            <label>PostScript</label>
+            <value>application/postscript</value>
+        </item>
+        <item>
+            <label>OpenDocument Text</label>
             <value>application/vnd.oasis.opendocument.text</value>
         </item>
         <item>
-            <label>application/vnd.oasis.opendocument.spreadsheet, OpenDocument Spreadsheet</label>
+            <label>OpenDocument Spreadsheet</label>
             <value>application/vnd.oasis.opendocument.spreadsheet</value>
         </item>
         <item>
-            <label>application/vnd.oasis.opendocument.presentation, OpenDocument Presentation</label>
+            <label>OpenDocument Presentation</label>
             <value>application/vnd.oasis.opendocument.presentation</value>
         </item>
         <item>
-            <label>application/vnd.oasis.opendocument.graphics, OpenDocument Graphics</label>
+            <label>OpenDocument Graphics</label>
             <value>application/vnd.oasis.opendocument.graphics</value>
         </item>
         <item>
-            <label>application/vnd.ms-excel, Microsoft Excel files</label>
+            <label>Microsoft Excels</label>
             <value>application/vnd.ms-excel</value>
         </item>
         <item>
-            <label>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, Microsoft Excel 2007 files</label>
+            <label>Microsoft Excel 2007</label>
             <value>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</value>
         </item>
         <item>
-            <label>application/vnd.ms-powerpoint, Microsoft Powerpoint files</label>
+            <label>Microsoft Powerpoint</label>
             <value>application/vnd.ms-powerpoint</value>
         </item>
         <item>
-            <label>application/msword, Microsoft Word files</label>
+            <label>Microsoft Word</label>
             <value>application/msword</value>
         </item>
         <item>
-            <label>application/vnd.openxmlformats-officedocument.wordprocessingml.document, Microsoft Word 2007 files</label>
+            <label>Microsoft Word 2007</label>
             <value>application/vnd.openxmlformats-officedocument.wordprocessingml.document</value>
         </item>
         <item>
-            <label>application/vnd.mozilla.xul+xml, Mozilla XUL files</label>
+            <label>Mozilla XUL</label>
             <value>application/vnd.mozilla.xul+xml</value>
         </item>
     </items>
