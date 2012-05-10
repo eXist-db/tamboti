@@ -27,8 +27,8 @@ declare variable $users-collection-name := "users";
 declare variable $groups-collection-name := "groups";
 declare variable $temp-collection-name := "temp";
 declare variable $commons-collection-name := "commons";
-declare variable $commons-samples-collection-name := "samples";
-declare variable $commons-exist-collection-name := "exist";
+declare variable $commons-samples-collection-name := "sociology";
+declare variable $commons-exist-collection-name := "eXist";
 declare variable $commons-mads-collection-name := "mads";
 
 (:~ Collection paths :)
@@ -90,7 +90,7 @@ util:log($log-level, "Config: Loading collection configuration ..."),
     local:mkcol($system-collection, $editor-app-code-tables-collection),
     xdb:store-files-from-pattern(fn:concat($system-collection, $editor-app-code-tables-collection), $dir, "modules/edit/code-tables/*.xconf"),
     local:mkcol($system-collection, $resources-collection),
-    xdb:store-files-from-pattern(fn:concat($system-collection, $resources-collection), $home, "samples/mods/*.xconf"),
+    xdb:store-files-from-pattern(fn:concat($system-collection, $resources-collection), $dir, "data/*.xconf"),
     local:mkcol($system-collection, $commons-mads-collection),
     (: TODO - how to load additional collection.xconf files and where should these be kept in the EXPath Package? :)
     (: xdb:store-files-from-pattern("/system/config/db/resources/commons/mads", $home, "commons/mads/*.xconf"), :)
@@ -112,9 +112,9 @@ util:log($log-level, fn:concat("Config: Creating commons collection '", $commons
         xdb:set-collection-permissions($col, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8))
     ),
     util:log($log-level, "...Config: Uploading samples data..."),
-        xdb:store-files-from-pattern($commons-samples-collection, $home, "samples/mods/*.xml"),
+        xdb:store-files-from-pattern($commons-samples-collection, $dir, "data/sociology/*.xml"),
         local:set-collection-resource-permissions($commons-samples-collection, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8)),
-        xdb:store-files-from-pattern($commons-exist-collection, $home, "samples/mods/eXist/*.xml"),
+        xdb:store-files-from-pattern($commons-exist-collection, $dir, "data/eXist/*.xml"),
         local:set-collection-resource-permissions($commons-exist-collection, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8)),
     util:log($log-level, "...Config: Done Uploading samples data."),
 util:log($log-level, "Config: Done."), 
