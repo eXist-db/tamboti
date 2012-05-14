@@ -21,16 +21,19 @@
             <!--<text qname="mods:tableOfContents"/>-->
             <text qname="mods:relatedItem"/>
             <!--<text qname="mods:extension"/>-->
-            <text qname="mods:originInfo"/>
+            <!--<text qname="mods:originInfo"/>-->
             <!--<text qname="mods:targetAudience"/>-->
             <text qname="mods:identifier"/>
             <!--<text qname="mods:recordInfo"/>-->
             
             <!--deeper elements accessed by search module-->
+            <text qname="mods:date"/>
             <text qname="mods:dateCreated"/>
             <text qname="mods:dateIssued"/>
             <text qname="mods:dateCaptured"/>
             <text qname="mods:copyrightDate"/>
+            <text qname="mods:placeTerm"/>
+            <text qname="mods:publisher"/>
         </lucene>
         <create qname="@ID" type="xs:string"/>
         <create qname="@type" type="xs:string"/>

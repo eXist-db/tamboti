@@ -88,12 +88,11 @@ util:log($log-level, "Security: Done."),
 (: Load collection.xconf documents :)
 util:log($log-level, "Config: Loading collection configuration ..."),
     local:mkcol($system-collection, $editor-app-code-tables-collection),
-    xdb:store-files-from-pattern(fn:concat($system-collection, $editor-app-code-tables-collection), $dir, "modules/edit/code-tables/*.xconf"),
+    xdb:store-files-from-pattern(fn:concat($system-collection, $editor-app-code-tables-collection), $dir, "data/xconf/code-tables/*.xconf"),
     local:mkcol($system-collection, $resources-collection),
-    xdb:store-files-from-pattern(fn:concat($system-collection, $resources-collection), $dir, "data/*.xconf"),
+    xdb:store-files-from-pattern(fn:concat($system-collection, $resources-collection), $dir, "data/xconf/resources/*.xconf"),
     local:mkcol($system-collection, $commons-mads-collection),
-    (: TODO - how to load additional collection.xconf files and where should these be kept in the EXPath Package? :)
-    (: xdb:store-files-from-pattern("/system/config/db/resources/commons/mads", $home, "commons/mads/*.xconf"), :)
+    xdb:store-files-from-pattern(fn:concat($system-collection, $commons-mads-collection), $dir, "data/xconf/mads/*.xconf"), 
 util:log($log-level, "Config: Done."),
 
 
