@@ -1026,7 +1026,9 @@ margin-top:-2.5em;}
     }
 
 
-#personal-list button {
+#personal-list button,
+#query-history button
+{
     padding:2px 4px 2px 4px;
     margin-right:4px;
 }

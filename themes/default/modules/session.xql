@@ -85,14 +85,15 @@ declare function bs:view-gallery-item($mode as xs:string, $item as element(mods:
 declare function bs:detail-view-table($item as element(mods:mods), $currentPos as xs:int) {
     let $isWritable := bs:collection-is-writable(util:collection-name($item))
     let $id := concat(document-uri(root($item)), '#', util:node-id($item))
-    let $stored := session:get-attribute("mods-personal-list")
+    let $stored := session:get-attribute("personal-list")
     let $saved := exists($stored//*[@id = $id])
+
     return
         <tr class="pagination-item detail" xmlns="http://www.w3.org/1999/xhtml">
             <td class="pagination-number">{$currentPos}</td>
             <td class="actions-cell">
                 <a id="save_{$id}" href="#{$currentPos}" class="save">
-                    <img title="Save Record to My List" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+                    <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
                 </a>
             </td>
             <td class="magnify detail-type">
@@ -115,7 +116,7 @@ declare function bs:detail-view-table($item as element(mods:mods), $currentPos a
 
 declare function bs:mods-list-view-table($item as node(), $currentPos as xs:int) {
     let $id := concat(document-uri(root($item)), '#', util:node-id($item))
-    let $stored := session:get-attribute("mods-personal-list")
+    let $stored := session:get-attribute("personal-list")
     let $saved := exists($stored//*[@id = $id])
     return
         <tr xmlns="http://www.w3.org/1999/xhtml" class="pagination-item list">
@@ -123,7 +124,7 @@ declare function bs:mods-list-view-table($item as node(), $currentPos as xs:int)
             {
             <td class="actions-cell">
                 <a id="save_{$id}" href="#{$currentPos}" class="save">
-                    <img title="Save Record to My List" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+                    <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
                 </a>
             </td>
             }
@@ -151,7 +152,7 @@ declare function bs:mods-list-view-table($item as node(), $currentPos as xs:int)
 declare function bs:plain-list-view-table($item as node(), $currentPos as xs:int) {
     let $kwic := kwic:summarize($item/field[1], <config xmlns="" width="40"/>)
     let $id := concat(document-uri(root($item)), '#', util:node-id($item))
-    let $stored := session:get-attribute("mods-personal-list")
+    let $stored := session:get-attribute("personal-list")
     let $saved := exists($stored//*[@id = $id])
     let $titleField := ft:get-field($item/@uri, "Title")
     let $title := if ($titleField) then $titleField else replace($item/@uri, "^.*/([^/]+)$", "$1")
@@ -309,7 +310,7 @@ declare function bs:view-gallery($mode as xs:string, $cached as item()*, $stored
 declare function bs:retrieve($start as xs:int, $count as xs:int) {
     let $mode := request:get-parameter("mode", "gallery")
     let $cached := session:get-attribute("mods:cached")
-    let $stored := session:get-attribute("mods-personal-list")
+    let $stored := session:get-attribute("personal-list")
     let $total := count($cached)
     let $available :=
         if ($start + $count gt $total) then

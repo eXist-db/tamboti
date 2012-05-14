@@ -61,52 +61,43 @@ declare function functx:substring-before-if-contains
 :)
 declare variable $biblio:FIELDS :=
 	<fields>
-		<field name="Title">(
-			mods:mods[ft:query(mods:titleInfo, '$q', $options)]
-			      union
-			mods:mods[ft:query(mods:relatedItem/mods:titleInfo, '$q', $options)]
-		)</field>
-		<field name="Name">(
-			mods:mods[ft:query(mods:name, '$q', $options)]
-			      union
-			mods:mods[ft:query(mods:relatedItem/mods:name, '$q', $options)]		
-		)</field>
+		<field name="Title">mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]</field>
+		<field name="Name">mods:mods[ft:query(.//mods:name, '$q', $options)]</field>
+		<field name="Origin">
+		      (
+		      mods:mods[ft:query(.//mods:placeTerm , '$q*', $options)]
+		          union
+		      mods:mods[ft:query(.//mods:publisher , '$q*', $options)]
+		      )
+		      </field>
 		<field name="Date">
 			(
-			mods:mods[ft:query(mods:originInfo/mods:dateCreated, '$q*', $options)]
+			mods:mods[ft:query(.//mods:dateCreated, '$q*', $options)]
 			      union
-			mods:mods[ft:query(mods:originInfo/mods:dateIssued, '$q*', $options)]
+			mods:mods[ft:query(.//mods:dateIssued, '$q*', $options)]
 			      union
-			mods:mods[ft:query(mods:originInfo/mods:dateCaptured, '$q*', $options)]
+			mods:mods[ft:query(.//mods:dateCaptured, '$q*', $options)]
 			      union
-			mods:mods[ft:query(mods:originInfo/mods:copyrightDate, '$q*', $options)]
+			mods:mods[ft:query(.//mods:copyrightDate, '$q*', $options)]
 			      union
-			mods:mods[ft:query(mods:relatedItem/mods:originInfo/mods:dateCreated, '$q*', $options)]
-			      union
-			mods:mods[ft:query(mods:relatedItem/mods:originInfo/mods:dateIssued, '$q*', $options)]
-			      union
-			mods:mods[ft:query(mods:relatedItem/mods:originInfo/mods:dateCaptured, '$q*', $options)]
-			      union
-			mods:mods[ft:query(mods:relatedItem/mods:originInfo/mods:copyrightDate, '$q*', $options)]
-			      union
-			mods:mods[ft:query(mods:part/mods:date, '$q*', $options)]
-			      union
-			mods:mods[ft:query(mods:relatedItem/mods:part/mods:date, '$q*', $options)]
+			mods:mods[ft:query(.//mods:date, '$q*', $options)]
 			)
 		</field>
 		<field name="Identifier">mods:mods[mods:identifier = '$q']</field>
 		<field name="Abstract">mods:mods[ft:query(mods:note, '$q', $options)]</field>
         <field name="Note">mods:mods[ft:query(mods:note, '$q', $options)]</field>
         <field name="Subject">mods:mods[ft:query(mods:subject, '$q', $options)]</field>
-       	<field name="All">
+       	<field name="ID">mods:mods[@ID = '$q']</field>        
+        <field name="XLink">mods:mods[mods:relatedItem/@xlink:href = '$q']</field>
+        <field name="All">
        		(
        		mods:mods[ft:query(., '$q', $options)] 
        			union
-       		ft:search('page:$q')
+       		mods:mods[@ID = '$q']
+       			union
+       		mods:mods[mods:relatedItem/@xlink:href = '$q']
        		)
        	</field>
-        <field name="ID">mods:mods[@ID = '$q']</field>        
-        <field name="XLink">mods:mods[mods:relatedItem/@xlink:href = '$q']</field>
 	</fields>;
 
 (:
@@ -888,7 +879,7 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     let $history := request:get-parameter("history", ())
     let $reload := request:get-parameter("reload", ())
     let $clear := request:get-parameter("clear", ())
-    let $mylist := request:get-parameter("mylist", ())
+    let $mylist := request:get-parameter("mylist", ()) (:clear, display:)
     let $collection := uu:escape-collection-path(request:get-parameter("collection", $config:mods-root))
     let $collection := if (starts-with($collection, "/db")) then $collection else concat("/db", $collection)
     let $id := request:get-parameter("id", ())

@@ -5,11 +5,10 @@ declare namespace mods="http://www.loc.gov/mods/v3";
 
 declare function user:add-to-personal-list() {
     let $cached := session:get-attribute("mods:cached")
-    let $log := util:log("DEBUG", ("##$cached): ", $cached))
     let $pos := xs:integer(request:get-parameter("pos", 1))
-    let $oldList0 := session:get-attribute("personal-list")
+    let $oldList := session:get-attribute("personal-list")
     let $oldList :=
-        if ($oldList0) then $oldList0 else <mylist/>
+        if ($oldList) then $oldList else <mylist/>
     let $id := concat(document-uri(root($cached[$pos])), '#', util:node-id($cached[$pos]))
     let $newList :=
         <myList>
@@ -22,7 +21,8 @@ declare function user:add-to-personal-list() {
 };
 
 declare function user:remove-from-personal-list() {
-    let $id := request:get-parameter("id", ())
+    (:Where does "save_" come from?:)
+    let $id := substring-after(request:get-parameter("id", ()), "save_")
     let $oldList := session:get-attribute("personal-list")
     let $newList :=
         <myList>
@@ -60,7 +60,6 @@ declare function user:export-personal-list() as element(mods:modsCollection) {
 let $list := request:get-parameter("list", ())
 let $export := request:get-parameter("export", ())
 let $list-size := user:personal-list-size()
-let $log := util:log("DEBUG", ("##$list-size): ", $list-size))
 
 return
     if ($export)
