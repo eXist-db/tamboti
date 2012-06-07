@@ -91,10 +91,12 @@ declare variable $biblio:FIELDS :=
         <field name="XLink">mods:mods[mods:relatedItem/@xlink:href = '$q']</field>
         <field name="All">
        		(
-       		mods:mods[ft:query(., '$q', $options)] 
-       			union
+       		mods:mods[ft:query(., '$q', $options)]
+       		   union
+	        ft:search('page:$q')
+	           union
        		mods:mods[@ID = '$q']
-       			union
+       		   union
        		mods:mods[mods:relatedItem/@xlink:href = '$q']
        		)
        	</field>

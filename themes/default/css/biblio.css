@@ -212,7 +212,7 @@ td.collection-path {
   padding-top: 8px;
 }
 /*collection-tree ends*/
-/*create new record dialog*/
+/*create new record dialog begins*/
 .language-label {
   padding: .5em;
 }
@@ -223,13 +223,7 @@ td.collection-path {
 .language-list option {
   margin: .25em .5em;
 }
-#results-head {
-  border-bottom: 1px solid #bbbbbb;
-  padding: 1em;
-}
-.records-found {
-  margin-right: 1em;
-}
+/*create new record dialog ends*/
 #results {
   margin-top: .5em;
   overflow: auto;
@@ -291,73 +285,65 @@ td.collection-path {
   border: 0;
   text-align: center;
 }
-.ui-accordion a,
-.ui-accordion-header a {
+#filters .ui-accordion a,
+#filters .ui-accordion-header a {
   font-weight: 400;
 }
-.ui-state-hover,
-.ui-state-hover a,
-.ui-state-hover a:hover {
+#filters .ui-state-hover,
+#filters .ui-state-hover a,
+#filters .ui-state-hover a:hover {
   color: #5db0e6 !important;
 }
 /*facets end*/
 /*pagination begins*/
-table .pagination-toggle {
-  margin-left: 4em;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+#results-head {
+  border-bottom: 1px solid #bbbbbb;
+  padding: 1em;
 }
-.pagination-links {
-  padding: 0 8px;
-  margin-bottom: 12px;
+#results-head .records-found {
+  margin-right: 1em;
 }
-.pagination-link {
-  display: none;
+#results-head .navbar .pagination-toggle,
+#results-head .navbar .pagination-mode {
+  margin-left: 1.5em;
 }
-.pagination-first {
+#results-head .navbar .pagination-first {
   margin-right: .5em;
   padding: 2px 4px;
 }
-.pagination-last {
+#results-head .navbar .pagination-last {
   margin-left: .5em;
   padding: 2px 4px;
 }
-.pagination-previous {
+#results-head .navbar .pagination-previous {
   margin-right: .5em;
   padding: 2px 6px;
 }
-.pagination-next {
+#results-head .navbar .pagination-next {
   margin-right: .5em;
   padding: 2px 6px;
 }
-.pagination-previous,
-.pagination-next,
-.pagination-last,
-.pagination-first {
+#results-head .navbar .pagination-previous,
+#results-head .navbar .pagination-next,
+#results-head .navbar .pagination-last,
+#results-head .navbar .pagination-first {
   cursor: pointer;
   border: 1px solid #5db0e6;
   color: #5db0e6;
 }
-.pagination-view {
-  margin-left: 20px;
-}
-.inactive {
+#results-head .navbar .inactive {
   border: 1px solid #bbbbbb;
   color: #bbbbbb;
   cursor: default;
 }
-.pagination-info {
+#results-head .navbar .pagination-info {
   margin: 10px;
   text-align: center;
 }
-.pagination-list-view {
+#results-head .pagination-list-view {
   margin-left: .25em;
 }
 /*pagination ends*/
-.authors {
-  display: none;
-}
-.pagination-n,
 .actions-cell,
 .detail-type,
 .list-type,
@@ -376,12 +362,6 @@ table .pagination-toggle {
   margin: 10px 0 0;
   padding-left: 10px;
   text-align: center;
-}
-.pagination-n {
-  padding: .55em 0 0;
-  border-radius: 5px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
 }
 .subject td {
   vertical-align: middle;
@@ -429,7 +409,7 @@ table .pagination-toggle {
 #results li .icon:hover .icon-magnifier {
   display: block;
 }
-.magnify {
+.detail-xml .magnify {
   cursor: pointer;
 }
 #results li.grid .icon {

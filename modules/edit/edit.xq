@@ -1,5 +1,7 @@
 xquery version "1.0";
 
+(:TODO: change all 'monograph' to 'book':)
+
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace sm="http://exist-db.org/xquery/securitymanager"; (:TODO move code into security module:)
 import module namespace util="http://exist-db.org/xquery/util";
@@ -71,7 +73,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
           update value $doc/mads:mads/@ID with $id
           ,
           (:Save the language and script of the resource.:)
-          let $language-insert:=
+          let $language-insert :=
               <mods:language>
                   <mods:languageTerm authority="iso639-2b" type="code">
                       {$languageOfResource}
@@ -84,7 +86,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
           update insert $language-insert into $doc/mods:mods
           ,
           (:Save the library reference, the creation date, and the language and script of cataloguing:)
-          let $recordInfo-insert:=
+          let $recordInfo-insert :=
               <mods:recordInfo lang="eng" script="latn">
                   <mods:recordContentSource authority="marcorg">DE-16-158</mods:recordContentSource>
                   <mods:recordCreationDate encoding="w3cdtf">
@@ -217,37 +219,44 @@ declare function local:assemble-form($dummy-attributes as attribute()*, $style a
 
 declare function local:create-page-content($id as xs:string, $tab-id as xs:string, $type-request as xs:string, $target-collection as xs:string, $instance-id as xs:string, $record-data as xs:string, $type-data as xs:string) as element(div) {
     (:Get the part of the form that belongs to the active tab.:)
-    let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id = $instance-id]
-    (:Get the relevant information to display in the info-line, the label for the tamplate chosen (if any) and the hint belonging to it (if any).:)
-    let $type-label := doc($type-data)/code-table/items/item[value = $type-request]/label
-    let $type-hint := doc($type-data)/code-table/items/item[value = $type-request]/hint
-    let $save-hint := doc($type-data)/code-table/items/item[value = "save"]/hint
+    let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id eq $instance-id]
+    (:Get the relevant information to display in the info-line, the label for the tamplate chosen (if any) and the hint belonging to it (if any). :)
+    let $save-hint := doc($type-data)/code-table/items/item[value eq "save"]/hint
     (:Display the bottom tabs belonging to the active tab.:)
     let $tab-data := concat($config:edit-app-root, '/tab-data.xml')
-    let $bottom-tab-label := doc($tab-data)/tabs/tab[tab-id=$tab-id]/*[local-name() = $type-request]
+    let $bottom-tab-label := doc($tab-data)/tabs/tab[tab-id eq $tab-id]/*[local-name() eq $type-request]
     let $bottom-tab-label := 
     	if ($bottom-tab-label)
     	then $bottom-tab-label
-    	else doc($tab-data)/tabs/tab[tab-id=$tab-id]/label    	
+    	else doc($tab-data)/tabs/tab[tab-id eq $tab-id]/label    	
     return
         <div class="content">
             <span class="info-line">
             {
                 if ($type-request)
-                then (
-                    'Editing record of type ', 
-                    <strong>{$type-label}</strong>,
-                    if ($type-hint) 
-                    then
-                        <span class="xforms-help">
-                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                            <div class="xforms-help-value">{$type-hint}</div>
-                        </span>
-                    else ()
-                ) else 'Editing record'
+                then
+                    (:Remove any 'latin' and 'transliterated' appended the original type request. :)
+                    let $type-request := if (contains($type-request, '-')) then substring-before($type-request, '-') else $type-request
+                    let $type-label := doc($type-data)/code-table/items/item[value eq $type-request]/label
+                    let $type-hint := doc($type-data)/code-table/items/item[value eq $type-request]/hint
+                        return
+                        (
+                        'Editing record of type ', 
+                        <strong>{$type-label}</strong>
+                        ,
+                        if ($type-hint) 
+                        then
+                            <span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">{$type-hint}</div>
+                            </span>
+                        else ()
+                        ) 
+                else 'Editing record'
                 ,
-                let $publication-title := concat(doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) = 0][1]/mods:nonSort, ' ', doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) = 0][1]/mods:title) return
-                    if ($publication-title != ' ') 
+                let $publication-title := concat(doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) eq 0][1]/mods:nonSort, ' ', doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) eq 0][1]/mods:title) 
+                return
+                    if ($publication-title ne ' ') 
                     then (' with the title ', <strong>{$publication-title}</strong>) 
                     else ()
                 }, on the <strong>{$bottom-tab-label}</strong> tab, to be saved in <strong> {
@@ -376,16 +385,16 @@ let $type-data := concat($config:edit-app-root, '/code-tables/document-type-code
 (:If type-sort is '1', it is a compact form and the Basic Input Forms should be shown; 
 if type-sort is 3, it is a mads record and the MADS forms should be shown; 
 otherwise it is a record not made with Tamboti and Title Information should be shown.:)
-let $type-sort := doc($type-data)/code-table/items/item[value = $type-request]/sort
+let $type-sort := doc($type-data)/code-table/items/item[value eq $type-request]/sort
 
 (:Get the tab-id for the upper tab to be shown. 
 If no tab is specified, default to the compact-a tab when there is a template to be used with Basic Input Forms;
 otherwise default to Title Information.:)
 let $tab-id :=
-    if ($type-sort = 1)
+    if (xs:integer($type-sort) eq 1)
     then 'compact-a'
     else
-        if ($type-sort = 3)
+        if (xs:integer($type-sort eq 3))
         then 'mads'
         else 'title'        
 (:However, if a tab-id is passed, use this instead of the default.:)
@@ -396,7 +405,7 @@ let $target-collection := uu:escape-collection-path(request:get-parameter("colle
 
 (:Get the id of the record, if it has one; otherwise mark it "new" in order to give it one.:)
 let $id-param := request:get-parameter('id', 'new')
-let $new-record := xs:boolean($id-param = '' or $id-param = 'new')
+let $new-record := xs:boolean($id-param eq '' or $id-param eq 'new')
 (:If we do not have an incoming ID (the record has been made outside Tamboti) or if the record is new (made with Tamboti), then create an ID with util:uuid().:)
 let $id :=
 	if ($new-record)

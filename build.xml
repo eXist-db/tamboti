@@ -1,8 +1,9 @@
-<project default="xar" name="MODS Database Loader">
+<project default="xar" name="tamboti">
+    <property name="project.version" value="1.0"/>
+    <property name="project.app" value="tamboti"/>
+    <property name="build.dir" value="build"/>
     <target name="xar">
-        <delete file="library-1.0.xar" failonerror="false"/>
-        <zip destfile="library-1.0.xar">
-            <fileset dir="." excludes=".svn"/>
-        </zip>
+        <mkdir dir="${build.dir}"/>
+        <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="${build.dir}/*"/>
     </target>
 </project>

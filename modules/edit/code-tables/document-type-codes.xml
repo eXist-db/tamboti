@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <code-table>
     <code-table-name>document-type-code</code-table-name>
     <items>
@@ -46,7 +47,7 @@
                 <p>&#160;</p>
                 <p>Use the <strong>Periodical</strong> tab to catalogue the periodical that the article occurs in and the position of the article inside the
                     periodical.</p>
-                <p>Input the title of the periodical in <strong>Periodical Title</strong>. Follow the same guidelines that apply to monograph titles.</p>
+                <p>Input the title of the periodical in <strong>Periodical Title</strong>. Follow the same guidelines that apply to book titles.</p>
                 <p>Input the name(s) of the editor(s) of the periodical in <strong>Names and Roles</strong>. Choose "personal," "corporate" or "conference" as
                     Type of Name as applies to the periodical in question. If the "editor" is personal, select "Given Name" and "Family Name" instead of "(none
                     selected)."</p>
@@ -62,7 +63,7 @@
             <sort>1</sort>
         </item>
         <!--<item>
-            <label>Monograph Chapter</label>
+            <label>Book Chapter</label>
             <value>related-monograph-chapter</value>
             <classifier>related-item</classifier>
             <sort>1</sort>
@@ -80,29 +81,29 @@
             <sort>1</sort>
         </item>
         <item>
-            <label>Monograph</label>
+            <label>Book</label>
             <value>monograph</value>
             <classifier>stand-alone</classifier>
             <hint>
-                <p>For a <strong>Monograph</strong>, on the <strong>Monograph</strong> tab, one would normally input the following information:</p>
+                <p>For a <strong>Book</strong>, on the <strong>Book</strong> tab, one would normally input the following information:</p>
                 <p>Input the name(s) of the author(s) in <strong>Names and Roles</strong>, selecting "author" as Role. Divide the name into Given Name and
                 Family Name, if possible.</p>
                 <p>If there is more than one author, repeat the <strong>Names and Roles</strong> fields by clicking the '+' button.</p>
-                <p>Input the title of the monograph in <strong>Title Information</strong>, dividing this into Title and Subtitle, if possible. If the title
+                <p>Input the title of the book in <strong>Title Information</strong>, dividing this into Title and Subtitle, if possible. If the title
                     begins with an article like the English "A" or "The", remove this from the title and input it in Non Sort.</p>
                 <p>In <strong>Origin Information</strong>, input the city in which the publisher resides and the name of the publisher. If more than one of
-                    these is in evidence, input the main one or the first of them. Finally, input the year the monograph was issued or copyrighted. </p>
-                <p>In <strong>Physical Description</strong>, input the extent of the monograph in pages, e.g. "ix, 214 p."</p>
-                <p>In case the monograph is (also) electronic, input in <strong>URL</strong> the web address of the monograph.</p>
-                <p>Finally, in <strong>Identifier</strong> input the ISBN number of the monograph, preferably a 13-digit ISBN, and a DOI, if available.</p>
+                    these is in evidence, input the main one or the first of them. Finally, input the year the book was issued or copyrighted. </p>
+                <p>In <strong>Physical Description</strong>, input the extent of the book in pages, e.g. "ix, 214 p."</p>
+                <p>In case the book is (also) electronic, input in <strong>URL</strong> the web address of the book.</p>
+                <p>Finally, in <strong>Identifier</strong> input the ISBN number of the book, preferably a 13-digit ISBN, and a DOI, if available.</p>
                 <p>&#160;</p>
-                <p>Use the <strong>Monograph Series</strong> tab only if the monograph is part of a series.</p>
-                <p>Input the title of the series in <strong>Series Title</strong>. Follow the same guidelines that apply to monograph titles.</p>
+                <p>Use the <strong>Book Series</strong> tab only if the book is part of a series.</p>
+                <p>Input the title of the series in <strong>Series Title</strong>. Follow the same guidelines that apply to book titles.</p>
                 <p>Input the name(s) of the editor(s) of the series in <strong>Names and Roles</strong>. Choose "personal," "corporate" or "conference" as Type
-                    of Name as applies to the monograph in question. If the "editor" is not personal, select "(none selected)" instead of "Given Name" and
+                    of Name as applies to the book in question. If the "editor" is not personal, select "(none selected)" instead of "Given Name" and
                     "Family Name."</p>
-                <p>In <strong>Location of Monograph in Series</strong> note the volume number of the monograph within the series.</p>
-                <p>In <strong>Identifier</strong> input the ISSN number of the monograph series and a DOI, if available.</p>
+                <p>In <strong>Location of Book in Series</strong> note the volume number of the book within the series.</p>
+                <p>In <strong>Identifier</strong> input the ISSN number of the book series and a DOI, if available.</p>
             </hint>
             <sort>1</sort>
         </item>

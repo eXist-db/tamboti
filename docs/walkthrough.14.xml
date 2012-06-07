@@ -71,10 +71,10 @@
         <para>There are many different kinds of bibliographical items, but for our purposes the most
             important among them are 
             <itemizedlist>
-                <listitem>monographs, works of writing upon a single subject, published as one or
+                <listitem>books, works of writing on a single subject, published as one or
                     more book volumes, often referred to simply as a "book," which may occur in
-                    monograph series</listitem>
-                <listitem>articles, works of writing upon a single subject, published in a
+                    book series</listitem>
+                <listitem>articles, works of writing on a single subject, published in a
                     periodical</listitem>
                 <listitem>publications which resemble articles, but which occur (along with other
                     similar publications) in books, books which are thematically unified and have an
@@ -85,7 +85,7 @@
         <para>From this we can see that we at least have to operate with three further
             categories:
             <itemizedlist>
-                <listitem>monograph series</listitem>
+                <listitem>book series</listitem>
                 <listitem>periodicals</listitem>
                 <listitem>edited volumes</listitem>
             </itemizedlist>
@@ -95,23 +95,23 @@
         <ul>
             <li>the publication itself
                 <itemizedlist>
-                    <listitem>a monograph</listitem>
+                    <listitem>a book</listitem>
                     <listitem>an article</listitem>
                     <listitem>a contribution to an edited volume</listitem>
                 </itemizedlist>
             </li>
             <li>the container that the publication occurs in
                 <itemizedlist>
-                    <listitem>a monograph series</listitem>
+                    <listitem>a book series</listitem>
                     <listitem>a periodical</listitem>
                     <listitem>an edited volume</listitem>
                 </itemizedlist>
             </li>
             <li>the location of the publication inside its container.</li>
         </ul>
-        <para> Monographs that belong in a monograph series, articles that belong in a periodical
-            and contributions that belong in an edited volume all follow this pattern. Monographs
-            that occur on their own, that is, monographs that are not part of any series, only have
+        <para>Books that belong in a book series, articles that belong in a periodical
+            and contributions that belong in an edited volume all follow this pattern. Books
+            that occur on their own, that is, books that are not part of any series, only have
             the first block of information, but that presents no complications: the last two blocks
             are simply left empty. The same applies to descriptions of series and periodicals as
             such.</para>
@@ -128,19 +128,19 @@
                     <td align="center" valign="middle">Location in Container</td>
                 </tr>
                 <tr>
-                    <td>Monographs</td>
+                    <td>Books</td>
                     <td align="center" valign="middle">X</td>
                     <td align="center" valign="middle"/>
                     <td align="center" valign="middle"/>
                 </tr>
                 <tr>
-                    <td>Monographs in series</td>
+                    <td>Books in series</td>
                     <td align="center" valign="middle">X</td>
                     <td align="center" valign="middle">X</td>
                     <td align="center" valign="middle">X</td>
                 </tr>
                 <tr>
-                    <td>Monograph series</td>
+                    <td>Book series</td>
                     <td align="center" valign="middle">X</td>
                     <td align="center" valign="middle"/>
                     <td align="center" valign="middle"/>
@@ -177,7 +177,7 @@
                 </tr>
             </tbody>
         </table>
-        <para>(Since an edited volume can be part of a series, just like a monograph, the situation
+        <para>(Since an edited volume can be part of a series, just like a book, the situation
             is even more involved: we can have a contribution contained in an edited volume contained in a
             series ….)</para>
         <para> The Basic Input Forms accommodate these types of bibliographical entries (and a few more). This means

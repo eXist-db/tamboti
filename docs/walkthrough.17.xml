@@ -34,7 +34,7 @@
     <xi:include href="sidebar.xml"/>
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
     <chapter>
-        <title>Monograph Series</title>
+        <title>Book Series</title>
         <table frame="all" width="25%" border="0" class="center">
             <title/>
             <tgroup cols="4">
@@ -69,8 +69,8 @@
                 </tbody>
             </tgroup>
         </table>
-        <para>A monograph does not <em>have</em> to occur inside something else, but it can, since it can be part of a series. 
-            If we want to register that a monograph belongs to a series, we usually need only note the series title and the location of the monograph inside the series, i.e. its volume number (if it is numbered). </para>
+        <para>A book does not <em>have</em> to occur inside something else, but it can, since it can be part of a series. 
+            If we want to register that a book belongs to a series, we usually need only note the series title and the location of the book inside the series, i.e. its volume number (if it is numbered). </para>
         <ul>
             <li>
                 <span class="publication">Markman, Charles W. Chicago before History: The Prehistoric Archaeology of a Modern Metropolitan Area</span>. <span class="container">Studies in Illinois Archaeology</span>
@@ -82,10 +82,10 @@
                 1998</span>.</li>
         </ul>
         <para>The different parts are differently coloured: <span class="publication">publication</span>, <span class="container">container</span> and <span class="location">location</span> of publication inside container. </para>
-        <para>Note that the last monograph has no location in the monograph series it occurs in - the series may be unnumbered. Note also that the information regarding container and location inside container splits the information regarding the publication in two.</para>
+        <para>Note that the last book has no location in the book series it occurs in - the series may be unnumbered. Note also that the information regarding container and location inside container splits the information regarding the publication in two.</para>
         <para>It is not very often that one wishes to catalogue a series on its own, but for reasons of parallelism it is included in the Basic Input Forms.
             A series has a title, one or more editors, and the series as a whole has a place and time of publication, as well as an extent: 
-            the number of volumes published hitherto. We see that one would normally note more pieces information than when cataloguing a monograph as part of a series. 
+            the number of volumes published hitherto. We see that one would normally note more pieces information than when cataloguing a book as part of a series. 
             The same holds for periodicals, as we shall see.</para>
     </chapter>
 </book>

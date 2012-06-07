@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="origin block-form" tab-id="origin" e:dummy="dummy">
     <xf:group appearance="full" class="fieldset level-1">
         <div class="join">
@@ -264,7 +265,7 @@
                             <xf:case id="place-add-node-hide">
                                 <div class="node-button">
                                     <xf:trigger class="add-button">
-                                        <xf:label class="xforms-group-label-centered">Show Additional Fields</xf:label>
+                                        <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                         <xf:toggle case="place-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
                                 </div>
@@ -272,7 +273,7 @@
                             <xf:case id="place-add-node-unhide">
                                 <div class="node-button">
                                     <xf:trigger>
-                                        <xf:label class="xforms-group-label-centered">Hide Additional Fields</xf:label>
+                                        <xf:label class="xforms-group-label-centered">&lt;</xf:label>
                                         <xf:toggle case="place-add-node-hide" ev:event="DOMActivate"/>
                                     </xf:trigger>
                                 </div>
