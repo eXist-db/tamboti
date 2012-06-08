@@ -56,10 +56,7 @@ a:visited {
 img {
   border: 0;
 }
-#content1col {
-  margin-bottom: 3em;
-}
-/*page top elements begin*/
+/*page-head div begins*/
 #page-head {
   height: 14em;
   margin-top: .5em;
@@ -73,6 +70,11 @@ img {
   position: absolute;
   right: 0;
   margin-top: 1em;
+}
+/*page-head div ends*/
+/*content1col div begins*/
+#content1col {
+  margin-bottom: 3em;
 }
 #content1col .help {
   text-align: left;
@@ -89,8 +91,8 @@ img {
 #content1col .username {
   font-weight: 700;
 }
-/*page top elements end*/
-/*query panel begins*/
+/*content1col div end*/
+/*query-panel div begins*/
 #query-panel .search-form td {
   padding: 4px 4px 0;
   text-align: left;
@@ -115,9 +117,9 @@ img {
   border: 0;
   width: 800px;
 }
-#add-field,
-#remove-field,
-#clear-all {
+#query-panel #add-field,
+#query-panel #remove-field,
+#query-panel #clear-all {
   padding-bottom: 2px;
   padding-left: 1em;
   padding-right: 1em;
@@ -133,7 +135,7 @@ img {
   margin-left: 7em;
   color: #4d4d4d;
 }
-/*query panel ends*/
+/*query-panel div ends*/
 /*folder view*/
 /*collection-tree begins*/
 #collection-tree {
@@ -141,13 +143,13 @@ img {
   float: left;
   margin-top: .8em;
 }
-.collection-tree-head {
+#collection-tree .collection-tree-head {
   background-color: #f5f5f5;
   margin-bottom: -8px;
   border-radius: 5px;
   height: 40px;
 }
-.collection-tree-toolbar {
+#collection-tree .collection-tree-toolbar {
   margin: 10px 5px 5px;
   height: 20px;
   list-style: none;
@@ -155,13 +157,38 @@ img {
   background-color: #fff;
   border-radius: 5px;
 }
-.collection-tree-toolbar li {
+#collection-tree .collection-tree-toolbar li {
   display: inline;
   float: left;
   margin: 4px 8px 4px 0;
 }
-.collection-tree-toolbar img {
+#collection-tree .collection-tree-toolbar img {
   border: 0;
+}
+#collection-tree .dynatree-container {
+  border: 0;
+  background-color: #fff;
+  font-size: 1em;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+#collection-tree .info-box {
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  color: #4d4d4d;
+  margin-top: 0;
+  margin-bottom: 5px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding: 2px;
+}
+#collection-tree .info-box p {
+  margin: 4px;
+  padding-top: 8px;
 }
 #toggle-collection-tree {
   margin: 4px;
@@ -175,62 +202,25 @@ img {
 #collection-tree-tree ul {
   font-size: 1em;
 }
-table.biblio-full td.collection-label {
-  background-color: #fff;
-  text-align: right;
-  padding-right: 1em;
-}
-ul.dynatree-container {
-  border: 0;
-  background-color: #fff;
-  font-size: 1em;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  border-radius: 5px;
-}
 #collection-expand-all {
   margin-left: 5px;
 }
-td.collection-path {
+#collection-path {
   width: 800px;
-}
-.box {
-  border-radius: 5px;
-  background-color: #f5f5f5;
-  color: #4d4d4d;
-  margin-top: 0;
-  margin-bottom: 5px;
-  height: 40px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  padding: 2px;
-}
-.box p {
-  margin: 4px;
-  padding-top: 8px;
 }
 /*collection-tree ends*/
 /*create new record dialog begins*/
-.language-label {
+#new-resource-form .language-label {
   padding: .5em;
 }
-.language-list {
+#new-resource-form .language-list {
   position: absolute;
   right: 2em;
 }
-.language-list option {
+#new-resource-form .language-list option {
   margin: .25em .5em;
 }
 /*create new record dialog ends*/
-#results {
-  margin-top: .5em;
-  overflow: auto;
-}
-#results table {
-  width: 100%;
-}
 .hi {
   background-color: #5db0e6;
 }
@@ -372,6 +362,13 @@ td.collection-path {
   float: right;
 }
 /*main structures for display of search results begins*/
+#results {
+  margin-top: .5em;
+  overflow: auto;
+}
+#results table {
+  width: 100%;
+}
 #results ul {
   list-style: none;
   margin-top: 2px;
@@ -425,10 +422,24 @@ td.collection-path {
   cursor: pointer;
   vertical-align: middle;
 }
-#results li h4 {
+#results .record p,
+#results .record ol li,
+#results .record ul li {
   margin: 0;
-  font-size: 75%;
-  font-weight: 400;
+  border: 0;
+  float: none;
+  padding: 0;
+  text-align: left;
+}
+#results .record h1,
+#results .record h2,
+#results .record h3,
+#results .record h4,
+#results .record h5,
+#results .record h6 {
+  background-color: #fff;
+  color: #000;
+  padding: 0;
 }
 li .pagination-number {
   display: none;
@@ -457,6 +468,11 @@ table .biblio-full .collection {
   width: 30em;
   /*to keep the collection path from overlapping the actions toolbar*/
 
+}
+table .biblio-full .collection-label {
+  background-color: #fff;
+  text-align: right;
+  padding-right: 1em;
 }
 table .biblio-full .label {
   text-align: right;
@@ -596,7 +612,7 @@ span.readable .dynatree-title {
 #login-form input {
   width: 20em;
 }
-/* image gallery lightbox */
+/* image gallery lightbox  begins*/
 .overlay {
   display: none;
   position: fixed;
@@ -678,6 +694,11 @@ span.readable .dynatree-title {
   top: 33%;
   left: 0;
 }
+.lightbox li h4 {
+  margin: 0;
+  font-size: 75%;
+  font-weight: 400;
+}
 .filmstrip {
   position: fixed;
   display: none;
@@ -725,6 +746,7 @@ span.readable .dynatree-title {
   background-color: #000;
   border: 1px #fff solid;
 }
+/* image gallery lightbox  ends*/
 /* collection sharing dialog begins*/
 #collectionSharingDetails_filter {
   float: right;
@@ -784,32 +806,11 @@ span.readable .dynatree-title {
   display: block;
 }
 /* collection sharing dialog ends*/
-/*Zotero notes markup begins*/
-#results .record p,
-#results .record ol li,
-#results .record ul li {
-  margin: 0;
-  border: 0;
-  float: none;
-  padding: 0;
-  text-align: left;
-}
-#results .record h1,
-#results .record h2,
-#results .record h3,
-#results .record h4,
-#results .record h5,
-#results .record h6 {
-  background-color: #fff;
-  color: #000;
-  padding: 0;
-}
 #personal-list button,
 #query-history button {
   padding: 2px 4px;
   margin-right: 4px;
 }
-/*Zotero notes markup ends*/
 #login-form {
   width: 30em;
 }

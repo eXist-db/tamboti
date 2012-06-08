@@ -1,6 +1,6 @@
 xquery version "1.0";
 
-(:TODO: change all 'monograph' to 'book':)
+(:TODO: change all 'monograph' to 'book' in tabs-data.xml and compact body files:)
 
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace sm="http://exist-db.org/xquery/securitymanager"; (:TODO move code into security module:)
@@ -236,7 +236,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                 if ($type-request)
                 then
                     (:Remove any 'latin' and 'transliterated' appended the original type request. :)
-                    let $type-request := if (contains($type-request, '-')) then substring-before($type-request, '-') else $type-request
+                    let $type-request := replace(replace($type-request, '-latin', ''), '-transliterated', '')
                     let $type-label := doc($type-data)/code-table/items/item[value eq $type-request]/label
                     let $type-hint := doc($type-data)/code-table/items/item[value eq $type-request]/hint
                         return
@@ -340,31 +340,34 @@ the only filtering that is performed is for transliteration.
 The compact-c temples (in 00-compact-contents) is the same for all resource types; 
 the only filtering that is performed is for transliteration.:)
 declare function local:get-tab-id($tab-id as xs:string, $type-request as xs:string) {
-    if ($tab-id ne 'compact-b')
-    (:Only treat compact-b types.:)
-    then $tab-id
-    else
-	    if ($type-request eq 'article-in-periodical')
-	    then 'compact-b-article' 
-	    else 
-		    if ($type-request eq 'contribution-to-edited-volume')
-		    then 'compact-b-contribution'
-		    else
-    		    if ($type-request eq 'monograph')
-    		    then 'compact-b-monograph'
-    		    else
-        		    if ($type-request eq 'edited-volume')
-        		    then 'compact-b-monograph'
+    (:Remove any 'latin' and 'transliterated' appended the original type request. :)
+    let $type-request := replace(replace($type-request, '-latin', ''), '-transliterated', '')
+        return
+            if ($tab-id ne 'compact-b')
+            (:Only treat compact-b types.:)
+            then $tab-id
+            else
+        	    if ($type-request eq 'article-in-periodical')
+        	    then 'compact-b-article' 
+        	    else 
+        		    if ($type-request eq 'contribution-to-edited-volume')
+        		    then 'compact-b-contribution'
         		    else
-        			    if ($type-request eq 'book-review')
-        			    then 'compact-b-review'
-        			    else 
-        				    if ($type-request eq 'suebs-tibetan')
-        				    then 'compact-b-suebs-tibetan'
-        				    else
-        				        if ($type-request eq 'mads')
-        				        then 'mads'
-        				        else 'compact-b-xlink'
+            		    if ($type-request eq 'monograph')
+            		    then 'compact-b-monograph'
+            		    else
+                		    if ($type-request eq 'edited-volume')
+                		    then 'compact-b-monograph'
+                		    else
+                			    if ($type-request eq 'book-review')
+                			    then 'compact-b-review'
+                			    else 
+                				    if ($type-request eq 'suebs-tibetan')
+                				    then 'compact-b-suebs-tibetan'
+                				    else
+                				        if ($type-request eq 'mads')
+                				        then 'mads'
+                				        else 'compact-b-xlink'
 };
 
 (:Main:)
