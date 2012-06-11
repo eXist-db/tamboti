@@ -29,7 +29,7 @@ declare function op:create-collection($parent as xs:string, $name as xs:string) 
         let $collection := xmldb:create-collection($parent, uu:escape-collection-path($name)),
         
         (: just the owner has full access - to start with :)
-        $null := sm:chmod(xs:anyURI($collection), "rwx------"),
+        $null := sm:chmod(xs:anyURI($collection), "rwx--x---"),
         
         (:
         if this collection was created

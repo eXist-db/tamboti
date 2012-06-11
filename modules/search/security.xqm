@@ -550,7 +550,7 @@ declare function security:set-ace-writeable($resource as xs:anyURI, $id as xs:in
                 
                 (: TODO - write implies update until update is replaced with execute :)
                 let $regexp-replacement := if($is-writeable)then
-                    "wu"    
+                    "wx"    
                 else
                     "--"
                 ,
