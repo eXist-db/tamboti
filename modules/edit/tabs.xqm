@@ -30,8 +30,11 @@ let $type :=
                 then concat($type, '-transliterated') 
                 else 
                     if ($type)
+                    (:NB: Why does 'insert-templates' get '-latin' here - is it not filtered out by the first if?:) 
                     then concat($type, '-latin')
                     else ()
+(:NB: Why is this necessary? $type is one space character too long. :)
+let $type := normalize-space($type)
 (: Get the top-tab-number param from the URL.
 If it is empty, it is because the record has just been initialised, because a record not made with Tamboti is loaded; 
 or because it is a non-basic template - set it to 2 to show Citation Forms/Title Information (and hide the Basic Input Forms tab). 
@@ -39,20 +42,21 @@ Otherwise set it to 1 to show Basic Input Forms/Main Publication. :)
 let $top-tab-number := xs:integer(request:get-parameter("top-tab-number", 0))
 let $top-tab-number := 
     (: If a top-tab-number is passed, use it. :)
-    if ($top-tab-number) 
+    if ($top-tab-number gt 0) 
     then $top-tab-number 
     else
         (: If a top-tab-number is not passed, construct it.
         If the record is not made in Tamboti (does not have a type) or if the type is not one that Basic Forms handle, serve the second tab (Citation Forms). :)
-        if ($type = ('insert-templates','new-instance') or not($type))
+        (:NB: Why does 'insert-templates' get '-latin' added?:)
+        if ($type = ('insert-templates-latin','new-instance-latin') or not($type))
         then 2
         else
             (: For (future) mads records, serve the mads tab. :)
             if ($type = 'mads')
             then 5
             else 1
-            
 (: Get the tabs data. :)
+
 let $tabs-data := doc($mods:tabs-data)/tabs/tab
 return
 <div class="tabs">
@@ -61,7 +65,7 @@ return
             {
             for $top-tab-label in distinct-values($tabs-data/top-tab-label)
             (: Do not show the Basic Input Forms tab for records not created in Tamboti. These records have no type. :)
-            where not(not($type) and $top-tab-label eq 'Basic Input Forms')
+            where not($type = ('insert-templates-latin','new-instance-latin') and $top-tab-label eq 'Basic Input Forms')
             return
             <td style="{
                 if ($tabs-data[top-tab-label = $top-tab-label]/top-tab-number = $top-tab-number) 

@@ -1500,33 +1500,36 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     (: table of contents :)
     for $table-of-contents in $entry/mods:tableOfContents
     return
-        <tr xmlns="http://www.w3.org/1999/xhtml">
-            <td class="label"> 
-            {
-                if ($table-of-contents/@displayLabel)
-                then $table-of-contents/@displayLabel
-                else 'Table of Contents'
-            }
-            </td>
-            <td class="record">
-            {
-            (:Possibly, both text and link could be displayed.:)
-            if ($table-of-contents/text())
-            then $table-of-contents/text()
-            else
-                if ($table-of-contents/@xlink:href/string())
-                then
-                    <a href="{$table-of-contents/@xlink:href/string()}" target="_blank">
-                    {
-                        if ((string-length($table-of-contents/@xlink:href/string()) le 70)) 
-                        then $table-of-contents/@xlink:href/string()
-                        (:avoid too long urls that do not line-wrap:)
-                        else (substring($table-of-contents/@xlink:href/string(), 1, 70), '...')}
-                    </a>
-                else ()
-            }
-            </td>
-        </tr>
+        if ($table-of-contents/string()) 
+        then        
+            <tr xmlns="http://www.w3.org/1999/xhtml">
+                <td class="label"> 
+                {
+                    if ($table-of-contents/@displayLabel)
+                    then $table-of-contents/@displayLabel
+                    else 'Table of Contents'
+                }
+                </td>
+                <td class="record">
+                {
+                (:Possibly, both text and link could be displayed.:)
+                if ($table-of-contents/text())
+                then $table-of-contents/text()
+                else
+                    if ($table-of-contents/@xlink:href/string())
+                    then
+                        <a href="{$table-of-contents/@xlink:href/string()}" target="_blank">
+                        {
+                            if ((string-length($table-of-contents/@xlink:href/string()) le 70)) 
+                            then $table-of-contents/@xlink:href/string()
+                            (:avoid too long urls that do not line-wrap:)
+                            else (substring($table-of-contents/@xlink:href/string(), 1, 70), '...')}
+                        </a>
+                    else ()
+                }
+                </td>
+            </tr>
+        else ()
     ,
     (: identifier :)
     for $item in $entry/mods:identifier

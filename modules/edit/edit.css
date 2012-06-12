@@ -12,7 +12,6 @@
 
 .xforms-repeat {
 	margin-bottom:1em;
-	1padding-bottom:1em;
 }
 
 .xforms-repeat-item-selected,
@@ -22,17 +21,17 @@
 }
 
 .compact .xforms-group .xforms-group-content .output {
-    margin-top: -2em !important;
+    margin-top:-2em !important;
 }
 
-.node-adds button xf|label 
+.node-adds button .xforms-label 
     {
-    text-align: center;
+    text-align:center;
     }
 
 .node-adds .xforms-group .xforms-group-content
 {
-    display: inline !important;
+    display:inline !important;
 }
 
 /*temporary stuff ends*/
@@ -43,7 +42,7 @@ body
     {
   border-color:#3681B3;
   font-size:75%;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:Arial, Helvetica, sans-serif;
 }
 
 #page-head {
@@ -66,7 +65,7 @@ body
     margin:10px 0 0 0;
     border-top:1px solid #DEDEDE;
     border-bottom:1px solid #DEDEDE;
-    display: block;
+    display:block;
 }
 
 #page-head h1 {
@@ -80,7 +79,7 @@ body
 }
 
 .container {
-    margin: 0 auto;
+    margin:0 auto;
     padding-top:0.5em !important;
     padding-right:1em !important;
     padding-top:0.5em !important;
@@ -89,8 +88,8 @@ body
     border-color:#CCCCCC !important;/*overrules xsltforms.css*/
     margin-bottom:1em !important;/*overrules xsltforms.css*/
     width:1150px !important;/*overrules xsltforms.css*/
-    -moz-border-radius: 10px 10px 10px 10px;
-	border: 1px solid #CCCCCC;
+    -moz-border-radius:10px 10px 10px 10px;
+	border:1px solid #CCCCCC;
 }
 
 .content {
@@ -105,30 +104,30 @@ body
 }
 
 .tabs a {
-    text-decoration: none;
+    text-decoration:none;
 }
 
 .top-tabs {
     margin-top:1em;
-    margin-bottom: .25em;
-    width: 100%;
-    margin-top: .75em;
+    margin-bottom:.25em;
+    width:100%;
+    margin-top:.75em;
 }
 
 .bottom-tabs {
-    width: 100%;
-    margin-bottom: .5em;
+    width:100%;
+    margin-bottom:.5em;
 }
 
 
 table { 
     margin-bottom:.5em !important;
-    border-collapse: separate;
-    border-spacing: 0;
+    border-collapse:separate;
+    border-spacing:0;
 }
 
 table, td, th {
-    vertical-align: middle;
+    vertical-align:middle;
 }
 
 
@@ -194,7 +193,7 @@ button {
     border-top-right-radius:5px 5px;
     }
 
-.block-form xf|label {
+.block-form .xforms-label {
     display:inline-block;
     width:15em; /* the default width of all the labels in the block form */
     margin-right:5px; /* margin before the input area */
@@ -229,11 +228,11 @@ button {
 }
 
 .node-adds .xforms-group {
-    display: inline;
+    display:inline;
 }
 
 .node-adds .xforms-group button {
-    width: 15em;
+    width:15em;
 }
 
 .compact .fieldset .xforms-repeat-item {
@@ -247,13 +246,6 @@ fieldset,
 {
     border-color:#CCCCCC;
 }
-
-/*fieldset {
-	padding:1.4em 1.4em 0 1.4em !important;
-	margin:0 0 1.5em 0;
-	border:1px solid #BBBBBB;
-}
-*/
 
 .fieldset,
 fieldset,
@@ -283,13 +275,13 @@ fieldset,
 /*unsorted begins*/
 
 caption, th, td {
-    font-weight: normal;
-    padding: .5em 1em .5em .5em;
+    font-weight:normal;
+    padding:.5em 1em .5em .5em;
 }
 
 label {
-	white-space: nowrap;
-	font-weight: bold;
+	white-space:nowrap;
+	font-weight:bold;
 }
 
 input[type="text"], 
@@ -299,9 +291,9 @@ input.title,
 textarea, 
 select 
 	{
-    margin-bottom: 0.5em;
-    margin-top: 0.5em;
-    border: 1px solid #BBBBBB;
+    margin-bottom:0.5em;
+    margin-top:0.5em;
+    border:1px solid #BBBBBB;
     padding:.2em; /*to give a little less cramped input field*/
 }
 
@@ -309,7 +301,7 @@ select
 	1margin-left:1em;
 }
 
-.join { /*rename: label-box*/
+.join { /*rename:label-box*/
     font-weight:bold;
     border-style:solid;
     background-color:#EDEDED;
@@ -340,13 +332,6 @@ select
     margin:auto;
 }
 
-xf|submit xf|label.xforms-group-label-centered-general { /*buttons outside the form*/
-    text-align:center;
-    padding:0;
-    vertical-align:middle;
-    margin:auto;
-}
-
 .xforms-case {
     margin-bottom:1em;
     margin-top:auto;
@@ -357,12 +342,6 @@ xf|submit xf|label.xforms-group-label-centered-general { /*buttons outside the f
     margin-bottom:0;    
 }
 
-xf|group xf|trigger.delete-button { /*for field delete buttons - sizing does not work*/
-    vertical-align:top;
-    width:4px !important;
-    margin-right:-5em;    
-}
-
 select .xforms-value {
     padding-left:.25em;
 }
@@ -370,9 +349,9 @@ select .xforms-value {
 .join-button .xforms-control button
 {
     width:1.75em !important;
-    height:1.75em;
+    height:1.7em;
     padding:0;
-    margin:0 .5em 0 .5em;
+    margin:-.2em .5em 0 .5em;
 }
 
 .wide .xforms-control button
@@ -382,7 +361,7 @@ select .xforms-value {
 
 .join-button .xforms-control button .xforms-label {
     display:inline;
-    width:1em;
+    1width:1em;
     text-align:center;
     padding:0;
     margin:0;
@@ -558,7 +537,7 @@ div.xforms-hint-value strong
 }
 
 .compact fieldset.level-1 .join {
-    margin-bottom: 1.25em;
+    margin-bottom:1.25em;
     } 
 
 .compact .xforms-repeat-item-selected
@@ -588,12 +567,6 @@ div.xforms-hint-value strong
 
 .compact .level-2 .margin-plus .xforms-select1 {/*level-2 with name*/
     margin-left:1em;
-}
-
-.compact .level-2 .margin-plus input,
-.compact .level-1 .margin-plus input
-	{
-    1margin-left:1em;
 }
 
 .compact .level-1 .margin-plus .xforms-select1 {

@@ -220,10 +220,10 @@ declare function local:assemble-form($dummy-attributes as attribute()*, $style a
 declare function local:create-page-content($id as xs:string, $tab-id as xs:string, $type-request as xs:string, $target-collection as xs:string, $instance-id as xs:string, $record-data as xs:string, $type-data as xs:string) as element(div) {
     (:Get the part of the form that belongs to the active tab.:)
     let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id eq $instance-id]
-    (:Get the relevant information to display in the info-line, the label for the tamplate chosen (if any) and the hint belonging to it (if any). :)
+    (:Get the relevant information to display in the info-line, the label for the template chosen (if any) and the hint belonging to it (if any). :)
     let $save-hint := doc($type-data)/code-table/items/item[value eq "save"]/hint
     (:Display the bottom tabs belonging to the active tab.:)
-    let $tab-data := concat($config:edit-app-root, '/tab-data.xml')
+    let $tab-data := concat($config:edit-app-root, '/tab-data.xml') 
     let $bottom-tab-label := doc($tab-data)/tabs/tab[tab-id eq $tab-id]/*[local-name() eq $type-request]
     let $bottom-tab-label := 
     	if ($bottom-tab-label)
@@ -256,7 +256,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                 ,
                 let $publication-title := concat(doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) eq 0][1]/mods:nonSort, ' ', doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) eq 0][1]/mods:title) 
                 return
-                    if ($publication-title ne ' ') 
+                    if ($publication-title ne ' ') (:NB: Why a space here?:) 
                     then (' with the title ', <strong>{$publication-title}</strong>) 
                     else ()
                 }, on the <strong>{$bottom-tab-label}</strong> tab, to be saved in <strong> {
@@ -301,7 +301,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
             <!-- Import the correct form body for the tab called. -->
             {$form-body}
             
-            <!--Displays button below as well.-->
+            <!--Displays buttons below as well.-->
             <div class="save-buttons">    
                 <xf:submit submission="save-submission">
                     <xf:label class="xforms-group-label-centered-general">Save</xf:label>
@@ -388,16 +388,17 @@ let $type-data := concat($config:edit-app-root, '/code-tables/document-type-code
 (:If type-sort is '1', it is a compact form and the Basic Input Forms should be shown; 
 if type-sort is 3, it is a mads record and the MADS forms should be shown; 
 otherwise it is a record not made with Tamboti and Title Information should be shown.:)
-let $type-sort := doc($type-data)/code-table/items/item[value eq $type-request]/sort
+let $type-request := replace(replace($type-request, '-latin', ''), '-transliterated', '')
+let $type-sort := xs:integer(doc($type-data)/code-table/items/item[value eq $type-request]/sort)
 
 (:Get the tab-id for the upper tab to be shown. 
 If no tab is specified, default to the compact-a tab when there is a template to be used with Basic Input Forms;
 otherwise default to Title Information.:)
 let $tab-id :=
-    if (xs:integer($type-sort) eq 1)
+    if ($type-sort eq 1)
     then 'compact-a'
     else
-        if (xs:integer($type-sort eq 3))
+        if ($type-sort eq 3)
         then 'mads'
         else 'title'        
 (:However, if a tab-id is passed, use this instead of the default.:)
