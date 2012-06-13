@@ -104,9 +104,6 @@ img {
 #query-panel .search-form input {
   width: 800px;
 }
-#query-panel .search-form .small {
-  width: 6px;
-}
 #query-panel .search-form td input {
   width: 260px;
 }
@@ -223,6 +220,8 @@ img {
 /*create new record dialog ends*/
 .hi {
   background-color: #5db0e6;
+  /*KWIC in text extraction*/
+
 }
 .operator select,
 .search-field select {
@@ -262,19 +261,6 @@ img {
 #filters .ui-accordion .ui-accordion-content {
   padding-top: 0 !important;
 }
-#filters .expanded .expand-img {
-  background: url(minus.gif) no-repeat left bottom;
-}
-#filters .expand-img {
-  float: left;
-  width: 14px;
-  height: 14px;
-  background: url(plus.gif) no-repeat left bottom;
-}
-#filters img {
-  border: 0;
-  text-align: center;
-}
 #filters .ui-accordion a,
 #filters .ui-accordion-header a {
   font-weight: 400;
@@ -282,7 +268,7 @@ img {
 #filters .ui-state-hover,
 #filters .ui-state-hover a,
 #filters .ui-state-hover a:hover {
-  color: #5db0e6 !important;
+  color: #5db0e6;
 }
 /*facets end*/
 /*pagination begins*/
@@ -330,9 +316,6 @@ img {
   margin: 10px;
   text-align: center;
 }
-#results-head .pagination-list-view {
-  margin-left: .25em;
-}
 /*pagination ends*/
 .actions-cell,
 .detail-type,
@@ -357,9 +340,6 @@ img {
   vertical-align: middle;
   border: #bbbbbb 1px;
   padding: 0;
-}
-.action-toolbar {
-  float: right;
 }
 /*main structures for display of search results begins*/
 #results {
@@ -560,48 +540,8 @@ form ul li {
 /*collection-tree*/
 span.readable .dynatree-title {
   font-weight: 400;
-  color: grey;
+  color: #bbbbbb;
 }
-/*folder sharing dialog begins*/
-.sharing-panel {
-  border: 1px #000 solid;
-  padding: 1em;
-  margin-bottom: 2em;
-  margin-bottom: .5em;
-}
-.sharing-option {
-  margin-top: 1em;
-}
-#members-list {
-  width: 35em;
-}
-#group-members {
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-#group-members-list {
-  font-size: 90%;
-  background-color: #fff;
-  border: 1px solid #bbbbbb;
-  color: #000;
-  height: 5em;
-  list-style: none;
-  overflow: auto;
-  width: 40em;
-  padding: 2px;
-  display: block;
-  margin-bottom: .5em;
-}
-#group-members-list li {
-  padding-bottom: .25em;
-  padding-left: .5em;
-  padding-right: .5em;
-  padding-top: .25em;
-}
-.labelWithCheckboxLeft {
-  padding-left: .25em;
-}
-/*folder sharing dialog ends*/
 #new-resource-dialog,
 #add-related-dialog {
   font-size: .85em;
@@ -806,8 +746,7 @@ span.readable .dynatree-title {
   display: block;
 }
 /* collection sharing dialog ends*/
-#personal-list button,
-#query-history button {
+#personal-list button {
   padding: 2px 4px;
   margin-right: 4px;
 }

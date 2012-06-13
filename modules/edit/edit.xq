@@ -256,7 +256,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                 ,
                 let $publication-title := concat(doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) eq 0][1]/mods:nonSort, ' ', doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) eq 0][1]/mods:title) 
                 return
-                    if ($publication-title ne ' ') (:NB: Why a space here?:) 
+                    if ($publication-title ne ' ') 
                     then (' with the title ', <strong>{$publication-title}</strong>) 
                     else ()
                 }, on the <strong>{$bottom-tab-label}</strong> tab, to be saved in <strong> {
