@@ -38,10 +38,10 @@ declare function xf:do-updates($item, $doc) {
     (: This first checks to see if we have a titleInfo in the saved document.  
     If we do then it first deletes the titleInfo in the saved document.
     Then it goes through each titleInfo in the incoming record and inserts it in the saved document. 
-    If name (the "next" element in the canonical order) occurs in the saved document, titleInfo is inserted before name, maintaining order.
+    If name (the "next" element in the "canonical" order of MODS elements) occurs in the saved document, titleInfo is inserted before name, maintaining order.
     If name does not occur, titleInfo is inserted at the default position, i.e. at the end of the saved document.
     The canonical order is: titleInfo, name, originInfo, part, physicalDescription, targetAudience, typeOfResource, genre, subject, classification, abstract, tableOfContents, note, relatedItem, identifier, location, accessCondition, language, recordInfo, extension. 
-    This is then repeated for the remaining elements in the canonical order.:)
+    This is then repeated for the remaining elements, in the canonical order.:)
     
     if ($item/mods:titleInfo)
     then
@@ -292,19 +292,15 @@ declare function save:find-live-collection-containing-uuid($uuid as xs:string) a
 
 (: This is where the form "POSTS" documents to this XQuery using the POST method of a submission :)
 let $item := clean:clean-namespaces(request:get-data()/element())
-
 (: This service takes an incoming POST and saves the appropriate records :)
 (: Note that the incoming @ID is required :)
 
-(: NB: Why does this return the temp collection, when the URL contains the target collection as "collection"? :)
 let $collection := request:get-parameter('collection', ())
 
 (:The default action is save, which means that the recrod is saved in temp each time a tab is clicked.:)
 let $action := request:get-parameter('action', 'save')
-
 let $incoming-id := $item/@ID
-
-(: If we do not have an ID, then throw an error :) 
+(: If we do not have an ID, then throw an error. :) 
 return
     if (string-length($incoming-id) eq 0)
     then
@@ -312,11 +308,11 @@ return
             <message class="warning">ERROR! Attempted to save a record with no ID specified.</message>
         </error>
     else
-        (: otherwise, we are doing an update to an existing file with an ID (unless the action is cancel). :)
+        (: If there is an ID, we are doing an update to an existing file (unless the action is cancel). :)
         let $file-to-update := concat($incoming-id, '.xml')
         (: This always resolves to /db/resources/temp/ :)
-        let $file-path := concat($collection, '/', $file-to-update)
-        (: This is the document in temp to be updated :)
+        let $file-path := concat(xmldb:encode-uri($collection), '/', $file-to-update)
+        (:This is the document in temp to be updated during save and the document to be saved in the target collection when the editor is being closed.:)
         let $doc := doc($file-path)/mods:mods
         (: If the incoming has any part then we update it in the document with do-updates.
         This has the side effect of adding the mods namespace prefix in the data files. 
@@ -329,21 +325,29 @@ return
             else
                 if ($action eq 'close')
                 (: If the user terminates editing. :)
-                then        
-                    (: Get the target collection. If it's an edit to an existing document, we can find its location by means of its uuid,
-                    otherwise it can be captured as the collection parameter passed in the URL. :)
-                    let $live-target-collection := save:find-live-collection-containing-uuid($incoming-id)
+                then
+                    (:Get the document in temp.:)
+                    let $temp-file-path := concat(xmldb:encode-uri($config:mods-temp-collection), '/', $file-to-update)
+                    let $doc := doc($temp-file-path)/mods:mods
+                    (:Get the target collection. If it's an edit to an existing document, we can find its location by means of its uuid.
+                    If it is a new record, the target collection can be captured as the collection parameter passed in the URL. :)
+                    let $target-collection := save:find-live-collection-containing-uuid($incoming-id)
                     let $new-target-collection := uu:escape-collection-path(request:get-parameter("collection", ""))
                     let $target-collection :=
-                            if ($live-target-collection)
-                            then $live-target-collection
+                            if ($target-collection)
+                            then $target-collection
                             else $new-target-collection
                     return
                     (
+                        (:Update the document in temp with $item.:)
                         xf:do-updates($item, $doc),
+                        (:Move it from temp to target collection.:)
                         xmldb:move($config:mods-temp-collection, $target-collection, $file-to-update),
-                        (: Set the same permissions on the new file as the parent collection :)
+                        (:Set the same permissions on the moved file that the parent collection has.:)
                         security:apply-parent-collection-permissions(xs:anyURI(concat($target-collection, "/", $file-to-update)))
                     )
-                else xf:do-updates($item, $doc)    
+                (:If action is 'save' (the default action):)
+                (:$item is the old document, $doc the new one:)
+                else
+                    xf:do-updates($item, $doc)    
         return ()

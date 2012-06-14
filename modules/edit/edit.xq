@@ -54,7 +54,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
     (:If the record is created in a collection inside commons, it should be visible to all.:)
     let $null := 
         if (contains($target-collection, "/commons/")) 
-        then xmldb:set-resource-permissions($config:mods-temp-collection, $doc-name, "editor", "biblio.users", xmldb:string-to-permissions("rwxr-xr-x"))
+        then xmldb:set-resource-permissions($config:mods-temp-collection, $doc-name, "editor", "biblio.users", xmldb:string-to-permissions("rwxrwxr-x"))
         else ()
     
     (:Get the remaining parameters that are to be stored (in addition to transliterationOfResource which was fetched above).:)
@@ -260,7 +260,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     then (' with the title ', <strong>{$publication-title}</strong>) 
                     else ()
                 }, on the <strong>{$bottom-tab-label}</strong> tab, to be saved in <strong> {
-                    let $target-collection-display := replace(replace($target-collection, '/db/resources/users/', ''), '/db/resources/commons/', '') 
+                    let $target-collection-display := replace(replace(xmldb:decode-uri($target-collection), '/db/resources/users/', ''), '/db/resources/commons/', '') 
                     return
                         if ($target-collection-display eq security:get-user-credential-from-session()[1])
                         then 'resources/Home'
@@ -271,18 +271,9 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
             {mods:tabs($tab-id, $id, $target-collection)}
         
             <div class="save-buttons">    
-                <xf:submit submission="save-submission">
+                <!--<xf:submit submission="save-submission">
                     <xf:label class="xforms-group-label-centered-general">Save</xf:label>
-                </xf:submit>
-             
-                <xf:trigger>
-                    <xf:label class="xforms-group-label-centered-general">Save and Close</xf:label>
-                    <xf:action ev:event="DOMActivate">
-                        <xf:send submission="save-and-close-submission"/>
-                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={replace($target-collection, '/db', '')}" show="replace"/>
-                    </xf:action>
-                </xf:trigger>
-             
+                </xf:submit>-->
                 <xf:trigger>
                     <xf:label class="xforms-group-label-centered-general">Cancel Editing</xf:label>
                     <xf:action ev:event="DOMActivate">
@@ -290,6 +281,13 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                         <xf:load resource="../../?reload=true" show="replace"/>
                     </xf:action>
                  </xf:trigger>
+                 <xf:trigger>
+                    <xf:label class="xforms-group-label-centered-general">Finish Editing</xf:label>
+                    <xf:action ev:event="DOMActivate">
+                        <xf:send submission="save-and-close-submission"/>
+                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={replace($target-collection, '/db', '')}" show="replace"/>
+                    </xf:action>
+                </xf:trigger>
                 <span class="xforms-hint">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-hint-value">
@@ -303,18 +301,9 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
             
             <!--Displays buttons below as well.-->
             <div class="save-buttons">    
-                <xf:submit submission="save-submission">
+                <!--<xf:submit submission="save-submission">
                     <xf:label class="xforms-group-label-centered-general">Save</xf:label>
-                </xf:submit>
-             
-                <xf:trigger>
-                    <xf:label class="xforms-group-label-centered-general">Save and Close</xf:label>
-                    <xf:action ev:event="DOMActivate">
-                        <xf:send submission="save-and-close-submission"/>
-                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>
-                    </xf:action>
-                </xf:trigger>
-             
+                </xf:submit>-->
                 <xf:trigger>
                     <xf:label class="xforms-group-label-centered-general">Cancel Editing</xf:label>
                     <xf:action ev:event="DOMActivate">
@@ -322,7 +311,13 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                         <xf:load resource="../../?reload=true" show="replace"/>
                     </xf:action>
                  </xf:trigger>
-             
+                 <xf:trigger>
+                    <xf:label class="xforms-group-label-centered-general">Save and Close</xf:label>
+                    <xf:action ev:event="DOMActivate">
+                        <xf:send submission="save-and-close-submission"/>
+                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>
+                    </xf:action>
+                </xf:trigger>
                 <span class="xforms-hint">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-hint-value">
