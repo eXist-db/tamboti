@@ -18,7 +18,7 @@ declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace e="http://www.asia-europe.uni-heidelberg.de/";
 declare namespace mads="http://www.loc.gov/mads/";
 
-(:These variable are used for a kind of theming in local:assemble-form():)
+(:These variables are used for a kind of dynamic theming in local:assemble-form().:)
 declare variable $uri := substring-before(substring-after(request:get-url(), "/apps/"), "/modules/edit/edit.xq");
 declare variable $header-title := if ($uri eq "tamboti") then "Tamboti Metadata Framework - MODS Editor" else "eXist Bibliographical Demo - MODS Editor";
 declare variable $tamboti-css := if ($uri eq "tamboti") then "tamboti.css" else ();
@@ -57,14 +57,14 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
         then xmldb:set-resource-permissions($config:mods-temp-collection, $doc-name, "editor", "biblio.users", xmldb:string-to-permissions("rwxrwxr-x"))
         else ()
     
-    (:Get the remaining parameters that are to be stored (in addition to transliterationOfResource which was fetched above).:)
+    (:Get the remaining parameters that are to be stored, in addition to transliterationOfResource (which was fetched above).:)
     let $scriptOfResource := request:get-parameter("scriptOfResource", '')
     let $languageOfResource := request:get-parameter("languageOfResource", '')
     let $languageOfCataloging := request:get-parameter("languageOfCataloging", '')
-    let $scriptOfCataloging := request:get-parameter("scriptOfCataloging", '')       
-    
+    let $scriptOfCataloging := request:get-parameter("scriptOfCataloging", '')           
     (:Parameter 'host' is used when related records are created.:)
     let $host := request:get-parameter('host', '')
+    
     let $doc := doc($stored)
     (:Note that we cannot use "update replace" if we want to keep the default namespace.:)
        return (
@@ -73,6 +73,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
           update value $doc/mads:mads/@ID with $id
           ,
           (:Save the language and script of the resource.:)
+          (:If namespace is not applied in the updates, the elements will be in the empty namespace.:)
           let $language-insert :=
               <mods:language>
                   <mods:languageTerm authority="iso639-2b" type="code">
@@ -274,13 +275,13 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                 <!--<xf:submit submission="save-submission">
                     <xf:label class="xforms-group-label-centered-general">Save</xf:label>
                 </xf:submit>-->
-                <xf:trigger>
+                <!--<xf:trigger>
                     <xf:label class="xforms-group-label-centered-general">Cancel Editing</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="cancel-submission"/>
                         <xf:load resource="../../?reload=true" show="replace"/>
                     </xf:action>
-                 </xf:trigger>
+                 </xf:trigger>-->
                  <xf:trigger>
                     <xf:label class="xforms-group-label-centered-general">Finish Editing</xf:label>
                     <xf:action ev:event="DOMActivate">
@@ -308,11 +309,12 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     <xf:label class="xforms-group-label-centered-general">Cancel Editing</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="cancel-submission"/>
-                        <xf:load resource="../../?reload=true" show="replace"/>
+                        <!--<xf:load resource="../../?reload=true" show="replace"/>-->
+                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>
                     </xf:action>
                  </xf:trigger>
                  <xf:trigger>
-                    <xf:label class="xforms-group-label-centered-general">Save and Close</xf:label>
+                    <xf:label class="xforms-group-label-centered-general">Finish Editing</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="save-and-close-submission"/>
                         <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>

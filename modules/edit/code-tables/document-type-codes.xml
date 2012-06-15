@@ -4,14 +4,14 @@
     <items>
         <item>
             <hint>
-                <p>Every time you click a tab, your input is saved. </p>
-                <p>When you click "Finish Editing", your input is saved. </p>
-                <p>Be aware, however, that you are only logged in for a certain period of time (30 minutes) and when your session times out, what you have input cannot be retrieved. 
-                    You can keep your session alive by clicking any tab. When your session is about to expire, you are prompted to keep it alive and given 5 minutes to react.</p>
-                <p>If you know that you may not be able to finish a record, it is best to click "Finish Editing" and return later to finish the record.</p>
-                <p>When you click the "Finish Editing" button, the record is saved inside the folder you marked before opening the editor or the folder from which you opened it for re-editing.</p>
+                <p>Every time you click a tab (including the current one), your input is saved. </p>
+                <p>When you click "Finish Editing", your input is saved, and you return to the search interface where your record is displayed. </p>
+                <p>The record is saved inside the folder you marked before opening the editor or the folder from which you opened it for re-editing.</p>
+                <p>Be aware that you are only logged in for 30 minutes and that when your session times out, you will be returned to the search interface and what you have input without saving it cannot be retrieved.</p>
+                <p>You can keep your session alive for another 30 minutes by clicking any tab. When your session is about to expire, you are prompted to keep it alive and given 5 minutes to react.</p>
+                <p>If you know that you may not be able to finish a record, it is best to click "Finish Editing" and return later to continue editing it.</p>
                 <p>You can continue editing the record by finding it and clicking the "Edit Record" button inside the record's detail view.</p>
-                <p>If you wish to discard what you have input since last clicking on a tab and return to the search function, click "Cancel Editing".</p>
+                <p>If you wish to discard your edits, click "Cancel Editing" at the bottom of the page. None of the edits you have made will then be saved and you will be shown the original record again.</p>
             </hint>
             <value>save</value>
         </item>
@@ -88,7 +88,7 @@
             <hint>
                 <p>For a <strong>Book</strong>, on the <strong>Book</strong> tab, one would normally input the following information:</p>
                 <p>Input the name(s) of the author(s) in <strong>Names and Roles</strong>, selecting "author" as Role. Divide the name into Given Name and
-                Family Name, if possible.</p>
+                    Family Name, if possible.</p>
                 <p>If there is more than one author, repeat the <strong>Names and Roles</strong> fields by clicking the '+' button.</p>
                 <p>Input the title of the book in <strong>Title Information</strong>, dividing this into Title and Subtitle, if possible. If the title
                     begins with an article like the English "A" or "The", remove this from the title and input it in Non Sort.</p>
