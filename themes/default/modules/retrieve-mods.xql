@@ -96,7 +96,7 @@ declare function mods:clean-up-punctuation($element as node()) as node() {
 : @param $node A mods element, either mods:mods or mods:relatedItem.
 : @return The same element, with parents with children without required children removed.
 :)
-declare function mods:remove-parent-with-missing-required-node($node as element()) as element() {
+declare function mods:remove-parent-with-missing-required-node($node as node()) as node() {
 element {node-name($node)} 
 {
 for $element in $node/*
@@ -109,7 +109,7 @@ return
         else
             if ($element instance of element(mods:relatedItem))
             then 
-            	if (not($element/mods:title/text() or $element/@xlink:href))
+            	if (not(((string-length($element) > 0) or ($element/@xlink:href))))
             	then ()
             	else $element
 	        else $element
@@ -1089,9 +1089,12 @@ declare function mods:get-related-items($entry as element(mods:mods), $destinati
 declare function mods:format-related-item($relatedItem as element(), $global-language as xs:string) {
 	let $relatedItem := mods:remove-parent-with-missing-required-node($relatedItem)
 	let $global-transliteration := $relatedItem/../mods:extension/e:transliterationOfResource/text()
+	let $relatedItem-role-terms := distinct-values($relatedItem/mods:name/mods:role/mods:roleTerm[1])
+	let $relatedItem-role-terms := 
+	   (for $relatedItem-role-term in $relatedItem-role-terms return lower-case($relatedItem-role-term))
 	return
     mods:clean-up-punctuation(<result>{(
-    if (lower-case($relatedItem/mods:name/mods:role/mods:roleTerm) = $mods:author-roles or not($relatedItem/mods:name/mods:role/mods:roleTerm/text()))
+    if ($relatedItem-role-terms = $mods:author-roles or not($relatedItem-role-terms))
     then mods:format-multiple-names($relatedItem, 'list-first', $global-transliteration, $global-language)
     else ()
     ,
@@ -1599,7 +1602,10 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         (: The author, etc. of the primary publication. :)
         (: NB: conference? :)
         let $names := $entry/mods:name
-        let $names-primary-publication := <entry>{$names[@type = ('personal', 'corporate', 'family') or not(@type)][lower-case(mods:role/mods:roleTerm) = $mods:author-roles or not(mods:role/mods:roleTerm/text())]}</entry>
+        let $role-terms := distinct-values($names/mods:role/mods:roleTerm[1])
+	    let $role-terms := 
+	       (for $role-term in $role-terms return lower-case($role-term))
+        let $names-primary-publication := <entry>{$names[@type = ('personal', 'corporate', 'family') or not(@type)][$role-terms = $mods:author-roles or not($role-terms)]}</entry>
         return
 	        if ($names-primary-publication/string())
 	        then (mods:format-multiple-names($names-primary-publication, 'list-first', $global-transliteration, $global-language)
