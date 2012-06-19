@@ -5,31 +5,6 @@
         <graphic fileref="theme/images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>
         <productname>Tamboti</productname>
         <title>Tamboti Walkthrough</title>
-        <date>February 2012</date>
-        <author>
-            <firstname>Dulip</firstname>
-            <surname>Withanage</surname>
-            <affiliation>
-                <address format="linespecific">
-                    <email>withanage@asia-europe.uni-heidelberg.de</email>
-                </address>
-                <orgname>Heidelberg Research Architecture</orgname>
-                <orgname>"Asia and Europe in a Global Context"</orgname>
-                <orgname>Heidelberg University</orgname>
-            </affiliation>
-        </author>
-        <author>
-            <firstname>Jens Østergaard</firstname>
-            <surname>Petersen</surname>
-            <affiliation>
-                <address format="linespecific">
-                    <email>petersen@asia-europe.uni-heidelberg.de</email>
-                </address>
-                <orgname>Heidelberg Research Architecture</orgname>
-                <orgname>"Asia and Europe in a Global Context"</orgname>
-                <orgname>Heidelberg University</orgname>
-            </affiliation>
-        </author>
     </bookinfo>
     <xi:include href="sidebar.xml"/>
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
@@ -70,17 +45,30 @@
             </tgroup>
         </table>
         <para>
-            If you wish to find all material available in a certain path, leave the search term empty and click "Search." Double-clicking on a folder also performs a search for all records within it. 
+            If you wish to find all material available in a certain path, leave the search term empty and click "Search." 
+            Double-clicking on a folder has the same effect. 
         </para>
         <para>
-            Searching in itself should be fairly obvious. The options are more or less the same as in any library catalogue. In a separate section of this tutorial you can read about the detailed search options at your disposal.
+            Searching in itself should be fairly obvious. The options are more or less the same as in any library catalogue. 
+            In a separate section of this tutorial you can read about the detailed search options at your disposal.
         </para>
         <para>
-            If you search for a specific term in the records in the path you have selected, or make an "empty search" to retrieve all records in the path you have selected, you will be presented with a list view if more than one record is retrieved.  
+            If you search for a specific term in the records in the path you have selected, 
+            or make an "empty search" to retrieve all records in the path you have selected, 
+            you will be presented with a list view if more than one record is retrieved.  
         </para>
-        <para>The format presented in list view attempts to follow <a href="http://www.chicagomanualofstyle.org/home.html" target="_blank">The Chicago Manual of Style</a>.</para>
-        <para>To the right of the numbering of the item in question, you will see the Save Record to My List button <graphic fileref="../themes/default/images/disk.gif" align="center" valign="middle"/>, which allows you to collect the record temporarily in a list accessed from the My List tab, from which it can be exported. This button also occurs on the detail view.</para>
-        <para>To the right of this, you will find a graphic representation of the kind of resource the record is about (here "text," represented with <graphic fileref="../themes/default/images/text.png" align="center" valign="middle"/>) - hover above the icon to see its meaning. This icon also occurs on the detail view.</para>
+        <para>The format presented in list view attempts to follow <a href="http://www.chicagomanualofstyle.org/home.html" target="_blank">The Chicago Manual of Style</a>. 
+            There will be glitches here, especially with records lacking information for standard fields. 
+            If you find that information you have input is not displayed, let us know and we will work on it.</para>
+        <para>To the right of the numbering of the item in question, 
+            you will see the Save Record to My List button <graphic fileref="../themes/default/images/disk.gif" align="center" valign="middle"/>, 
+            which allows you to collect the record temporarily in a list accessed from the My List tab, 
+            from which it can be exported. 
+            This button also occurs on the detail view.</para>
+        <para>To the right of this, you will find a graphic representation of the kind of resource the record is about 
+            (here "text," represented by <graphic fileref="../themes/default/images/text.png" align="center" valign="middle"/>) - 
+            hover above the icon to see its meaning. 
+            This icon also occurs on the detail view.</para>
         <para>
             If you click on any of the hits in the list, you will be taken to the detail view.  
         </para>

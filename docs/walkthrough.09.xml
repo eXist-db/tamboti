@@ -5,31 +5,6 @@
         <graphic fileref="theme/images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>
         <productname>Tamboti</productname>
         <title>Tamboti Walkthrough</title>
-        <date>March 2011</date>
-        <author>
-            <firstname>Dulip</firstname>
-            <surname>Withanage</surname>
-            <affiliation>
-                <address format="linespecific">
-                    <email>withanage@asia-europe.uni-heidelberg.de</email>
-                </address>
-                <orgname>Heidelberg Research Architecture</orgname>
-                <orgname>"Asia and Europe in a Global Context"</orgname>
-                <orgname>Heidelberg University</orgname>
-            </affiliation>
-        </author>
-        <author>
-            <firstname>Jens Østergaard</firstname>
-            <surname>Petersen</surname>
-            <affiliation>
-                <address format="linespecific">
-                    <email>petersen@asia-europe.uni-heidelberg.de</email>
-                </address>
-                <orgname>Heidelberg Research Architecture</orgname>
-                <orgname>"Asia and Europe in a Global Context"</orgname>
-                <orgname>Heidelberg University</orgname>
-            </affiliation>
-        </author>
     </bookinfo>
     <xi:include href="sidebar.xml"/>
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
@@ -70,7 +45,7 @@
             </tgroup>
         </table>
         <para>
-            When you log in, changes occur both in the buttons above and in the folders below.
+            When you log in, changes occur both in the buttons shown in Folder View and in the folders below.
         </para>
         <para>
             In order to log in to the Tamboti framework, use the username and password you use to access the Cluster IT resources. 
@@ -88,7 +63,8 @@
         <para>
             <graphic fileref="images/walk-through.09.2.png" align="center" valign="middle"/>
         </para>
-        <para>Your session lasts 30 minutes. You are presented with a warning that you will be logged out after 30 minutes of inactivity. If you do not respond to this within five minutes, your session will expire. This means that whatever you have not finished in the editor will be lost. It also means that your list in My List will be lost.
+        <para>Your session lasts 30 minutes. After 25 minutes of inactivity you are presented with a warning that your sessionis about to expire. If you do not respond to this within five minutes, your will be logged out. This means that whatever you have not finished in the editor will be lost. It also means that your list in My List and your search history will be lost.
         </para>
+        <para>Sessions are expired because the database maintains a lot of information about your search results in order to make browsing faster, and it can become a strain on the database server if too many sessions are logged.</para>
     </chapter>
 </book>

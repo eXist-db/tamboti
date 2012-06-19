@@ -5,36 +5,11 @@
         <graphic fileref="theme/images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>
         <productname>Tamboti</productname>
         <title>Tamboti Walkthrough</title>
-        <date>February 2012</date>
-        <author>
-            <firstname>Dulip</firstname>
-            <surname>Withanage</surname>
-            <affiliation>
-                <address format="linespecific">
-                    <email>withanage@asia-europe.uni-heidelberg.de</email>
-                </address>
-                <orgname>Heidelberg Research Architecture</orgname>
-                <orgname>"Asia and Europe in a Global Context"</orgname>
-                <orgname>Heidelberg University</orgname>
-            </affiliation>
-        </author>
-        <author>
-            <firstname>Jens Østergaard</firstname>
-            <surname>Petersen</surname>
-            <affiliation>
-                <address format="linespecific">
-                    <email>petersen@asia-europe.uni-heidelberg.de</email>
-                </address>
-                <orgname>Heidelberg Research Architecture</orgname>
-                <orgname>"Asia and Europe in a Global Context"</orgname>
-                <orgname>Heidelberg University</orgname>
-            </affiliation>
-        </author>
     </bookinfo>
     <xi:include href="sidebar.xml"/>
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
     <chapter>
-        <title>Paths</title>
+        <title>Search Paths 1</title>
         <table frame="all" width="25%" border="0" class="center">
             <title/>
             <tgroup cols="4">
@@ -59,7 +34,7 @@
                             </ulink>
                         </entry>
                         <entry>
-                            <ulink href="walkthrough.07.xml">
+                            <ulink href="walkthrough.06.5.xml">
                                 <div>
                                     <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next"/>&#160;
                                 </div>
@@ -72,20 +47,19 @@
         <para>
             If you click on the first button at the top 
             &#160;<graphic fileref="../themes/default/images/arrow_out.png" align="center" valign="middle"/>&#160;, 
-            all folders are opened fully, whereas all folders close if you click the second
+            all folders are opened fully, whereas all folders close if you click the second button
             &#160;<graphic fileref="../themes/default/images/arrow_in.png" align="center" valign="middle"/>&#160;. 
             The third button
             &#160;<graphic fileref="../themes/default/images/arrow_refresh.png" align="center" valign="middle"/>&#160;, 
-            the one for reloading the folder view, is only needed if you work for a long time on the database and new folders that you can see have been created (or deleted) by others since you logged in - these you will only be able to see if you reload the Folder View.
+            the one for reloading the folder view, is only needed if you work for a long time on the database and new folders 
+            that you can see have been created (or deleted) by others since you logged in - 
+            these you will only be able to see if you reload the Folder View.
         </para>
-        <para>
-            When you click on a folder or a folder name and thereby select it, you will see that the "path" leading to the folder in the search panel. Here the path leads from the base folder, "resources", to the folder "commons" and then to the folder "Cluster Publications", each step separated by slashes.</para>
-        <para>The folder called "commons" is used for all resources that are not particular to specific users or groups, but are meant to be general Cluster resources.</para>
-        <para>
-            Clicking on a folder in this way is how you determine where to perform a search. If you search for something, it will be searched for inside the path you have chosen. 
-        </para>
-        <para>
-            <graphic fileref="images/walk-through.06.png" align="center" valign="middle"/>
-        </para>
+        <note>
+            <para>Known Bug:</para>
+            <para>When you make a search in a folder, the other folders contained in the same folder disappear.</para>
+            <para>Until this bug is fixed, get around this by closing down all folders by clicking the second button, 
+                then updating by clicking the third button, and lastly accessing the same level in the folder hierarchy again.</para>
+        </note>
     </chapter>
 </book>

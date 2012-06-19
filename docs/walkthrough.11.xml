@@ -5,31 +5,6 @@
         <graphic fileref="theme/images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>
         <productname>Tamboti</productname>
         <title>Tamboti Walkthrough</title>
-        <date>February 2012</date>
-        <author>
-            <firstname>Dulip</firstname>
-            <surname>Withanage</surname>
-            <affiliation>
-                <address format="linespecific">
-                    <email>withanage@asia-europe.uni-heidelberg.de</email>
-                </address>
-                <orgname>Heidelberg Research Architecture</orgname>
-                <orgname>"Asia and Europe in a Global Context"</orgname>
-                <orgname>Heidelberg University</orgname>
-            </affiliation>
-        </author>
-        <author>
-            <firstname>Jens Østergaard</firstname>
-            <surname>Petersen</surname>
-            <affiliation>
-                <address format="linespecific">
-                    <email>petersen@asia-europe.uni-heidelberg.de</email>
-                </address>
-                <orgname>Heidelberg Research Architecture</orgname>
-                <orgname>"Asia and Europe in a Global Context"</orgname>
-                <orgname>Heidelberg University</orgname>
-            </affiliation>
-        </author>
     </bookinfo>
     <xi:include href="sidebar.xml"/>
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
@@ -67,20 +42,21 @@
                 </tbody>
             </tgroup>
         </table>
-        <para> If you click on your Home folder, you will see that two new buttons occur in the line above the folder hierarchy. </para>
-        <para> One of them allows you to create a folder inside the folder that belongs to you <graphic fileref="theme/images/folder_add.png" align="center" valign="middle"/>&#160;. If you have not created any folders yet, this will be your Home
-            folder (unless someone has shared a folder with you, as "samples" are in the screen shot below). </para>
+        <para> If you select your Home folder, you will see that two new buttons occur in the line above the folder hierarchy. </para>
+        <para> One of them allows you to create a folder inside a folder that belongs to you or that is shared with you 
+            <graphic fileref="images/folder_add.png" align="center" valign="middle"/>&#160;. 
+            </para>
         <para>
             <graphic fileref="images/walk-through.11.1.png" align="center" valign="middle"/>
         </para>
-        <para> If you select your Home folder and click this button, a dialogue window pops up, in which you can give a name to this folder. Please note that
-            you cannot use spaces in the folder name (it is probably best to use underscores).</para>
+        <para> If you select "bold" folder and click this button, a dialogue window appears in which you can give a name to the folder you want to create. 
+            You can use any characters you wish in the folder name, including spaces.</para>
         <para>
             <graphic fileref="images/walk-through.11.2.png" align="center" valign="middle"/>
         </para>
-        <para> By default, Tamboti comes with a number of sample records that illustrate different kinds of records. These you can treat as your own: at regular
+        <!--<para> By default, Tamboti comes with a number of sample records that illustrate different kinds of records. These you can treat as your own: at regular
             intervals the "samples" folder is restored to its original state, so you can do no (permanent) harm here. They are mainly of use when learning how to
-            use the editor; more about this later. </para>
-        <para>If you create a new folder, you will see even more buttons. They will be explained in the next part.</para>
+            use the editor; more about this later. </para>-->
+        <para>After you have created a new folder, you will see even more buttons. They will be explained in the next part.</para>
     </chapter>
 </book>

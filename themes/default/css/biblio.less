@@ -4,6 +4,7 @@
 #777 1 icon-magnifier
 #888 1 icon-magnifier
 @dark-gray:#4d4d4d;
+@mid-gray:#777777;
 @ordinary-gray:#bbb;
 @light-gray:#fafafa;
 @theme-color:#5db0e6;
@@ -13,6 +14,7 @@ color scheme ends*/
 /*variables begin*/
 @theme-color:#5db0e6;
 @ordinary-gray:#bbbbbb;
+@mid-gray:#777777;
 @light-gray:#f5f5f5;
 @dark-gray:#4d4d4d;
 @radius:5px;
@@ -21,10 +23,6 @@ color scheme ends*/
 
 /*new or temporary stuff begins*/
 
-ul.dynatree-container a {
-    color:@dark-gray;
-
-}
 #keyword-form input {
     margin-right:1em;
 }
@@ -214,7 +212,7 @@ img {border:0;
 }
 
 #collection-tree .collection-tree-toolbar img { 
-    border:0; 
+    border:0;
 }
 
 #collection-tree .dynatree-container {
@@ -225,6 +223,12 @@ img {border:0;
     margin-right:5px;
     margin-bottom:5px;
     border-radius:@radius;
+    color:@dark-gray;
+}
+
+span.readable .dynatree-title {
+    color: @mid-gray;
+    font-weight:normal;
 }
 
 #collection-tree .info-box {
@@ -689,12 +693,6 @@ td .relatedItem-label {}
 
 form ul li {
 	list-style:none;
-}
-
-/*collection-tree*/
-span.readable .dynatree-title {
-    font-weight:400;
-    color:@ordinary-gray;
 }
 
 #new-resource-dialog,	 

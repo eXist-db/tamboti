@@ -5,31 +5,6 @@
         <graphic fileref="theme/images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>
         <productname>Tamboti</productname>
         <title>Tamboti Walkthrough</title>
-        <date>February 2012</date>
-        <author>
-            <firstname>Dulip</firstname>
-            <surname>Withanage</surname>
-            <affiliation>
-                <address format="linespecific">
-                    <email>withanage@asia-europe.uni-heidelberg.de</email>
-                </address>
-                <orgname>Heidelberg Research Architecture</orgname>
-                <orgname>"Asia and Europe in a Global Context"</orgname>
-                <orgname>Heidelberg University</orgname>
-            </affiliation>
-        </author>
-        <author>
-            <firstname>Jens Østergaard</firstname>
-            <surname>Petersen</surname>
-            <affiliation>
-                <address format="linespecific">
-                    <email>petersen@asia-europe.uni-heidelberg.de</email>
-                </address>
-                <orgname>Heidelberg Research Architecture</orgname>
-                <orgname>"Asia and Europe in a Global Context"</orgname>
-                <orgname>Heidelberg University</orgname>
-            </affiliation>
-        </author>
     </bookinfo>
     <xi:include href="sidebar.xml"/>
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
@@ -59,7 +34,7 @@
                             </ulink>
                         </entry>
                         <entry>
-                            <ulink href="walkthrough.13.xml">
+                            <ulink href="walkthrough.12.3.xml">
                                 <div>
                                     <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next"/>
                                     &#160;</div>
@@ -70,18 +45,25 @@
             </tgroup>
         </table>
         <para>If you now open up your Home folder, by clicking on the plus sign, and select your newly created folder inside the Home folder,
-            you will see button allows you to move a folder to someplace else "within your command" <graphic fileref="theme/images/folder_go.png" align="center" valign="middle"/>&#160;.</para>
-        <para> Yet another button allows you to delete a folder that belongs to you, in this case the folder you have just created <graphic fileref="theme/images/folder_delete.png" align="center" valign="middle"/>&#160;. </para>
-        <para> More complicated options are presented by the new button: Manage Folder Sharing <graphic fileref="theme/images/user_edit.png" align="center" valign="middle"/>&#160;. The options afforded by this button are discussed separately, in the section on <ulink href="security-manager.xml">Sharing</ulink>. </para>
-        <para>
-            <graphic fileref="images/walk-through.12.png" align="center" valign="middle"/>
+            you will see a button which allows you to rename the folder, should you wish to <graphic fileref="images/folder_edit.png" align="center" valign="middle"/>&#160;. 
+        Clicking this will bring up a dialogue window similar to the one for creating new folders.</para>
+        <para>Another button allows you to move a folder to someplace else "within your command" 
+                <graphic fileref="images/folder_go.png" align="center" valign="middle"/>&#160;.
+            More on this in the next section.</para>
+        <para> Yet another button allows you to delete a folder that belongs to you, 
+            in this case the folder you have just created <graphic fileref="images/folder_delete.png" align="center" valign="middle"/>&#160;.
+            This brings up a dialogue warning that after deleting the folder, the folder and its contents cannot be restored. 
         </para>
-        <para> The last button&#160;<graphic fileref="theme/images/page_add.png" align="center" valign="middle"/>&#160;is in many ways the most important one: Create Stand-Alone Record (more about what "Stand-Alone" means below). 
-            If you click this button, you
-            will leave the Tamboti search interface and be taken to the Tamboti editor in which you can create a new record. 
-            You will first be presented with a dialogue in which are are asked to choose which kind of record you wish to enter and which language is used in the resource (and which language
-            you intend to use when cataloguing).</para>
-        <para> The search interface and the editor are linked in more ways than the Create Stand-Alone Record. If you are already in the editor or dialogue box now, you can click Cancel to
-            return to the search interface. </para>
+        <para> More complicated options are presented by the new button: 
+            Manage Folder Sharing <graphic fileref="images/user_edit.png" align="center" valign="middle"/>&#160;. 
+            The options afforded by this button are discussed separately, 
+            in the section on <ulink href="security-manager.xml">Sharing</ulink>. </para>
+        <para>
+            <graphic fileref="images/walk-through.12.1.png" align="center" valign="middle"/>
+        </para>
+        <para> The last button&#160;<graphic fileref="images/page_add.png" align="center" valign="middle"/>&#160;is in many ways the most important one: Create Stand-Alone Record (more about what "Stand-Alone" means below). 
+            If you click this button, you will leave the Tamboti search interface and be taken to the Tamboti editor in which you can create a new record. 
+            You will first be presented with a dialogue in which are are asked to choose which kind of record you wish to enter. More about the editor below.</para>
+        <para>If you are in the editor or the dialogue box, you can click Cancel Editing or Cancel to return to the search interface.</para>
     </chapter>
 </book>

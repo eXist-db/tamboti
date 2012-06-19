@@ -1,7 +1,7 @@
 module namespace modsCommon="http://exist-db.org/mods/common";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
-declare namespace functx = "http://www.functx.com";
+declare namespace functx="http://www.functx.com";
 
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
 
@@ -116,7 +116,7 @@ declare function modsCommon:get-short-title($entry as element()) {
     (: The short title only consists of the main title, which is untyped, and its renditions in transliteration and translation. 
     Filter away the remaining titleInfo @type values. 
     This means that a record without an untyped titleInfo will not display any title. :)
-    let $titleInfo := $entry/mods:titleInfo[not(@type=('abbreviated', 'uniform', 'alternative'))]
+    let $titleInfo := $entry/mods:titleInfo[not(@type = ('abbreviated', 'uniform', 'alternative'))]
     
     (: The main title can be 1) in original language and script, or 2) in transliteration, or 3) in translation. 
     Therefore, split titleInfo into these three, reusing $titleInfo for the untyped titleInfo. 
@@ -153,26 +153,24 @@ declare function modsCommon:get-short-title($entry as element()) {
     (: Format each of the three kinds of titleInfo. :)
     let $title-formatted := 
         (
-        if ($nonSort/string())
+        if (string($nonSort))
         (: This assumes that nonSort is not used in Asian scripts; otherwise we would have to avoid the space. :)
         then concat($nonSort, ' ' , $title)
         else $title
         , 
-        if ($subTitle/string()) 
+        if (string($subTitle)) 
         then concat(': ', $subTitle)
         else ()
         ,
-        if ($partNumber/string() or $partName/string())
+        if ($partNumber/text() or $partName/text())
         then
-            if ($partNumber/string() and $partName/string()) 
-            then concat('. ', $partNumber, ': ', $partName)
+            if ($partNumber/text() and $partName/text()) 
+            then concat('. ', $partNumber/text(), ': ', $partName/text())
             else
-                if ($partNumber/string())
-                then concat('. ', $partNumber)
-                else
-                    if ($partName/string())
-                    then concat('. ', $partName)
-            		else ()
+                if ($partNumber/text())
+                then concat('. ', $partNumber/text())
+                else concat('. ', $partName/text())
+            		
         else ()
         )
     let $title-formatted := string-join($title-formatted, '')
@@ -187,17 +185,14 @@ declare function modsCommon:get-short-title($entry as element()) {
         then concat(': ', $subTitle-transliterated)
         else ()
         ,
-        if ($partNumber-transliterated or $partName-transliterated)
+        if ($partNumber-transliterated/text() or $partName-transliterated/text())
         then
-            if ($partNumber-transliterated and $partName-transliterated) 
-            then concat('. ', $partNumber-transliterated, ': ', $partName-transliterated)
+            if ($partNumber-transliterated/text() and $partName-transliterated/text()) 
+            then concat('. ', $partNumber-transliterated/text(), ': ', $partName-transliterated/text())
             else
-                if ($partNumber-transliterated)
-                then concat('. ', $partNumber-transliterated)
-                else
-                    if ($partName-transliterated)
-                    then concat('. ', $partName-transliterated)
-            		else ()
+                if ($partNumber-transliterated/text())
+                then concat('. ', $partNumber-transliterated/text())
+                else concat('. ', $partName-transliterated/text())
         else ()
         )
     let $title-transliterated-formatted := string-join($title-transliterated-formatted, '')    
@@ -212,17 +207,14 @@ declare function modsCommon:get-short-title($entry as element()) {
         then concat(': ', $subTitle-translated)
         else ()
         ,
-        if ($partNumber-translated or $partName-translated)
+        if ($partNumber-translated/text() or $partName-translated/text())
         then
-            if ($partNumber-translated and $partName-translated) 
-            then concat('. ', $partNumber-translated, ': ', $partName-translated)
+            if ($partNumber-translated/text() and $partName-translated/text()) 
+            then concat('. ', $partNumber-translated/text(), ': ', $partName-translated/text())
             else
-                if ($partNumber-translated)
-                then concat('. ', $partNumber-translated)
-                else
-                    if ($partName-translated)
-                    then concat('. ', $partName-translated)
-            		else ()
+                if ($partNumber-translated/text())
+                then concat('. ', $partNumber-translated/text())
+                else concat('. ', $partName-translated/text())
         else ()
         )
     let $title-translated-formatted := string-join($title-translated-formatted, '')
@@ -240,10 +232,10 @@ declare function modsCommon:get-short-title($entry as element()) {
         then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">{$title-formatted}</span>
         else
         (: If there is no transliterated title, the standard for Western literature. :)
-        	if (exists($entry/mods:relatedItem[@type='host'][1]/mods:part/mods:extent[1]) 
-        	   or exists($entry/mods:relatedItem[@type='host'][1]/mods:part[1]/mods:detail[1]/mods:number[1]) 
-        	   (: NB: Faulty Zotero export has text here; delete when corrected. :)
-        	   or exists($entry/mods:relatedItem[@type='host'][1]/mods:part[1]/mods:detail[1]/mods:text[1]))
+        	if (exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part/mods:extent[1]) 
+        	   or exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part[1]/mods:detail[1]/mods:number[1]) 
+        	   (: NB: Faulty Zotero export has mods:text here; delete when Zotero has corrected this. :)
+        	   or exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part[1]/mods:detail[1]/mods:text[1]))
     	   then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">“{$title-formatted}”</span>
     	   else <span xmlns="http://www.w3.org/1999/xhtml" class="title">{$title-formatted}</span>
         ,
@@ -275,27 +267,27 @@ declare function modsCommon:get-short-title($entry as element()) {
 :)
 declare function modsCommon:get-language-label($languageTerm as xs:string) as xs:string? {
         let $language-label :=
-            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[value = $languageTerm]/label
+            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[value eq $languageTerm]/label
             return
                 if ($language-label)
                 then $language-label
                 else
-                    let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTwo = $languageTerm]/label
+                    let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTwo eq $languageTerm]/label
                     return
                         if ($language-label)
                         then $language-label
                         else
-                            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTerm = $languageTerm]/label
+                            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[valueTerm eq $languageTerm]/label
                             return
                                 if ($language-label)
                                 then $language-label
                                 else
-                                    let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[upper-case(label) = upper-case($languageTerm)[1]]/label
+                                    let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[upper-case(label) eq upper-case($languageTerm)[1]]/label
                                     return
                                         if ($language-label)
                                         then $language-label
                                         else
-                                            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[upper-case(label) = upper-case($languageTerm)]/label
+                                            let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[upper-case(label) eq upper-case($languageTerm)]/label
                                             return
                                                 if ($language-label)
                                                 then $language-label
@@ -470,7 +462,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                         and which do not have script set to Latin, and which do not have English as their language. :)
                         let $name-in-non-latin-script := 
     	                    if ($name-contains-transliteration)
-    	                    then <name>{$name/*:namePart[(not(@transliteration) or string-length(@transliteration) eq 0)][(@script)][not(@script = ('Latn', 'latn', 'Latin'))][not(@lang = $modsCommon:western-languages)]}</name>
+    	                    then <name>{$name/*:namePart[(not(@transliteration) or not(string(@transliteration)))][(@script)][not(@script = ('Latn', 'latn', 'Latin'))][not(@lang = $modsCommon:western-languages)]}</name>
     	                    else ()
                         (: We assume that there is only one date name part in $name-basic. 
                         Date name parts with transliteration and script are rather theoretical. 
@@ -479,7 +471,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                         return
                             concat(
                             (: ## 1 ##:)
-                            if ($name-basic/string())
+                            if (string($name-basic))
                             (: If there are one or more name parts that are not marked as being transliteration and that are not marked as being in a certain script (aside from Latin). :)
                             then
                             (: Filter the name parts according to type. :)
@@ -502,9 +494,10 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                 if ($untyped-name-basic/*:namePart/@lang)
                                                 then $untyped-name-basic/*:namePart/@lang
                                                 else ()
-                                let $nameOrder-basic := modsCommon:get-name-order($language-basic, $name-language, $global-language)
+                                let $log := util:log("DEBUG", ("##$language-basic): ", $language-basic))
+                                let $nameOrder-basic := modsCommon:get-name-order(distinct-values($language-basic), $name-language, $global-language)
                                 return
-                                    if ($untyped-name-basic/string())
+                                    if (string($untyped-name-basic))
                                     (: If there are name parts that are not typed, there is nothing we can do to order their sequence. 
                                     When name parts are not typed, it is generally because the whole name occurs in one name part, 
                                     pre-formatted for display (usually with a comma between family and given name), 
@@ -527,7 +520,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                 (: There may be several instances of the same type of name part; these are joined with a space in between. :)
                                                 string-join($family-name-basic/*:namePart, ' ') 
                                                 ,
-                                                if ($family-name-basic/string() and $given-name-basic/string())
+                                                if (string($family-name-basic) and string($given-name-basic))
                                                 (: If only one of family and given are evidenced, no comma is needed. :)
                                                 then
                                                     if ($nameOrder-basic eq 'family-given')
@@ -538,7 +531,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                 ,
                                                 string-join($given-name-basic/*:namePart, ' ') 
                                                 ,
-                                                if ($termsOfAddress-basic/string())
+                                                if (string($termsOfAddress-basic))
                                                 (: If there are several terms of address, join them with a comma in between ("Dr., Prof."). :)
                                                 then concat(', ', string-join($termsOfAddress-basic/*:namePart, ', ')) 
                                                 else ()
@@ -551,13 +544,13 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                 (
                                                     string-join($family-name-basic/*:namePart, ' ') 
                                                     ,
-                                                    if ($family-name-basic/string() and $given-name-basic/string())
+                                                    if (string($family-name-basic) and string($given-name-basic))
                                                     then ' '
                                                     else ()
                                                     ,
                                                     string-join($given-name-basic/*:namePart, ' ') 
                                                     ,
-                                                    if ($termsOfAddress-basic/string())
+                                                    if (string($termsOfAddress-basic))
                                                     (: NB: Where do terms of address go in Hungarian? :)
                                                     then concat(', ', string-join($termsOfAddress-basic/*:namePart, ', ')) 
                                                     else ()
@@ -567,13 +560,13 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                             (: Example: "Dr. Sigmund Freud (1856-1939)". :)
                                                         concat
                                                         (
-                                                            if ($termsOfAddress-basic/text())
+                                                            if (string($termsOfAddress-basic))
                                                             then concat(string-join($termsOfAddress-basic/*:namePart, ', '), ' ')
                                                             else ()
                                                             ,
                                                             string-join($given-name-basic/*:namePart, ' ')
                                                             ,
-                                                            if ($family-name-basic/string() and $given-name-basic/string())
+                                                            if (string($family-name-basic) and string($given-name-basic))
                                                             then ' '
                                                             else ()
                                                             ,
@@ -591,7 +584,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                             then ' ('
                             else ()
                             ,
-                            if ($name-in-transliteration/string())
+                            if (string($name-in-transliteration))
                             (: If we have a name in transliteration, e.g. be a Chinese name or a Russian name, filter the name parts according to type. :)
                             then
                                 let $untyped-name-in-transliteration := <name>{$name-in-transliteration/*:namePart[not(@type)]}</name>
@@ -615,7 +608,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                 let $nameOrder-in-transliteration := modsCommon:get-name-order($language-in-transliteration, $name-language, $global-language)                                
                                 return       
                                     (: If there are name parts that are not typed, there is nothing we can do to order their sequence. :)
-                                    if ($untyped-name-in-transliteration/string())
+                                    if (string($untyped-name-in-transliteration))
                                     then string-join($untyped-name-in-transliteration/*:namePart, ' ') 
                                     else
                                     (: If the name parts are typed, we have a name that is a transliteration and that is divided into given and family name. 
@@ -627,13 +620,13 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                         concat(
                                             string-join($family-name-in-transliteration/*:namePart, ' ') 
                                             , 
-                                            if ($family-name-in-transliteration/string() and $given-name-in-transliteration/string())
+                                            if (string($family-name-in-transliteration) and string($given-name-in-transliteration))
                                             then ', '
                                             else ()
                                             ,
                                             string-join($given-name-in-transliteration/*:namePart, ' ') 
                                             ,
-                                            if ($termsOfAddress-in-transliteration/string()) 
+                                            if (string($termsOfAddress-in-transliteration)) 
                                             then concat(', ', string-join($termsOfAddress-in-transliteration/*:namePart, ', ')) 
                                             else ()
                                         )
@@ -644,13 +637,13 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                             (: If it is e.g. a Russian name. :)
                                             then
                                                 concat(
-                                                    if ($termsOfAddress-in-transliteration/string()) 
+                                                    if (string($termsOfAddress-in-transliteration)) 
                                                     then concat(', ', string-join($termsOfAddress-in-transliteration/*:namePart, ', ')) 
                                                     else ()
                                                     ,
                                                     string-join($given-name-in-transliteration/*:namePart, ' ')
                                                     ,
-                                                    if ($family-name-in-transliteration/string() and $given-name-in-transliteration/string())
+                                                    if (string($family-name-in-transliteration) and string($given-name-in-transliteration))
                                                     then ' '
                                                     else ()
                                                     ,
@@ -661,20 +654,20 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                 concat(
                                                     string-join($family-name-in-transliteration, '')
                                                     ,
-                                                    if ($family-name-in-transliteration/string() and $given-name-in-transliteration/string())
+                                                    if (string($family-name-in-transliteration) and string($given-name-in-transliteration))
                                                     then ' '
                                                     else ()
                                                     ,
                                                     string-join($given-name-in-transliteration, '')
                                                     ,
-                                                    if ($termsOfAddress-in-transliteration/string()) 
+                                                    if (string($termsOfAddress-in-transliteration)) 
                                                     then concat(' ', string-join($termsOfAddress-in-transliteration/*:namePart, ' ')) 
                                                     else ()
                                                 )
                                 else ()
                                 , ' ',
                                 (: ## 3 ##:)
-                                    if ($name-in-non-latin-script/string())
+                                    if (string($name-in-non-latin-script))
                                     then
                                         let $untyped-name-in-non-latin-script := <name>{$name-in-non-latin-script/*:namePart[not(@type)]}</name>
                                         let $family-name-in-non-latin-script := <name>{$name-in-non-latin-script/*:namePart[@type eq 'family']}</name>
@@ -695,7 +688,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                         else ()
                                         let $nameOrder-in-non-latin-script := modsCommon:get-name-order($language-in-non-latin-script, $name-language, $global-language)
                                         return       
-                                            if ($untyped-name-in-non-latin-script/string())
+                                            if (string($untyped-name-in-non-latin-script))
                                             (: If the name parts are not typed, there is nothing we can do to order their sequence. When name parts are not typed, it is generally because the whole name occurs in one name part, formatted for display (usually with a comma between family and given name), but it may also be used when names that cannot be divided into family and given names are in evidence. We trust that any sequence of nameparts are meaningfully ordered and string-join them. :)
                                             then string-join($untyped-name-in-non-latin-script, ' ') 
                                             else
@@ -709,13 +702,13 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                 concat(
                                                     string-join($family-name-in-non-latin-script/*:namePart, ' ')
                                                     , 
-                                                    if ($family-name-in-non-latin-script/string() and $given-name-in-non-latin-script/string())
+                                                    if (string($family-name-in-non-latin-script) and string($given-name-in-non-latin-script))
                                                     then ', '
                                                     else ()
                                                     ,
                                                     string-join($given-name-in-non-latin-script/*:namePart, ' ')
                                                     ,
-                                                    if ($termsOfAddress-in-non-latin-script/string()) 
+                                                    if (string($termsOfAddress-in-non-latin-script)) 
                                                     then concat(', ', string-join($termsOfAddress-in-non-latin-script, ', ')) 
                                                     else ()
                                                 )
@@ -726,13 +719,13 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                     if ($nameOrder-in-non-latin-script ne 'family-given')
                                                     then
                                                         concat(
-                                                            if ($termsOfAddress-in-non-latin-script/string())
+                                                            if (string($termsOfAddress-in-non-latin-script))
                                                             then concat(string-join($termsOfAddress-in-non-latin-script, ', '), ' ')
                                                             else ()
                                                             ,
                                                             string-join($given-name-in-non-latin-script/*:namePart, ' ')
                                                             ,
-                                                            if ($family-name-in-non-latin-script/string() and $given-name-in-non-latin-script/string())
+                                                            if (string($family-name-in-non-latin-script) and string($given-name-in-non-latin-script))
                                                             then ' '
                                                             else ()
                                                             ,
@@ -749,7 +742,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                             string-join($termsOfAddress-in-non-latin-script, '')
                                                             (:
                                                             ,
-                                                            if ($dateScript/string())
+                                                            if (string($dateScript))
                                                             then concat(' (', string-join($dateScript, ', ') ,')')
                                                             else ()
                                                             :)
@@ -791,7 +784,7 @@ declare function modsCommon:get-name-order($namePart-language as xs:string?, $na
                     if ($global-language)
                     then $global-language
                     else ()
-    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[value eq $language]/nameOrder/string()
+    let $nameOrder := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[value eq $language]/nameOrder/text()
     return $nameOrder
 };
 
@@ -811,26 +804,26 @@ declare function modsCommon:get-name-order($namePart-language as xs:string?, $na
 declare function modsCommon:format-subjects($entry as element(), $global-transliteration as xs:string, $global-language as xs:string) as element()+ {
     for $subject in $entry/mods:subject
     let $authority := 
-        if ($subject/@authority/string()) 
-        then concat('(', ($subject/@authority/string()), ')') 
+        if (string($subject/@authority)) 
+        then concat('(', (string($subject/@authority)), ')') 
         else ()
     return
         <tr>
             <td class="label subject">Subject {$authority}</td>
             <td class="record">    
             {
-            for $item in $subject/mods:*[string-length(functx:trim(.)) gt 0]
+            for $item in $subject/mods:*[string(functx:trim(.))]
             let $authority := 
-                if ($item/@authority/string()) 
-                then concat('(', ($item/@authority/string()), ')') 
+                if (string($item/@authority)) 
+                then concat('(', (string($item/@authority)), ')') 
                 else ()
             let $encoding := 
-                if ($item/@encoding/string()) 
-                then concat('(', ($item/@encoding/string()), ')') 
+                if (string($item/@encoding)) 
+                then concat('(', (string($item/@encoding)), ')') 
                 else ()
             let $type := 
-                if ($item/@type/string()) 
-                then concat('(', ($item/@type/string()), ')') 
+                if (string($item/@type)) 
+                then concat('(', (string($item/@type)), ')') 
                 else ()        
             return
                 <table class="subject">
@@ -857,16 +850,16 @@ declare function modsCommon:format-subjects($entry as element(), $global-transli
                                     (: If it is something else, no special formatting takes place. :)
                                     for $subitem in ($item/mods:*)
                                     let $authority := 
-                                        if ($subitem/@authority/string()) 
-                                        then concat('(', ($subitem/@authority/string()), ')') 
+                                        if (string($subitem/@authority)) 
+                                        then concat('(', (string($subitem/@authority)), ')') 
                                         else ()
                                     let $encoding := 
-                                        if ($subitem/@encoding/string()) 
-                                        then concat('(', ($subitem/@encoding/string()), ')') 
+                                        if (string($subitem/@encoding)) 
+                                        then concat('(', (string($subitem/@encoding)), ')') 
                                         else ()
                                     let $type := 
-                                        if ($subitem/@type/string()) 
-                                        then concat('(', ($subitem/@type/string()), ')') 
+                                        if (string($subitem/@type)) 
+                                        then concat('(', (string($subitem/@type)), ')') 
                                         else ()    
                                     return
                                         <table>
@@ -877,7 +870,7 @@ declare function modsCommon:format-subjects($entry as element(), $global-transli
                                                 </td>
                                                 <td>
                                                 <td class="subrecord">                
-                                                {$subitem/string()}
+                                                {string($subitem)}
                                                 </td>
                                                 </td>
                                             </tr>
@@ -886,7 +879,7 @@ declare function modsCommon:format-subjects($entry as element(), $global-transli
                         </td>
                         else
                             if ($item) then
-                            <td class="subrecord" colspan="2">{$item/string()}</td>
+                            <td class="subrecord" colspan="2">{string($item)}</td>
                             else ()
                         }
                     </tr>

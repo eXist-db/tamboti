@@ -5,31 +5,6 @@
         <graphic fileref="theme/images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>
         <productname>Tamboti</productname>
         <title>Tamboti Walkthrough</title>
-        <date>February 2012</date>
-        <author>
-            <firstname>Dulip</firstname>
-            <surname>Withanage</surname>
-            <affiliation>
-                <address format="linespecific">
-                    <email>withanage@asia-europe.uni-heidelberg.de</email>
-                </address>
-                <orgname>Heidelberg Research Architecture</orgname>
-                <orgname>"Asia and Europe in a Global Context"</orgname>
-                <orgname>Heidelberg University</orgname>
-            </affiliation>
-        </author>
-        <author>
-            <firstname>Jens Østergaard</firstname>
-            <surname>Petersen</surname>
-            <affiliation>
-                <address format="linespecific">
-                    <email>petersen@asia-europe.uni-heidelberg.de</email>
-                </address>
-                <orgname>Heidelberg Research Architecture</orgname>
-                <orgname>"Asia and Europe in a Global Context"</orgname>
-                <orgname>Heidelberg University</orgname>
-            </affiliation>
-        </author>
     </bookinfo>
     <xi:include href="sidebar.xml"/>
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
@@ -53,8 +28,7 @@
                         <entry>
                             <ulink href="walkthrough.toc.xml">
                                 <div class="toc">
-                                    <graphic fileref="images/text_list_bullets.png" align="center" alt="Table of Contents"/>&#160;
-                                </div>
+                                    <graphic fileref="images/text_list_bullets.png" align="center" alt="Table of Contents"/>&#160; </div>
                             </ulink>
                         </entry>
                         <entry>
@@ -67,16 +41,25 @@
                 </tbody>
             </tgroup>
         </table>
-        <para> When you access Tamboti without logging in, you are able to search in material that is open to everybody, to all "guests." </para>
-        <para>When you have logged in, you can additionally search in material that is open to you alone and in material that is open to groups to which you
-            belong.</para>
-        <para>Even after you have logged log in, you will not see all material in the database, since it is likely that there are other users who keep at least
-            some of their records private to themselves.</para>
-        <para>The material that you wish to keep to yourself cannot be seen by anybody else, unless you choose to allow this. Below, it will be explained how
-            you go about sharing your material, should you choose to do so.</para>
-        <para>When searches are performed, only material open to a certain user is retrieved: the rest of the database could just as well not have existed.
-            Needless to say, the parts that outsiders cannot see cannot be edited by them. </para>
-        <para>Though, generally speaking, it is hard to imagine why one would not want to share one's bibliographical records with everybody, Tamboti makes this
-            possible. In other frameworks where we will apply the same user model, the benefits of this flexibility will be more evident.</para>
+        <para> When you access Tamboti without logging in, you are able to search in material that
+            is open to everybody, to all "guests." </para>
+        <para>When you have logged in, you can additionally search in material that is open to you
+            alone, in material that is shared with you, and in material that is open to groups to
+            which you belong.</para>
+        <para>Even after you have logged log in, you will not see all material in the database,
+            since it is likely that there are other users who keep at least some of their records
+            private to themselves.</para>
+        <para>The material that you wish to keep to yourself cannot be seen by anybody else, unless
+            you choose to allow this. Below, it will be explained how you go about sharing your
+            material, should you choose to do so.</para>
+        <para>When searches are performed, only material open to a certain user is retrieved: the
+            rest of the database could just as well not have existed. Needless to say, the parts
+            that outsiders cannot see cannot be edited by them. </para>
+        <para>Though, generally speaking, it is hard to imagine why one would not want to share
+            one's finished bibliographical records with everybody, a project might wish to develop a
+            bibliography, keeping the draft visible to a certain group and editable to another
+            group, before a decision has been made to publish it to the world at large. In other
+            frameworks where we will apply the same user model, the benefits of this flexibility
+            will be more evident.</para>
     </chapter>
 </book>

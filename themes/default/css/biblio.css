@@ -4,6 +4,7 @@
 #777 1 icon-magnifier
 #888 1 icon-magnifier
 @dark-gray:#4d4d4d;
+@mid-gray:#777777;
 @ordinary-gray:#bbb;
 @light-gray:#fafafa;
 @theme-color:#5db0e6;
@@ -12,9 +13,6 @@ color scheme ends*/
 /*variables begin*/
 /*variables end*/
 /*new or temporary stuff begins*/
-ul.dynatree-container a {
-  color: #4d4d4d;
-}
 #keyword-form input {
   margin-right: 1em;
 }
@@ -170,6 +168,11 @@ img {
   margin-right: 5px;
   margin-bottom: 5px;
   border-radius: 5px;
+  color: #4d4d4d;
+}
+span.readable .dynatree-title {
+  color: #777777;
+  font-weight: normal;
 }
 #collection-tree .info-box {
   border-radius: 5px;
@@ -536,11 +539,6 @@ td .title {
 }
 form ul li {
   list-style: none;
-}
-/*collection-tree*/
-span.readable .dynatree-title {
-  font-weight: 400;
-  color: #bbbbbb;
 }
 #new-resource-dialog,
 #add-related-dialog {

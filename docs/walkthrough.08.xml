@@ -5,31 +5,6 @@
         <graphic fileref="theme/images/logovjc.gif" title="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" alt="The Cluster of Excellence &#34;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&#34; at Heidelberg University" width="75" height="69" style="border-style: none"/>
         <productname>Tamboti</productname>
         <title>Tamboti Walkthrough</title>
-        <date>February 2012</date>
-        <author>
-            <firstname>Dulip</firstname>
-            <surname>Withanage</surname>
-            <affiliation>
-                <address format="linespecific">
-                    <email>withanage@asia-europe.uni-heidelberg.de</email>
-                </address>
-                <orgname>Heidelberg Research Architecture</orgname>
-                <orgname>"Asia and Europe in a Global Context"</orgname>
-                <orgname>Heidelberg University</orgname>
-            </affiliation>
-        </author>
-        <author>
-            <firstname>Jens Østergaard</firstname>
-            <surname>Petersen</surname>
-            <affiliation>
-                <address format="linespecific">
-                    <email>petersen@asia-europe.uni-heidelberg.de</email>
-                </address>
-                <orgname>Heidelberg Research Architecture</orgname>
-                <orgname>"Asia and Europe in a Global Context"</orgname>
-                <orgname>Heidelberg University</orgname>
-            </affiliation>
-        </author>
     </bookinfo>
     <xi:include href="sidebar.xml"/>
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
@@ -75,17 +50,24 @@
         <para>
             <graphic fileref="images/walk-through.08.png" align="center" valign="middle"/>
         </para>
-        <para> In the detail view, you can see in which folder the record is located, opposite "In Folder:" </para>
-        <para> In the detail view the buttons displayed reflect what you can do. If you have not logged in, this is not much. </para>
+        <para> In the detail view, you can see in which folder the record is located, opposite "Record Location".</para>
+        <para> The buttons displayed reflect what you can do. If you have not logged in, this is not much. </para>
         <itemizedlist>
             <listitem>
-                <para>You can access the XML view of the record in question, that is the "raw" XML view of the MODS record, with all information enclosed by
-                    tags. While this view is very informative, it may not be easy to decipher. </para>
+                <para>You can access the XML view of the record in question, that is the "raw" XML view of the MODS record, 
+                    with all information enclosed by tags. </para>
             </listitem>
         </itemizedlist>
         <para> The detail view shows most of the contents of the records, but some of the information may not be displayed, because it is too complex or too prolix or because it is believed to lack
-            relevance to most users. The XML view shows the unabridged view of a record. If you have saved a number of records and export them, the export
-            format is also raw XML. Applications like EndNote and Zotero can import this format (in Citavi, this import function is still under
-            development). This means that you can work with the records you find in Tamboti in ordinary desktop applications. </para>
+            relevance to most users. The XML view shows the unabridged view of a record. This is the data that Tamboti works with. 
+            If you have saved a number of records and export them, the export format is also raw XML.
+            While it is very informative, it is not easy to decipher. 
+        </para>
+        <para>
+            Applications like <ulink href="http://http://www.endnote.com/">EndNote</ulink> and 
+            <ulink href="http://http://www.zotero.org/">Zotero</ulink> can import this format 
+            (in <ulink href="http://www.citavi.com/">Citavi</ulink>, this import function is still under
+            development). This means that you can work with the records you find in Tamboti in ordinary desktop applications and (with Zotero) in the browser,
+            integrating them in your papers. </para>
     </chapter>
 </book>

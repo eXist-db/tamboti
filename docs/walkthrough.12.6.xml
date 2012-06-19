@@ -9,7 +9,7 @@
     <xi:include href="sidebar.xml"/>
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
     <chapter>
-        <title>The Search Interface</title>
+        <title>Home Folder Functionalities 3</title>
         <table frame="all" width="25%" border="0" class="center">
             <title/>
             <tgroup cols="4">
@@ -20,10 +20,10 @@
                 <tbody>
                     <row>
                         <entry>
-                            <ulink href="walkthrough.03.xml">
+                            <ulink href="walkthrough.12.3.xml">
                                 <div>
-                                    <graphic fileref="images/resultset_previous.png" align="left" alt="Go To Previous"/>&#160;
-                                </div>
+                                    <graphic fileref="images/resultset_previous.png" align="left" alt="Go To Previous"/>
+                                    &#160;</div>
                             </ulink>
                         </entry>
                         <entry>
@@ -34,32 +34,29 @@
                             </ulink>
                         </entry>
                         <entry>
-                            <ulink href="walkthrough.05.xml">
+                            <ulink href="walkthrough.13.xml">
                                 <div>
-                                    <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next"/>&#160;
-                                </div>
+                                    <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next"/>
+                                    &#160;</div>
                             </ulink>
                         </entry>
                     </row>
                 </tbody>
             </tgroup>
         </table>
+        <para>Deleting</para>
+        <para> Yet another button allows you to delete a folder that belongs to you, 
+            in this case the folder you have just created <graphic fileref="images/folder_delete.png" align="center" valign="middle"/>&#160;. </para>
+        <para> More complicated options are presented by the new button: 
+            Manage Folder Sharing <graphic fileref="images/user_edit.png" align="center" valign="middle"/>&#160;. 
+            The options afforded by this button are discussed separately, 
+            in the section on <ulink href="security-manager.xml">Sharing</ulink>. </para>
         <para>
-                When you access Tamboti, you will first be presented with the search interface. The search interface consists of several parts.
-            </para>
-        <para>
-            <itemizedlist>
-                <listitem>Below the Tamboti logo, you will find the buttons for "Login" and "Help" - presumably you are now reading this tutorial because
-                        you have clicked the latter one.</listitem>
-                <listitem>Below that, you will find a set of tabs. The tabs open by default on Simple Search: the other tabs are Advanced Search, Query
-                        History and My List. The functions that these tabs give access to will be explained below; they are similar to functions found in most
-                        library catalogues.</listitem>
-                <listitem>Below the area controlled by the tabs, you will find a grey vertical column, headed by the Folder View button.</listitem>
-                <listitem>To the right of the Folder View button, you will find the found count for the current search and the links for navigating to the next and previous groups of search hits (composed of ten records), as well as to the first and last groups.</listitem>
-            </itemizedlist>
+            <graphic fileref="images/walk-through.12.png" align="center" valign="middle"/>
         </para>
-        <para>
-            <graphic fileref="images/walk-through.04.png" align="center" valign="middle"/>
-        </para>
+        <para> The last button&#160;<graphic fileref="images/page_add.png" align="center" valign="middle"/>&#160;is in many ways the most important one: Create Stand-Alone Record (more about what "Stand-Alone" means below). 
+            If you click this button, you will leave the Tamboti search interface and be taken to the Tamboti editor in which you can create a new record. 
+            You will first be presented with a dialogue in which are are asked to choose which kind of record you wish to enter. More about the editor below.</para>
+        <para>If you are in the editor or the dialogue box, you can click Cancel Editing or Cancel to return to the search interface.</para>
     </chapter>
 </book>
