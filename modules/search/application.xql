@@ -25,7 +25,7 @@ declare namespace request="http://exist-db.org/xquery/request";
 declare namespace session="http://exist-db.org/xquery/session";
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace xmldb="http://exist-db.org/xquery/xmldb";
-declare namespace functx = "http://www.functx.com";
+declare namespace functx="http://www.functx.com";
 declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace mods="http://www.loc.gov/mods/v3";
 
@@ -57,7 +57,9 @@ declare function functx:substring-before-if-contains
  } ;
 
 (:~
-    Simple mapping from field names to an XPath expression
+    Mapping field names to XPath expressions.
+    Changes in field names should be reflected in autocomplete.xql and biblio:construct-order-by-expression().
+    Fields used should be reflected in the collection.xconf in /db/system/config/db/resources/.
 :)
 declare variable $biblio:FIELDS :=
 	<fields>
@@ -84,27 +86,27 @@ declare variable $biblio:FIELDS :=
 			)
 		</field>
 		<field name="Identifier">mods:mods[mods:identifier = '$q']</field>
-		<field name="Abstract">mods:mods[ft:query(mods:note, '$q', $options)]</field>
+		<field name="Abstract">mods:mods[ft:query(mods:abstract, '$q', $options)]</field>
         <field name="Note">mods:mods[ft:query(mods:note, '$q', $options)]</field>
         <field name="Subject">mods:mods[ft:query(mods:subject, '$q', $options)]</field>
-       	<field name="ID">mods:mods[@ID = '$q']</field>        
-        <field name="XLink">mods:mods[mods:relatedItem/@xlink:href = '$q']</field>
+       	<field name="ID">mods:mods[@ID eq '$q']</field>        
+        <field name="XLink">mods:mods[mods:relatedItem/@xlink:href eq '$q']</field>
         <field name="All">
        		(
        		mods:mods[ft:query(., '$q', $options)]
        		   union
 	        ft:search('page:$q')
 	           union
-       		mods:mods[@ID = '$q']
+       		mods:mods[@ID eq '$q']
        		   union
-       		mods:mods[mods:relatedItem/@xlink:href = '$q']
+       		mods:mods[mods:relatedItem/@xlink:href eq '$q']
        		)
        	</field>
 	</fields>;
 
 (:
-    Default template to be used for form generation if no
-    query was specified. This sets the search for all records in the theme default collection.
+    Default template to be used for form generation if no query is specified. 
+    This sets a search for all records in the theme default collection.
 :)
 declare variable $biblio:TEMPLATE_QUERY :=
     <query>
@@ -115,23 +117,49 @@ declare variable $biblio:TEMPLATE_QUERY :=
     </query>;
 
 (:~
-    Regenerate the HTML form to match the query, e.g. after adding more filter
-    clauses.
+    Regenerate the HTML form to match the query, e.g. after adding more filter clauses.
+    $incoming-query returns XML as follows:
+    <query>
+        <collection>/resources/commons/Cluster%20Publications</collection>
+        <not>
+            <and>
+                <or>
+                    <field m="1" name="All">france</field>
+                    <field m="2" name="All">germany</field>
+                </or>
+                <field m="3" name="All">identity</field>
+            </and>
+            <field m="4" name="Name">fuhr</field>
+        </not>
+    </query> 
+    for: 
+        - "france" All
+        or "germany" All
+        and "identity" All
+        not "fuhr" Name
 :)
-(: NB: why can only two filters be added? Clicking on a filter adds it to the search, but adding a third filter does not work. :)
 declare function biblio:form-from-query($node as node(), $params as element(parameters)?, $model as item()*) as element()+ {
     let $incoming-query := $model[1]
+    let $log := util:log("DEBUG", ("##$model): ", $model))
+    (:NB: Hack to avoid error because the integer 0 is returned to $incoming-query when clicking "Clear all". 
+    After removing the search fields, an empty search in the selected collection should be performed.:)
+    let $incoming-query := if (string($incoming-query) eq '0') then $biblio:TEMPLATE_QUERY else $incoming-query
+    let $log := util:log("DEBUG", ("##$incoming-query): ", $incoming-query))
     let $query := if ($incoming-query//field) then $incoming-query else $biblio:TEMPLATE_QUERY
+    let $log := util:log("DEBUG", ("##$query): ", $query))
     for $field at $pos in $query//field
+    let $log := util:log("DEBUG", ("##$field): ", $field))
     return
         <tr class="repeat">
             <td class="operator">
             {
                 let $operator := 
                     if ($field/preceding-sibling::*) then
-                        $field/../local-name(.)
+                        string($field/../local-name(.))
                     else
                         ()
+                (:NB: This returns "query" if there is only one search field.:)
+                let $log := util:log("DEBUG", ("##$operator): ", $operator))
                 return
                     <select name="operator{$pos}">
                     { if (empty($operator)) then attribute style { "display: none;" } else () }
@@ -181,18 +209,28 @@ declare function biblio:form-from-query($node as node(), $params as element(para
     of the query.
 :)
 declare function biblio:generate-query($query-as-xml as element()) as xs:string* {
+    let $log := util:log("DEBUG", ("##$query-as-xml): ", $query-as-xml))
+    return
     typeswitch ($query-as-xml)
         case element(query) return
             for $child in $query-as-xml/*
             (: The query is decomposed into collection and field. Why does this not include sort? :)
-                return
-                    biblio:generate-query($child)
+                return biblio:generate-query($child)
         case element(and) return
-            (
-                biblio:generate-query($query-as-xml/*[1]), 
-                " intersect ", 
-                biblio:generate-query($query-as-xml/*[2])
-            )
+            (:Search only for one ID at a time.:)
+            (:NB: Hack to get around the piling up of search requests for IDs - only take the new request.
+            The best solution would be not to remove search fields when 
+                requesting the editor
+                when clicking links to searches for ID.
+            :)
+            if ($query-as-xml/field[@name eq 'ID']) 
+            then biblio:generate-query($query-as-xml/*[2])
+            else
+                (
+                    biblio:generate-query($query-as-xml/*[1]), 
+                    " intersect ", 
+                    biblio:generate-query($query-as-xml/*[2])
+                )
         case element(or) return
             (
                 biblio:generate-query($query-as-xml/*[1]), 
@@ -205,18 +243,19 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 " except ", 
                 biblio:generate-query($query-as-xml/*[2])
             )
-        (: determine which field to search in: if a field has been specified, use it; otherwise use "All". :)
+        (:Determine which field to search in: if a field has been specified, use it; otherwise use "All".:)
         case element(field) return
-            let $expr := $biblio:FIELDS/field[@name = $query-as-xml/@name]
+            let $expr := $biblio:FIELDS/field[@name eq $query-as-xml/@name]
             let $expr := 
                 if ($expr) 
                 then $expr 
                 else $biblio:FIELDS/field[name eq 'All']
             let $collection-path := 
-                (: When searching for ID and xlink:href, do not use the chosen collection-path, but search throughout resources. :)
+                (: When searching for ID and xlink:href, do not use the chosen collection-path, but search throughout all of /resources. :)
                 if ($expr/@name = ('ID', 'XLink')) 
                 then '/resources' 
                 else $query-as-xml/ancestor::query/collection/string()
+            let $log := util:log("DEBUG", ("##$collection-path): ", $collection-path))
             let $collection :=
                 if ($collection-path eq $config:groups-collection)
                 (:if ($collection-path eq $config:groups-collection or $collection-path eq fn:replace($config:groups-collection, "/db/", "")):)
@@ -241,7 +280,8 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 return ()
 };
 
-(: If an apostrophe occurs in the search string, it is escaped.:) 
+(: If an apostrophe occurs in the search string, it is escaped.:)
+(:NB: "&" should be escaped as well.:)
 declare function biblio:escape-search-string($search-string as xs:string?) as xs:string? {
 	replace($search-string, "'", "''")
 };
@@ -285,10 +325,15 @@ declare function biblio:xml-query-to-string($query-as-xml as element()) as xs:st
     Process single form parameter. Called from biblio:process-form().
 :)
 declare function biblio:process-form-parameters($params as xs:string*) as element() {
+    (:Only take the new param.:)
     let $param := $params[1]
+    let $log := util:log("DEBUG", ("##$param): ", $param))
+    let $log := util:log("DEBUG", ("##$params): ", $params))
     let $search-number := substring-after($param, 'input')
     let $value := request:get-parameter($param, "")
+    let $log := util:log("DEBUG", ("##$value): ", $value))
     let $search-field := request:get-parameter(concat("field", $search-number), 'All')
+    let $log := util:log("DEBUG", ("##$search-field): ", $search-field))
     let $operator := request:get-parameter(concat("operator", $search-number), "and")
     return
         if (count($params) eq 1) then
@@ -423,7 +468,7 @@ declare function biblio:construct-order-by-expression($sort as xs:string?) as xs
     if ($sort eq "Score") 
     then "ft:score($hit) descending"
     else 
-        if ($sort eq "Author") 
+        if ($sort eq "Name") 
         then "biblio:order-by-author($hit)"
         else 
             if ($sort eq "Title") 
@@ -436,9 +481,10 @@ declare function biblio:construct-order-by-expression($sort as xs:string?) as xs
     Evaluate the actual XPath query and order the results
 :)
 declare function biblio:evaluate-query($query-as-string as xs:string, $sort as xs:string?) {
+    let $log := util:log("DEBUG", ("##$query-as-string): ", $query-as-string))
     let $order-by-expression := biblio:construct-order-by-expression($sort)
     let $query-with-order-by-expression :=
-        (:The condition should be added that there is a search term. This will address comment in 388 :)
+        (:The condition should be added that there is a search term. This will address comment in biblio:construct-order-by-expression(). :)
         if ($order-by-expression) then
             concat("for $hit in ", $query-as-string, " order by ", $order-by-expression, " return $hit")
         else
@@ -599,6 +645,17 @@ declare function biblio:clear() {
     return
         ()
 };
+
+(:~
+    Clear the query history.
+:)
+declare function biblio:clear-history() {
+    let $null := session:remove-attribute('history')
+    let $null := session:set-attribute("history", ())
+    return
+        ()
+};
+
 
 declare function biblio:current-user($node as node(), $params as element(parameters)?, $model as item()*) {
     <span>{request:get-attribute("xquery.user")}</span>
@@ -860,20 +917,25 @@ declare function biblio:prepare-query($id as xs:string?, $collection as xs:strin
 : @retun a count of the results available
 :)
 declare function biblio:get-or-create-cached-results($mylist as xs:string?, $query as element(query)?, $sort as item()?) as xs:int {
-    if($mylist) then (
+    if ($mylist) 
+    then 
+    (
         if ($mylist eq 'clear') then
             session:set-attribute("personal-list", ())
         else
             (),
         let $list := session:get-attribute("personal-list")
+        let $log := util:log("DEBUG", ("##$list): ", $list))
         let $items :=
             for $item in $list/listitem
             return
                 util:node-by-id(doc(substring-before($item/@id, '#')), substring-after($item/@id, '#'))
+        let $log := util:log("DEBUG", ("##$items): ", $items))
         let $null := session:set-attribute('mods:cached', $items)
         return
             count($items)
-    ) else
+    )
+    else
         biblio:eval-query($query, $sort)
 };
 
@@ -885,6 +947,7 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     let $reload := request:get-parameter("reload", ())
     let $clear := request:get-parameter("clear", ())
     let $mylist := request:get-parameter("mylist", ()) (:clear, display:)
+    let $log := util:log("DEBUG", ("##$mylist): ", $mylist))
     let $collection := uu:escape-collection-path(request:get-parameter("collection", $config:mods-root))
     let $collection := if (starts-with($collection, "/db")) then $collection else concat("/db", $collection)
     let $id := request:get-parameter("id", ())

@@ -494,7 +494,6 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                 if ($untyped-name-basic/*:namePart/@lang)
                                                 then $untyped-name-basic/*:namePart/@lang
                                                 else ()
-                                let $log := util:log("DEBUG", ("##$language-basic): ", $language-basic))
                                 let $nameOrder-basic := modsCommon:get-name-order(distinct-values($language-basic), $name-language, $global-language)
                                 return
                                     if (string($untyped-name-basic))

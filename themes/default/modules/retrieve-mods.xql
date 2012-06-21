@@ -660,8 +660,8 @@ declare function mods:get-conference-hitlist($entry as element(mods:mods)) {
     then
         concat('Paper presented at ', 
             mods:add-part(string($conference), ', '),
-            mods:add-part($entry/mods:originInfo[1]/mods:place/mods:placeTerm, ', '),
-            $date
+            mods:add-part($entry/mods:originInfo[1]/mods:place[1]/mods:placeTerm[1], ', '),
+            $date[1]
         )
     else ()
 };
@@ -1563,10 +1563,11 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         let $linked-records := collection($config:mods-root)//mods:mods[mods:relatedItem[@type = ('host', 'series', 'otherFormat')]/@xlink:href eq $linked-ID]
         let $linked-records-count := count($linked-records)
         return
-        if ($linked-records-count gt 5)
+        if ($linked-records-count gt 10)
         then
             <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
                 <td class="url label relatedItem-label">
+                <!--NB: Searching for XLink with initial "#" does not work.-->
                     <a href="?action=&amp;filter=XLink&amp;value={$linked-ID}">&lt;&lt; Catalogued Contents:</a>
                 </td>
                 <td class="relatedItem-record">

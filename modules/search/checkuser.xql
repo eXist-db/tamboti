@@ -19,6 +19,7 @@ declare function local:authenticate($user as xs:string, $password as xs:string?)
 };
 
 (:~
+
 : Describes a users relationship with a collection
 :
 : @param user
@@ -26,10 +27,13 @@ declare function local:authenticate($user as xs:string, $password as xs:string?)
 :
 : @return
 :   <relationship user="{$user}" collection="{$collection}">
-:       <read>{true or false indicating whether the user can read the collection}</read>
-:       <write>{true or false indicating whether the user can write the collection}</write>
 :       <home>{true or false indicating whether this collection is the users home collection}</home>
 :       <owner>{true or false indicating whether the user owns this collection}</owner>
+:       <read>{true or false indicating whether the user can read the collection}</read>
+:       <write>{true or false indicating whether the user can write the collection}</write>
+        <read-parent>{true or false indicating whether the user can read the collection}</read-parent>
+        <write-parent>{true or false indicating whether the user can write the collection}</write-parent>
+        <execute-parent>{true or false indicating whether the user can access the collection}</execute-parent>
 :   </relationship>
 :)
 declare function local:collection-relationship($collection as xs:string) as element(relationship)
