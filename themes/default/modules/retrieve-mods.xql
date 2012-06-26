@@ -1104,6 +1104,10 @@ declare function mods:format-related-item($relatedItem as element(), $global-lan
     then mods:format-multiple-names($relatedItem, 'list-first', $global-transliteration, $global-language)
     else ()
     ,
+    if ($relatedItem-role-terms = $mods:author-roles)
+    then '. '
+    else ()
+    ,
     modsCommon:get-short-title($relatedItem)
     ,
     let $roleTerms := $relatedItem/mods:name/mods:role/mods:roleTerm
@@ -1559,6 +1563,8 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     (: find records that refer to the current record if this records a periodical or an edited volume or a similar kind of publication. :)
     if ($entry/mods:genre = ('series', 'periodical', 'editedVolume', 'newspaper', 'journal', 'festschrift', 'encyclopedia', 'conference publication', 'canonical scripture')) 
     then
+        (:The $ID is passed to the query; when the query is constructed, the hash is appended (application.xql, $biblio:FIELDS). 
+        A hash in the URL is interpreted as a fragment identifier and not passed as a param.:)
         let $linked-ID := concat('#',$ID)
         let $linked-records := collection($config:mods-root)//mods:mods[mods:relatedItem[@type = ('host', 'series', 'otherFormat')]/@xlink:href eq $linked-ID]
         let $linked-records-count := count($linked-records)
@@ -1566,9 +1572,8 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         if ($linked-records-count gt 10)
         then
             <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
-                <td class="url label relatedItem-label">
-                <!--NB: Searching for XLink with initial "#" does not work.-->
-                    <a href="?action=&amp;filter=XLink&amp;value={$linked-ID}">&lt;&lt; Catalogued Contents:</a>
+                <td class="url label relatedItem-label"> 
+                    <a href="?action=&amp;filter=XLink&amp;value={$ID}&amp;query-tabs=simple">&lt;&lt; Catalogued Contents:</a>
                 </td>
                 <td class="relatedItem-record">
                     <span class="relatedItem-span">{$linked-records-count} records</span>
@@ -1653,11 +1658,18 @@ declare function mods:format-list-view($id as xs:string, $entry as element(mods:
         if ($entry/mods:name[@type eq 'conference']) 
         then mods:get-conference-hitlist($entry)
         (: If not a conference publication, get originInfo and part information for the primary publication. :)
-        else mods:get-part-and-origin($entry)    
+        else 
+            (:The series that the primary publication occurs in is spliced in between the secondary names and the originInfo.:)
+            (:NB: Should not be  italicised.:)
+            if ($entry/mods:relatedItem[@type eq'series'])
+            then ('. ', <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods:get-related-items($entry, 'list', $global-language)}</span>)
+            else ()
+            ,
+            mods:get-part-and-origin($entry)
         ,
         (: The periodical, edited volume or series that the primary publication occurs in. :)
         (: if ($entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:extent or $entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:detail/mods:number/text()) :)
-        if ($entry/mods:relatedItem[@type = ('host','series')])
+        if ($entry/mods:relatedItem[@type eq 'host'])
         then <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods:get-related-items($entry, 'list', $global-language)}</span>
         else 
         (: The url of the primary publication. :)

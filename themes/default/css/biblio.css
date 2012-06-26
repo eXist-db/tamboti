@@ -112,9 +112,7 @@ img {
   border: 0;
   width: 800px;
 }
-#query-panel #add-field,
-#query-panel #remove-field,
-#query-panel #clear-all {
+#query-panel .button {
   padding-bottom: 2px;
   padding-left: 1em;
   padding-right: 1em;

@@ -824,12 +824,16 @@ declare function modsCommon:format-subjects($entry as element(), $global-transli
                 if (string($item/@type)) 
                 then concat('(', (string($item/@type)), ')') 
                 else ()        
+            let $point := 
+                if (string($item/@point)) 
+                then concat('(', (string($item/@point)), ')') 
+                else ()
             return
                 <table class="subject">
                     <tr><td class="sublabel">
                         {
                         replace(functx:capitalize-first(replace($item/name(), 'mods:','')),'Info',''),
-                        $authority, $encoding, $type
+                        $authority, $encoding, $type, $point
                         }
                         </td>
                         {
@@ -859,13 +863,17 @@ declare function modsCommon:format-subjects($entry as element(), $global-transli
                                     let $type := 
                                         if (string($subitem/@type)) 
                                         then concat('(', (string($subitem/@type)), ')') 
-                                        else ()    
+                                        else ()
+                                    let $point := 
+                                        if (string($subitem/@point)) 
+                                        then concat('(', (string($subitem/@point)), ')') 
+                                        else ()
                                     return
                                         <table>
                                             <tr>
                                                 <td class="sublabel">
                                                 {functx:capitalize-first(functx:camel-case-to-words(replace($subitem/name(), 'mods:',''), ' ')),
-                                                $authority, $encoding}
+                                                $authority, $encoding, $point}
                                                 </td>
                                                 <td>
                                                 <td class="subrecord">                

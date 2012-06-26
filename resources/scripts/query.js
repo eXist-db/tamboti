@@ -56,17 +56,6 @@ $(document).ready(function(){
 
     bindKeyPressActions();
 
-    $('#clear-all').click(function(){
-        var form = $('#advanced-search-form > form');
-        form.find(':input').each(function() {
-            switch(this.type) {
-                case 'text':
-                    $(this).val('');
-                    break;
-            }
-        });
-    });
-    
     bindAdditionalDialogTriggers();
     
     hideCollectionActionButtons();

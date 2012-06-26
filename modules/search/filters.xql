@@ -133,7 +133,8 @@ return
                                 for $subject in $subjects
                                 order by upper-case($subject) ascending
                                 return
-                                    <li><a href="?filter=Subject&amp;value={$subject}&amp;query-tabs=advanced-search-form">{$subject}</a></li>
+                                    (:LCSH have '--':)
+                                    <li><a href="?filter=Subject&amp;value={replace($subject, '-', '')}&amp;query-tabs=advanced-search-form">{$subject}</a></li>
                  }
                  </ul>
              else
