@@ -1561,43 +1561,53 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     return modsCommon:simple-row($item, concat('Classification', $authority))
     ,
     (: find records that refer to the current record if this records a periodical or an edited volume or a similar kind of publication. :)
+    (:NB: This takes time!:)
     if ($entry/mods:genre = ('series', 'periodical', 'editedVolume', 'newspaper', 'journal', 'festschrift', 'encyclopedia', 'conference publication', 'canonical scripture')) 
     then
         (:The $ID is passed to the query; when the query is constructed, the hash is appended (application.xql, $biblio:FIELDS). 
-        A hash in the URL is interpreted as a fragment identifier and not passed as a param.:)
+        This is necessary since a hash in the URL is interpreted as a fragment identifier and not passed as a param.:)
         let $linked-ID := concat('#',$ID)
         let $linked-records := collection($config:mods-root)//mods:mods[mods:relatedItem[@type = ('host', 'series', 'otherFormat')]/@xlink:href eq $linked-ID]
         let $linked-records-count := count($linked-records)
         return
-        if ($linked-records-count gt 10)
-        then
-            <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
-                <td class="url label relatedItem-label"> 
-                    <a href="?action=&amp;filter=XLink&amp;value={$ID}&amp;query-tabs=simple">&lt;&lt; Catalogued Contents:</a>
-                </td>
-                <td class="relatedItem-record">
-                    <span class="relatedItem-span">{$linked-records-count} records</span>
-                </td>
-            </tr>
-        else
-            for $linked-record in $linked-records
-            let $link-ID := $linked-record/@ID
-            let $link-contents := 
-                if (string-join($linked-record/mods:titleInfo/mods:title, ''))
-                then mods:format-list-view((), $linked-record, '') 
-                else ()
-            return
-            <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
-                <td class="url label relatedItem-label">
-                    <a href="?filter=ID&amp;value={$link-ID}">&lt;&lt; Catalogued Contents:</a>
-                </td>
-                <td class="relatedItem-record">
-                    <span class="relatedItem-span">{$link-contents}</span>
-                </td>
-            </tr>
-    else ()
+        if ($linked-records-count eq 0)
+        then ()
+        else 
+            if ($linked-records-count gt 10)
+            then
+                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
+                    <td class="url label relatedItem-label"> 
+                        <a href="?action=&amp;filter=XLink&amp;value={$ID}&amp;query-tabs=simple">&lt;&lt; Catalogued Contents:</a>
+                    </td>
+                    <td class="relatedItem-record">
+                        <span class="relatedItem-span">{$linked-records-count} records</span>
+                    </td>
+                </tr>
+            else
+                for $linked-record in $linked-records
+                let $link-ID := $linked-record/@ID
+                let $link-contents := 
+                    if (string-join($linked-record/mods:titleInfo/mods:title, ''))
+                    then mods:format-list-view((), $linked-record, '') 
+                    else ()
+                return
+                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
+                    <td class="url label relatedItem-label">
+                        <a href="?filter=ID&amp;value={$link-ID}">&lt;&lt; Catalogued Contents:</a>
+                    </td>
+                    <td class="relatedItem-record">
+                        <span class="relatedItem-span">{$link-contents}</span>
+                    </td>
+                </tr>
+        else ()
     ,
     modsCommon:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
+    ,
+    let $last-modified := $entry/mods:recordInfo/mods:recordChangeDate[last()]
+    return 
+        if ($last-modified) then
+            modsCommon:simple-row(functx:substring-before-last-match($last-modified, 'T'), 'Last Modified')
+        else ()
     }
     </table>
 };

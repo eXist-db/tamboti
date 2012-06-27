@@ -271,6 +271,8 @@ declare function local:find-live-collection-containing-uuid($uuid as xs:string) 
 let $item := request:get-data()/element()
 let $action := request:get-parameter('action', 'save')
 let $incoming-id := $item/@ID
+let $last-modified := xmldb:last-modified($config:mods-temp-collection, concat($incoming-id,'.xml'))
+let $last-modified := <mods:recordChangeDate>{$last-modified}</mods:recordChangeDate>
 (: If we do not have an ID, then throw an error. :) 
 return
     if (string-length($incoming-id) eq 0)
@@ -305,6 +307,8 @@ return
                     (
                         (:Update $doc (the document in temp) with $item (the new edits).:)
                         local:do-updates($item, $doc),
+                        (:Insert modification date-time.:)
+                        update insert $last-modified into $doc/mods:recordInfo,
                         (:Move it from temp to target collection.:)
                         xmldb:move($config:mods-temp-collection, $target-collection, $file-to-update),
                         (:Set the same permissions on the moved file that the parent collection has.:)

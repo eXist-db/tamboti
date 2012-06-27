@@ -17,6 +17,7 @@ declare namespace ev="http://www.w3.org/2001/xml-events";
 declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace e="http://www.asia-europe.uni-heidelberg.de/";
 declare namespace mads="http://www.loc.gov/mads/";
+declare namespace functx = "http://www.functx.com";
 
 (:These variables are used for a kind of dynamic theming in local:assemble-form().:)
 declare variable $uri := substring-before(substring-after(request:get-url(), "/apps/"), "/modules/edit/edit.xq");
@@ -30,8 +31,21 @@ declare variable $img-right-title := if ($uri eq "tamboti") then "The Cluster of
 declare variable $img-right-width := if ($uri eq "tamboti") then "200" else ();
 
 (:TODO: Code related to MADS files.:)
-
-declare function local:create-new-record($id as xs:string, $type-request as xs:string, $target-collection as xs:string) as empty() {
+ 
+declare function functx:pad-integer-to-length($integerToPad as xs:anyAtomicType?, $length as xs:integer) as xs:string {       
+   if ($length < string-length(string($integerToPad)))
+   then error(xs:QName('functx:Integer_Longer_Than_Length'))
+   else concat
+         (functx:repeat-string(
+            '0',$length - string-length(string($integerToPad))),
+          string($integerToPad))
+ };
+ 
+ declare function functx:repeat-string($stringToRepeat as xs:string?, $count as xs:integer) as xs:string {      
+   string-join((for $i in 1 to $count return $stringToRepeat), '')
+ };
+ 
+ declare function local:create-new-record($id as xs:string, $type-request as xs:string, $target-collection as xs:string) as empty() {
     (:Copy the template into data and store it with the ID as file name.:)
     (:First, get the right template, based on the type-request and the presence or absence of transliteration.:)
     let $transliterationOfResource := request:get-parameter("transliterationOfResource", '')
@@ -223,6 +237,11 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
     let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id eq $instance-id]
     (:Get the relevant information to display in the info-line, the label for the template chosen (if any) and the hint belonging to it (if any). :)
     let $save-hint := doc($type-data)/code-table/items/item[value eq "save"]/hint
+    (:Get the time of the last save to the temp collection and parse it.:)
+    let $last-modified := xmldb:last-modified($config:mods-temp-collection, concat($id,'.xml'))
+    let $last-modified-hour := hours-from-dateTime($last-modified)
+    let $last-modified-minute := minutes-from-dateTime($last-modified)
+    let $last-modified-minute := functx:pad-integer-to-length($last-modified-minute, 2)
     (:Display the bottom tabs belonging to the active tab.:)
     let $tab-data := concat($config:edit-app-root, '/tab-data.xml') 
     let $bottom-tab-label := doc($tab-data)/tabs/tab[tab-id eq $tab-id]/*[local-name() eq $type-request]
@@ -266,7 +285,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                         if ($target-collection-display eq security:get-user-credential-from-session()[1])
                         then 'resources/Home'
                         else concat('resources/', $target-collection-display)
-                }</strong>.
+                }</strong> (Last saved: {$last-modified-hour}:{$last-modified-minute}).
             </span>
             <!--Here values are passed to the URL.-->
             {mods:tabs($tab-id, $id, $target-collection)}
