@@ -29,7 +29,7 @@ declare variable $temp-collection-name := "temp";
 declare variable $commons-collection-name := "commons";
 declare variable $commons-samples-collection-name := "sociology";
 declare variable $commons-exist-collection-name := "eXist";
-declare variable $commons-mads-collection-name := "mads";
+(:declare variable $commons-mads-collection-name := "mads";:)
 
 (:~ Collection paths :)
 declare variable $library-collection := fn:concat($db-root, "/", $library-collection-name);
@@ -43,7 +43,7 @@ declare variable $resources-groups-collection := fn:concat($resources-collection
 declare variable $commons-collection := fn:concat($resources-collection, "/", $commons-collection-name);
 declare variable $commons-samples-collection := fn:concat($commons-collection, "/", $commons-samples-collection-name);
 declare variable $commons-exist-collection := fn:concat($commons-collection, "/", $commons-exist-collection-name);
-declare variable $commons-mads-collection := fn:concat($commons-collection, "/", $commons-mads-collection-name);
+(:declare variable $commons-mads-collection := fn:concat($commons-collection, "/", $commons-mads-collection-name);:)
 
 declare function local:mkcol-recursive($collection, $components) {
     if (fn:exists($components)) then
@@ -91,8 +91,8 @@ util:log($log-level, "Config: Loading collection configuration ..."),
     xdb:store-files-from-pattern(fn:concat($system-collection, $editor-app-code-tables-collection), $dir, "data/xconf/code-tables/*.xconf"),
     local:mkcol($system-collection, $resources-collection),
     xdb:store-files-from-pattern(fn:concat($system-collection, $resources-collection), $dir, "data/xconf/resources/*.xconf"),
-    local:mkcol($system-collection, $commons-mads-collection),
-    xdb:store-files-from-pattern(fn:concat($system-collection, $commons-mads-collection), $dir, "data/xconf/mads/*.xconf"), 
+    (:local:mkcol($system-collection, $commons-mads-collection),:)
+    (:xdb:store-files-from-pattern(fn:concat($system-collection, $commons-mads-collection), $dir, "data/xconf/mads/*.xconf"),:) 
 util:log($log-level, "Config: Done."),
 
 
@@ -105,7 +105,7 @@ util:log($log-level, "Config: Done."),
 
 (: Create resources/commons :)
 util:log($log-level, fn:concat("Config: Creating commons collection '", $commons-collection, "'...")),
-    for $col in ($commons-samples-collection, $commons-exist-collection, $commons-mads-collection) return
+    for $col in ($commons-samples-collection, $commons-exist-collection(:, $commons-mads-collection:)) return
     (
         local:mkcol($db-root, local:strip-prefix($col, fn:concat($db-root, "/"))),
         xdb:set-collection-permissions($col, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8))

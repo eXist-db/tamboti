@@ -89,6 +89,7 @@ declare variable $biblio:FIELDS :=
 		<field name="Abstract">mods:mods[ft:query(mods:abstract, '$q', $options)]</field>
         <field name="Note">mods:mods[ft:query(mods:note, '$q', $options)]</field>
         <field name="Subject">mods:mods[ft:query(mods:subject, '$q', $options)]</field>
+       	<field name="Full Text">ft:search('page:$q')</field>
        	<field name="ID">mods:mods[@ID eq '$q']</field>        
         <field name="XLink">mods:mods[mods:relatedItem/@xlink:href eq concat('#', replace('$q', '#', ''))]</field>
         <field name="All">
@@ -150,10 +151,9 @@ declare function biblio:form-from-query($node as node(), $params as element(para
             <td class="operator">
             {
                 let $operator := 
-                    if ($field/preceding-sibling::*) then
-                        string($field/../local-name(.))
-                    else
-                        ()
+                    if ($field/preceding-sibling::*)
+                    then string($field/../local-name(.))
+                    else ()
                 (:NB: This returns "query" if there is only one search field.:)
                 (:let $log := util:log("DEBUG", ("##$operator): ", $operator)):)
                 return
@@ -164,10 +164,9 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                         return
                             <option>
                             {
-                                if ($opt eq $operator) then
-                                    attribute selected { "selected" }
-                                else
-                                    ()
+                                if ($opt eq $operator)
+                                then attribute selected { "selected" }
+                                else ()
                             }
                             { $opt }
                             </option>
@@ -256,8 +255,8 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
             )
         case element(collection) 
             return
-                if (not($query-as-xml/..//field) and not($config:require-query)) then
-                    ('collection("', $query-as-xml/string(), '")//mods:mods')
+                if (not($query-as-xml/..//field) and not($config:require-query))
+                then ('collection("', $query-as-xml/string(), '")//mods:mods')
                 else ()
         (:Determine which field to search in: if a field has been specified, use it; otherwise use "All".:)
         case element(field) return
@@ -285,12 +284,12 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 (
                     (: searching the virtual 'groups' collection means searching the users collection. ??? :)
                     (:NB: Yes, but the user's home collection should perhaps not be included here.:)
-                    fn:concat("collection('", $config:users-collection, "')//")
+                    concat("collection('", $config:users-collection, "')//")
                 )
                 else
                 (
                     (: search one of the user's own collections or a commons collection. :)
-                    fn:concat("collection('", $collection-path, "')//")
+                    concat("collection('", $collection-path, "')//")
                 )
             return
                 (:The search term held in $query-as-xml is substituted for the 'q' held in $expr.:)
@@ -333,7 +332,7 @@ declare function biblio:xml-query-to-string($query-as-xml as element()) as xs:st
                 biblio:xml-query-to-string($query-as-xml/*[2])
             )
         case element(collection) return
-            fn:concat("collection(""", $query-as-xml, """):")
+            concat("collection(""", $query-as-xml, """):")
         case element(field) return
             concat($query-as-xml/@name, ':', $query-as-xml/string())
         default return
@@ -355,10 +354,9 @@ declare function biblio:process-form-parameters($params as xs:string*) as elemen
     (:let $log := util:log("DEBUG", ("##$search-field): ", $search-field)):)
     let $operator := request:get-parameter(concat("operator", $search-number), "and")
     return
-        if (count($params) eq 1) then
-            <field m="{$search-number}" name="{$search-field}">{$value}</field>
-        else
-            element { xs:QName($operator) } {
+        if (count($params) eq 1)
+        then <field m="{$search-number}" name="{$search-field}">{$value}</field>
+        else element { xs:QName($operator) } {
                 biblio:process-form-parameters(subsequence($params, 2)),
                 <field m="{$search-number}" name="{$search-field}">{$value}</field>
             }
@@ -380,7 +378,8 @@ declare function biblio:process-form() as element(query)? {
         return
             $param
     return
-        if (exists($fields)) then
+        if (exists($fields))
+        then
             (:  process-form recursively calls itself for every parameter and
                 generates and XML representation of the query. :)
             <query>
@@ -594,8 +593,8 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
 declare function biblio:notice() as element(div)* {
     
     (: have we already seen the notices for this session? :)
-    if(session:get-attribute("seen-notices") eq true()) then
-    ()
+    if (session:get-attribute("seen-notices") eq true()) 
+    then ()
     else
     (
         (: 1 - is there a login notice :)
@@ -603,24 +602,29 @@ declare function biblio:notice() as element(div)* {
         (: find all collections that are shared with the current user and whoose modification time is after our last login time :)
         
         let $shared-roots := sharing:get-shared-collection-roots(false()) return
-        if(not(empty($shared-roots)))then
+        if (not(empty($shared-roots)))
+        then
         (
             let $last-login-time := security:get-last-login-time(security:get-user-credential-from-session()),
             $collections-modified-since-last-login := local:find-collections-modified-after($shared-roots, $last-login-time) return
                
-                if(not(empty($collections-modified-since-last-login)))then
+                if (not(empty($collections-modified-since-last-login))) 
+                then
                 (
                     <div id="notices-dialog" title="System Notices">
                         <p>The following Groups have published new or updated documents since you last logged in:</p>
                         <ul>
                             {
-                                for $modified-collection in $collections-modified-since-last-login return
-                                    <li>{ fn:replace($modified-collection, ".*/", "") } ({ count(xmldb:get-child-resources($modified-collection)[$last-login-time lt xmldb:last-modified($modified-collection, .)]) })</li>
+                                for $modified-collection in $collections-modified-since-last-login 
+                                return
+                                    <li>{replace($modified-collection, ".*/", "") } ({count(xmldb:get-child-resources($modified-collection)[$last-login-time lt xmldb:last-modified($modified-collection, .)]) })</li>
                             }
                         </ul>
                     </div>
-                )else()
-        )else()
+                )
+                else ()
+        )
+        else ()
     )
 };
 
@@ -628,17 +632,13 @@ declare function biblio:notice() as element(div)* {
 : Get the last-modified date of a collection
 :)
 declare function local:get-collection-last-modified($collection-path as xs:string) as xs:dateTime {
-	
 	let $resources-last-modified := 
 		for $resource in xmldb:get-child-resources($collection-path) return
 			xmldb:last-modified($collection-path, $resource)
 	return
-		if(not(empty($resources-last-modified)))then
-			max(
-				$resources-last-modified	
-			)
-		else
-			xmldb:created($collection-path)
+		if (not(empty($resources-last-modified)))
+		then max($resources-last-modified)
+		else xmldb:created($collection-path)
 };
 
 (:~
@@ -646,11 +646,12 @@ declare function local:get-collection-last-modified($collection-path as xs:strin
 :)
 declare function local:find-collections-modified-after($collection-paths as xs:string*, $modified-after as xs:dateTime) as xs:string* {
 	
-	for $collection-path in $collection-paths return
+	for $collection-path in $collection-paths 
+	return
 	(
-	   if($modified-after lt local:get-collection-last-modified($collection-path)) then
-	       $collection-path
-	   else(),
+	   if ($modified-after lt local:get-collection-last-modified($collection-path)) 
+	   then $collection-path
+	   else (),
        local:find-collections-modified-after(xmldb:get-child-collections($collection-path), $modified-after)
    )
 };
@@ -681,7 +682,8 @@ declare function biblio:current-user($node as node(), $params as element(paramet
 declare function biblio:login($node as node(), $params as element(parameters)?, $model as item()*) {
     let $user := request:get-attribute("xquery.user")
     return 
-        if ($user eq 'guest') then
+        if ($user eq 'guest')
+        then
         (
             <div class="help"><a href="../../docs/index.xml" target="_blank">Help</a></div>
             ,
@@ -691,7 +693,7 @@ declare function biblio:login($node as node(), $params as element(parameters)?, 
         (
             <div class="help"><a href="../../docs/index.xml">Help</a></div>
             ,
-            <div class="login">Logged in as <span class="username">{let $human-name := security:get-human-name-for-user($user) return if(fn:not(fn:empty($human-name)))then $human-name else $user}</span>. <a href="?logout=1">Logout</a></div>
+            <div class="login">Logged in as <span class="username">{let $human-name := security:get-human-name-for-user($user) return if (not(empty($human-name))) then $human-name else $user}</span>. <a href="?logout=1">Logout</a></div>
         )
 };
 
@@ -848,10 +850,9 @@ declare function biblio:resource-types($node as node(), $params as element(param
 declare function biblio:optimize-trigger($node as node(), $params as element(parameters)?, $model as item()*) {
     let $user := request:get-attribute("xquery.user")
     return
-        if (xmldb:is-admin-user($user)) then
-            <a id="optimize-trigger" href="#">Create custom indexes for sorting</a>
-        else
-            ()
+        if (xmldb:is-admin-user($user))
+        then <a id="optimize-trigger" href="#">Create custom indexes for sorting</a>
+        else ()
 };
 
 declare function biblio:form-select-current-user-groups($select-name as xs:string) as element(select) {
@@ -869,11 +870,9 @@ declare function biblio:get-writeable-subcollection-paths($path as xs:string) {
 	for $sub in xmldb:get-child-collections($path)
 	let $col := concat($path, "/", $sub) return
 		(
-			if(security:can-write-collection($col))then
-			(
-			 $col
-			)else(),
-			biblio:get-writeable-subcollection-paths($col)
+			if (security:can-write-collection($col))
+			then $col
+			else (), biblio:get-writeable-subcollection-paths($col)
 		)
 };
 
@@ -884,7 +883,8 @@ declare function biblio:get-writeable-subcollection-paths($path as xs:string) {
 declare function biblio:apply-filter($filter as xs:string, $value as xs:string) {
     let $prevQuery := session:get-attribute("query")
     return
-        if (empty($prevQuery//field)) then
+        if (empty($prevQuery//field))
+        then
             <query>
                 { $prevQuery/collection }
                 <field name="{$filter}">{$value}</field>
@@ -940,42 +940,48 @@ declare function biblio:prepare-query($id as xs:string?, $collection as xs:strin
     let $log := util:log("DEBUG", ("##$mylist): ", $mylist))
     let $log := util:log("DEBUG", ("##$value): ", $value))
     return:)
-    if ($id) then
+    if ($id)
+    then
         <query>
             <collection>{$config:mods-root}</collection>
             <field m="1" name="Id">{$id}</field>
         </query>
-    else if (empty($collection)) then
-        () (: no parameters sent :)
-    else if ($reload) then
-        session:get-attribute('query')
-    else if ($history) then
-        biblio:query-from-history($history)
-    else if ($clear) then
-        biblio:clear-search-terms($collection)
-    else if ($filter) then 
-        biblio:apply-filter($filter, $value)
-    else if ($mylist eq 'display') then
-        ()
     else 
-        biblio:process-form()
+        if (empty($collection)) 
+        then () (: no parameters sent :)
+        else 
+            if ($reload) 
+            then session:get-attribute('query')
+            else 
+                if ($history)
+                then biblio:query-from-history($history)
+                else 
+                    if ($clear)
+                    then biblio:clear-search-terms($collection)
+                    else 
+                        if ($filter) 
+                        then  biblio:apply-filter($filter, $value)
+                        else 
+                            if ($mylist eq 'display') 
+                            then ()
+                            else biblio:process-form()
 };
 
 (:~
-: Gets cached results from the session
-: if not such results exist, then a query is performed
-: and the resilts are then cached in the session
+: Gets cached results from the session;
+: if no such results exist, then a query is performed
+: and the results are then cached in the session
 :
-: @retun a count of the results available
+: @return a count of the results available
 :)
 declare function biblio:get-or-create-cached-results($mylist as xs:string?, $query as element(query)?, $sort as item()?) as xs:int {
     if ($mylist) 
     then 
     (
-        if ($mylist eq 'clear') then
-            session:set-attribute("personal-list", ())
-        else
-            (),
+        if ($mylist eq 'clear')
+        then session:set-attribute("personal-list", ())
+        else ()
+        ,
         let $list := session:get-attribute("personal-list")
         (:let $log := util:log("DEBUG", ("##$list): ", $list)):)
         let $items :=

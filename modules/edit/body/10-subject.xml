@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--node insertions: checked including temporal. 
-    No insertion of language atrributes for subelements of hierarchicalGeographic, cartographics and geographicCode. --><!--missing element: OK. --><!--hints moved to code-table: OK--><!--saving of all nodes: checked including temporal --><!--schema instatiated: No language atrributes for subelements of cartographics and geographicCode.--><!--schema notations added: -->
+<!--node insertions: checked including temporal. No insertion of language attributes for subelements of hierarchicalGeographic, cartographics and geographicCode. --><!--missing element: OK. --><!--hints moved to code-table: OK--><!--saving of all nodes: checked including temporal --><!--schema instatiated: No language atrributes for subelements of cartographics and geographicCode.--><!--schema notations added: -->
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms" class="subject" tab-id="subject">
     <div class="block-form">
         <fieldset class="level-1">
@@ -1398,9 +1397,8 @@
                             <xf:switch>
                                 <xf:case id="name-add-node-hide">
                                     <div class="node-button">
-                                        <xf:trigger class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Show
-                                                Additional Fields</xf:label>
+                                        <xf:trigger>
+                                            <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                             <xf:toggle case="name-add-node-unhide" ev:event="DOMActivate"/>
                                         </xf:trigger>
                                     </div>
@@ -1408,8 +1406,7 @@
                                 <xf:case id="name-add-node-unhide">
                                     <div class="node-button">
                                         <xf:trigger>
-                                            <xf:label class="xforms-group-label-centered">Hide
-                                                Additional Fields</xf:label>
+                                            <xf:label class="xforms-group-label-centered">&lt;</xf:label>
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
                                         </xf:trigger>
                                     </div>

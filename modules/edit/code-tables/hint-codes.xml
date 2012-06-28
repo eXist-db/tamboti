@@ -564,6 +564,80 @@
         </item>
         <item>
             <help>
+                <p> Here the language of the contents of the described resource as a whole is noted. </p>
+                <p> Language may also be expressed in relation to a single field, by means of the Language field, in order to note the language used in
+                    a particular field. This is only necessary if the language used in the field in quesiotn (e.g. in an alternative title) is different
+                    from the language noted in Resource Language. </p>
+                <p> Cataloging Language under Record Info is used to note the language used in the record itself. Cataloging Language is not the
+                    Resource Language, but of the metadata describing a resource, i.e. the record you are working on or looking at now. The Language of
+                    Cataloging is assumed to be English; if you wish to note another Language of Cataloging, click "Show All" to display the required
+                    tab.. </p>
+                <p> At least one Resource Language field is required for all resources in which language is primary to understanding the resource. These
+                    resources include textual resources, but also audio and video resources with spoken word components. </p>
+                <p> Although Language is usually not required for non-textual resources such as images, it could be used effectively for such resources
+                    when language is a component. Examples of the latter might include a photograph of a sign with text or a monument with an
+                    inscription. </p>
+                <p> The Language field is optional for resources in which language is important to understanding the resource, but not primary. For
+                    example, the caption of a photograph may in some instances be important to understanding the photograph, but not primary. If the
+                    content of the resource is in more than one language, Language is repeated for each language employed. </p>
+            </help>
+            <hint/>
+            <value>language</value>
+            <local-name>language</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Language Term specifies the language(s) of the content of the resource.
+                    <!--NB: revise after question of two types of input is solved.--> It may be expressed in textual or coded form. If
+                    in coded form, the source of the code should be indicated in the value of the authority field. If no authority is
+                    given, it is assumed that the content is textual, i.e. that the Type is "text". If there is more than one
+                    representation of the same language, e.g. using different forms of the same language (code or text) or from
+                    different authorities, Language Term is repeated within the Language container. </p>
+            </help>
+            <hint/>
+            <value>languageTerm</value>
+            <local-name>languageTerm</local-name>
+            <parent>language</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Hint</p>
+            </help>
+            <hint/>
+            <value>scriptTerm</value>
+            <local-name>scriptTerm</local-name>
+            <parent>language</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Hint</p>
+            </help>
+            <hint/>
+            <value>languageTerm-type</value>
+            <local-name>type</local-name>
+            <parent>languageTerm</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> This field designates which part of the resource is in the language
+                    stated in Language Term. The values of the field are not controlled by
+                    an authority list; examples of values of Object Part are "Summary" and
+                    "Caption". If you use this field, use expressions of similar generality.
+                </p>
+            </help>
+            <hint/>
+            <value>objectPart</value>
+            <local-name>objectPart</local-name>
+            <parent>language</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
                 <p> The language used within Title Information is specified here. The most common
                     languages have been moved to the top of the list. </p>
                 <p>The language noted here is the language chosen when the record was created. It

@@ -250,6 +250,8 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
     	if ($bottom-tab-label)
     	then $bottom-tab-label
     	else doc($tab-data)/tabs/tab[tab-id eq $tab-id]/label    	
+    (:If the record is hosted by a record linked to through an xlink, display the title of this record. 
+    Only the xlink on the first relatedItem with type host is treated.:)
     let $related-publication-xlink := doc($record-data)/mods:mods/mods:relatedItem[@type eq 'host'][1]/@xlink:href/string()
     let $related-publication-xlink := replace($related-publication-xlink, '^#?(.*)$', '$1')    
     let $related-publication := collection($config:mods-root)//mods:mods[@ID eq $related-publication-xlink][1]

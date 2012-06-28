@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--node insertions: --><!--missing element insertion: --><!--hints moved to code-table: --><!--saving of all nodes: --><!--schema instatiated: --><!--schema notations added: -->
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-xlink" e:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
@@ -35,8 +36,8 @@
                     <xf:switch>
                         <xf:case id="relatedItem-add-node-hide">
                             <div class="node-button">
-                                <xf:trigger class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Show Additional Fields</xf:label>
+                                <xf:trigger>
+                                    <xf:label class="xforms-group-label-centered">></xf:label>
                                     <xf:toggle case="relatedItem-add-node-unhide" ev:event="DOMActivate"/>
                                 </xf:trigger>
                             </div>
@@ -44,7 +45,7 @@
                         <xf:case id="relatedItem-add-node-unhide">
                             <div class="node-button">
                                 <xf:trigger>
-                                    <xf:label class="xforms-group-label-centered">Hide Additional Fields</xf:label>
+                                    <xf:label class="xforms-group-label-centered"><</xf:label>
                                     <xf:toggle case="relatedItem-add-node-hide" ev:event="DOMActivate"/>
                                 </xf:trigger>
                             </div>
@@ -94,8 +95,8 @@
                     </xf:select1>
                 </xf:group>-->
                 <br/>
-                <xf:group ref=".[@xlink]">
-                    <xf:input ref="./@xlink" class="text_50">
+                <xf:group ref=".[@xlink:href]">
+                    <xf:input ref="./@xlink:href" class="text_50">
                         <xf:label>XLink: </xf:label>
                         <xf:hint>
                             <p> The XLink field is used to reference an external resource, such as a second metadata record, a Related Item or a Table Of
@@ -281,11 +282,11 @@
                                         <xf:insert context="." origin="instance('insert-templates')/mods:relatedItem/mods:titleInfo/@ID"/>
                                         </xf:action>
                                         </xf:trigger>
-                                        <xf:trigger ref=".[not(@xlink)]" class="add-button">
+                                        <xf:trigger ref=".[not(@xlink:href)]" class="add-button">
                                         <xf:label class="xforms-group-label-centered">Add XLink</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                        <xf:insert context="." origin="instance('insert-templates')/mods:relatedItem/mods:titleInfo/@xlink"/>
+                                        <xf:insert context="." origin="instance('insert-templates')/mods:relatedItem/mods:titleInfo/@xlink:href"/>
                                         </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@xml:lang)]" class="add-button">
@@ -323,8 +324,8 @@
                             </xf:group>
                                 <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                                 <!--Cluster: omit-->
-                            <xf:group ref=".[@xlink]">
-                                <xf:input ref="./@xlink" class="text_50">
+                            <xf:group ref=".[@xlink:href]">
+                                <xf:input ref="./@xlink:href" class="text_50">
                                     <xf:label>XLink</xf:label>
                                     <xf:hint>
                                         <p> XLink is used to reference an external resource, such as a second metadata record, a Related Item or a Table Of
@@ -335,7 +336,7 @@
                             <xf:trigger class="delete-button">
                             <xf:label class="xforms-label-small">-</xf:label>
                             <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                            <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:relatedItem/mods:titleInfo/@xlink" at="index('relatedItem-titleInfo-repeat')"/>
+                            <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:relatedItem/mods:titleInfo/@xlink:href" at="index('relatedItem-titleInfo-repeat')"/>
                         </xf:trigger>
                         -->
                             </xf:group>
@@ -727,8 +728,8 @@
                                 <xf:switch>
                                     <xf:case id="part-add-node-hide">
                                         <div class="node-button">
-                                            <xf:trigger class="add-button">
-                                                <xf:label class="xforms-group-label-centered">Show Additional Fields</xf:label>
+                                            <xf:trigger>
+                                                <xf:label class="xforms-group-label-centered">></xf:label>
                                                 <xf:toggle case="part-add-node-unhide" ev:event="DOMActivate"/>
                                             </xf:trigger>
                                         </div>
@@ -736,7 +737,7 @@
                                     <xf:case id="part-add-node-unhide">
                                         <div class="node-button">
                                             <xf:trigger>
-                                                <xf:label class="xforms-group-label-centered">Hide Additional Fields</xf:label>
+                                                <xf:label class="xforms-group-label-centered"><</xf:label>
                                                 <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/>
                                             </xf:trigger>
                                         </div>

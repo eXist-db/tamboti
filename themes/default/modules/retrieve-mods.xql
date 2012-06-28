@@ -1603,7 +1603,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     ,
     modsCommon:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
     ,
-    let $last-modified := $entry/mods:recordInfo/mods:recordChangeDate[last()]
+    let $last-modified := $entry/mods:recordInfo/mods:recordChangeDate[last()][1]
     return 
         if ($last-modified) then
             modsCommon:simple-row(functx:substring-before-last-match($last-modified, 'T'), 'Last Modified')
