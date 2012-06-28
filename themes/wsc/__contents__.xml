@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collection xmlns="http://exist.sourceforge.net/NS/exist" name="/db/library/themes/wsc" owner="editor" group="biblio.users" mode="644" created="2012-02-16T11:26:30+01:00" version="1">
+    <acl entries="0" version="1"/>
+    <resource type="XMLResource" name="query.xml" owner="editor" group="biblio.users" mode="644" created="2012-02-16T11:26:31+01:00" modified="2012-02-16T11:26:31+01:00" filename="query.xml" mimetype="application/xml">
+        <acl entries="0" version="1"/>
+    </resource>
+    <resource type="XMLResource" name="template.xml" owner="editor" group="biblio.users" mode="644" created="2012-02-16T11:26:31+01:00" modified="2012-02-16T11:26:31+01:00" filename="template.xml" mimetype="application/xml">
+        <acl entries="0" version="1"/>
+    </resource>
+    <subcollection name="images" filename="images"/>
+    <subcollection name="pages" filename="pages"/>
+    <subcollection name="css" filename="css"/>
+</collection>
