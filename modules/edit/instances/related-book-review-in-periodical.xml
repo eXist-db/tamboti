@@ -9,9 +9,6 @@
         <namePart type="given"/>
         <namePart type="family"/>
         <role>
-            <roleTerm type="text">author</roleTerm>
-        </role>
-        <role>
             <roleTerm type="code">aut</roleTerm>
         </role>
     </name>
@@ -36,10 +33,10 @@
             <namePart type=""/>
         </name>
     </subject>
-    <classification authority="lcc" displayLabel="" lang=""/>
-    <abstract/>
+    <classification authority="lcc"/>
+    <abstract lang=""/>
     <tableOfContents lang="" script="" xlink:href=""/>
-    <note lang="" type=""/>
+    <note lang="" type="content"/>
     <relatedItem type="host" xlink:href="">
         <part>
             <detail type="volume">
@@ -57,7 +54,45 @@
             <date encoding="w3cdtf"/>
         </part>
     </relatedItem>
-    <identifier displayLabel="" type="local"/>
-    <location/>
+    <relatedItem type="references" xlink:href="">
+        <titleInfo>
+            <nonSort/>
+            <title/>
+            <subTitle/>
+            <partNumber/>
+            <partName/>
+        </titleInfo>
+        <name type="personal" xlink:href="">
+            <namePart type="given"/>
+            <namePart type="family"/>
+            <role>
+                <roleTerm type="code" authority="marcrelator">aut</roleTerm>
+            </role>
+        </name>
+        <originInfo>
+            <place>
+                <placeTerm type="text"/>
+            </place>
+            <dateIssued encoding="w3cdtf"/>
+            <copyrightDate encoding="w3cdtf"/>
+            <publisher/>
+            <issuance>monographic</issuance>
+        </originInfo>
+        <part/>
+        <physicalDescription>
+            <extent unit="pages"/>
+        </physicalDescription>
+        <targetAudience authority="marctarget">adult</targetAudience>
+        <typeOfResource>text</typeOfResource>
+        <genre type="code" authority="marcgt">book</genre>
+        <classification authority="lcc"/>
+        <abstract lang="eng"/>
+        <tableOfContents lang="" script="" xlink:href=""/>
+        <note lang="" type=""/>
+    </relatedItem>
+    <identifier type="doi"/>
+    <location>
+        <url dateLastAccessed=""/>
+    </location>
     <accessCondition/>
 </mods>

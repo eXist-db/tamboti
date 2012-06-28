@@ -8,6 +8,7 @@ import module namespace util="http://exist-db.org/xquery/util";
 import module namespace xmldb="http://exist-db.org/xquery/xmldb";
 
 import module namespace mods="http://www.loc.gov/mods/v3" at "tabs.xqm";
+import module namespace modsCommon="http://exist-db.org/mods/common" at "../mods-common.xql";
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace security="http://exist-db.org/mods/security" at "../search/security.xqm"; (:TODO move security module up one level:)
 import module namespace uu="http://exist-db.org/mods/uri-util" at "../search/uri-util.xqm";
@@ -50,7 +51,7 @@ declare function functx:pad-integer-to-length($integerToPad as xs:anyAtomicType?
     (:First, get the right template, based on the type-request and the presence or absence of transliteration.:)
     let $transliterationOfResource := request:get-parameter("transliterationOfResource", '')
     let $template-request := 
-        if ($type-request = ('related-article-in-periodical', 'related-contribution-to-edited-volume', 'suebs-tibetan', 'insert-templates', 'new-instance', 'mads'))
+        if ($type-request = ('related-book-review-in-periodical', 'related-article-in-periodical', 'related-contribution-to-edited-volume', 'suebs-tibetan', 'insert-templates', 'new-instance', 'mads'))
         (:These document types do not (yet) divide into latin and transliterated.:)
         then $type-request
         else
@@ -249,6 +250,15 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
     	if ($bottom-tab-label)
     	then $bottom-tab-label
     	else doc($tab-data)/tabs/tab[tab-id eq $tab-id]/label    	
+    let $related-publication-xlink := doc($record-data)/mods:mods/mods:relatedItem[@type eq 'host'][1]/@xlink:href/string()
+    let $related-publication-xlink := replace($related-publication-xlink, '^#?(.*)$', '$1')    
+    let $related-publication := collection($config:mods-root)//mods:mods[@ID eq $related-publication-xlink][1]
+    let $related-publication := modsCommon:get-short-title($related-publication)
+    let $related-publication :=
+        if ($related-publication-xlink)
+        then
+        (<span class="intro">The present publication is hosted by </span>, <a href="../../modules/search/index.html?filter=ID&amp;value={$related-publication-xlink}" target="_blank">{$related-publication}</a>)
+        else ()
     return
         <div class="content">
             <span class="info-line">
@@ -274,7 +284,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                         ) 
                 else 'Editing record'
                 ,
-                let $publication-title := concat(doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) eq 0][1]/mods:nonSort, ' ', doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) eq 0][1]/mods:title) 
+                let $publication-title := concat(doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) eq 0][1]/mods:nonSort, ' ', doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) eq 0][1]/mods:title)
                 return
                     if ($publication-title ne ' ') 
                     then (' with the title ', <strong>{$publication-title}</strong>) 
@@ -313,6 +323,9 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     <div class="xforms-hint-value">
                         {$save-hint}
                     </div>
+                </span>
+                <span class="related-title">
+                        {$related-publication}
                 </span>
             </div>
             

@@ -566,6 +566,7 @@ declare function biblio:query-history($node as node(), $params as element(parame
 declare function biblio:eval-query($query-as-xml as element(query)?, $sort as item()?) as xs:int {
     if ($query-as-xml) then
         let $query := string-join(biblio:generate-query($query-as-xml), '')
+        let $log := util:log("DEBUG", ("##$query): ", $query))
         let $sort := if ($sort) then $sort else session:get-attribute("sort")
         let $results := biblio:evaluate-query($query, $sort)
         let $processed :=
@@ -655,15 +656,10 @@ declare function local:find-collections-modified-after($collection-paths as xs:s
 };
 
 (:~
-    Clear the last query result.
+    Clear the search terms on the advanced search tab by performing an empty search in the selected collection.
 :)
-declare function biblio:clear-search($collection) {
-    let $log := util:log("DEBUG", ("##$collection1): ", $collection))
-    (:let $null := session:remove-attribute('mods:cached')
-    let $null := session:remove-attribute('query')
-    let $null := session:remove-attribute('sort'):)
-    return
-        <query><collection>{$collection}</collection></query>
+declare function biblio:clear-search-terms($collection) {
+    <query><collection>{$collection}</collection></query>
 
 };
 
@@ -717,21 +713,21 @@ declare function biblio:result-count($node as node(), $params as element(paramet
 declare function biblio:resource-types($node as node(), $params as element(parameters)?, $model as item()*) {
     let $classifier := tokenize($node/@class, "\s")
     let $classifier := $classifier[2]
-    let $code-tables := concat($config:edit-app-root, '/code-tables')
-    let $document-path := concat($code-tables, '/document-type-codes.xml')
-    let $language-path := concat($code-tables, '/language-3-type-codes.xml')
-    let $transliteration-path := concat($code-tables, '/transliteration-short-codes.xml')
-    let $script-path := concat($code-tables, '/script-codes.xml')
-    let $code-table-type := doc($document-path)/code-table
-    let $code-table-lang := doc($language-path)/code-table
-    let $code-table-transliteration := doc($transliteration-path)/code-table
-    let $code-table-script := doc($script-path)/code-table
+    let $code-table-path := concat($config:edit-app-root, '/code-tables')
+    let $document-type-codes-path := concat($code-table-path, '/document-type-codes.xml')
+    let $language-type-codes-path := concat($code-table-path, '/language-3-type-codes.xml')
+    let $transliteration-codes-path := concat($code-table-path, '/transliteration-short-codes.xml')
+    let $script-codes-path := concat($code-table-path, '/script-codes.xml')
+    let $document-type-code-table := doc($document-type-codes-path)/code-table
+    let $language-type-code-table := doc($language-type-codes-path)/code-table
+    let $transliteration-code-table := doc($transliteration-codes-path)/code-table
+    let $script-code-table := doc($script-codes-path)/code-table
     return 
         <div class="content">
             <form id="{if ($classifier eq 'stand-alone') then 'new-resource-form' else 'add-related-form'}" action="../edit/edit.xq" method="GET">
                 <ul>
                 {
-                    for $item in $code-table-type//item[classifier = $classifier]
+                    for $item in $document-type-code-table//item[classifier = $classifier]
                     order by $item/sort/text(), $item/label/text()
                     return
                         <li>
@@ -745,7 +741,7 @@ declare function biblio:resource-types($node as node(), $params as element(param
                 <span class="language-list">
                 <select name="languageOfResource">
                     {
-                        for $item in $code-table-lang//item
+                        for $item in $language-type-code-table//item
                         let $label := $item/label/text()
                         let $labelValue := $item/value/text()
                         let $sortOrder := 
@@ -754,7 +750,6 @@ declare function biblio:resource-types($node as node(), $params as element(param
                             else 
                                 if ($item/frequencyClassifier[. = 'common']) 
                                 then 'A' 
-                                (: else frequencyClassifier = 'default':)
                                 else ''
                         order by $sortOrder, $label
                         return
@@ -769,7 +764,7 @@ declare function biblio:resource-types($node as node(), $params as element(param
                 <span class="language-list">
                 <select name="scriptOfResource">
                     {
-                        for $item in $code-table-script//item
+                        for $item in $script-code-table//item
                         let $label := $item/label/text()
                         let $labelValue := $item/value/text()
                         let $sortOrder := 
@@ -777,8 +772,7 @@ declare function biblio:resource-types($node as node(), $params as element(param
                         then 'B' 
                         else 
                             if ($item/frequencyClassifier[. = 'common']) 
-                            then 'A' 
-                            (: else frequencyClassifier = 'default':)
+                            then 'A'
                             else ''
                         order by $sortOrder, $label
                         return
@@ -793,7 +787,7 @@ declare function biblio:resource-types($node as node(), $params as element(param
                 <span class="language-list">
                 <select name="transliterationOfResource">
                     {
-                        for $item in $code-table-transliteration//item
+                        for $item in $transliteration-code-table//item
                         let $label := $item/label/text()
                         let $labelValue := $item/value/text()
                         return
@@ -808,7 +802,7 @@ declare function biblio:resource-types($node as node(), $params as element(param
                 <span class="language-list">
                 <select name="languageOfCataloging">
                     {
-                        for $item in $code-table-lang//item[(frequencyClassifier)]
+                        for $item in $language-type-code-table//item[(frequencyClassifier)]
                         let $label := $item/label/text()
                         let $labelValue := $item/value/text()
                         let $sortOrder :=                                  
@@ -829,7 +823,7 @@ declare function biblio:resource-types($node as node(), $params as element(param
                 <span class="language-list">
                 <select name="scriptOfCataloging">
                     {
-                        for $item in $code-table-script//item[(frequencyClassifier)]
+                        for $item in $script-code-table//item[(frequencyClassifier)]
                         let $label := $item/label/text()
                         let $labelValue := $item/value/text()
                         let $sortOrder :=  
@@ -958,7 +952,7 @@ declare function biblio:prepare-query($id as xs:string?, $collection as xs:strin
     else if ($history) then
         biblio:query-from-history($history)
     else if ($clear) then
-        biblio:clear-search($collection)
+        biblio:clear-search-terms($collection)
     else if ($filter) then 
         biblio:apply-filter($filter, $value)
     else if ($mylist eq 'display') then

@@ -19,7 +19,7 @@ let $type := replace(replace($type, '-latin', ''), '-transliterated', '')
 let $transliterationOfResource := request:get-parameter("transliterationOfResource", "")
 (: Construct the full types. :)
 let $type := 
-        if ($type = ('related-article-in-periodical', 'related-monograph-chapter','related-contribution-to-edited-volume','suebs-tibetan', 'insert-templates', 'new-instance', 'mads'))
+        if ($type = ('related-book-review-in-periodical', 'related-article-in-periodical', 'related-monograph-chapter','related-contribution-to-edited-volume','suebs-tibetan', 'insert-templates', 'new-instance', 'mads'))
         (: These document types do not (yet) divide into latin and transliterated. :)
         then $type
         else
