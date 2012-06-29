@@ -1,5 +1,5 @@
 xquery version "3.0";
-
+ 
 module namespace biblio="http:/exist-db.org/xquery/biblio";
 
 (:~
