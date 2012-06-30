@@ -498,7 +498,6 @@ div.xforms-help-value {
 }
 
 .save-buttons div.xforms-hint-value,
-.join div.xforms-help-value,
 .info-line div.xforms-help-value 
     {
     width:70em;
@@ -519,7 +518,7 @@ div.xforms-hint-value
 	position:absolute;
 	border:#666666 1px solid; 
 	margin:0;
-	margin-top:-3em; /*to pull up the help boxes, allowing the lower boxes to be more visible*/
+	margin-top:-5em; /*to pull up the help boxes, allowing the lower boxes to be more visible*/
 	padding-top:.5em;
 	padding-left:.5em;
 	padding-right:.5em;
@@ -529,7 +528,7 @@ div.xforms-hint-value
 div.xforms-help-value p, 
 div.xforms-help-value li
     { 
-	margin-bottom:.5em;
+	margin-top:.25em;
 	font-weight:normal;
 }
 

@@ -244,6 +244,7 @@ declare function mods:add-part($part, $sep as xs:string) {
 declare function mods:get-publisher($publishers as element(mods:publisher)*) as item()* {
         string-join(
 	        for $publisher in $publishers
+	        order by $publisher/@transliteration 
 	        return
 	        	(: NB: Using name here is an expansion of the MODS schema.:)
 	            if ($publisher/mods:name)
@@ -589,11 +590,13 @@ declare function mods:get-part-and-origin($entry as element()) {
                 	)
                 else ()
                 , 
-                mods:add-part($dateOriginInfo
-                , 
-                if (exists($entry/mods:relatedItem[@type='host']/mods:part/mods:extent) or exists($entry/mods:relatedItem[@type='host']/mods:part/mods:detail))
-                then '.'
-                else ()
+                mods:add-part
+                (
+                    $dateOriginInfo
+                    , 
+                    if (exists($entry/mods:relatedItem[@type='host']/mods:part/mods:extent) or exists($entry/mods:relatedItem[@type='host']/mods:part/mods:detail))
+                    then '.'
+                    else ()
                 )
                 ,
                 if (exists($extent/mods:start) or exists($extent/mods:end) or exists($extent/mods:list))
@@ -1110,23 +1113,28 @@ declare function mods:format-related-item($relatedItem as element(), $global-lan
     ,
     modsCommon:get-short-title($relatedItem)
     ,
+    (:Do not show editors for periodicals.:)
     let $roleTerms := $relatedItem/mods:name/mods:role/mods:roleTerm
+    let $issuance := $relatedItem/mods:originInfo/mods:role/mods:issuance
     return
-        for $roleTerm in distinct-values($roleTerms)
-            where $roleTerm = $mods:secondary-roles        
-                return
-                    let $names := <entry>{$relatedItem/mods:name[mods:role/mods:roleTerm eq $roleTerm]}</entry>
-                        return
-                            if (string($names))
-                            then
-                                (
-                                ', '
-                                ,
-                                mods:get-role-label-for-list-view($roleTerm)
-                                ,
-                                mods:format-multiple-names($names, 'secondary', $global-transliteration, $global-language)
-                                )
-                            else '.'
+        if ($issuance)
+        then
+            for $roleTerm in distinct-values($roleTerms)
+                where $roleTerm = $mods:secondary-roles        
+                    return
+                        let $names := <entry>{$relatedItem/mods:name[mods:role/mods:roleTerm eq $roleTerm]}</entry>
+                            return
+                                if (string($names))
+                                then
+                                    (
+                                    ', '
+                                    ,
+                                    mods:get-role-label-for-list-view($roleTerm)
+                                    ,
+                                    mods:format-multiple-names($names, 'secondary', $global-transliteration, $global-language)
+                                    )
+                                else '.'
+        else ()
     ,
     mods:get-part-and-origin($relatedItem)
     ,                
@@ -1388,6 +1396,31 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     , 'Internet Media Type')
     ,
     
+    (: genre :)
+    for $genre in ($entry/mods:genre)
+    let $authority := string($genre/@authority)
+    return   
+        modsCommon:simple-row(
+            if ($authority eq 'local')
+                then doc(concat($config:edit-app-root, '/code-tables/genre-local-codes.xml'))/*:code-table/*:items/*:item[*:value eq $genre]/*:label
+                else
+                	if ($authority eq 'marcgt')
+                	then doc(concat($config:edit-app-root, '/code-tables/genre-marcgt-codes.xml'))/*:code-table/*:items/*:item[*:value eq $genre]/*:label
+					else string($genre)
+                , 
+                concat(
+                    'Genre'
+                    , 
+                    if ($authority)
+                    then
+                        if ($authority eq 'marcgt')
+                        then ' (MARC Genre Terms)'
+                        else concat(' (', $authority, ')')
+                    else ()            
+            )
+    )
+    ,
+
     (: language :)
     let $distinct-language-labels := distinct-values(
         for $language in $entry/mods:language
@@ -1427,50 +1460,6 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
                 else 'Script of Resource'
                     )
             else ()
-    ,
-
-    (: languageOfCataloging :)
-    let $distinct-language-labels := distinct-values(
-        for $language in $entry/mods:recordInfo/mods:languageOfCataloging
-        return modsCommon:get-language-label($language/mods:languageTerm/text())
-        )
-    let $distinct-language-labels-count := count($distinct-language-labels)
-        return
-            if ($distinct-language-labels-count gt 0)
-            then
-                modsCommon:simple-row(
-                    modsCommon:serialize-list($distinct-language-labels, $distinct-language-labels-count)
-                ,
-                if ($distinct-language-labels-count gt 1) 
-                then 'Languages of Cataloging' 
-                else 'Language of Cataloging'
-                    )
-            else ()
-    ,
-
-    (: genre :)
-    for $genre in ($entry/mods:genre)
-    let $authority := string($genre/@authority)
-    return   
-        modsCommon:simple-row(
-            if ($authority eq 'local')
-                then doc(concat($config:edit-app-root, '/code-tables/genre-local-codes.xml'))/*:code-table/*:items/*:item[*:value eq $genre]/*:label
-                else
-                	if ($authority eq 'marcgt')
-                	then doc(concat($config:edit-app-root, '/code-tables/genre-marcgt-codes.xml'))/*:code-table/*:items/*:item[*:value eq $genre]/*:label
-					else string($genre)
-                , 
-                concat(
-                    'Genre'
-                    , 
-                    if ($authority)
-                    then
-                        if ($authority eq 'marcgt')
-                        then ' (MARC Genre Terms)'
-                        else concat(' (', $authority, ')')
-                    else ()            
-            )
-    )
     ,
     
     (: abstract :)
@@ -1603,10 +1592,30 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     ,
     modsCommon:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
     ,
+
+    (: languageOfCataloging :)
+    let $distinct-language-labels := distinct-values(
+        for $language in $entry/mods:recordInfo/mods:languageOfCataloging
+        return modsCommon:get-language-label($language/mods:languageTerm/text())
+        )
+    let $distinct-language-labels-count := count($distinct-language-labels)
+        return
+            if ($distinct-language-labels-count gt 0)
+            then
+                modsCommon:simple-row(
+                    modsCommon:serialize-list($distinct-language-labels, $distinct-language-labels-count)
+                ,
+                if ($distinct-language-labels-count gt 1) 
+                then 'Languages of Cataloging' 
+                else 'Language of Cataloging'
+                    )
+            else ()
+    ,
+
     let $last-modified := $entry/mods:recordInfo/mods:recordChangeDate[last()][1]
     return 
         if ($last-modified) then
-            modsCommon:simple-row(functx:substring-before-last-match($last-modified, 'T'), 'Last Modified')
+            modsCommon:simple-row(functx:substring-before-last-match($last-modified, 'T'), 'Record Last Modified')
         else ()
     }
     </table>

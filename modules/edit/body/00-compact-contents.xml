@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--node insertions: --><!--missing element insertion: --><!--hints moved to code-table: --><!--saving of all nodes: --><!--schema instatiated: --><!--schema notations added: -->
-<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-c" e:dummy="dummy">
+<!--node insertions: OK.--><!--hints moved to code-table: OK--><!--hints checked: OK--><!--saving of all nodes: OK-->
+<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-c" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
             <div class="join">
@@ -138,6 +138,165 @@
                         </xf:repeat>
                     </fieldset>
                 </xf:group>
+                <xf:group ref=".[mods:titleInfo]">
+                    <fieldset class="level-2">
+                        <div class="join">
+                            <span class="legend">Works as Topic</span>
+                            <span class="join-button">
+                                <xf:trigger>
+                                    <xf:label>+</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:insert nodeset="instance('save-data')/mods:titleInfo" at="index('subject-titleInfo-repeat')" position="before" origin="instance('compact-template')/mods:titleInfo[1]"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
+                            <span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subject-titleInfo']/help"/>
+                                </div>
+                            </span>
+                        </div>
+                        <xf:repeat nodeset="./mods:titleInfo" id="subject-titleInfo-repeat">
+                            <xf:group>
+                                <xf:input ref="./mods:nonSort" class="text_10 margin-plus">
+                                    <xf:label>
+                                        <xf:group>Non Sort</xf:group>
+                                    </xf:label>
+                                </xf:input>
+                            </xf:group>
+                            <xf:group>
+                                <xf:input ref="./mods:title" class="text_150 margin-plus">
+                                    <xf:label>
+                                        <xf:group>Title</xf:group>
+                                    </xf:label>
+                                </xf:input>
+                            </xf:group>
+                            <xf:group>
+                                <xf:input ref="./mods:subTitle" class="text_150 margin-plus">
+                                    <xf:label>
+                                        <xf:group>Subtitle</xf:group>
+                                    </xf:label>
+                                </xf:input>
+                            </xf:group>
+                            <xf:group ref=".[count(../mods:titleInfo) &gt; 1]">
+                                <br/>
+                            </xf:group>
+                        </xf:repeat>
+                    </fieldset>
+                </xf:group>
+                <xf:group ref=".[mods:name]">
+                    <fieldset class="level-2">
+                        <div class="join extra-wide">
+                            <span class="legend">Persons and Institutions as Topics</span>
+                            <span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subject-name']/help"/>
+                                </div>
+                            </span>
+                        </div>
+                        <fieldset class="level-3">
+                            <div class="join">
+                                <span class="legend">Person(s) as Topic</span>
+                                <span class="join-button">
+                                    <xf:trigger>
+                                        <xf:label>+</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('subject-name-person-repeat')" position="before" origin="instance('compact-template')/mods:subject/mods:name[1]"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </span>
+                                <span class="xforms-help">
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-help-value">
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subject-name-personal-compact']/help"/>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-subjects']/help"/>
+                                    </div>
+                                </span>
+                            </div>
+                            <xf:repeat nodeset="./mods:name" id="subject-name-person-repeat">
+                                <xf:group ref=".[@type = 'personal']">
+                                    <fieldset class="level-4">
+                                        <div class="join">
+                                            <span class="legend">Name</span>
+                                            <span class="xforms-help">
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-help-value">
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subject-namePart-personal-compact']/help"/>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-subjects']/help"/>
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <xf:repeat nodeset="./mods:namePart" id="subject-namePart-person-repeat">
+                                            <xf:group class="margin-plus text_100" ref=".[@type = 'given']">
+                                                <xf:input ref=".">
+                                                    <xf:label>Given Name</xf:label>
+                                                </xf:input>
+                                            </xf:group>
+                                            <xf:group class="margin-plus text_100" ref=".[@type = 'family']">
+                                                <xf:input ref=".">
+                                                    <xf:label>Family Name</xf:label>
+                                                </xf:input>
+                                            </xf:group>
+                                        </xf:repeat>
+                                    </fieldset>
+                                </xf:group>
+                            </xf:repeat>
+                        </fieldset>
+                        <fieldset class="level-3">
+                            <div class="join">
+                                <span class="legend">Institutions(s) as Topic</span>
+                                <span class="join-button">
+                                    <xf:trigger ref=".[string-length(mods:extension/e:transliterationOfResource) = 0 and string-length(@transliteration) = 0]">
+                                        <xf:label>+</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('subject-name-person-repeat')" position="before" origin="instance('compact-template')/mods:subject/mods:name[2]"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                    <xf:trigger ref=".[string-length(mods:extension/e:transliterationOfResource) &gt; 0]">
+                                        <xf:label>+</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('subject-name-institution-repeat')" position="before" origin="instance('compact-template')/mods:name[2]"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </span>
+                                <span class="xforms-help">
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-help-value">
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subject-name-corporate-compact']/help"/>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-subjects']/help"/>
+                                    </div>
+                                </span>
+                            </div>
+                            <xf:repeat nodeset="./mods:name" id="subject-name-institution-repeat">
+                                <xf:group ref=".[@type = 'corporate']">
+                                    <fieldset class="level-4">
+                                        <div class="join">
+                                            <span class="legend">Name</span>
+                                            <span class="xforms-help">
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-help-value">
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subject-namePart-corporate-compact']/help"/>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-subjects']/help"/>
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <xf:repeat nodeset="./mods:namePart" id="subject-namePart-person-repeat">
+                                            <xf:group class="margin-plus text_100">
+                                                <xf:input ref=".">
+                                                    <xf:label>
+                                                        Name Part
+                                                    </xf:label>
+                                                </xf:input>
+                                            </xf:group>
+                                        </xf:repeat>
+                                    </fieldset>
+                                </xf:group>
+                            </xf:repeat>
+                        </fieldset>
+                    </fieldset>
+                </xf:group>
             </xf:repeat>
         </fieldset>
     </xf:group>
@@ -165,12 +324,8 @@
             <xf:repeat nodeset="./mods:note" id="note-repeat">
                 <xf:group class="margin-plus">
                     <xf:select1 ref="./@type" selection="open">
-                        <xf:label>Type<span class="xforms-help">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='note-type']/help"/>
-                                </div>
-                            </span>
+                        <xf:label>
+                            Type
                         </xf:label>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='note-type-code']/items/item">
                             <xf:label ref="label"/>

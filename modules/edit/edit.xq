@@ -18,18 +18,18 @@ declare namespace ev="http://www.w3.org/2001/xml-events";
 declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace e="http://www.asia-europe.uni-heidelberg.de/";
 declare namespace mads="http://www.loc.gov/mads/";
-declare namespace functx = "http://www.functx.com";
+declare namespace functx="http://www.functx.com";
 
 (:These variables are used for a kind of dynamic theming in local:assemble-form().:)
-declare variable $uri := substring-before(substring-after(request:get-url(), "/apps/"), "/modules/edit/edit.xq");
-declare variable $header-title := if ($uri eq "tamboti") then "Tamboti Metadata Framework - MODS Editor" else "eXist Bibliographical Demo - MODS Editor";
-declare variable $tamboti-css := if ($uri eq "tamboti") then "tamboti.css" else ();
-declare variable $img-left-src := if ($uri eq "tamboti") then "../../themes/tamboti/images/tamboti.png" else "../../themes/default/images/logo.jpg";
-declare variable $img-left-title := if ($uri eq "tamboti") then "Tamboti Metadata Framework" else "eXist-db: Open Source Native XML Database";
-declare variable $img-right-href := if ($uri eq "tamboti") then "http://www.asia-europe.uni-heidelberg.de/en/home.html" else "";
-declare variable $img-right-src := if ($uri eq "tamboti") then "../../themes/tamboti/images/cluster_logo.png" else ();
-declare variable $img-right-title := if ($uri eq "tamboti") then "The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University" else ();
-declare variable $img-right-width := if ($uri eq "tamboti") then "200" else ();
+declare variable $theme := substring-before(substring-after(request:get-url(), "/apps/"), "/modules/edit/edit.xq");
+declare variable $header-title := if ($theme eq "tamboti") then "Tamboti Metadata Framework - MODS Editor" else "eXist Bibliographical Demo - MODS Editor";
+declare variable $tamboti-css := if ($theme eq "tamboti") then "tamboti.css" else ();
+declare variable $img-left-src := if ($theme eq "tamboti") then "../../themes/tamboti/images/tamboti.png" else "../../themes/default/images/logo.jpg";
+declare variable $img-left-title := if ($theme eq "tamboti") then "Tamboti Metadata Framework" else "eXist-db: Open Source Native XML Database";
+declare variable $img-right-href := if ($theme eq "tamboti") then "http://www.asia-europe.uni-heidelberg.de/en/home.html" else "";
+declare variable $img-right-src := if ($theme eq "tamboti") then "../../themes/tamboti/images/cluster_logo.png" else ();
+declare variable $img-right-title := if ($theme eq "tamboti") then "The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University" else ();
+declare variable $img-right-width := if ($theme eq "tamboti") then "200" else ();
 
 (:TODO: Code related to MADS files.:)
  
@@ -382,7 +382,7 @@ declare function local:get-tab-id($tab-id as xs:string, $type-request as xs:stri
         	    then 'compact-b-article' 
         	    else 
         		    if ($type-request eq 'contribution-to-edited-volume')
-        		    then 'compact-b-contribution'
+        		    then 'compact-b-edited-volume'
         		    else
             		    if ($type-request eq 'monograph')
             		    then 'compact-b-monograph'

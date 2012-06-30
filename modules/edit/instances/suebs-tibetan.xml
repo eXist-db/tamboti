@@ -18,11 +18,12 @@
     <targetAudience authority="marctarget">adult</targetAudience>
     <typeOfResource>text</typeOfResource>
     <genre authority="marcgt">book</genre>
-    <subject>
-        <topic/>
-        <geographic/>
-        <temporal point=""/>
-        <titleInfo>
+    <subject authority="" xlink:href="">
+        <topic authority=""/>
+        <geographic authority=""/>
+        <temporal authority="" encoding="w3cdtf" point=""/>
+        <titleInfo type="" xlink:href="">
+            <nonSort/>
             <title/>
             <subTitle/>
         </titleInfo>

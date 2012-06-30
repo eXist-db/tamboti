@@ -36,42 +36,22 @@
     <targetAudience authority="marctarget">adult</targetAudience>
     <typeOfResource>text</typeOfResource>
     <genre authority="marcgt">article</genre>
-    <subject>
-        <topic/>
-        <geographic/>
-        <temporal encoding="w3cdtf" point=""/>
-        <titleInfo script="">
+    <subject authority="" xlink:href="">
+        <topic authority=""/>
+        <geographic authority=""/>
+        <temporal authority="" encoding="w3cdtf" point=""/>
+        <titleInfo type="" xlink:href="">
             <nonSort/>
             <title/>
             <subTitle/>
-            <partNumber/>
-            <partName/>
-        </titleInfo>
-        <titleInfo script="latn" transliteration="" type="translated">
-            <nonSort/>
-            <title/>
-            <subTitle/>
-            <partNumber/>
-            <partName/>
-        </titleInfo>
-        <titleInfo lang="" script="" type="translated">
-            <nonSort/>
-            <title/>
-            <subTitle/>
-            <partNumber/>
-            <partName/>
         </titleInfo>
         <name type="personal" xlink:href="">
             <namePart type="given"/>
             <namePart type="family"/>
-            <namePart type="given" script="latn" transliteration=""/>
-            <namePart type="family" script="latn" transliteration=""/>
         </name>
         <name type="corporate" xlink:href="">
-            <namePart script=""/>
-            <namePart script=""/>
-            <namePart transliteration=""/>
-            <namePart transliteration=""/>
+            <namePart/>
+            <namePart/>
         </name>
     </subject>
     <classification authority="lcc"/>

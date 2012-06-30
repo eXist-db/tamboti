@@ -37,11 +37,11 @@
     <typeOfResource>text</typeOfResource>
     <genre authority="marcgt">article</genre>
     <genre authority="marcgt">review</genre>
-    <subject>
-        <topic/>
-        <geographic/>
-        <temporal encoding="w3cdtf" point=""/>
-        <titleInfo>
+    <subject authority="" xlink:href="">
+        <topic authority=""/>
+        <geographic authority=""/>
+        <temporal authority="" encoding="w3cdtf" point=""/>
+        <titleInfo type="" xlink:href="">
             <nonSort/>
             <title/>
             <subTitle/>
@@ -51,8 +51,8 @@
             <namePart type="family"/>
         </name>
         <name type="corporate" xlink:href="">
-            <namePart type=""/>
-            <namePart type=""/>
+            <namePart/>
+            <namePart/>
         </name>
     </subject>
     <classification authority="lcc"/>
@@ -167,11 +167,11 @@
         <targetAudience authority="marctarget">adult</targetAudience>
         <typeOfResource>text</typeOfResource>
         <genre type="code" authority="marcgt">book</genre>
-        <subject>
-            <topic/>
-            <geographic/>
-            <temporal encoding="w3cdtf" point=""/>
-            <titleInfo>
+        <subject authority="" xlink:href="">
+            <topic authority=""/>
+            <geographic authority=""/>
+            <temporal authority="" encoding="w3cdtf" point=""/>
+            <titleInfo type="" xlink:href="">
                 <nonSort/>
                 <title/>
                 <subTitle/>

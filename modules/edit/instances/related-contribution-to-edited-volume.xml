@@ -20,17 +20,22 @@
     <targetAudience authority="marctarget">adult</targetAudience>
     <typeOfResource>text</typeOfResource>
     <genre authority="marcgt">article</genre>
-    <subject authority="" xlink:href="" lang="" script="" transliteration="">
+    <subject authority="" xlink:href="">
         <topic authority=""/>
-        <geographic/>
-        <temporal encoding="w3cdtf" point="" keyDate=""/>
-        <titleInfo lang="" type="" authority="" script="" transliteration="">
+        <geographic authority=""/>
+        <temporal authority="" encoding="w3cdtf" point=""/>
+        <titleInfo type="" xlink:href="">
             <nonSort/>
             <title/>
             <subTitle/>
         </titleInfo>
-        <name type="" authority="" script="" transliteration="" xlink:href="">
-            <namePart type=""/>
+        <name type="personal" xlink:href="">
+            <namePart type="given"/>
+            <namePart type="family"/>
+        </name>
+        <name type="corporate" xlink:href="">
+            <namePart/>
+            <namePart/>
         </name>
     </subject>
     <classification authority="lcc" displayLabel="" lang=""/>

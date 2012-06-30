@@ -7,11 +7,14 @@
                 <p>Every time you click a tab (including the current one), your input is saved. </p>
                 <p>When you click "Finish Editing", your input is saved, and you return to the search interface where your record is displayed. </p>
                 <p>The record is saved inside the folder you marked before opening the editor or the folder from which you opened it for re-editing.</p>
-                <p>Be aware that you are only logged in for 30 minutes and that when your session times out, you will be returned to the search interface and what you have input without saving it cannot be retrieved.</p>
+                <p>Be aware that you are only logged in for 30 minutes and that when your session times out, you will be returned to the search interface and what you have input without saving cannot be retrieved.</p>
+                <p>You can always see when your record was last saved, in the line above.</p>
+                <p>Note that if you reload the web page, your last edits are lost.</p>
                 <p>You can keep your session alive for another 30 minutes by clicking any tab. When your session is about to expire, you are prompted to keep it alive and given 5 minutes to react.</p>
                 <p>If you know that you may not be able to finish a record, it is best to click "Finish Editing" and return later to continue editing it.</p>
                 <p>You can continue editing the record by finding it and clicking the "Edit Record" button inside the record's detail view.</p>
                 <p>If you wish to discard your edits, click "Cancel Editing" at the bottom of the page. None of the edits you have made will then be saved and you will be shown the original record again.</p>
+                <p>Should you be logged out without saving a record, you can log in again and find it by searching for it; once you have located it in a folder called "temp", you can move it to your home folder.</p>
             </hint>
             <value>save</value>
         </item>

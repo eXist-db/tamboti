@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--node insertions: --><!--missing element insertion: --><!--hints moved to code-table: --><!--saving of all nodes: --><!--schema instatiated: --><!--schema notations added: -->
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-edited-volume" e:dummy="dummy">
+<!--node insertions: OK.--><!--hints moved to code-table: OK.--><!--hints checked: OK.--><!--saving of all nodes: OK.-->
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-edited-volume" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
             <div class="join">
@@ -14,8 +14,25 @@
                     </div>
                 </span>
             </div>
-                <!--relatedItem repeat begins-->
-            <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-anthology-repeat">
+            <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-edited-volume-repeat">
+                <xf:group>
+                    <fieldset class="level-2">
+                        <div class="join">
+                            <span class="legend">XLink of Edited Volume</span>
+                            <span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xlink:href']/help"/>
+                                </div>
+                            </span>
+                        </div>
+                        <xf:group class="margin-plus hide-label">
+                            <xf:input ref="./@xlink:href">
+                                <xf:label>XLink</xf:label>
+                            </xf:input>
+                        </xf:group>
+                    </fieldset>
+                </xf:group>
                 <xf:group>
                     <fieldset class="level-2">
                         <div class="join">
@@ -27,33 +44,15 @@
                                 </div>
                             </span>
                         </div>
-                        <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-anthology-repeat">
-                                <!--titleInfo input begins-->
+                        <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-edited-volume-repeat">
                             <xf:group ref=".[(@transliteration) or string-length(@lang) &gt; 0]">
                                 <br/>
-                            </xf:group>
-                            <xf:group ref=".[(@transliteration)]" class="margin-plus">
-                                <xf:select1 ref="/mods:mods/mods:extension/e:transliterationOfResource">
-                                    <xf:label>Transliteration</xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
-                                        <xf:label ref="label"/>
-                                        <xf:value ref="value"/>
-                                    </xf:itemset>
-                                </xf:select1>
-                            </xf:group>
-                            <xf:group ref=".[string-length(@lang) &gt; 0]" class="margin-plus">
-                                <xf:select1 ref="./@lang">
-                                    <xf:label>Language</xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
-                                        <xf:label ref="label"/>
-                                        <xf:value ref="value"/>
-                                    </xf:itemset>
-                                </xf:select1>
                             </xf:group>
                             <xf:group class="text_10 margin-plus">
                                 <xf:input ref="./mods:nonSort">
                                     <xf:label>
-                                        <xf:group ref=".[string-length(../@type) = 0]">Non Sort</xf:group>
+                                        <xf:group ref=".[string-length(../@type) = 0]">Non
+                                            Sort</xf:group>
                                         <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Non Sort</xf:group>
                                         <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non Sort</xf:group>
                                     </xf:label>
@@ -83,7 +82,7 @@
                 <xf:group>
                     <fieldset class="level-2">
                         <div class="join">
-                            <span class="legend">Editor(s) of Edited Volume</span>
+                            <span class="legend">Editors of Edited Volume</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
@@ -91,7 +90,6 @@
                                 </div>
                             </span>
                         </div>
-                            <!--name repeat begins-->
                         <xf:group>
                             <fieldset class="level-3">
                                 <div class="join">
@@ -114,19 +112,18 @@
                                         <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">
                                             <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart-compact']/help"/>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-name-information']/help"/>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-items']/help"/>
                                         </div>
                                     </span>
                                 </div>
-                                    <!--namePart begins-->
                                 <xf:repeat nodeset="./mods:name" id="relatedItem-name-person-repeat">
                                     <xf:group ref=".[@type = 'personal']">
-                                            <!--namePart repeat begins-->
                                         <xf:repeat nodeset="./mods:namePart" id="relatedItem-name-person-namePart-repeat">
                                             <xf:group class="margin-plus">
                                                 <xf:select1 ref="./@type">
                                                     <xf:label>
                                                         <xf:group ref="../.[@script='latn']">Transliterated</xf:group>
-                                                        <xf:group ref="../.[not(@script='latn')]"/>
                                                     </xf:label>
                                                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-part-type-compact-code']/items/item">
                                                         <xf:label ref="label"/>
@@ -137,9 +134,7 @@
                                                     <xf:label/>
                                                 </xf:input>
                                             </xf:group>
-                                                <!--namePart input ends-->
                                         </xf:repeat>
-                                            <!--namePart repeat ends-->
                                         <xf:group ref=".[count(../mods:name[@type = 'personal']) &gt; 1]">
                                             <br/>
                                         </xf:group>
@@ -151,7 +146,7 @@
                             <fieldset class="level-3">
                                 <div class="join">
                                     <span class="legend">Institutions as Editors</span>
-                                    <span class="join-button wide">
+                                    <span class="join-button extra-wide">
                                         <xf:trigger ref=".[@transliteration]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
@@ -169,32 +164,27 @@
                                         <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">
                                             <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart-institution-compact']/help"/>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-name-information']/help"/>
                                         </div>
                                     </span>
                                 </div>
-                                    <!--namePart begins-->
                                 <xf:repeat nodeset="./mods:name" id="relatedItem-name-institution-repeat">
                                     <xf:group ref=".[@type = 'corporate']">
-                                            <!--namePart repeat begins-->
                                         <xf:repeat nodeset="./mods:namePart" id="relatedItem-name-institution-namePart-repeat">
-                                            <xf:group class="margin-plus hide-label">
+                                            <xf:group class="margin-plus">
                                                 <xf:select1 ref="./@type">
-                                                    <xf:label>
-                                                        <xf:group ref="../.[@script='latn']">Transliterated</xf:group>
-                                                        <xf:group ref="../.[not(@script='latn')]"/>
-                                                    </xf:label>
                                                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-part-type-compact-code']/items/item">
                                                         <xf:label ref="label"/>
                                                         <xf:value ref="value"/>
                                                     </xf:itemset>
                                                 </xf:select1>
                                                 <xf:input ref="." class="text_100">
-                                                    <xf:label>Name Part</xf:label>
+                                                    <xf:label>
+                                                        <xf:group ref=".[@script='latn']">Transliterated</xf:group>
+                                                    </xf:label>
                                                 </xf:input>
                                             </xf:group>
-                                                <!--namePart input ends-->
                                         </xf:repeat>
-                                            <!--namePart repeat ends-->
                                         <xf:group ref=".[count(../mods:name[@type = 'corporate']) &gt; 1]">
                                             <br/>
                                         </xf:group>
@@ -202,7 +192,6 @@
                                 </xf:repeat>
                             </fieldset>
                         </xf:group>
-                            <!--name repeat ends-->
                     </fieldset>
                 </xf:group>
                 <xf:group>
@@ -213,12 +202,11 @@
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='originInfo-compact']/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-origin-information']/help"/>
                                 </div>
                             </span>
                         </div>
-                            <!--originInfo repeat begins-->
-                        <xf:repeat nodeset="./mods:originInfo" id="relatedItem-origininfo-anthology-repeat">
-                                <!--originInfo input begins-->
+                        <xf:repeat nodeset="./mods:originInfo" id="relatedItem-origininfo-edited-volume-repeat">
                             <xf:group>
                                 <fieldset class="level-3">
                                     <div class="join">
@@ -227,40 +215,25 @@
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='place-compact']/help"/>
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-items']/help"/>
                                             </div>
                                         </span>
                                     </div>
-                                        <!--place repeat begins-->
-                                    <xf:repeat nodeset="./mods:place" id="relatedItem-place-anthology-repeat">
-                                            <!--place input begins-->
-                                            <!--place input ends-->
-                                            <!--placeTerm begins-->
+                                    <xf:repeat nodeset="./mods:place" id="relatedItem-place-edited-volume-repeat">
                                         <xf:group>
                                             <fieldset class="level-4">
-                                                    <!--placeTerm repeat begins-->
-                                                <xf:repeat nodeset="./mods:placeTerm" id="relatedItem-place-term-anthology-repeat">
-                                                        <!--placeTerm input begins-->
+                                                <xf:repeat nodeset="./mods:placeTerm" id="relatedItem-place-term-edited-volume-repeat">
                                                     <xf:group class="hide-label margin-plus">
                                                         <xf:input ref="." class="text_100">
                                                             <xf:label>Place Term</xf:label>
                                                         </xf:input>
                                                     </xf:group>
-                                                        <!--placeTerm input ends-->
-                                                        <!--placeTerm delete begins-->
-                                                        <!--placeTerm delete ends-->
                                                 </xf:repeat>
-                                                    <!--placeTerm repeat ends-->
-                                                    <!--placeTerm add begins-->
-                                                    <!--placeTerm add ends-->
                                             </fieldset>
                                         </xf:group>
-                                            <!--placeTerm ends-->
                                     </xf:repeat>
-                                        <!--place repeat ends-->
                                 </fieldset>
                             </xf:group>
-                                <!--place ends-->
-                                <!--publisher begins-->
                             <xf:group>
                                 <fieldset class="level-3">
                                     <div class="join">
@@ -269,41 +242,41 @@
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='publisher-compact']/help"/>
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-items']/help"/>
                                             </div>
                                         </span>
                                     </div>
-                                        <!--publisher repeat begins-->
-                                    <xf:repeat nodeset="./mods:publisher" id="relatedItem-publisher-anthology-repeat">
-                                            <!--publisher input begins-->
+                                    <xf:repeat nodeset="./mods:publisher" id="relatedItem-publisher-edited-volume-repeat">
                                         <xf:group class="hide-label margin-plus">
                                             <xf:input ref="." class="text_100">
                                                 <xf:label>Publisher</xf:label>
                                             </xf:input>
                                         </xf:group>
-                                            <!--publisher input ends-->
                                     </xf:repeat>
-                                        <!--publisher repeat ends-->
-                                        <!--publisher add begins-->
-                                        <!--publisher add ends-->
                                 </fieldset>
                             </xf:group>
-                                <!--publisher ends-->
-                                <!--dateIssued begins-->
-                            <xf:group>
-                                <fieldset class="level-3">
+                            <xf:group ref=".[mods:dateIssued]">
+                                <fieldset class="level-2">
                                     <div class="join">
-                                        <span class="legend">Year of Publication</span>
+                                        <span class="legend">Date of Issue</span>
+                                        <span class="join-button">
+                                            <xf:trigger>
+                                                <xf:label>+</xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xf:insert nodeset="mods:dateIssued" at="index('dateIssued-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:dateIssued"/>
+                                                </xf:action>
+                                            </xf:trigger>
+                                        </span>
                                         <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='dateIssued-compact']/help"/>
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-items']/help"/>
                                             </div>
                                         </span>
                                     </div>
-                                        <!--dateIssued repeat begins-->
-                                    <xf:repeat nodeset="./mods:dateIssued" id="relatedItem-date-issued-anthology-repeat">
-                                            <!--dateIssued input begins-->
-                                        <xf:group class="margin-plus">
+                                    <xf:repeat nodeset="./mods:dateIssued" id="dateIssued-repeat">
+                                        <xf:group ref=".[count(../mods:dateIssued) &gt; 1]" class="margin-plus">
                                             <xf:select1 ref="./@point">
                                                 <xf:label>Point</xf:label>
                                                 <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='date-point-code']/items/item">
@@ -312,22 +285,51 @@
                                                 </xf:itemset>
                                             </xf:select1>
                                         </xf:group>
-                                            <!--Cluster: hide-->
-                                        <xf:group class="hide-label margin-plus">
-                                            <xf:input ref="." class="text_10">
-                                                <xf:label>Year</xf:label>
-                                            </xf:input>
-                                        </xf:group>
-                                            <!--dateIssued input ends-->
+                                        <xf:input ref="." class="text_10 hide-label margin-plus">
+                                            <xf:label>Date Issued</xf:label>
+                                        </xf:input>
                                     </xf:repeat>
-                                        <!--dateIssued repeat ends-->
                                 </fieldset>
                             </xf:group>
-                                <!--dateIssued ends-->
+                            <xf:group ref=".[mods:copyrightDate]">
+                                <fieldset class="level-2">
+                                    <div class="join">
+                                        <span class="legend">Copyright Date</span>
+                                        <span class="join-button">
+                                            <xf:trigger>
+                                                <xf:label>+</xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xf:insert nodeset="mods:copyrightDate" at="index('copyrightDate-repeat')" position="after" origin="instance('insert-templates')/mods:originInfo/mods:copyrightDate"/>
+                                                </xf:action>
+                                            </xf:trigger>
+                                        </span>
+                                        <span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='copyrightDate-compact']/help"/>
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-items']/help"/>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <xf:repeat nodeset="./mods:copyrightDate" id="copyrightDate-repeat">
+                                        <xf:group class="margin-plus" ref=".[count(../mods:copyrightDate) &gt; 1]">
+                                            <xf:select1 ref="./@point">
+                                                <xf:label>Point</xf:label>
+                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='date-point-code']/items/item">
+                                                    <xf:label ref="label"/>
+                                                    <xf:value ref="value"/>
+                                                </xf:itemset>
+                                            </xf:select1>
+                                        </xf:group>
+                                        <xf:group class="text_10 hide-label margin-plus">
+                                            <xf:input ref=".">
+                                                <xf:label>Copyright Date</xf:label>
+                                            </xf:input>
+                                        </xf:group>
+                                    </xf:repeat>
+                                </fieldset>
+                            </xf:group>
                         </xf:repeat>
-                            <!--originInfo repeat ends-->
-                            <!--originInfo add begins-->
-                            <!--originInfo add ends-->
                     </fieldset>
                 </xf:group>
                 <xf:group>
@@ -337,37 +339,26 @@
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='originIfo-compact']/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='edited-volume-part-compact']/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-items']/help"/>
                                 </div>
                             </span>
                         </div>
-                            <!--relatedItem/part repeat begins-->
-                        <xf:repeat nodeset="./mods:part" id="related-item-part-anthology-repeat">
-                                <!--relatedItem/part input begins-->
-                                <!--NB 3.4 adds altRepGroup-->
-                                <!--relatedItem/part input ends-->
-                                <!--relatedItem/part/detail begins-->
+                        <xf:repeat nodeset="./mods:part" id="related-item-part-edited-volume-repeat">
                             <xf:group ref=".[mods:detail]">
                                 <fieldset class="level-3">
                                     <div class="join">
                                         <span class="legend">Volume</span>
                                     </div>
-                                        <!--relatedItem/part/detail repeat begins-->
-                                    <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-anthology-repeat">
-                                            <!--relatedItem/part/detail input ends-->
-                                            <!--relatedItem/part/detail/number begins-->
+                                    <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-edited-volume-repeat">
                                         <xf:group ref=".[mods:number]" class="hide-label margin-plus">
                                             <xf:input ref="./mods:number" class="text_10">
                                                 <xf:label>Number</xf:label>
                                             </xf:input>
                                         </xf:group>
-                                            <!--relatedItem/part/detail/number ends-->
                                     </xf:repeat>
-                                        <!--relatedItem/part/detail repeat ends-->
                                 </fieldset>
                             </xf:group>
-                                <!--relatedItem/part/detail ends-->
-                                <!--relatedItem/part/extent begins-->
                             <xf:group ref=".[mods:extent]">
                                 <fieldset class="level-3">
                                     <div class="join">
@@ -376,53 +367,44 @@
                                             <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='extent-compact']/help"/>
                                         </div>
                                     </div>
-                                        <!--relatedItem/part/extent repeat begins-->
-                                    <xf:repeat nodeset="./mods:extent" id="related-item-extent-anthology-repeat">
-                                            <!--relatedItem/part/extent input begins-->
-                                            <!--relatedItem/part/extent input ends-->
-                                            <!--relatedItem/part/start begins-->
+                                    <xf:repeat nodeset="./mods:extent" id="related-item-extent-edited-volume-repeat">
                                         <xf:group ref=".[mods:start]" class="margin-plus">
                                             <xf:input ref="./mods:start" class="text_10">
                                                 <xf:label>Start</xf:label>
                                             </xf:input>
                                         </xf:group>
-                                            <!--relatedItem/part/start ends-->
-                                            <!--relatedItem/part/end begins-->
                                         <xf:group ref=".[mods:end]" class="margin-plus">
                                             <xf:input ref="./mods:end" class="text_10">
                                                 <xf:label>End</xf:label>
                                             </xf:input>
                                         </xf:group>
-                                            <!--relatedItem/part/end ends-->
                                     </xf:repeat>
-                                        <!--relatedItem/part/extent repeat ends-->
                                 </fieldset>
                             </xf:group>
-                                <!--relatedItem/part/extent ends-->
                         </xf:repeat>
-                            <!--relatedItem/part repeat ends-->
                     </fieldset>
                 </xf:group>
                 <xf:group ref=".[mods:identifier]">
                     <fieldset class="level-2">
-                        <div class="join">
-                            <span class="legend">Identifiers</span>
+                        <div class="join wide">
+                            <span class="legend">Identifiers of Edited Volume</span>
                             <span class="join-button">
                                 <xf:trigger ref=".[mods:identifier]">
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:identifier" at="index('identifier-anthology-repeat')" position="before" origin="instance('compact-template')/mods:identifier"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:identifier" at="index('identifier-edited-volume-repeat')" position="before" origin="instance('compact-template')/mods:identifier"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='identifier-monograph-compact']/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='identifier']/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-items']/help"/>
                                 </div>
                             </span>
                         </div>
-                        <xf:repeat nodeset="./mods:identifier" id="identifier-anthology-repeat">
+                        <xf:repeat nodeset="./mods:identifier" id="identifier-edited-volume-repeat">
                             <xf:group class="hide-label margin-plus">
                                 <xf:select1 ref="./@type">
                                     <xf:label>Type</xf:label>
@@ -447,14 +429,30 @@
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <p> Enter here information related to the monograph series that the monograph you are cataloguing occurs in. This
-                                        information falls into two groups: general information on the monograph series and specific information on the location
-                                        of the monograph in the monograph series.</p>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='series-edited-volume-compact']/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-items']/help"/>
                                 </div>
                             </span>
                         </div>
-                        <!--relatedItem repeat begins-->
                         <xf:repeat nodeset="./mods:relatedItem" id="relatedItem-relatedItem-series-repeat">
+                            <xf:group>
+                                <fieldset class="level-2">
+                                    <div class="join">
+                                        <span class="legend">XLink of Monograph Series</span>
+                                        <span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xlink:href']/help"/>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <xf:group class="margin-plus hide-label">
+                                        <xf:input ref="./@xlink:href">
+                                            <xf:label>XLink</xf:label>
+                                        </xf:input>
+                                    </xf:group>
+                                </fieldset>
+                            </xf:group>
                             <xf:group>
                                 <fieldset class="level-3">
                                     <div class="join">
@@ -462,35 +460,20 @@
                                         <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
-                                                <p> Enter here the title of the series you are cataloguing. If the title divides into a main title and a
-                                                    subtitle, enter each part in its separate field. </p>
-                                                <p> If the title is in a language that is usually transliterated, enter the transliterated title and subtitle in
-                                                    their respective fields. Use the transliteration scheme you chose when selecting a record template. </p>
-                                                <p> If you believe it is useful to supply a translation of the title, do so in their relevant fields. Note the
-                                                    language that the title information is translated into (the default is English). </p>
-                                                <p> The language used is only specified if it is different from the language noted in Language of Resource when
-                                                    you selected the record template. The most common languages have been moved to the top of the list. </p>
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='edited-volume-series-title']/help"/>
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-items']/help"/>
                                             </div>
                                         </span>
                                     </div>
                                     <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-relatedItem-relatedItem-series-repeat">
-                                        <!--titleInfo input begins-->
                                         <xf:group ref=".[(@transliteration) or string-length(@lang) &gt; 0]">
                                             <br/>
-                                        </xf:group>
-                                        <xf:group ref=".[string-length(@lang) &gt; 0]" class="margin-plus">
-                                            <xf:select1 ref="./@lang">
-                                                <xf:label>Language</xf:label>
-                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
-                                                    <xf:label ref="label"/>
-                                                    <xf:value ref="value"/>
-                                                </xf:itemset>
-                                            </xf:select1>
                                         </xf:group>
                                         <xf:group class="margin-plus">
                                             <xf:input ref="./mods:nonSort" class="text_10">
                                                 <xf:label>
-                                                    <xf:group ref=".[string-length(../@type) = 0]">Non Sort</xf:group>
+                                                    <xf:group ref=".[string-length(../@type) = 0]">Non
+                                                  Sort</xf:group>
                                                     <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Non Sort</xf:group>
                                                     <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non Sort</xf:group>
                                                 </xf:label>
@@ -520,20 +503,17 @@
                             <xf:group>
                                 <fieldset class="level-3">
                                     <div class="join extra-wide">
-                                        <span class="legend">Location of Edited Volume in Monograph Series</span>
+                                        <span class="legend">Location of Edited Volume in Monograph
+                                            Series</span>
                                         <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
-                                                <p> Use this field to indicate the volume of the series that the edited volume you are cataloguing occurs in.
-                                                </p>
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='edited-volume-series-part']/help"/>
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-items']/help"/>
                                             </div>
                                         </span>
                                     </div>
-                                    <!--relatedItem/part repeat begins-->
                                     <xf:repeat nodeset="./mods:part" id="part-relatedItem-relatedItem-series-repeat">
-                                        <!--relatedItem/part input begins-->
-                                        <!--relatedItem/part input ends-->
-                                        <!--relatedItem/part/detail begins-->
                                         <xf:group ref=".[mods:detail]">
                                             <fieldset class="level-4">
                                                 <div class="join">
@@ -541,37 +521,27 @@
                                                     <span class="xforms-help">
                                                         <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                         <div class="xforms-help-value">
-                                                            <p> Use this field to indicate the volume the edited volume that the edited volume contribution you
-                                                                are cataloguing occurs in. </p>
+                                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='edited-volume-series-part']/help"/>
+                                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-items']/help"/>
                                                         </div>
                                                     </span>
                                                 </div>
-                                                <!--relatedItem/part/detail repeat begins-->
                                                 <xf:repeat nodeset="./mods:detail" id="detail-relatedItem-relatedItem-series-repeat">
-                                                    <!--relatedItem/part/detail input ends-->
-                                                    <!--relatedItem/part/detail/number begins-->
                                                     <xf:group ref=".[mods:number]" class="hide-label margin-plus">
                                                         <xf:input ref="./mods:number" class="text_10">
                                                             <xf:label>Number</xf:label>
                                                         </xf:input>
                                                     </xf:group>
-                                                    <!--relatedItem/part/detail/number ends-->
                                                 </xf:repeat>
-                                                <!--relatedItem/part/detail repeat ends-->
                                             </fieldset>
                                         </xf:group>
-                                        <!--relatedItem/part/detail ends-->
-                                        <!--relatedItem/part/extent begins-->
                                     </xf:repeat>
-                                    <!--relatedItem/part repeat ends-->
                                 </fieldset>
                             </xf:group>
                         </xf:repeat>
-                        <!--title repeat ends-->
                     </fieldset>
                 </xf:group>
             </xf:repeat>
-                <!--title repeat ends-->
         </fieldset>
     </xf:group>
 </div>

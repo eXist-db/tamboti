@@ -9,6 +9,7 @@ import module namespace security = "http://exist-db.org/mods/security" at "../se
 import module namespace uu = "http://exist-db.org/mods/uri-util" at "../search/uri-util.xqm";
 
 declare namespace mods = "http://www.loc.gov/mods/v3";
+declare namespace e="http://www.asia-europe.uni-heidelberg.de/";
 
 declare function local:do-updates($item, $doc) {
     (: This first checks to see if we have a titleInfo in the saved document.  
@@ -271,8 +272,16 @@ declare function local:find-live-collection-containing-uuid($uuid as xs:string) 
 let $item := request:get-data()/element()
 let $action := request:get-parameter('action', 'save')
 let $incoming-id := $item/@ID
+let $user := session:get-attribute($security:SESSION_USER_ATTRIBUTE)
 let $last-modified := xmldb:last-modified($config:mods-temp-collection, concat($incoming-id,'.xml'))
-let $last-modified := <mods:recordChangeDate>{$last-modified}</mods:recordChangeDate>
+(:There is no way to store the user name in MODS, therefor it is stored in extension. The standard mods way of noting modifications is followed as well.:)
+let $last-modified-extension :=
+    <e:modified>
+        <e:when>{$last-modified}</e:when>
+        <e:who>{$user}</e:who>
+    </e:modified>
+let $last-modified := 
+    <mods:recordChangeDate>{$last-modified}</mods:recordChangeDate>
 (: If we do not have an ID, then throw an error. :) 
 return
     if (string-length($incoming-id) eq 0)
@@ -309,6 +318,7 @@ return
                         local:do-updates($item, $doc),
                         (:Insert modification date-time.:)
                         update insert $last-modified into $doc/mods:recordInfo,
+                        update insert $last-modified-extension into $doc/mods:extension,
                         (:Move it from temp to target collection.:)
                         xmldb:move($config:mods-temp-collection, $target-collection, $file-to-update),
                         (:Set the same permissions on the moved file that the parent collection has.:)

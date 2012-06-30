@@ -89,10 +89,15 @@
     <name type="personal" xlink:href="">
         <namePart type=""/>
     </name>
-    <subject>
-        <topic/>
-        <geographic/>
-        <temporal encoding="w3cdtf" point=""/>
+    <subject authority="" xlink:href="">
+        <topic authority=""/>
+        <geographic authority=""/>
+        <temporal authority="" encoding="w3cdtf" point=""/>
+        <titleInfo type="" xlink:href="">
+            <nonSort/>
+            <title/>
+            <subTitle/>
+        </titleInfo>
         <name type="personal" xlink:href="">
             <namePart type="given"/>
             <namePart type="family"/>
@@ -194,10 +199,15 @@
         <targetAudience authority="marctarget">adult</targetAudience>
         <typeOfResource>text</typeOfResource>
         <genre type="code" authority="marcgt">book</genre>
-        <subject>
-            <topic/>
-            <geographic/>
-            <temporal encoding="w3cdtf" point=""/>
+        <subject authority="" xlink:href="">
+            <topic authority=""/>
+            <geographic authority=""/>
+            <temporal authority="" encoding="w3cdtf" point=""/>
+            <titleInfo type="" xlink:href="">
+                <nonSort/>
+                <title/>
+                <subTitle/>
+            </titleInfo>
             <name type="personal" xlink:href="">
                 <namePart type="given"/>
                 <namePart type="family"/>
