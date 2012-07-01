@@ -30,46 +30,6 @@
                             <xf:group ref=".[(@transliteration) or string-length(@lang) &gt; 0]">
                                 <br/>
                             </xf:group>
-                            <xf:group ref=".[(@transliteration)]" class="margin-plus">
-                                <xf:select1 ref="/mods:mods/mods:extension/e:transliterationOfResource">
-                                    <xf:label>Transliteration<span class="xforms-help">
-                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-help-value">
-                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration-global-compact']/help"/>
-                                            </div>
-                                        </span>
-                                    </xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
-                                        <xf:label ref="label"/>
-                                        <xf:value ref="value"/>
-                                    </xf:itemset>
-                                </xf:select1>
-                            </xf:group>
-                            <xf:group ref=".[string-length(@lang) &gt; 0]" class="margin-plus">
-                                <xf:select1 ref="./@lang">
-                                    <xf:label>Language<span class="xforms-hint-icon opaque"/>
-                                    </xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
-                                        <xf:label ref="label"/>
-                                        <xf:value ref="value"/>
-                                    </xf:itemset>
-                                </xf:select1>
-                            </xf:group>
-                            <xf:group ref=".[(@script) and (@transliteration)]" class="margin-plus">
-                                <xf:select1 ref="/mods:mods/mods:language/mods:scriptTerm">
-                                    <xf:label>Global Script<span class="xforms-help">
-                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-help-value">
-                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='script-compact']/help"/>
-                                            </div>
-                                        </span>
-                                    </xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
-                                        <xf:label ref="label"/>
-                                        <xf:value ref="value"/>
-                                    </xf:itemset>
-                                </xf:select1>
-                            </xf:group>
                             <xf:group>
                                 <xf:input ref="./mods:nonSort" class="text_10 margin-plus">
                                     <xf:label>
@@ -123,13 +83,13 @@
                         <div class="join wide">
                             <span class="legend">Editor(s) of Periodical</span>
                             <span class="join-button">
-                                <xf:trigger ref=".[mods:name/mods:namePart/@transliteration]">
+                                <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) &gt; 0]">
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-repeat-periodical')" position="before" origin="instance('compact-template')/mods:name[6]"/>
                                     </xf:action>
                                 </xf:trigger>
-                                <xf:trigger ref=".[not(mods:name/mods:namePart/@transliteration)]">
+                                <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) = 0]">
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-repeat-periodical')" position="before" origin="instance('compact-template')/mods:name[5]"/>

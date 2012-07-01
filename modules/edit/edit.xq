@@ -212,7 +212,7 @@ declare function local:assemble-form($dummy-attributes as attribute()*, $style a
     <div id="page-head">
         <div id="page-head-left">
             <a href="../.." style="text-decoration: none">
-                <img src="{$img-left-src}" title="{$img-left-title}" alt="{$img-left-title}" style="border-style: none;"/>
+                <img src="{$img-left-src}" title="{$img-left-title}" alt="{$img-left-title}" style="border-style: none;" width="250px"/>
             </a>
             <div class="documentation"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
         </div>
@@ -243,13 +243,6 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
     let $last-modified-hour := hours-from-dateTime($last-modified)
     let $last-modified-minute := minutes-from-dateTime($last-modified)
     let $last-modified-minute := functx:pad-integer-to-length($last-modified-minute, 2)
-    (:Display the bottom tabs belonging to the active tab.:)
-    let $tab-data := concat($config:edit-app-root, '/tab-data.xml') 
-    let $bottom-tab-label := doc($tab-data)/tabs/tab[tab-id eq $tab-id]/*[local-name() eq $type-request]
-    let $bottom-tab-label := 
-    	if ($bottom-tab-label)
-    	then $bottom-tab-label
-    	else doc($tab-data)/tabs/tab[tab-id eq $tab-id]/label    	
     (:If the record is hosted by a record linked to through an xlink, display the title of this record. 
     Only the xlink on the first relatedItem with type host is treated.:)
     let $related-publication-xlink := doc($record-data)/mods:mods/mods:relatedItem[@type eq 'host'][1]/@xlink:href/string()
@@ -259,7 +252,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
     let $related-publication :=
         if ($related-publication-xlink)
         then
-        (<span class="intro">The present publication is hosted by </span>, <a href="../../modules/search/index.html?filter=ID&amp;value={$related-publication-xlink}" target="_blank">{$related-publication}</a>)
+        (<span class="intro">The catalogued publication is included in </span>, <a href="../../modules/search/index.html?filter=ID&amp;value={$related-publication-xlink}" target="_blank">{$related-publication}</a>,<span class="intro"> through its XLink</span>)
         else ()
     return
         <div class="content">
@@ -291,7 +284,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     if ($publication-title ne ' ') 
                     then (' with the title ', <strong>{$publication-title}</strong>) 
                     else ()
-                }, on the <strong>{$bottom-tab-label}</strong> tab, to be saved in <strong> {
+                }, to be saved in <strong> {
                     let $target-collection-display := replace(replace(xmldb:decode-uri($target-collection), '/db/resources/users/', ''), '/db/resources/commons/', '') 
                     return
                         if ($target-collection-display eq security:get-user-credential-from-session()[1])
@@ -314,18 +307,19 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     </xf:action>
                  </xf:trigger>-->
                  <xf:trigger>
-                    <xf:label class="xforms-group-label-centered-general">Finish Editing</xf:label>
-                    <xf:action ev:event="DOMActivate">
-                        <xf:send submission="save-and-close-submission"/>
-                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={replace($target-collection, '/db', '')}" show="replace"/>
-                    </xf:action>
+                    <xf:label class="xforms-group-label-centered-general">Finish Editing
+                    <span class="xforms-hint">
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <div class="xforms-hint-value">
+                            {$save-hint}
+                        </div>
+                    </span>
+                    </xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:send submission="save-and-close-submission"/>
+                            <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={replace($target-collection, '/db', '')}" show="replace"/>
+                        </xf:action>
                 </xf:trigger>
-                <span class="xforms-hint">
-                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                    <div class="xforms-hint-value">
-                        {$save-hint}
-                    </div>
-                </span>
                 <span class="related-title">
                         {$related-publication}
                 </span>
@@ -348,18 +342,19 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     </xf:action>
                  </xf:trigger>
                  <xf:trigger>
-                    <xf:label class="xforms-group-label-centered-general">Finish Editing</xf:label>
+                    <xf:label class="xforms-group-label-centered-general">Finish Editing
+                        <span class="xforms-hint">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-hint-value">
+                                {$save-hint}
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="save-and-close-submission"/>
                         <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>
                     </xf:action>
                 </xf:trigger>
-                <span class="xforms-hint">
-                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                    <div class="xforms-hint-value">
-                        {$save-hint}
-                    </div>
-                </span>
             </div>
         </div>
 };

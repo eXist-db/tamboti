@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--node insertions: --><!--missing element insertion: --><!--hints moved to code-table: --><!--saving of all nodes: --><!--schema instatiated: --><!--schema notations added: -->
+<!--node insertions: OK--><!--missing element insertion: --><!--hints moved to code-table: OK--><!--hints checked: OK.--><!--saving of all nodes: OK--><!--schema instatiated: OK--><!--schema notations added: OK-->
 <div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="target-audience block-form" tab-id="target-audience" e:dummy="dummy" xlink:dummy="dummy" xml:dummy="dummy">
-    <!--DLF/Aquifer: Recommended if applicable-->
-    <!--Cluster: hide-->
-    <!-- The DLF/Aquifer Implementation Guidelines for Shareable MODS Records recommend the use of at least one targetAudience element when applicable, and a controlled vocabulary when available. This element is repeatable. -->
     <xf:group appearance="full" class="fieldset level-1">
         <div class="join">
             <span class="legend">
@@ -32,12 +29,8 @@
                 </span>
             </span>
         </div>
-
-        <!--targetAudience repeat begins-->
         <xf:repeat nodeset="instance('save-data')/mods:targetAudience" id="targetAudience-repeat">
-            <!--targetAudience node-add begins-->
-            <!--NB: attributes do not work-->
-            <xf:group appearance="full" ref=".[not(mods:targetAudience)] | .[not(@altRepGroup)]| .[not(@authority)] | .[not(@authorityURI)] | .[not(@displayLabel)] | .[not(@lang)] | .[not(@xml:lang)] | .[not(@script)] | .[not(@transliteration)] | .[not(@valueURI)]">
+            <xf:group appearance="full" ref=".[not(@altRepGroup)]| .[not(@authority)] | .[not(@authorityURI)] | .[not(@displayLabel)] | .[not(@lang)] | .[not(@xml:lang)] | .[not(@script)] | .[not(@transliteration)] | .[not(@valueURI)]">
                 <xf:switch>
                     <xf:case id="targetAudience-add-node-hide">
                         <div class="node-button">
@@ -133,127 +126,117 @@
                     </xf:case>
                 </xf:switch>
             </xf:group>
-            <!--targetAudience node-add ends-->
-
-            <!--targetAudience input begins-->
-            <xf:group appearance="full" ref=".[@lang]">
+            <xf:group appearance="full" ref=".[@lang]" class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@lang">
-                    <xf:label>Language</xf:label>
-                    <xf:hint>
-                        <p> The language used within Title Information is specified here, if this
-                            language is different from the language noted in Language of Resource.
-                            The most common languages have been moved to the top of the list. </p>
-                    </xf:hint>
+                    <xf:label>Language<span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='language']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-            <!--DLF/Aquifer: NOT RECOMMENDED]-->
-            <!--Cluster: omit-->
-            <xf:group appearance="full" ref=".[@xml:lang]">
+            <xf:group appearance="full" ref=".[@xml:lang]" class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@xml:lang">
-                    <xf:label>xml:lang</xf:label>
-                    <xf:hint>
-                        <p> The language used within Title Information is specified here, if this
-                            language is different from the language noted in Language of Resource.
-                            xml:lang is used to specify the language used within a field, using
-                            specifications in RFC 3066. RFC 3066 uses the two-character ISO 639-1
-                            codes along with three-character ISO 639-2 codes for those languages not
-                            given in 639-1. </p>
-                        <p> The recommendation is not to use xml:lang, but to use the Language. </p>
-                    </xf:hint>
+                    <xf:label>xml:lang<span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xml:lang']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-            <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
-            <!--Cluster: include-->
-            <xf:group appearance="full" ref=".[@type='transliterated']">
+            <xf:group appearance="full" ref=".[@transliteration]" class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@transliteration" selection="open">
-                    <xf:label>Transliteration</xf:label>
-                    <xf:hint>
-                        <p> Transliteration specifies the transliteration (transcription,
-                            romanisation) scheme used within Title Information. When specificing the
-                            transliteration used, also specify the language employed. There is at
-                            present no standard list of transliteration schemes available. If you
-                            wish to employ a transliteration on the scheme, please contact
-                            <!--contact -->. In general, the Library of Congress transliteration
-                            schemes (<!-- NB -->) should be used. If you follow a transliteration
-                            scheme authorised by <!--NB-->, choose <!--NB--> as the value and note
-                            the language from which the transliteration is made. The following
-                            transliteration schemes are authorised by <!--NB-->: Chinese: pinyin
-                            Japanese: (modified) Hepburn Korean: <!--NB--> Russian: <!--NB-->
-                            Sanskrit: <!--NB--> If you employ a different, but recognised,
-                            transliteration scheme, you may have it added to the list. </p>
-                    </xf:hint>
+                    <xf:label>Transliteration<span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliteration']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-            <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
-            <!--Cluster: include-->
-            <xf:group appearance="full" ref=".[not(@type='transliterated') and ./@script]">
+            <xf:group appearance="full" ref=".[@script]" class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@script">
-                    <xf:label>Script</xf:label>
-                    <xf:hint>
-                        <p> Script specifies the script used within individual fields. The use of
-                            Latin script is not noted. "Chinese" is "Han (Simplified Variant)" or
-                            "Han (Traditional Variant)". If the two variants are not considered, it
-                            is "Han (Hanzi, Kanji, Hanja)", also used for Japanese, Korean and
-                            Vietnamese written in Chinese. </p>
-                    </xf:hint>
+                    <xf:label>Script<span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xml:lang']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-            <!--DLF/Aquifer: OPTIONAL]]-->
-            <!--Cluster: hide-->
-            <xf:group appearance="full" ref=".[@authority]">
-                <xf:input ref="./@authority" class="text_100">
-                    <xf:label>Authority</xf:label>
-                    <xf:hint> Hint </xf:hint>
-                </xf:input>
+            <xf:group appearance="full" ref=".[@authority]" class="schema_3.3 schema_3.4">
+                <xf:select1 ref="./@authority">
+                    <xf:label>Authority<span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='authority']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
+                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='target-audience-authority-code']/items/item">
+                        <xf:label ref="label"/>
+                        <xf:value ref="value"/>
+                    </xf:itemset>
+                </xf:select1>
             </xf:group>
-            <!--DLF/Aquifer: N/A]]-->
-            <!--Cluster: hide-->
-            <xf:group appearance="full" ref=".[@authorityURI]" class="text_100">
+            <xf:group appearance="full" ref=".[@authorityURI]" class="text_100 schema_3.4">
                 <xf:input ref="./@authorityURI" selection="open">
-                    <xf:label>Authority URI</xf:label>
+                    <xf:label>Authority URI<span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='authority-uri']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:hint> Hint</xf:hint>
                 </xf:input>
             </xf:group>
-
-
-            <!--DLF/Aquifer: N/A]]-->
-            <!--Cluster: hide-->
-            <xf:group appearance="full" ref=".[@valueURI]" class="text_100">
+            <xf:group appearance="full" ref=".[@valueURI]" class="text_100 schema_3.4">
                 <xf:input ref="./@valueURI">
-                    <xf:label>Value URI</xf:label>
+                    <xf:label>Value URI<span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='value-uri']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:hint> Hint </xf:hint>
                 </xf:input>
             </xf:group>
             <xf:group appearance="full" ref=".[@displayLabel]">
-                <xf:input ref="./@displayLabel" class="text_100">
-                    <xf:label>Display Label</xf:label>
-                    <xf:hint>
-                        <p> Display Label is intended to be used when additional text associated
-                            with the title is needed for display. Display Label may be used whenever
-                            appropriate to indicate the preferred labeling when displayed.
-                            Appropriate cases include titles other than the primary title or
-                            subtitle. Include the text preferred and capitalisation, but do not
-                            include delimiters such as colons. </p>
-                    </xf:hint>
+                <xf:input ref="./@displayLabel" class="text_100 schema_3.4">
+                    <xf:label>Display Label<span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='displayLabel']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                 </xf:input>
             </xf:group>
-            <xf:group appearance="full">
+            <xf:group appearance="full" ref=".[@altRepGroup]" class="schema_3.4">
                 <xf:select1 ref="./@altRepGroup">
                     <xf:label>Alt Rep Group<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -268,50 +251,48 @@
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-            <!--DLF/Aquifer: Recommended if applicable-->
-            <!--Cluster: include-->
-            <xf:group appearance="full" ref=".">
+            <xf:group appearance="full" class="schema_3.3 schema_3.4">
                 <xf:input ref=".[string-length(@authority)=0]" class="text_50" selection="open">
-                    <xf:label>Target Audience</xf:label>
-                    <xf:hint>
-                        <p> Use Target Audience to describe a group for which a resource is
-                            intended. </p>
-                    </xf:hint>
+                    <xf:label>Target Audience (text input)<span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='targetAudience']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                 </xf:input>
             </xf:group>
-            <!--DLF/Aquifer: Recommended if applicable-->
-            <!--Cluster: include-->
-            <xf:group appearance="full" ref=".">
+            <xf:group appearance="full" class="schema_3.3 schema_3.4">
                 <xf:select1 ref=".[@authority='marctarget']" selection="open">
-                    <xf:label>Target Audience</xf:label>
-                    <xf:hint>
-                        <p> The name of the authoritative list for a controlled value is recorded
-                            here. </p>
-                    </xf:hint>
+                    <xf:label>Target Audience (marctarget)<span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='targetAudience']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='target-audience-marctarget-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-            <!--DLF/Aquifer: Recommended if applicable-->
-            <!--Cluster: include-->
-            <xf:group appearance="full" ref=".">
+            <xf:group appearance="full" class="schema_3.3 schema_3.4">
                 <xf:select1 ref=".[@authority='local']" selection="open">
-                    <xf:label>Target Audience</xf:label>
-                    <xf:hint>
-                        <p> The name of the authoritative list for a controlled value is recorded
-                            here. </p>
-                    </xf:hint>
+                    <xf:label>Target Audience (local)<span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='targetAudience']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='target-audience-local-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-            <!--targetAudience input ends-->
         </xf:repeat>
-        <!--targetAudience repeat ends-->
         <xf:group appearance="full" ref=".[not(mods:targetAudience)]">
             <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Target Audience</xf:label>

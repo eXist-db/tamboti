@@ -274,14 +274,12 @@ let $action := request:get-parameter('action', 'save')
 let $incoming-id := $item/@ID
 let $user := session:get-attribute($security:SESSION_USER_ATTRIBUTE)
 let $last-modified := xmldb:last-modified($config:mods-temp-collection, concat($incoming-id,'.xml'))
-(:There is no way to store the user name in MODS, therefor it is stored in extension. The standard mods way of noting modifications is followed as well.:)
+(:There is no way to store the user name in MODS, therefore it is stored in extension.:)
 let $last-modified-extension :=
     <e:modified>
         <e:when>{$last-modified}</e:when>
         <e:who>{$user}</e:who>
     </e:modified>
-let $last-modified := 
-    <mods:recordChangeDate>{$last-modified}</mods:recordChangeDate>
 (: If we do not have an ID, then throw an error. :) 
 return
     if (string-length($incoming-id) eq 0)
@@ -317,7 +315,6 @@ return
                         (:Update $doc (the document in temp) with $item (the new edits).:)
                         local:do-updates($item, $doc),
                         (:Insert modification date-time.:)
-                        update insert $last-modified into $doc/mods:recordInfo,
                         update insert $last-modified-extension into $doc/mods:extension,
                         (:Move it from temp to target collection.:)
                         xmldb:move($config:mods-temp-collection, $target-collection, $file-to-update),

@@ -27,7 +27,7 @@
                             </span>
                         </div>
                         <xf:group class="margin-plus hide-label">
-                            <xf:input ref="./@xlink:href">
+                            <xf:input ref="./@xlink:href" class="text_50">
                                 <xf:label>XLink</xf:label>
                             </xf:input>
                         </xf:group>
@@ -95,13 +95,13 @@
                                 <div class="join">
                                     <span class="legend">Persons as Editors</span>
                                     <span class="join-button wide">
-                                        <xf:trigger ref=".[mods:namePart/@transliteration]">
+                                        <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) &gt; 0]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-person-repeat')" position="before" origin="instance('compact-template')/mods:name[4]"/>
+                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-person-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem/mods:name[2]"/>
                                             </xf:action>
                                         </xf:trigger>
-                                        <xf:trigger ref=".[not(mods:namePart/@transliteration)]">
+                                        <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) = 0]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-person-repeat')" position="before" origin="instance('compact-template')/mods:name[3]"/>
@@ -112,7 +112,6 @@
                                         <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">
                                             <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart-compact']/help"/>
-                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-name-information']/help"/>
                                             <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-items']/help"/>
                                         </div>
                                     </span>
@@ -147,13 +146,13 @@
                                 <div class="join">
                                     <span class="legend">Institutions as Editors</span>
                                     <span class="join-button extra-wide">
-                                        <xf:trigger ref=".[@transliteration]">
+                                        <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) &gt; 0]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-institution-namePart-repeat')" position="before" origin="instance('compact-template')/mods:name[6]"/>
+                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-institution-namePart-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem/mods:name[6]"/>
                                             </xf:action>
                                         </xf:trigger>
-                                        <xf:trigger ref=".[not(@transliteration)]">
+                                        <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) = 0]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-institution-namePart-repeat')" position="before" origin="instance('compact-template')/mods:name[5]"/>
@@ -172,12 +171,6 @@
                                     <xf:group ref=".[@type = 'corporate']">
                                         <xf:repeat nodeset="./mods:namePart" id="relatedItem-name-institution-namePart-repeat">
                                             <xf:group class="margin-plus">
-                                                <xf:select1 ref="./@type">
-                                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-part-type-compact-code']/items/item">
-                                                        <xf:label ref="label"/>
-                                                        <xf:value ref="value"/>
-                                                    </xf:itemset>
-                                                </xf:select1>
                                                 <xf:input ref="." class="text_100">
                                                     <xf:label>
                                                         <xf:group ref=".[@script='latn']">Transliterated</xf:group>

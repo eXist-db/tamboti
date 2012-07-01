@@ -10,7 +10,7 @@
     
 .save-buttons .related-title a {
     text-decoration:none;
-    color:#5db0e6;
+    color:#3681B3;
     font-weight:600;
 }
 
@@ -32,7 +32,8 @@
 }
 
 .xforms-repeat-item-selected,
-#subject-repeat .xforms-repeat-item-selected
+#subject-repeat .xforms-repeat-item-selected,
+#related-item-part-repeat .xforms-repeat-item-selected
 {
     background-color:#FCFCFC;
 }
@@ -166,6 +167,9 @@ table, td, th {
     margin-bottom:2em;
 }
 
+.save-buttons .xforms-hint-value {
+    font-weight:normal;
+}
 .save-buttons button {
     height:2.5em;
 }
@@ -174,6 +178,7 @@ table, td, th {
     {
     margin:.75em !important;
     font-weight:bold;
+    font-size:12px;
 }
 
 .documentation {
@@ -182,7 +187,7 @@ table, td, th {
 }
 
 .documentation a {
-    color:#5DB0E6;
+    color:#3681B3;
 }
 
 .info-line {
@@ -428,7 +433,7 @@ select .xforms-value {
     }
 
 .text_50 .xforms-value {
-    width:25em;
+    width:30em;
     }
 
 .text_100 .xforms-value {

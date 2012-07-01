@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--node insertions: --><!--hints moved to code-table: --><!--hints checked: --><!--saving of all nodes: -->
+<!--node insertions: --><!--hints moved to code-table: OK--><!--hints checked: OK--><!--saving of all nodes: OK-->
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-monograph" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
@@ -10,14 +10,29 @@
                 <span class="xforms-help">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-help-value">
-                        <p> Enter here information related to the monograph series that the monograph you are cataloguing occurs in. This information falls
-                                into two groups: general information on the monograph series and specific information on the location of the monograph in the
-                                monograph series.</p>
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='series-compact']/help"/>
                     </div>
                 </span>
             </div>
-                <!--relatedItem repeat begins-->
             <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-series-repeat">
+                <xf:group>
+                    <fieldset class="level-2">
+                        <div class="join">
+                            <span class="legend">XLink of Edited Volume</span>
+                            <span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xlink:href']/help"/>
+                                </div>
+                            </span>
+                        </div>
+                        <xf:group class="margin-plus hide-label">
+                            <xf:input ref="./@xlink:href" class="text_50">
+                                <xf:label>XLink</xf:label>
+                            </xf:input>
+                        </xf:group>
+                    </fieldset>
+                </xf:group>
                 <xf:group>
                     <fieldset class="level-2">
                         <div class="join">
@@ -25,19 +40,11 @@
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <p> Enter here the title of the series you are cataloguing. If the title divides into a main title and a subtitle, enter
-                                            each part in its separate field. </p>
-                                    <p> If the title is in a language that is usually transliterated, enter the transliterated title and subtitle in their
-                                            respective fields. Use the transliteration scheme you chose when selecting a record template. </p>
-                                    <p> If you believe it is useful to supply a translation of the title, do so in their relevant fields. Note the language
-                                            that the title information is translated into (the default is English). </p>
-                                    <p> The language used is only specified if it is different from the language noted in Language of Resource when you
-                                            selected the record template. The most common languages have been moved to the top of the list. </p>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='series-titleInfo-compact']/help"/>
                                 </div>
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-periodical-repeat">
-                                <!--titleInfo input begins-->
                             <xf:group ref=".[(@transliteration) or string-length(@lang) &gt; 0]">
                                 <br/>
                             </xf:group>
@@ -62,7 +69,8 @@
                             <xf:group>
                                 <xf:input ref="./mods:nonSort" class="text_10 margin-plus">
                                     <xf:label>
-                                        <xf:group ref=".[string-length(../@type) = 0]">Non Sort</xf:group>
+                                        <xf:group ref=".[string-length(../@type) = 0]">Non
+                                            Sort</xf:group>
                                         <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Non Sort</xf:group>
                                         <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non Sort</xf:group>
                                     </xf:label>
@@ -92,138 +100,110 @@
                 <xf:group>
                     <fieldset class="level-2">
                         <div class="join">
-                            <span class="legend">Names and Roles</span>
-                            <span class="join-button">
-                                <xf:trigger ref=".[@transliteration]">
-                                    <xf:label>+</xf:label>
-                                    <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-repeat-series')" position="before" origin="instance('compact-template')/mods:name[4]"/>
-                                    </xf:action>
-                                </xf:trigger>
-                                <xf:trigger ref=".[not(@transliteration)]">
-                                    <xf:label>+</xf:label>
-                                    <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-repeat-series')" position="before" origin="instance('compact-template')/mods:name[3]"/>
-                                    </xf:action>
-                                </xf:trigger>
-                            </span>
+                            <span class="legend">Editors of Monograph Series</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <p> In Names and Roles, catalogue the names of each person, corporation or conference associated with the resource.</p>
-                                    <p> Include as many Names and Roles as needed, by clicking the '+' button. </p>
-                                    <p> Choose an appropriate Type of Name for each name, "personal" for personal names, "corporate" for names of
-                                            institutions, and "conference" for names of events such as conferences..</p>
-                                    <p> Please notice that the role pertaining to a name follows the name in question.</p>
-                                    <p> More input options can be found on the Name Info tab on the Citation Forms.</p>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='series-name-compact']/help"/>
                                 </div>
                             </span>
                         </div>
-                            <!--name repeat begins-->
-                        <xf:repeat nodeset="./mods:name" id="relatedItem-name-repeat-series">
-                                <!--namePart begins-->
-                            <xf:group>
-                                <fieldset class="level-3">
-                                    <div class="join">
-                                        <span class="legend">Name</span>
-                                        <span class="xforms-help">
-                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-help-value">
-                                                <p> Analyse each name into separate name parts.</p>
-                                                <p> If possible, analyse each personal name into Given Name and Family Name. If this is not possible, choose
-                                                        "(none selected)" and enter the whole name in the field in question.</p>
-                                                <p> If a given or family name consists of several parts, enter all parts of the same type in the same
-                                                        field.</p>
-                                                <p> If possible, analyse each corporate name and conference name into separate name parts. Record the more
-                                                        general designation in the first field and a more specific designation in the second field. If this is
-                                                        not possible, choose "(none selected)" and enter the whole name in the field in question.</p>
-                                                <p> If the name is in a language that is usually transliterated, enter the transliterated name parts in
-                                                        their respective fields. Use the transliteration scheme you chose when selecting a record template. </p>
-                                                <p> More input options can be found on the Name Info tab on the Citation Forms.</p>
-                                            </div>
-                                        </span>
-                                    </div>
-                                    <xf:group class="hide-label margin-plus">
-                                        <xf:select1 ref="./@type">
-                                            <xf:label>Type of Name</xf:label>
-                                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-type-code']/items/item">
-                                                <xf:label ref="label"/>
-                                                <xf:value ref="value"/>
-                                            </xf:itemset>
-                                        </xf:select1>
-                                    </xf:group>
-                                        <!--namePart repeat begins-->
-                                    <xf:repeat nodeset="./mods:namePart" id="relatedItem-namePart-series-repeat">
-                                        <xf:group class="margin-plus">
-                                            <xf:select1 ref="./@type">
-                                                <xf:label>
-                                                    <xf:group ref="../.[@script='latn']">Transliterated</xf:group>
-                                                    <xf:group ref="../.[not(@script='latn')]"/>
-                                                </xf:label>
-                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-part-type-compact-code']/items/item">
-                                                    <xf:label ref="label"/>
-                                                    <xf:value ref="value"/>
-                                                </xf:itemset>
-                                            </xf:select1>
-                                            <xf:input ref="." class="text_100">
-                                                <xf:label/>
-                                            </xf:input>
-                                        </xf:group>
-                                            <!--namePart input ends-->
-                                    </xf:repeat>
-                                        <!--namePart repeat ends-->
-                                </fieldset>
-                            </xf:group>
-                                <!--namePart ends-->
-                                <!--role begins-->
-                            <xf:group>
-                                <fieldset class="level-3">
-                                    <div class="join">
-                                        <span class="legend">Role</span>
-                                        <span class="join-button">
-                                            <xf:trigger>
-                                                <xf:label>+</xf:label>
-                                                <xf:action ev:event="DOMActivate">
-                                                    <xf:insert nodeset="instance('save-data')/mods:role" at="index('relatedItem-series-role-repeat')" position="before" origin="instance('compact-template')/mods:name[3]/mods:role"/>
-                                                </xf:action>
-                                            </xf:trigger>
-                                        </span>
+                        <xf:group>
+                            <fieldset class="level-3">
+                                <div class="join">
+                                    <span class="legend">Persons as Editors</span>
+                                    <span class="join-button wide">
+                                        <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) &gt; 0]">
+                                            <xf:label>+</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-person-repeat')" position="before" origin="instance('compact-template')/mods:name[4]"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                        <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) = 0]">
+                                            <xf:label>+</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-series-name-person-repeat')" position="before" origin="instance('compact-template')/mods:name[3]"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </span>
+                                    <span class="xforms-help">
+                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">
-                                            <p> Role contains a description of the role of the person or institution named above to the resource being
-                                                    catalogued.</p>
-                                            <p> Repeat for each new role played by the named entity, i.e. the same person or institution can have several
-                                                    roles in relation to one resource.</p>
-                                            <p> The more common roles are listed at the top.</p>
-                                            <p> More role input options can be found on the Name Info tab on the Citation Forms.</p>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart-compact']/help"/>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-name-information']/help"/>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-items']/help"/>
                                         </div>
-                                    </div>
-                                        <!--role repeat begins-->
-                                    <xf:repeat nodeset="./mods:role" id="relatedItem-series-role-repeat">
-                                            <!--role input begins-->
-                                            <!--roleTerm repeat begins-->
-                                        <xf:repeat nodeset="./mods:roleTerm" id="relatedItem-series-roleTerm-repeat">
-                                                <!--roleTerm input begins-->
-                                            <xf:group class="hide-label margin-plus">
-                                                <xf:select1 ref=".">
-                                                    <xf:label>Role Term</xf:label>
-                                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='role-short-code']/items/item">
+                                    </span>
+                                </div>
+                                <xf:repeat nodeset="./mods:name" id="relatedItem-series-name-person-repeat">
+                                    <xf:group ref=".[@type = 'personal']">
+                                        <xf:repeat nodeset="./mods:namePart" id="relatedItem-series-name-person-namePart-repeat">
+                                            <xf:group class="margin-plus">
+                                                <xf:select1 ref="./@type">
+                                                    <xf:label>
+                                                        <xf:group ref="../.[@script='latn']">Transliterated</xf:group>
+                                                    </xf:label>
+                                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-part-type-compact-code']/items/item">
                                                         <xf:label ref="label"/>
                                                         <xf:value ref="value"/>
                                                     </xf:itemset>
                                                 </xf:select1>
+                                                <xf:input ref="." class="hide-label text_100">
+                                                    <xf:label/>
+                                                </xf:input>
                                             </xf:group>
-                                                <!--roleTerm input ends-->
                                         </xf:repeat>
-                                            <!--roleTerm repeat ends-->
-                                            <!--roleTerm ends-->
-                                            <!--role input ends-->
-                                    </xf:repeat>
-                                        <!--role repeat ends-->
-                                </fieldset>
-                            </xf:group>
-                                <!--role ends-->
-                        </xf:repeat>
-                            <!--name repeat ends-->
+                                        <xf:group ref=".[count(../mods:name[@type = 'personal']) &gt; 1]">
+                                            <br/>
+                                        </xf:group>
+                                    </xf:group>
+                                </xf:repeat>
+                            </fieldset>
+                        </xf:group>
+                        <xf:group>
+                            <fieldset class="level-3">
+                                <div class="join">
+                                    <span class="legend">Institutions as Editors</span>
+                                    <span class="join-button extra-wide">
+                                        <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) &gt; 0]">
+                                            <xf:label>+</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-series-name-institution-namePart-repeat')" position="before" origin="instance('compact-template')/mods:name[6]"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                        <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) = 0]">
+                                            <xf:label>+</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-series-name-institution-namePart-repeat')" position="before" origin="instance('compact-template')/mods:name[5]"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </span>
+                                    <span class="xforms-help">
+                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                        <div class="xforms-help-value">
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart-institution-compact']/help"/>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-name-information']/help"/>
+                                        </div>
+                                    </span>
+                                </div>
+                                <xf:repeat nodeset="./mods:name" id="relatedItem-series-name-institution-repeat">
+                                    <xf:group ref=".[@type = 'corporate']">
+                                        <xf:repeat nodeset="./mods:namePart" id="relatedItem-series-name-institution-namePart-repeat">
+                                            <xf:group class="margin-plus">
+                                                <xf:input ref="." class="text_100">
+                                                    <xf:label>
+                                                        <xf:group ref=".[@script='latn']">Transliterated</xf:group>
+                                                    </xf:label>
+                                                </xf:input>
+                                            </xf:group>
+                                        </xf:repeat>
+                                        <xf:group ref=".[count(../mods:name[@type = 'corporate']) &gt; 1]">
+                                            <br/>
+                                        </xf:group>
+                                    </xf:group>
+                                </xf:repeat>
+                            </fieldset>
+                        </xf:group>
                     </fieldset>
                 </xf:group>
                 <xf:group>
@@ -233,71 +213,54 @@
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <p> Use this field to indicate the volume of the series that the monograph you are cataloguing occurs in. </p>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='series-part-compact']/help"/>
                                 </div>
                             </span>
                         </div>
-                            <!--relatedItem/part repeat begins-->
                         <xf:repeat nodeset="./mods:part" id="related-item-part-series-repeat">
-                                <!--relatedItem/part input begins-->
-                                <!--relatedItem/part input ends-->
-                                <!--relatedItem/part/detail begins-->
                             <xf:group ref=".[mods:detail]">
                                 <fieldset class="level-3">
                                     <div class="join">
                                         <span class="legend">Volume</span>
                                     </div>
-                                        <!--relatedItem/part/detail repeat begins-->
                                     <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-series-repeat">
-                                            <!--relatedItem/part/detail input ends-->
-                                            <!--relatedItem/part/detail/number begins-->
                                         <xf:group ref=".[mods:number]" class="text_10 margin-plus">
                                             <xf:input ref="./mods:number" class="text_10">
                                                 <xf:label> </xf:label>
                                             </xf:input>
                                         </xf:group>
-                                            <!--relatedItem/part/detail/number ends-->
                                     </xf:repeat>
-                                        <!--relatedItem/part/detail repeat ends-->
                                 </fieldset>
                             </xf:group>
-                                <!--relatedItem/part/detail ends-->
-                                <!--relatedItem/part/extent begins-->
-                                <!--relatedItem/part/extent ends-->
-                                <!--relatedItem/part/text begins-->
                             <xf:group ref=".[mods:part/mods:text]">
                                 <xf:textarea ref="instance('save-data')/mods:part/mods:text" class="textarea" mediatype="dojo">
                                     <xf:label>Text</xf:label>
                                 </xf:textarea>
                             </xf:group>
-                                <!--relatedItem/part/text ends-->
                         </xf:repeat>
-                            <!--relatedItem/part repeat ends-->
                     </fieldset>
                 </xf:group>
                 <xf:group ref=".[mods:identifier]">
                     <fieldset class="level-2">
-                        <div class="join">
-                            <span class="legend">Identifiers</span>
+                        <div class="join wide">
+                            <span class="legend">Identifiers of Monograph Series</span>
                             <span class="join-button">
                                 <xf:trigger ref=".[mods:identifier]">
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:identifier" at="index('identifier-series-repeat')" position="before" origin="instance('compact-template')/mods:identifier"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:identifier" at="index('identifier-edited-volume-repeat')" position="before" origin="instance('compact-template')/mods:identifier"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <p>Enter here primarily the International Standard Book Number (ISBN) number of the monograph you are cataloguing and/or
-                                            its Digital Object Identifier (DOI). </p>
-                                    <p>Use the 13-digit version of the ISBN number, if available.</p>
-                                    <p>If you have access to any other unique identifier, please record it.</p>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='identifier']/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-items']/help"/>
                                 </div>
                             </span>
                         </div>
-                        <xf:repeat nodeset="./mods:identifier" id="identifier-series-repeat">
+                        <xf:repeat nodeset="./mods:identifier" id="identifier-edited-volume-repeat">
                             <xf:group class="hide-label margin-plus">
                                 <xf:select1 ref="./@type">
                                     <xf:label>Type</xf:label>
@@ -314,7 +277,6 @@
                     </fieldset>
                 </xf:group>
             </xf:repeat>
-                <!--title repeat ends-->
         </fieldset>
     </xf:group>
 </div>

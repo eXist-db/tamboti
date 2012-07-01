@@ -53,7 +53,7 @@
                 </p>
                 <p>If you are cataloguing several contributions from the same edited volume, it is a
                     good idea first to catalogue the edited volume. This will save you time and
-                    produce a more ordered bibliograhy. When you have finished with cataloguing the
+                    produce a more ordered bibliography. When you have finished with cataloguing the
                     edited volume, you can then choose "Create Related Record" in the detail view
                     for the record in question. The ID number for the edited volume will then
                     automatically be inserted and you only have to fill out the information
@@ -64,11 +64,44 @@
                 <p> If you choose to enter the information concerning the edited volume inside the
                     record for the contribution, that is, not to use XLink, this is also fine. If
                     you later decide to use the ID of the record for the edited volume, you may
-                    insert its ID in the XLink field. If you insert the ID in the XLink field, any
-                    information you may have entered concerning the edited volume will be
-                    disregarded in the record display. </p>
+                    insert its ID in the XLink field. </p>
             </help>
             <value>edited-volume-compact</value>
+            <local-name/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Enter here information related to the monograph series that the book you are
+                    cataloguing occurs in. </p>
+                <p>This information falls into two groups: <ul>
+                        <li>general information on the monograph series </li>
+                        <li>specific information on the location of the monograph in the monograph
+                            series</li>
+                    </ul>
+                </p>
+                <p>There are two ways you can supply this information: <ul>
+                        <li>you can fill out the title, editors, etc. of the series</li>
+                        <li>you can supply the ID number of the series and then fill out the
+                            information on the location of the book in the series</li>
+                    </ul>
+                </p>
+                <p> In connection with monograph series, the first approach is the most common.</p>
+                <p> You can enter the information concerning the series inside the record for the
+                    book, that is, not to use the ID of the series.</p>
+                <p> If you later decide to use the ID of the record for the edited volume, you may
+                    insert its ID in the XLink field. </p>
+                <p>If you are cataloguing several books from the same series, it is a good idea
+                    first to catalogue the series. This will save you time and produce a more
+                    ordered bibliography. When you have finished with cataloguing the series, you
+                    can then choose "Create Related Record" in the detail view for the record in
+                    question. The ID number for the series will then automatically be inserted and
+                    you only have to fill out the information particular to the book itself. If you
+                    are only cataloguing one book, you can also follow this way - others may then
+                    use your record (if you make it available to them) and catalogue other books in
+                    the same series, by finding it and clicking "Create Related Record". </p>
+            </help>
+            <value>series-compact</value>
             <local-name/>
             <tab-id/>
         </item>
@@ -99,7 +132,7 @@
         </item>
         <item>
             <help>
-                <p>Alternate Representation Groups is used to link alternate representations of the
+                <p> Alternate Representation Groups is used to link alternate representations of the
                     same element content, such as different scripts, transliterations, and
                     translations. The same attribute value is applied to each of the element
                     instances to be linked.</p>
@@ -188,10 +221,17 @@
             <tab-id/>
         </item>
         <item>
-            <help/>
+            <help>
+                <p>A URI uniquely identifying the vocabulary from which the controlled term has been
+                    selected, as assigned by the body responsible for the maintenance of the
+                    vocabulary.</p>
+                <p>URIs identifying authorities may or may not be dereferenceable to human- or
+                    machine-readable information on the authority file, controlled vocabulary, or
+                    thesaurus.</p>
+            </help>
             <hint/>
-            <value>name-authority-uri</value>
-            <local-name>authorityUri</local-name>
+            <value>authority-uri</value>
+            <local-name>authorityURI</local-name>
             <parent/>
             <tab-id/>
         </item>
@@ -203,22 +243,6 @@
             <hint/>
             <value>titleInfo-authority-abbreviated</value>
             <local-name>authority</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help/>
-            <hint/>
-            <value>titleInfo-authorityURI</value>
-            <local-name>authorityURI</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help/>
-            <hint/>
-            <value>authorityURI</value>
-            <local-name>authorityURI</local-name>
             <parent/>
             <tab-id/>
         </item>
@@ -446,9 +470,9 @@
                 <p> Encoding is used to note the encoding followed in the date notation.</p>
                 <p>The recommendation is to use the w3cdtf encoding. According to this encoding,
                     dates are formatted in the following way: <ul>
-                        <li>Year: YYYY (eg 1997)</li>
-                        <li>Year and month: YYYY-MM (eg 1997-07)</li>
-                        <li>Complete date: YYYY-MM-DD (eg 1997-07-16)</li>
+                        <li>Year: YYYY (e.g. 1997)</li>
+                        <li>Year and month: YYYY-MM (e.g. 1997-07)</li>
+                        <li>Complete date: YYYY-MM-DD (e.g. 1997-07-16)</li>
                     </ul>
                 </p>
                 <p>For more options, use the Extended Date-Time Format
@@ -599,8 +623,8 @@
         <item>
             <help>
                 <p> The language used within the input field is specified here, if this language is
-                    different from the language noted in Language of Resource. The most common
-                    languages have been moved to the top of the list. </p>
+                    different from the language noted in Language of Resource. </p>
+                <p>The most common languages have been moved to the top of the list. </p>
             </help>
             <hint/>
             <value>lang</value>
@@ -613,7 +637,7 @@
                 <p> Here the language of the contents of the described resource as a whole is noted. </p>
                 <p> Language may also be expressed in relation to a single field, by means of the
                     Language field, in order to note the language used in a particular field. This
-                    is only necessary if the language used in the field in quesiotn (e.g. in an
+                    is only necessary if the language used in the field in question (e.g. in an
                     alternative title) is different from the language noted in Resource Language. </p>
                 <p> Cataloging Language under Record Information is used to note the language used
                     in the record itself. Cataloging Language is not the Resource Language, but of
@@ -698,7 +722,7 @@
                 <p>The language noted here is the language chosen when the record was created. It
                     applies to the record as a whole, unless otherwise noted. Since a title or a
                     name as a subject can be in any language, the Global Language can be overruled
-                    here by chosing a Local Language.</p>
+                    here by choosing a Local Language.</p>
             </help>
             <hint/>
             <value>lang-global-compact</value>
@@ -713,7 +737,7 @@
                 <p>The language noted here is not the language chosen when the record was created.
                     The language noted here only applies to the field(s) immediately below. Since a
                     title or a name as a subject can be in any language , the Global Language can be
-                    overruled here by chosing a Local Language.</p>
+                    overruled here by choosing a Local Language.</p>
             </help>
             <hint/>
             <value>lang-local-compact</value>
@@ -799,8 +823,10 @@
         </item>
         <item>
             <help>
-                <p> In Editor(s) of Periodical, catalogue the names of the insitution that serves as
+                <p> In Editor(s) of Periodical, catalogue the names of the institution that serves as
                     editor of the periodical.</p>
+                <p> The editor of the periodical as such, not a specific issue, is recorded
+                    here.</p>
                 <p> Include as many editor as needed, by clicking the '+' buttons. </p>
                 <p> If individual persons serve as editors, use the Citation Forms.</p>
                 <p> Analyse each name into separate name parts. Record the more general designation
@@ -879,7 +905,7 @@
         </item>
         <item>
             <help>
-                <p> In Person(s) as Topic, catalogue the names of the persons or corporatate
+                <p> In Person(s) as Topic, catalogue the names of the persons or corporate
                     entities that occur as topic in the work you are cataloguing.</p>
                 <p> Add as many Names as needed, by clicking the '+' button. </p>
             </help>
@@ -892,7 +918,7 @@
         <item>
             <help>
                 <p> In Persons and Institutions as Topics, catalogue the names of each person or
-                    institution that serves as topic of the resource you are calaloguing. </p>
+                    institution that serves as topic of the resource you are cataloguing. </p>
                 <p> Add as many Persons and Institutions as Topics as is necessary. </p>
                 <p> More input options can be accessed by clicking the Subjects tab on Content
                     Description Forms.</p>
@@ -943,6 +969,18 @@
                 <p> More input options can be found on the Related Items Forms tab.</p>
             </help>
             <value>edited-volume-name-compact</value>
+            <local-name>name</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> In Editors of Monograph Series, catalogue the names of each person or
+                    corporation associated with the monograph series.</p>
+                <p> Include as many editors as needed, by clicking the '+' buttons. </p>
+                <p> More input options can be found on the Related Items Forms tab.</p>
+            </help>
+            <value>series-name-compact</value>
             <local-name>name</local-name>
             <parent/>
             <tab-id/>
@@ -1035,7 +1073,7 @@
                     following values: Date, Family, Given, Terms Of Address. </p>
                 <p> "Date" is used to note dates that are not integral parts of a name. For dates
                     within e.g. a conference name, do not use this field to separate the date, since
-                    it is an integral part of the name of the conference. The birthdate associated
+                    it is an integral part of the name of the conference. The birth date associated
                     with a personal name, however, is not an integral part of the name, but can be
                     added to distinguish the name from others, so it does include a separate Name
                     Part with a Type of "Date". </p>
@@ -1072,7 +1110,7 @@
                 <p> Non Sort contains characters, including initial articles (typically "A" and
                     "The" in English), punctuation, and spaces that appear at the beginning of a
                     title that should be ignored when indexing and sorting. </p>
-                <p> Non Sort should only be used with languages that have preposed articles. </p>
+                <p> Non Sort should only be used with languages that have pre-posed articles. </p>
             </help>
             <hint/>
             <value>nonSort</value>
@@ -1100,7 +1138,7 @@
         <item>
             <help>
                 <p>Identifies what type of note is recorded.</p>
-                <p>One can either select a value from the dropdown menu or enter a free-text
+                <p>One can either select a value from the drop-down menu or enter a free-text
                     value.</p>
             </help>
             <hint/>
@@ -1249,14 +1287,14 @@
         </item>
         <item>
             <help>
-                <p> This subfield includes a hierarchical form of a place name relating to the
+                <p> This sub-field includes a hierarchical form of a place name relating to the
                     content of the resource that is both readable by humans and parsable by
                     machines. This form can be applied to the degree of specificity that is known or
                     relevant and used to generate browseable hierarchies even when values are
                     specified to different levels. Explicit inclusion of the complete hierarchy is
                     of potential benefit for automated consultation of a gazetteer to derive map
                     coordinates or to support a map-based interface for searching by country or
-                    state. This subfield has no fields. </p>
+                    state. This sub-field has no fields. </p>
             </help>
             <value>hierarchicalGeographic</value>
             <local-name>hierarchicalGeographic</local-name>
@@ -1378,6 +1416,46 @@
         </item>
         <item>
             <help>
+                <p> The designation of physical parts of a resource in a detailed form. Part is used
+                    to provide detailed coding for physical parts of a resource. It may be used as a
+                    top level element to designate physical parts or under Related Item. It may be
+                    used under Related Item for generating citations about the location of a part
+                    within a host/parent item.</p>
+                <p> Use Part when the record in question refers to either a physical or structural
+                    part of a resource, rather than an intellectual part. An intellectual part of a
+                    resource should be recorded in various fields under Title. A newspaper issue
+                    would generally be indicated with Part, rather than indicating the issue number
+                    as part of the title. The Part element at the top level would also be used to
+                    describe one reel of microfilm in a set, or in any other case in which the part
+                    being described is not an intellectual whole by itself. When in doubt, and only
+                    part numbers or names are needed, use Part Number and/or Part Name under Title
+                    under Title Information. </p>
+            </help>
+            <hint/>
+            <value>part</value>
+            <local-name>part</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Part is used here to record the various parts of one publication inside another
+                    publication. </p>
+                <p> Most publications only have one part. An article may have several instalments,
+                    but most articles, contributions and book reviews are published as a whole.</p>
+                <p> For articles and book reviews, the volume and issue, the year of publication and
+                    the page extent are noted.</p>
+                <p> For contributions to edited volumes, the volume (if relevant) and the page
+                    extent are noted.</p>
+            </help>
+            <hint/>
+            <value>other-part</value>
+            <local-name>part</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
                 <p> Part Name is used for a part or section name of a title. Use Part Name when a
                     part name is present, rather than including the part name in the text of Title.
                     Use Part Name to describe the section or division titles of a digital object
@@ -1493,7 +1571,7 @@
         </item>
         <item>
             <help>
-                <p> Uncoded place terms, i.e. place terms that have not been chosen in an authority
+                <p> Unencoded place terms, i.e. place terms that have not been chosen in an authority
                     file. </p>
             </help>
             <hint/>
@@ -1581,12 +1659,9 @@
                 <p> If the title is in a language that is usually transliterated, enter the
                     transliterated title and subtitle in their respective fields. Use the
                     transliteration scheme you chose when selecting a record template. </p>
-                <p> If you believe it is useful to supply a translation of the title, do so in their
-                    relevant fields. Note the language that the title information is translated into
-                    (the default is English). </p>
-                <p> The language used is only specified if it is different from the language noted
-                    in Language of Resource when you selected the record template. The most common
-                    languages have been moved to the top of the list. </p>
+                <p> If you believe it is useful to supply a translation of the title, do so in the
+                    relevant fields. If the language that the title information is translated into
+                    is not English, you should choose another language. </p>
             </help>
             <value>relatedItem-periodical-titleInfo-compact</value>
             <local-name>relatedItem</local-name>
@@ -1655,8 +1730,8 @@
                 <p> The list of terms given if "Text" is chosen for Type is the same as the list
                     given if "Code" is chosen for Type and Authority is MARC Code List for Relators.
                     However, the values entered into the database are different. If Code is chosen,
-                    "aut" will e.g be input, whereas "Author" will be input if "Text" is chosen. It
-                    is recomended to input each role in both coded and textual form. </p>
+                    "aut" will e.g. be input, whereas "Author" will be input if "Text" is chosen. It
+                    is recommended to input each role in both coded and textual form. </p>
                 <p> If "Text" is chosen, you can also input a term not on the list.</p>
             </help>
             <hint/>
@@ -1717,7 +1792,7 @@
             <help>
                 <p> If the Origin Information is in a non-Latin script, note here the script
                     utilised. As transliterations use the Latin script, the Transliteration field
-                    becomes unneccesary when Latin script is chosen. </p>
+                    becomes unnecessary when Latin script is chosen. </p>
                 <p> Script can be applied the Origin Information as a whole. Do this if you are
                     using only one Script value for all Place Terms, for Publisher and for Edition.
                     If you are using different Script values inside Origin Information, apply Script
@@ -1753,7 +1828,7 @@
                 <p>The script noted here is the script chosen when the record was created. It
                     applies to the record as a whole, unless otherwise noted. Since a title or a
                     name as a subject can be in any script, the Global Script can be overruled here
-                    by chosing a Local Script.</p>
+                    by choosing a Local Script.</p>
             </help>
             <hint/>
             <value>script-global-compact</value>
@@ -1771,7 +1846,7 @@
                 <p>The script noted here is not the script chosen when the record was created. the
                     script noted here only applies to the field(s) immediately below. Since a title
                     or a name as a subject can be in any script, the Global Script can be overruled
-                    here by chosing a Local Script.</p>
+                    here by choosing a Local Script.</p>
             </help>
             <hint/>
             <value>script-local-compact</value>
@@ -1792,7 +1867,7 @@
                     record. </p>
                 <p>If you need to specify a script for an individual field that is different from
                     the global script, you should use the Citation Forms. Here script can be applied
-                    to indivual fields.</p>
+                    to individual fields.</p>
             </help>
             <hint/>
             <value>script-compact</value>
@@ -1815,7 +1890,7 @@
                     when.</p>
                 <p> While it is allowed to place multiple values in a single Subject field, such as
                     within on Topic field, it is the preferred practice to split up Subject terms
-                    into separate subfields, each of which answer the question of who, what, where,
+                    into separate sub-fields, each of which answer the question of who, what, where,
                     and when in relation to the resource being catalogued. Analyse as much as
                     possible.</p>
                 <p> A Subject is basically composed of a Topic, a Place reference and a Time
@@ -1904,7 +1979,7 @@
         </item>
         <item>
             <help>
-                <p> Use Time for chronological Subject terms to denoe temporal coverage. Time may be
+                <p> Use Time for chronological Subject terms to denote temporal coverage. Time may be
                     expressed as a term (e.g. "Middle Ages") or as a structured date (e.g.
                     "2001-09-11"). In the first case, choose "text" in Type; otherwise choose
                     "YYY-MM-DD" and enter the time you wish to refer to as precisely as
@@ -2062,8 +2137,8 @@
                     transliterated title and subtitle in their respective fields. Use the
                     transliteration scheme you chose when selecting a record template.</p>
                 <p> If you believe it is useful to supply a translation of the title, do so in the
-                    relevant fields. Record the language that the title information is translated
-                    into (the default is English). </p>
+                    relevant fields. If the language that the title information is translated into
+                    is not English, you should choose another language. </p>
                 <p> More input options can be found on the Title Information tab on the Citation
                     Forms.</p>
             </help>
@@ -2113,9 +2188,9 @@
                 <p> If the title is in a language that is usually transliterated, enter the
                     transliterated title and subtitle in their respective fields. Use the
                     transliteration scheme you chose when selecting a record template. </p>
-                <p> If you believe it is useful to supply a translation of the title, do so in their
-                    relevant fields. Note the language that the title information is translated into
-                    (the default is English). </p>
+                <p> If you believe it is useful to supply a translation of the title, do so in the
+                    relevant fields. If the language that the title information is translated into
+                    is not English, you should choose another language. </p>
             </help>
             <value>edited-volume-titleInfo-compact</value>
             <local-name>titleInfo</local-name>
@@ -2124,8 +2199,26 @@
         </item>
         <item>
             <help>
+                <p> Enter here the title of the series you are cataloguing. If the title divides
+                    into a main title and a subtitle, enter each part in its separate field. </p>
+                <p> If you have chosen a transliteration scheme when you created the record, you
+                    will have the option of entering a transliteration and a translation.</p>
+                <p> If the title is in a language that is usually transliterated, enter the
+                    transliterated title and subtitle in their respective fields. Use the
+                    transliteration scheme you chose when selecting a record template. </p>
+                <p> If you believe it is useful to supply a translation of the title, do so in the
+                    relevant fields. If the language that the title information is translated into
+                    is not English, you should choose another language. </p>
+            </help>
+            <value>series-titleInfo-compact</value>
+            <local-name>titleInfo</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
                 <p> Use Topic to indicate any primary subjects that do not fit into the Place, Time,
-                    Works as Topics, or Persons and Institutions as Topics subfields. In general,
+                    Works as Topics, or Persons and Institutions as Topics sub-fields. In general,
                     abstract nouns should be used. Add as many Topic fields as you need in order to
                     analyse your topic. The relation between the different fields is not specified,
                     but one may start with more abstract terms and move to more specific terms,
@@ -2137,7 +2230,7 @@
                     Subject instead of another Topic.</p>
                 <p> More input options can be accessed by clicking the Subjects tab on Content
                     Description Forms.</p>
-                <p> While it is highly recommended that subject values be parsed into subfields,
+                <p> While it is highly recommended that subject values be parsed into sub-fields,
                     they are often listed as a string, divided by e.g. double dashes, as in Library
                     of Congress Subject Headings. If you have imported such Subjects, please analyse
                     them.</p>
@@ -2151,12 +2244,12 @@
         <item>
             <help>
                 <p> Transliteration specifies the transliteration (transcription, romanisation)
-                    scheme used within a certain field. When specificing the transliteration used,
+                    scheme used within a certain field. When specifying the transliteration used,
                     also specify the language employed. Since only transliteration into Roman script
                     is used, there is no need to record the script used.</p>
                 <p> There is at present no standard list of transliteration schemes available, but
                     use the American Library Association-Library of Congress transliteration, if
-                    possible. These are postfixed "ALA-LC" in the dropdown list. For more
+                    possible. These are postfixed "ALA-LC" in the drop-down list. For more
                     information on these transliteration schemes, see <a href="http://www.loc.gov/catdir/cpso/roman.html">ALA-LC Romanization
                         Tables</a>. </p>
                 <p> If you wish to employ a transliteration scheme not in the list, please contact
@@ -2182,7 +2275,7 @@
                     chosen. This value applies to the whole record, not just to the field above
                     which it is noted. If you change the value, the change will apply to the whole
                     record. </p>
-                <p> The Global Transliteration can be overruled for a specific field by chosing a
+                <p> The Global Transliteration can be overruled for a specific field by choosing a
                     Local Transliteration in Citation Forms.</p>
             </help>
             <hint/>
@@ -2198,7 +2291,7 @@
                 <p> The transliteration noted here is <em>not</em> the transliteration chosen when
                     the record was created. The transliteration noted here only applies to the
                     field(s) immediately below. Since a title or a name as a subject can be in any
-                    language , the Global Transliteration can be overruled here by chosing a Local
+                    language , the Global Transliteration can be overruled here by choosing a Local
                     Transliteration.</p>
             </help>
             <hint/>
@@ -2249,25 +2342,14 @@
             <tab-id/>
         </item>
         <item>
-            <help/>
+            <help>
+                <p>A URI uniquely identifying the term or controlled value from a vocabulary, as
+                    assigned by the body responsible for the maintenance of the vocabulary.</p>
+                <p>URIs identifying terms may or may not be dereferenceable to human- or
+                    machine-readable records for the term.</p>
+            </help>
             <hint/>
-            <value>name-value-uri</value>
-            <local-name>valueUri</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help/>
-            <hint/>
-            <value>titleInfo-valueURI</value>
-            <local-name>valueURI</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help/>
-            <hint/>
-            <value>valueURI</value>
+            <value>value-uri</value>
             <local-name>valueURI</local-name>
             <parent/>
             <tab-id/>
@@ -2281,7 +2363,8 @@
                     "uuid-1a385342-5d6a-4abb-8704-4355f69dcec9." You can find this value in the
                     "Stable Link to This Record" in the detail view for each record.</p>
                 <p>If you wish to refer to another Tamboti record by its ID in an XLink, you should
-                    insert the UUID with a pound sign (#) in front of it.</p>
+                    insert the UUID with a pound sign (#) in front of it. If you see a link of this
+                    kind, only remove it if it points to the wrong record.</p>
             </help>
             <hint/>
             <value>xlink:href</value>
@@ -2399,7 +2482,7 @@
                     schemes are the same as those used in the pre-entry options. </p>
                 <p> If a record has not been made by use of Tamboti, if will not have this field,
                     but you can assign a transliteration scheme to it here. Doing so will make it
-                    unneccesary to note which transliteration scheme is used for individual fields,
+                    unnecessary to note which transliteration scheme is used for individual fields,
                     i.e. you can set this value once and for all here. Adding a transliteration
                     scheme here will not cause the Basic Input Forms to display transliteration
                     fields. If you wish to add transliterations for titles, names, etc., you have to
@@ -2439,7 +2522,7 @@
                     source of the code. </p>
                 <p> Physical Location typically includes specific information used to locate a
                     resource within a collection, such as the name or code of an
-                    institution/repository, and perhaps subcollection. A shelf number is given in
+                    institution/repository, and perhaps sub-collection. A shelf number is given in
                     Shelf Locator. </p>
             </help>
             <hint/>
@@ -2450,7 +2533,7 @@
         </item>
         <item>
             <help>
-                <p> Shelf Locator records a shelfmark or other shelving designation that indicates
+                <p> Shelf Locator records a shelf-mark or other shelving designation that indicates
                     the location identifier for a copy. If more detailed holdings information is
                     given at the item level, use Shelf Locator under Holding Simple. </p>
             </help>
@@ -2476,10 +2559,21 @@
             <help>
                 <p>Enter here information regarding in which volume of the edited volume the
                     contribution occurs, if the edited volume is in several volumes.</p>
-                <p>Enter also information regarding th epage extent of the contribution.</p>
+                <p>Enter also information regarding the page extent of the contribution.</p>
             </help>
             <hint/>
             <value>edited-volume-part-compact</value>
+            <local-name>part</local-name>
+            <parent>relatedItem</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Enter here information regarding in which volume of the monograph series the book
+                    occurs.</p>
+            </help>
+            <hint/>
+            <value>series-part-compact</value>
             <local-name>part</local-name>
             <parent>relatedItem</parent>
             <tab-id/>
@@ -2493,12 +2587,9 @@
                 <p> If the title is in a language that is usually transliterated, enter the
                     transliterated title and subtitle in their respective fields. Use the
                     transliteration scheme you chose when selecting a record template. </p>
-                <p> If you believe it is useful to supply a translation of the title, do so in their
-                    relevant fields. Note the language that the title information is translated into
-                    (the default is English). </p>
-                <p> The language used is only specified if it is different from the language noted
-                    in Language of Resource when you selected the record template. The most common
-                    languages have been moved to the top of the list. </p>
+                <p> If you believe it is useful to supply a translation of the title, do so in the
+                    relevant fields. If the language that the title information is translated into
+                    is not English, you should choose another language. </p>
             </help>
             <hint/>
             <value>edited-volume-series-title</value>
@@ -2526,6 +2617,22 @@
             <hint/>
             <value>edited-volume-series</value>
             <local-name>titleInfo</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Record here the location of the article, book review or contribution inside its
+                    host publication, that is, inside its periodical or edited volume.</p>
+                <p>If the publication has several parts inside the same host, repeat Part.</p>
+                <p>The host publication, that is, the publication that the article, book review or
+                    contribution is included in, is show above. This was on the detail view of this
+                    publication that the present record was created. Clicking on the link will take
+                    you to the record in question.</p>
+            </help>
+            <hint/>
+            <value>other-location</value>
+            <local-name>relatedItem</local-name>
             <parent/>
             <tab-id/>
         </item>

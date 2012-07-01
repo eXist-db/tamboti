@@ -1611,11 +1611,13 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
                     )
             else ()
     ,
-
-    let $last-modified := $entry/mods:recordInfo/mods:recordChangeDate[last()][1]
+    
+    (:modification date:)
+    let $last-modified := $entry/mods:extension/e:modified/e:when
+    (:let $log := util:log("DEBUG", ("##$last-modified): ", $last-modified)):)
     return 
         if ($last-modified) then
-            modsCommon:simple-row(functx:substring-before-last-match($last-modified, 'T'), 'Record Last Modified')
+            modsCommon:simple-row(functx:substring-before-last-match($last-modified[last()], 'T'), 'Record Last Modified')
         else ()
     }
     </table>
