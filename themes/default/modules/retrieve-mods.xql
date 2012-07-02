@@ -1051,7 +1051,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $destinati
 	                then
 	                    <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
 							<td class="url label relatedItem-label">
-	                            <a href="?filter=ID&amp;value={$xlinked-ID}">&lt;&lt; In:</a>
+	                            <a href="?filter=ID&amp;value={$xlinked-ID}">&lt;&lt; In</a>
 	                        </td>
 	                        <td class="relatedItem-record">
 								<span class="relatedItem-span">{mods:format-related-item($related-item, $global-language)}</span>
@@ -1060,7 +1060,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $destinati
 	                else
                         (:If the related item is in the record itself, format it without a link.:)	                
 	                    <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
-							<td class="url label relatedItem-label">In:</td>
+							<td class="url label relatedItem-label">In</td>
 	                        <td class="relatedItem-record">
 								<span class="relatedItem-span">{mods:format-related-item($related-item, $global-language)}</span>
 	                        </td>

@@ -21,7 +21,7 @@
                             </div>
                         </span>
                     </div>
-                        <!--relatedItem repeat begins-->
+                        
                         <!--<xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-review-repeat">-->
                     <xf:group>
                         <fieldset class="level-2">
@@ -42,7 +42,6 @@
                                 </span>
                             </div>
                             <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-periodical-repeat">
-                                    <!--titleInfo input begins-->
                                 <xf:group ref=".[(@transliteration) or string-length(@lang) &gt; 0]">
                                     <br/>
                                 </xf:group>
@@ -106,11 +105,7 @@
                                     </div>
                                 </span>
                             </div>
-                                <!--relatedItem/part repeat begins-->
                             <xf:repeat nodeset="./mods:part" id="related-item-part-review-repeat">
-                                    <!--relatedItem/part input begins-->
-                                    <!--relatedItem/part input ends-->
-                                    <!--relatedItem/part/detail begins-->
                                 <xf:group ref=".[mods:detail]">
                                     <fieldset class="level-3">
                                         <div class="join">
@@ -119,10 +114,7 @@
                                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             </span>
                                         </div>
-                                            <!--relatedItem/part/detail repeat begins-->
                                         <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-review-repeat">
-                                                <!--relatedItem/part/detail input ends-->
-                                                <!--relatedItem/part/detail/number begins-->
                                             <xf:group ref=".[mods:number]" class="margin-plus">
                                                 <xf:input ref="./mods:number" class="text_10">
                                                     <xf:label>
@@ -130,13 +122,9 @@
                                                     </xf:label>
                                                 </xf:input>
                                             </xf:group>
-                                                <!--relatedItem/part/detail/number ends-->
                                         </xf:repeat>
-                                            <!--relatedItem/part/detail repeat ends-->
                                     </fieldset>
                                 </xf:group>
-                                    <!--relatedItem/part/detail ends-->
-                                    <!--relatedItem/part/date begins-->
                                 <xf:group ref=".[mods:date]">
                                     <fieldset class="level-3">
                                         <div class="join">
@@ -144,23 +132,17 @@
                                                 <span class="legend">Year of Issue</span>
                                             </span>
                                         </div>
-                                            <!--relatedItem/part/date repeat begins-->
                                         <xf:repeat nodeset="./mods:date" id="related-item-part-date-review-repeat">
                                             <div class="block-form">
-                                                    <!--relatedItem/part/date input begins-->
                                                 <xf:group ref="." class="margin-plus">
                                                     <xf:input ref="." class="text_10">
                                                         <xf:label>Year</xf:label>
                                                     </xf:input>
                                                 </xf:group>
-                                                    <!--relatedItem/part/date input ends-->
                                             </div>
                                         </xf:repeat>
-                                            <!--relatedItem/part/date repeat ends-->
                                     </fieldset>
                                 </xf:group>
-                                    <!--relatedItem/part/date ends-->
-                                    <!--relatedItem/part/extent begins-->
                                 <xf:group ref=".[mods:extent]">
                                     <fieldset class="level-3">
                                         <div class="join">
@@ -170,31 +152,21 @@
                                                         the volume and issue number of the periodical noted above. </p>
                                             </div>
                                         </div>
-                                            <!--relatedItem/part/extent repeat begins-->
                                         <xf:repeat nodeset="./mods:extent" id="related-item-extent-review-repeat">
-                                                <!--relatedItem/part/extent input begins-->
-                                                <!--relatedItem/part/extent input ends-->
-                                                <!--relatedItem/part/start begins-->
                                             <xf:group ref=".[mods:start]" class="margin-plus">
                                                 <xf:input ref="./mods:start" class="text_10">
                                                     <xf:label>Start</xf:label>
                                                 </xf:input>
                                             </xf:group>
-                                                <!--relatedItem/part/start ends-->
-                                                <!--relatedItem/part/end begins-->
                                             <xf:group ref=".[mods:end]" class="margin-plus">
                                                 <xf:input ref="./mods:end" class="text_10">
                                                     <xf:label>End</xf:label>
                                                 </xf:input>
                                             </xf:group>
-                                                <!--relatedItem/part/end ends-->
                                         </xf:repeat>
-                                            <!--relatedItem/part/extent repeat ends-->
                                     </fieldset>
                                 </xf:group>
-                                    <!--relatedItem/part/extent ends-->
                             </xf:repeat>
-                                <!--relatedItem/part repeat ends-->
                         </fieldset>
                     </xf:group>
                     <xf:group ref=".[mods:identifier]">
@@ -242,10 +214,16 @@
                         <span class="legend">Book(s) Reviewed</span>
                         <span class="join-button">
                             <span class="join-button">
-                                <xf:trigger>
+                                <xf:trigger ref=".[string-length(../mods:extension/e:transliterationOfResource) &gt; 0]">
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:relatedItem" at="index('relatedItem-reviewed-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem[1]"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:relatedItem" at="index('relatedItem-reviewed-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem[2]"/>
+                                    </xf:action>
+                                </xf:trigger>
+                                <xf:trigger ref=".[string-length(../mods:extension/e:transliterationOfResource) = 0]">
+                                    <xf:label>+</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:insert nodeset="instance('save-data')/mods:relatedItem" at="index('relatedItem-reviewed-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem[3]"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
@@ -269,16 +247,16 @@
                             <div class="join super-wide">
                                 <span class="legend">Names and Roles Connected With Book Reviewed</span>
                                 <span class="join-button">
-                                    <xf:trigger ref=".[mods:namePart/@transliteration]">
+                                    <xf:trigger ref=".[string-length(../mods:extension/e:transliterationOfResource) &gt; 0]">
                                         <xf:label>+</xf:label>
                                         <xf:action ev:event="DOMActivate">
-                                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:name[2]"/>
+                                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem[1]/mods:name[2]"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(.mods:namePart/@transliteration)]">
+                                    <xf:trigger ref=".[string-length(../mods:extension/e:transliterationOfResource) = 0]">
                                         <xf:label>+</xf:label>
                                         <xf:action ev:event="DOMActivate">
-                                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:name[1]"/>
+                                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem[1]/mods:name[1]"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </span>
@@ -298,10 +276,8 @@
                                     </div>
                                 </span>
                             </div>
-                                <!--name repeat begins-->
                             <xf:repeat nodeset="./mods:name" id="name-periodical-repeat">
                                     <!--<xf:repeat nodeset="instance('save-data')/mods:name" id="name-repeat">-->
-                                    <!--namePart begins-->
                                 <xf:group>
                                     <fieldset class="level-3">
                                         <div class="join">
@@ -324,25 +300,6 @@
                                                 </div>
                                             </span>
                                         </div>
-                                        <xf:group class="hide-label margin-plus">
-                                            <xf:select1 ref="./@type">
-                                                <xf:label>Type of Name</xf:label>
-                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-type-code']/items/item">
-                                                    <xf:label ref="label"/>
-                                                    <xf:value ref="value"/>
-                                                </xf:itemset>
-                                            </xf:select1>
-                                        </xf:group>
-                                        <xf:group ref=".[mods:namePart/@transliteration]" class="margin-plus">
-                                            <xf:select1 ref="/mods:mods/mods:extension/e:transliterationOfResource">
-                                                <xf:label>Transliteration</xf:label>
-                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
-                                                    <xf:label ref="label"/>
-                                                    <xf:value ref="value"/>
-                                                </xf:itemset>
-                                            </xf:select1>
-                                        </xf:group>
-                                            <!--namePart repeat begins-->
                                         <xf:repeat nodeset="./mods:namePart" id="namePart-repeat">
                                             <xf:group class="margin-plus">
                                                 <xf:select1 ref="./@type">
@@ -359,13 +316,9 @@
                                                     <xf:label/>
                                                 </xf:input>
                                             </xf:group>
-                                                <!--namePart input ends-->
                                         </xf:repeat>
-                                            <!--namePart repeat ends-->
                                     </fieldset>
                                 </xf:group>
-                                    <!--namePart ends-->
-                                    <!--role begins-->
                                 <xf:group ref=".[mods:role]">
                                     <fieldset class="level-3">
                                         <div class="join">
@@ -390,12 +343,8 @@
                                                 </div>
                                             </span>
                                         </div>
-                                            <!--role repeat begins-->
                                         <xf:repeat nodeset="./mods:role" id="role-repeat">
-                                                <!--role input begins-->
-                                                <!--roleTerm repeat begins-->
                                             <xf:repeat nodeset="./mods:roleTerm" id="roleTerm-repeat">
-                                                    <!--roleTerm input begins-->
                                                 <xf:group class="hide-label margin-plus">
                                                     <xf:select1 ref=".">
                                                         <xf:label>Role Term</xf:label>
@@ -405,18 +354,11 @@
                                                         </xf:itemset>
                                                     </xf:select1>
                                                 </xf:group>
-                                                    <!--roleTerm input ends-->
                                             </xf:repeat>
-                                                <!--roleTerm repeat ends-->
-                                                <!--roleTerm ends-->
-                                                <!--role input ends-->
                                         </xf:repeat>
-                                            <!--role repeat ends-->
                                     </fieldset>
                                 </xf:group>
-                                    <!--role ends-->
                             </xf:repeat>
-                                <!--name repeat ends-->
                         </fieldset>
                     </xf:group>
                     <xf:group>
@@ -438,7 +380,6 @@
                                 </span>
                             </div>
                             <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-periodical-repeat">
-                                    <!--titleInfo input begins-->
                                 <xf:group ref=".[@transliteration or string-length(@lang) &gt; 0]">
                                     <br/>
                                 </xf:group>
@@ -503,12 +444,10 @@
                                     </div>
                                 </span>
                             </div>
-                                <!--originInfo repeat begins-->
                             <xf:repeat nodeset="./mods:originInfo" id="originInfo-periodical-repeat">
                                 <xf:group ref=".[string-length(@transliteration) &gt; 0]">
                                     <br/>
                                 </xf:group>
-                                    <!--originInfo input begins-->
                                 <xf:group ref=".[mods:place]">
                                     <fieldset class="level-3">
                                         <div class="join">
@@ -526,14 +465,10 @@
                                                 </div>
                                             </span>
                                         </div>
-                                            <!--place repeat begins-->
                                         <xf:repeat nodeset="./mods:place" id="place-repeat">
-                                                <!--placeTerm begins-->
                                             <xf:group ref=".[mods:placeTerm]">
                                                 <fieldset class="level-4">
-                                                        <!--placeTerm repeat begins-->
                                                     <xf:repeat nodeset="./mods:placeTerm" id="place-term-repeat">
-                                                            <!--placeTerm input begins-->
                                                         <xf:group ref=".[not(@transliteration)]" class="margin-plus">
                                                             <xf:input ref="." class="text_100 hide-label">
                                                                 <xf:label>City Name</xf:label>
@@ -544,23 +479,12 @@
                                                                 <xf:label>Transliterated</xf:label>
                                                             </xf:input>
                                                         </xf:group>
-
-                                                            <!--placeTerm input ends-->
                                                     </xf:repeat>
-                                                        <!--placeTerm repeat ends-->
-
-                                                        <!--placeTerm add begins-->
-
-                                                        <!--placeTerm add ends-->
                                                 </fieldset>
                                             </xf:group>
-                                                <!--placeTerm ends-->
                                         </xf:repeat>
-                                            <!--place repeat ends-->
                                     </fieldset>
                                 </xf:group>
-                                    <!--place ends-->
-                                    <!--publisher begins-->
                                 <xf:group ref=".[mods:publisher]">
                                     <fieldset class="level-3">
                                         <div class="join">
@@ -577,9 +501,7 @@
                                                 </div>
                                             </span>
                                         </div>
-                                            <!--publisher repeat begins-->
                                         <xf:repeat nodeset="./mods:publisher" id="publisher-repeat">
-                                                <!--publisher input begins-->
                                             <xf:group ref=".[not(@transliteration)]" class="text_100 hide-label margin-plus">
                                                 <xf:input ref=".">
                                                     <xf:label>Name of Publisher</xf:label>
@@ -590,14 +512,9 @@
                                                     <xf:label>Transliterated</xf:label>
                                                 </xf:input>
                                             </xf:group>
-                                                <!--publisher input ends-->
                                         </xf:repeat>
-                                            <!--publisher repeat ends-->
                                     </fieldset>
                                 </xf:group>
-                                    <!--publisher ends-->
-
-                                    <!--dateIssued begins-->
                                 <xf:group ref=".[mods:dateIssued]">
                                     <fieldset class="level-3">
                                         <div class="join">
@@ -614,9 +531,7 @@
                                                 </div>
                                             </span>
                                         </div>
-                                            <!--dateIssued repeat begins-->
                                         <xf:repeat nodeset="./mods:dateIssued" id="date-issued-repeat">
-                                                <!--dateIssued input begins-->
                                             <xf:group>
                                                 <xf:select1 ref="./@point">
                                                     <xf:label>Point</xf:label>
@@ -626,24 +541,15 @@
                                                     </xf:itemset>
                                                 </xf:select1>
                                             </xf:group>
-                                                <!--Cluster: hide-->
                                             <xf:group>
                                                 <xf:input ref="." class="text_10 hide-label margin-plus">
                                                     <xf:label>Date Issued</xf:label>
                                                 </xf:input>
                                             </xf:group>
-                                                <!--dateIssued input ends-->
                                         </xf:repeat>
-                                            <!--dateIssued repeat ends-->
                                     </fieldset>
                                 </xf:group>
-                                    <!--dateIssued ends-->
                             </xf:repeat>
-                                <!--originInfo repeat ends-->
-
-                                <!--originInfo add begins-->
-
-                                <!--originInfo add ends-->
                         </fieldset>
                     </xf:group>
                     <xf:group ref=".[mods:physicalDescription]">
@@ -659,9 +565,7 @@
                                     </div>
                                 </span>
                             </div>
-                                <!--physicalDescription repeat begins-->
                             <xf:repeat nodeset="./mods:physicalDescription" id="physicalDescription-repeat">
-                                    <!--internetMediaType begins-->
                                 <xf:group ref=".[mods:internetMediaType]">
                                     <fieldset class="level-3">
                                         <div class="join">
@@ -675,9 +579,7 @@
                                                 </div>
                                             </span>
                                         </div>
-                                            <!--internetMediaType repeat begins-->
                                         <xf:repeat nodeset="./mods:internetMediaType" id="internetMediaType-repeat">
-                                                <!--internetMediaType input begins-->
                                             <xf:group class="margin-plus">
                                                 <xf:select1 ref=".">
                                                     <xf:label>Internet Media Type</xf:label>
@@ -687,13 +589,9 @@
                                                     </xf:itemset>
                                                 </xf:select1>
                                             </xf:group>
-                                                <!--internetMediaType input ends-->
                                         </xf:repeat>
-                                            <!--internetMediaType repeat ends-->
                                     </fieldset>
                                 </xf:group>
-                                    <!--internetMediaType ends-->
-                                    <!--extent begins-->
                                 <xf:group ref=".[mods:extent]">
                                     <fieldset class="level-3">
                                         <div class="join">
@@ -708,22 +606,16 @@
                                                 </div>
                                             </span>
                                         </div>
-                                            <!--extent repeat begins-->
                                         <xf:repeat nodeset="./mods:extent" id="extent-repeat">
-                                                <!--extent input begins-->
                                             <xf:group class="hide-label margin-plus">
                                                 <xf:input ref="." class="text_10">
                                                     <xf:label>Extent</xf:label>
                                                 </xf:input>
                                             </xf:group>
-                                                <!--extent input ends-->
                                         </xf:repeat>
-                                            <!--extent repeat ends-->
                                     </fieldset>
                                 </xf:group>
-                                    <!--extent ends-->
                             </xf:repeat>
-                                <!--physicalDescription repeat ends-->
                         </fieldset>
                     </xf:group>
                     <xf:group ref=".[mods:url]">
@@ -739,19 +631,15 @@
                                     </div>
                                 </span>
                             </div>
-                                <!--url repeat begins-->
                             <xf:repeat nodeset="./mods:location" id="location-url-repeat">
                                 <xf:repeat nodeset="./mods:url" id="location-url-repeat">
-                                    <!--url input begins-->
                                     <xf:group class="margin-plus">
                                         <xf:input ref="." class="text_150 hide-label margin-plus">
                                             <xf:label>URL</xf:label>
                                         </xf:input>
                                     </xf:group>
-                                    <!--url input ends-->
                                 </xf:repeat>
                             </xf:repeat>
-                                <!--url repeat ends-->
                         </fieldset>
                     </xf:group>
                     <xf:group ref=".[mods:identifier]">

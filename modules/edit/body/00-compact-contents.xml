@@ -248,7 +248,7 @@
                             <div class="join">
                                 <span class="legend">Institutions(s) as Topic</span>
                                 <span class="join-button">
-                                    <xf:trigger ref=".[string-length(mods:extension/e:transliterationOfResource) = 0 and string-length(@transliteration) = 0]">
+                                    <xf:trigger ref=".[string-length(mods:extension/e:transliterationOfResource) = 0]">
                                         <xf:label>+</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:insert nodeset="instance('save-data')/mods:name" at="index('subject-name-person-repeat')" position="before" origin="instance('compact-template')/mods:subject/mods:name[2]"/>
@@ -362,6 +362,7 @@
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-help-value">
                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='abstract']/help"/>
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-subjects']/help"/>
                     </div>
                 </span>
             </div>

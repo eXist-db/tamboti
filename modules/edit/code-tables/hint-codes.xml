@@ -5,117 +5,39 @@
     <code-table-name>hint-code</code-table-name>
     <items>
         <item>
-            <help/>
-            <hint>Click to add another frame with the same contents after the frame with the blue
-                background.</hint>
-            <value>add-frame</value>
-            <local-name/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Type Identifies the type of location recorded. Use Type to indicate different
-                    kinds of locations if more specificity is needed, e.g. current, discovery,
-                    former, creation. </p>
-            </help>
-            <value>location-type</value>
-            <local-name>type</local-name>
-            <parent>location</parent>
-            <tab-id>type</tab-id>
-        </item>
-        <item>
-            <help>
-                <p>The Type field can take the following values: personal, corporate, conference.
-                    Use it to indicate whether the name is the name of a person (or a family), the
-                    name of a corporation or the name of a conference (or an event similar to a
-                    conference).</p>
-            </help>
-            <value>name-type</value>
-            <local-name/>
-            <tab-id>type</tab-id>
-        </item>
-        <item>
-            <help>
-                <p> Enter here information related to the edited volume that the contribution you
-                    are cataloguing occurs in. </p>
-                <p>This information falls into two groups: <ul>
-                        <li>general information on the edited volume</li>
-                        <li>specific information on the location of the contribution in the edited
-                            volume</li>
-                    </ul>
-                </p>
-                <p>There are two ways you can supply this information: <ul>
-                        <li>you can fill out the title, editors, etc. of the edited volume</li>
-                        <li>you can supply the ID number of the edited volume and then fill out the
-                            information on the location of the contribution in the edited
-                            volume</li>
-                    </ul>
-                </p>
-                <p>If you are cataloguing several contributions from the same edited volume, it is a
-                    good idea first to catalogue the edited volume. This will save you time and
-                    produce a more ordered bibliography. When you have finished with cataloguing the
-                    edited volume, you can then choose "Create Related Record" in the detail view
-                    for the record in question. The ID number for the edited volume will then
-                    automatically be inserted and you only have to fill out the information
-                    particular to the contribution itself. If you are only cataloguing one
-                    contribution, you can also follow this way - others may then use your record (if
-                    you make it available to them) and catalogue other contributions in the same
-                    edited volume, by finding it and clicking "Create Related Record". </p>
-                <p> If you choose to enter the information concerning the edited volume inside the
-                    record for the contribution, that is, not to use XLink, this is also fine. If
-                    you later decide to use the ID of the record for the edited volume, you may
-                    insert its ID in the XLink field. </p>
-            </help>
-            <value>edited-volume-compact</value>
-            <local-name/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p>Enter here information related to the monograph series that the book you are
-                    cataloguing occurs in. </p>
-                <p>This information falls into two groups: <ul>
-                        <li>general information on the monograph series </li>
-                        <li>specific information on the location of the monograph in the monograph
-                            series</li>
-                    </ul>
-                </p>
-                <p>There are two ways you can supply this information: <ul>
-                        <li>you can fill out the title, editors, etc. of the series</li>
-                        <li>you can supply the ID number of the series and then fill out the
-                            information on the location of the book in the series</li>
-                    </ul>
-                </p>
-                <p> In connection with monograph series, the first approach is the most common.</p>
-                <p> You can enter the information concerning the series inside the record for the
-                    book, that is, not to use the ID of the series.</p>
-                <p> If you later decide to use the ID of the record for the edited volume, you may
-                    insert its ID in the XLink field. </p>
-                <p>If you are cataloguing several books from the same series, it is a good idea
-                    first to catalogue the series. This will save you time and produce a more
-                    ordered bibliography. When you have finished with cataloguing the series, you
-                    can then choose "Create Related Record" in the detail view for the record in
-                    question. The ID number for the series will then automatically be inserted and
-                    you only have to fill out the information particular to the book itself. If you
-                    are only cataloguing one book, you can also follow this way - others may then
-                    use your record (if you make it available to them) and catalogue other books in
-                    the same series, by finding it and clicking "Create Related Record". </p>
-            </help>
-            <value>series-compact</value>
-            <local-name/>
-            <tab-id/>
-        </item>
-        <item>
             <help>
                 <p> Abstract is used to record a succinct summary of some aspect of the content of
                     the resource. </p>
-                <p> More input options can be accessed by clicking the Subjects tab on Content
-                    Description Forms.</p>
             </help>
             <hint/>
             <value>abstract</value>
             <local-name>abstract</local-name>
-            <parent/>
+            <parent>subject</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Information about restrictions imposed on access to a resource is noted here.</p>
+                <p>Use Access Condition to indicate rights relating to access and use of digital
+                    resources. State clearly any restrictions on use of the digital resource,
+                    including explicitly mentioning lack of copyright restrictions when the digital
+                    resource is in the public domain. Also provide contact information for use by
+                    end users who wish to require permissions for publication, exhibit, or other
+                    types of dissemination.</p>
+                <p>An XLink may be supplied in lieu of or in addition to the content noted in Access
+                    Condition. If, for example, you maintain rights information relating to specific
+                    resources on a website, you may provide a URL for that website in lieu of a
+                    textual rights statement. When doing so, you should provide enough textual
+                    explanation in Access Condition, along with the URL, to make the purpose of the
+                    URL clear to end users.</p>
+                <p> Whenever possible, consider using a standard license such as Creative Commons
+                    and/or a rights expression language such as the Open Digital Rights Language
+                    (ODRL) specification.</p>
+            </help>
+            <hint/>
+            <value>accessCondition</value>
+            <local-name>accessCondition</local-name>
+            <parent>mods</parent>
             <tab-id/>
         </item>
         <item>
@@ -140,7 +62,17 @@
             <hint/>
             <value>altRepGroup</value>
             <local-name>altRepGroup</local-name>
-            <parent/>
+            <parent>titleInfo</parent>
+            <parent>name</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Name of a non-jurisdictional geographic entity. </p>
+            </help>
+            <value>area</value>
+            <local-name>area</local-name>
+            <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
         <item>
@@ -153,28 +85,6 @@
             <hint/>
             <value>authority</value>
             <local-name>authority</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Use Target Audience to describe a group for which a resource is intended. </p>
-                <p> Use this field whenever there is a specific audience for a resource (for
-                    example, a text marked up specifically for historians). Do not limit the use of
-                    Target Audience to the intellectual level of the audience (as suggested by the
-                    marctarget list). </p>
-                <p> If you wish to add an authority file, or wish to add terms to the Local
-                    authority file, please contact <!--contact-->. When more than one target
-                    audience is recorded, the field is repeated. </p>
-                <p> Use the authority field whenever possible to indicate the controlled vocabulary
-                    used. </p>
-                <p> Do not use Target Audience to indicate audiences to whom access or use of the
-                    resource is limited; include this information in the Access Condition field.
-                </p>
-            </help>
-            <hint/>
-            <value>targetAudience</value>
-            <local-name>targetAudience</local-name>
             <parent/>
             <tab-id/>
         </item>
@@ -222,6 +132,17 @@
         </item>
         <item>
             <help>
+                <p> The name of the authoritative list for the abbreviated title is recorded here.
+                </p>
+            </help>
+            <hint/>
+            <value>titleInfo-authority-abbreviated</value>
+            <local-name>authority</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
                 <p>A URI uniquely identifying the vocabulary from which the controlled term has been
                     selected, as assigned by the body responsible for the maintenance of the
                     vocabulary.</p>
@@ -237,12 +158,121 @@
         </item>
         <item>
             <help>
-                <p> The name of the authoritative list for the abbreviated title is recorded here.
-                </p>
+                <p> Cartographics is a wrapper field that includes cartographic data indicating
+                    spatial coverage. </p>
+            </help>
+            <value>cartographics</value>
+            <local-name>cartographics</local-name>
+            <parent>subject</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Name of an inhabited place incorporated as a city, town, etc. </p>
+            </help>
+            <value>city</value>
+            <local-name>city</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Name of a smaller unit within a populated place, e.g., neighborhoods, parks or
+                    streets. </p>
+            </help>
+            <value>citySection</value>
+            <local-name>citySection</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Includes Asia, Africa, Europe, North America, South America.</p>
+            </help>
+            <value>continent</value>
+            <local-name>continent</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Coordinates contains a statement of coordinates covered by the resource. One or
+                    more statements may be supplied. If one is supplied, it is a point (i.e., a
+                    single location); if two, it is a line; if more than two, it is a n-sided
+                    polygon where n=number of coordinates assigned. No three points should be
+                    co-linear, and coordinates should be supplied in polygon-traversal order. </p>
+            </help>
+            <value>coordinates</value>
+            <local-name>coordinates</local-name>
+            <parent>cartographics</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Note in Copyright Date the year in which copyright was claimed for the resource. </p>
+                <p> Copyright Date is typically found on the page following the title page. It
+                    occurs in connection with a copyright symbol, (c) or ©.</p>
+                <p> If there is a Date of Issue, use it; otherwise use the Date of Copyright.</p>
+                <p> If you wish to record a span of time, e.g. 1912-1914, repeat the Date of
+                    Publication field. The field Point will appear.</p>
+                <p> Choose "start" in one Point and "end" in the other, and enter the appropriate
+                    dates in the corresponding two fields. </p>
+                <p> If no Point is specified a year noted in Copyright Date is assumed to be a
+                    single year. </p>
             </help>
             <hint/>
-            <value>titleInfo-authority-abbreviated</value>
-            <local-name>authority</local-name>
+            <value>copyrightDate-compact</value>
+            <local-name>copyrightDate</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> A date in which a resource is copyrighted. </p>
+            </help>
+            <hint/>
+            <value>copyrightDate</value>
+            <local-name>copyrightDate</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Name of a country, i.e. a political entity considered a country. </p>
+            </help>
+            <value>country</value>
+            <local-name>country</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Name of the largest local administrative unit in various countries, e.g.
+                    England. </p>
+            </help>
+            <value>county</value>
+            <local-name>county</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> The date on which a digital resource was digitized or a subsequent snapshot was
+                    taken. </p>
+            </help>
+            <hint/>
+            <value>dateCaptured</value>
+            <local-name>dateCaptured</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> The date of creation of the resource. </p>
+            </help>
+            <hint/>
+            <value>dateCreated</value>
+            <local-name>dateCreated</local-name>
             <parent/>
             <tab-id/>
         </item>
@@ -269,25 +299,6 @@
         </item>
         <item>
             <help>
-                <p> Note in Copyright Date the year in which copyright was claimed for the resource. </p>
-                <p> Copyright Date is typically found on the page following the title page. It
-                    occurs in connection with a copyright symbol, (c) or ©.</p>
-                <p> If there is a Date of Issue, use it; otherwise use the Date of Copyright.</p>
-                <p> If you wish to record a span of time, e.g. 1912-1914, repeat the Date of
-                    Publication field. The field Point will appear.</p>
-                <p> Choose "start" in one Point and "end" in the other, and enter the appropriate
-                    dates in the corresponding two fields. </p>
-                <p> If no Point is specified a year noted in Copyright Date is assumed to be a
-                    single year. </p>
-            </help>
-            <hint/>
-            <value>copyrightDate-compact</value>
-            <local-name>copyrightDate</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
                 <p> The date that the resource was published, released, or issued. </p>
                 <p> The Date of Issue is typically found on the title page, in connection with place
                     of publication and publisher. </p>
@@ -309,52 +320,11 @@
         </item>
         <item>
             <help>
-                <p> The date of creation of the resource. </p>
-            </help>
-            <hint/>
-            <value>dateCreated</value>
-            <local-name>dateCreated</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> The date on which a digital resource was digitized or a subsequent snapshot was
-                    taken. </p>
-            </help>
-            <hint/>
-            <value>dateCaptured</value>
-            <local-name>dateCaptured</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> A date in which the content of a resource is valid. </p>
-            </help>
-            <hint/>
-            <value>dateValid</value>
-            <local-name>dateValid</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
                 <p> The date in which a resource is modified or changed. </p>
             </help>
             <hint/>
             <value>dateModified</value>
             <local-name>dateModified</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> A date in which a resource is copyrighted. </p>
-            </help>
-            <hint/>
-            <value>copyrightDate</value>
-            <local-name>copyrightDate</local-name>
             <parent/>
             <tab-id/>
         </item>
@@ -370,22 +340,11 @@
         </item>
         <item>
             <help>
-                <p> Dates can be expressed in several different formats. The following values are
-                    used with the Encoding: w3cdtf, iso8601, marc. The recommended encoding is
-                    w3cdtf. </p>
-                <p> In all three encodings, a specific year (e.g. "1938") is encoded in the same
-                    way; the three standards differ in how to encode time points of time year.
-                    According to w3cdtf dates follow the pattern: YYYY-MM-DD, i.e. with dashes
-                    between year, month and day, and with all years have four, all months two and
-                    all days two digits. If hours, minutes, and seconds are needed, the following
-                    pattern is used: YYYY-MM-DDThh:mm:ss. </p>
-                <p> If Encoding is not given any value, the input is assumed to be textual. This
-                    means that any way of noting time can be used. If possible, use a coded value.
-                </p>
+                <p> A date in which the content of a resource is valid. </p>
             </help>
             <hint/>
-            <value>date-encoding</value>
-            <local-name>encoding</local-name>
+            <value>dateValid</value>
+            <local-name>dateValid</local-name>
             <parent/>
             <tab-id/>
         </item>
@@ -440,28 +399,22 @@
         </item>
         <item>
             <help>
-                <p> In Issuance one records how the resource is issued. It may be used with the
-                    following values: continuing and monographic. </p>
-                <p> A continuing resource is issued over time with no predetermined conclusion.
-                    Continuing resources include serials/periodicals and ongoing integrating
-                    resources, i.e. those that are continuously updated. A monographic resource is
-                    either complete in one part or intended to be completed in a finite number of
-                    separate parts. </p>
+                <p> Dates can be expressed in several different formats. The following values are
+                    used with the Encoding: w3cdtf, iso8601, marc. The recommended encoding is
+                    w3cdtf. </p>
+                <p> In all three encodings, a specific year (e.g. "1938") is encoded in the same
+                    way; the three standards differ in how to encode time points of time year.
+                    According to w3cdtf dates follow the pattern: YYYY-MM-DD, i.e. with dashes
+                    between year, month and day, and with all years have four, all months two and
+                    all days two digits. If hours, minutes, and seconds are needed, the following
+                    pattern is used: YYYY-MM-DDThh:mm:ss. </p>
+                <p> If Encoding is not given any value, the input is assumed to be textual. This
+                    means that any way of noting time can be used. If possible, use a coded value.
+                </p>
             </help>
             <hint/>
-            <value>issuance</value>
-            <local-name>issuance</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Frequency is used to note the publication pattern of the item. It is only used
-                    if the Issuance of the resource is "continuing".</p>
-            </help>
-            <hint/>
-            <value>frequency</value>
-            <local-name>frequency</local-name>
+            <value>date-encoding</value>
+            <local-name>encoding</local-name>
             <parent/>
             <tab-id/>
         </item>
@@ -483,6 +436,23 @@
             <value>temporal-encoding</value>
             <local-name>encoding</local-name>
             <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>In Extension you have access to a number of fields that we have added to the MODS
+                    schema.</p>
+                <p>If the record you are viewing has not been made with Tamboti, it may not have
+                    Extension - at least it does not have our Extension. If it lacks Extension, you
+                    can add it by using the button below.</p>
+                <p>If you change the values of the fields Publication Type and Transliteration of
+                    Resource, parts of the Basic Input Forms will display differently in accordance
+                    with your choice.</p>
+            </help>
+            <hint/>
+            <value>extension</value>
+            <local-name>extension</local-name>
+            <parent>mods</parent>
             <tab-id/>
         </item>
         <item>
@@ -521,6 +491,40 @@
         </item>
         <item>
             <help>
+                <p> Name of any extraterrestrial entity or space, including solar systems, galaxies,
+                    star systems, and planets as well as geographic features of individual planets.
+                </p>
+            </help>
+            <value>extraterrestrialArea</value>
+            <local-name>extraterrestrialArea</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Frequency is used to note the publication pattern of the item. It is only used
+                    if the Issuance of the resource is "continuing".</p>
+            </help>
+            <hint/>
+            <value>frequency</value>
+            <local-name>frequency</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> One or more terms that designate a category characterising a particular style,
+                    form, or content, such as artistic, musical, literary composition, etc. Genre
+                    contains terms that give more specificity than the broad terms used in Type Of
+                    Resource. </p>
+            </help>
+            <value>genre</value>
+            <local-name>genre</local-name>
+            <parent>subject</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
                 <p> Use here standard names for geographical places.</p>
                 <p> Add as many Place fields as you need.</p>
                 <p> The relation between the different fields is not specified, but one may start
@@ -536,6 +540,33 @@
             <value>geographic</value>
             <local-name>geographic</local-name>
             <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Geographic Code includes a geographic area code associated with a resource. A
+                    geographic code that represents the same entity as a term in Geographic is
+                    included within the same Subject field.</p>
+            </help>
+            <value>geographicCode</value>
+            <local-name>geographicCode</local-name>
+            <parent>subject</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> This sub-field includes a hierarchical form of a place name relating to the
+                    content of the resource that is both readable by humans and parsable by
+                    machines. This form can be applied to the degree of specificity that is known or
+                    relevant and used to generate browseable hierarchies even when values are
+                    specified to different levels. Explicit inclusion of the complete hierarchy is
+                    of potential benefit for automated consultation of a gazetteer to derive map
+                    coordinates or to support a map-based interface for searching by country or
+                    state. This sub-field has no fields. </p>
+            </help>
+            <value>hierarchicalGeographic</value>
+            <local-name>hierarchicalGeographic</local-name>
+            <parent>subject</parent>
             <tab-id/>
         </item>
         <item>
@@ -585,13 +616,14 @@
         </item>
         <item>
             <help>
-                <p>Type identifies the type of identifier that is recorded</p>
-                <!--<p>Suggested values include: hdl, doi, isbn, isrc, ismn, issn, issue number, istc, lccn, local,
-                    matrix number, music publisher, music plate, sici, uri, upc, videorecording identifier,
-                    stock number.</p>-->
+                <p> Use this field if the resource is electronic. An identification of the
+                    electronic format type, or the data representation of the resource. Internet
+                    Media Type specifies the electronic format type of the resource, such as
+                    text/html, PDF file, JPEG image or executable application .</p>
             </help>
-            <value>identifier-type</value>
-            <local-name>type</local-name>
+            <hint/>
+            <value>internetMediaType-compact</value>
+            <local-name>internetMediaType</local-name>
             <parent/>
             <tab-id/>
         </item>
@@ -609,14 +641,40 @@
         </item>
         <item>
             <help>
-                <p> Use this field if the resource is electronic. An identification of the
-                    electronic format type, or the data representation of the resource. Internet
-                    Media Type specifies the electronic format type of the resource, such as
-                    text/html, PDF file, JPEG image or executable application .</p>
+                <p> Name of a tract of land surrounded by water and smaller than a continent but is
+                    not itself a separate country. </p>
+            </help>
+            <value>genre</value>
+            <local-name>island</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> In Issuance one records how the resource is issued. It may be used with the
+                    following values: continuing and monographic. </p>
+                <p> A continuing resource is issued over time with no predetermined conclusion.
+                    Continuing resources include serials/periodicals and ongoing integrating
+                    resources, i.e. those that are continuously updated. A monographic resource is
+                    either complete in one part or intended to be completed in a finite number of
+                    separate parts. </p>
             </help>
             <hint/>
-            <value>internetMediaType-compact</value>
-            <local-name>internetMediaType</local-name>
+            <value>issuance</value>
+            <local-name>issuance</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> One can record different events that may be important in the life of a resource
+                    in a number of different date fields. When multiple date fields apply but would
+                    contain identical data, one may choose to use only one of the relevant date
+                    fields. In this case, mark one and only one such date field as a key date by
+                    choosing "date is key date" in Key Date. </p>
+            </help>
+            <value>keyDate</value>
+            <local-name>keyDate</local-name>
             <parent/>
             <tab-id/>
         </item>
@@ -630,89 +688,6 @@
             <value>lang</value>
             <local-name>lang</local-name>
             <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Here the language of the contents of the described resource as a whole is noted. </p>
-                <p> Language may also be expressed in relation to a single field, by means of the
-                    Language field, in order to note the language used in a particular field. This
-                    is only necessary if the language used in the field in question (e.g. in an
-                    alternative title) is different from the language noted in Resource Language. </p>
-                <p> Cataloging Language under Record Information is used to note the language used
-                    in the record itself. Cataloging Language is not the Resource Language, but of
-                    the metadata describing a resource, i.e. the record you are working on or
-                    looking at now. The Language of Cataloging is assumed to be English; if you wish
-                    to note another Language of Cataloging, click "Show All" to display the required
-                    tab.. </p>
-                <p> At least one Resource Language field is required for all resources in which
-                    language is primary to understanding the resource. These resources include
-                    textual resources, but also audio and video resources with spoken word
-                    components. </p>
-                <p> Although Language is usually not required for non-textual resources such as
-                    images, it could be used effectively for such resources when language is a
-                    component. Examples of the latter might include a photograph of a sign with text
-                    or a monument with an inscription. </p>
-                <p> The Language field is optional for resources in which language is important to
-                    understanding the resource, but not primary. For example, the caption of a
-                    photograph may in some instances be important to understanding the photograph,
-                    but not primary. If the content of the resource is in more than one language,
-                    Language is repeated for each language employed. </p>
-            </help>
-            <hint/>
-            <value>language</value>
-            <local-name>language</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Language Term specifies the language(s) of the content of the resource.
-                    <!--NB: revise after question of two types of input is solved.--> It may be
-                    expressed in textual or coded form. If in coded form, the source of the code
-                    should be indicated in the value of the authority field. If no authority is
-                    given, it is assumed that the content is textual, i.e. that the Type is "text".
-                    If there is more than one representation of the same language, e.g. using
-                    different forms of the same language (code or text) or from different
-                    authorities, Language Term is repeated within the Language container. </p>
-            </help>
-            <hint/>
-            <value>languageTerm</value>
-            <local-name>languageTerm</local-name>
-            <parent>language</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p>Hint</p>
-            </help>
-            <hint/>
-            <value>scriptTerm</value>
-            <local-name>scriptTerm</local-name>
-            <parent>language</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p>Hint</p>
-            </help>
-            <hint/>
-            <value>languageTerm-type</value>
-            <local-name>type</local-name>
-            <parent>languageTerm</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> This field designates which part of the resource is in the language stated in
-                    Language Term. The values of the field are not controlled by an authority list;
-                    examples of values of Object Part are "Summary" and "Caption". If you use this
-                    field, use expressions of similar generality. </p>
-            </help>
-            <hint/>
-            <value>objectPart</value>
-            <local-name>objectPart</local-name>
-            <parent>language</parent>
             <tab-id/>
         </item>
         <item>
@@ -796,6 +771,116 @@
         </item>
         <item>
             <help>
+                <p> Here the language of the contents of the described resource as a whole is noted. </p>
+                <p> Language may also be expressed in relation to a single field, by means of the
+                    Language field, in order to note the language used in a particular field. This
+                    is only necessary if the language used in the field in question (e.g. in an
+                    alternative title) is different from the language noted in Resource Language. </p>
+                <p> Cataloging Language under Record Information is used to note the language used
+                    in the record itself. Cataloging Language is not the Resource Language, but of
+                    the metadata describing a resource, i.e. the record you are working on or
+                    looking at now. The Language of Cataloging is assumed to be English; if you wish
+                    to note another Language of Cataloging, click "Show All" to display the required
+                    tab.. </p>
+                <p> At least one Resource Language field is required for all resources in which
+                    language is primary to understanding the resource. These resources include
+                    textual resources, but also audio and video resources with spoken word
+                    components. </p>
+                <p> Although Language is usually not required for non-textual resources such as
+                    images, it could be used effectively for such resources when language is a
+                    component. Examples of the latter might include a photograph of a sign with text
+                    or a monument with an inscription. </p>
+                <p> The Language field is optional for resources in which language is important to
+                    understanding the resource, but not primary. For example, the caption of a
+                    photograph may in some instances be important to understanding the photograph,
+                    but not primary. If the content of the resource is in more than one language,
+                    Language is repeated for each language employed. </p>
+            </help>
+            <hint/>
+            <value>language</value>
+            <local-name>language</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Language Term specifies the language(s) of the content of the resource.
+                    <!--NB: revise after question of two types of input is solved.--> It may be
+                    expressed in textual or coded form. If in coded form, the source of the code
+                    should be indicated in the value of the authority field. If no authority is
+                    given, it is assumed that the content is textual, i.e. that the Type is "text".
+                    If there is more than one representation of the same language, e.g. using
+                    different forms of the same language (code or text) or from different
+                    authorities, Language Term is repeated within the Language container. </p>
+            </help>
+            <hint/>
+            <value>languageTerm</value>
+            <local-name>languageTerm</local-name>
+            <parent>language</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Location identifies the institution or repository holding the resource, or a
+                    remote location in the form of a URL where the resource is available. In the
+                    case of a physical resource, information is noted about what the institution
+                    identified in Physical Location holds of the resource in question and its
+                    specific location within the institution. </p>
+                <p> Holdings information consists of copy-specific information about the resource,
+                    information about the specific location within an institution, version
+                    information, and other information that is peculiar to the institution. </p>
+            </help>
+            <hint/>
+            <value>location</value>
+            <local-name>location</local-name>
+            <parent>mods</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> More input options can be found on the Related Items Forms tab.</p>
+            </help>
+            <hint/>
+            <value>more-related-items</value>
+            <local-name>more</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> More input options can be found on the Subjects tab on Content Description
+                    Forms.</p>
+            </help>
+            <hint/>
+            <value>more-subjects</value>
+            <local-name>more</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> More input options can be found on the Name Information tab on the Citation
+                    Forms.</p>
+            </help>
+            <hint/>
+            <value>more-name-information</value>
+            <local-name>more</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> More input options can be found on the Origin Information tab on the Citation
+                    Forms.</p>
+            </help>
+            <hint/>
+            <value>more-origin-information</value>
+            <local-name>more</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
                 <p> In Names are catalogued the names of the persons, organisations, or events
                     (conferences, meetings, etc.) that are associated with the resource being
                     catalogued. These relationship between these named entities and the resource is
@@ -823,8 +908,8 @@
         </item>
         <item>
             <help>
-                <p> In Editor(s) of Periodical, catalogue the names of the institution that serves as
-                    editor of the periodical.</p>
+                <p> In Editor(s) of Periodical, catalogue the names of the institution that serves
+                    as editor of the periodical.</p>
                 <p> The editor of the periodical as such, not a specific issue, is recorded
                     here.</p>
                 <p> Include as many editor as needed, by clicking the '+' buttons. </p>
@@ -905,8 +990,8 @@
         </item>
         <item>
             <help>
-                <p> In Person(s) as Topic, catalogue the names of the persons or corporate
-                    entities that occur as topic in the work you are cataloguing.</p>
+                <p> In Person(s) as Topic, catalogue the names of the persons or corporate entities
+                    that occur as topic in the work you are cataloguing.</p>
                 <p> Add as many Names as needed, by clicking the '+' button. </p>
             </help>
             <hint/>
@@ -983,26 +1068,6 @@
             <value>series-name-compact</value>
             <local-name>name</local-name>
             <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Enter here information related to the monograph series that the edited volume
-                    you are cataloguing occurs in. </p>
-                <p>This information falls into two groups: general information on the monograph
-                    series and specific information on the location of the edited volume in the
-                    monograph series.</p>
-                <p>In order not to make matter more complicated than necessary, only information
-                    relating to the title of the series and the location of the edited volume within
-                    the series is included.</p>
-                <p> Please note that the information concerning Monograph Series of Edited Volume is
-                    not displayed.</p>
-                <p>The option to input an XLink for the series is similar to that for the edited
-                    volume itself.</p>
-            </help>
-            <value>series-edited-volume-compact</value>
-            <local-name>relatedItem</local-name>
-            <parent>relatedItem</parent>
             <tab-id/>
         </item>
         <item>
@@ -1137,222 +1202,15 @@
         </item>
         <item>
             <help>
-                <p>Identifies what type of note is recorded.</p>
-                <p>One can either select a value from the drop-down menu or enter a free-text
-                    value.</p>
+                <p> This field designates which part of the resource is in the language stated in
+                    Language Term. The values of the field are not controlled by an authority list;
+                    examples of values of Object Part are "Summary" and "Caption". If you use this
+                    field, use expressions of similar generality. </p>
             </help>
             <hint/>
-            <value>note-type</value>
-            <local-name>type</local-name>
-            <parent>note</parent>
-            <tab-id>compact-c</tab-id>
-        </item>
-        <item>
-            <help>
-                <p>(missing)</p>
-            </help>
-            <value>genre-type</value>
-            <local-name>type</local-name>
-            <parent>genre</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> One or more terms that designate a category characterising a particular style,
-                    form, or content, such as artistic, musical, literary composition, etc. Genre
-                    contains terms that give more specificity than the broad terms used in Type Of
-                    Resource. </p>
-            </help>
-            <value>genre</value>
-            <local-name>genre</local-name>
-            <parent>subject</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Includes Asia, Africa, Europe, North America, South America.</p>
-            </help>
-            <value>continent</value>
-            <local-name>continent</local-name>
-            <parent>hierarchicalGeographic</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Name of a country, i.e. a political entity considered a country. </p>
-            </help>
-            <value>country</value>
-            <local-name>country</local-name>
-            <parent>hierarchicalGeographic</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Includes first order political divisions called provinces within a country, e.g.
-                    Canada. </p>
-            </help>
-            <value>province</value>
-            <local-name>province</local-name>
-            <parent>hierarchicalGeographic</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Includes regions that have status as a jurisdiction, usually incorporating more
-                    than one first level jurisdiction. </p>
-            </help>
-            <value>region</value>
-            <local-name>region</local-name>
-            <parent>hierarchicalGeographic</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Includes first order political divisions called states within a country, e.g. in
-                    U.S., Argentina, Italy. Use also for France département. </p>
-            </help>
-            <value>state</value>
-            <local-name>state</local-name>
-            <parent>hierarchicalGeographic</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Name of a geographical area belonging to or under the jurisdiction of a
-                    governmental authority. </p>
-            </help>
-            <value>territory</value>
-            <local-name>territory</local-name>
-            <parent>hierarchicalGeographic</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Name of the largest local administrative unit in various countries, e.g.
-                    England. </p>
-            </help>
-            <value>county</value>
-            <local-name>county</local-name>
-            <parent>hierarchicalGeographic</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Name of an inhabited place incorporated as a city, town, etc. </p>
-            </help>
-            <value>city</value>
-            <local-name>city</local-name>
-            <parent>hierarchicalGeographic</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Name of a smaller unit within a populated place, e.g., neighborhoods, parks or
-                    streets. </p>
-            </help>
-            <value>citySection</value>
-            <local-name>citySection</local-name>
-            <parent>hierarchicalGeographic</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Name of a tract of land surrounded by water and smaller than a continent but is
-                    not itself a separate country. </p>
-            </help>
-            <value>genre</value>
-            <local-name>island</local-name>
-            <parent>hierarchicalGeographic</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Name of a non-jurisdictional geographic entity. </p>
-            </help>
-            <value>area</value>
-            <local-name>area</local-name>
-            <parent>hierarchicalGeographic</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Name of any extraterrestrial entity or space, including solar systems, galaxies,
-                    star systems, and planets as well as geographic features of individual planets.
-                </p>
-            </help>
-            <value>extraterrestrialArea</value>
-            <local-name>extraterrestrialArea</local-name>
-            <parent>hierarchicalGeographic</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> This sub-field includes a hierarchical form of a place name relating to the
-                    content of the resource that is both readable by humans and parsable by
-                    machines. This form can be applied to the degree of specificity that is known or
-                    relevant and used to generate browseable hierarchies even when values are
-                    specified to different levels. Explicit inclusion of the complete hierarchy is
-                    of potential benefit for automated consultation of a gazetteer to derive map
-                    coordinates or to support a map-based interface for searching by country or
-                    state. This sub-field has no fields. </p>
-            </help>
-            <value>hierarchicalGeographic</value>
-            <local-name>hierarchicalGeographic</local-name>
-            <parent>subject</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Cartographics is a wrapper field that includes cartographic data indicating
-                    spatial coverage. </p>
-            </help>
-            <value>cartographics</value>
-            <local-name>cartographics</local-name>
-            <parent>subject</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Coordinates contains a statement of coordinates covered by the resource. One or
-                    more statements may be supplied. If one is supplied, it is a point (i.e., a
-                    single location); if two, it is a line; if more than two, it is a n-sided
-                    polygon where n=number of coordinates assigned. No three points should be
-                    co-linear, and coordinates should be supplied in polygon-traversal order. </p>
-            </help>
-            <value>coordinates</value>
-            <local-name>coordinates</local-name>
-            <parent>cartographics</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Scale provides a statement of scale. It may include any equivalency statements,
-                    vertical scales or vertical exaggeration statements for relief models and other
-                    three-dimensional items. </p>
-            </help>
-            <value>scale</value>
-            <local-name>scale</local-name>
-            <parent>cartographics</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Projection provides a statement of projection. </p>
-            </help>
-            <value>projection</value>
-            <local-name>projection</local-name>
-            <parent>cartographics</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p>Geographic Code includes a geographic area code associated with a resource. A
-                    geographic code that represents the same entity as a term in Geographic is
-                    included within the same Subject field.</p>
-            </help>
-            <value>geographicCode</value>
-            <local-name>geographicCode</local-name>
-            <parent>subject</parent>
+            <value>objectPart</value>
+            <local-name>objectPart</local-name>
+            <parent>language</parent>
             <tab-id/>
         </item>
         <item>
@@ -1367,16 +1225,6 @@
             <local-name>occupation</local-name>
             <parent>subject</parent>
             <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Type indicates whether the place is expressed in a coded or textual form. </p>
-            </help>
-            <hint/>
-            <value>originInfo-type</value>
-            <local-name>type</local-name>
-            <parent>note</parent>
-            <tab-id>compact-c</tab-id>
         </item>
         <item>
             <help>
@@ -1456,6 +1304,29 @@
         </item>
         <item>
             <help>
+                <p>Enter here information regarding in which volume of the edited volume the
+                    contribution occurs, if the edited volume is in several volumes.</p>
+                <p>Enter also information regarding the page extent of the contribution.</p>
+            </help>
+            <hint/>
+            <value>edited-volume-part-compact</value>
+            <local-name>part</local-name>
+            <parent>relatedItem</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Enter here information regarding in which volume of the monograph series the book
+                    occurs.</p>
+            </help>
+            <hint/>
+            <value>series-part-compact</value>
+            <local-name>part</local-name>
+            <parent>relatedItem</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
                 <p> Part Name is used for a part or section name of a title. Use Part Name when a
                     part name is present, rather than including the part name in the text of Title.
                     Use Part Name to describe the section or division titles of a digital object
@@ -1506,6 +1377,23 @@
             <value>physicalDescription-compact</value>
             <local-name>physicalDescription</local-name>
             <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Record in Physical Location the institution or repository that holds the
+                    resource or where it is available. Physical Location may be expressed as text
+                    and/or as a code. If expressed as code, use the Authority field to designate the
+                    source of the code. </p>
+                <p> Physical Location typically includes specific information used to locate a
+                    resource within a collection, such as the name or code of an
+                    institution/repository, and perhaps sub-collection. A shelf number is given in
+                    Shelf Locator. </p>
+            </help>
+            <hint/>
+            <value>physicalLocation</value>
+            <local-name>physicalLocation</local-name>
+            <parent>location</parent>
             <tab-id/>
         </item>
         <item>
@@ -1571,8 +1459,8 @@
         </item>
         <item>
             <help>
-                <p> Unencoded place terms, i.e. place terms that have not been chosen in an authority
-                    file. </p>
+                <p> Unencoded place terms, i.e. place terms that have not been chosen in an
+                    authority file. </p>
             </help>
             <hint/>
             <value>placeTerm-text</value>
@@ -1596,14 +1484,37 @@
         </item>
         <item>
             <help>
-                <p> One can record different events that may be important in the life of a resource
-                    in a number of different date fields. When multiple date fields apply but would
-                    contain identical data, one may choose to use only one of the relevant date
-                    fields. In this case, mark one and only one such date field as a key date by
-                    choosing "date is key date" in Key Date. </p>
+                <p> Projection provides a statement of projection. </p>
             </help>
-            <value>keyDate</value>
-            <local-name>keyDate</local-name>
+            <value>projection</value>
+            <local-name>projection</local-name>
+            <parent>cartographics</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Includes first order political divisions called provinces within a country, e.g.
+                    Canada. </p>
+            </help>
+            <value>province</value>
+            <local-name>province</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Record in Publisher the name of the entity that is the originator for a
+                    resource, i.e. that has published, printed, distributed, released, issued, or
+                    produced it, as noted on the title page. </p>
+                <p> If you have chosen a transliteration scheme when you created the record, you
+                    will have the option of entering a transliteration and a translation.</p>
+                <p> If the publisher name is in a language that is usually transliterated, enter the
+                    transliterated publisher name in its field. Use the transliteration scheme you
+                    chose when selecting a record template. </p>
+            </help>
+            <hint/>
+            <value>publisher-compact</value>
+            <local-name>publisher</local-name>
             <parent/>
             <tab-id/>
         </item>
@@ -1623,19 +1534,12 @@
         </item>
         <item>
             <help>
-                <p> Record in Publisher the name of the entity that is the originator for a
-                    resource, i.e. that has published, printed, distributed, released, issued, or
-                    produced it, as noted on the title page. </p>
-                <p> If you have chosen a transliteration scheme when you created the record, you
-                    will have the option of entering a transliteration and a translation.</p>
-                <p> If the publisher name is in a language that is usually transliterated, enter the
-                    transliterated publisher name in its field. Use the transliteration scheme you
-                    chose when selecting a record template. </p>
+                <p> Includes regions that have status as a jurisdiction, usually incorporating more
+                    than one first level jurisdiction. </p>
             </help>
-            <hint/>
-            <value>publisher-compact</value>
-            <local-name>publisher</local-name>
-            <parent/>
+            <value>region</value>
+            <local-name>region</local-name>
+            <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
         <item>
@@ -1666,6 +1570,115 @@
             <value>relatedItem-periodical-titleInfo-compact</value>
             <local-name>relatedItem</local-name>
             <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Record here the location of the article, book review or contribution inside its
+                    host publication, that is, inside its periodical or edited volume.</p>
+                <p>If the publication has several parts inside the same host, repeat Part.</p>
+                <p>The host publication, that is, the publication that the article, book review or
+                    contribution is included in, is show above. This was on the detail view of this
+                    publication that the present record was created. Clicking on the link will take
+                    you to the record in question.</p>
+            </help>
+            <hint/>
+            <value>other-location</value>
+            <local-name>relatedItem</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Enter here information related to the edited volume that the contribution you
+                    are cataloguing occurs in. </p>
+                <p>This information falls into two groups: <ul>
+                        <li>general information on the edited volume</li>
+                        <li>specific information on the location of the contribution in the edited
+                            volume</li>
+                    </ul>
+                </p>
+                <p>There are two ways you can supply this information: <ul>
+                        <li>you can fill out the title, editors, etc. of the edited volume</li>
+                        <li>you can supply the ID number of the edited volume and then fill out the
+                            information on the location of the contribution in the edited
+                            volume</li>
+                    </ul>
+                </p>
+                <p>If you are cataloguing several contributions from the same edited volume, it is a
+                    good idea first to catalogue the edited volume. This will save you time and
+                    produce a more ordered bibliography. When you have finished with cataloguing the
+                    edited volume, you can then choose "Create Related Record" in the detail view
+                    for the record in question. The ID number for the edited volume will then
+                    automatically be inserted and you only have to fill out the information
+                    particular to the contribution itself. If you are only cataloguing one
+                    contribution, you can also follow this way - others may then use your record (if
+                    you make it available to them) and catalogue other contributions in the same
+                    edited volume, by finding it and clicking "Create Related Record". </p>
+                <p> If you choose to enter the information concerning the edited volume inside the
+                    record for the contribution, that is, not to use XLink, this is also fine. If
+                    you later decide to use the ID of the record for the edited volume, you may
+                    insert its ID in the XLink field. </p>
+            </help>
+            <value>edited-volume-compact</value>
+            <local-name>relatedItem</local-name>
+            <parent>mods</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Enter here information related to the monograph series that the book you are
+                    cataloguing occurs in. </p>
+                <p>This information falls into two groups: <ul>
+                        <li>general information on the monograph series </li>
+                        <li>specific information on the location of the monograph in the monograph
+                            series</li>
+                    </ul>
+                </p>
+                <p>There are two ways you can supply this information: <ul>
+                        <li>you can fill out the title, editors, etc. of the series</li>
+                        <li>you can supply the ID number of the series and then fill out the
+                            information on the location of the book in the series</li>
+                    </ul>
+                </p>
+                <p> In connection with monograph series, the first approach is the most common.</p>
+                <p> You can enter the information concerning the series inside the record for the
+                    book, that is, not to use the ID of the series.</p>
+                <p> If you later decide to use the ID of the record for the edited volume, you may
+                    insert its ID in the XLink field. </p>
+                <p>If you are cataloguing several books from the same series, it is a good idea
+                    first to catalogue the series. This will save you time and produce a more
+                    ordered bibliography. When you have finished with cataloguing the series, you
+                    can then choose "Create Related Record" in the detail view for the record in
+                    question. The ID number for the series will then automatically be inserted and
+                    you only have to fill out the information particular to the book itself. If you
+                    are only cataloguing one book, you can also follow this way - others may then
+                    use your record (if you make it available to them) and catalogue other books in
+                    the same series, by finding it and clicking "Create Related Record". </p>
+            </help>
+            <value>series-compact</value>
+            <local-name>relatedItem</local-name>
+            <parent>mods</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Enter here information related to the monograph series that the edited volume
+                    you are cataloguing occurs in. </p>
+                <p>This information falls into two groups: general information on the monograph
+                    series and specific information on the location of the edited volume in the
+                    monograph series.</p>
+                <p>In order not to make matter more complicated than necessary, only information
+                    relating to the title of the series and the location of the edited volume within
+                    the series is included.</p>
+                <p> Please note that the information concerning Monograph Series of Edited Volume is
+                    not displayed.</p>
+                <p>The option to input an XLink for the series is similar to that for the edited
+                    volume itself.</p>
+            </help>
+            <value>series-edited-volume-compact</value>
+            <local-name>relatedItem</local-name>
+            <parent>relatedItem</parent>
             <tab-id/>
         </item>
         <item>
@@ -1758,6 +1771,17 @@
             <value>roleTerm-authority</value>
             <local-name>roleTerm</local-name>
             <parent>role</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Scale provides a statement of scale. It may include any equivalency statements,
+                    vertical scales or vertical exaggeration statements for relief models and other
+                    three-dimensional items. </p>
+            </help>
+            <value>scale</value>
+            <local-name>scale</local-name>
+            <parent>cartographics</parent>
             <tab-id/>
         </item>
         <item>
@@ -1877,6 +1901,38 @@
         </item>
         <item>
             <help>
+                <p>Hint</p>
+            </help>
+            <hint/>
+            <value>scriptTerm</value>
+            <local-name>scriptTerm</local-name>
+            <parent>language</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Shelf Locator records a shelf-mark or other shelving designation that indicates
+                    the location identifier for a copy. If more detailed holdings information is
+                    given at the item level, use Shelf Locator under Holding Simple. </p>
+            </help>
+            <hint/>
+            <value>shelfLocator</value>
+            <local-name>shelfLocator</local-name>
+            <parent>location</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Includes first order political divisions called states within a country, e.g. in
+                    U.S., Argentina, Italy. Use also for France département. </p>
+            </help>
+            <value>state</value>
+            <local-name>state</local-name>
+            <parent>hierarchicalGeographic</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
                 <p> A Subject is a term or a phrase that represents the primary topic(s) on which a
                     work is focused. Use at least one Subject field in each record to allow
                     retrieval of the record by its contents. Enter as many specific terms as
@@ -1979,8 +2035,46 @@
         </item>
         <item>
             <help>
-                <p> Use Time for chronological Subject terms to denote temporal coverage. Time may be
-                    expressed as a term (e.g. "Middle Ages") or as a structured date (e.g.
+                <p> Use Target Audience to describe a group for which a resource is intended. </p>
+                <p> Use this field whenever there is a specific audience for a resource (for
+                    example, a text marked up specifically for historians). Do not limit the use of
+                    Target Audience to the intellectual level of the audience (as suggested by the
+                    marctarget list). </p>
+                <p> If you wish to add an authority file, or wish to add terms to the Local
+                    authority file, please contact <!--contact-->. When more than one target
+                    audience is recorded, the field is repeated. </p>
+                <p> Use the authority field whenever possible to indicate the controlled vocabulary
+                    used. </p>
+                <p> Do not use Target Audience to indicate audiences to whom access or use of the
+                    resource is limited; include this information in the Access Condition field.
+                </p>
+            </help>
+            <hint/>
+            <value>targetAudience</value>
+            <local-name>targetAudience</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Choose one of the publication types listed below. These publication types are the
+                    same as the record templates used in the pre-entry options. </p>
+                <p> If a record has not been made by use of Tamboti, you can assign a publication
+                    type to it here.</p>
+                <p> If you have assigned a wrong publication type in the pre-entry dialogue, you can
+                    change it here. Changing it here will however not change the options displayed
+                    in the Basic Input Forms until you save the record and reopen it.</p>
+            </help>
+            <hint/>
+            <value>template</value>
+            <local-name>template</local-name>
+            <parent>extension</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Use Time for chronological Subject terms to denote temporal coverage. Time may
+                    be expressed as a term (e.g. "Middle Ages") or as a structured date (e.g.
                     "2001-09-11"). In the first case, choose "text" in Type; otherwise choose
                     "YYY-MM-DD" and enter the time you wish to refer to as precisely as
                     possible.</p>
@@ -1997,6 +2091,16 @@
             <value>temporal</value>
             <local-name>temporal</local-name>
             <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Name of a geographical area belonging to or under the jurisdiction of a
+                    governmental authority. </p>
+            </help>
+            <value>territory</value>
+            <local-name>territory</local-name>
+            <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
         <item>
@@ -2150,37 +2254,6 @@
         </item>
         <item>
             <help>
-                <p> Type identifies what type of Title Information is recorded, if this information
-                    is special. If the title is recorded as it appears on the title page, it does
-                    not have Type. Use Type if the title is abbreviated, translated, alternative, or
-                    uniform (a transliteration is here regarded as a form of translation). </p>
-                <p> When an abbreviated title is present, an Authority must be chosen. An
-                    alternative title may be a parallel title found in the authoritative title
-                    information (in written works, typically the title page) or a title that does
-                    not occur in the authoritative title information, e.g. a title found on a cover.
-                    If the alternative title does not occur in the authoritative title information,
-                    indicate in Display Label where the information comes from (e.g., "Cover
-                    Title"). If the alternative title occurs in the authoritative title information,
-                    it can e.g. be a translation or a transliteration of the main title information.
-                    If a translated or a transliterated title occurs in the authoritative title
-                    information of the work being catalogued, choose "Alternative" for Type and note
-                    the language, transliteration and script of the title information, as
-                    appropriate, if this is different from the language noted in Language of
-                    Resource. If this is not the case and you have e.g. supplied the translation or
-                    transliteration yourself, choose "Translated" for Type and note the language,
-                    transliteration and script of the title information, as appropriate. </p>
-                <p> A uniform title is a title that refers uniformly to a work that is known by
-                    several titles, e.g. the works of Shakespeare or the Bible. When a uniform title
-                    is present, an Authority for its selection must be chosen. </p>
-            </help>
-            <hint/>
-            <value>titleInfo-type</value>
-            <local-name>type</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
                 <p> Enter here the title of the edited volume you are cataloguing. If the title
                     divides into a main title and a subtitle, enter each part in its separate field. </p>
                 <p> If you have chosen a transliteration scheme when you created the record, you
@@ -2211,6 +2284,48 @@
                     is not English, you should choose another language. </p>
             </help>
             <value>series-titleInfo-compact</value>
+            <local-name>titleInfo</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Enter here the title of the series you are cataloguing. If the title divides
+                    into a main title and a subtitle, enter each part in its separate field. </p>
+                <p> If you have chosen a transliteration scheme when you created the record, you
+                    will have the option of entering a transliteration and a translation.</p>
+                <p> If the title is in a language that is usually transliterated, enter the
+                    transliterated title and subtitle in their respective fields. Use the
+                    transliteration scheme you chose when selecting a record template. </p>
+                <p> If you believe it is useful to supply a translation of the title, do so in the
+                    relevant fields. If the language that the title information is translated into
+                    is not English, you should choose another language. </p>
+            </help>
+            <hint/>
+            <value>edited-volume-series-title</value>
+            <local-name>titleInfo</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Use this field to indicate the volume of the series that the edited volume you
+                    are cataloguing occurs in. </p>
+            </help>
+            <hint/>
+            <value>edited-volume-series-part</value>
+            <local-name>titleInfo</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Record here, if applicable, information regarding the book series that the edited
+                    volume is part of and the position of the edited volume with the series.</p>
+                <p>Only these two items are registered here.</p>
+            </help>
+            <hint/>
+            <value>edited-volume-series</value>
             <local-name>titleInfo</local-name>
             <parent/>
             <tab-id/>
@@ -2302,6 +2417,148 @@
         </item>
         <item>
             <help>
+                <p> Choose one of the transliteration schemes listed below. The transliteration
+                    schemes are the same as those used in the pre-entry options. </p>
+                <p> If a record has not been made by use of Tamboti, if will not have this field,
+                    but you can assign a transliteration scheme to it here. Doing so will make it
+                    unnecessary to note which transliteration scheme is used for individual fields,
+                    i.e. you can set this value once and for all here. Adding a transliteration
+                    scheme here will not cause the Basic Input Forms to display transliteration
+                    fields. If you wish to add transliterations for titles, names, etc., you have to
+                    use the Citation Forms.</p>
+                <p> If you have assigned the wrong transliteration scheme in the pre-entry dialogue,
+                    you can change it here. The Basic Input Forms will still display fields for the
+                    transliteration of titles, names, etc.</p>
+            </help>
+            <hint/>
+            <value>transliterationOfResource</value>
+            <local-name>transliterationOfResource</local-name>
+            <parent>extension</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Type identifies the type of identifier that is recorded</p>
+                <!--<p>Suggested values include: hdl, doi, isbn, isrc, ismn, issn, issue number, istc, lccn, local,
+                    matrix number, music publisher, music plate, sici, uri, upc, videorecording identifier,
+                    stock number.</p>-->
+            </help>
+            <value>identifier-type</value>
+            <local-name>type</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Type identifies what type of Title Information is recorded, if this information
+                    is special. If the title is recorded as it appears on the title page, it does
+                    not have Type. Use Type if the title is abbreviated, translated, alternative, or
+                    uniform (a transliteration is here regarded as a form of translation). </p>
+                <p> When an abbreviated title is present, an Authority must be chosen. An
+                    alternative title may be a parallel title found in the authoritative title
+                    information (in written works, typically the title page) or a title that does
+                    not occur in the authoritative title information, e.g. a title found on a cover.
+                    If the alternative title does not occur in the authoritative title information,
+                    indicate in Display Label where the information comes from (e.g., "Cover
+                    Title"). If the alternative title occurs in the authoritative title information,
+                    it can e.g. be a translation or a transliteration of the main title information.
+                    If a translated or a transliterated title occurs in the authoritative title
+                    information of the work being catalogued, choose "Alternative" for Type and note
+                    the language, transliteration and script of the title information, as
+                    appropriate, if this is different from the language noted in Language of
+                    Resource. If this is not the case and you have e.g. supplied the translation or
+                    transliteration yourself, choose "Translated" for Type and note the language,
+                    transliteration and script of the title information, as appropriate. </p>
+                <p> A uniform title is a title that refers uniformly to a work that is known by
+                    several titles, e.g. the works of Shakespeare or the Bible. When a uniform title
+                    is present, an Authority for its selection must be chosen. </p>
+            </help>
+            <hint/>
+            <value>titleInfo-type</value>
+            <local-name>type</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Use the type attribute to indicate the type of restrictions (or lack thereof) on
+                    use of the resource and/or restrictions on access to the material.</p>
+                <p>There is no controlled list of types for Access Condition. Suggested values are:
+                    "restriction on access" and "use and reproduction". Choose the value appropriate
+                    or enter a type of your own. </p>
+            </help>
+            <hint/>
+            <value>accessCondition-type</value>
+            <local-name>type</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>(missing)</p>
+            </help>
+            <value>genre-type</value>
+            <local-name>type</local-name>
+            <parent>genre</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Hint</p>
+            </help>
+            <hint/>
+            <value>languageTerm-type</value>
+            <local-name>type</local-name>
+            <parent>languageTerm</parent>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> Type Identifies the type of location recorded. Use Type to indicate different
+                    kinds of locations if more specificity is needed, e.g. current, discovery,
+                    former, creation. </p>
+            </help>
+            <value>location-type</value>
+            <local-name>type</local-name>
+            <parent>location</parent>
+            <tab-id>type</tab-id>
+        </item>
+        <item>
+            <help>
+                <p>The Type field can take the following values: personal, corporate, conference.
+                    Use it to indicate whether the name is the name of a person (or a family), the
+                    name of a corporation or the name of a conference (or an event similar to a
+                    conference).</p>
+            </help>
+            <value>name-type</value>
+            <local-name>type</local-name>
+            <parent>name</parent>
+            <tab-id>type</tab-id>
+        </item>
+        <item>
+            <help>
+                <p>Identifies what type of note is recorded.</p>
+                <p>One can either select a value from the drop-down menu or enter a free-text
+                    value.</p>
+            </help>
+            <hint/>
+            <value>note-type</value>
+            <local-name>type</local-name>
+            <parent>note</parent>
+            <tab-id>compact-c</tab-id>
+        </item>
+        <item>
+            <help>
+                <p> Type indicates whether the place is expressed in a coded or textual form. </p>
+            </help>
+            <hint/>
+            <value>originInfo-type</value>
+            <local-name>type</local-name>
+            <parent>note</parent>
+            <tab-id>compact-c</tab-id>
+        </item>
+        <item>
+            <help>
                 <p> In URL, record the Uniform Resource Locator (URL) of the resource if it has been
                     accessed on the Internet.</p>
                 <p> Note also the date of the last time you have accessed the resource.</p>
@@ -2310,6 +2567,18 @@
             <value>url-compact</value>
             <local-name>url</local-name>
             <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> In URL, record the Uniform Resource Locator (URL) of the networked location of a
+                    resource. It is recommended that all URLs used with the Location element be
+                    persistent. </p>
+            </help>
+            <hint/>
+            <value>location-url</value>
+            <local-name>url</local-name>
+            <parent>location</parent>
             <tab-id/>
         </item>
         <item>
@@ -2374,60 +2643,6 @@
         </item>
         <item>
             <help>
-                <p> The language used within Title Information is specified here, if this language
-                    is different from the language noted in Language of Resource. xml:lang is used
-                    to specify the language used within a field, using specifications in RFC 3066.
-                    RFC 3066 uses the two-character ISO 639-1 codes along with three-character ISO
-                    639-2 codes for those languages not given in 639-1. </p>
-                <p> The recommendation is not to use xml:lang, but to use Language. </p>
-            </help>
-            <hint/>
-            <value>xml:lang</value>
-            <local-name>xml:lang</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p>Information about restrictions imposed on access to a resource is noted here.</p>
-                <p>Use Access Condition to indicate rights relating to access and use of digital
-                    resources. State clearly any restrictions on use of the digital resource,
-                    including explicitly mentioning lack of copyright restrictions when the digital
-                    resource is in the public domain. Also provide contact information for use by
-                    end users who wish to require permissions for publication, exhibit, or other
-                    types of dissemination.</p>
-                <p>An XLink may be supplied in lieu of or in addition to the content noted in Access
-                    Condition. If, for example, you maintain rights information relating to specific
-                    resources on a website, you may provide a URL for that website in lieu of a
-                    textual rights statement. When doing so, you should provide enough textual
-                    explanation in Access Condition, along with the URL, to make the purpose of the
-                    URL clear to end users.</p>
-                <p> Whenever possible, consider using a standard license such as Creative Commons
-                    and/or a rights expression language such as the Open Digital Rights Language
-                    (ODRL) specification.</p>
-            </help>
-            <hint/>
-            <value>accessCondition</value>
-            <local-name>accessCondition</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p>Use the type attribute to indicate the type of restrictions (or lack thereof) on
-                    use of the resource and/or restrictions on access to the material.</p>
-                <p>There is no controlled list of types for Access Condition. Suggested values are:
-                    "restriction on access" and "use and reproduction". Choose the value appropriate
-                    or enter a type of your own. </p>
-            </help>
-            <hint/>
-            <value>accessCondition-type</value>
-            <local-name>type</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
                 <p> The XLink field is used to reference an external resource, such as a second
                     metadata record, a Related Item or a Table Of Contents. </p>
                 <p> An XLink may be supplied in lieu of or in addition to the content noted in
@@ -2445,242 +2660,21 @@
         </item>
         <item>
             <help>
-                <p>In Extension you have access to a number of fields that we have added to the MODS
-                    schema.</p>
-                <p>If the record you are viewing has not been made with Tamboti, it may not have
-                    Extension - at least it does not have our Extension. If it lacks Extension, you
-                    can add it by using the button below.</p>
-                <p>If you change the values of the fields Publication Type and Transliteration of
-                    Resource, parts of the Basic Input Forms will display differently in accordance
-                    with your choice.</p>
+                <p> The language used within Title Information is specified here, if this language
+                    is different from the language noted in Language of Resource. xml:lang is used
+                    to specify the language used within a field, using specifications in RFC 3066.
+                    RFC 3066 uses the two-character ISO 639-1 codes along with three-character ISO
+                    639-2 codes for those languages not given in 639-1. </p>
+                <p> The recommendation is not to use xml:lang, but to use Language. </p>
             </help>
             <hint/>
-            <value>extension</value>
-            <local-name>extension</local-name>
-            <parent>mods</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p>Choose one of the publication types listed below. These publication types are the
-                    same as the record templates used in the pre-entry options. </p>
-                <p> If a record has not been made by use of Tamboti, you can assign a publication
-                    type to it here.</p>
-                <p> If you have assigned a wrong publication type in the pre-entry dialogue, you can
-                    change it here. Changing it here will however not change the options displayed
-                    in the Basic Input Forms until you save the record and reopen it.</p>
-            </help>
-            <hint/>
-            <value>template</value>
-            <local-name>template</local-name>
-            <parent>extension</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Choose one of the transliteration schemes listed below. The transliteration
-                    schemes are the same as those used in the pre-entry options. </p>
-                <p> If a record has not been made by use of Tamboti, if will not have this field,
-                    but you can assign a transliteration scheme to it here. Doing so will make it
-                    unnecessary to note which transliteration scheme is used for individual fields,
-                    i.e. you can set this value once and for all here. Adding a transliteration
-                    scheme here will not cause the Basic Input Forms to display transliteration
-                    fields. If you wish to add transliterations for titles, names, etc., you have to
-                    use the Citation Forms.</p>
-                <p> If you have assigned the wrong transliteration scheme in the pre-entry dialogue,
-                    you can change it here. The Basic Input Forms will still display fields for the
-                    transliteration of titles, names, etc.</p>
-            </help>
-            <hint/>
-            <value>transliterationOfResource</value>
-            <local-name>transliterationOfResource</local-name>
-            <parent>extension</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Location identifies the institution or repository holding the resource, or a
-                    remote location in the form of a URL where the resource is available. In the
-                    case of a physical resource, information is noted about what the institution
-                    identified in Physical Location holds of the resource in question and its
-                    specific location within the institution. </p>
-                <p> Holdings information consists of copy-specific information about the resource,
-                    information about the specific location within an institution, version
-                    information, and other information that is peculiar to the institution. </p>
-            </help>
-            <hint/>
-            <value>location</value>
-            <local-name>location</local-name>
-            <parent>mods</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Record in Physical Location the institution or repository that holds the
-                    resource or where it is available. Physical Location may be expressed as text
-                    and/or as a code. If expressed as code, use the Authority field to designate the
-                    source of the code. </p>
-                <p> Physical Location typically includes specific information used to locate a
-                    resource within a collection, such as the name or code of an
-                    institution/repository, and perhaps sub-collection. A shelf number is given in
-                    Shelf Locator. </p>
-            </help>
-            <hint/>
-            <value>physicalLocation</value>
-            <local-name>physicalLocation</local-name>
-            <parent>location</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Shelf Locator records a shelf-mark or other shelving designation that indicates
-                    the location identifier for a copy. If more detailed holdings information is
-                    given at the item level, use Shelf Locator under Holding Simple. </p>
-            </help>
-            <hint/>
-            <value>shelfLocator</value>
-            <local-name>shelfLocator</local-name>
-            <parent>location</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> In URL, record the Uniform Resource Locator (URL) of the networked location of a
-                    resource. It is recommended that all URLs used with the Location element be
-                    persistent. </p>
-            </help>
-            <hint/>
-            <value>location-url</value>
-            <local-name>url</local-name>
-            <parent>location</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p>Enter here information regarding in which volume of the edited volume the
-                    contribution occurs, if the edited volume is in several volumes.</p>
-                <p>Enter also information regarding the page extent of the contribution.</p>
-            </help>
-            <hint/>
-            <value>edited-volume-part-compact</value>
-            <local-name>part</local-name>
-            <parent>relatedItem</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p>Enter here information regarding in which volume of the monograph series the book
-                    occurs.</p>
-            </help>
-            <hint/>
-            <value>series-part-compact</value>
-            <local-name>part</local-name>
-            <parent>relatedItem</parent>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Enter here the title of the series you are cataloguing. If the title divides
-                    into a main title and a subtitle, enter each part in its separate field. </p>
-                <p> If you have chosen a transliteration scheme when you created the record, you
-                    will have the option of entering a transliteration and a translation.</p>
-                <p> If the title is in a language that is usually transliterated, enter the
-                    transliterated title and subtitle in their respective fields. Use the
-                    transliteration scheme you chose when selecting a record template. </p>
-                <p> If you believe it is useful to supply a translation of the title, do so in the
-                    relevant fields. If the language that the title information is translated into
-                    is not English, you should choose another language. </p>
-            </help>
-            <hint/>
-            <value>edited-volume-series-title</value>
-            <local-name>titleInfo</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Use this field to indicate the volume of the series that the edited volume you
-                    are cataloguing occurs in. </p>
-            </help>
-            <hint/>
-            <value>edited-volume-series-part</value>
-            <local-name>titleInfo</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p>Record here, if applicable, information regarding the book series that the edited
-                    volume is part of and the position of the edited volume with the series.</p>
-                <p>Only these two items are registered here.</p>
-            </help>
-            <hint/>
-            <value>edited-volume-series</value>
-            <local-name>titleInfo</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> Record here the location of the article, book review or contribution inside its
-                    host publication, that is, inside its periodical or edited volume.</p>
-                <p>If the publication has several parts inside the same host, repeat Part.</p>
-                <p>The host publication, that is, the publication that the article, book review or
-                    contribution is included in, is show above. This was on the detail view of this
-                    publication that the present record was created. Clicking on the link will take
-                    you to the record in question.</p>
-            </help>
-            <hint/>
-            <value>other-location</value>
-            <local-name>relatedItem</local-name>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> More input options can be found on the Related Items Forms tab.</p>
-            </help>
-            <hint/>
-            <value>more-related-items</value>
-            <local-name/>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> More input options can be found on the Subjects tab on Content Description
-                    Forms.</p>
-            </help>
-            <hint/>
-            <value>more-subjects</value>
-            <local-name/>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> More input options can be found on the Name Information tab on the Citation
-                    Forms.</p>
-            </help>
-            <hint/>
-            <value>more-name-information</value>
-            <local-name/>
-            <parent/>
-            <tab-id/>
-        </item>
-        <item>
-            <help>
-                <p> More input options can be found on the Origin Information tab on the Citation
-                    Forms.</p>
-            </help>
-            <hint/>
-            <value>more-origin-information</value>
-            <local-name/>
+            <value>xml:lang</value>
+            <local-name>xml:lang</local-name>
             <parent/>
             <tab-id/>
         </item>
     </items>
 </code-table><!--return
 for $item in $code-table/items/item
-order by upper-case($item/value)
+order by upper-case($item/local-name[1]), upper-case($item/parent) 
 return $item-->
