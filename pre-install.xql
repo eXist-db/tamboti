@@ -18,7 +18,7 @@ declare variable $biblio-admin-user := "editor";
 declare variable $biblio-users-group := "biblio.users";
 
 (:~ Collection names :)
-declare variable $library-collection-name := "library";
+declare variable $library-collection-name := "tamboti";
 declare variable $modules-collection-name := "modules";
 declare variable $edit-app-collection-name := "edit";
 declare variable $code-tables-collection-name := "code-tables";
@@ -27,7 +27,8 @@ declare variable $users-collection-name := "users";
 declare variable $groups-collection-name := "groups";
 declare variable $temp-collection-name := "temp";
 declare variable $commons-collection-name := "commons";
-declare variable $commons-samples-collection-name := "sociology";
+declare variable $commons-samples-collection-name := "samples";
+declare variable $commons-sociology-collection-name := "sociology";
 declare variable $commons-exist-collection-name := "eXist";
 (:declare variable $commons-mads-collection-name := "mads";:)
 
@@ -41,8 +42,8 @@ declare variable $resources-temp-collection := fn:concat($resources-collection, 
 declare variable $resources-users-collection := fn:concat($resources-collection, "/", $users-collection-name);
 declare variable $resources-groups-collection := fn:concat($resources-collection, "/", $groups-collection-name);
 declare variable $commons-collection := fn:concat($resources-collection, "/", $commons-collection-name);
-declare variable $commons-samples-collection := fn:concat($commons-collection, "/", $commons-samples-collection-name);
-declare variable $commons-exist-collection := fn:concat($commons-collection, "/", $commons-exist-collection-name);
+declare variable $commons-sociology-collection := fn:concat($commons-collection, "/", $commons-samples-collection-name, "/", $commons-sociology-collection-name);
+declare variable $commons-exist-collection := fn:concat($commons-collection, "/", $commons-samples-collection-name, "/", $commons-exist-collection-name);
 (:declare variable $commons-mads-collection := fn:concat($commons-collection, "/", $commons-mads-collection-name);:)
 
 declare function local:mkcol-recursive($collection, $components) {
@@ -105,14 +106,14 @@ util:log($log-level, "Config: Done."),
 
 (: Create resources/commons :)
 util:log($log-level, fn:concat("Config: Creating commons collection '", $commons-collection, "'...")),
-    for $col in ($commons-samples-collection, $commons-exist-collection(:, $commons-mads-collection:)) return
+    for $col in ($commons-sociology-collection, $commons-exist-collection(:, $commons-mads-collection:)) return
     (
         local:mkcol($db-root, local:strip-prefix($col, fn:concat($db-root, "/"))),
         xdb:set-collection-permissions($col, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8))
     ),
     util:log($log-level, "...Config: Uploading samples data..."),
-        xdb:store-files-from-pattern($commons-samples-collection, $dir, "data/sociology/*.xml"),
-        local:set-collection-resource-permissions($commons-samples-collection, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8)),
+        xdb:store-files-from-pattern($commons-sociology-collection, $dir, "data/sociology/*.xml"),
+        local:set-collection-resource-permissions($commons-sociology-collection, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8)),
         xdb:store-files-from-pattern($commons-exist-collection, $dir, "data/eXist/*.xml"),
         local:set-collection-resource-permissions($commons-exist-collection, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8)),
     util:log($log-level, "...Config: Done Uploading samples data."),

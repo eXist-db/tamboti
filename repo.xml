@@ -10,10 +10,10 @@
     <repo:copyright>true</repo:copyright>
     <repo:description>Tamboti Metadata Framework</repo:description>
     <repo:type>application</repo:type>
-    <repo:target>/db/library</repo:target>
+    <repo:target>/db/tamboti</repo:target>
     <repo:permissions user="editor" password="editor" group="biblio.users" mode="0444"/>
     <repo:status>stable</repo:status>
     <repo:prepare>pre-install.xql</repo:prepare>
     <repo:finish>post-install.xql</repo:finish>
-    <deployed>2012-05-20T16:18:14.952+02:00</deployed>
+    <deployed>2012-06-28T14:44:29.895+02:00</deployed>
 </repo:meta>
