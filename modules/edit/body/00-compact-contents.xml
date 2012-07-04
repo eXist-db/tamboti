@@ -282,7 +282,7 @@
                                                 </div>
                                             </span>
                                         </div>
-                                        <xf:repeat nodeset="./mods:namePart" id="subject-namePart-person-repeat">
+                                        <xf:repeat nodeset="./mods:namePart" id="subject-namePart-institution-repeat">
                                             <xf:group class="margin-plus text_100">
                                                 <xf:input ref=".">
                                                     <xf:label>

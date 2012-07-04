@@ -454,7 +454,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
         						if ($global-transliteration)
         						then 1
         						else 0
-                        (:let $log := util:log("DEBUG", ("##$name-contains-transliteration): ", $name-contains-transliteration)):)
+                        let $log := util:log("DEBUG", ("##$name-contains-transliteration): ", $name-contains-transliteration))
                         (: If the name does not contain a namePart with transliteration, it is a basic name, 
                         i.e. a name where the distinction between the name in native script and in transliteration does not arise. 
                         Typical examples are Western names, but this also includes Eastern names where no effort has been taken to distinguish between native script and transliteration. 
@@ -469,7 +469,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                         	(:If we know for sure that transliteration is used somewhere in the name, then grab the untransliterated parts.:)
                         	else <name>{$name/*:namePart[(@lang = $modsCommon:given-name-first-languages or not(@lang)) and not(@transliteration)]}</name>
                         	(:else <name>{$name/*:namePart[not(@transliteration)]}</name>:)
-                        (:let $log := util:log("DEBUG", ("##$name-basic): ", $name-basic)):)
+                        let $log := util:log("DEBUG", ("##$name-basic): ", $name-basic))
                         (: If there is transliteration, there are nameParts with transliteration. 
                         To filter these, we seek nameParts which contain the transliteration attribute, 
                         even though this may be empty 
@@ -481,7 +481,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                         	if ($name-contains-transliteration)
                         	then <name>{$name/*:namePart[@transliteration][(not(@script) or (@script = ('Latn', 'latn', 'Latin')))]}</name>
                         	else ()
-                        (:let $log := util:log("DEBUG", ("##$name-in-transliteration): ", $name-in-transliteration)):)
+                        let $log := util:log("DEBUG", ("##$name-in-transliteration): ", $name-in-transliteration))
                         (: If there is transliteration, the presumption must be that all nameParts which are not transliterations (and which do not have the language set to a European language) are names in non-Latin script. 
                         We filter for nameParts which do no have the transliteration attribute or have one with no contents, 
                         and which do not have script set to Latin, and which do not have English as their language. :)
@@ -489,7 +489,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
     	                    if ($name-contains-transliteration)
     	                    then <name>{$name/*:namePart[(not(@transliteration) or not(string(@transliteration)))][(@script)][not(@script = ('Latn', 'latn', 'Latin'))][not(@lang = $modsCommon:given-name-first-languages)]}</name>
     	                    else ()
-                        (:let $log := util:log("DEBUG", ("##$name-in-non-latin-script): ", $name-in-non-latin-script)):)
+                        let $log := util:log("DEBUG", ("##$name-in-non-latin-script): ", $name-in-non-latin-script))
                         (:Switch around $name-in-non-latin-script and $name-basic if there is $name-in-transliteration. 
                         This is necessary because $name-in-non-latin-script looks like $name-basic in a record using global language.:) 
                         let $name-in-non-latin-script1 := 
@@ -533,9 +533,9 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                 if ($untyped-name-basic/*:namePart/@lang)
                                                 then $untyped-name-basic/*:namePart/@lang
                                                 else ()
-                                (:let $log := util:log("DEBUG", ("##$language-basic): ", $language-basic)):)
+                                let $log := util:log("DEBUG", ("##$language-basic): ", $language-basic))
                                 let $nameOrder-basic := modsCommon:get-name-order(distinct-values($language-basic), $name-language, $global-language)
-                                (:let $log := util:log("DEBUG", ("##$nameOrder-basic): ", $nameOrder-basic)):)
+                                let $log := util:log("DEBUG", ("##$nameOrder-basic): ", $nameOrder-basic))
                                 return
                                     if (string($untyped-name-basic))
                                     (: If there are name parts that are not typed, there is nothing we can do to order their sequence. 
@@ -564,11 +564,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                 (: If only one of family and given are evidenced, no comma is needed. :)
                                                 then
                                                     if ($nameOrder-basic eq 'family-given')
-                                                    (: If the name is Hungarian, use a space; otherwise (i.e. in most cases) use a comma. :)
-                                                    then 
-                                                        if ($language-basic eq 'hun')
-                                                        then ' '
-                                                        else ''
+                                                    then ' '
                                                     else ', '
                                                 else ()
                                                 ,

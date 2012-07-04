@@ -867,18 +867,6 @@ declare function mods:get-genre() {
 (: If there is a Japanese or Chinese title, any English title will be a translated title. :) 
     (: Problem: a variant or parallel title in English? :)
 
-declare function mods:get-title-translated($entry as element(mods:mods), $titleInfo as element(mods:titleInfo)?) {
-    let $titleInfo :=
-        if ($titleInfo/@lang = ('ja', 'jpn', 'zh', 'chi', 'kor')) 
-        (: NB: check language terms! :)
-        then string-join(($entry/mods:titleInfo[@lang = ('en', 'eng')]/mods:title, $entry/mods:titleInfo[@lang = ('en', 'eng')]/mods:subTitle), ' ')
-        else ()
-    return
-        if ($titleInfo) 
-        then <span xmlns="http://www.w3.org/1999/xhtml" class="title-translated">{string-join((string($titleInfo/mods:title), string($titleInfo/mods:subTitle)), ' ') }</span>
-        else ()
-};
-
 (: Constructs title for the detail view. 
 It is called by mods:format-detail-view(), which iterates through a sequence of titleInfo elements. :)
 declare function mods:title-full($titleInfo as element(mods:titleInfo)) {
@@ -887,7 +875,7 @@ if ($titleInfo)
     <tr xmlns="http://www.w3.org/1999/xhtml">
         <td class="label">
         {
-            if (($titleInfo/@type eq 'translated') and not($titleInfo/@transliteration)) 
+            if (($titleInfo/@type eq 'translated') and (not($titleInfo/@transliteration) or string($titleInfo/@lang))) 
             then 'Translated Title'
             else 
                 if ($titleInfo/@type eq 'alternative') 
@@ -1334,7 +1322,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     ,
     (: edition :)
     if ($entry/mods:originInfo[1]/mods:edition) 
-    then modsCommon:simple-row($entry/mods:originInfo[1]/mods:edition, 'Edition') 
+    then modsCommon:simple-row($entry/mods:originInfo[1]/mods:edition[1], 'Edition') 
     else ()
     ,
     (: extent :)
@@ -1352,18 +1340,20 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         else ()
     ,
     (: URL :)
-    for $url in $entry/mods:location/mods:url
+    for $url in $entry/mods:location/mods:url[./text()]
+    let $displayLabel := $url/@displayLabel/string()
+    let $dateLastAccessed := $url/@displayLabel/string()
     return
         <tr xmlns="http://www.w3.org/1999/xhtml">
             <td class="label"> 
             {
                 concat(
-                    if ($url/@displayLabel)
-                    then $url/@displayLabel
+                    if ($url/@displayLabel/string())
+                    then $url/@displayLabel/string()
                     else 'URL'
                 ,
-                    if ($url/@dateLastAccessed)
-                    then concat(' (Last Accessed: ', $url/@dateLastAccessed, ')')
+                    if ($url/@dateLastAccessed/string())
+                    then concat(' (Last Accessed: ', $url/@dateLastAccessed/string(), ')')
                     else ''
                 )
             }

@@ -127,11 +127,6 @@ li a:visited
     color:#B3A17D;
 }
 
-.pagination-next {
-    padding:2px 4px;
-    border:1px solid #B3A17D;
-    color:#B3A17D;
-}
 
 table {
     margin:1em;
@@ -611,21 +606,26 @@ h1 {
     text-align:center;
 }
 
-.pagination-previous,
-.pagination-next,
-.pagination-last,
-.pagination-first
+#results-head .navbar .pagination-previous,
+#results-head .navbar .pagination-next,
+#results-head .navbar .pagination-last,
+#results-head .navbar .pagination-first
 	{
     cursor:pointer;
     border:1px solid #835400;
     color:#835400;
 }
 
-.inactive
+#results-head .navbar .inactive
 {
-    cursor:pointer;
+    cursor:default;
     border:1px solid #C7B899;
     color:#C7B899;
+}
+
+
+.navbar .pagination-next {
+    padding:2px 4px;
 }
 
 .pagination-link {

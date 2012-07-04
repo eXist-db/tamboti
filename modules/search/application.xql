@@ -271,7 +271,6 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 (: When searching for ID and xlink:href, do not use the chosen collection-path, but search throughout all of /resources. :)
                 if ($expr/@name = ('ID', 'XLink')) 
                 then '/resources'
-                (:This should be something like ('/resources/commons', '/resources/users', '/resources/groups'), in order to filter out stray files in temp.:)
                 else $query-as-xml/ancestor::query/collection/string()
             (:let $log := util:log("DEBUG", ("##$collection-path): ", $collection-path)):)
             let $collection :=
@@ -292,8 +291,15 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 ($collection, replace($expr, '\$q', biblio:escape-search-string($query-as-xml/string())))
         case element(collection) 
             return
-                if (not($query-as-xml/..//field)(: and not($config:require-query):)) then
-                    ('collection("', $query-as-xml/string(), '")//mods:mods')
+                if (not($query-as-xml/..//field)(: and not($config:require-query):)) 
+                then 
+                    (:If a search is made in /db/resources, we want /db/resources/temp to be excluded from the search, 
+                    since it may contain stray files left there if the user is logged out.
+                    Therefore a search is made in all other sub-collections of /db/resources.
+                    Both this and the identical replacement in biblio:evaluate-query() are necessary.:)
+                    if ($query-as-xml/string() eq '/resources')
+                    then ('(collection("/resources/commons","/resources/users", "/resources/groups"))//mods:mods')
+                    else ('collection("', $query-as-xml/string(), '")//mods:mods')
                 else ()
             default 
                 return ()
@@ -500,7 +506,13 @@ declare function biblio:construct-order-by-expression($sort as xs:string?) as xs
     Evaluate the actual XPath query and order the results
 :)
 declare function biblio:evaluate-query($query-as-string as xs:string, $sort as xs:string?) {
-    (:let $log := util:log("DEBUG", ("##$query-as-string): ", $query-as-string)):)
+    (:let $log := util:log("DEBUG", ("##$query-as-string1): ", $query-as-string)):)
+    (:If a search is made in /db/resources, we want /db/resources/temp to be excluded from the search, 
+    since it may contain stray files left there if the user is logged out.
+    Therefore a search is made in all other sub-collections of /db/resources.
+    Both this and the identical replacement in biblio:generate-query() are necessary.:)
+    let $query-as-string := replace($query-as-string, "'/resources'", "'/resources/commons','/resources/users', '/resources/groups'")
+    (:let $log := util:log("DEBUG", ("##$query-as-string2): ", $query-as-string)):)
     let $order-by-expression := biblio:construct-order-by-expression($sort)
     let $query-with-order-by-expression :=
         (:The condition should be added that there is a search term. This will address comment in biblio:construct-order-by-expression(). :)
@@ -508,6 +520,7 @@ declare function biblio:evaluate-query($query-as-string as xs:string, $sort as x
             concat("for $hit in ", $query-as-string, " order by ", $order-by-expression, " return $hit")
         else
             $query-as-string
+    (:let $log := util:log("DEBUG", ("##$query-with-order-by-expression): ", $query-with-order-by-expression)):)
     let $options :=
         <options>
             <default-operator>and</default-operator>
@@ -934,14 +947,14 @@ $param
 :
 :)
 declare function biblio:prepare-query($id as xs:string?, $collection as xs:string, $reload as xs:string?, $history as xs:string?, $clear as xs:string?, $filter as xs:string?, $mylist as xs:string?, $value as xs:string?) as element(query)? {
-(:    let $log := util:log("DEBUG", ("##$collection): ", $collection))
-    let $log := util:log("DEBUG", ("##$reload): ", $reload))
-    let $log := util:log("DEBUG", ("##$history): ", $history))
-    let $log := util:log("DEBUG", ("##$clear): ", $clear))
-    let $log := util:log("DEBUG", ("##$filter): ", $filter))
-    let $log := util:log("DEBUG", ("##$mylist): ", $mylist))
-    let $log := util:log("DEBUG", ("##$value): ", $value))
-    return:)
+    (:let $log := util:log("DEBUG", ("##$collection): ", $collection)):)
+    (:let $log := util:log("DEBUG", ("##$reload): ", $reload)):)
+    (:let $log := util:log("DEBUG", ("##$history): ", $history)):)
+    (:let $log := util:log("DEBUG", ("##$clear): ", $clear)):)
+    (:let $log := util:log("DEBUG", ("##$filter): ", $filter)):)
+    (:let $log := util:log("DEBUG", ("##$mylist): ", $mylist)):)
+    (:let $log := util:log("DEBUG", ("##$value): ", $value)):)
+    (:return:)
     if ($id)
     then
         <query>

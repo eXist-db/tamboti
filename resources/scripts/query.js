@@ -259,6 +259,7 @@ function toggleCollectionTree(show) {
     }
 }
 
+//This is where the path follwing "inside" on the search form is set.
 function updateCollectionPaths(title, key) {
     key = key.replace(/^\/db/, "");
     

@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <themes>
     <map path="/apps/library" theme="library" root="/db/resources/commons/samples"/>
     <map path="/apps/tamboti" theme="tamboti" root="/db/resources"/>
-</themes>
-<!--
+    <map path="/apps/wsc" theme="wsc" root="/db/resources"/>
+</themes><!--
     Dynamically resolve all resources depending on the current theme. 
     A theme is selected by looking at the URL prefix (as defined in controller-config.xml) and themes/configuration.xml. 
     To add a theme, just map an arbitrary prefix in controller-config.xml 
