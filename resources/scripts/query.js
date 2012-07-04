@@ -35,8 +35,9 @@ $(function() {
         $("#results").pagination("option", "itemsPerPage", 10);
         $("#results").pagination("refresh");
     });
-    
     pingSession();
+    
+    $("#splash").fadeOut(1000);
 });
 
 /* collection action buttons */
@@ -56,6 +57,17 @@ $(document).ready(function(){
 
     bindKeyPressActions();
 
+    $('#clear-all').click(function(){
+        var form = $('#advanced-search-form > form');
+        form.find(':input').each(function() {
+            switch(this.type) {
+                case 'text':
+                    $(this).val('');
+                    break;
+            }
+        });
+    });
+    
     bindAdditionalDialogTriggers();
     
     hideCollectionActionButtons();
@@ -259,7 +271,6 @@ function toggleCollectionTree(show) {
     }
 }
 
-//This is where the path follwing "inside" on the search form is set.
 function updateCollectionPaths(title, key) {
     key = key.replace(/^\/db/, "");
     
@@ -669,7 +680,7 @@ function resultsLoaded(options) {
     $('#filters .expand').removeClass('expanded');
  
     // trigger image viewer when user clicks on thumbnail
-    $("#results .detail-xml .magnify").click(function (ev) {
+    $("#results .magnify").click(function (ev) {
         ev.stopPropagation();
         var num = $(this).closest(".pagination-item").find(".pagination-number").text();
         if (num) {
