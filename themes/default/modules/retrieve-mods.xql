@@ -803,7 +803,7 @@ declare function mods:return-type($entry ) {
     return
         if (exists($type))
         then  
-            replace(replace(
+            translate(translate(
             if ($type)
             then $type
             else 'text'
@@ -1003,7 +1003,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $destinati
         let $xlinked-record :=
             (: Any MODS record in /db/resources is retrieved if there is a @xlink:href/@ID match and the relatedItem has no string value. If there should be duplicated IDs, only the first record is retrieved.:)
             if (exists($xlinked-ID) and not($titleInfo))
-            then collection($config:mods-root)//mods:mods[@ID eq $xlinked-ID][1]
+            then collection($config:mods-root-minus-temp)//mods:mods[@ID eq $xlinked-ID][1]
             else ()
         let $related-item :=
         	(:If the related item is noted in another record than the current record.:)
@@ -1539,6 +1539,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         else ()
     return modsCommon:simple-row($item, concat('Classification', $authority))
     ,
+    
     (: find records that refer to the current record if this records a periodical or an edited volume or a similar kind of publication. :)
     (:NB: This takes time!:)
     if ($entry/mods:genre = ('series', 'periodical', 'editedVolume', 'newspaper', 'journal', 'festschrift', 'encyclopedia', 'conference publication', 'canonical scripture')) 
@@ -1546,7 +1547,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         (:The $ID is passed to the query; when the query is constructed, the hash is appended (application.xql, $biblio:FIELDS). 
         This is necessary since a hash in the URL is interpreted as a fragment identifier and not passed as a param.:)
         let $linked-ID := concat('#',$ID)
-        let $linked-records := collection($config:mods-root)//mods:mods[mods:relatedItem[@type = ('host', 'series', 'otherFormat')]/@xlink:href eq $linked-ID]
+        let $linked-records := collection($config:mods-root-minus-temp)//mods:mods[mods:relatedItem[@type = ('host', 'series', 'otherFormat')]/@xlink:href eq $linked-ID]
         let $linked-records-count := count($linked-records)
         return
         if ($linked-records-count eq 0)

@@ -307,9 +307,17 @@ return
                     let $target-collection := local:find-live-collection-containing-uuid($incoming-id)
                     let $new-target-collection := uu:escape-collection-path(request:get-parameter("collection", ""))
                     let $target-collection :=
-                            if ($target-collection)
-                            then $target-collection
-                            else $new-target-collection
+                        if ($target-collection)
+                        then $target-collection
+                        else $new-target-collection
+                    (:If the user has created a related record with a record as host in a collection to which the user does not have write access,
+                    save the record in the user's home folder. The user can then move it elsewhere.
+                    If the user does have write access, save it in the collection that the host occurs in.:)
+                    (:NB: Do we need to check whether the record is, in fact, a related record?:)
+                    let $target-collection := 
+                        if (security:can-write-collection($target-collection))
+                        then $target-collection
+                        else security:get-home-collection-uri(security:get-user-credential-from-session()[1])
                     return
                     (
                         (:Update $doc (the document in temp) with $item (the new edits).:)

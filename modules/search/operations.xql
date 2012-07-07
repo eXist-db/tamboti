@@ -3,19 +3,30 @@ xquery version "1.0";
 import module namespace security="http://exist-db.org/mods/security" at "security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "sharing.xqm";
 import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
+import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
+
 declare namespace group = "http://commons/sharing/group";
-
 declare namespace op="http://exist-db.org/xquery/biblio/operations";
-
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace xmldb="http://exist-db.org/xquery/xmldb";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
+declare namespace xlink="http://www.w3.org/1999/xlink";
+declare namespace functx = "http://www.functx.com"; 
 
 declare variable $HTTP-FORBIDDEN := 403;
 
+declare function functx:substring-after-last($arg as xs:string?, $delim as xs:string)as xs:string {       
+   replace ($arg,concat('^.*',functx:escape-for-regex($delim)),'')
+ } ;
+
+declare function functx:escape-for-regex($arg as xs:string?) as xs:string {       
+   replace($arg,
+           '(\.|\[|\]|\\|\||\-|\^|\$|\?|\*|\+|\{|\}|\(|\))','\\$1')
+ } ;
+ 
 (:~
 : Creates a collection inside a parent collection
 :
@@ -61,8 +72,29 @@ declare function op:rename-collection($path as xs:string, $name as xs:string) as
 };
 
 declare function op:remove-collection($collection as xs:string) as element(status) {
-    let $null := xmldb:remove($collection) return
-        <status id="removed">{uu:unescape-collection-path($collection)}</status>
+    (:Only allow deletion of a collection if none of the records in it are referred to in xlinks outside the collection itself.:)
+    (:Get the ids of the records in the collection that the user wants to delete.:)
+    let $collection-ids := collection($collection)//@ID
+    (:Get the ids of the records that are linked to the records in the collection that the user wants to delete.:)
+    let $xlinked-rec-ids :=
+        string-join(
+        for $collection-id in $collection-ids
+            let $xlink := concat('#', $collection-id)
+            let $xlink-recs := collection($config:mods-root-minus-temp)//mods:relatedItem[@xlink:href eq $xlink]/ancestor::mods:mods/@ID
+            return
+                (:It is OK to delete a record using an ID as an xlink if the record is inside the folder to be deleted.:)
+                if (not($xlink-recs = $collection-ids))
+                then $xlink-recs
+                else ''
+                (:This should return '' for each iteration for deletion to proceed.:)
+                ,'')
+    let $null := 
+         (:If $xlinked-rec-ids is not empty, do not delete.:)
+         if ($xlinked-rec-ids)
+         then ()
+         else xmldb:remove($collection) 
+             return
+            <status id="removed">{uu:unescape-collection-path($collection)}</status>
 };
 
 (:~
@@ -74,12 +106,24 @@ declare function op:remove-resource($resource-id as xs:string) as element(status
     let $path := substring-before($resource-id, "#")
     let $id := substring-after($resource-id, "#")
     let $doc := doc($path)
+    (:Do not remove a record that another record links to.:)
+    (:NB: A message should be given to the user that the delete is not possible.:)
+    (:NB: A similar block should be introduced with remove-collection().:)
+    let $doc-id := functx:substring-after-last($path, '/')
+    let $doc-id := substring-before($doc-id, '.xml')
+    (:NB: The $doc-id should be obtained from $doc.:)
+    let $xlink := concat('#', $doc-id)
+    let $xlink-recs := collection($config:mods-root-minus-temp)//mods:relatedItem[@xlink:href eq $xlink]
     return (
-        if ($id eq "1") then
-            xmldb:remove(util:collection-name($doc), util:document-name($doc))
-        else
-            update delete util:node-by-id($doc, $id),
-    
+        if (count($xlink-recs/..) eq 0) 
+        then
+            if ($id eq "1") 
+            then
+                xmldb:remove(util:collection-name($doc), util:document-name($doc))
+            else
+                update delete util:node-by-id($doc, $id)
+        else ()
+        ,
         <status id="removed">{$resource-id}</status>
     )
 };

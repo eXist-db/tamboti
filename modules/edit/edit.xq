@@ -237,7 +237,8 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
     (:Get the part of the form that belongs to the active tab.:)
     let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id eq $instance-id]
     (:Get the relevant information to display in the info-line, the label for the template chosen (if any) and the hint belonging to it (if any). :)
-    let $save-hint := doc($type-data)/code-table/items/item[value eq "save"]/hint
+    let $hint-data := concat($config:edit-app-root, '/code-tables/hint-codes.xml')
+    let $save-hint := doc($hint-data)/code-table/items/item[value eq "save"]/hint
     (:Get the time of the last save to the temp collection and parse it.:)
     let $last-modified := xmldb:last-modified($config:mods-temp-collection, concat($id,'.xml'))
     let $last-modified-hour := hours-from-dateTime($last-modified)
