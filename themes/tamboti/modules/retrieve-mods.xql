@@ -1598,7 +1598,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
 
 (: Creates view for hitlist. :)
 (: NB: "mods:format-list-view()" is referenced in session.xql. :)
-declare function mods:format-list-view($id as xs:string, $entry as element(mods:mods), $collection-short as xs:string) {
+declare function mods:format-list-view($id as xs:string, $entry as element(), $collection-short as xs:string) {
 	let $entry := mods:remove-parent-with-missing-required-node($entry)
 	let $global-transliteration := $entry/mods:extension/e:transliterationOfResource/text()
 	let $global-language := $entry/mods:language[1]/mods:languageTerm[1]/text()
