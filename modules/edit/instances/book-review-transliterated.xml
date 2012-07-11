@@ -167,6 +167,11 @@
         <targetAudience authority="marctarget">adult</targetAudience>
         <typeOfResource>text</typeOfResource>
         <genre type="code" authority="marcgt">book</genre>
+        <identifier type="isbn"/>
+        <identifier type="doi"/>
+        <location>
+            <url dateLastAccessed=""/>
+        </location>
         <subject authority="" xlink:href="">
             <topic authority=""/>
             <geographic authority=""/>

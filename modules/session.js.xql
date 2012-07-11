@@ -38,7 +38,7 @@ if (security:get-user-credential-from-session()[1] ne $security:GUEST_CREDENTIAL
             
                 var beforeWarningTime = new Date().getTime();
                 
-                if (confirm('Your session is about to expire. Do you want to continue using Tamboti?' + '\n\n' + 'If you do, click \'OK\'.' + '\n\n' + 'If you do not, then clicking \'Cancel\' will log you out.' + '\n\n' + 'If you postpone replying for five minutes, you will have to log in again.')) {
+                if (confirm('Your session is about to expire. Do you want to continue using Tamboti?' + '\n\n' + 'If you do, click \'OK\'.' + '\n\n' + 'If you do not, then clicking \'Cancel\' will log you out.' + '\n\n' + 'If you postpone replying for five minutes, you will be logged out automatically. You will then have to log in again in order to access your home folder and edit records.')) {
                     
                     if (new Date().getTime() - beforeWarningTime >= beforeTimeout) {
                         alert('You have waited too long before confirming your intention to stay logged in to Tamboti, so you have been logged out.' + '\n\n' + 'A Tamboti session lasts 30 minutes.');

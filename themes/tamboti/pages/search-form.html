@@ -68,17 +68,16 @@
                         <td/>
                         <td class="add-field" align="center" colspan="2">
                             <button class="button" id="add-field">
-                                <span>+</span> Add search
-                                field</button>
+                                <span>+</span> Add search field</button>
                             <button class="button" id="remove-field">
-                                <span>-</span> Remove selected search
-                                field</button>
+                                <span>-</span> Remove selected search field</button>
                         </td>
                     </tr>
                     <tr>
                         <td/>
                         <td colspan="2">
-                            <button class="button" name="clear" value="clear" type="submit">Clear Search Terms</button>
+                            <button class="button" name="clear" value="clear" type="submit">Clear
+                                Search Terms</button>
                             <div class="advanced-search">
                                 <button class="advanced-search" name="action" id="form-submit" type="submit">Search</button>
                             </div>
@@ -104,89 +103,79 @@
             </form>
             <form action="user.xql" method="POST">
                 <p>
-                    <button class="button" id="export" name="export" type="submit" value="export">Export</button> your list items.
-                </p>
+                    <button class="button" id="export" name="export" type="submit" value="export">Export</button> your list items. </p>
             </form>
         </jquery:tab>
         <jquery:tab id="about-tamboti" label="About Tamboti">
-            <p>
-                Tamboti is:
-                <ul>
-                    <li>
-                        <a href="index.html?collection=/resources/commons/Buddhist%20Logic" target="_blank">Buddhist Logic</a>
-                        <ul>
-                            <li>
-                                A bibliography of literature on Buddhist Logic. 
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="index.html?collection=/resources/commons/Cluster%20Publications" target="_blank">Cluster Publications</a>
-                        <ul>
-                            <li>
-                                Publications made by Cluster members during the  
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="index.html?collection=/resources/commons/Wissenschaftssprache%20Chinesisch" target="_blank">Wissenschaftssprache Chinesisch</a>
-                        <ul>
-                            <li>
-                                The project Wissenschaftssprache Chinesisch has its own theme with project information: <a href="/exist/apps/wsc/modules/search/index.html" target="_blank">Wissenschaftssprache Chinesisch</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                Our visual collections are for the time being hosted on another server. Please access them through the following links:
-                <ul>
-                    <li>
-                        <a href="http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/naddara/" target="_blank">Abou Naddara Collection</a>
-                    </li>
-                    <li>
-                        <a href="http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/ppcoll/" target="_blank">Priya Paul Collection</a>
-                    </li>
-                </ul>
-            </p>
+            <p> Tamboti is an application for working with metadata based on the <a href="http://www.loc.gov/standards/mods/" target="_blank">MODS</a> standard.</p>
+            <p> The MODS standard can be used to catalogue books, articles and other traditional
+                library materials, as well as images, web sites, and other "new" materials.</p>
+            <p> Tamboti is similar in most respects to the public interface (OPAC) of the library
+                systems used by national and university libraries. It can handle records in the
+                millions.</p>
+            <p> Tamboti makes it possible for users to catalogue materials through a form-based interface. </p>
+            <br/>
+            <p> Tamboti is based on the <a href="http://exist-db.org/" target="_blank">eXist Native
+                    XML database</a>. As eXist itself, Tamboti is open source and free. Tamboti can be
+                installed in a way that is similar to installing an app on a mobile phone. 
+                The eXist database system can be installed with a standard application installer.</p>
+            <br/>
+            <p>Tamboti has a number of special features:</p>
+            <ul>
+                <li> Users can log in using an Active Directory, common in many large organisations. </li>
+                <li> Users have fine-grained control over who can view and edit the records they
+                    create. </li>
+                <li> Users can collaborate within groups to work collectively on a bibliography. </li>
+                <li> Users can upload PDFs and other binary materials. The text and metadata of
+                    these are extracted and searchable. </li>
+                <li> Users and user groups are able to easily create a distinctive layout for their
+                    own collection, with its own internet address. </li>
+            </ul>
+            <p>Please follow the <a href="../../docs/index.xml">Tamboti Walkthrough</a> to get
+                acquainted with functionalities of Tamboti.</p>
+            <br/>
+            <p>Tamboti is stable and used in a production setting, but you are invited to contribute
+                to the further development of Tamboti.</p>
         </jquery:tab>
         <jquery:tab class="cluster-collections" id="cluster-collections" label="Tamboti Collections">
-            <p>
-                In Tamboti, we have at present the following collections:
-                <ul>
-                    <li>
-                        <a href="index.html?collection=/resources/commons/Buddhist%20Logic" target="_blank">Buddhist Logic</a>
-                        <ul>
-                            <li>
-                                A bibliography of literature on Buddhist Logic. 
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="index.html?collection=/resources/commons/Cluster%20Publications" target="_blank">Cluster Publications</a>
-                        <ul>
-                            <li>
-                                Publications made by Cluster members during the  
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="index.html?collection=/resources/commons/Wissenschaftssprache%20Chinesisch" target="_blank">Wissenschaftssprache Chinesisch</a>
-                        <ul>
-                            <li>
-                                The project Wissenschaftssprache Chinesisch has its own theme with project information: <a href="/exist/apps/wsc/modules/search/index.html" target="_blank">Wissenschaftssprache Chinesisch</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                Our visual collections are for the time being hosted on another server. Please access them through the following links:
-                <ul>
-                    <li>
-                        <a href="http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/naddara/" target="_blank">Abou Naddara Collection</a>
-                    </li>
-                    <li>
-                        <a href="http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/ppcoll/" target="_blank">Priya Paul Collection</a>
-                    </li>
-                </ul>
+            <p> In Tamboti, there are a number of special collection which you can access by clicking on
+                the links below. </p>
+            <p>You can also access these collections by clicking the Folder View
+                icon <img src="theme/images/tree.gif" align="center" valign="middle"/> and navigating yourself.
             </p>
+            <p> In Tamboti, there are at present the following collections: </p>
+            <ul>
+                <li>
+                    <a href="index.html?collection=/resources/commons/Buddhist%20Logic" target="_blank">Buddhist Logic</a>
+                    <ul>
+                        <li> A bibliography of literature on Buddhist Logic. </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="index.html?collection=/resources/commons/Cluster%20Publications" target="_blank">Cluster Publications</a>
+                    <ul>
+                        <li> Publications made by Cluster members during the </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="index.html?collection=/resources/commons/Wissenschaftssprache%20Chinesisch" target="_blank">Wissenschaftssprache Chinesisch</a>
+                    <ul>
+                        <li> The project Wissenschaftssprache Chinesisch has its own theme with
+                            project information: <a href="/exist/apps/wsc/modules/search/index.html" target="_blank">Wissenschaftssprache Chinesisch</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Our visual collections are for the time being hosted on another server. Please
+            access them through the following links: </p>
+            <ul>
+                <li>
+                    <a href="http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/naddara/" target="_blank">Abou Naddara Collection</a>
+                </li>
+                <li>
+                    <a href="http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/ppcoll/" target="_blank">Priya Paul Collection</a>
+                </li>
+            </ul>
         </jquery:tab>
     </jquery:tabset>
 </div>

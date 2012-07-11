@@ -41,8 +41,7 @@
                         <div class="node-adds">
                             <xf:group appearance="full" ref=".[not(e:template)] | .[not(e:transliterationOfResource)]">
                                 <xf:trigger ref=".[not(e:template)]" class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Add Publication
-                                        Type</xf:label>
+                                    <xf:label class="xforms-group-label-centered">Add Tamboti Template</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert nodeset="e:template" at="index('extension-repeat')" position="before" origin="instance('insert-templates')/e:template"/>
@@ -63,7 +62,7 @@
             </xf:group>
             <xf:group appearance="full">
                 <xf:select1 ref="e:template">
-                    <xf:label>Publication Type<span class="xforms-help">
+                    <xf:label>Tamboti Template<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='template']/help"/>

@@ -5,6 +5,31 @@
     <code-table-name>hint-code</code-table-name>
     <items>
         <item>
+            <hint>
+                <p>Every time you click a tab (including the current one), your input is saved. </p>
+                <p>When you click "Finish Editing", your input is saved, and you return to the
+                    search interface where your record is displayed. </p>
+                <p>The record is saved inside the folder you marked before opening the editor or the
+                    folder from which you opened it for re-editing.</p>
+                <p>Be aware that you are only logged in for 30 minutes and that when your session
+                    times out, you will be returned to the search interface and what you have input
+                    without saving cannot be retrieved.</p>
+                <p>You can always see when your record was last saved, in the line above.</p>
+                <p>Note that if you reload the web page, your last edits are lost.</p>
+                <p>You can keep your session alive for another 30 minutes by clicking any tab. When
+                    your session is about to expire, you are prompted to keep it alive and given 5
+                    minutes to react.</p>
+                <p>If you know that you may not be able to finish a record, it is best to click
+                    "Finish Editing" and return later to continue editing it.</p>
+                <p>You can continue editing the record by finding it and clicking the "Edit Record"
+                    button inside the record's detail view.</p>
+                <p>If you wish to discard your edits, click "Cancel Editing" at the bottom of the
+                    page. None of the edits you have made will then be saved and you will be shown
+                    the original record again.</p>
+            </hint>
+            <value>save</value>
+        </item>
+        <item>
             <help>
                 <p> Abstract is used to record a succinct summary of some aspect of the content of
                     the resource. </p>
@@ -841,7 +866,39 @@
                 <p> More input options can be found on the Related Items Forms tab.</p>
             </help>
             <hint/>
-            <value>more-related-items</value>
+            <value>more-related-item</value>
+            <local-name>more</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> More input options can be found on the Physical Description tab on the Citation
+                    Forms.</p>
+            </help>
+            <hint/>
+            <value>more-physical-description</value>
+            <local-name>more</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> More input options can be found on the Locations tab on the Remaining Forms.</p>
+            </help>
+            <hint/>
+            <value>more-location</value>
+            <local-name>more</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> More input options can be found on the Identifiers tab on the Remaining
+                    Forms.</p>
+            </help>
+            <hint/>
+            <value>more-identifier</value>
             <local-name>more</local-name>
             <parent/>
             <tab-id/>
@@ -853,6 +910,17 @@
             </help>
             <hint/>
             <value>more-subjects</value>
+            <local-name>more</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> More input options can be found on the Title Information tab on the Citation
+                    Forms.</p>
+            </help>
+            <hint/>
+            <value>more-title-information</value>
             <local-name>more</local-name>
             <parent/>
             <tab-id/>
@@ -1231,6 +1299,7 @@
                 <p> Enter here information about the publication's origin, including its place of
                     origin or publication, its publisher, and its date of issue or date of
                     copyright. </p>
+                <!--expand-->
             </help>
             <hint/>
             <value>originInfo</value>
@@ -1252,9 +1321,9 @@
         </item>
         <item>
             <help>
-                <p> Note here in which volume and issue the article you are cataloguing occurs in
-                    the periodical, in which year the volume/issue was published, and on which pages
-                    the article occurs.</p>
+                <p> Note here in which volume and (if relevant) which issue the article or book
+                    review you are cataloguing occurs in the periodical, in which year the
+                    volume/issue was published, and on which pages the article occurs.</p>
             </help>
             <hint/>
             <value>part-relatedItem-periodical-compact</value>
@@ -1370,8 +1439,6 @@
             <help>
                 <p> The Extent and (for some types of publication) the Internet Media Type of the
                     publication are noted in Physical Description.</p>
-                <p> More input options can be found on the Physical Description tab on the Citation
-                    Forms.</p>
             </help>
             <hint/>
             <value>physicalDescription-compact</value>
@@ -1545,9 +1612,10 @@
         <item>
             <help>
                 <p> Enter here information related to the periodical that the article you are
-                    cataloguing occurs in. This information falls into two groups: general
-                    information on the periodical and specific information on the location of the
-                    article in the periodical.</p>
+                    cataloguing occurs in. </p>
+                <p> This information falls into two groups: general information relating to the
+                    periodical and specific information relating to the location of the article in
+                    the periodical.</p>
             </help>
             <value>relatedItem-periodical-compact</value>
             <local-name>relatedItem</local-name>
@@ -1584,6 +1652,41 @@
             </help>
             <hint/>
             <value>other-location</value>
+            <local-name>relatedItem</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Record here information regarding where the book review itself has been
+                    published. This is the same as cataloguing an article in a periodical. </p>
+                <p>Record
+                    the title of the book review itself, regardless of whether or not it contains
+                    part of or all of the title, etc. of the book being reviewed. </p>
+                <p>This information falls into two parts: general information relating to the
+                    periodical and information relating to the specific location of the review in
+                    the periodical.</p>
+            </help>
+            <hint/>
+            <value>book-review</value>
+            <local-name>relatedItem</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p>Record here information regarding the book reviewed in the book review. 
+                    This is the same as cataloguing a book. </p>
+                <p>
+                    Record
+                    the title of the book review itself, regardless of whether or not it contains
+                    part of or all of the title, etc. of the book being reviewed. </p>
+                <p>This information falls into two parts: general information relating to the
+                    periodical and information relating to the specific location of the review in
+                    the periodical.</p>
+            </help>
+            <hint/>
+            <value>book-reviewed</value>
             <local-name>relatedItem</local-name>
             <parent/>
             <tab-id/>
@@ -1687,8 +1790,6 @@
                     to the resource being catalogued.</p>
                 <p> Repeat Role for each new role played by the named entity, i.e. the same person
                     or institution can have several roles in relation to one resource.</p>
-                <p> More role input options can be found on the Name Information tab on the Citation
-                    Forms.</p>
             </help>
             <hint/>
             <value>role-compact</value>
@@ -2228,10 +2329,12 @@
         </item>
         <item>
             <help>
-                <p> Enter here the title of the book, the article or the contribution to an edited
-                    volume that you are cataloguing. If the title divides into a main title and a
-                    subtitle, enter each part in its separate field. If the subtitle divides into
-                    several parts, separate the parts with a semicolon. </p>
+                <p> Enter here the title of the publication that you are cataloguing. This
+                    publication may be a book, an edited volume, a periodical, an article, or a
+                    contribution to an edited volume.</p>
+                <p> If the title divides into a main title and a subtitle, enter each part in its
+                    separate field. If the subtitle divides into several parts, separate the parts
+                    with a semicolon. </p>
                 <p> Non Sort contains characters, including initial articles (typically "A" and
                     "The" in English) that appear at the beginning of a title that should be ignored
                     when sorting. </p>
@@ -2243,8 +2346,6 @@
                 <p> If you believe it is useful to supply a translation of the title, do so in the
                     relevant fields. If the language that the title information is translated into
                     is not English, you should choose another language. </p>
-                <p> More input options can be found on the Title Information tab on the Citation
-                    Forms.</p>
             </help>
             <hint/>
             <value>titleInfo-compact</value>

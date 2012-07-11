@@ -11,6 +11,7 @@
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-help-value">
                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='relatedItem-periodical-compact']/help"/>
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-item']/help"/>
                     </div>
                 </span>
             </div>
@@ -23,6 +24,7 @@
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='relatedItem-periodical-titleInfo-compact']/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-item']/help"/>
                                 </div>
                             </span>
                         </div>
@@ -60,18 +62,54 @@
                             <xf:group>
                                 <xf:input ref="./mods:title" class="text_150 margin-plus">
                                     <xf:label>
-                                        <xf:group ref=".[string-length(../@type) = 0]">Title</xf:group>
-                                        <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Title</xf:group>
-                                        <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Title</xf:group>
+                                        <xf:group ref=".[string-length(../@type) = 0]">Title<span class="xforms-help">
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-help-value">
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title-compact']/help"/>
+                                                </div>
+                                            </span>
+                                        </xf:group>
+                                        <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Title<span class="xforms-help">
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-help-value">
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title-compact']/help"/>
+                                                </div>
+                                            </span>
+                                        </xf:group>
+                                        <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Title<span class="xforms-help">
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-help-value">
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title-compact']/help"/>
+                                                </div>
+                                            </span>
+                                        </xf:group>
                                     </xf:label>
                                 </xf:input>
                             </xf:group>
                             <xf:group>
                                 <xf:input ref="./mods:subTitle" class="text_150 margin-plus">
                                     <xf:label>
-                                        <xf:group ref=".[string-length(../@type) = 0]">Subtitle</xf:group>
-                                        <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Subtitle</xf:group>
-                                        <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Subtitle</xf:group>
+                                        <xf:group ref=".[string-length(../@type) = 0]">Subtitle<span class="xforms-help">
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-help-value">
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subTitle-compact']/help"/>
+                                                </div>
+                                            </span>
+                                        </xf:group>
+                                        <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Subtitle<span class="xforms-help">
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-help-value">
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subTitle-compact']/help"/>
+                                                </div>
+                                            </span>
+                                        </xf:group>
+                                        <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Subtitle<span class="xforms-help">
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-help-value">
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subTitle-compact']/help"/>
+                                                </div>
+                                            </span>
+                                        </xf:group>
                                     </xf:label>
                                 </xf:input>
                             </xf:group>
@@ -80,8 +118,8 @@
                 </xf:group>
                 <xf:group>
                     <fieldset class="level-2">
-                        <div class="join wide">
-                            <span class="legend">Editor(s) of Periodical</span>
+                        <div class="join extra-wide">
+                            <span class="legend">Institutional Editor(s) of Periodical</span>
                             <span class="join-button">
                                 <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) &gt; 0]">
                                     <xf:label>+</xf:label>
@@ -100,7 +138,7 @@
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-relatedItem-periodical-editor-compact']/help"/>
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-name-information']/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-item']/help"/>
                                 </div>
                             </span>
                         </div>
@@ -113,7 +151,7 @@
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='relatedItem-namePart-corporate-compact']/help"/>
-                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-subjects']/help"/>
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-item']/help"/>
                                             </div>
                                         </span>
                                     </div>

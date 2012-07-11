@@ -22,22 +22,19 @@
                         <entry>
                             <ulink href="walkthrough.02.xml">
                                 <div>
-                                    <graphic fileref="images/resultset_previous.png" align="left" href="walkthough.01.xml" alt="Go To Previous"/>&#160;
-                                </div>
+                                    <graphic fileref="images/resultset_previous.png" align="left" href="walkthough.01.xml" alt="Go To Previous"/>&#160; </div>
                             </ulink>
                         </entry>
                         <entry>
                             <ulink href="walkthrough.toc.xml">
                                 <div class="toc">
-                                    <graphic fileref="images/text_list_bullets.png" align="center" alt="Table of Contents"/>&#160;
-                                </div>
+                                    <graphic fileref="images/text_list_bullets.png" align="center" alt="Table of Contents"/>&#160; </div>
                             </ulink>
                         </entry>
                         <entry>
                             <ulink href="walkthrough.03.xml">
                                 <div>
-                                    <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next"/>&#160;
-                                </div>
+                                    <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next"/>&#160; </div>
                             </ulink>
                         </entry>
                     </row>
@@ -56,13 +53,19 @@
                 <listitem>Chrome</listitem>
             </ulink>
             <ulink href="http://www.microsoft.com/download/en/details.aspx?id=13950">
-                <listitem>Internet Explorer 8 &amp; 9</listitem>
+                <listitem>Internet Explorer 9</listitem>
             </ulink>
             <ulink href="http://www.opera.com/browser/download/">
                 <listitem>Opera</listitem>
             </ulink>
         </itemizedlist>
-        <para>Tamboti does not work with Internet Explorer 6 and 7.</para>
-        <para>Please note that since late 2011, most browsers have accellerated their update cycle. This may create problems with breaking browser versions, especially from development branches, since they are not always thoroughly tested. If you run into a problem, please let us know.</para>
+        <para>The Tamboti search interface does not work with Internet Explorer 6 and 7. The Tamboti
+            editor does not work with Internet Explorer 6, 7, and 8. Note that this means that if
+            you are running Windows XP, you cannot use Internet Explorer to access Tamboti fully.
+            You may, however, use Internet Explorer 8 to <emphasis>search</emphasis> Tamboti.</para>
+        <para>Please note that since late 2011, most browsers have accellerated their update cycle.
+            This may create problems with breaking browser versions, especially from development
+            branches, since they are not always thoroughly tested. If you run into a problem, please
+            let us know.</para>
     </chapter>
 </book>

@@ -108,7 +108,6 @@ declare function op:remove-resource($resource-id as xs:string) as element(status
     let $doc := doc($path)
     (:Do not remove a record that another record links to.:)
     (:NB: A message should be given to the user that the delete is not possible.:)
-    (:NB: A similar block should be introduced with remove-collection().:)
     let $doc-id := functx:substring-after-last($path, '/')
     let $doc-id := substring-before($doc-id, '.xml')
     (:NB: The $doc-id should be obtained from $doc.:)

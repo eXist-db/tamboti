@@ -1,6 +1,9 @@
 <css>
 @namespace xf url(http://www.w3.org/2002/xforms);
 
+/* empty rule to recover from parse errors */
+   empty {}
+   
 /*temporary stuff begins*/
 
 .save-buttons .related-title {

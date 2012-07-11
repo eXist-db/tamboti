@@ -1,44 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--node insertions: --><!--hints moved to code-table: --><!--hints checked: --><!--saving of all nodes: -->
+<!--node insertions: OK--><!--hints moved to code-table: OK--><!--hints checked: OK--><!--saving of all nodes: OK-->
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-review" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
-        <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-review-repeat">
-            <xf:group ref=".[@type='host']">
-                <fieldset class="level-1">
-                    <div class="join">
-                        <span class="legend">Location of Book Review</span>
-                        <span class="xforms-help">
-                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                            <div class="xforms-help-value">
-                                <p> The Container information for a book review falls into two parts.</p>
-                                <p>The first part is the information regarding where the book review itself has been published. This is the same as
-                                        cataloguing an article in a periodical. Record the title of the book review itself, regardless of whether or not it
-                                        contains part of or all of the title, etc. of the monograph being reviewed. This information also falls into two parts:
-                                        general information on the periodical and information on the specific location of the review in the periodical.</p>
-                                <p> The second part relates to the monograph that is reviewed. Follow here the guidelines for cataloguing a monograph on its
-                                        own. </p>
-                                <p> Repeat Book Reviewed as needed, by clicking the '+' button. </p>
-                            </div>
-                        </span>
+        <fieldset class="level-1">
+            <div class="join">
+                <span class="legend">Location of Book Review</span>
+                <span class="xforms-help">
+                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                    <div class="xforms-help-value">
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='book-review']/help"/>
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-item']/help"/>
                     </div>
-                        
-                        <!--<xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-review-repeat">-->
+                </span>
+            </div>
+            <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-review-repeat">
+                <xf:group ref=".[@type='host']">
                     <xf:group>
                         <fieldset class="level-2">
                             <div class="join">
-                                <span class="legend">Periodical Title</span>
-                                <span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <p> Enter here the title of the series you are cataloguing. If the title divides into a main title and a subtitle,
-                                                enter each part in its separate field. </p>
-                                        <p> If the title is in a language that is usually transliterated, enter the transliterated title and subtitle in
-                                                their respective fields. Use the transliteration scheme you chose when selecting a record template. </p>
-                                        <p> If you believe it is useful to supply a translation of the title, do so in their relevant fields. Note the
-                                                language that the title information is translated into (the default is English). </p>
-                                        <p> The language used is only specified if it is different from the language noted in Language of Resource when you
-                                                selected the record template. The most common languages have been moved to the top of the list. </p>
-                                    </div>
+                                <span class="legend">Periodical Title <span class="xforms-help">
+                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                        <div class="xforms-help-value">
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-compact']/help"/>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-item']/help"/>
+                                        </div>
+                                    </span>
                                 </span>
                             </div>
                             <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-periodical-repeat">
@@ -66,29 +52,138 @@
                                 <xf:group>
                                     <xf:input ref="./mods:nonSort" class="text_10 margin-plus">
                                         <xf:label>
-                                            <xf:group ref=".[string-length(../@type) = 0]">Non Sort</xf:group>
-                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Non Sort</xf:group>
-                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non Sort</xf:group>
+                                            <xf:group ref=".[string-length(../@type) = 0]">Non
+                                                  Sort<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
+                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Non Sort<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
+                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non Sort<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
                                         </xf:label>
                                     </xf:input>
                                 </xf:group>
                                 <xf:group>
                                     <xf:input ref="./mods:title" class="text_150 margin-plus">
                                         <xf:label>
-                                            <xf:group ref=".[string-length(../@type) = 0]">Title</xf:group>
-                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Title</xf:group>
-                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Title</xf:group>
+                                            <xf:group ref=".[string-length(../@type) = 0]">Title<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title-compact']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
+                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Title<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title-compact']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
+                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Title<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title-compact']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
                                         </xf:label>
                                     </xf:input>
                                 </xf:group>
                                 <xf:group>
                                     <xf:input ref="./mods:subTitle" class="text_150 margin-plus">
                                         <xf:label>
-                                            <xf:group ref=".[string-length(../@type) = 0]">Subtitle</xf:group>
-                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Subtitle</xf:group>
-                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Subtitle</xf:group>
+                                            <xf:group ref=".[string-length(../@type) = 0]">Subtitle<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subTitle-compact']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
+                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Subtitle<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subTitle-compact']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
+                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Subtitle<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subTitle-compact']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
                                         </xf:label>
                                     </xf:input>
+                                </xf:group>
+                            </xf:repeat>
+                        </fieldset>
+                    </xf:group>
+                    <xf:group>
+                        <fieldset class="level-2">
+                            <div class="join extra-wide">
+                                <span class="legend">Institutional Editor(s) of Periodical</span>
+                                <span class="join-button">
+                                    <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) &gt; 0]">
+                                        <xf:label>+</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-repeat-periodical')" position="before" origin="instance('compact-template')/mods:name[6]"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                    <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) = 0]">
+                                        <xf:label>+</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-repeat-periodical')" position="before" origin="instance('compact-template')/mods:name[5]"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </span>
+                                <span class="xforms-help">
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-help-value">
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-relatedItem-periodical-editor-compact']/help"/>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-item']/help"/>
+                                    </div>
+                                </span>
+                            </div>
+                            <xf:repeat nodeset="./mods:name" id="relatedItem-name-repeat-periodical">
+                                <xf:group>
+                                    <fieldset class="level-3">
+                                        <div class="join">
+                                            <span class="legend">Name</span>
+                                            <span class="xforms-help">
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-help-value">
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='relatedItem-namePart-corporate-compact']/help"/>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-item']/help"/>
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <xf:group> </xf:group>
+                                        <xf:repeat nodeset="./mods:namePart" id="relatedItem-namePart-periodical-repeat">
+                                            <xf:group>
+                                                <xf:input ref="." class="text_100 margin-plus">
+                                                    <xf:label>
+                                                        <xf:group ref=".[@script='latn']">Transliterated</xf:group>
+                                                    </xf:label>
+                                                </xf:input>
+                                            </xf:group>
+                                        </xf:repeat>
+                                    </fieldset>
                                 </xf:group>
                             </xf:repeat>
                         </fieldset>
@@ -100,8 +195,7 @@
                                 <span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <p> Note here in which volume and issue and on which pages the article you are cataloguing occurs in the
-                                                periodical.</p>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='part-relatedItem-periodical-compact']/help"/>
                                     </div>
                                 </span>
                             </div>
@@ -148,8 +242,10 @@
                                         <div class="join">
                                             <span class="legend">Page Extent</span>
                                             <div class="xforms-help-value">
-                                                <p> Use this field to indicate from which page and to which page the article you are cataloguing occurs in
-                                                        the volume and issue number of the periodical noted above. </p>
+                                                <p> Use this field to indicate from which page and
+                                                  to which page the article you are cataloguing
+                                                  occurs in the volume and issue number of the
+                                                  periodical noted above. </p>
                                             </div>
                                         </div>
                                         <xf:repeat nodeset="./mods:extent" id="related-item-extent-review-repeat">
@@ -204,44 +300,40 @@
                             </xf:repeat>
                         </fieldset>
                     </xf:group>
-                </fieldset>
-            </xf:group>
-        </xf:repeat>
-        <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-reviewed-repeat">
-            <xf:group ref=".[@type='references']">
-                <fieldset class="level-1">
-                    <div class="join">
-                        <span class="legend">Book(s) Reviewed</span>
-                        <span class="join-button">
-                            <span class="join-button">
-                                <xf:trigger ref=".[string-length(../mods:extension/e:transliterationOfResource) &gt; 0]">
-                                    <xf:label>+</xf:label>
-                                    <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:relatedItem" at="index('relatedItem-reviewed-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem[2]"/>
-                                    </xf:action>
-                                </xf:trigger>
-                                <xf:trigger ref=".[string-length(../mods:extension/e:transliterationOfResource) = 0]">
-                                    <xf:label>+</xf:label>
-                                    <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:relatedItem" at="index('relatedItem-reviewed-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem[3]"/>
-                                    </xf:action>
-                                </xf:trigger>
-                            </span>
-                        </span>
-                        <span class="xforms-help">
-                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                            <div class="xforms-help-value">
-                                <p> The Container information for a book review falls into two parts.</p>
-                                <p>The first part is the information regarding where the book review itself has been published. This is the same as
-                                        cataloguing an article in a periodical. Record the title of the book review itself, regardless of whether or not it
-                                        contains part of or all of the title, etc. of the monograph being reviewed. This information also falls into two parts:
-                                        general information on the periodical and information on the specific location of the review in the periodical.</p>
-                                <p> The second part relates to the monograph that is reviewed. Follow here the guidelines for cataloguing a monograph on its
-                                        own. </p>
-                                <p> Repeat Book Reviewed as needed, by clicking the '+' button. </p>
-                            </div>
-                        </span>
+                </xf:group>
+            </xf:repeat>
+        </fieldset>
+    </xf:group>
+    <xf:group>
+        <fieldset class="level-1">
+            <div class="join">
+                <span class="legend">Book(s) Reviewed</span>
+                <span class="join-button">
+                    <span class="join-button">
+                        <xf:trigger ref=".[string-length(../mods:extension/e:transliterationOfResource) &gt; 0]">
+                            <xf:label>+</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:insert nodeset="instance('save-data')/mods:relatedItem" at="index('relatedItem-book-reviewed-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem[2]"/>
+                            </xf:action>
+                        </xf:trigger>
+                        <xf:trigger ref=".[string-length(../mods:extension/e:transliterationOfResource) = 0]">
+                            <xf:label>+</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:insert nodeset="instance('save-data')/mods:relatedItem" at="index('relatedItem-book-reviewed-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem[3]"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </span>
+                </span>
+                <span class="xforms-help">
+                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                    <div class="xforms-help-value">
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='book-reviewed']/help"/>
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-item']/help"/>
                     </div>
+                </span>
+            </div>
+            <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-book-reviewed-repeat">
+                <xf:group ref=".[@type='references']">
                     <xf:group>
                         <fieldset class="level-2">
                             <div class="join super-wide">
@@ -250,34 +342,25 @@
                                     <xf:trigger ref=".[string-length(../mods:extension/e:transliterationOfResource) &gt; 0]">
                                         <xf:label>+</xf:label>
                                         <xf:action ev:event="DOMActivate">
-                                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem[1]/mods:name[2]"/>
+                                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-book-reviewed-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem[1]/mods:name[2]"/>
                                         </xf:action>
                                     </xf:trigger>
                                     <xf:trigger ref=".[string-length(../mods:extension/e:transliterationOfResource) = 0]">
                                         <xf:label>+</xf:label>
                                         <xf:action ev:event="DOMActivate">
-                                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem[1]/mods:name[1]"/>
+                                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-book-reviewed-repeat')" position="before" origin="instance('compact-template')/mods:relatedItem[1]/mods:name[1]"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </span>
                                 <span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <p> In Names and Roles, catalogue the names of each person, corporation or conference associated with the
-                                                resource.</p>
-                                        <p> Include as many Names and Roles as needed, by clicking the '+' button. </p>
-                                        <p> Choose an appropriate Type of Name for each name, "personal" for personal names, "corporate" for names of
-                                                institutions, and "conference" for names of events such as conferences. If you choose "corporate" or
-                                                "conference," please clear the values "Given" and "Family" in front of the name parts by choosing "(none
-                                                selected)." Conversely, if you add a personal name, please choose "Given Name" and "Family Name" as is relevant. </p>
-                                        <p> Given Name and Family Name can occur in any order. </p>
-                                        <p> Please notice that the role pertaining to a name follows the name in question. </p>
-                                        <p> More input options can be found on the Name Info tab on the Citation Forms.</p>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-compact']/help"/>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-item']/help"/>
                                     </div>
                                 </span>
                             </div>
-                            <xf:repeat nodeset="./mods:name" id="name-periodical-repeat">
-                                    <!--<xf:repeat nodeset="instance('save-data')/mods:name" id="name-repeat">-->
+                            <xf:repeat nodeset="./mods:name" id="name-book-reviewed-repeat">
                                 <xf:group>
                                     <fieldset class="level-3">
                                         <div class="join">
@@ -285,18 +368,8 @@
                                             <span class="xforms-help">
                                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
-                                                    <p> Analyse each name into separate name parts.</p>
-                                                    <p> If possible, analyse each personal name into Given Name and Family Name. If this is not possible,
-                                                            choose "(none selected)" and enter the whole name in the field in question.</p>
-                                                    <p> If a given or family name consists of several parts, enter all parts of the same type in the same
-                                                            field.</p>
-                                                    <p> If possible, analyse each corporate name and conference name into separate name parts. Record the
-                                                            more general designation in the first field and a more specific designation in the second field. If
-                                                            this is not possible, choose "(none selected)" and enter the whole name in the field in
-                                                            question.</p>
-                                                    <p> If the name is in a language that is usually transliterated, enter the transliterated name parts in
-                                                            their respective fields. Use the transliteration scheme you chose when selecting a record template. </p>
-                                                    <p> More input options can be found on the Name Info tab on the Citation Forms.</p>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='namePart-compact']/help"/>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-name-information']/help"/>
                                                 </div>
                                             </span>
                                         </div>
@@ -334,12 +407,8 @@
                                             <span class="xforms-help">
                                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
-                                                    <p> Role contains a description of the role of the person or institution named above to the resource
-                                                            being catalogued.</p>
-                                                    <p> Repeat for each new role played by the named entity, i.e. the same person or institution can have
-                                                            several roles in relation to one resource.</p>
-                                                    <p> The more common roles are listed at the top.</p>
-                                                    <p> More role input options can be found on the Name Info tab on the Citation Forms.</p>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='role-compact']/help"/>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-name-information']/help"/>
                                                 </div>
                                             </span>
                                         </div>
@@ -368,18 +437,12 @@
                                 <span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <p> Enter here the title of the series you are cataloguing. If the title divides into a main title and a subtitle,
-                                                enter each part in its separate field. </p>
-                                        <p> If the title is in a language that is usually transliterated, enter the transliterated title and subtitle in
-                                                their respective fields. Use the transliteration scheme you chose when selecting a record template. </p>
-                                        <p> If you believe it is useful to supply a translation of the title, do so in their relevant fields. Note the
-                                                language that the title information is translated into (the default is English). </p>
-                                        <p> The language used is only specified if it is different from the language noted in Language of Resource when you
-                                                selected the record template. The most common languages have been moved to the top of the list. </p>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-compact']/help"/>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-title-information']/help"/>
                                     </div>
                                 </span>
                             </div>
-                            <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-periodical-repeat">
+                            <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-book-reviewed-repeat">
                                 <xf:group ref=".[@transliteration or string-length(@lang) &gt; 0]">
                                     <br/>
                                 </xf:group>
@@ -404,27 +467,82 @@
                                 <xf:group>
                                     <xf:input ref="./mods:nonSort" class="text_10 margin-plus">
                                         <xf:label>
-                                            <xf:group ref=".[string-length(../@type) = 0]">Non Sort</xf:group>
-                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Non Sort</xf:group>
-                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non Sort</xf:group>
+                                            <xf:group ref=".[string-length(../@type) = 0]">Non
+                                                  Sort<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
+                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Non Sort<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
+                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non Sort<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nonSort']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
                                         </xf:label>
                                     </xf:input>
                                 </xf:group>
                                 <xf:group>
                                     <xf:input ref="./mods:title" class="text_150 margin-plus">
                                         <xf:label>
-                                            <xf:group ref=".[string-length(../@type) = 0]">Title</xf:group>
-                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Title</xf:group>
-                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Title</xf:group>
+                                            <xf:group ref=".[string-length(../@type) = 0]">Title<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title-compact']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
+                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Title<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title-compact']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
+                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Title<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='title-compact']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
                                         </xf:label>
                                     </xf:input>
                                 </xf:group>
                                 <xf:group>
                                     <xf:input ref="./mods:subTitle" class="text_150 margin-plus">
                                         <xf:label>
-                                            <xf:group ref=".[string-length(../@type) = 0]">Subtitle</xf:group>
-                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Subtitle</xf:group>
-                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Subtitle</xf:group>
+                                            <xf:group ref=".[string-length(../@type) = 0]">Subtitle<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subTitle-compact']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
+                                            <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Subtitle<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subTitle-compact']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
+                                            <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Subtitle<span class="xforms-help">
+                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                    <div class="xforms-help-value">
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='subTitle-compact']/help"/>
+                                                    </div>
+                                                </span>
+                                            </xf:group>
                                         </xf:label>
                                     </xf:input>
                                 </xf:group>
@@ -438,13 +556,11 @@
                                 <span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <p> Enter here information about the book's origin, including its place of origin or publication, its publisher, and
-                                                its date of issue. </p>
-                                        <p> More input options can be found on the Origin Info tab on the Citation Forms.</p>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='originInfo-compact']/help"/>
                                     </div>
                                 </span>
                             </div>
-                            <xf:repeat nodeset="./mods:originInfo" id="originInfo-periodical-repeat">
+                            <xf:repeat nodeset="./mods:originInfo" id="originInfo-book-reviewed-repeat">
                                 <xf:group ref=".[string-length(@transliteration) &gt; 0]">
                                     <br/>
                                 </xf:group>
@@ -455,13 +571,8 @@
                                             <span class="xforms-help">
                                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
-                                                    <p> Record in City Name the city in which the publisher has its principal domicile, as noted on the
-                                                            title page. </p>
-                                                    <p> If the publisher is housed in several cities, record the one given prominence on the title page. If
-                                                            all are given equal prominence, record the first city name.</p>
-                                                    <p> If the city name is in a language that is usually transliterated, enter the transliterated city name
-                                                            in its field. Use the transliteration scheme you chose when selecting a record template.</p>
-                                                    <p> More input options can be found on the Origin Info tab on the Citation Forms.</p>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='place-compact']/help"/>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-item']/help"/>
                                                 </div>
                                             </span>
                                         </div>
@@ -492,12 +603,8 @@
                                             <span class="xforms-help">
                                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
-                                                    <p> Record in Publisher Name the name of the entity that is the originator for a resource, i.e. that has
-                                                            published, printed, distributed, released, issued, or produced it, as noted on the title page. </p>
-                                                    <p> If the publisher name is in a language that is usually transliterated, enter the transliterated
-                                                            publisher name in its field. Use the transliteration scheme you chose when selecting a record
-                                                            template. </p>
-                                                    <p> More input options can be found on the Origin Info tab of the Citation Forms.</p>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='publisher-compact']/help"/>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-item']/help"/>
                                                 </div>
                                             </span>
                                         </div>
@@ -518,16 +625,12 @@
                                 <xf:group ref=".[mods:dateIssued]">
                                     <fieldset class="level-3">
                                         <div class="join">
-                                            <span class="legend">Year of Publication</span>
+                                            <span class="legend">Date of Issue</span>
                                             <span class="xforms-help">
                                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
-                                                    <p> Note in Year of Publication the year in which the resource was published, released, or issued. </p>
-                                                    <p> Use Point if you wish to record a span of time, e.g. 1912-1914. The values "start" and "end" are
-                                                            used with Point. Repeat the Year of Publication field and choose "start" in one and "end" in the
-                                                            other repetition, and enter the appropriate dates in the two Year of Publication fields. </p>
-                                                    <p> If no point is specified a year noted in Year of Publication is assumed to be a single year. </p>
-                                                    <p> More input options can be found on the Origin Info tab on the Citation Forms.</p>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='dateIssued-compact']/help"/>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-item']/help"/>
                                                 </div>
                                             </span>
                                         </div>
@@ -549,6 +652,37 @@
                                         </xf:repeat>
                                     </fieldset>
                                 </xf:group>
+                                <xf:group ref=".[mods:copyrightDate]">
+                                    <fieldset class="level-2">
+                                        <div class="join">
+                                            <span class="legend">Copyright Date</span>
+                                            <span class="join-button"/>
+                                            <span class="xforms-help">
+                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                <div class="xforms-help-value">
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='copyrightDate-compact']/help"/>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-related-item']/help"/>
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <xf:repeat nodeset="./mods:copyrightDate" id="copyrightDate-repeat">
+                                            <xf:group class="margin-plus" ref=".[count(../mods:copyrightDate) &gt; 1]">
+                                                <xf:select1 ref="./@point">
+                                                    <xf:label>Point</xf:label>
+                                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='date-point-code']/items/item">
+                                                        <xf:label ref="label"/>
+                                                        <xf:value ref="value"/>
+                                                    </xf:itemset>
+                                                </xf:select1>
+                                            </xf:group>
+                                            <xf:group class="text_10 hide-label margin-plus">
+                                                <xf:input ref=".">
+                                                    <xf:label>Copyright Date</xf:label>
+                                                </xf:input>
+                                            </xf:group>
+                                        </xf:repeat>
+                                    </fieldset>
+                                </xf:group>
                             </xf:repeat>
                         </fieldset>
                     </xf:group>
@@ -559,9 +693,11 @@
                                 <span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <p> In this compact input format, only the Internet Media Type and the Extent of the publication are noted in
-                                                Physical Description.</p>
-                                        <p> More input options can be found on the Physical Description tab on the Citation Forms.</p>
+                                        <p> In this compact input format, only the Internet Media
+                                            Type and the Extent of the publication are noted in
+                                            Physical Description.</p>
+                                        <p> More input options can be found on the Physical
+                                            Description tab on the Citation Forms.</p>
                                     </div>
                                 </span>
                             </div>
@@ -573,9 +709,7 @@
                                             <span class="xforms-help">
                                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
-                                                    <p> Use this field if the resource is electronic. An identification of the electronic format type, or
-                                                            the data representation of the resource. Internet Media Type specifies the electronic format type of
-                                                            the resource, such as text/html, PDF file, JPEG image or executable application .</p>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='internetMediaType-compact']/help"/>
                                                 </div>
                                             </span>
                                         </div>
@@ -599,10 +733,7 @@
                                             <span class="xforms-help">
                                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
-                                                    <p> A statement of the number and specific material of the units of the resource that express physical
-                                                            extent. A typical entry for a book might read "xiv, 213 p."</p>
-                                                    <p> Extent may be used with electronic resources, e.g. digitised collection of slides, to show how many
-                                                            slides constitute the resource. </p>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='extent-compact']/help"/>
                                                 </div>
                                             </span>
                                         </div>
@@ -618,25 +749,44 @@
                             </xf:repeat>
                         </fieldset>
                     </xf:group>
-                    <xf:group ref=".[mods:url]">
-                        <fieldset class="level-2">
+                    <xf:group ref=".[mods:location]">
+                        <fieldset class="level-1">
                             <div class="join">
                                 <span class="legend">
                                     <span class="legend">URL</span>
                                 </span>
+                                <span class="join-button">
+                                    <xf:trigger>
+                                        <xf:label>+</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:insert nodeset="instance('save-data')/mods:relatedItem/mods:location/mods:url" at="index('url-book-reviewed-repeat')" position="before" origin="instance('compact-template')/mods:location/mods:url"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </span>
                                 <span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <p> In URL, record the Uniform Resource Locator (URL) of a resource accessed on the Internet.</p>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='url-compact']/help"/>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-location']/help"/>
                                     </div>
                                 </span>
                             </div>
-                            <xf:repeat nodeset="./mods:location" id="location-url-repeat">
-                                <xf:repeat nodeset="./mods:url" id="location-url-repeat">
+                            <xf:repeat nodeset="./mods:location" id="location-book-reviewed-repeat">
+                                <xf:repeat nodeset="./mods:url" id="url-book-reviewed-repeat">
                                     <xf:group class="margin-plus">
-                                        <xf:input ref="." class="text_150 hide-label margin-plus">
-                                            <xf:label>URL</xf:label>
-                                        </xf:input>
+                                        <xf:group class="text_10">
+                                            <xf:input ref="./@dateLastAccessed">
+                                                <xf:label>Last Accessed</xf:label>
+                                            </xf:input>
+                                        </xf:group>
+                                        <xf:group class="text_150">
+                                            <xf:input ref=".">
+                                                <xf:label>URL</xf:label>
+                                            </xf:input>
+                                        </xf:group>
+                                    </xf:group>
+                                    <xf:group ref=".[count(../mods:url) &gt; 1]">
+                                        <br/>
                                     </xf:group>
                                 </xf:repeat>
                             </xf:repeat>
@@ -650,7 +800,7 @@
                                     <xf:trigger ref=".[mods:identifier]">
                                         <xf:label>+</xf:label>
                                         <xf:action ev:event="DOMActivate">
-                                            <xf:insert nodeset="instance('save-data')/mods:identifier" at="index('identifier-repeat')" position="before" origin="instance('compact-template')/mods:identifier"/>
+                                            <xf:insert nodeset="instance('save-data')/mods:identifier" at="index('identifier-book-reviewed-repeat')" position="before" origin="instance('compact-template')/mods:identifier"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </span>
@@ -661,7 +811,7 @@
                                     </div>
                                 </span>
                             </div>
-                            <xf:repeat nodeset="./mods:identifier" id="identifier-repeat">
+                            <xf:repeat nodeset="./mods:identifier" id="identifier-book-reviewed-repeat">
                                 <xf:group ref=".[@type]" selection="open" class="margin-plus">
                                     <xf:select1 ref="./@type">
                                         <xf:label>Type</xf:label>
@@ -679,8 +829,8 @@
                             </xf:repeat>
                         </fieldset>
                     </xf:group>
-                </fieldset>
-            </xf:group>
-        </xf:repeat>
+                </xf:group>
+            </xf:repeat>
+        </fieldset>
     </xf:group>
 </div>

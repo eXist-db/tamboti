@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--node insertions: OK, except xml:lang and xlink:href--><!--missing element insertion: OK.--><!--hints moved to code-table: OK--><!--hints checked: --><!--saving of all nodes: OK--><!--schema instatiated: n/a--><!--schema notations added: OK-->
+<!--node insertions: OK, except xml:lang and xlink:href--><!--missing element insertion: OK.--><!--hints moved to code-table: OK--><!--hints checked: --><!--saving of all nodes: OK--><!--schema instatiated: OK--><!--schema notations added: OK-->
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="title block-form" tab-id="title" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group class="fieldset level-1">
         <div class="join">
@@ -33,7 +33,8 @@
         <!-- element deletion: works. -->
         <!-- element repetition: works. -->
         <xf:repeat nodeset="instance('save-data')/mods:titleInfo" id="titleInfo-repeat">
-            <xf:group class="show-hide" ref=".[not(@altRepGroup)] | .[not(@authority)] | .[not(@authorityURI)] | .[not(@displayLabel)] | .[not(@ID)] | .[not(@lang)] | .[not(@nameTitleGroup)] | .[not(mods:nonSort)] | .[not(mods:partName)] | .[not(mods:partNumber)] | .[not(@script)] | .[not(mods:subTitle)] | .[not(@supplied)] | .[not(mods:title)] | .[not(@transliteration)] | .[not(@type)] | .[not(@usage)] | .[not(@valueURI)] | .[not(@xml:lang)] | .[not(@xlink:href)]                 ">
+            <!--<xf:group class="show-hide" ref=".[not(mods:partName and mods:partNumber and @script and mods:subTitle and @supplied and mods:title and @transliteration and @type and @usage and @valueURI and @xml:lang and @xlink:href)]">-->
+            <xf:group class="show-hide" ref=".[count(@*) &lt; 8 or count(*) &lt; 5]">
                 <xf:switch>
                     <xf:case id="titleInfo-add-node-hide">
                         <div class="node-button">

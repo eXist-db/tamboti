@@ -133,8 +133,8 @@ declare function functx:pad-integer-to-length($integerToPad as xs:anyAtomicType?
           if ($host)
           then
             (
-                update value doc($stored)/mods:mods/mods:relatedItem/@xlink:href with concat('#', $host),
-                update value doc($stored)/mods:mods/mods:relatedItem/@type with "host"
+                update value doc($stored)/mods:mods/mods:relatedItem[@type eq 'host']/@xlink:href with concat('#', $host)(:,
+                update value doc($stored)/mods:mods/mods:relatedItem/@type with "host":)
             )
           else ()
       )
