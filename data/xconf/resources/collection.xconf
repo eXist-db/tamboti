@@ -39,5 +39,6 @@
         <create qname="@type" type="xs:string"/>
         <create qname="@authority" type="xs:string"/>
         <create qname="@lang" type="xs:string"/>
+        <create qname="@xlink:href" type="xs:string"/>
     </index>
 </collection>

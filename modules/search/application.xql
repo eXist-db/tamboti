@@ -90,8 +90,8 @@ declare variable $biblio:FIELDS :=
         <field name="Note">mods:mods[ft:query(mods:note, '$q', $options)]</field>
         <field name="Subject">mods:mods[ft:query(mods:subject, '$q', $options)]</field>
        	<field name="Full Text">ft:search('page:$q')</field>
-       	<field name="ID">mods:mods[@ID eq '$q']</field>        
-        
+       	<field name="ID">mods:mods[@ID eq '$q']</field>
+       	<field name="XLink">mods:mods[mods:relatedItem[ends-with(@xlink:href, '$q')]]</field>
         <field name="All">
        		(
        		mods:mods[ft:query(., '$q', $options)]
@@ -512,8 +512,11 @@ declare function biblio:evaluate-query($query-as-string as xs:string, $sort as x
     Therefore a search is made in all other sub-collections of /db/resources.
     Both this and the identical replacement in biblio:generate-query() are necessary.:)
     let $query-as-string := replace($query-as-string, "'/resources'", "'/resources/commons','/resources/users', '/resources/groups'")
+    (:NB: The following hack is required because some queries end up with "//" before "order by", raising the error that "by" is an unexpected expression.:)
+    let $query-as-string := if (ends-with($query-as-string, "//")) then concat($query-as-string, "*") else $query-as-string
     (:let $log := util:log("DEBUG", ("##$query-as-string2): ", $query-as-string)):)
     let $order-by-expression := biblio:construct-order-by-expression($sort)
+    (:let $log := util:log("DEBUG", ("##$order-by-expression): ", $order-by-expression)):)
     let $query-with-order-by-expression :=
         (:The condition should be added that there is a search term. This will address comment in biblio:construct-order-by-expression(). :)
         if ($order-by-expression) then
