@@ -1191,7 +1191,7 @@ declare function modsCommon:format-subjects($entry as element(), $global-transli
 : @param $global-language  The value set for the language of the resource catalogued, set in language/languageTerm
 : @return The relatedItem formatted as XHTML.
 :)
-declare function modsCommon:format-related-item($relatedItem as element(mods:relatedItem), $global-language as xs:string) {
+declare function modsCommon:format-related-item($relatedItem as element(mods:relatedItem), $global-language as xs:string, $collection-short as xs:string) {
 	let $relatedItem := modsCommon:remove-parent-with-missing-required-node($relatedItem)
 	let $global-transliteration := $relatedItem/../mods:extension/e:transliterationOfResource/text()
 	(:If several terms are used for the same role, we assume them to be synonymous.:)
@@ -1215,7 +1215,9 @@ declare function modsCommon:format-related-item($relatedItem as element(mods:rel
                 else ()
                 ,
                 (:Get title:)
-                modsCommon:get-short-title($relatedItem)
+                if (contains($collection-short, 'Annotated%20Videos')) 
+                then ()
+                else modsCommon:get-short-title($relatedItem)
                 ,
                 (:Display secondary roles.:)
                 (:Do not display these (editors) for periodicals, here interpreted as publications with issuance "continuing".:)
@@ -1252,12 +1254,37 @@ declare function modsCommon:format-related-item($relatedItem as element(mods:rel
                             return
                                 concat(' <', $url, '>')
                     else ()
+                ,
+                if (contains($collection-short, 'Annotated%20Videos')) 
+                then 
+                    let $notes := $relatedItem/mods:note
+                    for $note in $notes
+                    return
+                    ('(', functx:capitalize-first($note/@type), ':) ', $note)
+                else ()
+                ,
+                if (contains($collection-short, 'Annotated%20Videos')) 
+                then 
+                    let $extent := $relatedItem/mods:part/mods:physicalDescription/mods:extent
+                    return
+                    ('(Extent: ', modsCommon:get-extent($extent), ')')
+                else ()
+                ,
+                if (contains($collection-short, 'Annotated%20Videos')) 
+                then
+                    let $subjects := $relatedItem/mods:subject/mods:topic                    
+                    return
+                        if ($subjects)
+                        then
+                        ('(Topics: ', for $subject in $subjects return $subjects, ')')
+                        else ()
+                else ()
         	)}</result>
         )
 };
 
 (:~
-: The <b>modsCommon:get-part-and-origin</b> function returns 
+: The <b>mods:get-part-and-origin</b> function returns 
 : information relating to where a publication has been published and 
 : where in a container publication another publication occurs.
 : The function at present seeks to approach the Chicago style.
@@ -1491,6 +1518,7 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
                 else ()
                 )
 };
+
 
 (:~
 : The <b>modsCommon:get-extent</b> function returns 

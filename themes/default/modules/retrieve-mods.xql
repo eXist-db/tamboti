@@ -898,7 +898,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     let $text := $note/text()
     (: The following serves to render html markup in Zotero exports. Stylesheet should be changed to accommodate standard markup. :)
     (:Do $double-escapes occur?:)
-    let $double-escapes-fixed := replace(replace(replace($text, '&amp;nbsp;', '&#160;'), '&amp;gt;', '&gt;'), '&amp;lt;', '&lt;')
+    let $double-escapes-fixed := replace(replace(replace(replace($text, '&amp;nbsp;', '&#160;'), '&amp;gt;', '&gt;'), '&amp;lt;', '&lt;'),'&amp;', '&#x26;')
     let $wrapped-with-span := concat('&lt;span>', $double-escapes-fixed, '</span>')
     return        
         modsCommon:simple-row(util:parse($wrapped-with-span)
