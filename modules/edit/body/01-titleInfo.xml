@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: OK, except xml:lang and xlink:href--><!--missing element insertion: OK.--><!--hints moved to code-table: OK--><!--hints checked: --><!--saving of all nodes: OK--><!--schema instatiated: OK--><!--schema notations added: OK-->
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="title block-form" tab-id="title" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="title block-form" tab-id="title" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group class="fieldset level-1">
         <div class="join">
             <span class="legend">Title Information</span>
@@ -27,13 +27,13 @@
                 </xf:trigger>
             </span>
         </div>
-        <!-- attributes: ID; xlink; lang; xml:lang; script; transliteration; type; authority; authorityURI; valueURI; displayLabel; supplied; usage; altRepGroup; nameTitleGroup. Full. -->
-        <!-- subelements: title, subTitle, partNumber, partName, nonSort. Full. -->
-        <!-- node-adds: work, except xml:lang and xlink:href. -->
-        <!-- element deletion: works. -->
-        <!-- element repetition: works. -->
+                <!-- attributes: ID; xlink; lang; xml:lang; script; transliteration; type; authority; authorityURI; valueURI; displayLabel; supplied; usage; altRepGroup; nameTitleGroup. Full. -->
+                <!-- subelements: title, subTitle, partNumber, partName, nonSort. Full. -->
+                <!-- node-adds: work, except xml:lang and xlink:href. -->
+                <!-- element deletion: works. -->
+                <!-- element repetition: works. -->
         <xf:repeat nodeset="instance('save-data')/mods:titleInfo" id="titleInfo-repeat">
-            <!--<xf:group class="show-hide" ref=".[not(mods:partName and mods:partNumber and @script and mods:subTitle and @supplied and mods:title and @transliteration and @type and @usage and @valueURI and @xml:lang and @xlink:href)]">-->
+                        <!--<xf:group class="show-hide" ref=".[not(mods:partName and mods:partNumber and @script and mods:subTitle and @supplied and mods:title and @transliteration and @type and @usage and @valueURI and @xml:lang and @xlink:href)]">-->
             <xf:group class="show-hide" ref=".[count(@*) &lt; 8 or count(*) &lt; 5]">
                 <xf:switch>
                     <xf:case id="titleInfo-add-node-hide">
@@ -53,10 +53,11 @@
                         </div>
                         <div class="node-adds">
                             <xf:group class="add-buttons">
-                                    <!-- A -->
+                                                  <!-- A -->
                                 <xf:group ref=".[not(@altRepGroup)]">
                                     <xf:trigger>
-                                        <xf:label>Add Alternate Representation Group</xf:label>
+                                        <xf:label>Add Alternate Representation
+                                                  Group</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
                                             <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@altRepGroup"/>
@@ -81,7 +82,7 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                    <!-- D -->
+                                                  <!-- D -->
                                 <xf:group ref=".[not(@displayLabel)]">
                                     <xf:trigger>
                                         <xf:label>Add Display Label</xf:label>
@@ -91,7 +92,7 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                    <!-- I -->
+                                                  <!-- I -->
                                 <xf:group ref=".[not(@ID)]">
                                     <xf:trigger>
                                         <xf:label>Add ID</xf:label>
@@ -101,7 +102,7 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                    <!-- L -->
+                                                  <!-- L -->
                                 <xf:group ref=".[not(@lang)]">
                                     <xf:trigger>
                                         <xf:label>Add Language</xf:label>
@@ -111,7 +112,7 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                    <!-- N -->
+                                                  <!-- N -->
                                 <xf:group ref=".[not(@nameTitleGroup)]">
                                     <xf:trigger>
                                         <xf:label>Add Name-Title Group</xf:label>
@@ -130,7 +131,7 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                    <!-- P -->
+                                                  <!-- P -->
                                 <xf:group ref=".[not(mods:partName)]">
                                     <xf:trigger>
                                         <xf:label>Add Part Name</xf:label>
@@ -149,7 +150,7 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                    <!-- S -->
+                                                  <!-- S -->
                                 <xf:group ref=".[not(@script)]">
                                     <xf:trigger>
                                         <xf:label>Add Script</xf:label>
@@ -177,7 +178,7 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                    <!-- T -->
+                                                  <!-- T -->
                                 <xf:group ref=".[not(mods:title)]">
                                     <xf:trigger>
                                         <xf:label>Add Title</xf:label>
@@ -205,7 +206,7 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                    <!-- U -->
+                                                  <!-- U -->
                                 <xf:group ref=".[not(@usage)]">
                                     <xf:trigger>
                                         <xf:label>Add Usage</xf:label>
@@ -215,7 +216,7 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                    <!-- V -->
+                                                  <!-- V -->
                                 <xf:group ref=".[not(@valueURI)]">
                                     <xf:trigger>
                                         <xf:label>Add Value URI</xf:label>
@@ -225,7 +226,7 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                    <!-- X -->
+                                                  <!-- X -->
                                 <xf:group ref=".[not(@xml:lang)]">
                                     <xf:trigger>
                                         <xf:label>Add xml:lang</xf:label>
@@ -251,8 +252,7 @@
             </xf:group>
             <xf:group class="text_50 schema_3.3 schema_3.4">
                 <xf:input ref="./@ID">
-                    <xf:label>ID
-                        <span class="xforms-help">
+                    <xf:label>ID <span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
                                 <xf:output mediatype="application/xhtml+xml" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='ID']/help"/>
@@ -412,8 +412,7 @@
             </xf:group>
             <xf:group class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@script">
-                    <xf:label>Script
-                        <span class="xforms-help">
+                    <xf:label>Script <span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='script']/help"/>
@@ -468,11 +467,11 @@
                 </xf:select1>
             </xf:group>
             <xf:group class="schema_3.3 schema_3.4 set">
-                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
-                <!-- subelements: none. -->
-                <!-- node-adds: n/a. -->
-                <!-- element deletion: n/a. -->
-                <!-- element repetition: n/a. -->
+                                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                                <!-- subelements: none. -->
+                                <!-- node-adds: n/a. -->
+                                <!-- element deletion: n/a. -->
+                                <!-- element repetition: n/a. -->
                 <xf:input ref="./mods:nonSort" class="text_10">
                     <xf:label>Non Sort<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -484,11 +483,11 @@
                 </xf:input>
             </xf:group>
             <xf:group class="textarea schema_3.3 schema_3.4">
-                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
-                <!-- subelements: none. -->
-                <!-- node-adds: n/a. -->
-                <!-- element deletion: n/a. -->
-                <!-- element repetition: n/a. -->
+                                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                                <!-- subelements: none. -->
+                                <!-- node-adds: n/a. -->
+                                <!-- element deletion: n/a. -->
+                                <!-- element repetition: n/a. -->
                 <xf:textarea ref="./mods:title">
                     <xf:label>Title<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -500,11 +499,11 @@
                 </xf:textarea>
             </xf:group>
             <xf:group class="textarea schema_3.3 schema_3.4">
-                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
-                <!-- subelements: none. -->
-                <!-- node-adds: n/a. -->
-                <!-- element deletion: n/a. -->
-                <!-- element repetition: n/a. -->
+                                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                                <!-- subelements: none. -->
+                                <!-- node-adds: n/a. -->
+                                <!-- element deletion: n/a. -->
+                                <!-- element repetition: n/a. -->
                 <xf:textarea ref="./mods:subTitle">
                     <xf:label>Subtitle<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -516,11 +515,11 @@
                 </xf:textarea>
             </xf:group>
             <xf:group class="text_50 schema_3.3 schema_3.4">
-                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
-                <!-- subelements: none. -->
-                <!-- node-adds: n/a. -->
-                <!-- element deletion: n/a. -->
-                <!-- element repetition: n/a. -->
+                                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                                <!-- subelements: none. -->
+                                <!-- node-adds: n/a. -->
+                                <!-- element deletion: n/a. -->
+                                <!-- element repetition: n/a. -->
                 <xf:input ref="./mods:partNumber">
                     <xf:label>Part Number<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -532,11 +531,11 @@
                 </xf:input>
             </xf:group>
             <xf:group class="textarea schema_3.3 schema_3.4">
-                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
-                <!-- subelements: none. -->
-                <!-- node-adds: n/a. -->
-                <!-- element deletion: n/a. -->
-                <!-- element repetition: n/a. -->
+                                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                                <!-- subelements: none. -->
+                                <!-- node-adds: n/a. -->
+                                <!-- element deletion: n/a. -->
+                                <!-- element repetition: n/a. -->
                 <xf:textarea ref="./mods:partName">
                     <xf:label>Part Name<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>

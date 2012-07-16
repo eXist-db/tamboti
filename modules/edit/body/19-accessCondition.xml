@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: OK, except xlink:href and xml:lang--><!--missing element insertion: OK--><!--hints revised: OK--><!--hints moved to code-table: OK--><!--hints checked: --><!--saving of all nodes: OK--><!--schema instantiated: OK--><!--schema notations added: OK-->
-<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="access-condition block-form" tab-id="access-condition" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="access-condition block-form" tab-id="access-condition" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group appearance="full" class="fieldset level-1 schema_3.3 schema_3.4">
         <div class="join wide">
             <span class="legend">Access Conditions</span>
@@ -48,56 +48,64 @@
                         <div class="node-adds">
                             <xf:group appearance="full" ref=".[not(@xlink:href)] | .[not(@type)] | .[not(@altRepGroup)] | .[not(@lang)] | .[not(@xml:lang)] | .[not(@script)] | .[not(@transliteration)] | .[not(@displayLabel)] | .[not(@displayLabel)]">
                                 <xf:trigger ref=".[not(@xlink:href)]" class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Add XLink</xf:label>
+                                    <xf:label class="xforms-group-label-centered">Add
+                                        XLink</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert context="." origin="instance('insert-templates')/mods:accessCondition/@xlink:href"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(@type)]" class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Add Type</xf:label>
+                                    <xf:label class="xforms-group-label-centered">Add
+                                        Type</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert context="." origin="instance('insert-templates')/mods:accessCondition/@type"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(@altRepGroup)]" class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Add Alternate Representation Group</xf:label>
+                                    <xf:label class="xforms-group-label-centered">Add Alternate
+                                        Representation Group</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert context="." origin="instance('insert-templates')/mods:accessCondition/@altRepGroup"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(@lang)]" class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Add Language</xf:label>
+                                    <xf:label class="xforms-group-label-centered">Add
+                                        Language</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert context="." origin="instance('insert-templates')/mods:accessCondition/@lang"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(@xml:lang)]" class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
+                                    <xf:label class="xforms-group-label-centered">Add
+                                        xml:lang</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert context="." origin="instance('insert-templates')/mods:accessCondition/@xml:lang"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(@script)]" class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Add Script</xf:label>
+                                    <xf:label class="xforms-group-label-centered">Add
+                                        Script</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert context="." origin="instance('insert-templates')/mods:accessCondition/@script"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(@transliteration)]" class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label>
+                                    <xf:label class="xforms-group-label-centered">Add
+                                        Transliteration</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert context="." origin="instance('insert-templates')/mods:accessCondition/@transliteration"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(@displayLabel)]" class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Add Display Label</xf:label>
+                                    <xf:label class="xforms-group-label-centered">Add Display
+                                        Label</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert context="." origin="instance('insert-templates')/mods:accessCondition/@displayLabel"/>
@@ -236,7 +244,8 @@
         </xf:repeat>
         <xf:group appearance="full" ref=".[not(mods:accessCondition)]">
             <xf:trigger class="add-button">
-                <xf:label class="xforms-group-label-centered">Add Missing Access Condition</xf:label>
+                <xf:label class="xforms-group-label-centered">Add Missing Access
+                    Condition</xf:label>
                 <xf:action ev:event="DOMActivate">
                     <xf:insert nodeset="instance('save-data')/mods:accessCondition" origin="instance('new-instance')/mods:accessCondition"/>
                 </xf:action>

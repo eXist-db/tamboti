@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: --><!--missing element insertion: --><!--hints moved to code-table: --><!--hints checked: --><!--saving of all nodes: --><!--schema instatiated: --><!--schema notations added: -->
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:mads="http://www.loc.gov/mads/" xmlns:xf="http://www.w3.org/2002/xforms" class="mads block-form" tab-id="mads" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:mads="http://www.loc.gov/mads/" class="mads block-form" tab-id="mads" e:dummy="dummy" xlink:dummy="dummy">
     <xf:repeat nodeset="instance('save-data')/mads:authority" id="authority-repeat">
         <xf:group appearance="full" class="fieldset level-1">
             <div class="join">
@@ -48,7 +48,7 @@
                             </div>
                             <div class="node-adds">
                                 <xf:group appearance="full">
-                                <!-- A -->
+                                    <!-- A -->
                                     <xf:group appearance="full" ref=".[not(mads:affiliation)]">
                                         <xf:trigger class="add-button">
                                             <xf:label>Add Affiliation</xf:label>
@@ -85,7 +85,7 @@
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
-                                <!-- D -->
+                                    <!-- D -->
                                     <xf:group appearance="full" ref=".[not(mads:description)]">
                                         <xf:trigger class="add-button">
                                             <xf:label>Add Description</xf:label>
@@ -113,7 +113,7 @@
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
-                                <!-- I -->
+                                    <!-- I -->
                                     <xf:group appearance="full" ref=".[not(@ID)]">
                                         <xf:trigger class="add-button">
                                             <xf:label>Add ID</xf:label>
@@ -123,7 +123,7 @@
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
-                                <!-- L -->
+                                    <!-- L -->
                                     <xf:group appearance="full" ref=".[not(@lang)]">
                                         <xf:trigger class="add-button">
                                             <xf:label>Add Language</xf:label>
@@ -133,7 +133,7 @@
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
-                                <!-- N -->
+                                    <!-- N -->
                                     <xf:group appearance="full" ref=".[not(@nameTitleGroup)]">
                                         <xf:trigger class="add-button">
                                             <xf:label>Add Name Title Group</xf:label>
@@ -152,7 +152,7 @@
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
-                                <!-- R -->
+                                    <!-- R -->
                                     <xf:group appearance="full" ref=".[not(mads:role)]">
                                         <xf:trigger class="add-button">
                                             <xf:label>Add Role</xf:label>
@@ -162,7 +162,7 @@
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
-                                <!-- S -->
+                                    <!-- S -->
                                     <xf:group appearance="full" ref=".[not(@script)]">
                                         <xf:trigger class="add-button">
                                             <xf:label>Add Script</xf:label>
@@ -172,7 +172,7 @@
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
-                                <!-- T -->
+                                    <!-- T -->
                                     <xf:group appearance="full" ref=".[not(@transliteration)]">
                                         <xf:trigger class="add-button">
                                             <xf:label>Add Transliteration</xf:label>
@@ -191,7 +191,7 @@
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
-                                <!-- U -->
+                                    <!-- U -->
                                     <xf:group appearance="full" ref=".[not(@usage)]">
                                         <xf:trigger class="add-button">
                                             <xf:label>Add Usage</xf:label>
@@ -201,7 +201,7 @@
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
-                                <!-- V -->
+                                    <!-- V -->
                                     <xf:group appearance="full" ref=".[not(@valueURI)]">
                                         <xf:trigger class="add-button">
                                             <xf:label>Add Value URI</xf:label>
@@ -211,7 +211,7 @@
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
-                                <!-- X -->
+                                    <!-- X -->
                                     <xf:group appearance="full" ref=".[not(@xlink:href)]">
                                         <xf:trigger class="add-button">
                                             <xf:label>Add XLink</xf:label>
@@ -474,21 +474,21 @@
                                     </div>
                                     <div class="node-adds">
                                         <xf:group appearance="full">
-                                        <!-- L -->
+                                            <!-- L -->
                                             <xf:trigger ref=".[not(@lang)]" class="add-button">
                                                 <xf:label>Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:insert context="." origin="instance('insert-templates')/mads:name/mads:namePart/@lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        <!-- S -->
+                                            <!-- S -->
                                             <xf:trigger ref=".[not(@script)]" class="add-button">
                                                 <xf:label>Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:insert context="." origin="instance('insert-templates')/mads:name/mads:namePart/@script"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        <!-- T -->
+                                            <!-- T -->
                                             <xf:trigger ref=".[not(@transliteration)]" class="add-button">
                                                 <xf:label>Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -501,7 +501,7 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mads:name/mads:namePart/@type"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        <!-- X -->
+                                            <!-- X -->
                                             <xf:trigger ref=".[not(@xml:lang)]" class="add-button">
                                                 <xf:label>Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -705,7 +705,7 @@
                                             </div>
                                             <div class="node-adds">
                                                 <xf:group appearance="full">
-                                                <!-- A -->
+                                                  <!-- A -->
                                                     <xf:group appearance="full" ref=".[not(@authority)]">
                                                         <xf:trigger class="add-button">
                                                             <xf:label>Add Authority</xf:label>
@@ -724,7 +724,7 @@
                                                             </xf:action>
                                                         </xf:trigger>
                                                     </xf:group>
-                                                <!-- L -->
+                                                  <!-- L -->
                                                     <xf:group appearance="full" ref=".[not(@lang)]">
                                                         <xf:trigger class="add-button">
                                                             <xf:label>Add Language</xf:label>
@@ -734,7 +734,7 @@
                                                             </xf:action>
                                                         </xf:trigger>
                                                     </xf:group>
-                                                <!-- S -->
+                                                  <!-- S -->
                                                     <xf:group appearance="full" ref=".[not(@script)]">
                                                         <xf:trigger class="add-button">
                                                             <xf:label>Add Script</xf:label>
@@ -744,7 +744,7 @@
                                                             </xf:action>
                                                         </xf:trigger>
                                                     </xf:group>
-                                                <!-- T -->
+                                                  <!-- T -->
                                                     <xf:group appearance="full" ref=".[not(@transliteration)]">
                                                         <xf:trigger class="add-button">
                                                             <xf:label>Add Transliteration</xf:label>
@@ -763,7 +763,7 @@
                                                             </xf:action>
                                                         </xf:trigger>
                                                     </xf:group>
-                                                <!-- V -->
+                                                  <!-- V -->
                                                     <xf:group appearance="full" ref=".[not(@valueURI)]">
                                                         <xf:trigger class="add-button">
                                                             <xf:label>Add Value URI</xf:label>
@@ -773,7 +773,7 @@
                                                             </xf:action>
                                                         </xf:trigger>
                                                     </xf:group>
-                                                <!-- X -->
+                                                  <!-- X -->
                                                     <xf:group appearance="full" ref=".[not(@xml:lang)]">
                                                         <xf:trigger class="add-button">
                                                             <xf:label>Add xml:lang</xf:label>
@@ -820,8 +820,7 @@
                                 </xf:group>
                                 <xf:group class="schema_3.4" appearance="full">
                                     <xf:input ref="./@authorityURI" class="text_50">
-                                        <xf:label>Authority URI
-                                        <span class="xforms-help">
+                                        <xf:label>Authority URI <span class="xforms-help">
                                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
                                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='name-authority-uri']/help"/>
@@ -927,7 +926,7 @@
                                         </xf:label>
                                     </xf:input>
                                 </xf:group>
-                            <!--<xf:group class=" schema_3.3 schema_3.4" appearance="full" ref=".[not(@type='code')]">
+                                <!--<xf:group class=" schema_3.3 schema_3.4" appearance="full" ref=".[not(@type='code')]">
                                 <xf:select1 ref="." selection="open">
                                     <xf:label>Role Term (text)<span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -1115,7 +1114,7 @@
                         </xf:input>
                     </xf:repeat>
                 </xf:group>
-            <!--NB: this can be repeated according to schema 3.3 and 3.4.-->
+                <!--NB: this can be repeated according to schema 3.3 and 3.4.-->
                 <xf:group appearance="full" class="fieldset level-2" ref=".[mads:affiliation]">
                     <div class="join">
                         <span class="legend">Affiliation</span>
@@ -1276,7 +1275,7 @@
                         </xf:group>
                     </xf:repeat>
                 </xf:group>
-            <!--NB: this can be repeated according to schema 3.3 and 3.4.-->
+                <!--NB: this can be repeated according to schema 3.3 and 3.4.-->
                 <xf:group appearance="full" class="fieldset level-2" ref=".[mads:description]">
                     <div class="join">
                         <span class="legend">Description</span>

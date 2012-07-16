@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: OK.--><!--hints moved to code-table: OK.--><!--hints checked: OK.--><!--saving of all nodes: OK.-->
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-edited-volume" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-edited-volume" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
             <div class="join">
@@ -52,7 +52,7 @@
                                 <xf:input ref="./mods:nonSort">
                                     <xf:label>
                                         <xf:group ref=".[string-length(../@type) = 0]">Non
-                                            Sort</xf:group>
+                                                  Sort</xf:group>
                                         <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Non Sort</xf:group>
                                         <xf:group ref=".[../@type='translated' and (../@lang)]">Translated Non Sort</xf:group>
                                     </xf:label>
@@ -144,7 +144,8 @@
                         <xf:group>
                             <fieldset class="level-3">
                                 <div class="join">
-                                    <span class="legend">Institutions as Editors</span>
+                                    <span class="legend">Institutions as
+                                                  Editors</span>
                                     <span class="join-button extra-wide">
                                         <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) &gt; 0]">
                                             <xf:label>+</xf:label>
@@ -190,7 +191,8 @@
                 <xf:group>
                     <fieldset class="level-2">
                         <div class="join wide">
-                            <span class="legend">Edited Volume Origin Information</span>
+                            <span class="legend">Edited Volume Origin
+                                                Information</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
@@ -328,7 +330,8 @@
                 <xf:group>
                     <fieldset class="level-2">
                         <div class="join extra-wide">
-                            <span class="legend">Location of Contribution in Edited Volume</span>
+                            <span class="legend">Location of Contribution in Edited
+                                                Volume</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
@@ -417,7 +420,8 @@
                     <fieldset class="level-2">
                         <div class="join wide">
                             <span class="legend">
-                                <span class="legend">Monograph Series of Edited Volume</span>
+                                <span class="legend">Monograph Series of Edited
+                                                  Volume</span>
                             </span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -431,7 +435,8 @@
                             <xf:group>
                                 <fieldset class="level-2">
                                     <div class="join">
-                                        <span class="legend">XLink of Monograph Series</span>
+                                        <span class="legend">XLink of Monograph
+                                                  Series</span>
                                         <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
@@ -496,8 +501,8 @@
                             <xf:group>
                                 <fieldset class="level-3">
                                     <div class="join extra-wide">
-                                        <span class="legend">Location of Edited Volume in Monograph
-                                            Series</span>
+                                        <span class="legend">Location of Edited Volume in
+                                                  Monograph Series</span>
                                         <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">

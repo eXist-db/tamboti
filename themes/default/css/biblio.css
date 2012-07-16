@@ -13,6 +13,12 @@ color scheme ends*/
 /*variables begin*/
 /*variables end*/
 /*new or temporary stuff begins*/
+#query-tabs ul li:nth-of-type(5) {
+  float: right;
+}
+.warning {
+  color: #ff0000;
+}
 #keyword-form input {
   margin-right: 1em;
 }

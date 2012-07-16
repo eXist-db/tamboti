@@ -466,7 +466,7 @@ if ($titleInfo)
 (: Subelements: any MODS element. :)
 (: NB! This function is constructed differently from mods:entry-full; the two should be harmonised. :)
 
-declare function mods:get-related-items($entry as element(mods:mods), $destination as xs:string, $global-language as xs:string) {
+declare function mods:get-related-items($entry as element(mods:mods), $destination as xs:string, $global-language as xs:string, $collection-short as xs:string) {
     for $item in $entry/mods:relatedItem
         let $type := string($item/@type)
         (:NB: do we use @ID on relatedItem?:) 
@@ -514,7 +514,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $destinati
 	            if ($destination eq 'list')
 	            then
 	                <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">
-	                	<span class="relatedItem-record">{modsCommon:format-related-item($related-item, $global-language)}</span>
+	                	<span class="relatedItem-record">{modsCommon:format-related-item($related-item, $global-language, $collection-short)}</span>
 	                </span>
 	            else
 	                (:If not 'list', $destination will be 'detail'.:)
@@ -526,7 +526,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $destinati
 	                            <a href="?filter=ID&amp;value={$xlinked-ID}">&lt;&lt; In</a>
 	                        </td>
 	                        <td class="relatedItem-record">
-								<span class="relatedItem-span">{modsCommon:format-related-item($related-item, $global-language)}</span>
+								<span class="relatedItem-span">{modsCommon:format-related-item($related-item, $global-language, $collection-short)}</span>
 	                        </td>
 	                    </tr>
 	                else
@@ -534,7 +534,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $destinati
 	                    <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
 							<td class="url label relatedItem-label">In</td>
 	                        <td class="relatedItem-record">
-								<span class="relatedItem-span">{modsCommon:format-related-item($related-item, $global-language)}</span>
+								<span class="relatedItem-span">{modsCommon:format-related-item($related-item, $global-language, $collection-short)}</span>
 	                        </td>
 	                    </tr>
 	        (: if @type is not 'host' or 'series':)
@@ -547,7 +547,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $destinati
 	                        <a href="?filter=ID&amp;value={$xlinked-ID}">&lt;&lt; {$label-displayed}</a>
 	                    </td>
 	                    <td class="relatedItem-record">
-							<span class="relatedItem-span">{modsCommon:format-related-item($related-item, $global-language)}</span>
+							<span class="relatedItem-span">{modsCommon:format-related-item($related-item, $global-language, $collection-short)}</span>
 	                    </td>
 	                </tr>
 	            else
@@ -559,7 +559,7 @@ declare function mods:get-related-items($entry as element(mods:mods), $destinati
 	                        {functx:capitalize-first(functx:camel-case-to-words($type, ' '))}
 	                    </td>
 	                    <td class="relatedItem-record">
-	                        <span class="relatedItem-span">{modsCommon:format-related-item($related-item, $global-language)}</span>
+	                        <span class="relatedItem-span">{modsCommon:format-related-item($related-item, $global-language, $collection-short)}</span>
 	                    </td>
 	                </tr>
 	                (:Only @type 'host' and 'series' are displayed in list view.:)
@@ -803,7 +803,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         </tr>
     ,
     (: relatedItem :)
-    mods:get-related-items($entry, 'detail', $global-language)
+    mods:get-related-items($entry, 'detail', $global-language, $collection-short)
     ,
     (: typeOfResource :)
     modsCommon:simple-row(string($entry/mods:typeOfResource[1]), 'Type of Resource')
@@ -956,14 +956,36 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
             </tr>
         else ()
     ,
+
     (: identifier :)
-    for $item in $entry/mods:identifier
-    let $type := 
-        if (string($item/@type)) 
-        then concat(' (', upper-case(string($item/@type)), ')') 
-        else ()
-    return modsCommon:simple-row($item, concat('Identifier', $type))
+    let $identifiers := $entry/mods:identifier
+    for $item in $identifiers
+    let $type := $item/@type
+    return 
+        modsCommon:simple-row
+        (
+            $item, 
+            concat
+            (
+                'Identifier',
+                if (string($type)) 
+                then concat(' (', string($type), ')') 
+                else ()
+                , 
+                if ($type eq 'local')
+                then
+                    let $local-identifiers := collection($config:mods-root-minus-temp)//mods:mods[.//mods:identifier eq $item]/@ID/string()
+                    let $local-identifiers := 
+                        (for $local-identifier in $local-identifiers where $local-identifier ne $ID return $local-identifier)
+                    return
+                        if (count($local-identifiers) gt 0)
+                        then concat(' NB: This identifier has already been used on record(s) with the following IDs: ', string-join($local-identifiers, ', '))
+                        else ()
+                else ()
+            )
+        )
     ,
+    
     (: classification :)
     for $item in $entry/mods:classification
     let $authority := 
@@ -1107,7 +1129,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(), $c
             (:The series that the primary publication occurs in is spliced in between the secondary names and the originInfo.:)
             (:NB: Should not be  italicised.:)
             if ($entry/mods:relatedItem[@type eq'series'])
-            then ('. ', <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods:get-related-items($entry, 'list', $global-language)}</span>)
+            then ('. ', <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods:get-related-items($entry, 'list', $global-language, $collection-short)}</span>)
             else ()
             ,
             modsCommon:get-part-and-origin($entry)
@@ -1115,7 +1137,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(), $c
         (: The periodical, edited volume or series that the primary publication occurs in. :)
         (: if ($entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:extent or $entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:detail/mods:number/text()) :)
         if ($entry/mods:relatedItem[@type eq 'host'])
-        then <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods:get-related-items($entry, 'list', $global-language)}</span>
+        then <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods:get-related-items($entry, 'list', $global-language, $collection-short)}</span>
         else 
         (: The url of the primary publication. :)
         	if (contains($collection-short, 'Priya')) then () else

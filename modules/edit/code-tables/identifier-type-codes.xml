@@ -6,8 +6,13 @@
     <basis>http://www.loc.gov/standards/mods/v3/mods-userguide-elements.html#identifier</basis>
     <basis>DLFMODS_ImplementationGuidelines.pdf</basis>
     <description/>
-    <notes>There is no controlled list of identifier types. Suggested values include, but are not limited to the following. Cluster: unused are commented out.</notes>
+    <notes>There is no controlled list of identifier types. Suggested values include, but are not
+        limited to the following. Cluster: unused are commented out.</notes>
     <items>
+        <item>
+            <value>local</value>
+            <label>local</label>
+        </item>
         <item>
             <value>ARK</value>
             <label>Archival Resource Key</label>

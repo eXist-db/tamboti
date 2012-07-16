@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: --><!--missing element insertion: --><!--hints moved to code-table: --><!--hints checked: --><!--saving of all nodes: --><!--schema instatiated: --><!--schema notations added: -->
-<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="classification block-form" tab-id="classification" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="classification block-form" tab-id="classification" e:dummy="dummy" xlink:dummy="dummy">
         <!--DLF/Aquifer: OPTIONAL-->
         <!--Cluster: omit-->
     <xf:group appearance="full" class="fieldset level-1">
@@ -25,24 +25,30 @@
             <span class="xforms-hint">
                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
-                    <p> A designation applied to a resource that indicates the subject by applying a formal system of coding and organising resources
-                            according to subject areas. Classification contains the classification number of a resource. It may also include the full call
-                            number if desired. </p>
+                    <p> A designation applied to a resource that indicates the
+                                                subject by applying a formal system of coding and
+                                                organising resources according to subject areas.
+                                                Classification contains the classification number of
+                                                a resource. It may also include the full call number
+                                                if desired. </p>
                 </div>
             </span>
         </div>
-            
-            <!--classification repeat begins-->
+
+                <!--classification repeat begins-->
         <xf:repeat nodeset="instance('save-data')/mods:classification" id="classification-repeat">
-                
-                    
+
+
                         <!--DLF/Aquifer: REQUIRED-->
                         <!--Cluster: include-->
             <xf:group appearance="full" ref=".[@authority]">
                 <xf:select1 ref="./@authority" selection="open">
                     <xf:label>Authority</xf:label>
                     <xf:hint>
-                        <p> The name of the authoritative list for a controlled value is recorded here. Authority contains designation of the source of the authority for classification schemes. </p>
+                        <p> The name of the authoritative list for a
+                                                  controlled value is recorded here. Authority
+                                                  contains designation of the source of the
+                                                  authority for classification schemes. </p>
                     </xf:hint>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='classification-authority-code']/items/item">
                         <xf:label ref="label"/>
@@ -56,7 +62,10 @@
                 <xf:input ref="./@edition" class="text_50">
                     <xf:label>Edition</xf:label>
                     <xf:hint>
-                        <p> This field contains a designation of the edition of the particular classification scheme indicated in authority for those schemes that are issued in editions. </p>
+                        <p> This field contains a designation of the edition
+                                                  of the particular classification scheme indicated
+                                                  in authority for those schemes that are issued in
+                                                  editions. </p>
                     </xf:hint>
                 </xf:input>
             </xf:group>
@@ -83,8 +92,13 @@
                 <xf:select1 ref="./@xml:lang">
                     <xf:label>xml:lang</xf:label>
                     <xf:hint>
-                        <p> This field is used to specify the language used within a field, using specifications in RFC 3066. RFC 3066 uses the two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in 639-1. </p>
-                        <p> The recommendation is not to use xml:lang, but to use the above Language field. </p>
+                        <p> This field is used to specify the language used
+                                                  within a field, using specifications in RFC 3066.
+                                                  RFC 3066 uses the two-character ISO 639-1 codes
+                                                  along with three-character ISO 639-2 codes for
+                                                  those languages not given in 639-1. </p>
+                        <p> The recommendation is not to use xml:lang, but
+                                                  to use the above Language field. </p>
                     </xf:hint>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
                         <xf:label ref="label"/>
@@ -124,15 +138,19 @@
                 <xf:input ref="." class="text_50">
                     <xf:label>Classification</xf:label>
                     <xf:hint>
-                        <p>A designation applied to a resource that indicates the subject by applying a formal system of coding and organising resources according to subject areas.</p>
+                        <p>A designation applied to a resource that
+                                                  indicates the subject by applying a formal system
+                                                  of coding and organising resources according to
+                                                  subject areas.</p>
                     </xf:hint>
                 </xf:input>
             </xf:group>
         </xf:repeat>
-            <!--classification repeat ends-->
+                <!--classification repeat ends-->
         <xf:group appearance="full" ref=".[not(mods:classification)]">
             <xf:trigger class="add-button">
-                <xf:label class="xforms-group-label-centered">Add Missing Classification</xf:label>
+                <xf:label class="xforms-group-label-centered">Add Missing
+                                        Classification</xf:label>
                 <xf:action ev:event="DOMActivate">
                     <xf:insert nodeset="instance('save-data')/mods:classification" origin="instance('new-instance')/mods:classification"/>
                 </xf:action>

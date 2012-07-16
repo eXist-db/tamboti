@@ -133,8 +133,8 @@ declare function functx:pad-integer-to-length($integerToPad as xs:anyAtomicType?
           if ($host)
           then
             (
-                update value doc($stored)/mods:mods/mods:relatedItem[@type eq 'host']/@xlink:href with concat('#', $host)(:,
-                update value doc($stored)/mods:mods/mods:relatedItem/@type with "host":)
+                update value doc($stored)/mods:mods/mods:relatedItem[string-length(@type) eq 0]/@type with "host",
+                update value doc($stored)/mods:mods/mods:relatedItem[@type eq 'host']/@xlink:href with concat('#', $host)
             )
           else ()
       )
@@ -253,7 +253,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
     let $related-publication :=
         if ($related-publication-xlink)
         then
-        (<span class="intro">The catalogued publication is included in </span>, <a href="../../modules/search/index.html?filter=ID&amp;value={$related-publication-xlink}" target="_blank">{$related-publication}</a>,<span class="intro"> through its XLink</span>)
+        (<span class="intro">The publication is included in </span>, <a href="../../modules/search/index.html?filter=ID&amp;value={$related-publication-xlink}" target="_blank">{$related-publication}</a>,<span class="intro">.</span>)
         else ()
     return
         <div class="content">
@@ -395,6 +395,8 @@ declare function local:get-tab-id($tab-id as xs:string, $type-request as xs:stri
                 				        if ($type-request eq 'mads')
                 				        then 'mads'
                 				        else 'compact-b-xlink'
+                				        (:Used for records related to other records through an xlink:href.:)
+                				        (:NB: Should be split up in three: article, book review and contribution.:)
 };
 
 (:Main:)

@@ -1257,7 +1257,7 @@ declare function modsCommon:format-related-item($relatedItem as element(mods:rel
 };
 
 (:~
-: The <b>mods:get-part-and-origin</b> function returns 
+: The <b>modsCommon:get-part-and-origin</b> function returns 
 : information relating to where a publication has been published and 
 : where in a container publication another publication occurs.
 : The function at present seeks to approach the Chicago style.

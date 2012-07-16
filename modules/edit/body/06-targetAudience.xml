@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: OK--><!--missing element insertion: --><!--hints moved to code-table: OK--><!--hints checked: OK.--><!--saving of all nodes: OK--><!--schema instatiated: OK--><!--schema notations added: OK-->
-<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="target-audience block-form" tab-id="target-audience" e:dummy="dummy" xlink:dummy="dummy" xml:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="target-audience block-form" tab-id="target-audience" e:dummy="dummy" xlink:dummy="dummy" xml:dummy="dummy">
     <xf:group appearance="full" class="fieldset level-1">
         <div class="join">
             <span class="legend">
@@ -90,24 +90,24 @@
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(@authorityURI)]" class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Add
-                                        Authority URI</xf:label>
+                                    <xf:label class="xforms-group-label-centered">Add Authority
+                                        URI</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="targetAudience-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert context="." origin="instance('insert-templates')/mods:targetAudience/@authorityURI"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(@valueURI)]" class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Add
-                                        Value URI</xf:label>
+                                    <xf:label class="xforms-group-label-centered">Add Value
+                                        URI</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="targetAudience-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert context="." origin="instance('insert-templates')/mods:targetAudience/@valueURI"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(@altRepGroup)]" class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Add
-                                        Alt Rep Group</xf:label>
+                                    <xf:label class="xforms-group-label-centered">Add Alt Rep
+                                        Group</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="targetAudience-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert context="." origin="instance('insert-templates')/mods:targetAudience/@altRepGroup"/>

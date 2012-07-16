@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: checked including temporal. No insertion of language attributes for subelements of hierarchicalGeographic, cartographics and geographicCode. --><!--missing element: OK. --><!--hints moved to code-table: OK--><!--hints checked: --><!--saving of all nodes: checked including temporal --><!--schema instatiated: No language atrributes for subelements of cartographics and geographicCode.--><!--schema notations added: -->
-<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="subject bleck-form" tab-id="subject" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="subject bleck-form" tab-id="subject" e:dummy="dummy" xlink:dummy="dummy">
     <div class="block-form">
         <fieldset class="level-1">
             <div class="join">
@@ -50,96 +50,85 @@
                                 <xf:group appearance="full">
                                     <xf:group class="add-buttons">
                                         <xf:trigger ref=".[not(@altRepGroup)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Alternate Representation Group</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Alternate Representation
+                        Group</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:subject/@altRepGroup"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@authority)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Authority</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Authority</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:subject/@authority"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@authorityURI)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Authority URI</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Authority URI</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:subject/@authorityURI"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@displayLabel)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                displayLabel</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add displayLabel</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:subject/@displayLabel"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@ID)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                ID</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add ID</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:subject/@ID"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@lang)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Language</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:subject/@lang"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@script)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Script</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:subject/@script"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@transliteration)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Transliteration</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:subject/@transliteration"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@usage)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Usage</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Usage</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:subject/@usage"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@valueURI)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add Value
-                                                URI</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Value URI</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:subject/@valueURI"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@xlink:href)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                xlink:href</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add xlink:href</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:subject/@xlink:href"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@xml:lang)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                xml:lang</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:subject/@xml:lang"/>
@@ -147,80 +136,71 @@
                                         </xf:trigger>
                                         <hr/>
                                         <xf:trigger ref=".[not(mods:cartographics)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Cartographics</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Cartographics</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert nodeset="mods:cartographics" at="index('subject-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:cartographics"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(mods:hierarchicalGeographic)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Hierarchical Geographic</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Hierarchical
+                        Geographic</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert nodeset="mods:hierarchicalGeographic" at="index('subject-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(mods:genre)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Genre</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Genre</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert nodeset="mods:genre" at="index('subject-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:genre"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(mods:geographicCode)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Geographic Code</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Geographic Code</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert nodeset="mods:geographicCode" at="index('subject-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:geographicCode"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(mods:geographic)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Geographic</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Geographic</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert nodeset="mods:geographic" at="index('subject-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:geographic"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(mods:name)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Name</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Name</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert nodeset="mods:name" at="index('subject-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:name"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(mods:occupation)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Occupation</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Occupation</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert nodeset="mods:occupation" at="index('subject-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:occupation"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(mods:temporal)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Temporal</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Temporal</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert nodeset="mods:temporal" at="index('subject-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:temporal"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(mods:titleInfo)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add Title
-                                                Information</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Title Information</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert nodeset="mods:titleInfo" at="index('subject-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:titleInfo"/>
                                             </xf:action>
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(mods:topic)]" class="add-button">
-                                            <xf:label class="xforms-group-label-centered">Add
-                                                Topic</xf:label>
+                                            <xf:label class="xforms-group-label-centered">Add Topic</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="subject-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert nodeset="mods:topic" at="index('subject-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:topic"/>
@@ -440,32 +420,28 @@
                                         <xf:group appearance="full">
                                             <xf:group class="add-buttons">
                                                 <xf:trigger ref=".[not(@authority)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Authority</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Authority</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-topic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/@authority"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@authorityURI)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Authority URI</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Authority URI</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-topic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/@authorityURI"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@lang)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Language</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-topic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/@lang"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@script)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Script</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-topic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/@script"/>
@@ -473,23 +449,21 @@
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@transliteration)]" class="add-button">
                                                     <xf:label class="xforms-group-label-centered">Add
-                                                  Transliteration</xf:label>
+                            Transliteration</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-topic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/@transliteration"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@valueURI)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Value URI</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Value URI</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-topic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/@valueURI"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@xml:lang)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  xml:lang</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-topic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/@xml:lang"/>
@@ -659,32 +633,28 @@
                                         <xf:group appearance="full">
                                             <xf:group class="add-buttons">
                                                 <xf:trigger ref=".[not(@authority)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Authority</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Authority</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-geographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:geographic/@authority"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@authorityURI)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Authority URI</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Authority URI</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-geographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:geographic/@authorityURI"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@lang)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Language</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-geographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:geographic/@lang"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@script)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Script</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-geographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:geographic/@script"/>
@@ -692,23 +662,21 @@
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@transliteration)]" class="add-button">
                                                     <xf:label class="xforms-group-label-centered">Add
-                                                  Transliteration</xf:label>
+                            Transliteration</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-geographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:geographic/@transliteration"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@valueURI)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Value URI</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Value URI</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-geographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:geographic/@valueURI"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@xml:lang)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  xml:lang</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-geographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:geographic/@xml:lang"/>
@@ -878,32 +846,28 @@
                                         <xf:group appearance="full">
                                             <xf:group class="add-buttons">
                                                 <xf:trigger ref=".[not(@encoding)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Encoding</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Encoding</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-temporal-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:temporal/@encoding"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@keyDate)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Key Date</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Key Date</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-temporal-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:temporal/@keyDate"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@point)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Point</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Point</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-temporal-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:temporal/@point"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@qualifier)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Qualifier</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Qualifier</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-temporal-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:temporal/@qualifier"/>
@@ -911,32 +875,28 @@
                                                 </xf:trigger>
                                                 <hr/>
                                                 <xf:trigger ref=".[not(@authority)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Authority</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Authority</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-temporal-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:temporal/@authority"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@authorityURI)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Authority URI</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Authority URI</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-temporal-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:temporal/@authorityURI"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@lang)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Language</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-temporal-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:temporal/@lang"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@script)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Script</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-temporal-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:temporal/@script"/>
@@ -944,23 +904,21 @@
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@transliteration)]" class="add-button">
                                                     <xf:label class="xforms-group-label-centered">Add
-                                                  Transliteration</xf:label>
+                            Transliteration</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-temporal-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:temporal/@transliteration"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@valueURI)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Value URI</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Value URI</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-temporal-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:temporal/@valueURI"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@xml:lang)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  xml:lang</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-temporal-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:temporal/@xml:lang"/>
@@ -1412,8 +1370,8 @@
                                     </div>
                                     <div class="node-adds">
                                         <xf:group appearance="full" ref=".[not(mods:namePart)]">
-                                            <!--<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-->
-                                            <!--
+                      <!--<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-->
+                      <!--
                                                     <xf:trigger ref=".[not(@type)]" class="add-button">
                                                     <xf:label class="xforms-group-label-centered">Add Type</xf:label>
                                                     <xf:action ev:event="DOMActivate">
@@ -1423,8 +1381,7 @@
                                                     </xf:trigger>
                                                  -->
                                             <xf:trigger ref=".[not(mods:namePart)]" class="add-button">
-                                                <xf:label class="xforms-group-label-centered">Add
-                                                  Name Part</xf:label>
+                                                <xf:label class="xforms-group-label-centered">Add Name Part</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert nodeset="mods:namePart" at="index('name-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:name/mods:namePart"/>
@@ -1549,7 +1506,7 @@
                         </xf:group>
                         <br/>
                         <xf:group appearance="full" class="fieldset level-3" ref=".[mods:namePart]">
-                            <!--NB: add +- button-->
+              <!--NB: add +- button-->
                             <div class="join">
                                 <span class="legend">Name Part</span>
                                 <span class="xforms-help">
@@ -1638,32 +1595,28 @@
                                         <xf:group appearance="full">
                                             <xf:group class="add-buttons">
                                                 <xf:trigger ref=".[not(@authority)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Authority</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Authority</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-genre-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:genre/@authority"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@authorityURI)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Authority URI</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Authority URI</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-genre-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:genre/@authorityURI"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@lang)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Language</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-genre-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:genre/@lang"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@script)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Script</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-genre-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:genre/@script"/>
@@ -1671,23 +1624,21 @@
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@transliteration)]" class="add-button">
                                                     <xf:label class="xforms-group-label-centered">Add
-                                                  Transliteration</xf:label>
+                            Transliteration</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-genre-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:genre/@transliteration"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@valueURI)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Value URI</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Value URI</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-genre-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:genre/@valueURI"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@xml:lang)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  xml:lang</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-genre-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:genre/@xml:lang"/>
@@ -1917,32 +1868,28 @@
                                         <xf:group appearance="full">
                                             <xf:group class="add-buttons">
                                                 <xf:trigger ref=".[not(@authority)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Authority</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Authority</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/@authority"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@authorityURI)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Authority URI</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Authority URI</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/@authorityURI"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@lang)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Language</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/@lang"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@script)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Script</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/@script"/>
@@ -1950,23 +1897,21 @@
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@transliteration)]" class="add-button">
                                                     <xf:label class="xforms-group-label-centered">Add
-                                                  Transliteration</xf:label>
+                            Transliteration</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/@transliteration"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@valueURI)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Value URI</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Value URI</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/@valueURI"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@xml:lang)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  xml:lang</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/@xml:lang"/>
@@ -1974,96 +1919,85 @@
                                                 </xf:trigger>
                                                 <hr/>
                                                 <xf:trigger ref=".[not(mods:continent)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Continent</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Continent</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:continent" at="index('subject-hierarchicalGeographic-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/mods:continent"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:country)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Country</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Country</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:country" at="index('subject-hierarchicalGeographic-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/mods:country"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:province)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Province</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Province</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:province" at="index('subject-hierarchicalGeographic-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/mods:province"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:region)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Region</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Region</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:region" at="index('subject-hierarchicalGeographic-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/mods:region"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:state)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  State</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add State</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:state" at="index('subject-hierarchicalGeographic-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/mods:state"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:territory)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Territory</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Territory</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:territory" at="index('subject-hierarchicalGeographic-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/mods:territory"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:county)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  County</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add County</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:county" at="index('subject-hierarchicalGeographic-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/mods:county"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:city)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  City</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add City</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:city" at="index('subject-hierarchicalGeographic-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/mods:city"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:citySection)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  City Section</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add City Section</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:citySection" at="index('subject-hierarchicalGeographic-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/mods:citySection"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:island)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Island</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Island</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:island" at="index('subject-hierarchicalGeographic-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/mods:island"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:area)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Area</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Area</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:area" at="index('subject-hierarchicalGeographic-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/mods:area"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:extraterrestrialArea)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Extraterrestrial Area</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Extraterrestrial
+                            Area</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-hierarchicalGeographic-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:extraterrestrialArea" at="index('subject-hierarchicalGeographic-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:hierarchicalGeographic/mods:extraterrestrialArea"/>
@@ -3030,24 +2964,21 @@
                                         <xf:group appearance="full">
                                             <xf:group class="add-buttons">
                                                 <xf:trigger ref=".[not(mods:scale)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Scale</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Scale</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-cartographics-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:scale" at="index('subject-cartographics-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:cartographics/mods:scale"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:projection)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Projection</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Projection</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-cartographics-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:projection" at="index('subject-cartographics-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:cartographics/mods:projection"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:coordinates)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Coordinates</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Coordinates</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-cartographics-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert nodeset="mods:coordinates" at="index('subject-cartographics-repeat')" position="before" origin="instance('insert-templates')/mods:subject/mods:cartographics/mods:coordinates"/>
@@ -3142,24 +3073,21 @@
                                         <xf:group appearance="full">
                                             <xf:group class="add-buttons">
                                                 <xf:trigger ref=".[not(@authority)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Authority</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Authority</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-geographicCode-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:geographicCode/@authority"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@authorityURI)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Authority URI</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Authority URI</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-geographicCode-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:geographicCode/@authorityURI"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@valueURI)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Value URI</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Value URI</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-geographicCode-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:geographicCode/@valueURI"/>
@@ -3269,24 +3197,21 @@
                                         <xf:group appearance="full">
                                             <xf:group class="add-buttons">
                                                 <xf:trigger ref=".[not(@authority)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Authority</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Authority</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-occupation-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:occupation/@authority"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@authorityURI)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Authority URI</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Authority URI</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-occupation-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:occupation/@authorityURI"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(@valueURI)]" class="add-button">
-                                                    <xf:label class="xforms-group-label-centered">Add
-                                                  Value URI</xf:label>
+                                                    <xf:label class="xforms-group-label-centered">Add Value URI</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="subject-occupation-add-node-hide" ev:event="DOMActivate"/>
                                                         <xf:insert context="." origin="instance('insert-templates')/mods:subject/mods:occupation/@valueURI"/>

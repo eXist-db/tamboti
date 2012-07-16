@@ -11,6 +11,39 @@
             <value>periodical</value>
             <classifier>stand-alone</classifier>
             <sort>1</sort>
+            <hint>
+                <p>For a <strong>Periodical</strong>, on the <strong>Periodical</strong> tab, one
+                    would normally input the following information:</p>
+                <p>Input the name(s) of the editor(s) in <strong>Names and Roles</strong>, leaving
+                    "editor" selected as Role. </p>
+                <p>Analyse each corporate name into separate name parts if it consists of several
+                    components. Record the more general designation in the first field and the more
+                    specific designation in the second field. If this is not possible, enter the
+                    whole name in one field.</p>
+                <p>If the editor is a person, choose "Personal Name", "Given Name" and "Family" and
+                    record the information accordingly.</p>
+                <p>Input the title of the periodical in <strong>Title Information</strong>, dividing
+                    this into Title and Subtitle, if possible. If the title begins with an article
+                    like "A" or "The," remove this from the title and place it in Non Sort.</p>
+                <p>In case the publication is electronic (or also electronic) , input in
+                        <strong>URL</strong> the web address of the publication.</p>
+                <p>In <strong>Origin Information</strong>, input the city in which the publisher
+                    resides and the name of the publisher. If more than one of these is in evidence,
+                    input the main one or the first of them. </p>
+                <p>In the case of a periodical which has stopped publication, in <strong>Date of
+                        Issue</strong>, input the year when the periodical started publication,
+                    using "start" to mark this.</p>
+                <p>In the case of a periodical which has stopped publication, in <strong>Date of
+                        Issue</strong>, input the year when the periodical ceased publication, using
+                    "end" to mark this.</p>
+                <p>In the case of a periodical which has stopped publication, in <strong>Physical
+                        Description</strong>, input the extent of the book in volumes, e.g. "14
+                    v."</p>
+                <p>In case the periodical is (also) electronic, input in <strong>URL</strong> the
+                    web address of the book.</p>
+                <p>Finally, in <strong>Identifier</strong> input the ISSN number of the periodical,
+                    and a DOI, if available.</p>
+            </hint>
         </item>
         <item>
             <label>Periodical (in Latin Script)</label>
@@ -88,6 +121,12 @@
             <label>Article in Periodical (Related)</label>
             <value>related-article-in-periodical</value>
             <classifier>extension</classifier>
+        </item>
+        <item>
+            <label>Article in Periodical</label>
+            <value>related-article-in-periodical</value>
+            <classifier>related-item</classifier>
+            <sort>1</sort>
         </item>
         <item>
             <label>Book Review</label>
@@ -187,9 +226,9 @@
         </item>
         <item>
             <hint>
-                <p>For a <strong>Book Review</strong>, on the <strong>Book Review</strong>
-                    tab, input is the same as for an article in a periodical.
-                    Here, one would normally input the following information:</p>
+                <p>For a <strong>Book Review</strong>, on the <strong>Book Review</strong> tab,
+                    input is the same as for an article in a periodical. Here, one would normally
+                    input the following information:</p>
                 <p>Input the name(s) of the author(s) in <strong>Names and Roles</strong>, leaving
                     "author" selected as Role. Divide the name into Given Name and Family Name, if
                     possible.</p>
@@ -197,24 +236,27 @@
                     this into Title and Subtitle, if possible. If the title begins with an article
                     like "A" or "The," remove this from the title and place it in Non Sort.</p>
                 <p>In case the publication is electronic (or also electronic) , input in
-                    <strong>URL</strong> the web address of the publication.</p>
+                        <strong>URL</strong> the web address of the publication.</p>
                 <p>Finally, in <strong>Identifier</strong> input the DOI number of the article, if
                     available.</p>
-                <p>On the <strong>Periodical With Book Review and Book Reviewed</strong>
-                    tab, input is complicated by the fact that information relating to two different publications are input:
-                <ul>
-                        <li>Information relating to the periodical in which the book review occurs, plus the location of the book review within the periodical</li>
-                        <li>Information relating to the book reviewed</li>
+                <p>On the <strong>Periodical With Book Review and Book Reviewed</strong> tab, input
+                    is complicated by the fact that information relating to two different
+                    publications are input: <ul>
+                        <li>Information relating to the periodical in which
+                            the book review occurs, plus the location of the book review within the
+                            periodical</li>
+                        <li>Information relating to the book
+                    reviewed</li>
                     </ul>
                 </p>
-                <p>The first part, <strong>Location of Book Review</strong>, is the same as cataloguing an
-                    article in a periodical. Record the title of the book review itself,
-                    regardless of whether or not it contains part of or all of the
-                    title, etc. of the monograph being reviewed.</p>
+                <p>The first part, <strong>Location of Book Review</strong>, is the same as
+                    cataloguing an article in a periodical. Record the title of the book review
+                    itself, regardless of whether or not it contains part of or all of the title,
+                    etc. of the monograph being reviewed.</p>
                 <p>Input the title of the periodical in <strong>Periodical Title</strong>. Follow
                     the same guidelines that apply to book titles.</p>
                 <p>Input the name(s) of the editor(s) of the periodical in <strong>Institutional
-                    Editor(s) of Periodical</strong>. Only editors of the periodical as a whole
+                        Editor(s) of Periodical</strong>. Only editors of the periodical as a whole
                     should be input, not the editor of a single issue (ususally a guest editor).
                     Here provision is made only for inputting institutional editors.</p>
                 <p>In <strong>Location of Article in Periodical</strong> note the volume number and
@@ -224,8 +266,8 @@
                     and/or issue it occurs in in <strong>Page Extent</strong>.</p>
                 <p>Finally, in <strong>Identifier</strong> input the ISSN number of the periodical
                     and its DOI, if available.</p>
-                <p> The second part, <strong>Books Reviewed</strong>, relates to the monograph that is reviewed. Follow
-                    here the guidelines for cataloguing a monograph on its own. </p>
+                <p> The second part, <strong>Books Reviewed</strong>, relates to the monograph that
+                    is reviewed. Follow here the guidelines for cataloguing a monograph on its own. </p>
                 <p> Repeat Book(s) Reviewed as needed, by clicking the '+' button. </p>
                 <p>Input the name(s) of the author(s) in <strong>Names and Roles</strong>, selecting
                     "author" as Role. Divide the name into Given Name and Family Name, if

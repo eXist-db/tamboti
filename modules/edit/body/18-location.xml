@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: OK, except xlink:href and xml:lang--><!--missing element insertion: OK--><!--hints revised: --><!--hints moved to code-table: --><!--hints checked: --><!--saving of all nodes: --><!--schema instantiated: --><!--schema notations added: -->
-<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="location block-form" tab-id="location" e:dummy="dummy" xlink:dummy="dummy">
-        <!-- Holding Simple is a set of internally defined elements and corresponds roughly to summary holdings information. If more granularity is required, Holding External may be used in lieu of Holding Simple with elements from an external schema. Holding Simple consists of a single subelement, Copy Information, which has several subelements. Holding Simple is not repeatable; if additional holdings statements are needed for the resource, repeat Location with appropriate subelements. -->
-        <!-- Use of at least one location element with the subelement url is required by these guidelines. It is required that one and only one location/url must include the usage attribute value "primary display". Many aggregators may include only one URL in their brief display. Use of usage=”primary display” allows aggregators to easily identify which URL to display for their users. If a record describes multiple items (a multi-volume set, for example), these guidelines strongly recommend identifying a primary entry point for these. These guidelines also recommend that the "access" attribute with the appropriate value also be used. Best practice is that the "primary display" URL is a link to the resource with its contextual material (for example metadata, navigation to the collection homepage). If the primary link to a resource is to a stand alone version of the resource (such as a JPEG image only), an end user will have no context except for the metadata on the service provider’s site. At minimum, the URL should point to a page that contains the resource and a navigation bar that allows user to reach the collection homepage. It is highly desirable that this page also include the descriptive metadata for the resource. -->
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="location block-form" tab-id="location" e:dummy="dummy" xlink:dummy="dummy">
+    <!-- Holding Simple is a set of internally defined elements and corresponds roughly to summary holdings information. If more granularity is required, Holding External may be used in lieu of Holding Simple with elements from an external schema. Holding Simple consists of a single subelement, Copy Information, which has several subelements. Holding Simple is not repeatable; if additional holdings statements are needed for the resource, repeat Location with appropriate subelements. -->
+    <!-- Use of at least one location element with the subelement url is required by these guidelines. It is required that one and only one location/url must include the usage attribute value "primary display". Many aggregators may include only one URL in their brief display. Use of usage=”primary display” allows aggregators to easily identify which URL to display for their users. If a record describes multiple items (a multi-volume set, for example), these guidelines strongly recommend identifying a primary entry point for these. These guidelines also recommend that the "access" attribute with the appropriate value also be used. Best practice is that the "primary display" URL is a link to the resource with its contextual material (for example metadata, navigation to the collection homepage). If the primary link to a resource is to a stand alone version of the resource (such as a JPEG image only), an end user will have no context except for the metadata on the service provider’s site. At minimum, the URL should point to a page that contains the resource and a navigation bar that allows user to reach the collection homepage. It is highly desirable that this page also include the descriptive metadata for the resource. -->
     <xf:group appearance="full" class="fieldset level-1">
         <div class="join">
             <span class="legend">Locations</span>
@@ -54,8 +54,14 @@
                     <span class="xforms-hint">
                         <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
-                            <p> Record in Physical Location the institution or repository that holds the resource or where it is available. Physical Location may be expressed as text and/or as a code. If expressed as code, use the Authority field to designate the source of the code. </p>
-                            <p> Physical Location typically includes specific information used to locate a resource within a collection, such as the name or code of an institution/repository, and perhaps subcollection. A shelf number is given in Shelf Locator. </p>
+                            <p> Record in Physical Location the institution or repository that holds
+                                the resource or where it is available. Physical Location may be
+                                expressed as text and/or as a code. If expressed as code, use the
+                                Authority field to designate the source of the code. </p>
+                            <p> Physical Location typically includes specific information used to
+                                locate a resource within a collection, such as the name or code of
+                                an institution/repository, and perhaps subcollection. A shelf number
+                                is given in Shelf Locator. </p>
                         </div>
                     </span>
                 </div>
@@ -92,7 +98,10 @@
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
                                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xlink:href']/help"/>
-                                        <p> Here, XLink may be used to link to additional information about the resource recorded in Physical Location, e.g. the institution's website. </p>
+                                        <p> Here, XLink may be used to link to additional
+                                            information about the resource recorded in Physical
+                                            Location, e.g. the institution's website.
+                                    </p>
                                     </div>
                                 </span>
                             </xf:label>
@@ -584,10 +593,10 @@
                                         </div>
                                     </span>
                                 </div>
-                                            <!--location/note repeat begins-->
+                                <!--location/note repeat begins-->
                                 <xf:repeat nodeset="./mods:note " id="location-note-repeat">
-                                                <!--location/note input begins-->
-                                                <!-- Cluster: omit -->
+                                    <!--location/note input begins-->
+                                    <!-- Cluster: omit -->
                                     <xf:group appearance="full" ref=".[@type]">
                                         <xf:input ref="./@type" class="text_50">
                                             <xf:label>Type<span class="xforms-help">
@@ -598,11 +607,12 @@
                                                 </span>
                                             </xf:label>
                                             <xf:hint>
-                                                <p> This field is not controlled by a list and thus is open-ended. </p>
+                                                <p> This field is not controlled by a list and thus
+                                                  is open-ended. </p>
                                             </xf:hint>
                                         </xf:input>
                                     </xf:group>
-                                                <!-- Cluster: omit -->
+                                    <!-- Cluster: omit -->
                                     <xf:group appearance="full" ref=".[@displayLabel]">
                                         <xf:input ref="./@displayLabel" class="text_50">
                                             <xf:label>Display Label<span class="xforms-help">
@@ -613,7 +623,10 @@
                                                 </span>
                                             </xf:label>
                                             <xf:hint>
-                                                <p> Indicates that the note text is for display purposes. Use when a particular label for display is preferred to aid the user in understanding the note. </p>
+                                                <p> Indicates that the note text is for display
+                                                  purposes. Use when a particular label for display
+                                                  is preferred to aid the user in understanding the
+                                                  note. </p>
                                             </xf:hint>
                                         </xf:input>
                                     </xf:group>
@@ -627,16 +640,17 @@
                                                 </span>
                                             </xf:label>
                                             <xf:hint>
-                                                <p> Note relating to a specific copy of a document. </p>
+                                                <p> Note relating to a specific copy of a document.
+                                                </p>
                                             </xf:hint>
                                         </xf:textarea>
                                     </xf:group>
-                                                <!--location/note input ends-->
+                                    <!--location/note input ends-->
                                 </xf:repeat>
-                                            <!--location/note repeat ends-->
+                                <!--location/note repeat ends-->
                             </xf:group>
-                                        <!--location/note ends-->
-                                        <!--location/enumerationAndChronology begins-->
+                            <!--location/note ends-->
+                            <!--location/enumerationAndChronology begins-->
                             <xf:group appearance="full" class="fieldset level-4">
                                 <div class="join">
                                     <span class="legend">Enumeration And Chronology</span>
@@ -659,13 +673,21 @@
                                     <span class="xforms-hint">
                                         <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-hint-value">
-                                            <p> Alpha-numeric identification, such as a volume or issue, and an indication of the date of publication or date of issue of a component of a multi-part resource, distinguishing it from other components of the same resource. Enumeration And Chronology is an unparsed string that comprises a summary holdings statement. If more granularity is needed, a parsed statement using an external schema may be used within Holding External. </p>
+                                            <p> Alpha-numeric identification, such as a volume or
+                                                issue, and an indication of the date of publication
+                                                or date of issue of a component of a multi-part
+                                                resource, distinguishing it from other components of
+                                                the same resource. Enumeration And Chronology is an
+                                                unparsed string that comprises a summary holdings
+                                                statement. If more granularity is needed, a parsed
+                                                statement using an external schema may be used
+                                                within Holding External. </p>
                                         </div>
                                     </span>
                                 </div>
-                                            <!--location/enumerationAndChronology repeat begins-->
+                                <!--location/enumerationAndChronology repeat begins-->
                                 <xf:repeat nodeset="./mods:enumerationAndChronology " id="location-enumerationAndChronology-repeat">
-                                                <!--location/enumerationAndChronology input begins-->
+                                    <!--location/enumerationAndChronology input begins-->
                                     <xf:group appearance="full" ref=".[@unitType]">
                                         <xf:select1 ref="./@unitType">
                                             <xf:label>Unit Type<span class="xforms-help">
@@ -676,7 +698,9 @@
                                                 </span>
                                             </xf:label>
                                             <xf:hint>
-                                                <p> The category of bibliographic entity for which Enumeration And Chronology is given, i.e. basic bibliographic unit, supplement, or index. </p>
+                                                <p> The category of bibliographic entity for which
+                                                  Enumeration And Chronology is given, i.e. basic
+                                                  bibliographic unit, supplement, or index. </p>
                                             </xf:hint>
                                             <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='location-unittype-code']/items/item">
                                                 <xf:label ref="label"/>
@@ -694,32 +718,36 @@
                                                 </span>
                                             </xf:label>
                                             <xf:hint>
-                                                <p> Alpha-numeric identification, such as a volume or issue, and an indication of the date of publication or date of issue of a component of a multi-part resource, distinguishing it from other components of the same resource. </p>
+                                                <p> Alpha-numeric identification, such as a volume
+                                                  or issue, and an indication of the date of
+                                                  publication or date of issue of a component of a
+                                                  multi-part resource, distinguishing it from other
+                                                  components of the same resource. </p>
                                             </xf:hint>
                                         </xf:textarea>
                                     </xf:group>
-                                                <!--location/enumerationAndChronology input ends-->
+                                    <!--location/enumerationAndChronology input ends-->
                                 </xf:repeat>
-                                            <!--location/enumerationAndChronology repeat ends-->
+                                <!--location/enumerationAndChronology repeat ends-->
                             </xf:group>
-                                        <!--location/enumerationAndChronology ends-->
-                                        <!--location/copyInformation input ends-->
+                            <!--location/enumerationAndChronology ends-->
+                            <!--location/copyInformation input ends-->
                         </xf:repeat>
-                                    <!--location/copyInformation repeat ends-->
+                        <!--location/copyInformation repeat ends-->
                     </xf:group>
-                                <!--location/copyInformation ends-->
-                                <!--location/holdingSimple delete begins-->
-                                <!-- NB: not used <xf:trigger ref=".[count(../mods:holdingSimple) > 1]" class="delete-button"> <xf:label class="xforms-group-label-centered">Delete This Holding Simple</xf:label> <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location//mods:holdingSimple" at="index('location-holding-simple-repeat')"/> </xf:trigger> -->
-                                <!--location/holdingSimple delete ends-->
+                    <!--location/copyInformation ends-->
+                    <!--location/holdingSimple delete begins-->
+                    <!-- NB: not used <xf:trigger ref=".[count(../mods:holdingSimple) > 1]" class="delete-button"> <xf:label class="xforms-group-label-centered">Delete This Holding Simple</xf:label> <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location//mods:holdingSimple" at="index('location-holding-simple-repeat')"/> </xf:trigger> -->
+                    <!--location/holdingSimple delete ends-->
                 </xf:repeat>
-                            <!--location/holdingSimple repeat ends-->
-                            <!--location/holdingSimple add begins-->
-                            <!-- NB: not used <xf:trigger ref=".[count(mods:holdingSimple) > 0]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Another Holding Simple</xf:label> <xf:action ev:event="DOMActivate"> <xf:insert nodeset="mods:holdingSimple" at="index('location-holding-simple-repeat')" position="before" origin="instance('insert-templates')/mods:holdingSimple"/> <xf:setvalue ref="instance('save-data')/mods:holdingSimple[last()]" value="''"/> </xf:action> </xf:trigger> -->
-                            <!--location/holdingSimple add ends-->
+                <!--location/holdingSimple repeat ends-->
+                <!--location/holdingSimple add begins-->
+                <!-- NB: not used <xf:trigger ref=".[count(mods:holdingSimple) > 0]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Another Holding Simple</xf:label> <xf:action ev:event="DOMActivate"> <xf:insert nodeset="mods:holdingSimple" at="index('location-holding-simple-repeat')" position="before" origin="instance('insert-templates')/mods:holdingSimple"/> <xf:setvalue ref="instance('save-data')/mods:holdingSimple[last()]" value="''"/> </xf:action> </xf:trigger> -->
+                <!--location/holdingSimple add ends-->
             </xf:group>
-                    <!--location/holdingSimple ends-->
-                    <!--holdingExternal begins-->
-                    <!--Cluster: omit-->
+            <!--location/holdingSimple ends-->
+            <!--holdingExternal begins-->
+            <!--Cluster: omit-->
             <xf:group appearance="full" class="level-2" ref=".[mods:holdingExternal]">
                 <fieldset>
                     <div class="join">
@@ -743,14 +771,19 @@
                         <span class="xforms-hint">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-hint-value">
-                                <p> Holdings information that uses a schema defined externally to MODS. Holding External may include more detailed holdings information than that accommodated by the MODS schema. Holding External may include more detailed holdings information than that accommodated by the MODS schema. An example is ISO 20775 and its accompanying schema. </p>
+                                <p> Holdings information that uses a schema defined externally to
+                                    MODS. Holding External may include more detailed holdings
+                                    information than that accommodated by the MODS schema. Holding
+                                    External may include more detailed holdings information than
+                                    that accommodated by the MODS schema. An example is ISO 20775
+                                    and its accompanying schema. </p>
                             </div>
                         </span>
                     </div>
-                            <!--holdingExternal repeat begins-->
+                    <!--holdingExternal repeat begins-->
                     <xf:repeat nodeset="./mods:holdingExternal" id="holding-external-repeat">
-                                
-                                    <!--holdingExternal input begins-->
+
+                        <!--holdingExternal input begins-->
                         <xf:group appearance="full" ref=".">
                             <xf:textarea ref="." class="textarea" mediatype="dojo">
                                 <xf:label>Holding External<span class="xforms-help">
@@ -761,18 +794,23 @@
                                     </span>
                                 </xf:label>
                                 <xf:hint>
-                                    <p> Holdings information that uses a schema defined externally to MODS. Holding External may include more detailed holdings information than that accommodated by the MODS schema. Holding External may include more detailed holdings information than that accommodated by the MODS schema. An example is ISO 20775 and its accompanying schema. </p>
+                                    <p> Holdings information that uses a schema defined externally
+                                        to MODS. Holding External may include more detailed holdings
+                                        information than that accommodated by the MODS schema.
+                                        Holding External may include more detailed holdings
+                                        information than that accommodated by the MODS schema. An
+                                        example is ISO 20775 and its accompanying schema. </p>
                                 </xf:hint>
                             </xf:textarea>
                         </xf:group>
-                                    <!--holdingExternal input ends-->
+                        <!--holdingExternal input ends-->
                     </xf:repeat>
-                            <!--holdingExternal repeat ends-->
+                    <!--holdingExternal repeat ends-->
                 </fieldset>
             </xf:group>
-                    <!--holdingExternal ends-->
+            <!--holdingExternal ends-->
         </xf:repeat>
-            <!--location repeat ends-->
+        <!--location repeat ends-->
         <xf:group appearance="full" ref=".[not(mods:location)]">
             <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add Missing Location</xf:label>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: insertion and deletion does not work--><!--missing element insertion: does not work--><!--hints moved to code-table: OK--><!--hints checked: --><!--saving of all nodes: OK--><!--schema instatiated: n/a--><!--schema notations added: n/a-->
-<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001f/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="extension block-form" tab-id="extension" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001f/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="extension block-form" tab-id="extension" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group appearance="full" class="fieldset level-1">
         <div class="join">
             <span class="legend">Extension</span>
@@ -20,7 +20,7 @@
             </span>
         </div>
         <xf:repeat nodeset="instance('save-data')/mods:extension" id="extension-repeat">
-            <!-- repeat not used. -->
+                                    <!-- repeat not used. -->
             <xf:group appearance="full" ref=".[not(e:template)] | .[not(e:transliterationOfResource)]">
                 <xf:switch>
                     <xf:case id="extension-add-node-hide">
@@ -41,7 +41,8 @@
                         <div class="node-adds">
                             <xf:group appearance="full" ref=".[not(e:template)] | .[not(e:transliterationOfResource)]">
                                 <xf:trigger ref=".[not(e:template)]" class="add-button">
-                                    <xf:label class="xforms-group-label-centered">Add Tamboti Template</xf:label>
+                                    <xf:label class="xforms-group-label-centered">Add
+                                                  Tamboti Template</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert nodeset="e:template" at="index('extension-repeat')" position="before" origin="instance('insert-templates')/e:template"/>
@@ -49,7 +50,7 @@
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(e:transliterationOfResource)]" class="add-button">
                                     <xf:label class="xforms-group-label-centered">Add
-                                        Transliteration Of Resource</xf:label>
+                                                  Transliteration Of Resource</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert nodeset="e:template" at="index('extension-repeat')" position="before" origin="instance('insert-templates')/e:template"/>
@@ -93,7 +94,8 @@
         </xf:repeat>
         <xf:group appearance="full" ref=".[not(mods:extension)]">
             <xf:trigger class="add-button">
-                <xf:label class="xforms-group-label-centered">Add Missing Extension</xf:label>
+                <xf:label class="xforms-group-label-centered">Add
+                                                  Missing Extension</xf:label>
                 <xf:action ev:event="DOMActivate">
                     <xf:insert nodeset="instance('save-data')/mods:extension" origin="instance('new-instance')/mods:extension"/>
                 </xf:action>

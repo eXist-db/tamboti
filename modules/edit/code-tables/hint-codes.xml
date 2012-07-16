@@ -237,6 +237,7 @@
                 <p> Note in Copyright Date the year in which copyright was claimed for the resource. </p>
                 <p> Copyright Date is typically found on the page following the title page. It
                     occurs in connection with a copyright symbol, (c) or ©.</p>
+                <p> If there are several copyright dates, choose the last one.</p>
                 <p> If there is a Date of Issue, use it; otherwise use the Date of Copyright.</p>
                 <p> If you wish to record a span of time, e.g. 1912-1914, repeat the Date of
                     Publication field. The field Point will appear.</p>
@@ -254,6 +255,7 @@
         <item>
             <help>
                 <p> A date in which a resource is copyrighted. </p>
+                <p> If there are several copyright dates, choose the last one.</p>
             </help>
             <hint/>
             <value>copyrightDate</value>
@@ -309,12 +311,15 @@
                 <p> The Date of Copyright is typically found on the reverse the title page, in
                     connection the © or (c) symbol.</p>
                 <p> If there is a Date of Issue, use it; otherwise use the Date of Copyright.</p>
-                <p> If you wish to record a span of time, e.g. 1912-1914, repeat the Date of
-                    Publication field. The field Point will appear.</p>
-                <p> Choose "start" in one Point and "end" in the other, and enter the appropriate
-                    dates in the corresponding two fields. </p>
-                <p> If no Point is specified a year noted in Date of Issue is assumed to be a single
-                    year. </p>
+                <p> In case of periodicals, use the year that the volume or issue belongs to, rather
+                    than the actual year that the periodical was physically published. This year is
+                    noted as Date of Issue.</p>
+                <p> If the publication spans several years, e.g. 1912-1914, repeat the date field,
+                    if it is not already repeated.</p>
+                <p> The field Point will appear. Choose "start" in one Point and "end" in the other,
+                    and enter the appropriate dates in the corresponding two fields. </p>
+                <p> If no Point is specified a year noted in date is assumed to be a single year.
+                </p>
             </help>
             <hint/>
             <value>dateIssued-compact</value>
@@ -448,9 +453,11 @@
                 <p> Encoding is used to note the encoding followed in the date notation.</p>
                 <p>The recommendation is to use the w3cdtf encoding. According to this encoding,
                     dates are formatted in the following way: <ul>
-                        <li>Year: YYYY (e.g. 1997)</li>
+                        <li>Year: YYYY (e.g.
+                            1997)</li>
                         <li>Year and month: YYYY-MM (e.g. 1997-07)</li>
-                        <li>Complete date: YYYY-MM-DD (e.g. 1997-07-16)</li>
+                        <li>Complete
+                            date: YYYY-MM-DD (e.g. 1997-07-16)</li>
                     </ul>
                 </p>
                 <p>For more options, use the Extended Date-Time Format
@@ -1000,10 +1007,11 @@
                 <p> Include as many Names and Roles as needed, by clicking the '+' button. </p>
                 <p> Choose an appropriate Type of Name for each name, "personal" for personal names,
                     "corporate" for names of institutions, and "conference" for names of events such
-                    as conferences. If you choose "corporate" or "conference," please clear the
-                    values "Given" and "Family" in front of the name parts by choosing "(none
-                    selected)." Conversely, if you add a personal name, please choose "Given Name"
-                    and "Family Name" as is relevant. </p>
+                    as conferences. </p>
+                <p> If you choose "corporate" or "conference," please clear the values "Given" and
+                    "Family" in front of the name parts by choosing "(none selected)." Conversely,
+                    if you add a personal name, please choose "Given Name" and "Family Name" as is
+                    relevant. </p>
                 <p> Given Name and Family Name can occur in any order. </p>
                 <p> Please note that the role pertaining to a name follows the name in question.
                 </p>
@@ -1151,12 +1159,20 @@
         </item>
         <item>
             <help>
-                <p> Analyse each name into separate name parts, i.e. Given Name and Family Name.</p>
+                <p> Analyse each name into separate name parts.</p>
                 <p> If possible, analyse each personal name into Given Name and Family Name. If this
                     is not possible, choose "(none selected)" and enter the whole name in the field
                     in question.</p>
                 <p> If a given or family name consists of several parts, enter all parts of the same
                     type in the same field.</p>
+                <p> If the name is a corporate name or a conference name, select "(None Selected)"
+                    instead of "Given" and "Family", if necessary.</p>
+                <p> Analyse each corporate name into separate name parts if it consists of several
+                    components. Record the more general designation in the first field and the more
+                    specific designation in the second field. If this is not possible, enter the
+                    whole name in one field.</p>
+                <p> If you have chosen a transliteration scheme when you created the record, you
+                    will have the option of entering a transliteration.</p>
                 <p> If the name is in a language that is usually transliterated, enter the
                     transliterated name parts in their respective fields. Use the transliteration
                     scheme you chose when selecting a record template. </p>
@@ -1321,9 +1337,21 @@
         </item>
         <item>
             <help>
-                <p> Note here in which volume and (if relevant) which issue the article or book
-                    review you are cataloguing occurs in the periodical, in which year the
-                    volume/issue was published, and on which pages the article occurs.</p>
+                <p> For an article or a book review in a periodical, note here <ul>
+                        <li>in which
+                            volume and (if relevant) which issue the article or book review occurs
+                            in the periodical </li>
+                        <li>in which year the volume/issue was
+                            published</li>
+                        <li>on which pages the article occurs</li>
+                    </ul>.</p>
+                <p> For a contribution to an edited volume, note here <ul>
+                        <li>in which volume the
+                            contribution occurs in the edited volume</li>
+                        <li>leave volume and issue
+                            blank</li>
+                        <li>on which pages the contribution occurs</li>
+                    </ul>.</p>
             </help>
             <hint/>
             <value>part-relatedItem-periodical-compact</value>
@@ -1644,9 +1672,9 @@
             <help>
                 <p> Record here the location of the article, book review or contribution inside its
                     host publication, that is, inside its periodical or edited volume.</p>
-                <p>If the publication has several parts inside the same host, repeat Part.</p>
+                <p>If the publication has several parts inside the same host, repeat the block.</p>
                 <p>The host publication, that is, the publication that the article, book review or
-                    contribution is included in, is show above. This was on the detail view of this
+                    contribution is included in, is shown above. It was on the detail view of this
                     publication that the present record was created. Clicking on the link will take
                     you to the record in question.</p>
             </help>
@@ -1660,9 +1688,8 @@
             <help>
                 <p>Record here information regarding where the book review itself has been
                     published. This is the same as cataloguing an article in a periodical. </p>
-                <p>Record
-                    the title of the book review itself, regardless of whether or not it contains
-                    part of or all of the title, etc. of the book being reviewed. </p>
+                <p>Record the title of the book review itself, regardless of whether or not it
+                    contains part of or all of the title, etc. of the book being reviewed. </p>
                 <p>This information falls into two parts: general information relating to the
                     periodical and information relating to the specific location of the review in
                     the periodical.</p>
@@ -1675,12 +1702,10 @@
         </item>
         <item>
             <help>
-                <p>Record here information regarding the book reviewed in the book review. 
-                    This is the same as cataloguing a book. </p>
-                <p>
-                    Record
-                    the title of the book review itself, regardless of whether or not it contains
-                    part of or all of the title, etc. of the book being reviewed. </p>
+                <p>Record here information regarding the book reviewed in the book review. This is
+                    the same as cataloguing a book. </p>
+                <p> Record the title of the book review itself, regardless of whether or not it
+                    contains part of or all of the title, etc. of the book being reviewed. </p>
                 <p>This information falls into two parts: general information relating to the
                     periodical and information relating to the specific location of the review in
                     the periodical.</p>
@@ -1696,16 +1721,18 @@
                 <p> Enter here information related to the edited volume that the contribution you
                     are cataloguing occurs in. </p>
                 <p>This information falls into two groups: <ul>
-                        <li>general information on the edited volume</li>
-                        <li>specific information on the location of the contribution in the edited
+                        <li>general information on the edited
                             volume</li>
+                        <li>specific information on the location of the contribution
+                            in the edited volume</li>
                     </ul>
                 </p>
                 <p>There are two ways you can supply this information: <ul>
-                        <li>you can fill out the title, editors, etc. of the edited volume</li>
-                        <li>you can supply the ID number of the edited volume and then fill out the
-                            information on the location of the contribution in the edited
-                            volume</li>
+                        <li>you can fill out the
+                            title, editors, etc. of the edited volume</li>
+                        <li>you can supply the ID
+                            number of the edited volume and then fill out the information on the
+                            location of the contribution in the edited volume</li>
                     </ul>
                 </p>
                 <p>If you are cataloguing several contributions from the same edited volume, it is a
@@ -1733,15 +1760,18 @@
                 <p>Enter here information related to the monograph series that the book you are
                     cataloguing occurs in. </p>
                 <p>This information falls into two groups: <ul>
-                        <li>general information on the monograph series </li>
-                        <li>specific information on the location of the monograph in the monograph
-                            series</li>
+                        <li>general information on the
+                            monograph series </li>
+                        <li>specific information on the location of the
+                            monograph in the monograph series</li>
                     </ul>
                 </p>
                 <p>There are two ways you can supply this information: <ul>
-                        <li>you can fill out the title, editors, etc. of the series</li>
-                        <li>you can supply the ID number of the series and then fill out the
-                            information on the location of the book in the series</li>
+                        <li>you can fill out the
+                            title, editors, etc. of the series</li>
+                        <li>you can supply the ID number
+                            of the series and then fill out the information on the location of the
+                            book in the series</li>
                     </ul>
                 </p>
                 <p> In connection with monograph series, the first approach is the most common.</p>

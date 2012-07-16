@@ -5,13 +5,20 @@
     <form>closed</form>
     <basis>http://www.loc.gov/standards/iso639-2/ISO-639-2_utf-8.txt</basis>
     <description/>
-    <notes> See also http://www.loc.gov/standards/codelists/languages.xml, http://www.loc.gov/marc/languages/language_code.html. The following classifiers have
-        been applied: common, transliteration, Latin/not Latin. The classifier common has been applied subjectively. The classifier transliteration has been
-        applied by noting all languages in ALA-LC Romanization Tables at http://www.loc.gov/catdir/cpso/roman.html, minus Lepcha, Limbu, Moplah and Non-Slavic
-        Languages (in Cyrillic Script). On the basis of http://www.omniglot.com/writing/languages.htm, it has been noted which languages use Latin script. If
-        central pages of www.omniglot.com have not been used for a notation, type="added" has been attributed. With languages where both a script based on Latin
-        and a script not based on Latin (mostly Cyrillic) is used, the notation gives "non Latin". The modern form of the languages is intended, unless the
-        language name indicated otherwise. The order or family name and given name is noted in <nameOrder/>
+    <notes> See also http://www.loc.gov/standards/codelists/languages.xml,
+                http://www.loc.gov/marc/languages/language_code.html. The following classifiers have
+                been applied: common, transliteration, Latin/not Latin. The classifier common has
+                been applied subjectively. The classifier transliteration has been applied by noting
+                all languages in ALA-LC Romanization Tables at
+                http://www.loc.gov/catdir/cpso/roman.html, minus Lepcha, Limbu, Moplah and
+                Non-Slavic Languages (in Cyrillic Script). On the basis of
+                http://www.omniglot.com/writing/languages.htm, it has been noted which languages use
+                Latin script. If central pages of www.omniglot.com have not been used for a
+                notation, type="added" has been attributed. With languages where both a script based
+                on Latin and a script not based on Latin (mostly Cyrillic) is used, the notation
+                gives "non Latin". The modern form of the languages is intended, unless the language
+                name indicated otherwise. The order or family name and given name is noted in
+                <nameOrder/>
     </notes>
     <items>
         <item>
@@ -151,7 +158,9 @@
         <item>
             <value>arc</value>
             <valueTerm/>
-            <label>Official Aramaic<!-- (700-300 BCE)--><!--; Imperial Aramaic (700-300 BCE)--></label>
+            <label>Official
+                                Aramaic<!-- (700-300 BCE)--><!--; Imperial Aramaic (700-300 BCE)-->
+            </label>
             <scriptClassifier>not Latin</scriptClassifier>
         </item>
         <item>
@@ -548,7 +557,9 @@
             <value>chu</value>
             <valueTerm/>
             <valueTwo>cu</valueTwo>
-            <label>Church Slavic<!--; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic--></label>
+            <label>Church
+                                Slavic<!--; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic-->
+            </label>
             <transliterationClassifier>transliteration</transliterationClassifier>
             <scriptClassifier>not Latin</scriptClassifier>
         </item>

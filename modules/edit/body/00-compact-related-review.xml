@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: OK--><!--hints moved to code-table: OK--><!--hints checked: OK--><!--saving of all nodes: OK-->
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-review" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-review" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
             <div class="join">
@@ -137,7 +137,8 @@
                     <xf:group>
                         <fieldset class="level-2">
                             <div class="join extra-wide">
-                                <span class="legend">Institutional Editor(s) of Periodical</span>
+                                <span class="legend">Institutional Editor(s) of
+                                                  Periodical</span>
                                 <span class="join-button">
                                     <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) &gt; 0]">
                                         <xf:label>+</xf:label>
@@ -191,7 +192,16 @@
                     <xf:group>
                         <fieldset class="level-2">
                             <div class="join wide">
-                                <span class="legend">Location of Review in Periodical</span>
+                                <span class="legend">Location of Review in
+                                                  Periodical</span>
+                                <span class="join-button">
+                                    <xf:trigger>
+                                        <xf:label>+</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:insert nodeset="instance('save-data')/mods:part" at="index('related-item-part-repeat')" position="before" origin="instance('compact-template')/mods:part"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </span>
                                 <span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
@@ -199,70 +209,63 @@
                                     </div>
                                 </span>
                             </div>
-                            <xf:repeat nodeset="./mods:part" id="related-item-part-review-repeat">
-                                <xf:group ref=".[mods:detail]">
-                                    <fieldset class="level-3">
-                                        <div class="join">
-                                            <span class="legend">Volume and Issue</span>
-                                            <span class="xforms-help">
-                                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            </span>
-                                        </div>
-                                        <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-review-repeat">
-                                            <xf:group ref=".[mods:number]" class="margin-plus">
-                                                <xf:input ref="./mods:number" class="text_10">
-                                                    <xf:label>
-                                                        <xf:output ref="./../@type"/>
-                                                    </xf:label>
-                                                </xf:input>
-                                            </xf:group>
-                                        </xf:repeat>
-                                    </fieldset>
-                                </xf:group>
-                                <xf:group ref=".[mods:date]">
-                                    <fieldset class="level-3">
-                                        <div class="join">
-                                            <span class="legend">
-                                                <span class="legend">Year of Issue</span>
-                                            </span>
-                                        </div>
-                                        <xf:repeat nodeset="./mods:date" id="related-item-part-date-review-repeat">
-                                            <div class="block-form">
-                                                <xf:group ref="." class="margin-plus">
-                                                    <xf:input ref="." class="text_10">
-                                                        <xf:label>Year</xf:label>
+                            <xf:group ref=".[mods:part]">
+                                <xf:repeat nodeset="./mods:part" id="related-item-part-review-repeat">
+                                    <xf:group ref=".[mods:detail]">
+                                        <fieldset class="level-3">
+                                            <div class="join">
+                                                <span class="legend">Volume and Issue</span>
+                                            </div>
+                                            <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-review-repeat">
+                                                <xf:group ref=".[mods:number]" class="margin-plus">
+                                                    <xf:input ref="./mods:number" class="text_10">
+                                                        <xf:label>
+                                                            <xf:output ref="./../@type"/>
+                                                        </xf:label>
                                                     </xf:input>
                                                 </xf:group>
+                                            </xf:repeat>
+                                        </fieldset>
+                                    </xf:group>
+                                    <xf:group ref=".[mods:date]">
+                                        <fieldset class="level-3">
+                                            <div class="join">
+                                                <span class="legend">
+                                                    <span class="legend">Year of Issue</span>
+                                                </span>
                                             </div>
-                                        </xf:repeat>
-                                    </fieldset>
-                                </xf:group>
-                                <xf:group ref=".[mods:extent]">
-                                    <fieldset class="level-3">
-                                        <div class="join">
-                                            <span class="legend">Page Extent</span>
-                                            <div class="xforms-help-value">
-                                                <p> Use this field to indicate from which page and
-                                                  to which page the article you are cataloguing
-                                                  occurs in the volume and issue number of the
-                                                  periodical noted above. </p>
+                                            <xf:repeat nodeset="./mods:date" id="related-item-part-date-review-repeat">
+                                                <div class="block-form">
+                                                    <xf:group ref="." class="margin-plus">
+                                                        <xf:input ref="." class="text_10">
+                                                            <xf:label>Year</xf:label>
+                                                        </xf:input>
+                                                    </xf:group>
+                                                </div>
+                                            </xf:repeat>
+                                        </fieldset>
+                                    </xf:group>
+                                    <xf:group ref=".[mods:extent]">
+                                        <fieldset class="level-3">
+                                            <div class="join">
+                                                <span class="legend">Page Extent</span>
                                             </div>
-                                        </div>
-                                        <xf:repeat nodeset="./mods:extent" id="related-item-extent-review-repeat">
-                                            <xf:group ref=".[mods:start]" class="margin-plus">
-                                                <xf:input ref="./mods:start" class="text_10">
-                                                    <xf:label>Start</xf:label>
-                                                </xf:input>
-                                            </xf:group>
-                                            <xf:group ref=".[mods:end]" class="margin-plus">
-                                                <xf:input ref="./mods:end" class="text_10">
-                                                    <xf:label>End</xf:label>
-                                                </xf:input>
-                                            </xf:group>
-                                        </xf:repeat>
-                                    </fieldset>
-                                </xf:group>
-                            </xf:repeat>
+                                            <xf:repeat nodeset="./mods:extent" id="related-item-extent-review-repeat">
+                                                <xf:group ref=".[mods:start]" class="margin-plus">
+                                                    <xf:input ref="./mods:start" class="text_10">
+                                                        <xf:label>Start</xf:label>
+                                                    </xf:input>
+                                                </xf:group>
+                                                <xf:group ref=".[mods:end]" class="margin-plus">
+                                                    <xf:input ref="./mods:end" class="text_10">
+                                                        <xf:label>End</xf:label>
+                                                    </xf:input>
+                                                </xf:group>
+                                            </xf:repeat>
+                                        </fieldset>
+                                    </xf:group>
+                                </xf:repeat>
+                            </xf:group>
                         </fieldset>
                     </xf:group>
                     <xf:group ref=".[mods:identifier]">
@@ -337,7 +340,8 @@
                     <xf:group>
                         <fieldset class="level-2">
                             <div class="join super-wide">
-                                <span class="legend">Names and Roles Connected With Book Reviewed</span>
+                                <span class="legend">Names and Roles Connected With
+                                                  Book Reviewed</span>
                                 <span class="join-button">
                                     <xf:trigger ref=".[string-length(../mods:extension/e:transliterationOfResource) &gt; 0]">
                                         <xf:label>+</xf:label>
@@ -693,11 +697,12 @@
                                 <span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <p> In this compact input format, only the Internet Media
-                                            Type and the Extent of the publication are noted in
-                                            Physical Description.</p>
-                                        <p> More input options can be found on the Physical
-                                            Description tab on the Citation Forms.</p>
+                                        <p> In this compact input format, only the
+                                                  Internet Media Type and the Extent of the
+                                                  publication are noted in Physical Description.</p>
+                                        <p> More input options can be found on the
+                                                  Physical Description tab on the Citation
+                                                  Forms.</p>
                                     </div>
                                 </span>
                             </div>
@@ -795,7 +800,8 @@
                     <xf:group ref=".[mods:identifier]">
                         <fieldset class="level-2">
                             <div class="join wide">
-                                <span class="legend">Identifiers of Book Reviewed</span>
+                                <span class="legend">Identifiers of Book
+                                                  Reviewed</span>
                                 <span class="join-button">
                                     <xf:trigger ref=".[mods:identifier]">
                                         <xf:label>+</xf:label>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: --><!--missing element insertion: --><!--hints moved to code-table: --><!--hints checked: --><!--saving of all nodes: --><!--schema instatiated: --><!--schema notations added: -->
-<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="table-of-contents block-form" tab-id="table-of-contents" e:dummy="dummy" xlink:dummy="dummy">
-        <!--tableOfContents begins-->
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="table-of-contents block-form" tab-id="table-of-contents" e:dummy="dummy" xlink:dummy="dummy">
+    <!--tableOfContents begins-->
     <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
     <!--Cluster: include-->
     <xf:group appearance="full" class="fieldset level-1">
@@ -27,18 +27,21 @@
                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
                     <p> A description of the contents of a resource.</p>
-                    <p> A Table Of Contents can be rendered e.g. with dashes separating the chapter titles.</p>
-                    <p> Use
-            of Table Of Contents should be determined by the complexity of the digital object and whether or not the information is readily available. If more
-            structured information is needed, consider using Related Item with the type="constituent" field instead. Table Of Contents can also be used as
-            an empty field with an XLink field to link to an external table of contents. </p>
+                    <p> A Table Of Contents can be rendered e.g. with dashes separating the chapter
+                        titles.</p>
+                    <p> Use of Table Of Contents should be determined by the complexity of the
+                        digital object and whether or not the information is readily available. If
+                        more structured information is needed, consider using Related Item with the
+                        type="constituent" field instead. Table Of Contents can also be used as an
+                        empty field with an XLink field to link to an external table of contents.
+                    </p>
                 </div>
             </span>
         </div>
-            
+
         <!--tableOfContents repeat begins-->
         <xf:repeat nodeset="instance('save-data')/mods:tableOfContents" id="tableOfContents-repeat">
-                
+
             <!--tableOfContents input begins-->
             <!--DLF/Aquifer: NOT RECOMMENDED-->
             <!--Cluster: omit-->
@@ -56,7 +59,8 @@
                 <xf:input ref="./@xlink:href" class="text_50">
                     <xf:label>XLink</xf:label>
                     <xf:hint>
-                        <p> The XLink field is used to reference an external resource, such as a second metadata record, a Related Item or a Table Of Contents. </p>
+                        <p> The XLink field is used to reference an external resource, such as a
+                            second metadata record, a Related Item or a Table Of Contents. </p>
                     </xf:hint>
                 </xf:input>
             </xf:group>
@@ -90,13 +94,12 @@
                 <xf:select1 ref="./@xml:lang">
                     <xf:label>xml:lang</xf:label>
                     <xf:hint>
-                        <p>
-                                This field is used to specify the language used within a field, using specifications in RFC 3066. 
-                    RFC 3066 uses the two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in 639-1.
-                        </p>
-                        <p>
-                                The recommendation is not to use xml:lang, but to use the above Language field.
-                </p>
+                        <p> This field is used to specify the language used within a field, using
+                            specifications in RFC 3066. RFC 3066 uses the two-character ISO 639-1
+                            codes along with three-character ISO 639-2 codes for those languages not
+                            given in 639-1. </p>
+                        <p> The recommendation is not to use xml:lang, but to use the above Language
+                            field. </p>
                     </xf:hint>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                         <xf:label ref="label"/>
@@ -145,7 +148,8 @@
         <!--tableOfContents repeat ends-->
         <xf:group appearance="full" ref=".[not(mods:tableOfContents)]">
             <xf:trigger class="add-button">
-                <xf:label class="xforms-group-label-centered">Add Missing Table Of Contents</xf:label>
+                <xf:label class="xforms-group-label-centered">Add Missing Table Of
+                    Contents</xf:label>
                 <xf:action ev:event="DOMActivate">
                     <xf:insert nodeset="instance('save-data')/mods:tableOfContents" origin="instance('new-instance')/mods:tableOfContents"/>
                 </xf:action>
