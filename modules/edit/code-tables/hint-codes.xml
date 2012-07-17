@@ -405,9 +405,10 @@
         <item>
             <help>
                 <p> Display Label is used when additional text associated with a field is needed for
-                    display. Display Label may be used whenever appropriate to indicate the
-                    preferred labeling when displayed. Include the text preferred and
-                    capitalisation, but do not include delimiters such as colons. </p>
+                    display. </p>
+                <p> Display Label may be used whenever appropriate to indicate the preferred
+                    labeling when displayed. Include the text preferred and capitalisation, but do
+                    not include delimiters such as colons. </p>
             </help>
             <hint/>
             <value>displayLabel</value>
@@ -453,11 +454,9 @@
                 <p> Encoding is used to note the encoding followed in the date notation.</p>
                 <p>The recommendation is to use the w3cdtf encoding. According to this encoding,
                     dates are formatted in the following way: <ul>
-                        <li>Year: YYYY (e.g.
-                            1997)</li>
+                        <li>Year: YYYY (e.g. 1997)</li>
                         <li>Year and month: YYYY-MM (e.g. 1997-07)</li>
-                        <li>Complete
-                            date: YYYY-MM-DD (e.g. 1997-07-16)</li>
+                        <li>Complete date: YYYY-MM-DD (e.g. 1997-07-16)</li>
                     </ul>
                 </p>
                 <p>For more options, use the Extended Date-Time Format
@@ -1242,11 +1241,11 @@
         </item>
         <item>
             <help>
-                <p> Name-Title Group that can be used with Name and Title Information to enable an
-                    explicit link between a name and a title when that is desirable. The same value
-                    is assigned to this attribute for the two elements. This attribute is used to
-                    link names to uniform titles when the name-uniform title combination is an
-                    authority controlled heading. </p>
+                <p> Name-Title Group can be used with Name and Title Information to enable an
+                    explicit link between a name and a title when that is desirable. </p>
+                <p> The same value is assigned to this attribute for the two elements. This
+                    attribute is used to link names to uniform titles when the name-uniform title
+                    combination is an authority controlled heading. </p>
             </help>
             <hint/>
             <value>nameTitleGroup</value>
@@ -1277,6 +1276,7 @@
                     markup is not well-formed XHTML, the record will be saved, but you will not be
                     able to access it through the search interface, since this only accepts
                     well-formed XHTML.</p>
+                <p> For the ampersand ('&amp;'), use '&amp;#x26;'.</p>
             </help>
             <hint/>
             <value>note</value>
@@ -1338,18 +1338,14 @@
         <item>
             <help>
                 <p> For an article or a book review in a periodical, note here <ul>
-                        <li>in which
-                            volume and (if relevant) which issue the article or book review occurs
-                            in the periodical </li>
-                        <li>in which year the volume/issue was
-                            published</li>
+                        <li>in which volume and (if relevant) which issue the article or book review
+                            occurs in the periodical </li>
+                        <li>in which year the volume/issue was published</li>
                         <li>on which pages the article occurs</li>
                     </ul>.</p>
                 <p> For a contribution to an edited volume, note here <ul>
-                        <li>in which volume the
-                            contribution occurs in the edited volume</li>
-                        <li>leave volume and issue
-                            blank</li>
+                        <li>in which volume the contribution occurs in the edited volume</li>
+                        <li>leave volume and issue blank</li>
                         <li>on which pages the contribution occurs</li>
                     </ul>.</p>
             </help>
@@ -1721,18 +1717,16 @@
                 <p> Enter here information related to the edited volume that the contribution you
                     are cataloguing occurs in. </p>
                 <p>This information falls into two groups: <ul>
-                        <li>general information on the edited
+                        <li>general information on the edited volume</li>
+                        <li>specific information on the location of the contribution in the edited
                             volume</li>
-                        <li>specific information on the location of the contribution
-                            in the edited volume</li>
                     </ul>
                 </p>
                 <p>There are two ways you can supply this information: <ul>
-                        <li>you can fill out the
-                            title, editors, etc. of the edited volume</li>
-                        <li>you can supply the ID
-                            number of the edited volume and then fill out the information on the
-                            location of the contribution in the edited volume</li>
+                        <li>you can fill out the title, editors, etc. of the edited volume</li>
+                        <li>you can supply the ID number of the edited volume and then fill out the
+                            information on the location of the contribution in the edited
+                            volume</li>
                     </ul>
                 </p>
                 <p>If you are cataloguing several contributions from the same edited volume, it is a
@@ -1760,18 +1754,15 @@
                 <p>Enter here information related to the monograph series that the book you are
                     cataloguing occurs in. </p>
                 <p>This information falls into two groups: <ul>
-                        <li>general information on the
-                            monograph series </li>
-                        <li>specific information on the location of the
-                            monograph in the monograph series</li>
+                        <li>general information on the monograph series </li>
+                        <li>specific information on the location of the monograph in the monograph
+                            series</li>
                     </ul>
                 </p>
                 <p>There are two ways you can supply this information: <ul>
-                        <li>you can fill out the
-                            title, editors, etc. of the series</li>
-                        <li>you can supply the ID number
-                            of the series and then fill out the information on the location of the
-                            book in the series</li>
+                        <li>you can fill out the title, editors, etc. of the series</li>
+                        <li>you can supply the ID number of the series and then fill out the
+                            information on the location of the book in the series</li>
                     </ul>
                 </p>
                 <p> In connection with monograph series, the first approach is the most common.</p>
@@ -2157,7 +2148,10 @@
             <tab-id/>
         </item>
         <item>
-            <help/>
+            <help>
+                <p>Supplied indicates that the title information does not come from the resource
+                    itself, but has been supplied by the cataloguer.</p>
+            </help>
             <hint/>
             <value>titleInfo-supplied</value>
             <local-name>supplied</local-name>
@@ -2569,10 +2563,7 @@
         </item>
         <item>
             <help>
-                <p>Type identifies the type of identifier that is recorded</p>
-                <!--<p>Suggested values include: hdl, doi, isbn, isrc, ismn, issn, issue number, istc, lccn, local,
-                    matrix number, music publisher, music plate, sici, uri, upc, videorecording identifier,
-                    stock number.</p>-->
+                <p>Type identifies the type of identifier that is recorded.</p>
             </help>
             <value>identifier-type</value>
             <local-name>type</local-name>
@@ -2581,12 +2572,13 @@
         </item>
         <item>
             <help>
-                <p> Type identifies what type of Title Information is recorded, if this information
-                    is special. If the title is recorded as it appears on the title page, it does
-                    not have Type. Use Type if the title is abbreviated, translated, alternative, or
-                    uniform (a transliteration is here regarded as a form of translation). </p>
-                <p> When an abbreviated title is present, an Authority must be chosen. An
-                    alternative title may be a parallel title found in the authoritative title
+                <p> Type identifies what type of Title Information is recorded. </p>
+                <p> If the title is recorded as it appears on the title page, it does not have Type.
+                    Use Type if the title is abbreviated, translated, alternative, or uniform (a
+                    transliteration is here regarded as a form of translation). Choose "(none
+                    selected)" to clear Type.</p>
+                <p> When an abbreviated title is present, an Authority should be chosen. </p>
+                <p> An alternative title may be a parallel title found in the authoritative title
                     information (in written works, typically the title page) or a title that does
                     not occur in the authoritative title information, e.g. a title found on a cover.
                     If the alternative title does not occur in the authoritative title information,
@@ -2602,7 +2594,7 @@
                     transliteration and script of the title information, as appropriate. </p>
                 <p> A uniform title is a title that refers uniformly to a work that is known by
                     several titles, e.g. the works of Shakespeare or the Bible. When a uniform title
-                    is present, an Authority for its selection must be chosen. </p>
+                    is present, an Authority for its selection should be chosen. </p>
             </help>
             <hint/>
             <value>titleInfo-type</value>
@@ -2656,8 +2648,9 @@
         </item>
         <item>
             <help>
-                <p>The Type field can take the following values: personal, corporate, conference.
-                    Use it to indicate whether the name is the name of a person (or a family), the
+                <p>The Type field can take the following values: family, conference, corporate, and
+                    personal, .</p>
+                <p> Use it to indicate whether the name is the name of a person or a family, the
                     name of a corporation or the name of a conference (or an event similar to a
                     conference).</p>
             </help>
@@ -2785,6 +2778,42 @@
             </help>
             <hint/>
             <value>accessCondition-xlink:href</value>
+            <local-name>xlink:href</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> If the Book Series is catalogued elsewhere in Tamboti, enter its XLink here. </p>
+                <p> You may delete the information entered below, if it is contained in the record
+                    linked to by the XLink. </p>
+            </help>
+            <hint/>
+            <value>xlink:href-series</value>
+            <local-name>xlink:href</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> If the Periodical is catalogued elsewhere in Tamboti, enter its XLink here. </p>
+                <p> You may delete the information entered below, if it is contained in the record
+                    linked to by the XLink. </p>
+            </help>
+            <hint/>
+            <value>xlink:href-periodical</value>
+            <local-name>xlink:href</local-name>
+            <parent/>
+            <tab-id/>
+        </item>
+        <item>
+            <help>
+                <p> If the Edited Volume is catalogued elsewhere in Tamboti, enter its XLink here. </p>
+                <p> You may delete the information entered below, if it is contained in the record
+                    linked to by the XLink. </p>
+            </help>
+            <hint/>
+            <value>xlink:href-edited-volume</value>
             <local-name>xlink:href</local-name>
             <parent/>
             <tab-id/>

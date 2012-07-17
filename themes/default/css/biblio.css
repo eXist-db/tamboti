@@ -16,8 +16,11 @@ color scheme ends*/
 #query-tabs ul li:nth-of-type(5) {
   float: right;
 }
-.warning {
-  color: #ff0000;
+#query-tabs ul .list {
+  float: left;
+}
+#query-tabs .list li:nth-of-type(5) {
+  float: none;
 }
 #keyword-form input {
   margin-right: 1em;

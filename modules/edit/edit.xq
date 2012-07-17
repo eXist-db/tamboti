@@ -263,7 +263,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                 then
                     (:Remove any 'latin' and 'transliterated' appended the original type request. :)
                     let $type-request := replace(replace($type-request, '-latin', ''), '-transliterated', '')
-                    let $type-label := doc($type-data)/code-table/items/item[value eq $type-request]/label
+                    let $type-label := doc($type-data)/code-table/items/item[value eq $type-request][classifier = ('stand-alone', 'related')]/label
                     let $type-hint := doc($type-data)/code-table/items/item[value eq $type-request]/hint
                         return
                         (

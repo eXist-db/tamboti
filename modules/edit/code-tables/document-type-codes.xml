@@ -48,12 +48,12 @@
         <item>
             <label>Periodical (in Latin Script)</label>
             <value>periodical-latin</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <label>Periodical (with Transliteration)</label>
             <value>periodical-transliterated</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <label>Edited Volume</label>
@@ -64,12 +64,12 @@
         <item>
             <label>Edited Volume (in Latin Script)</label>
             <value>edited-volume-latin</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <label>Edited Volume (with Transliteration)</label>
             <value>edited-volume-transliterated</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <label>Article in Periodical</label>
@@ -110,17 +110,17 @@
         <item>
             <label>Article in Periodical (in Latin Script)</label>
             <value>article-in-periodical-latin</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <label>Article in Periodical (with Transliteration)</label>
             <value>article-in-periodical-transliterated</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <label>Article in Periodical (Related)</label>
             <value>related-article-in-periodical</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <label>Article in Periodical</label>
@@ -137,7 +137,7 @@
         <item>
             <label>Book Review (Related)</label>
             <value>related-book-review-in-periodical</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <!--<item>
             <label>Book Chapter</label>
@@ -154,7 +154,7 @@
         <item>
             <label>Contribution to Edited Volume (Related)</label>
             <value>related-contribution-to-edited-volume</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <label>Contribution to Edited Volume</label>
@@ -165,12 +165,12 @@
         <item>
             <label>Contribution to Edited Volume (in Latin Script)</label>
             <value>contribution-to-edited-volume-latin</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <label>Contribution to Edited Volume (with Transliteration)</label>
             <value>contribution-to-edited-volume-transliterated</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <label>Book</label>
@@ -217,12 +217,12 @@
         <item>
             <label>Book (in Latin Script)</label>
             <value>monograph-latin</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <label>Book (with Transliteration)</label>
             <value>monograph-transliterated</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <hint>
@@ -297,23 +297,18 @@
         <item>
             <label>Book Review (in Latin Script)</label>
             <value>book-review-latin</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <label>Book Review (with Transliteration)</label>
             <value>book-review-transliterated</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <label>SUEBS Tibetan</label>
             <value>suebs-tibetan</value>
             <classifier>stand-alone</classifier>
             <sort>1</sort>
-        </item>
-        <item>
-            <label>SUEBS Tibetan</label>
-            <value>suebs-tibetan</value>
-            <classifier>extension</classifier>
         </item>
         <!-- hard-coded tabs.xqm, line 22. -->
         <item>
@@ -325,7 +320,7 @@
         <item>
             <label>Almost Full MODS 3.4 Schema</label>
             <value>insert-templates</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <item>
             <label>Fairly Full MODS 3.4 Schema</label>
@@ -336,7 +331,7 @@
         <item>
             <label>Fairly Full MODS 3.4 Schema</label>
             <value>new-instance</value>
-            <classifier>extension</classifier>
+            <classifier>related</classifier>
         </item>
         <!--<item>
             <label>MADS record</label>

@@ -897,8 +897,8 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     let $type := string($note/@type)
     let $text := $note/text()
     (: The following serves to render html markup in Zotero exports. Stylesheet should be changed to accommodate standard markup. :)
-    (:Do $double-escapes occur?:)
-    let $double-escapes-fixed := replace(replace(replace(replace($text, '&amp;nbsp;', '&#160;'), '&amp;gt;', '&gt;'), '&amp;lt;', '&lt;'),'&amp;', '&#x26;')
+    (:NB: Do $double-escapes occur?:)
+    let $double-escapes-fixed := replace(replace(replace($text, '&amp;nbsp;', '&#160;'), '&amp;gt;', '&gt;'), '&amp;lt;', '&lt;')
     let $wrapped-with-span := concat('&lt;span>', $double-escapes-fixed, '</span>')
     return        
         modsCommon:simple-row(util:parse($wrapped-with-span)
@@ -1146,7 +1146,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(), $c
             	for $url in $entry/mods:location/mods:url
 	                return
                     (: NB: Too long URLs do not line-wrap, forcing the display of results down below the folder view, so do not display too long URLs. The link is anyway not clickable. :)
-	                if (string-length($url) le 90)
+	                if (string-length($url) le 80)
 	                then concat(' <', $url, '>', '.')
     	            else ""
         	else '.'

@@ -220,7 +220,7 @@ declare function functx:trim($arg as xs:string?) as xs:string {
 (:~
 : The <b>modsCommon:get-short-title</b> function returns 
 : a compact title for list view, for subject in detail view, and for related items in list and detail view.
-: The function at present seeks to approach the Chicago style.
+: The function seeks to approach the Chicago style.
 :
 : @author Wolfgang M. Meier
 : @author Jens Østergaard Petersen
@@ -450,7 +450,7 @@ declare function modsCommon:get-script-label($scriptTerm as xs:string) as xs:str
 (:~
 : The <b>modsCommon:retrieve-names(</b> function returns 
 : a a sequence of names to be passed to modsCommon:retrieve-name().  
-: The function at present seeks to approach the Chicago style.
+: The function seeks to approach the Chicago style.
 :
 : @author Wolfgang M. Meier
 : @author Jens Østergaard Petersen
@@ -476,7 +476,7 @@ declare function modsCommon:retrieve-names(
 : a formatted name. The function returns the name as it appears in first place in a list of names, with family name first, 
 : and as it appears elsewhere, with given name first. The case of names in a script that is also transliterated is covered.
 : If the name has an authoritative form according to a MADS record, this form is rendered.
-: The function at present seeks to approach the Chicago style.
+: The function seeks to approach the Chicago style.
 : The namespace is masked because it refers to both the MODS and the mads prefix.
 :
 : @author Wolfgang M. Meier
@@ -1182,7 +1182,7 @@ declare function modsCommon:format-subjects($entry as element(), $global-transli
 (:~
 : The <b>modsCommon:format-related-item</b> function returns 
 : a compact presentation of a relatedItem for the detail view of the item that related to it.
-: The function at present seeks to approach the Chicago style.
+: The function seeks to approach the Chicago style.
 :
 : @author Wolfgang M. Meier
 : @author Jens Østergaard Petersen
@@ -1284,10 +1284,15 @@ declare function modsCommon:format-related-item($relatedItem as element(mods:rel
 };
 
 (:~
-: The <b>mods:get-part-and-origin</b> function returns 
+: The <b>modsCommon:get-part-and-origin</b> function returns 
 : information relating to where a publication has been published and 
-: where in a container publication another publication occurs.
-: The function at present seeks to approach the Chicago style.
+: where in a container publication (periodical, edited volume) another publication occurs.
+: The function seeks to approach the Chicago style.
+: The problem here is that information derived from different MODS elements, mods:originInfo and mods:part, are intermingled.
+: The information occurs after the title and after any secondary names.
+: For a book, the information is presented as follows: {Place}: {Publisher}, {Date}. There is no information derived from mods:part.
+: For an article in a periodical, the information is presented as follows: {Volume}, no. {Issue} ({Date}), {Extent}.
+: For a contribution to an edited volume, the information is presented as follows: {Extent}. {Place}: {Publisher}, {Date}.
 : The function is used in list view and in the display of related items in list and detail view.
 
 : @author Wolfgang M. Meier
@@ -1396,8 +1401,7 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
     
     return
         (: If there is a part with issue information and a date, i.e. if the publication is an article in a periodical. :)
-        (: NB: "not($place or $publisher" is a little risky since full entries of periodicals have these elements. :)
-        if ($datePart and ($volume or $issue or $extent or $page) and not($place or $publisher)) 
+        if ($datePart and ($volume or $issue or $extent or $page)) 
         then 
             concat(
             ' '
@@ -1409,22 +1413,21 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
 			    )
             (: concat((if ($part/mods:detail/mods:caption) then $part/mods:detail/mods:caption/string() else '/'), $part/mods:detail[@type='issue']/mods:number) :)
             else
-            	if ($issue or $volume)
+            	if ($volume or $issue)
             	then
-                (: If the year is used as volume. :)
+                    (: If the year is used as volume. :)
 	                if ($issue)
-	                then concat(
-	                	concat(' ', $datePart)
-			            , ', no. ', $issue)
+	                then concat(' ', $datePart, ', no. ', $issue)
 	                else concat($volume, concat(' (', string-join($datePart, ', '), ')'))
 				else
 					if ($extent and $datePart)
-				(: We have date and extent alone. :)
+				    (: We have no volume or issue, but date and extent alone. :)
 					then concat(' ', $datePart)
 					else ()
 				,	
-				(: NB: We assume that there will not both be $page and $extent.:)
+				(: NB: We assume that there will not be both $page and $extent.:)
 				if ($extent) 
+				(:NB: iterate.:)
 				then concat(': ', modsCommon:get-extent($extent[1]), '.')
 				else
 					if ($page) 
@@ -1432,7 +1435,7 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
 					else '.'
             )
         else
-            (: If there is a dateIssued (loaded in $datePart) and a place or a publisher, i.e. if the publication is an an edited volume. :)
+            (: If there is no issue, but a dateOriginInfo (loaded in $datePart) and a place or a publisher, i.e. if the publication is an an edited volume. :)
             if ($datePart and ($place or $publisher)) 
             then
                 (
@@ -1523,7 +1526,7 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
 (:~
 : The <b>modsCommon:get-extent</b> function returns 
 : information relating to the number of pages etc. of a publication. 
-: The function at present seeks to approach the Chicago style.
+: The function seeks to approach the Chicago style.
 
 : @author Wolfgang M. Meier
 : @author Jens Østergaard Petersen
@@ -1570,7 +1573,7 @@ return
 (:~
 : The <b>modsCommon:get-publisher(</b> function returns 
 : information relating to the publisher of a publication. 
-: The function at present seeks to approach the Chicago style.
+: The function seeks to approach the Chicago style.
 
 : @author Wolfgang M. Meier
 : @author Jens Østergaard Petersen
@@ -1588,7 +1591,7 @@ declare function modsCommon:get-publisher($publishers as element(mods:publisher)
 	            then modsCommon:retrieve-name($publisher/mods:name, 1, 'secondary', '', '')
 	            else $publisher
         , 
-        (: If there is a transliterated publisher, probably only one publisher is referred to. :)
+        (: If there is a transliterated publisher and an untransliterated publisher, probably only one publisher is referred to. :)
         if ($publishers[@transliteration] or $publishers[mods:name/@transliteration])
         then ' '
         else
@@ -1598,8 +1601,8 @@ declare function modsCommon:get-publisher($publishers as element(mods:publisher)
 
 (:~
 : The <b>modsCommon:get-place(</b> function returns 
-: information relating to the publisher of a publication. 
-: The function at present seeks to approach the Chicago style.
+: information relating to the place of the domicile of the publisher of a publication. 
+: The function seeks to approach the Chicago style.
 
 : @author Wolfgang M. Meier
 : @author Jens Østergaard Petersen
@@ -1607,48 +1610,41 @@ declare function modsCommon:get-publisher($publishers as element(mods:publisher)
 : @param $places One or more MODS place elements from originInfo
 : @return a string
 :)
-declare function modsCommon:get-place($places as element(mods:place)*) as xs:string* {
-    string-join(
+declare function modsCommon:get-place($places as element(mods:place)*) as xs:string {
+    modsCommon:serialize-list(
         for $place in $places
         let $placeTerms := $place/mods:placeTerm
         return
-        	string-join(
-	        	for $placeTerm in $placeTerms
-	        	let $order := 
-	            if ($placeTerm/@transliteration) 
-	            then 0 
-	            else 1
-	        order by $order
+            string-join(
+                for $placeTerm in $placeTerms
+                let $order := if ($placeTerm/@transliteration) then 0 else 1
+                order by $order
 	        	return
-	            if ($placeTerm[@type eq 'text']/text()) 
-	            then concat
-	            	(
-	                $placeTerm[@transliteration]/text()
-	                ,
-	                ' '
-	                ,
-	                $placeTerm[not(@transliteration)]/text()
-	                )
-	            else
-	                if ($placeTerm[@authority eq 'marccountry']/text()) 
-	                then doc(concat($config:edit-app-root, '/code-tables/marc-country-codes.xml'))/code-table/items/item[value eq $placeTerm]/label
-	                else 
-	                    if ($placeTerm[@authority eq 'iso3166']/text()) 
-	                    then doc(concat($config:edit-app-root, '/code-tables/iso3166-country-codes.xml'))/code-table/items/item[value eq $placeTerm]/label
-	                    else $place/mods:placeTerm[not(@type)]/text(),
-        ' ')
-    ,
-    (: If there is a transliterated place term, probably only one place is referred to. :)
-    if ($places[@transliteration] or $places[mods:placeTerm/@transliteration])
-        then ' '
-        else
-        ' and ')
+    	            if ($placeTerm[@type eq 'text']/text()) 
+    	            then concat
+    	            	(
+    	                $placeTerm[@transliteration]/text()
+    	                ,
+    	                ' '
+    	                ,
+    	                $placeTerm[not(@transliteration)]/text()
+    	                )
+    	            else
+    	                if ($placeTerm[@authority eq 'marccountry']/text()) 
+    	                then doc(concat($config:edit-app-root, '/code-tables/marc-country-codes.xml'))/code-table/items/item[value eq $placeTerm]/label
+    	                else 
+    	                    if ($placeTerm[@authority eq 'iso3166']/text()) 
+    	                    then doc(concat($config:edit-app-root, '/code-tables/iso3166-country-codes.xml'))/code-table/items/item[value eq $placeTerm]/label
+    	                    else $place/mods:placeTerm[not(@type)]/text(),
+            ' ')
+    , count($places)
+    )
 };
 
 (:~
 : The <b>modsCommon:get-date(</b> function returns 
 : a date, either as a single date or as a span. 
-: The function at present seeks to approach the Chicago style.
+: The function seeks to approach the Chicago style.
 
 : @author Wolfgang M. Meier
 : @author Jens Østergaard Petersen

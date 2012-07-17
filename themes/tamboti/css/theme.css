@@ -4,4 +4,6 @@
 #query-tabs ul li:nth-of-type(6) {
     float:right;
 }
-
+#query-tabs .list li:nth-of-type(5) {
+    float:none;
+}

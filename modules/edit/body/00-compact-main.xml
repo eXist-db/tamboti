@@ -290,12 +290,20 @@
                     <fieldset class="level-2">
                         <div class="join">
                             <span class="legend">City</span>
-                            <span class="xforms-help">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='place-compact']/help"/>
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-origin-information']/help"/>
-                                </div>
+                            <span class="join-button">
+                                <xf:trigger>
+                                    <xf:label>+</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:insert nodeset="mods:place" at="index('place-repeat')" position="before" origin="instance('compact-template')/mods:originInfo/mods:place"/>
+                                    </xf:action>
+                                </xf:trigger>
+                                <span class="xforms-help">
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-help-value">
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='place-compact']/help"/>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='more-origin-information']/help"/>
+                                    </div>
+                                </span>
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:place" id="place-repeat">

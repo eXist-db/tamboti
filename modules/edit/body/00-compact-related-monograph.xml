@@ -18,11 +18,12 @@
                 <xf:group>
                     <fieldset class="level-2">
                         <div class="join">
-                            <span class="legend">XLink of Edited Volume</span>
+                            <span class="legend">XLink of Book Series</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xlink:href']/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='xlink:href-series']/help"/>
                                 </div>
                             </span>
                         </div>

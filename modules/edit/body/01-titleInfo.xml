@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--node insertions: OK, except xml:lang and xlink:href--><!--missing element insertion: OK.--><!--hints moved to code-table: OK--><!--hints checked: --><!--saving of all nodes: OK--><!--schema instatiated: OK--><!--schema notations added: OK-->
+<!--node insertions: OK, except xml:lang and xlink:href--><!--missing element insertion: OK.--><!--hints moved to code-table: OK--><!--hints checked: OK--><!--saving of all nodes: OK--><!--schema instantiated: limitations: no language attributes on children of titleInfo.--><!--schema notations added: OK-->
 <div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="title block-form" tab-id="title" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group class="fieldset level-1">
         <div class="join">
@@ -27,14 +27,10 @@
                 </xf:trigger>
             </span>
         </div>
-                <!-- attributes: ID; xlink; lang; xml:lang; script; transliteration; type; authority; authorityURI; valueURI; displayLabel; supplied; usage; altRepGroup; nameTitleGroup. Full. -->
-                <!-- subelements: title, subTitle, partNumber, partName, nonSort. Full. -->
-                <!-- node-adds: work, except xml:lang and xlink:href. -->
-                <!-- element deletion: works. -->
-                <!-- element repetition: works. -->
+        <!-- attributes: ID; xlink; lang; xml:lang; script; transliteration; type; authority; authorityURI; valueURI; displayLabel; supplied; usage; altRepGroup; nameTitleGroup. -->
+        <!-- subelements: title, subTitle, partNumber, partName, nonSort. -->
         <xf:repeat nodeset="instance('save-data')/mods:titleInfo" id="titleInfo-repeat">
-                        <!--<xf:group class="show-hide" ref=".[not(mods:partName and mods:partNumber and @script and mods:subTitle and @supplied and mods:title and @transliteration and @type and @usage and @valueURI and @xml:lang and @xlink:href)]">-->
-            <xf:group class="show-hide" ref=".[count(@*) &lt; 8 or count(*) &lt; 5]">
+            <xf:group class="show-hide" ref=".[count(@*) &lt; 15 or count(*) &lt; 5]">
                 <xf:switch>
                     <xf:case id="titleInfo-add-node-hide">
                         <div class="node-button">
@@ -53,7 +49,6 @@
                         </div>
                         <div class="node-adds">
                             <xf:group class="add-buttons">
-                                                  <!-- A -->
                                 <xf:group ref=".[not(@altRepGroup)]">
                                     <xf:trigger>
                                         <xf:label>Add Alternate Representation
@@ -82,7 +77,6 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                                  <!-- D -->
                                 <xf:group ref=".[not(@displayLabel)]">
                                     <xf:trigger>
                                         <xf:label>Add Display Label</xf:label>
@@ -92,7 +86,6 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                                  <!-- I -->
                                 <xf:group ref=".[not(@ID)]">
                                     <xf:trigger>
                                         <xf:label>Add ID</xf:label>
@@ -102,7 +95,6 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                                  <!-- L -->
                                 <xf:group ref=".[not(@lang)]">
                                     <xf:trigger>
                                         <xf:label>Add Language</xf:label>
@@ -112,7 +104,6 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                                  <!-- N -->
                                 <xf:group ref=".[not(@nameTitleGroup)]">
                                     <xf:trigger>
                                         <xf:label>Add Name-Title Group</xf:label>
@@ -122,35 +113,6 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                <xf:group ref=".[not(mods:nonSort)]">
-                                    <xf:trigger>
-                                        <xf:label>Add Non Sort</xf:label>
-                                        <xf:action ev:event="DOMActivate">
-                                            <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="instance('save-data')/mods:nonSort" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:nonSort"/>
-                                        </xf:action>
-                                    </xf:trigger>
-                                </xf:group>
-                                                  <!-- P -->
-                                <xf:group ref=".[not(mods:partName)]">
-                                    <xf:trigger>
-                                        <xf:label>Add Part Name</xf:label>
-                                        <xf:action ev:event="DOMActivate">
-                                            <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="instance('save-data')/mods:partName" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:partName"/>
-                                        </xf:action>
-                                    </xf:trigger>
-                                </xf:group>
-                                <xf:group ref=".[not(mods:partNumber)]">
-                                    <xf:trigger>
-                                        <xf:label>Add Part Number</xf:label>
-                                        <xf:action ev:event="DOMActivate">
-                                            <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="instance('save-data')/mods:partNumber" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:partNumber"/>
-                                        </xf:action>
-                                    </xf:trigger>
-                                </xf:group>
-                                                  <!-- S -->
                                 <xf:group ref=".[not(@script)]">
                                     <xf:trigger>
                                         <xf:label>Add Script</xf:label>
@@ -160,31 +122,12 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                <xf:group ref=".[not(mods:subTitle)]">
-                                    <xf:trigger>
-                                        <xf:label>Add Subtitle</xf:label>
-                                        <xf:action ev:event="DOMActivate">
-                                            <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="instance('save-data')/mods:subTitle" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:subTitle"/>
-                                        </xf:action>
-                                    </xf:trigger>
-                                </xf:group>
                                 <xf:group ref=".[not(@supplied)]">
                                     <xf:trigger>
                                         <xf:label>Add Supplied</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
                                             <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@supplied"/>
-                                        </xf:action>
-                                    </xf:trigger>
-                                </xf:group>
-                                                  <!-- T -->
-                                <xf:group ref=".[not(mods:title)]">
-                                    <xf:trigger>
-                                        <xf:label>Add Title</xf:label>
-                                        <xf:action ev:event="DOMActivate">
-                                            <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="instance('save-data')/mods:title" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:title"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -206,7 +149,6 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                                  <!-- U -->
                                 <xf:group ref=".[not(@usage)]">
                                     <xf:trigger>
                                         <xf:label>Add Usage</xf:label>
@@ -216,7 +158,6 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                                  <!-- V -->
                                 <xf:group ref=".[not(@valueURI)]">
                                     <xf:trigger>
                                         <xf:label>Add Value URI</xf:label>
@@ -226,7 +167,6 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                                  <!-- X -->
                                 <xf:group ref=".[not(@xml:lang)]">
                                     <xf:trigger>
                                         <xf:label>Add xml:lang</xf:label>
@@ -245,6 +185,52 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
+                            </xf:group>
+                            <hr/>
+                            <xf:group ref=".[not(mods:nonSort)]">
+                                <xf:trigger>
+                                    <xf:label>Add Non Sort</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:nonSort" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:nonSort"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </xf:group>
+                            <xf:group ref=".[not(mods:partName)]">
+                                <xf:trigger>
+                                    <xf:label>Add Part Name</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:partName" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:partName"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </xf:group>
+                            <xf:group ref=".[not(mods:partNumber)]">
+                                <xf:trigger>
+                                    <xf:label>Add Part Number</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:partNumber" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:partNumber"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </xf:group>
+                            <xf:group ref=".[not(mods:subTitle)]">
+                                <xf:trigger>
+                                    <xf:label>Add Subtitle</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:subTitle" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:subTitle"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </xf:group>
+                            <xf:group ref=".[not(mods:title)]">
+                                <xf:trigger>
+                                    <xf:label>Add Title</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:title" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:title"/>
+                                    </xf:action>
+                                </xf:trigger>
                             </xf:group>
                         </div>
                     </xf:case>
@@ -322,7 +308,7 @@
                     <xf:label>Authority URI<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
-                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-authorityURI']/help"/>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='authority-uri']/help"/>
                             </div>
                         </span>
                     </xf:label>
@@ -333,7 +319,7 @@
                     <xf:label>Value URI<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
-                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='titleInfo-valueURI']/help"/>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='value-uri']/help"/>
                             </div>
                         </span>
                     </xf:label>
@@ -364,6 +350,47 @@
                         </span>
                     </xf:label>
                 </xf:input>
+            </xf:group>
+            <xf:group class="text_100 schema_3.3 schema_3.4">
+                <xf:input ref="./@displayLabel">
+                    <xf:label>Display Label<span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='displayLabel']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
+                </xf:input>
+            </xf:group>
+            <xf:group class="schema_3.4">
+                <xf:select1 ref="./@nameTitleGroup" selection="open">
+                    <xf:label>Name-Title Group<span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='nameTitleGroup']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
+                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='nameTitleGroup-code']/items/item">
+                        <xf:label ref="label"/>
+                        <xf:value ref="value"/>
+                    </xf:itemset>
+                </xf:select1>
+            </xf:group>
+            <xf:group class="schema_3.4 select">
+                <xf:select1 ref="./@usage">
+                    <xf:label>Usage<span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='usage']/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
+                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='usage-type-code']/items/item">
+                        <xf:label ref="label"/>
+                        <xf:value ref="value"/>
+                    </xf:itemset>
+                </xf:select1>
             </xf:group>
             <xf:group class="schema_3.3 schema_3.4">
                 <xf:select1 ref="./@lang">
@@ -425,53 +452,10 @@
                     </xf:itemset>
                 </xf:select1>
             </xf:group>
-            <xf:group class="text_100 schema_3.3 schema_3.4">
-                <xf:input ref="./@displayLabel">
-                    <xf:label>Display Label<span class="xforms-help">
-                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                            <div class="xforms-help-value">
-                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='displayLabel']/help"/>
-                            </div>
-                        </span>
-                    </xf:label>
-                </xf:input>
-            </xf:group>
-            <xf:group class="schema_3.4">
-                <xf:select1 ref="./@nameTitleGroup" selection="open">
-                    <xf:label>Name-Title Group<span class="xforms-help">
-                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                            <div class="xforms-help-value">
-                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='displayLabel']/help"/>
-                            </div>
-                        </span>
-                    </xf:label>
-                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='nameTitleGroup-code']/items/item">
-                        <xf:label ref="label"/>
-                        <xf:value ref="value"/>
-                    </xf:itemset>
-                </xf:select1>
-            </xf:group>
-            <xf:group class="schema_3.4 select">
-                <xf:select1 ref="./@usage">
-                    <xf:label>Usage<span class="xforms-help">
-                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                            <div class="xforms-help-value">
-                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='usage']/help"/>
-                            </div>
-                        </span>
-                    </xf:label>
-                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='usage-type-code']/items/item">
-                        <xf:label ref="label"/>
-                        <xf:value ref="value"/>
-                    </xf:itemset>
-                </xf:select1>
-            </xf:group>
             <xf:group class="schema_3.3 schema_3.4 set">
-                                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
-                                <!-- subelements: none. -->
-                                <!-- node-adds: n/a. -->
-                                <!-- element deletion: n/a. -->
-                                <!-- element repetition: n/a. -->
+                <!-- non-repeating -->
+                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                <!-- subelements: none. -->
                 <xf:input ref="./mods:nonSort" class="text_10">
                     <xf:label>Non Sort<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -483,11 +467,9 @@
                 </xf:input>
             </xf:group>
             <xf:group class="textarea schema_3.3 schema_3.4">
-                                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
-                                <!-- subelements: none. -->
-                                <!-- node-adds: n/a. -->
-                                <!-- element deletion: n/a. -->
-                                <!-- element repetition: n/a. -->
+                <!-- non-repeating -->
+                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                <!-- subelements: none. -->
                 <xf:textarea ref="./mods:title">
                     <xf:label>Title<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -499,11 +481,9 @@
                 </xf:textarea>
             </xf:group>
             <xf:group class="textarea schema_3.3 schema_3.4">
-                                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
-                                <!-- subelements: none. -->
-                                <!-- node-adds: n/a. -->
-                                <!-- element deletion: n/a. -->
-                                <!-- element repetition: n/a. -->
+                <!-- non-repeating -->
+                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                <!-- subelements: none. -->
                 <xf:textarea ref="./mods:subTitle">
                     <xf:label>Subtitle<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -515,11 +495,9 @@
                 </xf:textarea>
             </xf:group>
             <xf:group class="text_50 schema_3.3 schema_3.4">
-                                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
-                                <!-- subelements: none. -->
-                                <!-- node-adds: n/a. -->
-                                <!-- element deletion: n/a. -->
-                                <!-- element repetition: n/a. -->
+                <!-- non-repeating -->
+                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                <!-- subelements: none. -->
                 <xf:input ref="./mods:partNumber">
                     <xf:label>Part Number<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -531,11 +509,9 @@
                 </xf:input>
             </xf:group>
             <xf:group class="textarea schema_3.3 schema_3.4">
-                                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
-                                <!-- subelements: none. -->
-                                <!-- node-adds: n/a. -->
-                                <!-- element deletion: n/a. -->
-                                <!-- element repetition: n/a. -->
+                <!-- non-repeating -->
+                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                <!-- subelements: none. -->
                 <xf:textarea ref="./mods:partName">
                     <xf:label>Part Name<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
