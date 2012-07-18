@@ -717,7 +717,7 @@ declare function biblio:login($node as node(), $params as element(parameters)?, 
 
 declare function biblio:collection-path($node as node(), $params as element(parameters)?, $model as item()*) {
     let $collection := functx:replace-first(uu:escape-collection-path(request:get-parameter("collection", theme:get-root())), "/db/", "")
-    let $collection := replace(replace($collection, "/commons", ""), "/users", "")
+    
     return
         templates:copy-set-attribute($node, "value", uu:unescape-collection-path($collection), $model)
 };
