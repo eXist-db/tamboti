@@ -344,7 +344,7 @@ table .even {
 #page-head {
     background: transparent;
     color:#4D4D4D;
-    height:180px;
+    height:210px;
     margin-top:0px;
     margin-bottom:0;
 }
@@ -493,6 +493,7 @@ table .even {
     padding:0;
 }
 
+
 #subnav .hlist ul li a, 
 #subnav .hlist ul li span {
     1background:url("http://sunmoonlake.com/wsc/button2.jpg") no-repeat scroll left top #FFFFFF;
@@ -510,11 +511,26 @@ table .even {
     text-transform:uppercase;
 }
 
+
+#subnavwsc{
+	width:800px;
+	border:0px solid #B3A17D;;
+	margin-left:-50px;
+	margin-top:-81px;
+}
+
+#nav .hlist ul ul li a:hover, 
+#nav .hlist ul ul li a:active, 
+#nav .hlist ul ul li a:focus, 
+#nav .hlist ul ul li.active a {
+	color:#4D4D4D;
+}
+
 #subnav .hlist ul li a:hover, 
 #subnav .hlist ul li a:active, 
 #subnav .hlist ul li a:focus, 
 #subnav .hlist ul li.active a {
-    1background:url("http://sunmoonlake.com/wsc/button-active.jpg") no-repeat scroll 0 0 #FFFFFF !important;
+    background: 0 0 #FFFFFF !important;
     color:#4D4D4D;
     height:68px;
     width:156px;
