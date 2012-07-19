@@ -391,7 +391,10 @@ table .even {
     margin-left:30px;
 }
 
-#page-head-right img {margin-left:-11em;}
+#page-head-right img {
+    margin-left:60px;
+}
+
 .hideme  {
     display:none;
 }
@@ -402,7 +405,7 @@ table .even {
 }
 
 #nav .hlist {
-    left:55px;
+    left:-40px;
     position:absolute;
     top:129px;
 }
@@ -514,9 +517,9 @@ table .even {
 
 #subnavwsc{
 	width:800px;
-	border:0px solid #B3A17D;;
-	margin-left:-50px;
-	margin-top:-81px;
+	border:0px solid #B3A17D;
+	margin-left:40px;
+	margin-top:-98px;
 }
 
 #nav .hlist ul ul li a:hover, 
@@ -524,6 +527,10 @@ table .even {
 #nav .hlist ul ul li a:focus, 
 #nav .hlist ul ul li.active a {
 	color:#4D4D4D;
+	border:1px solid #B3A17D;
+	border-left:none;
+	border-right:none;
+	border-top:none;
 }
 
 #subnav .hlist ul li a:hover, 
@@ -547,6 +554,8 @@ table .even {
     padding:0 !important;
     text-align:center;
     text-decoration:none;
+    
+    border-bottom:1px solid red;
 }
 
 #subnav .hlist ul li.active span a {
