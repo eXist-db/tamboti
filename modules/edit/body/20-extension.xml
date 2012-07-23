@@ -15,12 +15,11 @@
             <span class="xforms-hint">
                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
-                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='extension']/help"/>
+                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_extension',instance('code-tables'))/help"/>
                 </div>
             </span>
         </div>
         <xf:repeat nodeset="instance('save-data')/mods:extension" id="extension-repeat">
-                                    <!-- repeat not used. -->
             <xf:group appearance="full" ref=".[not(e:template)] | .[not(e:transliterationOfResource)]">
                 <xf:switch>
                     <xf:case id="extension-add-node-hide">
@@ -42,7 +41,7 @@
                             <xf:group appearance="full" ref=".[not(e:template)] | .[not(e:transliterationOfResource)]">
                                 <xf:trigger ref=".[not(e:template)]" class="add-button">
                                     <xf:label class="xforms-group-label-centered">Add
-                                                  Tamboti Template</xf:label>
+                                        Tamboti Template</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert nodeset="e:template" at="index('extension-repeat')" position="before" origin="instance('insert-templates')/e:template"/>
@@ -50,7 +49,7 @@
                                 </xf:trigger>
                                 <xf:trigger ref=".[not(e:transliterationOfResource)]" class="add-button">
                                     <xf:label class="xforms-group-label-centered">Add
-                                                  Transliteration Of Resource</xf:label>
+                                        Transliteration Of Resource</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="extension-add-node-hide" ev:event="DOMActivate"/>
                                         <xf:insert nodeset="e:template" at="index('extension-repeat')" position="before" origin="instance('insert-templates')/e:template"/>
@@ -66,7 +65,7 @@
                     <xf:label>Tamboti Template<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
-                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='template']/help"/>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_template',instance('code-tables'))/help"/>
                             </div>
                         </span>
                     </xf:label>
@@ -81,7 +80,7 @@
                     <xf:label>Transliteration Of Resource<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                             <div class="xforms-help-value">
-                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="instance('code-tables')/code-table[code-table-name='hint-code']/items/item[value='transliterationOfResource']/help"/>
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_transliterationOfResource',instance('code-tables'))/help"/>
                             </div>
                         </span>
                     </xf:label>
@@ -95,7 +94,7 @@
         <xf:group appearance="full" ref=".[not(mods:extension)]">
             <xf:trigger class="add-button">
                 <xf:label class="xforms-group-label-centered">Add
-                                                  Missing Extension</xf:label>
+                    Missing Extension</xf:label>
                 <xf:action ev:event="DOMActivate">
                     <xf:insert nodeset="instance('save-data')/mods:extension" origin="instance('new-instance')/mods:extension"/>
                 </xf:action>
