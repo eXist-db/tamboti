@@ -997,7 +997,8 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     
     (: find records that refer to the current record if this records a periodical or an edited volume or a similar kind of publication. :)
     (:NB: This takes time!:)
-    if ($entry/mods:genre = ('series', 'periodical', 'editedVolume', 'newspaper', 'journal', 'festschrift', 'encyclopedia', 'conference publication', 'canonical scripture')) 
+    (:NB: allowing empty genre to triger this: remove when WSC has genre.:)
+    if ($entry/mods:genre = ('series', 'periodical', 'editedVolume', 'newspaper', 'journal', 'festschrift', 'encyclopedia', 'conference publication', 'canonical scripture') or empty($entry/mods:genre)) 
     then
         (:The $ID is passed to the query; when the query is constructed, the hash is appended (application.xql, $biblio:FIELDS). 
         This is necessary since a hash in the URL is interpreted as a fragment identifier and not passed as a param.:)
@@ -1008,7 +1009,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
         if ($linked-records-count eq 0)
         then ()
         else 
-            if ($linked-records-count gt 5)
+            if ($linked-records-count gt 10)
             then
                 <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
                     <td class="url label relatedItem-label"> 
