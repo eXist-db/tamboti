@@ -111,9 +111,11 @@ let $etag := local:create-etag($last-modified) return
             else(),
            
             for $code-table-name in $distinct-code-table-names
+              let $log := util:log("DEBUG", ("##$code-table-name): ", $code-table-name))
               let $file-path := concat($code-table-collection, $code-table-name, 's.xml')
               let $code-table := doc($file-path) return
-                 <code-table>
+                 (:NB: An empty code-table is created; this has an empty xml:id which has to be filled with an NCName.:)
+                 <code-table xml:id="{if ($code-table-name) then $code-table-name else 'xxx'}">
                     <code-table-name>{$code-table-name}</code-table-name>
                     <items>
                     {

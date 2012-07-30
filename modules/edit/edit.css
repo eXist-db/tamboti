@@ -17,7 +17,11 @@
     font-weight:600;
 }
 
-
+hr {
+    color:#fafafa;
+    width:98%;
+    height:1px;
+}
 .save-buttons .related-title .intro {
     color:#4d4d4d;
     font-weight:400;
@@ -111,7 +115,8 @@ body
     margin-bottom:1em !important;/*overrules xsltforms.css*/
     width:1150px !important;/*overrules xsltforms.css*/
     -moz-border-radius:10px 10px 10px 10px;
-	border:1px solid #CCCCCC;
+    border-radius:10px 10px 10px 10px;
+    border:1px solid #CCCCCC;
 }
 
 .content {

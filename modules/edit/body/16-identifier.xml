@@ -143,7 +143,7 @@
                     </xf:hint>
                 </xf:input>
             </xf:group>
-            <xf:group appearance="full" ref=".[not(@type='local')]">
+            <xf:group appearance="full" ref=".">
                 <xf:input ref="." class="text_100">
                     <xf:label>Identifier<span class="xforms-help">
                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>

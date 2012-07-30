@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--let $code-table :=
 -->
-<code-table>
+<code-table xml:id="hint-code">
     <code-table-name>hint-code</code-table-name>
     <items>
-        <item>
-            <hint>
+        <item xml:id="hint-code_save">
+            <help>
                 <p>Every time you click a tab (including the current one), your input is saved. </p>
                 <p>When you click "Finish Editing", your input is saved, and you return to the
                     search interface where your record is displayed. </p>
@@ -26,10 +26,10 @@
                 <p>If you wish to discard your edits, click "Cancel Editing" at the bottom of the
                     page. None of the edits you have made will then be saved and you will be shown
                     the original record again.</p>
-            </hint>
+            </help>
             <value>save</value>
         </item>
-        <item>
+        <item xml:id="hint-code_abstract">
             <help>
                 <p> Abstract is used to record a succinct summary of some aspect of the content of
                     the resource. </p>
@@ -40,7 +40,7 @@
             <parent>subject</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_accessCondition">
             <help>
                 <p>Information about restrictions imposed on access to a resource is noted here.</p>
                 <p>Use Access Condition to indicate rights relating to access and use of digital
@@ -65,7 +65,7 @@
             <parent>mods</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_affiliation">
             <help>
                 <p>Affiliation contains the name, address, etc. of an organisation with which the
                     person in Name was associated when the resource was created.</p>
@@ -77,7 +77,7 @@
             <parent>name</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_altRepGroup">
             <help>
                 <p> Alternate Representation Groups is used to link alternate representations of the
                     same element content, such as different scripts, transliterations, and
@@ -91,7 +91,7 @@
             <parent>name</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_area">
             <help>
                 <p> Name of a non-jurisdictional geographic entity. </p>
             </help>
@@ -100,7 +100,7 @@
             <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_authority">
             <help>
                 <p> The name of the authoritative list for a controlled value is recorded here. An
                     authority field is used to indicate that a field has been entered by reference
@@ -113,7 +113,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_name-authority">
             <help>
                 <p> The name of an authoritative list for a controlled value in Name is recorded
                     here. </p>
@@ -129,7 +129,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_namePart-authority">
             <help>
                 <p> The name of an authoritative list for a controlled value in Name is recorded
                     here. </p>
@@ -145,7 +145,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_uniform-title-authority">
             <help>
                 <p> The name of the authoritative list for a uniform title is recorded here. </p>
             </help>
@@ -155,7 +155,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_titleInfo-authority-abbreviated">
             <help>
                 <p> The name of the authoritative list for the abbreviated title is recorded here.
                 </p>
@@ -166,7 +166,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_authority-uri">
             <help>
                 <p>A URI uniquely identifying the vocabulary from which the controlled term has been
                     selected, as assigned by the body responsible for the maintenance of the
@@ -181,7 +181,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_cartographics">
             <help>
                 <p> Cartographics is a wrapper field that includes cartographic data indicating
                     spatial coverage. </p>
@@ -191,7 +191,7 @@
             <parent>subject</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_city">
             <help>
                 <p> Name of an inhabited place incorporated as a city, town, etc. </p>
             </help>
@@ -200,7 +200,7 @@
             <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_citySection">
             <help>
                 <p> Name of a smaller unit within a populated place, e.g., neighborhoods, parks or
                     streets. </p>
@@ -210,7 +210,7 @@
             <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_continent">
             <help>
                 <p> Includes Asia, Africa, Europe, North America, South America.</p>
             </help>
@@ -219,7 +219,7 @@
             <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_coordinates">
             <help>
                 <p> Coordinates contains a statement of coordinates covered by the resource. One or
                     more statements may be supplied. If one is supplied, it is a point (i.e., a
@@ -232,7 +232,7 @@
             <parent>cartographics</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_copyrightDate-compact">
             <help>
                 <p> Note in Copyright Date the year in which copyright was claimed for the resource. </p>
                 <p> Copyright Date is typically found on the page following the title page. It
@@ -252,7 +252,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_copyrightDate">
             <help>
                 <p> A date in which a resource is copyrighted. </p>
                 <p> If there are several copyright dates, choose the last one.</p>
@@ -263,7 +263,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_country">
             <help>
                 <p> Name of a country, i.e. a political entity considered a country. </p>
             </help>
@@ -272,7 +272,7 @@
             <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_county">
             <help>
                 <p> Name of the largest local administrative unit in various countries, e.g.
                     England. </p>
@@ -282,7 +282,7 @@
             <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_dateCaptured">
             <help>
                 <p> The date on which a digital resource was digitized or a subsequent snapshot was
                     taken. </p>
@@ -293,7 +293,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_dateCreated">
             <help>
                 <p> The date of creation of the resource. </p>
             </help>
@@ -303,7 +303,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_dateIssued-compact">
             <help>
                 <p> Note in Date of Issue the year in which the resource was issued. </p>
                 <p> The Date of Issue is typically found on the title page, in connection with place
@@ -327,7 +327,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_dateIssued">
             <help>
                 <p> The date that the resource was published, released, or issued. </p>
                 <p> The Date of Issue is typically found on the title page, in connection with place
@@ -348,7 +348,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_dateModified">
             <help>
                 <p> The date in which a resource is modified or changed. </p>
             </help>
@@ -358,7 +358,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_dateOther">
             <help>
                 <p> A date that does not fall into another category but is important to record. </p>
             </help>
@@ -368,7 +368,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_dateValid">
             <help>
                 <p> A date in which the content of a resource is valid. </p>
             </help>
@@ -378,7 +378,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_description">
             <help>
                 <p>Description contains a textual description for a name when this is necessary, for
                     example, to distinguish it from other names.</p>
@@ -389,7 +389,7 @@
             <parent>name</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_name-displayForm">
             <help>
                 <p>The Display Form field makes it possible to display personal names in
                     unstructured form. It typically renders a name as given on the resource. </p>
@@ -402,7 +402,7 @@
             <parent>name</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_displayLabel">
             <help>
                 <p> Display Label is used when additional text associated with a field is needed for
                     display. </p>
@@ -416,7 +416,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_edition">
             <help>
                 <p> Information identifying the version of the resource. Resources that constitute
                     the same edition generally embody essentially the same content. If no edition
@@ -428,7 +428,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_date-encoding">
             <help>
                 <p> Dates can be expressed in several different formats. The following values are
                     used with the Encoding: w3cdtf, iso8601, marc. The recommended encoding is
@@ -449,7 +449,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_temporal-encoding">
             <help>
                 <p> Encoding is used to note the encoding followed in the date notation.</p>
                 <p>The recommendation is to use the w3cdtf encoding. According to this encoding,
@@ -469,7 +469,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_extension">
             <help>
                 <p>In Extension you have access to a number of fields that we have added to the MODS
                     schema.</p>
@@ -486,7 +486,7 @@
             <parent>mods</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_extent">
             <help>
                 <p> A statement of the number and specific material of the units of the resource
                     that express physical extent. A typical entry for a book might read "xiv, 213
@@ -500,7 +500,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_extent-compact">
             <help>
                 <p> The number of units and the material of the units of the resource that express
                     physical extent. Typical entries for a book might read "xiv, 213 p.", "21 p. :
@@ -520,7 +520,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_extraterrestrialArea">
             <help>
                 <p> Name of any extraterrestrial entity or space, including solar systems, galaxies,
                     star systems, and planets as well as geographic features of individual planets.
@@ -531,7 +531,7 @@
             <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_frequency">
             <help>
                 <p> Frequency is used to note the publication pattern of the item. It is only used
                     if the Issuance of the resource is "continuing".</p>
@@ -542,7 +542,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_genre">
             <help>
                 <p> One or more terms that designate a category characterising a particular style,
                     form, or content, such as artistic, musical, literary composition, etc. Genre
@@ -554,7 +554,7 @@
             <parent>subject</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_geographic">
             <help>
                 <p> Use here standard names for geographical places.</p>
                 <p> Add as many Place fields as you need.</p>
@@ -573,7 +573,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_geographicCode">
             <help>
                 <p>Geographic Code includes a geographic area code associated with a resource. A
                     geographic code that represents the same entity as a term in Geographic is
@@ -584,7 +584,7 @@
             <parent>subject</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_hierarchicalGeographic">
             <help>
                 <p> This sub-field includes a hierarchical form of a place name relating to the
                     content of the resource that is both readable by humans and parsable by
@@ -600,7 +600,7 @@
             <parent>subject</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_ID">
             <help>
                 <p> ID is used to link among records inside the database and to reference a field
                     inside the database from outside the database. </p>
@@ -611,7 +611,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_isbn">
             <help>
                 <p>Enter here primarily the International Standard Book Number (ISBN) number of the
                     book you are cataloguing or its Digital Object Identifier (DOI). </p>
@@ -623,7 +623,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_identifier">
             <help>
                 <p> For books, enter here primarily the International Standard Book Number (ISBN) of
                     the book you are cataloguing or its Digital Object Identifier (DOI). </p>
@@ -645,7 +645,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_internetMediaType-compact">
             <help>
                 <p> Use this field if the resource is electronic. An identification of the
                     electronic format type, or the data representation of the resource. Internet
@@ -658,7 +658,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_identifier-invalid">
             <help>
                 <p> This field signifies a canceled or invalid identifier. It should be used with
                     the value Yes. This value is used only when recording a canceled or invalid
@@ -670,7 +670,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_genre">
             <help>
                 <p> Name of a tract of land surrounded by water and smaller than a continent but is
                     not itself a separate country. </p>
@@ -680,7 +680,7 @@
             <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_issuance">
             <help>
                 <p> In Issuance one records how the resource is issued. It may be used with the
                     following values: continuing and monographic. </p>
@@ -696,7 +696,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_keyDate">
             <help>
                 <p> One can record different events that may be important in the life of a resource
                     in a number of different date fields. When multiple date fields apply but would
@@ -709,7 +709,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_lang">
             <help>
                 <p> The language used within the input field is specified here, if this language is
                     different from the language noted in Language of Resource. </p>
@@ -721,7 +721,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_lang-global-compact">
             <help>
                 <p> The language used within Title Information is specified here. The most common
                     languages have been moved to the top of the list. </p>
@@ -736,7 +736,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_lang-local-compact">
             <help>
                 <p> The language used within Title Information is specified here. The most common
                     languages have been moved to the top of the list. </p>
@@ -751,7 +751,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_name-lang">
             <help>
                 <p> The language used within Name Information is specified here, if this language is
                     different from the language noted in Language of Resource. The most common
@@ -767,7 +767,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_namePart-lang">
             <help>
                 <p>The language used within Title Information is specified here, if this language is
                     different from the language noted in Language of Resource. The most common
@@ -783,7 +783,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_originInfo-lang">
             <help>
                 <p> The language used within Origin Information is specified here, if this language
                     is different from the language noted in Language of Resource. The most common
@@ -800,7 +800,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_language">
             <help>
                 <p> Here the language of the contents of the described resource as a whole is noted. </p>
                 <p> Language may also be expressed in relation to a single field, by means of the
@@ -833,7 +833,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_languageTerm">
             <help>
                 <p> Language Term specifies the language(s) of the content of the resource.
                     <!--NB: revise after question of two types of input is solved.--> It may be
@@ -850,7 +850,7 @@
             <parent>language</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_location">
             <help>
                 <p> Location identifies the institution or repository holding the resource, or a
                     remote location in the form of a URL where the resource is available. In the
@@ -867,7 +867,7 @@
             <parent>mods</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_more-related-item">
             <help>
                 <p> More input options can be found on the Related Items Forms tab.</p>
             </help>
@@ -877,7 +877,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_more-physical-description">
             <help>
                 <p> More input options can be found on the Physical Description tab on the Citation
                     Forms.</p>
@@ -888,7 +888,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_more-location">
             <help>
                 <p> More input options can be found on the Locations tab on the Remaining Forms.</p>
             </help>
@@ -898,7 +898,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_more-identifier">
             <help>
                 <p> More input options can be found on the Identifiers tab on the Remaining
                     Forms.</p>
@@ -909,7 +909,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_more-subjects">
             <help>
                 <p> More input options can be found on the Subjects tab on Content Description
                     Forms.</p>
@@ -920,7 +920,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_more-title-information">
             <help>
                 <p> More input options can be found on the Title Information tab on the Citation
                     Forms.</p>
@@ -931,7 +931,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_more-name-information">
             <help>
                 <p> More input options can be found on the Name Information tab on the Citation
                     Forms.</p>
@@ -942,7 +942,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_more-origin-information">
             <help>
                 <p> More input options can be found on the Origin Information tab on the Citation
                     Forms.</p>
@@ -953,7 +953,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_name">
             <help>
                 <p> In Names are catalogued the names of the persons, organisations, or events
                     (conferences, meetings, etc.) that are associated with the resource being
@@ -980,7 +980,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_name-relatedItem-periodical-editor-compact">
             <help>
                 <p> In Editor(s) of Periodical, catalogue the names of the institution that serves
                     as editor of the periodical.</p>
@@ -999,7 +999,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_name-compact">
             <help>
                 <p> In Names and Roles, catalogue the names of each person, corporation or
                     conference associated with the resource.</p>
@@ -1021,7 +1021,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_subject-name-corporate-compact">
             <help>
                 <p> In Institution(s) as Topic, catalogue the names of the corporations occurring as
                     topic in the catalogued resource.</p>
@@ -1037,7 +1037,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_subject-namePart-corporate-compact">
             <help>
                 <p> Analyse each name into separate name parts. Record the more general designation
                     in the first field and a more specific designation in the second field. If this
@@ -1051,7 +1051,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_relatedItem-namePart-corporate-compact">
             <help>
                 <p> Analyse each name into separate name parts. Record the more general designation
                     in the first field and a more specific designation in the second field. If this
@@ -1063,7 +1063,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_subject-name-personal-compact">
             <help>
                 <p> In Person(s) as Topic, catalogue the names of the persons or corporate entities
                     that occur as topic in the work you are cataloguing.</p>
@@ -1075,7 +1075,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_subject-name">
             <help>
                 <p> In Persons and Institutions as Topics, catalogue the names of each person or
                     institution that serves as topic of the resource you are cataloguing. </p>
@@ -1089,7 +1089,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_subject-name-corporate">
             <help>
                 <p> Analyse each name into separate name parts, e.g. Given Name and Family Name.</p>
                 <p> If this is not possible, choose "(none selected)" and enter the whole name in
@@ -1105,7 +1105,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_subject-name-personal">
             <help>
                 <p> Analyse each name into separate name parts, e.g. Given Name and Family Name.</p>
                 <p> If this is not possible, choose "(none selected)" and enter the whole name in
@@ -1121,7 +1121,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_edited-volume-name-compact">
             <help>
                 <p> In Editors of Edited Volume, catalogue the names of each person or corporation
                     associated with the edited volume.</p>
@@ -1133,7 +1133,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_series-name-compact">
             <help>
                 <p> In Editors of Monograph Series, catalogue the names of each person or
                     corporation associated with the monograph series.</p>
@@ -1145,7 +1145,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_namePart">
             <help>
                 <p>The name itself is always entered into a Name Part. This is the case even if it
                     is not possible to parse the name into separate units.</p>
@@ -1156,7 +1156,7 @@
             <parent>name</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_namePart-compact">
             <help>
                 <p> Analyse each name into separate name parts.</p>
                 <p> If possible, analyse each personal name into Given Name and Family Name. If this
@@ -1182,7 +1182,7 @@
             <parent>name</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_subject-namePart-personal-compact">
             <help>
                 <p> If possible, analyse each personal name into Given Name and Family Name. If this
                     is not possible, select the Subjects tab on Content Description Forms and
@@ -1194,7 +1194,7 @@
             <parent>name</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_namePart-institution-compact">
             <help>
                 <p> Analyse each corporate name into separate name parts. Record the more general
                     designation in the first field and a more specific designation in the second
@@ -1211,7 +1211,7 @@
             <parent>name</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_namePart-type">
             <help>
                 <p>Name Part includes each part of the name. Parsing is used to parse parts of a
                     personal name into family/surname and given name/forename, as well as terms of
@@ -1239,7 +1239,7 @@
             <parent>name</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_nameTitleGroup">
             <help>
                 <p> Name-Title Group can be used with Name and Title Information to enable an
                     explicit link between a name and a title when that is desirable. </p>
@@ -1253,7 +1253,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_nonSort">
             <help>
                 <p> Non Sort contains characters, including initial articles (typically "A" and
                     "The" in English), punctuation, and spaces that appear at the beginning of a
@@ -1266,7 +1266,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_note">
             <help>
                 <p> A note contains general information relating to a resource. </p>
                 <p> Notes should be used only for information that cannot be encoded in another,
@@ -1284,7 +1284,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_objectPart">
             <help>
                 <p> This field designates which part of the resource is in the language stated in
                     Language Term. The values of the field are not controlled by an authority list;
@@ -1297,7 +1297,7 @@
             <parent>language</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_occupation">
             <help>
                 <p> Occupation includes a term that is descriptive of the occupation reflected in
                     the contents of the described materials. It is not used to list the occupations
@@ -1310,7 +1310,7 @@
             <parent>subject</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_originInfo">
             <help>
                 <p> Enter here information about the publication's origin, including its place of
                     origin or publication, its publisher, and its date of issue or date of
@@ -1323,7 +1323,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_originInfo-compact">
             <help>
                 <p> Enter here information about the publication's origin, including its place of
                     origin or publication, its publisher, and its date of issue or date of
@@ -1335,7 +1335,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_part-relatedItem-periodical-compact">
             <help>
                 <p> For an article or a book review in a periodical, note here <ul>
                         <li>in which volume and (if relevant) which issue the article or book review
@@ -1355,7 +1355,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_part">
             <help>
                 <p> The designation of physical parts of a resource in a detailed form. Part is used
                     to provide detailed coding for physical parts of a resource. It may be used as a
@@ -1378,7 +1378,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_other-part">
             <help>
                 <p> Part is used here to record the various parts of one publication inside another
                     publication. </p>
@@ -1395,7 +1395,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_edited-volume-part-compact">
             <help>
                 <p>Enter here information regarding in which volume of the edited volume the
                     contribution occurs, if the edited volume is in several volumes.</p>
@@ -1407,7 +1407,7 @@
             <parent>relatedItem</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_series-part-compact">
             <help>
                 <p>Enter here information regarding in which volume of the monograph series the book
                     occurs.</p>
@@ -1418,7 +1418,7 @@
             <parent>relatedItem</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_partName">
             <help>
                 <p> Part Name is used for a part or section name of a title. Use Part Name when a
                     part name is present, rather than including the part name in the text of Title.
@@ -1440,7 +1440,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_partNumber">
             <help>
                 <p> Part Number is used for a part or section number in a title. </p>
                 <p> Use Part Number when a part number is present, rather than including the part
@@ -1459,7 +1459,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_physicalDescription-compact">
             <help>
                 <p> The Extent and (for some types of publication) the Internet Media Type of the
                     publication are noted in Physical Description.</p>
@@ -1470,7 +1470,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_physicalLocation">
             <help>
                 <p> Record in Physical Location the institution or repository that holds the
                     resource or where it is available. Physical Location may be expressed as text
@@ -1487,7 +1487,7 @@
             <parent>location</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_place-compact">
             <help>
                 <p> Record in City the name of the city in which the publisher has its principal
                     domicile, as noted on the title page. </p>
@@ -1506,7 +1506,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_place">
             <help>
                 <p> Record in Place the place names associated with the origin of a resource, i.e.,
                     its creation, publication, issuance, etc.</p>
@@ -1523,7 +1523,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_placeTerm">
             <help>
                 <p> Use Place Term to record the textual or code form of the place.</p>
                 <p>If the place is a country, the name of the country can be selected from the MARC
@@ -1537,7 +1537,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_placeTerm-marccountry">
             <help>
                 <p> Names of countries (and US states) according to the marccountry standard list.
                 </p>
@@ -1548,7 +1548,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_placeTerm-text">
             <help>
                 <p> Unencoded place terms, i.e. place terms that have not been chosen in an
                     authority file. </p>
@@ -1559,7 +1559,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_point">
             <help>
                 <p> Use Point if you wish to record a span of time, e.g. 1912-1914.</p>
                 <p>The following values are used with Point: start, end.</p>
@@ -1573,7 +1573,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_projection">
             <help>
                 <p> Projection provides a statement of projection. </p>
             </help>
@@ -1582,7 +1582,7 @@
             <parent>cartographics</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_province">
             <help>
                 <p> Includes first order political divisions called provinces within a country, e.g.
                     Canada. </p>
@@ -1592,7 +1592,7 @@
             <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_publisher-compact">
             <help>
                 <p> Record in Publisher the name of the entity that is the originator for a
                     resource, i.e. that has published, printed, distributed, released, issued, or
@@ -1609,7 +1609,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_qualifier">
             <help>
                 <p> When a date is uncertain or supplied by the cataloger, indicate this through the
                     use of Qualifier rather than inserting characters such as "ca.", brackets, or a
@@ -1623,7 +1623,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_region">
             <help>
                 <p> Includes regions that have status as a jurisdiction, usually incorporating more
                     than one first level jurisdiction. </p>
@@ -1633,7 +1633,7 @@
             <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_relatedItem-periodical-compact">
             <help>
                 <p> Enter here information related to the periodical that the article you are
                     cataloguing occurs in. </p>
@@ -1646,7 +1646,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_relatedItem-periodical-titleInfo-compact">
             <help>
                 <p> Enter here the title of the periodical you are cataloguing. If the title divides
                     into a main title and a subtitle, enter each part in its separate field. </p>
@@ -1664,7 +1664,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_other-location">
             <help>
                 <p> Record here the location of the article, book review or contribution inside its
                     host publication, that is, inside its periodical or edited volume.</p>
@@ -1680,7 +1680,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_book-review">
             <help>
                 <p>Record here information regarding where the book review itself has been
                     published. This is the same as cataloguing an article in a periodical. </p>
@@ -1696,7 +1696,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_book-reviewed">
             <help>
                 <p>Record here information regarding the book reviewed in the book review. This is
                     the same as cataloguing a book. </p>
@@ -1712,7 +1712,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_edited-volume-compact">
             <help>
                 <p> Enter here information related to the edited volume that the contribution you
                     are cataloguing occurs in. </p>
@@ -1749,7 +1749,7 @@
             <parent>mods</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_series-compact">
             <help>
                 <p>Enter here information related to the monograph series that the book you are
                     cataloguing occurs in. </p>
@@ -1785,7 +1785,7 @@
             <parent>mods</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_series-edited-volume-compact">
             <help>
                 <p> Enter here information related to the monograph series that the edited volume
                     you are cataloguing occurs in. </p>
@@ -1805,7 +1805,7 @@
             <parent>relatedItem</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_role-compact">
             <help>
                 <p> Role contains a description of the role of the person or institution named above
                     to the resource being catalogued.</p>
@@ -1818,7 +1818,7 @@
             <parent>name</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_role">
             <help>
                 <p>Role contains a coded and/or textual description of the role of the person,
                     corporation or conference entered into Name Part to the resource being
@@ -1831,7 +1831,7 @@
             <parent>name</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_roleTerm">
             <help>
                 <p>Role contains a coded and/or textual description of the role of the person,
                     corporation or conference entered into Name Part to the resource being
@@ -1847,7 +1847,7 @@
             <parent>role</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_roleTerm-code">
             <help>
                 <p>Select a Role Term from the list. </p>
                 <p> Note that "Author" is primarily used in connection with printed resources,
@@ -1859,7 +1859,7 @@
             <parent>role</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_roleTerm-text">
             <help>
                 <p>Select a term from the list. </p>
                 <p> The list of terms given if "Text" is chosen for Type is the same as the list
@@ -1875,7 +1875,7 @@
             <parent>role</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_roleTerm-type">
             <help>
                 <p>Type is used to express whether the Role Term has textual or coded form.</p>
             </help>
@@ -1885,7 +1885,7 @@
             <parent>role</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_roleTerm-authority">
             <help>
                 <p>If the Type is in coded form, the authority file followed must be indicated.</p>
             </help>
@@ -1895,7 +1895,7 @@
             <parent>role</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_scale">
             <help>
                 <p> Scale provides a statement of scale. It may include any equivalency statements,
                     vertical scales or vertical exaggeration statements for relief models and other
@@ -1906,7 +1906,7 @@
             <parent>cartographics</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_name-script">
             <help>
                 <p> Use Script to record the script in which the name in rendered. </p>
                 <p>Script can be applied the Name as a whole. Do this if you are using only one
@@ -1920,7 +1920,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_namePart-script">
             <help>
                 <p>Use Script to record the script in which the name in rendered. </p>
                 <p> Script can be applied the Name as a whole. Do this if you are using only one
@@ -1934,7 +1934,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_originInfo-script">
             <help>
                 <p> If the Origin Information is in a non-Latin script, note here the script
                     utilised. As transliterations use the Latin script, the Transliteration field
@@ -1950,7 +1950,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_script">
             <help>
                 <p> Script specifies the script used within individual fields. The use of Latin
                     script is not noted. </p>
@@ -1964,7 +1964,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_script-global-compact">
             <help>
                 <p> Script specifies the script used within individual fields. The use of Latin
                     script is not noted. "Chinese" is "Han (Simplified Variant)" or "Han
@@ -1982,7 +1982,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_script-local-compact">
             <help>
                 <p> Script specifies the script used within individual fields. The use of Latin
                     script is not noted. "Chinese" is "Han (Simplified Variant)" or "Han
@@ -2000,7 +2000,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_script-compact">
             <help>
                 <p> Global Script specifies the script used within individual fields. The use of
                     Latin script is not noted.</p>
@@ -2021,7 +2021,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_scriptTerm">
             <help>
                 <p>Hint</p>
             </help>
@@ -2031,7 +2031,7 @@
             <parent>language</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_shelfLocator">
             <help>
                 <p> Shelf Locator records a shelf-mark or other shelving designation that indicates
                     the location identifier for a copy. If more detailed holdings information is
@@ -2043,7 +2043,7 @@
             <parent>location</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_state">
             <help>
                 <p> Includes first order political divisions called states within a country, e.g. in
                     U.S., Argentina, Italy. Use also for France département. </p>
@@ -2053,7 +2053,7 @@
             <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_subject">
             <help>
                 <p> A Subject is a term or a phrase that represents the primary topic(s) on which a
                     work is focused. Use at least one Subject field in each record to allow
@@ -2111,7 +2111,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_subTitle">
             <help>
                 <p> Subtitle is used to record a part of a title that is secondary to the core
                     title. </p>
@@ -2132,7 +2132,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_subTitle-compact">
             <help>
                 <p> Subtitle is used to record a part of a title that is secondary to the core
                     title. </p>
@@ -2147,7 +2147,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_titleInfo-supplied">
             <help>
                 <p>Supplied indicates that the title information does not come from the resource
                     itself, but has been supplied by the cataloguer.</p>
@@ -2158,7 +2158,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_targetAudience">
             <help>
                 <p> Use Target Audience to describe a group for which a resource is intended. </p>
                 <p> Use this field whenever there is a specific audience for a resource (for
@@ -2180,7 +2180,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_template">
             <help>
                 <p>Choose one of the publication types listed below. These publication types are the
                     same as the record templates used in the pre-entry options. </p>
@@ -2196,7 +2196,7 @@
             <parent>extension</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_temporal">
             <help>
                 <p> Use Time for chronological Subject terms to denote temporal coverage. Time may
                     be expressed as a term (e.g. "Middle Ages") or as a structured date (e.g.
@@ -2218,7 +2218,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_territory">
             <help>
                 <p> Name of a geographical area belonging to or under the jurisdiction of a
                     governmental authority. </p>
@@ -2228,7 +2228,7 @@
             <parent>hierarchicalGeographic</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_title">
             <help>
                 <p> Title contains the core title of the resource catalogued. </p>
                 <p> At least one Title is required. When no title appears on the item being
@@ -2258,7 +2258,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_title-compact">
             <help>
                 <p> Title contains the core title of the resource catalogued. </p>
                 <p> At least one Title is required. When no title appears on the item being
@@ -2272,7 +2272,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_subject-titleInfo">
             <help>
                 <p> Title Information is used under Subject to note when the resource catalogued is
                     about another resource with a title, e.g. when it is a book about another book
@@ -2309,7 +2309,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_titleInfo">
             <help>
                 <p> At least one Title inside a Title Information is required. Title Information can
                     be repeated for alternative, translated, transliterated or uniform titles. These
@@ -2351,7 +2351,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_titleInfo-compact">
             <help>
                 <p> Enter here the title of the publication that you are cataloguing. This
                     publication may be a book, an edited volume, a periodical, an article, or a
@@ -2377,7 +2377,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_edited-volume-titleInfo-compact">
             <help>
                 <p> Enter here the title of the edited volume you are cataloguing. If the title
                     divides into a main title and a subtitle, enter each part in its separate field. </p>
@@ -2395,7 +2395,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_series-titleInfo-compact">
             <help>
                 <p> Enter here the title of the series you are cataloguing. If the title divides
                     into a main title and a subtitle, enter each part in its separate field. </p>
@@ -2413,7 +2413,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_edited-volume-series-title">
             <help>
                 <p> Enter here the title of the series you are cataloguing. If the title divides
                     into a main title and a subtitle, enter each part in its separate field. </p>
@@ -2432,7 +2432,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_edited-volume-series-part">
             <help>
                 <p> Use this field to indicate the volume of the series that the edited volume you
                     are cataloguing occurs in. </p>
@@ -2443,7 +2443,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_edited-volume-series">
             <help>
                 <p>Record here, if applicable, information regarding the book series that the edited
                     volume is part of and the position of the edited volume with the series.</p>
@@ -2455,7 +2455,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_topic">
             <help>
                 <p> Use Topic to indicate any primary subjects that do not fit into the Place, Time,
                     Works as Topics, or Persons and Institutions as Topics sub-fields. In general,
@@ -2481,7 +2481,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_transliteration">
             <help>
                 <p> Transliteration specifies the transliteration (transcription, romanisation)
                     scheme used within a certain field. When specifying the transliteration used,
@@ -2507,7 +2507,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_transliteration-global-compact">
             <help>
                 <p> Global Transliteration specifies the transliteration (transcription,
                     romanisation) scheme used.</p>
@@ -2524,7 +2524,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_transliteration-local-compact">
             <help>
                 <p> Transliteration specifies the transliteration (transcription, romanisation)
                     scheme used.</p>
@@ -2540,7 +2540,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_transliterationOfResource">
             <help>
                 <p> Choose one of the transliteration schemes listed below. The transliteration
                     schemes are the same as those used in the pre-entry options. </p>
@@ -2561,7 +2561,7 @@
             <parent>extension</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_identifier-type">
             <help>
                 <p>Type identifies the type of identifier that is recorded.</p>
             </help>
@@ -2570,7 +2570,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_titleInfo-type">
             <help>
                 <p> Type identifies what type of Title Information is recorded. </p>
                 <p> If the title is recorded as it appears on the title page, it does not have Type.
@@ -2602,7 +2602,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_accessCondition-type">
             <help>
                 <p>Use the type attribute to indicate the type of restrictions (or lack thereof) on
                     use of the resource and/or restrictions on access to the material.</p>
@@ -2616,7 +2616,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_genre-type">
             <help>
                 <p>(missing)</p>
             </help>
@@ -2625,7 +2625,7 @@
             <parent>genre</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_languageTerm-type">
             <help>
                 <p>Hint</p>
             </help>
@@ -2635,7 +2635,7 @@
             <parent>languageTerm</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_location-type">
             <help>
                 <p> Type Identifies the type of location recorded. Use Type to indicate different
                     kinds of locations if more specificity is needed, e.g. current, discovery,
@@ -2646,7 +2646,7 @@
             <parent>location</parent>
             <tab-id>type</tab-id>
         </item>
-        <item>
+        <item xml:id="hint-code_name-type">
             <help>
                 <p>The Type field can take the following values: family, conference, corporate, and
                     personal, .</p>
@@ -2659,7 +2659,7 @@
             <parent>name</parent>
             <tab-id>type</tab-id>
         </item>
-        <item>
+        <item xml:id="hint-code_note-type">
             <help>
                 <p>Identifies what type of note is recorded.</p>
                 <p>One can either select a value from the drop-down menu or enter a free-text
@@ -2671,7 +2671,7 @@
             <parent>note</parent>
             <tab-id>compact-c</tab-id>
         </item>
-        <item>
+        <item xml:id="hint-code_originInfo-type">
             <help>
                 <p> Type indicates whether the place is expressed in a coded or textual form. </p>
             </help>
@@ -2681,7 +2681,7 @@
             <parent>note</parent>
             <tab-id>compact-c</tab-id>
         </item>
-        <item>
+        <item xml:id="hint-code_url-compact">
             <help>
                 <p> In URL, record the Uniform Resource Locator (URL) of the resource if it has been
                     accessed on the Internet.</p>
@@ -2693,7 +2693,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_location-url">
             <help>
                 <p> In URL, record the Uniform Resource Locator (URL) of the networked location of a
                     resource. It is recommended that all URLs used with the Location element be
@@ -2705,7 +2705,7 @@
             <parent>location</parent>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_name-usage">
             <help>
                 <p>Usage with the value "primary" can be used with repeated fields to indicate
                     special prominence of one that is useful for various special purposes such as
@@ -2722,7 +2722,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_usage">
             <help>
                 <p>Usage with the value "primary" can be used with repeated fields to indicate
                     special prominence of one that is useful for various special purposes such as
@@ -2734,7 +2734,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_value-uri">
             <help>
                 <p>A URI uniquely identifying the term or controlled value from a vocabulary, as
                     assigned by the body responsible for the maintenance of the vocabulary.</p>
@@ -2747,7 +2747,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_xlink_href">
             <help>
                 <p> XLink is used to reference an external resource, such as a second metadata
                     record, a Related Item or a Table of Contents. </p>
@@ -2765,7 +2765,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_accessCondition-xlink_href">
             <help>
                 <p> The XLink field is used to reference an external resource, such as a second
                     metadata record, a Related Item or a Table Of Contents. </p>
@@ -2782,7 +2782,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_xlink_href-series">
             <help>
                 <p> If the Book Series is catalogued elsewhere in Tamboti, enter its XLink here. </p>
                 <p> You may delete the information entered below, if it is contained in the record
@@ -2794,7 +2794,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_xlink_href-periodical">
             <help>
                 <p> If the Periodical is catalogued elsewhere in Tamboti, enter its XLink here. </p>
                 <p> You may delete the information entered below, if it is contained in the record
@@ -2806,7 +2806,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_xlink_href-edited-volume">
             <help>
                 <p> If the Edited Volume is catalogued elsewhere in Tamboti, enter its XLink here. </p>
                 <p> You may delete the information entered below, if it is contained in the record
@@ -2818,7 +2818,7 @@
             <parent/>
             <tab-id/>
         </item>
-        <item>
+        <item xml:id="hint-code_xml_lang">
             <help>
                 <p> The language used within Title Information is specified here, if this language
                     is different from the language noted in Language of Resource. xml:lang is used

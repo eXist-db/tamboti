@@ -101,6 +101,35 @@
     <tableOfContents type="" displayLabel="" lang="" script="" transliteration="" xlink:href=""/>
     <note lang="eng" type="" authority="" displayLabel="" script="" transliteration="" ID="" xlink:href=""/>
     <relatedItem type="" xlink:href="" ID="" displayLabel="">
+        <titleInfo lang="" script="" transliteration="" type="">
+            <nonSort/>
+            <title/>
+            <subTitle/>
+            <partNumber/>
+            <partName/>
+        </titleInfo>
+        <name type="" authority="" lang="" script="" transliteration="" xlink:href="">
+            <namePart type="" lang="" script="" transliteration=""/>
+            <role>
+                <roleTerm type="code" authority="marcrelator"/>
+            </role>
+        </name>
+        <originInfo lang="" script="" transliteration="" displayLabel="" altRepGroup="">
+            <place supplied="">
+                <placeTerm type="" authority="marccountry" authorityURI="" valueURI=""/>
+            </place>
+            <dateIssued encoding="w3cdtf" point="" keyDate="" qualifier=""/>
+            <dateCreated encoding="w3cdtf" point="" keyDate="" qualifier=""/>
+            <dateCaptured encoding="w3cdtf" point="" keyDate="" qualifier=""/>
+            <dateValid encoding="w3cdtf" point="" keyDate="" qualifier=""/>
+            <dateModified encoding="w3cdtf" point="" keyDate="" qualifier=""/>
+            <copyrightDate encoding="w3cdtf" point="" keyDate="" qualifier=""/>
+            <dateOther encoding="w3cdtf" point="" keyDate="" qualifier=""/>
+            <publisher/>
+            <edition/>
+            <issuance/>
+            <frequency authority="marcfrequency"/>
+        </originInfo>
         <part type="" order="" ID="">
             <detail type="" level="">
                 <number/>
