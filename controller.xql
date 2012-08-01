@@ -72,13 +72,21 @@ return
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
             <redirect url="{concat(request:get-uri(), '/')}"/>
         </dispatch>
-    
-    else if ($exist:path eq '/') then
+     else if ($exist:path = ('/bib')) then
+        <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+    		<redirect url="modules/search/bib.html"/>
+    	</dispatch>
+     else if ($exist:path = ('/database','/databases')) then
+        <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+    		<redirect url="modules/search/databases.html"/>
+    	</dispatch>
+        
+     else if ($exist:path eq '/') then
         <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
     		<redirect url="modules/search/index.html"/>
     	</dispatch>
 
-    else if ($exist:resource eq 'retrieve') then
+     else if ($exist:resource eq 'retrieve') then
 
         (:  Retrieve an item from the query results stored in the HTTP session. The
     	   format of the URL will be /sandbox/results/X, where X is the number of the
