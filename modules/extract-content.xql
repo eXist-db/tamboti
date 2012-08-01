@@ -28,7 +28,7 @@ declare function extract:index-callback($root as element(), $path as xs:anyURI, 
             if ($root/@class eq 'page') then
                 let $page := if (empty($page)) then 1 else $page + 1
                 return
-                    ( extract:do-index("page", concat("[[", $page, "]]", $root//xhtml:p/string()), $path), $page )
+                    ( extract:do-index("page", concat("[[", $page, "]]", string-join($root//xhtml:p/string(), " ")), $path), $page)
             else
                 $page
 };
