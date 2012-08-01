@@ -28,6 +28,7 @@
                     the original record again.</p>
             </help>
             <value>save</value>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_abstract">
             <help>
@@ -38,7 +39,7 @@
             <value>abstract</value>
             <local-name>abstract</local-name>
             <parent>subject</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_accessCondition">
             <help>
@@ -63,7 +64,7 @@
             <value>accessCondition</value>
             <local-name>accessCondition</local-name>
             <parent>mods</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_affiliation">
             <help>
@@ -75,7 +76,7 @@
             <value>affiliation</value>
             <local-name>affiliation</local-name>
             <parent>name</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_altRepGroup">
             <help>
@@ -89,7 +90,7 @@
             <local-name>altRepGroup</local-name>
             <parent>titleInfo</parent>
             <parent>name</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_area">
             <help>
@@ -98,7 +99,7 @@
             <value>area</value>
             <local-name>area</local-name>
             <parent>hierarchicalGeographic</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_authority">
             <help>
@@ -111,7 +112,7 @@
             <value>authority</value>
             <local-name>authority</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_name-authority">
             <help>
@@ -127,7 +128,7 @@
             <value>name-authority</value>
             <local-name>authority</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_namePart-authority">
             <help>
@@ -143,7 +144,7 @@
             <value>namePart-authority</value>
             <local-name>authority</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_uniform-title-authority">
             <help>
@@ -153,7 +154,7 @@
             <value>uniform-title-authority</value>
             <local-name>authority</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_titleInfo-authority-abbreviated">
             <help>
@@ -164,7 +165,7 @@
             <value>titleInfo-authority-abbreviated</value>
             <local-name>authority</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_authority-uri">
             <help>
@@ -179,7 +180,7 @@
             <value>authority-uri</value>
             <local-name>authorityURI</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_cartographics">
             <help>
@@ -189,7 +190,7 @@
             <value>cartographics</value>
             <local-name>cartographics</local-name>
             <parent>subject</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_city">
             <help>
@@ -198,7 +199,7 @@
             <value>city</value>
             <local-name>city</local-name>
             <parent>hierarchicalGeographic</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_citySection">
             <help>
@@ -208,7 +209,7 @@
             <value>citySection</value>
             <local-name>citySection</local-name>
             <parent>hierarchicalGeographic</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_continent">
             <help>
@@ -217,7 +218,7 @@
             <value>continent</value>
             <local-name>continent</local-name>
             <parent>hierarchicalGeographic</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_coordinates">
             <help>
@@ -230,7 +231,7 @@
             <value>coordinates</value>
             <local-name>coordinates</local-name>
             <parent>cartographics</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_copyrightDate-compact">
             <help>
@@ -250,7 +251,7 @@
             <value>copyrightDate-compact</value>
             <local-name>copyrightDate</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_copyrightDate">
             <help>
@@ -261,7 +262,7 @@
             <value>copyrightDate</value>
             <local-name>copyrightDate</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_country">
             <help>
@@ -270,7 +271,7 @@
             <value>country</value>
             <local-name>country</local-name>
             <parent>hierarchicalGeographic</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_county">
             <help>
@@ -280,7 +281,7 @@
             <value>county</value>
             <local-name>county</local-name>
             <parent>hierarchicalGeographic</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_dateCaptured">
             <help>
@@ -291,7 +292,7 @@
             <value>dateCaptured</value>
             <local-name>dateCaptured</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_dateCreated">
             <help>
@@ -301,7 +302,7 @@
             <value>dateCreated</value>
             <local-name>dateCreated</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_dateIssued-compact">
             <help>
@@ -325,7 +326,7 @@
             <value>dateIssued-compact</value>
             <local-name>dateIssued</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_dateIssued">
             <help>
@@ -346,7 +347,7 @@
             <value>dateIssued</value>
             <local-name>dateIssued</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_dateModified">
             <help>
@@ -356,7 +357,7 @@
             <value>dateModified</value>
             <local-name>dateModified</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_dateOther">
             <help>
@@ -366,7 +367,7 @@
             <value>dateOther</value>
             <local-name>dateOther</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_dateValid">
             <help>
@@ -376,7 +377,7 @@
             <value>dateValid</value>
             <local-name>dateValid</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_description">
             <help>
@@ -387,7 +388,7 @@
             <value>description</value>
             <local-name>description</local-name>
             <parent>name</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_name-displayForm">
             <help>
@@ -400,7 +401,7 @@
             <value>name-displayForm</value>
             <local-name>displayForm</local-name>
             <parent>name</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_displayLabel">
             <help>
@@ -414,7 +415,7 @@
             <value>displayLabel</value>
             <local-name>displayLabel</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_edition">
             <help>
@@ -426,7 +427,7 @@
             <value>edition</value>
             <local-name>edition</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_date-encoding">
             <help>
@@ -447,7 +448,7 @@
             <value>date-encoding</value>
             <local-name>encoding</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_temporal-encoding">
             <help>
@@ -467,7 +468,7 @@
             <value>temporal-encoding</value>
             <local-name>encoding</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_extension">
             <help>
@@ -484,7 +485,7 @@
             <value>extension</value>
             <local-name>extension</local-name>
             <parent>mods</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_extent">
             <help>
@@ -498,7 +499,7 @@
             <value>extent</value>
             <local-name>extent</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_extent-compact">
             <help>
@@ -518,7 +519,7 @@
             <value>extent-compact</value>
             <local-name>extent</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_extraterrestrialArea">
             <help>
@@ -529,7 +530,7 @@
             <value>extraterrestrialArea</value>
             <local-name>extraterrestrialArea</local-name>
             <parent>hierarchicalGeographic</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_frequency">
             <help>
@@ -540,7 +541,7 @@
             <value>frequency</value>
             <local-name>frequency</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_genre">
             <help>
@@ -552,7 +553,7 @@
             <value>genre</value>
             <local-name>genre</local-name>
             <parent>subject</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_geographic">
             <help>
@@ -571,7 +572,7 @@
             <value>geographic</value>
             <local-name>geographic</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_geographicCode">
             <help>
@@ -582,7 +583,7 @@
             <value>geographicCode</value>
             <local-name>geographicCode</local-name>
             <parent>subject</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_hierarchicalGeographic">
             <help>
@@ -598,7 +599,7 @@
             <value>hierarchicalGeographic</value>
             <local-name>hierarchicalGeographic</local-name>
             <parent>subject</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_ID">
             <help>
@@ -609,7 +610,7 @@
             <value>ID</value>
             <local-name>ID</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_isbn">
             <help>
@@ -621,7 +622,7 @@
             <value>isbn</value>
             <local-name>identifier</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_identifier">
             <help>
@@ -643,7 +644,7 @@
             <value>identifier</value>
             <local-name>identifier</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_internetMediaType-compact">
             <help>
@@ -656,7 +657,7 @@
             <value>internetMediaType-compact</value>
             <local-name>internetMediaType</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_identifier-invalid">
             <help>
@@ -668,7 +669,7 @@
             <value>identifier-invalid</value>
             <local-name>invalid</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_genre">
             <help>
@@ -678,7 +679,7 @@
             <value>genre</value>
             <local-name>island</local-name>
             <parent>hierarchicalGeographic</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_issuance">
             <help>
@@ -694,7 +695,7 @@
             <value>issuance</value>
             <local-name>issuance</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_keyDate">
             <help>
@@ -707,7 +708,7 @@
             <value>keyDate</value>
             <local-name>keyDate</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_lang">
             <help>
@@ -719,7 +720,7 @@
             <value>lang</value>
             <local-name>lang</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_lang-global-compact">
             <help>
@@ -734,7 +735,7 @@
             <value>lang-global-compact</value>
             <local-name>lang</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_lang-local-compact">
             <help>
@@ -749,7 +750,7 @@
             <value>lang-local-compact</value>
             <local-name>lang</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_name-lang">
             <help>
@@ -765,7 +766,7 @@
             <value>name-lang</value>
             <local-name>lang</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_namePart-lang">
             <help>
@@ -781,7 +782,7 @@
             <value>namePart-lang</value>
             <local-name>lang</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_originInfo-lang">
             <help>
@@ -798,7 +799,7 @@
             <value>originInfo-lang</value>
             <local-name>lang</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_language">
             <help>
@@ -831,7 +832,7 @@
             <value>language</value>
             <local-name>language</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_languageTerm">
             <help>
@@ -848,7 +849,7 @@
             <value>languageTerm</value>
             <local-name>languageTerm</local-name>
             <parent>language</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_location">
             <help>
@@ -865,7 +866,7 @@
             <value>location</value>
             <local-name>location</local-name>
             <parent>mods</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_more-related-item">
             <help>
@@ -875,7 +876,7 @@
             <value>more-related-item</value>
             <local-name>more</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_more-physical-description">
             <help>
@@ -886,7 +887,7 @@
             <value>more-physical-description</value>
             <local-name>more</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_more-location">
             <help>
@@ -896,7 +897,7 @@
             <value>more-location</value>
             <local-name>more</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_more-identifier">
             <help>
@@ -907,7 +908,7 @@
             <value>more-identifier</value>
             <local-name>more</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_more-subjects">
             <help>
@@ -918,7 +919,7 @@
             <value>more-subjects</value>
             <local-name>more</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_more-title-information">
             <help>
@@ -929,7 +930,7 @@
             <value>more-title-information</value>
             <local-name>more</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_more-name-information">
             <help>
@@ -940,7 +941,7 @@
             <value>more-name-information</value>
             <local-name>more</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_more-origin-information">
             <help>
@@ -951,7 +952,7 @@
             <value>more-origin-information</value>
             <local-name>more</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_name">
             <help>
@@ -978,7 +979,7 @@
             <value>name</value>
             <local-name>name</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_name-relatedItem-periodical-editor-compact">
             <help>
@@ -997,7 +998,7 @@
             <value>name-relatedItem-periodical-editor-compact</value>
             <local-name>name</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_name-compact">
             <help>
@@ -1019,7 +1020,7 @@
             <value>name-compact</value>
             <local-name>name</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_subject-name-corporate-compact">
             <help>
@@ -1035,7 +1036,7 @@
             <value>subject-name-corporate-compact</value>
             <local-name>name</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_subject-namePart-corporate-compact">
             <help>
@@ -1049,7 +1050,7 @@
             <value>subject-namePart-corporate-compact</value>
             <local-name>name</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_relatedItem-namePart-corporate-compact">
             <help>
@@ -1061,7 +1062,7 @@
             <value>relatedItem-namePart-corporate-compact</value>
             <local-name>name</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_subject-name-personal-compact">
             <help>
@@ -1073,7 +1074,7 @@
             <value>subject-name-personal-compact</value>
             <local-name>name</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_subject-name">
             <help>
@@ -1087,7 +1088,7 @@
             <value>subject-name</value>
             <local-name>name</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_subject-name-corporate">
             <help>
@@ -1103,7 +1104,7 @@
             <value>subject-name-corporate</value>
             <local-name>name</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_subject-name-personal">
             <help>
@@ -1119,7 +1120,7 @@
             <value>subject-name-personal</value>
             <local-name>name</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_edited-volume-name-compact">
             <help>
@@ -1131,7 +1132,7 @@
             <value>edited-volume-name-compact</value>
             <local-name>name</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_series-name-compact">
             <help>
@@ -1143,7 +1144,7 @@
             <value>series-name-compact</value>
             <local-name>name</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_namePart">
             <help>
@@ -1154,7 +1155,7 @@
             <value>namePart</value>
             <local-name>namePart</local-name>
             <parent>name</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_namePart-compact">
             <help>
@@ -1180,7 +1181,7 @@
             <value>namePart-compact</value>
             <local-name>namePart</local-name>
             <parent>name</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_subject-namePart-personal-compact">
             <help>
@@ -1192,7 +1193,7 @@
             <value>subject-namePart-personal-compact</value>
             <local-name>namePart</local-name>
             <parent>name</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_namePart-institution-compact">
             <help>
@@ -1209,7 +1210,7 @@
             <value>namePart-institution-compact</value>
             <local-name>namePart</local-name>
             <parent>name</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_namePart-type">
             <help>
@@ -1237,7 +1238,7 @@
             <value>namePart-type</value>
             <local-name>namePart</local-name>
             <parent>name</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_nameTitleGroup">
             <help>
@@ -1251,7 +1252,7 @@
             <value>nameTitleGroup</value>
             <local-name>nameTitleGroup</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_nonSort">
             <help>
@@ -1264,7 +1265,7 @@
             <value>nonSort</value>
             <local-name>nonSort</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_note">
             <help>
@@ -1282,7 +1283,7 @@
             <value>note</value>
             <local-name>note</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_objectPart">
             <help>
@@ -1295,7 +1296,7 @@
             <value>objectPart</value>
             <local-name>objectPart</local-name>
             <parent>language</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_occupation">
             <help>
@@ -1308,7 +1309,7 @@
             <value>occupation</value>
             <local-name>occupation</local-name>
             <parent>subject</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_originInfo">
             <help>
@@ -1321,7 +1322,7 @@
             <value>originInfo</value>
             <local-name>originInfo</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_originInfo-compact">
             <help>
@@ -1333,7 +1334,7 @@
             <value>originInfo-compact</value>
             <local-name>originInfo</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_part-relatedItem-periodical-compact">
             <help>
@@ -1353,7 +1354,7 @@
             <value>part-relatedItem-periodical-compact</value>
             <local-name>part</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_part">
             <help>
@@ -1376,7 +1377,7 @@
             <value>part</value>
             <local-name>part</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_other-part">
             <help>
@@ -1393,7 +1394,7 @@
             <value>other-part</value>
             <local-name>part</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_edited-volume-part-compact">
             <help>
@@ -1405,7 +1406,7 @@
             <value>edited-volume-part-compact</value>
             <local-name>part</local-name>
             <parent>relatedItem</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_series-part-compact">
             <help>
@@ -1416,7 +1417,7 @@
             <value>series-part-compact</value>
             <local-name>part</local-name>
             <parent>relatedItem</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_partName">
             <help>
@@ -1438,7 +1439,7 @@
             <value>partName</value>
             <local-name>partName</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_partNumber">
             <help>
@@ -1457,7 +1458,7 @@
             <value>partNumber</value>
             <local-name>partNumber</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_physicalDescription-compact">
             <help>
@@ -1468,7 +1469,7 @@
             <value>physicalDescription-compact</value>
             <local-name>physicalDescription</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_physicalLocation">
             <help>
@@ -1485,7 +1486,7 @@
             <value>physicalLocation</value>
             <local-name>physicalLocation</local-name>
             <parent>location</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_place-compact">
             <help>
@@ -1504,7 +1505,7 @@
             <value>place-compact</value>
             <local-name>place</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_place">
             <help>
@@ -1521,7 +1522,7 @@
             <value>place</value>
             <local-name>place</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_placeTerm">
             <help>
@@ -1535,7 +1536,7 @@
             <value>placeTerm</value>
             <local-name>placeTerm</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_placeTerm-marccountry">
             <help>
@@ -1546,7 +1547,7 @@
             <value>placeTerm-marccountry</value>
             <local-name>placeTerm</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_placeTerm-text">
             <help>
@@ -1557,7 +1558,7 @@
             <value>placeTerm-text</value>
             <local-name>placeTerm</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_point">
             <help>
@@ -1571,7 +1572,7 @@
             <value>point</value>
             <local-name>point</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_projection">
             <help>
@@ -1580,7 +1581,7 @@
             <value>projection</value>
             <local-name>projection</local-name>
             <parent>cartographics</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_province">
             <help>
@@ -1590,7 +1591,8 @@
             <value>province</value>
             <local-name>province</local-name>
             <parent>hierarchicalGeographic</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_publisher-compact">
             <help>
@@ -1607,7 +1609,7 @@
             <value>publisher-compact</value>
             <local-name>publisher</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_qualifier">
             <help>
@@ -1621,7 +1623,7 @@
             <value>qualifier</value>
             <local-name>qualifier</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_region">
             <help>
@@ -1631,7 +1633,7 @@
             <value>region</value>
             <local-name>region</local-name>
             <parent>hierarchicalGeographic</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_relatedItem-periodical-compact">
             <help>
@@ -1644,7 +1646,7 @@
             <value>relatedItem-periodical-compact</value>
             <local-name>relatedItem</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_relatedItem-periodical-titleInfo-compact">
             <help>
@@ -1662,7 +1664,7 @@
             <value>relatedItem-periodical-titleInfo-compact</value>
             <local-name>relatedItem</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_other-location">
             <help>
@@ -1678,7 +1680,7 @@
             <value>other-location</value>
             <local-name>relatedItem</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_book-review">
             <help>
@@ -1694,7 +1696,7 @@
             <value>book-review</value>
             <local-name>relatedItem</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_book-reviewed">
             <help>
@@ -1710,7 +1712,7 @@
             <value>book-reviewed</value>
             <local-name>relatedItem</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_edited-volume-compact">
             <help>
@@ -1747,7 +1749,7 @@
             <value>edited-volume-compact</value>
             <local-name>relatedItem</local-name>
             <parent>mods</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_series-compact">
             <help>
@@ -1783,7 +1785,7 @@
             <value>series-compact</value>
             <local-name>relatedItem</local-name>
             <parent>mods</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_series-edited-volume-compact">
             <help>
@@ -1803,7 +1805,7 @@
             <value>series-edited-volume-compact</value>
             <local-name>relatedItem</local-name>
             <parent>relatedItem</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_role-compact">
             <help>
@@ -1816,7 +1818,7 @@
             <value>role-compact</value>
             <local-name>role</local-name>
             <parent>name</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_role">
             <help>
@@ -1829,7 +1831,7 @@
             <value>role</value>
             <local-name>role</local-name>
             <parent>name</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_roleTerm">
             <help>
@@ -1845,7 +1847,7 @@
             <value>roleTerm</value>
             <local-name>roleTerm</local-name>
             <parent>role</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_roleTerm-code">
             <help>
@@ -1857,7 +1859,7 @@
             <value>roleTerm-code</value>
             <local-name>roleTerm</local-name>
             <parent>role</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_roleTerm-text">
             <help>
@@ -1873,7 +1875,7 @@
             <value>roleTerm-text</value>
             <local-name>roleTerm</local-name>
             <parent>role</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_roleTerm-type">
             <help>
@@ -1883,7 +1885,7 @@
             <value>roleTerm-type</value>
             <local-name>roleTerm</local-name>
             <parent>role</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_roleTerm-authority">
             <help>
@@ -1893,7 +1895,7 @@
             <value>roleTerm-authority</value>
             <local-name>roleTerm</local-name>
             <parent>role</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_scale">
             <help>
@@ -1904,7 +1906,7 @@
             <value>scale</value>
             <local-name>scale</local-name>
             <parent>cartographics</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_name-script">
             <help>
@@ -1918,7 +1920,7 @@
             <value>name-script</value>
             <local-name>script</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_namePart-script">
             <help>
@@ -1932,7 +1934,7 @@
             <value>namePart-script</value>
             <local-name>script</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_originInfo-script">
             <help>
@@ -1948,7 +1950,7 @@
             <value>originInfo-script</value>
             <local-name>script</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_script">
             <help>
@@ -1962,7 +1964,7 @@
             <value>script</value>
             <local-name>script</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_script-global-compact">
             <help>
@@ -1980,7 +1982,7 @@
             <value>script-global-compact</value>
             <local-name>script</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_script-local-compact">
             <help>
@@ -1998,7 +2000,7 @@
             <value>script-local-compact</value>
             <local-name>script</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_script-compact">
             <help>
@@ -2019,7 +2021,7 @@
             <value>script-compact</value>
             <local-name>script</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_scriptTerm">
             <help>
@@ -2029,7 +2031,7 @@
             <value>scriptTerm</value>
             <local-name>scriptTerm</local-name>
             <parent>language</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_shelfLocator">
             <help>
@@ -2041,7 +2043,7 @@
             <value>shelfLocator</value>
             <local-name>shelfLocator</local-name>
             <parent>location</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_state">
             <help>
@@ -2051,7 +2053,7 @@
             <value>state</value>
             <local-name>state</local-name>
             <parent>hierarchicalGeographic</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_subject">
             <help>
@@ -2109,7 +2111,7 @@
             <value>subject</value>
             <local-name>subject</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_subTitle">
             <help>
@@ -2130,7 +2132,7 @@
             <value>subTitle</value>
             <local-name>subTitle</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_subTitle-compact">
             <help>
@@ -2145,7 +2147,7 @@
             <value>subTitle-compact</value>
             <local-name>subTitle</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_titleInfo-supplied">
             <help>
@@ -2156,7 +2158,7 @@
             <value>titleInfo-supplied</value>
             <local-name>supplied</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_targetAudience">
             <help>
@@ -2178,7 +2180,7 @@
             <value>targetAudience</value>
             <local-name>targetAudience</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_template">
             <help>
@@ -2194,7 +2196,7 @@
             <value>template</value>
             <local-name>template</local-name>
             <parent>extension</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_temporal">
             <help>
@@ -2216,7 +2218,7 @@
             <value>temporal</value>
             <local-name>temporal</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_territory">
             <help>
@@ -2226,7 +2228,7 @@
             <value>territory</value>
             <local-name>territory</local-name>
             <parent>hierarchicalGeographic</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_title">
             <help>
@@ -2256,7 +2258,7 @@
             <value>title</value>
             <local-name>title</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_title-compact">
             <help>
@@ -2270,7 +2272,7 @@
             <value>title-compact</value>
             <local-name>title</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_subject-titleInfo">
             <help>
@@ -2307,7 +2309,7 @@
             <value>subject-titleInfo</value>
             <local-name>titleInfo</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_titleInfo">
             <help>
@@ -2349,7 +2351,7 @@
             <value>titleInfo</value>
             <local-name>titleInfo</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_titleInfo-compact">
             <help>
@@ -2375,7 +2377,7 @@
             <value>titleInfo-compact</value>
             <local-name>titleInfo</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_edited-volume-titleInfo-compact">
             <help>
@@ -2393,7 +2395,7 @@
             <value>edited-volume-titleInfo-compact</value>
             <local-name>titleInfo</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_series-titleInfo-compact">
             <help>
@@ -2411,7 +2413,7 @@
             <value>series-titleInfo-compact</value>
             <local-name>titleInfo</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_edited-volume-series-title">
             <help>
@@ -2430,7 +2432,7 @@
             <value>edited-volume-series-title</value>
             <local-name>titleInfo</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_edited-volume-series-part">
             <help>
@@ -2441,7 +2443,7 @@
             <value>edited-volume-series-part</value>
             <local-name>titleInfo</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_edited-volume-series">
             <help>
@@ -2453,7 +2455,7 @@
             <value>edited-volume-series</value>
             <local-name>titleInfo</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_topic">
             <help>
@@ -2479,7 +2481,7 @@
             <value>topic</value>
             <local-name>topic</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_transliteration">
             <help>
@@ -2505,7 +2507,7 @@
             <value>transliteration</value>
             <local-name>transliteration</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_transliteration-global-compact">
             <help>
@@ -2522,7 +2524,7 @@
             <value>transliteration-global-compact</value>
             <local-name>transliteration</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_transliteration-local-compact">
             <help>
@@ -2538,7 +2540,7 @@
             <value>transliteration-local-compact</value>
             <local-name>transliteration</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_transliterationOfResource">
             <help>
@@ -2559,7 +2561,7 @@
             <value>transliterationOfResource</value>
             <local-name>transliterationOfResource</local-name>
             <parent>extension</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_identifier-type">
             <help>
@@ -2568,7 +2570,7 @@
             <value>identifier-type</value>
             <local-name>type</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_titleInfo-type">
             <help>
@@ -2600,7 +2602,7 @@
             <value>titleInfo-type</value>
             <local-name>type</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_accessCondition-type">
             <help>
@@ -2614,7 +2616,7 @@
             <value>accessCondition-type</value>
             <local-name>type</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_genre-type">
             <help>
@@ -2623,7 +2625,7 @@
             <value>genre-type</value>
             <local-name>type</local-name>
             <parent>genre</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_languageTerm-type">
             <help>
@@ -2633,7 +2635,7 @@
             <value>languageTerm-type</value>
             <local-name>type</local-name>
             <parent>languageTerm</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_location-type">
             <help>
@@ -2691,7 +2693,7 @@
             <value>url-compact</value>
             <local-name>url</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_location-url">
             <help>
@@ -2703,7 +2705,7 @@
             <value>location-url</value>
             <local-name>url</local-name>
             <parent>location</parent>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_name-usage">
             <help>
@@ -2720,7 +2722,7 @@
             <value>name-usage</value>
             <local-name>usage</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_usage">
             <help>
@@ -2732,7 +2734,7 @@
             <value>usage</value>
             <local-name>usage</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_value-uri">
             <help>
@@ -2745,7 +2747,7 @@
             <value>value-uri</value>
             <local-name>valueURI</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_xlink_href">
             <help>
@@ -2763,7 +2765,7 @@
             <value>xlink:href</value>
             <local-name>xlink:href</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_accessCondition-xlink_href">
             <help>
@@ -2780,7 +2782,7 @@
             <value>accessCondition-xlink:href</value>
             <local-name>xlink:href</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_xlink_href-series">
             <help>
@@ -2792,7 +2794,7 @@
             <value>xlink:href-series</value>
             <local-name>xlink:href</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_xlink_href-periodical">
             <help>
@@ -2804,7 +2806,7 @@
             <value>xlink:href-periodical</value>
             <local-name>xlink:href</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_xlink_href-edited-volume">
             <help>
@@ -2816,7 +2818,7 @@
             <value>xlink:href-edited-volume</value>
             <local-name>xlink:href</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_xml_lang">
             <help>
@@ -2831,7 +2833,7 @@
             <value>xml:lang</value>
             <local-name>xml:lang</local-name>
             <parent/>
-            <tab-id/>
+            <tab-id>titles</tab-id>
         </item>
     </items>
 </code-table><!--return
