@@ -10,15 +10,15 @@ declare option exist:serialize "method=xml media-type=text/xml indent=yes";
 (: codes-for-tab.xq
    This module will load all the code tables for a specific tab of a large multi-part form.
    Created for the MODS form.
-   It calculates which tabs are needed by looking through the XForms body files
-   in the edit/body collection of the mods editor.
    
    Input parameter: the tab ID
    Output: a list of all the code tables used by the tab in XML
    
    Author: Dan McCreary
    Date: Aug. 2010
-   
+
+   Revised: Jens Petersen
+   Date: Aug. 2012
    :)
 
 (:~
@@ -66,60 +66,61 @@ else
 :)
 
 let $code-table-collection := concat($config:edit-app-root, '/code-tables/')
-let $xforms-body-collection := concat($config:edit-app-root, '/body')
-let $itemsets := collection($xforms-body-collection)/*[@tab-id=$tab-id]//xf:itemset
-let $code-table-names :=
-   for $itemset in $itemsets
-      let $nodeset := string($itemset/@nodeset)
-      let $after := substring-after($nodeset, "code-table-name='")
-      let $code-table-name := substring-before($after, "']/items/item")
-      order by $code-table-name
-      return $code-table-name
-let $distinct-code-table-names := (distinct-values($code-table-names), 'hint-code')
+let $code-table-names := collection($code-table-collection)/code-table[tab-id = $tab-id]/code-table-name/text()
 
 (: generate etag :)
 let $last-modified := local:get-last-modified($code-table-collection,
-    for $distinct-code-table-name in $distinct-code-table-names return
-        concat($distinct-code-table-name, 's.xml')
+    for $code-table-name in $code-table-names return
+        concat($code-table-name, 's.xml')
 )
+
+(:NB: hint-codes.xml is not covered by etag.:)
 let $etag := local:create-etag($last-modified) return
+
 (
     (: set some caching http headers :)
     response:set-header("Etag", $etag),
     response:set-header("Last-Modified", $last-modified),
 
     (: have we previously made the same request for the same un-modified code-tables? :)
-    if(request:get-header("If-None-Match") eq $etag)then
+    if (request:get-header("If-None-Match") eq $etag) then
     (
         (: yes, so send not modified :)
         response:set-status-code(304)
     ) else (
         (: no, so process the request:)
-        let $itemset-count := count($itemsets)
-        let $count-distinct := count($distinct-code-table-names) return
+        let $count-distinct := count($code-table-names) return
         <code-tables>
         {
-            if($debug) then
+            if ($debug) then
                 <debug>
                     <code-table-collection>{$code-table-collection}</code-table-collection>
-                    <xforms-body-collection>{$xforms-body-collection}</xforms-body-collection>
                     <tab-id>{$tab-id}</tab-id>
-                    <itemset-count>{$itemset-count}</itemset-count>
                     <code-table-name-count>{$count-distinct}</code-table-name-count>
-                    <distinct-code-table-names>{$distinct-code-table-names}</distinct-code-table-names>
+                    <distinct-code-table-names>{$code-table-names}</distinct-code-table-names>
                 </debug>
-            else(),
-           
-            for $code-table-name in $distinct-code-table-names
-              let $log := util:log("DEBUG", ("##$code-table-name): ", $code-table-name))
+            else ()
+            ,
+            for $code-table-name in $code-table-names
               let $file-path := concat($code-table-collection, $code-table-name, 's.xml')
-              let $code-table := doc($file-path) return
-                 (:NB: An empty code-table is created; this has an empty xml:id which has to be filled with an NCName.:)
-                 <code-table xml:id="{if ($code-table-name) then $code-table-name else 'xxx'}">
+              let $code-table := doc($file-path) 
+              return
+                 <code-table xml:id="{$code-table-name}">
                     <code-table-name>{$code-table-name}</code-table-name>
                     <items>
                     {
                         for $item in $code-table//item return
+                            $item
+                    }
+                    </items>
+                 </code-table>
+                 ,
+                 let $file-path := concat($code-table-collection, 'hint-code', 's.xml')
+                 return
+                 <code-table>
+                    <items>
+                    {
+                        for $item in doc($file-path)//item[tab-id = $tab-id] return
                             $item
                     }
                     </items>

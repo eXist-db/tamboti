@@ -590,7 +590,7 @@
                                         008/23 (BK, MU, CR, MX) and 008/29 (MP, VM). Use
                                         authority="marcform" to indicate its use. </p>
                                 </xf:hint>
-                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='note-authority-code']/items/item">
+                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='note-source-authority-code']/items/item">
                                     <xf:label ref="label"/>
                                     <xf:value ref="value"/>
                                 </xf:itemset>

@@ -160,7 +160,7 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
            <!--NB: These will all be in insert-templates.xml and are not needed.-->
            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="instances/compact-template.xml" id='compact-template' readonly="true"/> 
            
-           <!--Only load the code-tables that are used by the active tab. Long code-tables are the prime reason for the slowness of the editor.-->
+           <!--Only load the code-tables that are used by the active tab.-->
            <xf:instance id="code-tables" src="codes-for-tab.xq?tab-id={$instance-id}" readonly="true"/>
            
            <!--Having binds would prevent a tab from being saved when clicking on another tab, so binds are not used.--> 
@@ -238,7 +238,8 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
     let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id eq $instance-id]
     (:Get the relevant information to display in the info-line, the label for the template chosen (if any) and the hint belonging to it (if any). :)
     let $hint-data := concat($config:edit-app-root, '/code-tables/hint-codes.xml')
-    let $save-hint := doc($hint-data)/code-table/items/item[value eq "save"]/hint
+    let $save-hint := doc($hint-data)/code-table//item[value eq "save"]/help
+    
     (:Get the time of the last save to the temp collection and parse it.:)
     let $last-modified := xmldb:last-modified($config:mods-temp-collection, concat($id,'.xml'))
     let $last-modified-hour := hours-from-dateTime($last-modified)
@@ -309,18 +310,18 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                  </xf:trigger>-->
                  <xf:trigger>
                     <xf:label class="xforms-group-label-centered-general">Finish Editing
-                    <span class="xforms-hint">
-                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                        <div class="xforms-hint-value">
-                            {$save-hint}
-                        </div>
-                    </span>
                     </xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:send submission="save-and-close-submission"/>
                             <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={replace($target-collection, '/db', '')}" show="replace"/>
                         </xf:action>
                 </xf:trigger>
+                <span class="xforms-hint">
+                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                    <div class="xforms-hint-value">
+                        {$save-hint}
+                    </div>
+                </span>
                 <span class="related-title">
                         {$related-publication}
                 </span>
@@ -344,18 +345,18 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                  </xf:trigger>
                  <xf:trigger>
                     <xf:label class="xforms-group-label-centered-general">Finish Editing
-                        <span class="xforms-hint">
-                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                            <div class="xforms-hint-value">
-                                {$save-hint}
-                            </div>
-                        </span>
                     </xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="save-and-close-submission"/>
                         <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>
                     </xf:action>
                 </xf:trigger>
+                <span class="xforms-hint">
+                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                    <div class="xforms-hint-value">
+                        {$save-hint}
+                    </div>
+                </span>
             </div>
         </div>
 };

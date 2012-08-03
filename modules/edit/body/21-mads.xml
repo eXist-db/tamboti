@@ -252,7 +252,7 @@
                             <xf:label>xlink:href<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xlink:href',instance('code-tables'))/help"/>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xlink_href',instance('code-tables'))/help"/>
                                     </div>
                                 </span>
                             </xf:label>
@@ -330,7 +330,7 @@
                             <xf:label>xml:lang<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml:lang',instance('code-tables'))/help"/>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
                                     </div>
                                 </span>
                             </xf:label>
@@ -548,7 +548,7 @@
                                 <xf:label>xml:lang<span class="xforms-help">
                                         <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">
-                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml:lang',instance('code-tables'))/help"/>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
                                         </div>
                                     </span>
                                 </xf:label>
@@ -860,7 +860,7 @@
                                         <xf:label>xml:lang<span class="xforms-help">
                                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                 <div class="xforms-help-value">
-                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml:lang',instance('code-tables'))/help"/>
+                                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
                                                 </div>
                                             </span>
                                         </xf:label>
@@ -1063,7 +1063,7 @@
                                 <xf:label>xml:lang<span class="xforms-help">
                                         <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">
-                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml:lang',instance('code-tables'))/help"/>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
                                         </div>
                                     </span>
                                 </xf:label>
@@ -1222,7 +1222,7 @@
                                 <xf:label>xml:lang<span class="xforms-help">
                                         <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">
-                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml:lang',instance('code-tables'))/help"/>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
                                         </div>
                                     </span>
                                 </xf:label>
@@ -1383,7 +1383,7 @@
                                 <xf:label>xml:lang<span class="xforms-help">
                                         <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">
-                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml:lang',instance('code-tables'))/help"/>
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
                                         </div>
                                     </span>
                                 </xf:label>

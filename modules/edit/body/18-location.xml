@@ -26,7 +26,7 @@
                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                 <div class="xforms-hint-value">
                     <div class="xforms-hint-value">
-                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_extension',instance('code-tables'))/help"/>
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location',instance('code-tables'))/help"/>
                     </div>
                 </div>
             </span>
@@ -97,7 +97,7 @@
                             <xf:label>XLink<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xlink:href',instance('code-tables'))/help"/>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xlink_href',instance('code-tables'))/help"/>
                                         <p> Here, XLink may be used to link to additional
                                             information about the resource recorded in Physical
                                             Location, e.g. the institution's website.
@@ -127,7 +127,7 @@
                             <xf:label>xml:lang<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml:lang',instance('code-tables'))/help"/>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
                                     </div>
                                 </span>
                             </xf:label>
@@ -274,7 +274,7 @@
                             <xf:label>Access<span class="xforms-help">
                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                     <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_access',instance('code-tables'))/help"/>
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_url-access',instance('code-tables'))/help"/>
                                     </div>
                                 </span>
                             </xf:label>
@@ -602,7 +602,7 @@
                                             <xf:label>Type<span class="xforms-help">
                                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                     <div class="xforms-help-value">
-                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_template',instance('code-tables'))/help"/>
+                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_note-type',instance('code-tables'))/help"/>
                                                     </div>
                                                 </span>
                                             </xf:label>
