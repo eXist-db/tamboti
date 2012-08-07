@@ -6,7 +6,7 @@ declare namespace functx="http://www.functx.com";
 declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace e = "http://www.asia-europe.uni-heidelberg.de/";
 
-import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
+import module namespace config="http://exist-db.org/mods/config" at "config.xqm";
 
 declare variable $modsCommon:given-name-first-languages := ('eng', 'fre', 'ger', 'ita', 'por', 'spa');
 declare variable $modsCommon:no-word-space-languages := ('chi', 'jpn', 'kor');
