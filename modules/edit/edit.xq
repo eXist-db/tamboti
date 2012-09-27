@@ -1,6 +1,7 @@
 xquery version "1.0";
 
 (:TODO: change all 'monograph' to 'book' in tabs-data.xml and compact body files:)
+(:TODO: delete all '-compact' from e:template in records, then delete all code that removes this from type in session.xql, edit.xql, tabs.xqm.:)
 
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace sm="http://exist-db.org/xquery/securitymanager"; (:TODO move code into security module:)
@@ -51,7 +52,7 @@ declare function functx:pad-integer-to-length($integerToPad as xs:anyAtomicType?
     (:First, get the right template, based on the type-request and the presence or absence of transliteration.:)
     let $transliterationOfResource := request:get-parameter("transliterationOfResource", '')
     let $template-request := 
-        if ($type-request = ('related-book-review-in-periodical', 'related-article-in-periodical', 'related-contribution-to-edited-volume', 'suebs-tibetan', 'insert-templates', 'new-instance', 'mads'))
+        if ($type-request = ('related-book-review-in-periodical', 'related-article-in-periodical', 'related-contribution-to-edited-volume', 'suebs-tibetan', 'suebs-chinese', 'insert-templates', 'new-instance', 'mads'))
         (:These document types do not (yet) divide into latin and transliterated.:)
         then $type-request
         else
@@ -248,13 +249,15 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
     (:If the record is hosted by a record linked to through an xlink, display the title of this record. 
     Only the xlink on the first relatedItem with type host is treated.:)
     let $related-publication-xlink := doc($record-data)/mods:mods/mods:relatedItem[@type eq 'host'][1]/@xlink:href/string()
-    let $related-publication-xlink := replace($related-publication-xlink, '^#?(.*)$', '$1')    
+    let $related-publication-xlink := replace($related-publication-xlink, '^#?(.*)$', '$1')
     let $related-publication := collection($config:mods-root)//mods:mods[@ID eq $related-publication-xlink][1]
     let $related-publication := modsCommon:get-short-title($related-publication)
     let $related-publication :=
         if ($related-publication-xlink)
         then
-        (<span class="intro">The publication is included in </span>, <a href="../../modules/search/index.html?filter=ID&amp;value={$related-publication-xlink}" target="_blank">{$related-publication}</a>,<span class="intro">.</span>)
+            if (count($related-publication-xlink) eq 1)
+            then (<span class="intro">The publication is included in </span>, <a href="../../modules/search/index.html?filter=ID&amp;value={$related-publication-xlink}" target="_blank">{$related-publication}</a>,<span class="intro">.</span>)
+            else (<span class="intro">The publication is included in more than one publication.</span>)
         else ()
     return
         <div class="content">
@@ -369,7 +372,8 @@ The compact-c temples (in 00-compact-contents) is the same for all resource type
 the only filtering that is performed is for transliteration.:)
 declare function local:get-tab-id($tab-id as xs:string, $type-request as xs:string) {
     (:Remove any 'latin' and 'transliterated' appended the original type request. :)
-    let $type-request := replace(replace($type-request, '-latin', ''), '-transliterated', '')
+    (:Also remove "-compact" suffix used previously.:)
+    let $type-request := replace(replace(replace($type-request, '-latin', ''), '-transliterated', ''), '-compact', '')
         return
             if ($tab-id ne 'compact-b')
             (:Only treat compact-b types.:)
@@ -393,11 +397,14 @@ declare function local:get-tab-id($tab-id as xs:string, $type-request as xs:stri
                 				    if ($type-request eq 'suebs-tibetan')
                 				    then 'compact-b-suebs-tibetan'
                 				    else
-                				        if ($type-request eq 'mads')
-                				        then 'mads'
-                				        else 'compact-b-xlink'
-                				        (:Used for records related to other records through an xlink:href.:)
-                				        (:NB: Should be split up in three: article, book review and contribution.:)
+                    				    if ($type-request eq 'suebs-chinese')
+                    				    then 'compact-b-suebs-chinese'
+                    				    else
+                    				        if ($type-request eq 'mads')
+                    				        then 'mads'
+                    				        else 'compact-b-xlink'
+                    				        (:Used for records related to other records through an xlink:href.:)
+                    				        (:NB: Should be split up in three: article, book review and contribution.:)
 };
 
 (:Main:)
@@ -415,20 +422,21 @@ let $type-request := request:get-parameter('type', ())
 let $type-data := concat($config:edit-app-root, '/code-tables/document-type-codes.xml')
 
 (:Sorting data is retrieved from the type-data.:)
-(:If type-sort is '1', it is a compact form and the Basic Input Forms should be shown; 
-if type-sort is 3, it is a mads record and the MADS forms should be shown; 
+(:Sorting is done in session.xql in order to present the different template options in an intellegible way.:)
+(:If type-sort is '1', it is a compact form and the Basic Input Forms should be shown;
+If type-sort is '2', it is a compact form and the Basic Input Forms should be shown;
+if type-sort is 4, it is a mads record and the MADS forms should be shown; 
 otherwise it is a record not made with Tamboti and Title Information should be shown.:)
-let $type-request := replace(replace($type-request, '-latin', ''), '-transliterated', '')
+let $type-request := replace(replace(replace($type-request, '-latin', ''), '-transliterated', ''), '-compact', '')
 let $type-sort := xs:integer(doc($type-data)/code-table/items/item[value eq $type-request]/sort)
-
 (:Get the tab-id for the upper tab to be shown. 
 If no tab is specified, default to the compact-a tab when there is a template to be used with Basic Input Forms;
 otherwise default to Title Information.:)
 let $tab-id :=
-    if ($type-sort eq 1)
+    if ($type-sort = (1, 2))
     then 'compact-a'
     else
-        if ($type-sort eq 3)
+        if ($type-sort eq 4)
         then 'mads'
         else 'title'        
 (:However, if a tab-id is passed, use this instead of the default.:)

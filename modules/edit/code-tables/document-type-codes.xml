@@ -306,39 +306,47 @@
             <classifier>related</classifier>
         </item>
         <item>
-            <label>SUEBS Tibetan</label>
+            <label>EAST Tibetan</label>
             <value>suebs-tibetan</value>
             <classifier>stand-alone</classifier>
-            <sort>1</sort>
+            <sort>2</sort>
+        </item>
+        <item>
+            <label>EAST Chinese</label>
+            <value>suebs-chinese</value>
+            <classifier>stand-alone</classifier>
+            <sort>2</sort>
         </item>
         <!-- hard-coded tabs.xqm, line 22. -->
         <item>
             <label>Almost Full MODS 3.4 Schema</label>
             <value>insert-templates</value>
             <classifier>stand-alone</classifier>
-            <sort>2</sort>
+            <sort>3</sort>
         </item>
         <item>
             <label>Almost Full MODS 3.4 Schema</label>
             <value>insert-templates</value>
             <classifier>related</classifier>
+            <sort>3</sort>
         </item>
-        <item>
+        <!--<item>
             <label>Fairly Full MODS 3.4 Schema</label>
             <value>new-instance</value>
             <classifier>stand-alone</classifier>
-            <sort>2</sort>
-        </item>
-        <item>
+            <sort>3</sort>
+        </item>-->
+        <!--<item>
             <label>Fairly Full MODS 3.4 Schema</label>
             <value>new-instance</value>
             <classifier>related</classifier>
-        </item>
+            <sort>3</sort>
+        </item>-->
         <!--<item>
             <label>MADS record</label>
             <value>mads</value>
             <classifier>stand-alone</classifier>
-            <sort>3</sort>
+            <sort>4</sort>
         </item>-->
     </items>
 </code-table>

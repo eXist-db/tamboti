@@ -16,12 +16,11 @@ declare function mods:tabs($tab-id as xs:string, $record-id as xs:string, $data-
 let $type := request:get-parameter("type", '')
 (: When a new Tamboti record is created, '-latin', and '-transliterated' are not appended, but in old Tamboti records they are. The easiest thing is to strip them, if there, and construct them again. :)
 (:It is unclear why space has to be normalized here; at least 'insert-templates' has space appended when received here.:) 
-let $type := normalize-space(replace(replace($type, '-latin', ''), '-transliterated', ''))
+let $type := normalize-space(replace(replace(replace($type, '-latin', ''), '-transliterated', ''), '-compact', ''))
 let $transliterationOfResource := request:get-parameter("transliterationOfResource", "")
 (: Construct the full types. :)
-(:let $log := util:log("DEBUG", ("##$type1): ", $type)):)
 let $type := 
-        if ($type = ('related-book-review-in-periodical', 'related-article-in-periodical', 'related-monograph-chapter','related-contribution-to-edited-volume','suebs-tibetan', 'insert-templates', 'new-instance', 'mads'))
+        if ($type = ('related-book-review-in-periodical', 'related-article-in-periodical', 'related-monograph-chapter','related-contribution-to-edited-volume','suebs-tibetan', 'suebs-chinese', 'insert-templates', 'new-instance', 'mads'))
         (: These document types do not (yet) divide into latin and transliterated. :)
         then $type
         else
@@ -34,7 +33,6 @@ let $type :=
                     if ($type)
                     then concat($type, '-latin')
                     else ()
-(:let $log := util:log("DEBUG", ("##$type2): ", $type)):)
 (: Get the top-tab-number param from the URL.
 If it is empty, it is because the record has just been initialised, because a record not made with Tamboti is loaded; 
 or because it is a non-basic template - set it to 2 to show Citation Forms/Title Information (and hide the Basic Input Forms tab). 
@@ -58,6 +56,7 @@ let $top-tab-number :=
 (: Get the tabs data. :)
 
 let $tabs-data := doc($mods:tabs-data)/tabs/tab
+
 return
 <div class="tabs">
     <table class="top-tabs" width="100%">

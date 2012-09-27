@@ -203,7 +203,8 @@ declare function bs:toolbar($item as element(mods:mods), $isWritable as xs:boole
                 (: if the item's collection is writable, display edit/delete and move buttons :)
                 if ($isWritable) 
                 then (
-                    <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}&amp;type={$item/mods:extension/*:template}">
+                    (:remove '-compact' from type, used previously.:)
+                    <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}&amp;type={replace($item/mods:extension/*:template, '-compact', '')}">
                         <img title="Edit Record" src="theme/images/page_edit.png"/>
                     </a>
                     ,

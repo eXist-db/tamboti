@@ -941,7 +941,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
 : @param $global-language The string value of mods/language/languageTerm
 : @return $nameOrder The string 'family-given' or the empty string
 :)
-declare function modsCommon:get-name-order($namePart-language as xs:string?, $name-language as xs:string, $global-language) {
+declare function modsCommon:get-name-order($namePart-language as xs:string*, $name-language as xs:string, $global-language) {
     let $language :=
         if ($namePart-language)
             then $namePart-language

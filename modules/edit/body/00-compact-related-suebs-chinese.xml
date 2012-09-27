@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: --><!--hints moved to code-table: --><!--hints checked: --><!--saving of all nodes: -->
-<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-suebs-tibetan" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-suebs-chinese" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
             <div class="join">
@@ -9,7 +9,7 @@
                 </span>
             </div>
             <!--relatedItem repeat begins-->
-            <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-suebs-tibetan-repeat">
+            <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-suebs-chinese-repeat">
                 <!--Output: <xf:output ref="./@xlink:href"/>-->
                 <fieldset class="level-2">
                     <div class="join wide">
@@ -58,7 +58,7 @@
                         <div class="join center">
                             <span class="legend">Identifiers</span>
                         </div>
-                        <xf:repeat nodeset="./mods:identifier" id="identifier-suebs-tibetan-repeat">
+                        <xf:repeat nodeset="./mods:identifier" id="identifier-suebs-chinese-repeat">
                             <xf:group ref=".[@type]" selection="open" class="hide-label margin-plus">
                                 <xf:select1 ref="./@type">
                                     <xf:label>Type of Identifier</xf:label>
@@ -81,7 +81,7 @@
                         <div class="join">
                             <span class="legend">Title</span>
                         </div>
-                        <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-suebs-tibetan-repeat">
+                        <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-suebs-chinese-repeat">
                             <xf:group class="margin-plus">
                                 <xf:select1 ref="./@lang">
                                     <xf:label>Language</xf:label>
@@ -114,7 +114,7 @@
                             <span class="legend">Location of Text in Collection</span>
                         </div>
                         <!--relatedItem/part repeat begins-->
-                        <xf:repeat nodeset="./mods:part" id="related-item-part-suebs-tibetan-repeat">
+                        <xf:repeat nodeset="./mods:part" id="related-item-part-suebs-chinese-repeat">
                             <!--relatedItem/part input begins-->
                             <!--NB 3.4 adds altRepGroup-->
                             <!--relatedItem/part input ends-->
@@ -125,7 +125,7 @@
                                         <span class="legend">Part</span>
                                     </div>
                                     <!--relatedItem/part/detail repeat begins-->
-                                    <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-suebs-tibetan-repeat">
+                                    <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-suebs-chinese-repeat">
                                         <!--relatedItem/part/detail input ends-->
                                         <!--relatedItem/part/detail/number begins-->
                                         <xf:group ref=".[mods:number]" class="hide-label margin-plus">
@@ -152,7 +152,7 @@
                                         </div>
                                     </div>
                                     <!--relatedItem/part/extent repeat begins-->
-                                    <xf:repeat nodeset="./mods:extent" id="related-item-extent-suebs-tibetan-repeat">
+                                    <xf:repeat nodeset="./mods:extent" id="related-item-extent-suebs-chinese-repeat">
                                         <!--relatedItem/part/extent input begins-->
                                         <!--relatedItem/part/extent input ends-->
                                         <!--relatedItem/part/start begins-->
