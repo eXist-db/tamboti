@@ -322,9 +322,32 @@ return
                     (
                         (:Update $doc (the document in temp) with $item (the new edits).:)
                         local:do-updates($item, $doc),
+                        (:If there is no extension in $doc, insert one.:)
+                        if ($doc/mods:extension)
+                        then ()
+                        else
+                        update insert
+                            <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://www.asia-europe.uni-heidelberg.de/"/>
+                        into $doc
+                        ,
+                        (:If there is no e:template in $doc/extension, insert one.:)
+                        if ($doc/mods:extension/e:template)
+                        then ()
+                        else
+                        update insert <e:template/>
+                        into $doc/mods:extension
+                        ,
+                        (:If there is no e:transliterationOfResource in $doc/extension, insert one.:)
+                        if ($doc/mods:extension/e:transliterationOfResource)
+                        then ()
+                        else
+                        update insert <e:transliterationOfResource/>                    
+                        into $doc/mods:extension
+                        ,
                         (:Insert modification date-time.:)
-                        update insert $last-modified-extension into $doc/mods:extension,
-                        (:Move it from temp to target collection.:)
+                        update insert $last-modified-extension into $doc/mods:extension
+                        ,
+                        (:Move $doc from temp to target collection.:)
                         xmldb:move($config:mods-temp-collection, $target-collection, $file-to-update),
                         (:Set the same permissions on the moved file that the parent collection has.:)
                         security:apply-parent-collection-permissions(xs:anyURI(concat($target-collection, "/", $file-to-update)))
