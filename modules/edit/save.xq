@@ -258,25 +258,30 @@ declare function local:do-updates($item, $doc) {
     ,
     (:If there is no extension in $doc, insert one.:)
     if ($doc/mods:extension)
-    then ()
-    else
-    update insert
-        <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://www.asia-europe.uni-heidelberg.de/"/>
-    into $doc
-    ,
+    then 
     (:If there is no e:template in $doc/extension, insert one.:)
-    if ($doc/mods:extension/e:template)
-    then ()
+        (
+        if ($doc/mods:extension/e:template)
+        then ()
+        else
+            update insert <e:template/>
+            into $doc/mods:extension
+        ,
+        (:If there is no e:transliterationOfResource in $doc/extension, insert one.:)
+        if ($doc/mods:extension/e:transliterationOfResource)
+        then ()
+        else
+            update insert <e:transliterationOfResource/>                    
+            into $doc/mods:extension
+        )
     else
-    update insert <e:template/>
-    into $doc/mods:extension
-    ,
-    (:If there is no e:transliterationOfResource in $doc/extension, insert one.:)
-    if ($doc/mods:extension/e:transliterationOfResource)
-    then ()
-    else
-    update insert <e:transliterationOfResource/>                    
-    into $doc/mods:extension
+        update insert
+            <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://www.asia-europe.uni-heidelberg.de/">
+                <e:template/>
+                <e:transliterationOfResource/>
+            </extension>        
+        into $doc
+    
 };
 
 (: Find the collection containing the record with the uuid in the users collection and in the commons collection.
