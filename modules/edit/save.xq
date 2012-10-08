@@ -17,7 +17,7 @@ declare function local:do-updates($item, $doc) {
     Then it goes through each titleInfo in the incoming record and inserts it in the saved document. 
     If name (the "next" element in the "canonical" order of MODS elements) occurs in the saved document, titleInfo is inserted before name, maintaining order.
     If name does not occur, titleInfo is inserted at the default position, i.e. at the end of the saved document.
-    The canonical order is: titleInfo, name, originInfo, part, physicalDescription, targetAudience, typeOfResource, genre, subject, classification, abstract, tableOfContents, note, relatedItem, identifier, location, accessCondition, language, recordInfo, extension. 
+    The (locally defined) canonical order is: titleInfo, name, originInfo, part, physicalDescription, targetAudience, typeOfResource, genre, subject, classification, abstract, tableOfContents, note, relatedItem, identifier, location, accessCondition, language, recordInfo, extension. 
     This is then repeated for the remaining elements, in the canonical order.:)
     
     if ($item/mods:titleInfo)
@@ -256,7 +256,7 @@ declare function local:do-updates($item, $doc) {
         )
     else ()
     ,
-    (:If there is no extension in $doc, insert one.:)
+    (:If there is an extension in $doc, check whether it has the required children and insert them if they are missing.:)
     if ($doc/mods:extension)
     then 
     (:If there is no e:template in $doc/extension, insert one.:)
@@ -274,6 +274,7 @@ declare function local:do-updates($item, $doc) {
             update insert <e:transliterationOfResource/>                    
             into $doc/mods:extension
         )
+    (:If there is no extension in $doc, insert one with the required children.:)
     else
         update insert
             <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://www.asia-europe.uni-heidelberg.de/">
@@ -284,8 +285,8 @@ declare function local:do-updates($item, $doc) {
     
 };
 
-(: Find the collection containing the record with the uuid in the users collection and in the commons collection.
-This means that the record temporarily in the temp collection is not found. :)
+(: Find the collection containing the record with the uuid in question in the users collection and in the commons collection.
+This means that any record temporarily in the temp collection is not found. :)
 declare function local:find-live-collection-containing-uuid($uuid as xs:string) as xs:string? {
     let $live-record := collection($config:users-collection, $config:mods-commons)/mods:mods[@ID = $uuid] 
     return
@@ -294,11 +295,12 @@ declare function local:find-live-collection-containing-uuid($uuid as xs:string) 
         else ()
 };
 
+(:MAIN:)
 (: This is where the form "POSTS" documents to this XQuery using the POST method of a submission :)
 (:$item contains the edits for the elements attached to a single tab, not a whole MODS record.:)
 let $item := request:get-data()/element()
 let $action := request:get-parameter('action', 'save')
-let $incoming-id := $item/@ID
+let $incoming-id := $item/@ID/string()
 let $user := session:get-attribute($security:SESSION_USER_ATTRIBUTE)
 let $last-modified := xmldb:last-modified($config:mods-temp-collection, concat($incoming-id,'.xml'))
 (:There is no way to store the user name in MODS, therefore it is stored in extension.:)
@@ -318,16 +320,16 @@ return
         (: If there is an ID, we are doing an update to an existing file (unless the action is cancel). :)
         (:Locate the document in temp and and load it in $doc.:)
         let $file-to-update := concat($incoming-id, '.xml')
-        let $file-path := concat(xmldb:encode-uri($config:mods-temp-collection), '/', $file-to-update)
-        (:This is the document in temp to be updated during save and the document to be saved in the target collection when the editor is being closed.:)
-        let $doc := doc($file-path)/mods:mods
+        let $temp-file-path := concat(xmldb:encode-uri($config:mods-temp-collection), '/', $file-to-update)
+        (:This is the document in temp to be updated during saves and the document to be saved in the target collection when the user has finished editing.:)
+        let $doc := doc($temp-file-path)/mods:mods
         let $updates := 
             if ($action eq 'cancel')
             (: Remove the document from temp. :)
             then xmldb:remove($config:mods-temp-collection, $file-to-update)
             else
                 if ($action eq 'close')
-                (: If the user terminates editing. :)
+                (: If the user has finished editing. :)
                 then
                     (:Get the target collection. If it's an edit to an existing document, we can find its location by means of its uuid.
                     If it is a new record, the target collection can be captured as the collection parameter passed in the URL. :)
@@ -340,21 +342,39 @@ return
                     (:If the user has created a related record with a record as host in a collection to which the user does not have write access,
                     save the record in the user's home folder. The user can then move it elsewhere.
                     If the user does have write access, save it in the collection that the host occurs in.:)
-                    (:NB: Do we need to check whether the record is, in fact, a related record?:)
                     let $target-collection := 
                         if (security:can-write-collection($target-collection))
                         then $target-collection
                         else security:get-home-collection-uri(security:get-user-credential-from-session()[1])
+
                     return
                     (
                         (:Update $doc (the document in temp) with $item (the new edits).:)
                         local:do-updates($item, $doc)
                         ,
-                        (:Insert modification date-time.:)
+                        (:Insert modification date-time and user name.:)
                         update insert $last-modified-extension into $doc/mods:extension
                         ,
                         (:Move $doc from temp to target collection.:)
-                        xmldb:move($config:mods-temp-collection, $target-collection, $file-to-update),
+                        (:NB: To avoid potential problems with xmldb:move(), xmldb:store() and xmldb:remove() are used.
+                        xmldb:move() is suspected to create zero bytes "ghost" files in backups in __lost_and_found__.:)
+                        
+                        (:NB: The code used formerly, covering next three steps: 
+                        xmldb:move($config:mods-temp-collection, $target-collection, $file-to-update),:)
+
+                        (:Only attempt to delete the original record if it exists; otherwise script terminates. 
+                        This means that no attempt is made to delete newly created records.:)                        
+                        if (xmldb:document(concat($target-collection, '/', $file-to-update))) 
+                        then xmldb:remove($target-collection, $file-to-update) 
+                        else ()
+                        ,
+                        (:Store $doc in the target collection, whether this be where the file originally came from or 
+                        the collection from which a new record has been created.:)
+                        xmldb:store($target-collection, $file-to-update, $doc)
+                        ,
+                        (:Remove the $doc record from temp.:)
+                        xmldb:remove($config:mods-temp-collection, $file-to-update)
+                        ,
                         (:Set the same permissions on the moved file that the parent collection has.:)
                         security:apply-parent-collection-permissions(xs:anyURI(concat($target-collection, "/", $file-to-update)))
                     )

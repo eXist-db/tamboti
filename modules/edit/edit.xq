@@ -2,6 +2,7 @@ xquery version "1.0";
 
 (:TODO: change all 'monograph' to 'book' in tabs-data.xml and compact body files:)
 (:TODO: delete all '-compact' from e:template in records, then delete all code that removes this from type in session.xql, edit.xql, tabs.xqm.:)
+(:TODO: Code related to MADS files.:)
 
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace sm="http://exist-db.org/xquery/securitymanager"; (:TODO move code into security module:)
@@ -21,7 +22,7 @@ declare namespace e="http://www.asia-europe.uni-heidelberg.de/";
 declare namespace mads="http://www.loc.gov/mads/";
 declare namespace functx="http://www.functx.com";
 
-(:These variables are used for a kind of dynamic theming in local:assemble-form().:)
+(:The following variables are used for a kind of dynamic theming in local:assemble-form().:)
 declare variable $theme := substring-before(substring-after(request:get-url(), "/apps/"), "/modules/edit/edit.xq");
 declare variable $header-title := if ($theme eq "tamboti") then "Tamboti Metadata Framework - MODS Editor" else "eXist Bibliographical Demo - MODS Editor";
 declare variable $tamboti-css := if ($theme eq "tamboti") then "tamboti.css" else ();
@@ -31,8 +32,6 @@ declare variable $img-right-href := if ($theme eq "tamboti") then "http://www.as
 declare variable $img-right-src := if ($theme eq "tamboti") then "../../themes/tamboti/images/cluster_logo.png" else ();
 declare variable $img-right-title := if ($theme eq "tamboti") then "The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University" else ();
 declare variable $img-right-width := if ($theme eq "tamboti") then "200" else ();
-
-(:TODO: Code related to MADS files.:)
  
 declare function functx:pad-integer-to-length($integerToPad as xs:anyAtomicType?, $length as xs:integer) as xs:string {       
    if ($length < string-length(string($integerToPad)))
@@ -43,28 +42,36 @@ declare function functx:pad-integer-to-length($integerToPad as xs:anyAtomicType?
           string($integerToPad))
  };
  
- declare function functx:repeat-string($stringToRepeat as xs:string?, $count as xs:integer) as xs:string {      
+declare function functx:repeat-string($stringToRepeat as xs:string?, $count as xs:integer) as xs:string {      
    string-join((for $i in 1 to $count return $stringToRepeat), '')
  };
  
- declare function local:create-new-record($id as xs:string, $type-request as xs:string, $target-collection as xs:string) as empty() {
-    (:Copy the template into data and store it with the ID as file name.:)
+declare function local:create-new-record($id as xs:string, $type-request as xs:string, $target-collection as xs:string) as empty() {
+    (:Copy the template and store it with the ID as file name.:)
     (:First, get the right template, based on the type-request and the presence or absence of transliteration.:)
     let $transliterationOfResource := request:get-parameter("transliterationOfResource", '')
     let $template-request := 
-        if ($type-request = ('related-book-review-in-periodical', 'related-article-in-periodical', 'related-contribution-to-edited-volume', 'suebs-tibetan', 'suebs-chinese', 'insert-templates', 'new-instance', 'mads'))
+        if ($type-request = (
+                        'related-book-review-in-periodical', 
+                        'related-article-in-periodical', 
+                        'related-contribution-to-edited-volume', 
+                        'suebs-tibetan', 
+                        'suebs-chinese', 
+                        'insert-templates', 
+                        'new-instance', 
+                        'mads'))
         (:These document types do not (yet) divide into latin and transliterated.:)
         then $type-request
         else
             (:Append '-transliterated' if there is transliteration, otherwise append '-latin'.:)
-            if ($transliterationOfResource and $type-request) 
+            if ($transliterationOfResource) 
             then concat($type-request, '-transliterated') 
             else concat($type-request, '-latin') 
-    let $template-path := doc(concat($config:edit-app-root, '/instances/', $template-request, '.xml'))
+    let $template := doc(concat($config:edit-app-root, '/instances/', $template-request, '.xml'))
     
-    (:Then give it a name, store it in the temp location and set the right permissions on it.:)
+    (:Then give it a name based on a uuid, store it in the temp collection and set the restrictive permissions on it.:)
     let $doc-name := concat($id, '.xml')
-    let $stored := xmldb:store($config:mods-temp-collection, $doc-name, $template-path)   
+    let $stored := xmldb:store($config:mods-temp-collection, $doc-name, $template)   
     (:Make the record accessible to the user alone, as default.:)
     let $null := sm:chmod(xs:anyURI($stored), "rwx------")
     (:If the record is created in a collection inside commons, it should be visible to all.:)
@@ -342,7 +349,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     <xf:label class="xforms-group-label-centered-general">Cancel Editing</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="cancel-submission"/>
-                        <!--<xf:load resource="../../?reload=true" show="replace"/>-->
+                        <!--TODO: If the creation of a related record is cancelled, the record related to should be retrieved, not the cancelled record.-->
                         <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>
                     </xf:action>
                  </xf:trigger>
