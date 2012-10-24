@@ -1,6 +1,6 @@
 xquery version "3.0";
 
-module namespace biblio="http:/exist-db.org/xquery/biblio";
+module namespace biblio="http://exist-db.org/xquery/biblio";
 
 (:~
     The core XQuery script for the bibliographic demo. It receives a template XML document

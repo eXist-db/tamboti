@@ -2,7 +2,7 @@
     Module to clean up a MODS record. Removes empty elements, empty attributes and elements without required subelements.
 :)
 
-module namespace clean="http:/exist-db.org/xquery/mods/cleanup";
+module namespace clean="http://exist-db.org/xquery/mods/cleanup";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
 declare namespace xlink="http://www.w3.org/1999/xlink";
