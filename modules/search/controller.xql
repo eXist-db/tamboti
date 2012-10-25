@@ -2,7 +2,7 @@ xquery version "1.0";
 
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace security="http://exist-db.org/mods/security" at "security.xqm";
-import module namespace theme="http:/exist-db.org/xquery/biblio/theme" at "../theme.xqm";
+import module namespace theme="http://exist-db.org/xquery/biblio/theme" at "../theme.xqm";
 
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace session="http://exist-db.org/xquery/session";

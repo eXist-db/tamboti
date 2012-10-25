@@ -5,7 +5,7 @@ xquery version "1.0";
 declare namespace mods="http://www.loc.gov/mods/v3";
 
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
-import module namespace clean="http:/exist-db.org/xquery/mods/cleanup" at "cleanup.xql";
+import module namespace clean="http://exist-db.org/xquery/mods/cleanup" at "cleanup.xql";
 
 declare option exist:serialize "method=xml media-type=application/xml indent=yes";
 

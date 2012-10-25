@@ -4,7 +4,7 @@ import module namespace session ="http://exist-db.org/xquery/session";
 
 import module namespace config="http://exist-db.org/mods/config" at "modules/config.xqm";
 import module namespace security="http://exist-db.org/mods/security" at "modules/search/security.xqm";
-import module namespace theme="http:/exist-db.org/xquery/biblio/theme" at "modules/theme.xqm";
+import module namespace theme="http://exist-db.org/xquery/biblio/theme" at "modules/theme.xqm";
 
 declare namespace exist = "http://exist.sourceforge.net/NS/exist";
 

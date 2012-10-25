@@ -4,7 +4,7 @@
  : HTML templating module
 :)
 import module namespace config="http://exist-db.org/mods/config" at "config.xqm";
-import module namespace theme="http:/exist-db.org/xquery/biblio/theme" at "theme.xqm";
+import module namespace theme="http://exist-db.org/xquery/biblio/theme" at "theme.xqm";
 
 (:~
  : Start processing the provided content using the modules defined by $modules. $modules should

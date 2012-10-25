@@ -16,7 +16,7 @@ import module namespace mods="http://www.loc.gov/mods/v3" at "retrieve-mods.xql"
 import module namespace jquery="http://exist-db.org/xquery/jquery" at "resource:org/exist/xquery/lib/jquery.xql";
 import module namespace security="http://exist-db.org/mods/security" at "../../../modules/search/security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "../../../modules/search/sharing.xqm";
-import module namespace clean="http:/exist-db.org/xquery/mods/cleanup" at "../../../modules/search/cleanup.xql";
+import module namespace clean="http://exist-db.org/xquery/mods/cleanup" at "../../../modules/search/cleanup.xql";
 import module namespace kwic="http://exist-db.org/xquery/kwic" at "resource:org/exist/xquery/lib/kwic.xql";
 import module namespace modsCommon="http://exist-db.org/mods/common" at "../../../modules/mods-common.xql";
 

@@ -1,6 +1,6 @@
 xquery version "1.0";
 
-import module namespace theme="http:/exist-db.org/xquery/biblio/theme" at "../theme.xqm";
+import module namespace theme="http://exist-db.org/xquery/biblio/theme" at "../theme.xqm";
 
 (: Disable the betterFORM XForms filter on all requests. We use XSLTForms for tamboti. :)
 request:set-attribute("betterform.filter.ignoreResponseBody", "true"),

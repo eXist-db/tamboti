@@ -30,7 +30,7 @@ declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace mods="http://www.loc.gov/mods/v3";
 
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
-import module namespace theme="http:/exist-db.org/xquery/biblio/theme" at "../theme.xqm";
+import module namespace theme="http://exist-db.org/xquery/biblio/theme" at "../theme.xqm";
 import module namespace templates="http://exist-db.org/xquery/templates" at "../templates.xql";
 
 import module namespace jquery="http://exist-db.org/xquery/jquery" at "resource:org/exist/xquery/lib/jquery.xql";

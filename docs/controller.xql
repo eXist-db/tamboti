@@ -2,7 +2,7 @@ xquery version "1.0";
 
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace xdb = "http://exist-db.org/xquery/xmldb";
-import module namespace theme="http:/exist-db.org/xquery/biblio/theme" at "../modules/theme.xqm";
+import module namespace theme="http://exist-db.org/xquery/biblio/theme" at "../modules/theme.xqm";
 import module namespace config="http://exist-db.org/mods/config" at "../modules/config.xqm";
 
 let $uri := request:get-uri()
