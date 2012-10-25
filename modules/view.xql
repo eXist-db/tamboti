@@ -8,7 +8,7 @@ declare option exist:serialize "method=html5 media-type=text/html";
 declare variable $modules :=
     <modules>
         <module prefix="config" uri="http://exist-db.org/mods/config" at="config.xql"/>
-        <module prefix="biblio" uri="http:/exist-db.org/xquery/biblio" at="search/application.xql"/>
+        <module prefix="biblio" uri="http://exist-db.org/xquery/biblio" at="search/application.xql"/>
     </modules>;
 
 

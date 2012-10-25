@@ -111,7 +111,7 @@ declare function theme:get-root() {
     let $prefix := request:get-attribute("exist:prefix")
     return
         if (empty($prefix)) then
-            error(QName("http:/exist-db.org/xquery/tamboti", "error"), ("No prefix set!"))
+            error(QName("http://exist-db.org/xquery/tamboti", "error"), ("No prefix set!"))
         else
             theme:get-root($prefix)
 };
