@@ -395,7 +395,7 @@ if ($titleInfo)
         }
         {
         let $transliteration := string($titleInfo/@transliteration)
-        let $global-transliteration := $titleInfo/../mods:extension/e:transliterationOfResource
+        let $global-transliteration := $titleInfo/../mods:extension/e:transliterationOfResource/text()
         (:Prefer local transliteration to global.:)
         let $transliteration := 
         	if ($transliteration)
@@ -466,7 +466,7 @@ if ($titleInfo)
 (: Subelements: any MODS element. :)
 (: NB! This function is constructed differently from mods:entry-full; the two should be harmonised. :)
 
-declare function mods:get-related-items($entry as element(mods:mods), $destination as xs:string, $global-language as xs:string, $collection-short as xs:string) {
+declare function mods:get-related-items($entry as element(mods:mods), $destination as xs:string, $global-language as xs:string?, $collection-short as xs:string) {
     for $item in $entry/mods:relatedItem
         let $type := string($item/@type)
         (:NB: do we use @ID on relatedItem?:) 
@@ -1021,10 +1021,10 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
                 </tr>
             else
                 for $linked-record in $linked-records
-                let $link-ID := $linked-record/@ID
+                let $link-ID := $linked-record/@ID/string()
                 let $link-contents := 
                     if (string-join($linked-record/mods:titleInfo/mods:title, ''))
-                    then mods:format-list-view((), $linked-record, '') 
+                    then mods:format-list-view('', $linked-record, '') 
                     else ()
                 return
                 <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
@@ -1074,6 +1074,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
 (: NB: "mods:format-list-view()" is referenced in session.xql. :)
 declare function mods:format-list-view($id as xs:string, $entry as element(), $collection-short as xs:string) {
 	let $entry := modsCommon:remove-parent-with-missing-required-node($entry)
+	let $log := util:log("DEBUG", ("##$id): ", $entry))
 	let $global-transliteration := $entry/mods:extension/e:transliterationOfResource/text()
 	let $global-language := $entry/mods:language[1]/mods:languageTerm[1]/text()
 	return

@@ -111,7 +111,7 @@ declare function modsCommon:simple-row($data as item()?, $label as xs:string) as
 : @param $sep
 : @return element(tr)
 :)
-declare function modsCommon:add-part($part, $sep as xs:string) {
+declare function modsCommon:add-part($part, $sep as xs:string?) {
     (:If there is no part or if the first part there is has no string contents.:)
     if (empty($part) or not(string($part[1]))) 
     then ()
@@ -463,7 +463,7 @@ declare function modsCommon:get-script-label($scriptTerm as xs:string) as xs:str
 :)
 declare function modsCommon:retrieve-names(
         $entry as element()*, $destination as xs:string, 
-        $global-transliteration as xs:string, $global-language as xs:string) {
+        $global-transliteration as xs:string?, $global-language as xs:string?) {
     for $name at $position in $entry/mods:name
     return
     <span xmlns="http://www.w3.org/1999/xhtml" class="name">{modsCommon:retrieve-name($name, $position, $destination, $global-transliteration, $global-language)}</span>
@@ -490,7 +490,7 @@ declare function modsCommon:retrieve-names(
 : @param $global-language The value set for the language of the resource catalogued, set in language/languageTerm
 : @return The name formatted as XHTML.
 :)
-declare function modsCommon:format-name($name as element()?, $position as xs:integer, $destination as xs:string, $global-transliteration as xs:string, $global-language as xs:string) {	
+declare function modsCommon:format-name($name as element()?, $position as xs:integer, $destination as xs:string, $global-transliteration as xs:string?, $global-language as xs:string?) {	
     (: Get the type of the name, personal, corporate, conference, or family. :)
     let $name-language := $name/@lang
     let $name-type := $name/@type
@@ -660,7 +660,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                 then $untyped-name-basic/*:namePart/@lang
                                                 else ()
                                 (:let $log := util:log("DEBUG", ("##$language-basic): ", $language-basic)):)
-                                let $nameOrder-basic := modsCommon:get-name-order(distinct-values($language-basic), $name-language, $global-language)
+                                let $nameOrder-basic := modsCommon:get-name-order(distinct-values($language-basic), distinct-values($name-language), $global-language)
                                 (:let $log := util:log("DEBUG", ("##$nameOrder-basic): ", $nameOrder-basic)):)
                                 return
                                     if (string($untyped-name-basic))
@@ -773,7 +773,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                 if ($untyped-name-in-transliteration/*:namePart/@lang)
                                                 then $untyped-name-in-transliteration/*:namePart/@lang
                                                 else ()
-                                let $nameOrder-in-transliteration := modsCommon:get-name-order($language-in-transliteration, $name-language, $global-language)                                
+                                let $nameOrder-in-transliteration := modsCommon:get-name-order($language-in-transliteration, distinct-values($name-language), $global-language)                                
                                 return       
                                     (: If there are name parts that are not typed, there is nothing we can do to order their sequence. :)
                                     if (string($untyped-name-in-transliteration))
@@ -854,7 +854,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                         if ($untyped-name-in-non-latin-script/*:namePart/@lang)
                                                         then $untyped-name-in-non-latin-script/*:namePart/@lang
                                                         else ()
-                                        let $nameOrder-in-non-latin-script := modsCommon:get-name-order($language-in-non-latin-script, $name-language, $global-language)
+                                        let $nameOrder-in-non-latin-script := modsCommon:get-name-order($language-in-non-latin-script, distinct-values($name-language), $global-language)
                                         return       
                                             if (string($untyped-name-in-non-latin-script))
                                             (: If the name parts are not typed, there is nothing we can do to order their sequence. When name parts are not typed, it is generally because the whole name occurs in one name part, formatted for display (usually with a comma between family and given name), but it may also be used when names that cannot be divided into family and given names are in evidence. We trust that any sequence of nameparts are meaningfully ordered and string-join them. :)
@@ -941,13 +941,14 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
 : @param $global-language The string value of mods/language/languageTerm
 : @return $nameOrder The string 'family-given' or the empty string
 :)
-declare function modsCommon:get-name-order($namePart-language as xs:string*, $name-language as xs:string, $global-language) {
+declare function modsCommon:get-name-order($namePart-language as xs:string*, $name-language as xs:string*, $global-language as xs:string?) {
     let $language :=
-        if ($namePart-language)
-            then $namePart-language
+        (:This appears to be needed if several namePart have @lang and name does not. We assume that they have the same @lang.:)
+        if (distinct-values($namePart-language))
+            then distinct-values($namePart-language)
             else
-                if ($name-language)
-                then $name-language
+                if (distinct-values($name-language))
+                then distinct-values($name-language)
                 else
                     if ($global-language)
                     then $global-language
@@ -1016,7 +1017,7 @@ declare function modsCommon:get-role-label-for-list-view($roleTerm as xs:string?
 : @param $global-language The value set for the language of the resource catalogued, set in language/languageTerm
 : @return The string rendition of the name
 :)
-declare function modsCommon:format-multiple-names($entry as element()*, $destination as xs:string, $global-transliteration as xs:string, $global-language as xs:string) as xs:string* {
+declare function modsCommon:format-multiple-names($entry as element()*, $destination as xs:string, $global-transliteration as xs:string?, $global-language as xs:string?) as xs:string? {
     let $names := modsCommon:retrieve-names($entry, $destination, $global-transliteration, $global-language)
     let $nameCount := count($names)
     let $formatted :=
@@ -1045,7 +1046,7 @@ declare function modsCommon:format-multiple-names($entry as element()*, $destina
 (: NB: also used in search.xql ?:)
 (: Each name in the list view should have an authority name added to it in parentheses, if it exists and is different from the name as given in the MODS record. :)
 declare function modsCommon:retrieve-name($name as element(), $position as xs:int, $destination as xs:string, 
-    $global-transliteration as xs:string, $global-language as xs:string) {    
+    $global-transliteration as xs:string?, $global-language as xs:string?) {    
     let $mods-name := modsCommon:format-name($name, $position, $destination, $global-transliteration, $global-language)
     let $mads-reference := replace($name/@xlink:href, '^#?(.*)$', '$1')
     return
@@ -1083,7 +1084,7 @@ declare function modsCommon:retrieve-name($name as element(), $position as xs:in
 : @see http://www.loc.gov/standards/mods/userguide/subject.html
 : @return $nameOrder The string 'family-given' or the empty string
 :)
-declare function modsCommon:format-subjects($entry as element(), $global-transliteration as xs:string, $global-language as xs:string) as element()+ {
+declare function modsCommon:format-subjects($entry as element(), $global-transliteration as xs:string?, $global-language as xs:string?) as element()+ {
     for $subject in $entry/mods:subject
     let $authority := 
         if (string($subject/@authority)) 
@@ -1191,7 +1192,7 @@ declare function modsCommon:format-subjects($entry as element(), $global-transli
 : @param $global-language  The value set for the language of the resource catalogued, set in language/languageTerm
 : @return The relatedItem formatted as XHTML.
 :)
-declare function modsCommon:format-related-item($relatedItem as element(mods:relatedItem), $global-language as xs:string, $collection-short as xs:string) {
+declare function modsCommon:format-related-item($relatedItem as element(mods:relatedItem), $global-language as xs:string?, $collection-short as xs:string) {
 	let $relatedItem := modsCommon:remove-parent-with-missing-required-node($relatedItem)
 	let $global-transliteration := $relatedItem/../mods:extension/e:transliterationOfResource/text()
 	(:If several terms are used for the same role, we assume them to be synonymous.:)
