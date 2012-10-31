@@ -34,7 +34,7 @@
         <dateOther encoding="w3cdtf" point="" keyDate="" qualifier="" lang="" xml:lang="" script="" transliteration=""/>
         <publisher supplied="" lang="" script="" transliteration="" xml:lang=""/>
         <edition supplied="" lang="" script="" transliteration="" xml:lang=""/>
-        <issuance supplied="" lang="" script="" transliteration="" xml:lang=""/>
+        <issuance/>
         <frequency authority="marcfrequency" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
     </originInfo>
     <part type="" order="">
@@ -52,13 +52,13 @@
         <date encoding="w3cdtf" point="" qualifier=""/>
         <text/>
     </part>
-    <physicalDescription>
-        <form type="material" authority="marcform"/>
+    <physicalDescription lang="" xml:lang="" script="" transliteration="" displayLabel="" altRepGroup="">
+        <form type="material" authority="marcform" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
         <reformattingQuality/>
-        <internetMediaType/>
-        <extent/>
+        <internetMediaType lang="" xml:lang="" script="" transliteration=""/>
+        <extent supplied="" lang="" xml:lang="" script="" transliteration=""/>
         <digitalOrigin/>
-        <note xml:lang="" lang="eng" type="" displayLabel="" script="" transliteration=""/>
+        <note xml:lang="" lang="eng" type="" displayLabel="" script="" transliteration="" xlink:href="" ID=""/>
     </physicalDescription>
     <targetAudience authority="marctarget" authorityURI="" valueURI="" displayLabel="" altRepGroup="" lang="" xml:lang="" script="" transliteration=""/>
     <typeOfResource collection="" manuscript=""/>
