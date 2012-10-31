@@ -30,11 +30,11 @@
         <!--Attributes: lang; xml:lang; script; transliteration; displayLabel; altRepGroup. -->
         <!--Subelements: form; reformattingQuality; internetMediaType; extent; digitalOrigin; note. -->
         <xf:repeat nodeset="instance('save-data')/mods:physicalDescription" id="physicalDescription-repeat">
-            <xf:group class="show-hide" ref=".[count(@*) &lt; 6 or count(*) &lt; 6]">
+            <xf:group class="show-hide" ref=".[count(@*) &lt; 6 or .[not(mods:form)] or .[not(mods:reformattingQuality)] or .[not(mods:internetMediaType)] or .[not(mods:extent)] or .[not(mods:digitalOrigin)] or .[not(mods:note)]]">
                 <xf:switch>
                     <xf:case id="physicalDescription-add-node-hide">
                         <div class="node-button">
-                            <xf:trigger class="add-button">
+                            <xf:trigger>
                                 <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                 <xf:toggle case="physicalDescription-add-node-unhide" ev:event="DOMActivate"/>
                             </xf:trigger>
@@ -48,7 +48,7 @@
                             </xf:trigger>
                         </div>
                         <div class="node-adds">
-                            <xf:trigger ref=".[not(@displayLabel)]" class="add-button">
+                            <xf:trigger ref=".[not(@displayLabel)]">
                                 <xf:label class="xforms-group-label-centered">Add Display
                                     Label</xf:label>
                                 <xf:action ev:event="DOMActivate">
@@ -56,7 +56,7 @@
                                     <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/@displayLabel"/>
                                 </xf:action>
                             </xf:trigger>
-                            <xf:trigger ref=".[not(@lang)]" class="add-button">
+                            <xf:trigger ref=".[not(@lang)]">
                                 <xf:label class="xforms-group-label-centered">Add
                                     Language</xf:label>
                                 <xf:action ev:event="DOMActivate">
@@ -64,7 +64,7 @@
                                     <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/@lang"/>
                                 </xf:action>
                             </xf:trigger>
-                            <xf:trigger ref=".[not(@transliteration)]" class="add-button">
+                            <xf:trigger ref=".[not(@transliteration)]">
                                 <xf:label class="xforms-group-label-centered">Add
                                     Transliteration</xf:label>
                                 <xf:action ev:event="DOMActivate">
@@ -72,14 +72,14 @@
                                     <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/@transliteration"/>
                                 </xf:action>
                             </xf:trigger>
-                            <xf:trigger ref=".[not(@script)]" class="add-button">
+                            <xf:trigger ref=".[not(@script)]">
                                 <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                 <xf:action ev:event="DOMActivate">
                                     <xf:toggle case="physicalDescription-add-node-hide" ev:event="DOMActivate"/>
                                     <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/@script"/>
                                 </xf:action>
                             </xf:trigger>
-                            <xf:trigger ref=".[not(@script)]" class="add-button">
+                            <xf:trigger ref=".[not(@script)]">
                                 <xf:label class="xforms-group-label-centered">Add
                                     xml:lang</xf:label>
                                 <xf:action ev:event="DOMActivate">
@@ -88,7 +88,7 @@
                                 </xf:action>
                             </xf:trigger>
                             <hr/>
-                            <xf:trigger ref=".[not(mods:digitalOrigin)]" class="add-button">
+                            <xf:trigger ref=".[not(mods:digitalOrigin)]">
                                 <xf:label class="xforms-group-label-centered">Add Digital
                                     Origin</xf:label>
                                 <xf:action ev:event="DOMActivate">
@@ -96,21 +96,21 @@
                                     <xf:insert nodeset="mods:digitalOrigin" at="index('physicalDescription-repeat')" position="before" origin="instance('new-instance')/mods:physicalDescription/mods:digitalOrigin"/>
                                 </xf:action>
                             </xf:trigger>
-                            <xf:trigger ref=".[not(mods:extent)]" class="add-button">
+                            <xf:trigger ref=".[not(mods:extent)]">
                                 <xf:label class="xforms-group-label-centered">Add Extent</xf:label>
                                 <xf:action ev:event="DOMActivate">
                                     <xf:toggle case="physicalDescription-add-node-hide" ev:event="DOMActivate"/>
                                     <xf:insert nodeset="mods:extent" at="index('physicalDescription-repeat')" position="before" origin="instance('new-instance')/mods:physicalDescription/mods:extent"/>
                                 </xf:action>
                             </xf:trigger>
-                            <xf:trigger ref=".[not(mods:form)]" class="add-button">
+                            <xf:trigger ref=".[not(mods:form)]">
                                 <xf:label class="xforms-group-label-centered">Add Form</xf:label>
                                 <xf:action ev:event="DOMActivate">
                                     <xf:toggle case="physicalDescription-add-node-hide" ev:event="DOMActivate"/>
                                     <xf:insert nodeset="mods:form" at="index('physicalDescription-repeat')" position="before" origin="instance('new-instance')/mods:physicalDescription/mods:form"/>
                                 </xf:action>
                             </xf:trigger>
-                            <xf:trigger ref=".[not(mods:internetMediaType)]" class="add-button">
+                            <xf:trigger ref=".[not(mods:internetMediaType)]">
                                 <xf:label class="xforms-group-label-centered">Add Internet
                                     MediaType</xf:label>
                                 <xf:action ev:event="DOMActivate">
@@ -118,14 +118,14 @@
                                     <xf:insert nodeset="mods:internetMediaType" at="index('physicalDescription-repeat')" position="before" origin="instance('new-instance')/mods:physicalDescription/mods:internetMediaType"/>
                                 </xf:action>
                             </xf:trigger>
-                            <xf:trigger ref=".[not(mods:note)]" class="add-button">
+                            <xf:trigger ref=".[not(mods:note)]">
                                 <xf:label class="xforms-group-label-centered">Add Note</xf:label>
                                 <xf:action ev:event="DOMActivate">
                                     <xf:toggle case="physicalDescription-add-node-hide" ev:event="DOMActivate"/>
                                     <xf:insert nodeset="mods:note" at="index('physicalDescription-repeat')" position="before" origin="instance('new-instance')/mods:physicalDescription/mods:note"/>
                                 </xf:action>
                             </xf:trigger>
-                            <xf:trigger ref=".[not(mods:reformattingQuality)]" class="add-button">
+                            <xf:trigger ref=".[not(mods:reformattingQuality)]">
                                 <xf:label class="xforms-group-label-centered">Add Reformatting
                                     Quality</xf:label>
                                 <xf:action ev:event="DOMActivate">
@@ -252,7 +252,7 @@
                         <xf:switch>
                             <xf:case id="physicalDescription-form-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                         <xf:toggle case="physicalDescription-form-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -266,7 +266,7 @@
                                     </xf:trigger>
                                 </div>
                                 <div class="node-adds">
-                                    <xf:trigger ref=".[not(@authority)]" class="add-button">
+                                    <xf:trigger ref=".[not(@authority)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             Authority</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -274,7 +274,7 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:form/@authority"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@authorityURI)]" class="add-button">
+                                    <xf:trigger ref=".[not(@authorityURI)]">
                                         <xf:label class="xforms-group-label-centered">Add Authority
                                             URI</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -282,14 +282,14 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:form/@authorityURI"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@type)]" class="add-button">
+                                    <xf:trigger ref=".[not(@type)]">
                                         <xf:label class="xforms-group-label-centered">Add Type</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="physicalDescription-form-add-node-hide" ev:event="DOMActivate"/>
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:form/@type"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@valueURI)]" class="add-button">
+                                    <xf:trigger ref=".[not(@valueURI)]">
                                         <xf:label class="xforms-group-label-centered">Add Value
                                             URI</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -297,7 +297,7 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:form/@valueURI"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@lang)]" class="add-button">
+                                    <xf:trigger ref=".[not(@lang)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             Language</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -305,7 +305,7 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:form/@lang"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@transliteration)]" class="add-button">
+                                    <xf:trigger ref=".[not(@transliteration)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             Transliteration</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -313,7 +313,7 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:form/@transliteration"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@script)]" class="add-button">
+                                    <xf:trigger ref=".[not(@script)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             Script</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -321,7 +321,7 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:form/@script"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@script)]" class="add-button">
+                                    <xf:trigger ref=".[not(@script)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             xml:lang</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -542,7 +542,7 @@
                         <xf:switch>
                             <xf:case id="internetMediaType-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                         <xf:toggle case="internetMediaType-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -556,7 +556,7 @@
                                     </xf:trigger>
                                 </div>
                                 <div class="node-adds">
-                                    <xf:trigger ref=".[not(@lang)]" class="add-button">
+                                    <xf:trigger ref=".[not(@lang)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             Language</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -564,7 +564,7 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:internetMediaType/@lang"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@transliteration)]" class="add-button">
+                                    <xf:trigger ref=".[not(@transliteration)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             Transliteration</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -572,7 +572,7 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:internetMediaType/@transliteration"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@script)]" class="add-button">
+                                    <xf:trigger ref=".[not(@script)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             Script</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -580,7 +580,7 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:internetMediaType/@script"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@script)]" class="add-button">
+                                    <xf:trigger ref=".[not(@script)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             xml:lang</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -703,7 +703,7 @@
                         <xf:switch>
                             <xf:case id="extent-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                         <xf:toggle case="extent-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -717,14 +717,14 @@
                                     </xf:trigger>
                                 </div>
                                 <div class="node-adds">
-                                    <xf:trigger ref=".[not(@supplied)]" class="add-button">
+                                    <xf:trigger ref=".[not(@supplied)]">
                                         <xf:label class="xforms-group-label-centered">Add Supplied</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="extent-add-node-hide" ev:event="DOMActivate"/>
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:extent/@supplied"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@lang)]" class="add-button">
+                                    <xf:trigger ref=".[not(@lang)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             Language</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -732,7 +732,7 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:extent/@lang"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@transliteration)]" class="add-button">
+                                    <xf:trigger ref=".[not(@transliteration)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             Transliteration</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -740,7 +740,7 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:extent/@transliteration"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@script)]" class="add-button">
+                                    <xf:trigger ref=".[not(@script)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             Script</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -748,7 +748,7 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:extent/@script"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@script)]" class="add-button">
+                                    <xf:trigger ref=".[not(@script)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             xml:lang</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -928,7 +928,7 @@
                         <xf:switch>
                             <xf:case id="note-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                         <xf:toggle case="note-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -942,35 +942,35 @@
                                     </xf:trigger>
                                 </div>
                                 <div class="node-adds">
-                                    <xf:trigger ref=".[not(@displayLabel)]" class="add-button">
+                                    <xf:trigger ref=".[not(@displayLabel)]">
                                         <xf:label class="xforms-group-label-centered">Add Display Label</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="note-add-node-hide" ev:event="DOMActivate"/>
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:note/@displayLabel"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@ID)]" class="add-button">
+                                    <xf:trigger ref=".[not(@ID)]">
                                         <xf:label class="xforms-group-label-centered">Add ID</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="note-add-node-hide" ev:event="DOMActivate"/>
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:note/@ID"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@type)]" class="add-button">
+                                    <xf:trigger ref=".[not(@type)]">
                                         <xf:label class="xforms-group-label-centered">Add Type</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="note-add-node-hide" ev:event="DOMActivate"/>
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:note/@type"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@xlink:href)]" class="add-button">
+                                    <xf:trigger ref=".[not(@xlink:href)]">
                                         <xf:label class="xforms-group-label-centered">Add XLink</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="note-add-node-hide" ev:event="DOMActivate"/>
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:note/@xlink:href"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@lang)]" class="add-button">
+                                    <xf:trigger ref=".[not(@lang)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             Language</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -978,7 +978,7 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:note/@lang"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@transliteration)]" class="add-button">
+                                    <xf:trigger ref=".[not(@transliteration)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             Transliteration</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -986,7 +986,7 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:note/@transliteration"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@script)]" class="add-button">
+                                    <xf:trigger ref=".[not(@script)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             Script</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -994,7 +994,7 @@
                                             <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:note/@script"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[not(@script)]" class="add-button">
+                                    <xf:trigger ref=".[not(@script)]">
                                         <xf:label class="xforms-group-label-centered">Add
                                             xml:lang</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -1148,7 +1148,7 @@
             </xf:group>
         </xf:repeat>
         <xf:group ref=".[not(mods:physicalDescription)]">
-            <xf:trigger class="add-button">
+            <xf:trigger>
                 <xf:label class="xforms-group-label-centered">Add Missing Physical
                     Description</xf:label>
                 <xf:action ev:event="DOMActivate">

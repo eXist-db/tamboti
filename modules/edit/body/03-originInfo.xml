@@ -8,7 +8,7 @@
                 <xf:trigger ref=".[mods:originInfo]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="mods:originInfo" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo"/>
+                        <xf:insert nodeset="mods:originInfo" at="index('origininfo-repeat')" position="before" origin="instance('new-instance')/mods:originInfo"/>
                     </xf:action>
                 </xf:trigger>
             </span>
@@ -27,14 +27,14 @@
                 </div>
             </span>
         </div>
-        <!-- attributes: altRepGroup, displayLabel, lang, script, transliteration, xml:lang. -->
-        <!-- subelements: copyrightDate, dateCaptured, dateCreated, dateIssued, dateModified, dateOther, dateValid, edition, frequency, issuance, place, publisher. -->
+        <!--Attributes: altRepGroup, displayLabel, lang, script, transliteration, xml:lang. -->
+        <!--Subelements: copyrightDate, dateCaptured, dateCreated, dateIssued, dateModified, dateOther, dateValid, edition, frequency, issuance, place, publisher. -->
         <xf:repeat nodeset="instance('save-data')/mods:originInfo" id="origininfo-repeat">
-            <xf:group class="show-hide" ref=".[count(@*) &lt; 6 or count(*) &lt; 12]">
+            <xf:group class="show-hide" ref=".[count(@*) &lt; 6  or .[not(mods:copyrightDate)] or .[not(mods:dateCaptured)] or .[not(mods:dateCreated)] or .[not(mods:dateIssued)] or .[not(mods:dateModified)] or .[not(mods:dateOther)] or .[not(mods:dateValid)] or .[not(mods:edition)] or .[not(mods:frequency)] or .[not(mods:issuance)] or .[not(mods:place)] or .[not(mods:publisher)]]">
                 <xf:switch>
                     <xf:case id="originInfo-add-node-hide">
                         <div class="node-button">
-                            <xf:trigger class="add-button">
+                            <xf:trigger>
                                 <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                 <xf:toggle case="originInfo-add-node-unhide" ev:event="DOMActivate"/>
                             </xf:trigger>
@@ -50,7 +50,7 @@
                         <div class="node-adds">
                             <xf:group class="add-buttons">
                                 <xf:group appearance="full" ref=".[not(@altRepGroup)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add Alternate
                                             Representation Group</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -60,7 +60,7 @@
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(@displayLabel)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add Display
                                             Label</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -70,7 +70,7 @@
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(@lang)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add
                                             Language</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -80,7 +80,7 @@
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(@script)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add
                                             Script</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -90,7 +90,7 @@
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(@transliteration)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add
                                             Transliteration</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -100,7 +100,7 @@
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(@xml:lang)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add
                                             xml:lang</xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -116,117 +116,117 @@
                                             Date </xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:copyrightDate" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:copyrightDate"/>
+                                            <xf:insert nodeset="mods:copyrightDate" at="index('origininfo-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:copyrightDate"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(mods:dateCaptured)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add Date
                                             Captured</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:dateCaptured" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateCaptured"/>
+                                            <xf:insert nodeset="mods:dateCaptured" at="index('origininfo-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateCaptured"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(mods:dateCreated)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add Date
                                             Created</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:dateCreated" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateCreated"/>
+                                            <xf:insert nodeset="mods:dateCreated" at="index('origininfo-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateCreated"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(mods:dateIssued)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add Date
                                             Issued</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:dateIssued" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateIssued"/>
+                                            <xf:insert nodeset="mods:dateIssued" at="index('origininfo-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateIssued"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(mods:dateModified)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add Date
                                             Modified</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:dateModified" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateModified"/>
+                                            <xf:insert nodeset="mods:dateModified" at="index('origininfo-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateModified"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(mods:dateOther)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add Date
                                             Other</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:dateOther" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateOther"/>
+                                            <xf:insert nodeset="mods:dateOther" at="index('origininfo-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateOther"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(mods:dateValid)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add Date
                                             Valid</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:dateValid" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateValid"/>
+                                            <xf:insert nodeset="mods:dateValid" at="index('origininfo-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateValid"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(mods:edition)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add
                                             Edition</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:edition" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:edition"/>
+                                            <xf:insert nodeset="mods:edition" at="index('origininfo-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:edition"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(mods:frequency)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add
                                             Frequency</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:frequency" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:frequency"/>
+                                            <xf:insert nodeset="mods:frequency" at="index('origininfo-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:frequency"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(mods:issuance)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add
                                             Issuance</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:issuance" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:issuance"/>
+                                            <xf:insert nodeset="mods:issuance" at="index('origininfo-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:issuance"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(mods:place)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add
                                             Place</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:place" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:place"/>
+                                            <xf:insert nodeset="mods:place" at="index('origininfo-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:place"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
                                 <xf:group appearance="full" ref=".[not(mods:publisher)]">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">Add
                                             Publisher</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:publisher" at="index('origininfo-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:publisher"/>
+                                            <xf:insert nodeset="mods:publisher" at="index('origininfo-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:publisher"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -324,7 +324,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:place" at="index('place-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:place"/>
+                                <xf:insert nodeset="mods:place" at="index('place-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:place"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -343,7 +343,6 @@
                         </div>
                     </span>
                 </div>
-
                 <!--Attributes: supplied.-->
                 <!--Subelements: placeTerm.-->
                 <xf:repeat nodeset="./mods:place" id="place-repeat">
@@ -351,7 +350,7 @@
                         <xf:switch>
                             <xf:case id="place-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label>&gt;</xf:label>
                                         <xf:toggle case="place-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -367,7 +366,7 @@
                                 <div class="node-adds">
                                     <xf:group appearance="full">
                                         <xf:group appearance="full" ref=".[not(@supplied)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Supplied</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="place-add-node-hide" ev:event="DOMActivate"/>
@@ -377,7 +376,7 @@
                                         </xf:group>
                                         <hr/>
                                         <xf:group appearance="full" ref=".[not(mods:placeTerm)]">
-                                            <xf:trigger ref=".[not(mods:placeTerm)]" class="add-button">
+                                            <xf:trigger ref=".[not(mods:placeTerm)]">
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Place Term</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -413,7 +412,7 @@
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="mods:placeTerm" at="index('place-term-repeat')" position="before" origin="instance('insert-templates')/mods:place/mods:placeTerm"/>
+                                        <xf:insert nodeset="mods:placeTerm" at="index('place-term-repeat')" position="before" origin="instance('new-instance')/mods:originInfo//mods:place/mods:placeTerm"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
@@ -439,7 +438,7 @@
                                 <xf:switch>
                                     <xf:case id="place-term-add-node-hide">
                                         <div class="node-button">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>&gt;</xf:label>
                                                 <xf:toggle case="place-term-add-node-unhide" ev:event="DOMActivate"/>
                                             </xf:trigger>
@@ -455,7 +454,7 @@
                                         <div class="node-adds">
                                             <xf:group appearance="full">
                                                 <xf:group appearance="full" ref=".[not(@authority)]">
-                                                    <xf:trigger class="add-button">
+                                                    <xf:trigger>
                                                         <xf:label>Add Authority</xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xf:toggle case="place-term-add-node-hide" ev:event="DOMActivate"/>
@@ -464,7 +463,7 @@
                                                     </xf:trigger>
                                                 </xf:group>
                                                 <xf:group appearance="full" ref=".[not(@authorityURI)]">
-                                                    <xf:trigger class="add-button">
+                                                    <xf:trigger>
                                                         <xf:label>Add Authority URI</xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xf:toggle case="place-term-add-node-hide" ev:event="DOMActivate"/>
@@ -473,7 +472,7 @@
                                                     </xf:trigger>
                                                 </xf:group>
                                                 <xf:group appearance="full" ref=".[not(@lang)]">
-                                                    <xf:trigger class="add-button">
+                                                    <xf:trigger>
                                                         <xf:label>Add Language</xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xf:toggle case="place-term-add-node-hide" ev:event="DOMActivate"/>
@@ -482,7 +481,7 @@
                                                     </xf:trigger>
                                                 </xf:group>
                                                 <xf:group appearance="full" ref=".[not(@script)]">
-                                                    <xf:trigger class="add-button">
+                                                    <xf:trigger>
                                                         <xf:label>Add Script</xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xf:toggle case="place-term-add-node-hide" ev:event="DOMActivate"/>
@@ -491,7 +490,7 @@
                                                     </xf:trigger>
                                                 </xf:group>
                                                 <xf:group appearance="full" ref=".[not(@transliteration)]">
-                                                    <xf:trigger class="add-button">
+                                                    <xf:trigger>
                                                         <xf:label>Add Transliteration</xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xf:toggle case="place-term-add-node-hide" ev:event="DOMActivate"/>
@@ -500,7 +499,7 @@
                                                     </xf:trigger>
                                                 </xf:group>
                                                 <xf:group appearance="full" ref=".[not(@type)]">
-                                                    <xf:trigger class="add-button">
+                                                    <xf:trigger>
                                                         <xf:label>Add Type</xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xf:toggle case="place-term-add-node-hide" ev:event="DOMActivate"/>
@@ -509,7 +508,7 @@
                                                     </xf:trigger>
                                                 </xf:group>
                                                 <xf:group appearance="full" ref=".[not(@valueURI)]">
-                                                    <xf:trigger class="add-button">
+                                                    <xf:trigger>
                                                         <xf:label>Add Value URI</xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xf:toggle case="place-term-add-node-hide" ev:event="DOMActivate"/>
@@ -518,7 +517,7 @@
                                                     </xf:trigger>
                                                 </xf:group>
                                                 <xf:group appearance="full" ref=".[not(@xml:lang)]">
-                                                    <xf:trigger class="add-button">
+                                                    <xf:trigger>
                                                         <xf:label>Add xml:lang</xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xf:toggle case="place-term-add-node-hide" ev:event="DOMActivate"/>
@@ -695,7 +694,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:publisher" at="index('edition-repeat')" position="before" origin="instance('insert-templates')/mods:publisher"/>
+                                <xf:insert nodeset="mods:publisher" at="index('edition-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:publisher"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -714,14 +713,14 @@
                         </div>
                     </span>
                 </div>
-                <!-- attributes: supplied; lang; script; transliteration; xml:lang. -->
-                <!-- subelements: None. -->
+                <!--Attributes: supplied; lang; script; transliteration; xml:lang. -->
+                <!--Subelements: None. -->
                 <xf:repeat nodeset="./mods:publisher" id="publisher-repeat">
                     <xf:group class="show-hide" ref=".[count(@*) &lt; 5]">
                         <xf:switch>
                             <xf:case id="publisher-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label>&gt;</xf:label>
                                         <xf:toggle case="publisher-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -737,7 +736,7 @@
                                 <div class="node-adds">
                                     <xf:group appearance="full">
                                         <xf:group appearance="full" ref=".[not(@supplied)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Supplied</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="publisher-add-node-hide" ev:event="DOMActivate"/>
@@ -746,7 +745,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@lang)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="publisher-add-node-hide" ev:event="DOMActivate"/>
@@ -755,7 +754,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@script)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="publisher-add-node-hide" ev:event="DOMActivate"/>
@@ -764,7 +763,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@transliteration)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="publisher-add-node-hide" ev:event="DOMActivate"/>
@@ -773,7 +772,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@xml:lang)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="publisher-add-node-hide" ev:event="DOMActivate"/>
@@ -874,7 +873,6 @@
                     </xf:group>
                 </xf:repeat>
             </xf:group>
-            <!--NB: according to schema, edition should repeat, but does this make sense?-->
             <xf:group class="schema_3.3 schema_3.4 fieldset level-2" appearance="full" ref=".[mods:edition]">
                 <div class="join">
                     <span class="legend">Edition</span>
@@ -888,7 +886,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:edition" at="index('edition-repeat')" position="before" origin="instance('insert-templates')/mods:edition"/>
+                                <xf:insert nodeset="mods:edition" at="index('edition-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:edition"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -902,12 +900,13 @@
                     </span>
                 </div>
                 <!--Attributes: supplied; lang; xml:lang; script; transliteration-->
+                <!--Subelements: none-->
                 <xf:repeat nodeset="./mods:edition" id="edition-repeat">
                     <xf:group class="show-hide" ref=".[count(@*) &lt; 5]">
                         <xf:switch>
                             <xf:case id="edition-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label>&gt;</xf:label>
                                         <xf:toggle case="edition-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -923,7 +922,7 @@
                                 <div class="node-adds">
                                     <xf:group appearance="full">
                                         <xf:group appearance="full" ref=".[not(@supplied)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Supplied</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="edition-add-node-hide" ev:event="DOMActivate"/>
@@ -932,7 +931,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@lang)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="edition-add-node-hide" ev:event="DOMActivate"/>
@@ -941,7 +940,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@script)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="edition-add-node-hide" ev:event="DOMActivate"/>
@@ -950,7 +949,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@transliteration)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="edition-add-node-hide" ev:event="DOMActivate"/>
@@ -959,7 +958,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@xml:lang)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="edition-add-node-hide" ev:event="DOMActivate"/>
@@ -1067,7 +1066,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:issuance" at="index('issuance-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:issuance"/>
+                                <xf:insert nodeset="mods:issuance" at="index('issuance-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:issuance"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1087,7 +1086,7 @@
                     </span>
                 </div>
                 <!--Attributes: None.-->
-                <!--SUbelements: None.-->
+                <!--Subelements: None.-->
                 <xf:repeat nodeset="./mods:issuance" id="issuance-repeat">
                     <xf:group appearance="full">
                         <xf:select1 ref=".">
@@ -1106,7 +1105,6 @@
                     </xf:group>
                 </xf:repeat>
             </xf:group>
-            <!--NB: according to schema, frequency should repeat, but does this make sense?-->
             <xf:group class="schema_3.3 schema_3.4 fieldset level-2" appearance="full" ref=".[mods:frequency]">
                 <div class="join">
                     <span class="legend">Frequency</span>
@@ -1120,7 +1118,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:frequency" at="index('frequency-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:frequency"/>
+                                <xf:insert nodeset="mods:frequency" at="index('frequency-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:frequency"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1134,12 +1132,13 @@
                     </span>
                 </div>
                 <!--Attributes: authority; authorityURI; valueURI; lang; xml:lang; script; transliteration-->
+                <!--Subelements: none-->
                 <xf:repeat nodeset="./mods:frequency" id="frequency-repeat">
                     <xf:group class="show-hide" ref=".[count(@*) &lt; 7]">
                         <xf:switch>
                             <xf:case id="frequency-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label>&gt;</xf:label>
                                         <xf:toggle case="frequency-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -1155,7 +1154,7 @@
                                 <div class="node-adds">
                                     <xf:group appearance="full">
                                         <xf:group appearance="full" ref=".[not(@authority)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Authority</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="frequency-add-node-hide" ev:event="DOMActivate"/>
@@ -1164,7 +1163,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@authorityURI)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Authority URI</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="frequency-add-node-hide" ev:event="DOMActivate"/>
@@ -1173,7 +1172,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@lang)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="frequency-add-node-hide" ev:event="DOMActivate"/>
@@ -1182,7 +1181,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@script)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="frequency-add-node-hide" ev:event="DOMActivate"/>
@@ -1191,7 +1190,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@transliteration)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="frequency-add-node-hide" ev:event="DOMActivate"/>
@@ -1200,7 +1199,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@valueURI)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add Value URI</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="frequency-add-node-hide" ev:event="DOMActivate"/>
@@ -1209,7 +1208,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@xml:lang)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label>Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="frequency-add-node-hide" ev:event="DOMActivate"/>
@@ -1343,7 +1342,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:dateIssued" at="index('dateIssued-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateIssued"/>
+                                <xf:insert nodeset="mods:dateIssued" at="index('dateIssued-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateIssued"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1363,12 +1362,13 @@
                     </span>
                 </div>
                 <!--Attributes: encoding; point; keyDate; qualifier; lang; xml:lang; script; transliteration.-->
+                <!--Subelements: none-->
                 <xf:repeat nodeset="./mods:dateIssued" id="dateIssued-repeat">
                     <xf:group class="show-hide" ref=".[count(@*) &lt; 8]">
                         <xf:switch>
                             <xf:case id="dateIssued-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                         <xf:toggle case="dateIssued-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -1383,7 +1383,7 @@
                                 </div>
                                 <div class="node-adds">
                                     <xf:group appearance="full" ref=".[not(@encoding)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add
                                                 Encoding</xf:label>
                                             <xf:action ev:event="DOMActivate">
@@ -1393,7 +1393,7 @@
                                         </xf:trigger>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(@keyDate)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add Key
                                                 Date</xf:label>
                                             <xf:action ev:event="DOMActivate">
@@ -1403,7 +1403,7 @@
                                         </xf:trigger>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(@point)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add
                                                 Point</xf:label>
                                             <xf:action ev:event="DOMActivate">
@@ -1413,7 +1413,7 @@
                                         </xf:trigger>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(@qualifier)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add
                                                 Qualifier</xf:label>
                                             <xf:action ev:event="DOMActivate">
@@ -1423,7 +1423,7 @@
                                         </xf:trigger>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(@lang)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add
                                                 Language</xf:label>
                                             <xf:action ev:event="DOMActivate">
@@ -1433,7 +1433,7 @@
                                         </xf:trigger>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(@script)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add
                                                 Script</xf:label>
                                             <xf:action ev:event="DOMActivate">
@@ -1443,7 +1443,7 @@
                                         </xf:trigger>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(@transliteration)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add
                                                 Transliteration</xf:label>
                                             <xf:action ev:event="DOMActivate">
@@ -1453,7 +1453,7 @@
                                         </xf:trigger>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(@xml:lang)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add
                                                 xml:lang</xf:label>
                                             <xf:action ev:event="DOMActivate">
@@ -1606,7 +1606,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:dateCreated" at="index('dateCreated-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateCreated"/>
+                                <xf:insert nodeset="mods:dateCreated" at="index('dateCreated-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateCreated"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1630,7 +1630,7 @@
                         <xf:switch>
                             <xf:case id="dateCreated-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                         <xf:toggle case="dateCreated-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -1645,82 +1645,82 @@
                                 </div>
                                 <div class="node-adds">
                                     <xf:group appearance="full" ref=".[not(@encoding)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add
                                                 Encoding</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="dateCreated-add-node-hide" ev:event="DOMActivate"/>
-                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateIssued/@encoding"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCreated/@encoding"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(@keyDate)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add Key
                                                 Date</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="dateCreated-add-node-hide" ev:event="DOMActivate"/>
-                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateIssued/@keyDate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCreated/@keyDate"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(@point)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add
                                                 Point</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="dateCreated-add-node-hide" ev:event="DOMActivate"/>
-                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateIssued/@point"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCreated/@point"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(@qualifier)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add
                                                 Qualifier</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="dateCreated-add-node-hide" ev:event="DOMActivate"/>
-                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateIssued/@qualifier"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCreated/@qualifier"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(@lang)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add
                                                 Language</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="dateCreated-add-node-hide" ev:event="DOMActivate"/>
-                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateIssued/@lang"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCreated/@lang"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(@script)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add
                                                 Script</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="dateCreated-add-node-hide" ev:event="DOMActivate"/>
-                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateIssued/@script"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCreated/@script"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(@transliteration)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add
                                                 Transliteration</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="dateCreated-add-node-hide" ev:event="DOMActivate"/>
-                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateIssued/@transliteration"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCreated/@transliteration"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(@xml:lang)]">
-                                        <xf:trigger class="add-button">
+                                        <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add
                                                 xml:lang</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="dateCreated-add-node-hide" ev:event="DOMActivate"/>
-                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateIssued/@xml:lang"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCreated/@xml:lang"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
@@ -1868,7 +1868,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:dateCaptured" at="index('dateCaptured-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateCaptured"/>
+                                <xf:insert nodeset="mods:dateCaptured" at="index('dateCaptured-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateCaptured"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1892,7 +1892,7 @@
                         <xf:switch>
                             <xf:case id="dateCaptured-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                         <xf:toggle case="dateCaptured-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -1908,7 +1908,7 @@
                                 <div class="node-adds">
                                     <xf:group appearance="full" ref=".[not(@altRepGroup)] | .[not(mods:copyrightDate)] | .[not(mods:dateCaptured)] | .[not(mods:dateCaptured)] | .[not(mods:dateCaptured)] | .[not(mods:dateModified)] | .[not(mods:dateOther)] | .[not(mods:dateValid)] | .[not(@displayLabel)] | .[not(mods:edition)] | .[not(mods:frequency)] | .[not(mods:issuance)] | .[not(@lang)] | .[not(mods:place)] | .[not(mods:publisher)] | .[not(@script)] | .[not(@transliteration)] | .[not(@xml:lang)]">
                                         <xf:group appearance="full" ref=".[not(@encoding)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Encoding</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1918,7 +1918,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@keyDate)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Key Date</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1927,17 +1927,17 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <!--<xf:group appearance="full" ref=".[not(@lang)]">
-                                            <xf:trigger class="add-button">
+                                        <xf:group appearance="full" ref=".[not(@lang)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateCaptured-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCaptured/@lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
+                                        </xf:group>
                                         <xf:group appearance="full" ref=".[not(@point)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Point</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1947,7 +1947,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@qualifier)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Qualifier</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -1956,33 +1956,33 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <!--<xf:group appearance="full" ref=".[not(@script)]">
-                                            <xf:trigger class="add-button">
+                                        <xf:group appearance="full" ref=".[not(@script)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateCaptured-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCaptured/@script"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
-                                        <!--<xf:group appearance="full" ref=".[not(@transliteration)]">
-                                            <xf:trigger class="add-button">
+                                        </xf:group>
+                                        <xf:group appearance="full" ref=".[not(@transliteration)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateCaptured-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCaptured/@transliteration"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
-                                        <!--<xf:group appearance="full" ref=".[not(@xml:lang)]">
-                                            <xf:trigger class="add-button">
+                                        </xf:group>
+                                        <xf:group appearance="full" ref=".[not(@xml:lang)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateCaptured-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateCaptured/@xml:lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
+                                        </xf:group>
                                     </xf:group>
                                 </div>
                             </xf:case>
@@ -2128,7 +2128,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:dateValid" at="index('dateValid-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateValid"/>
+                                <xf:insert nodeset="mods:dateValid" at="index('dateValid-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateValid"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -2152,7 +2152,7 @@
                         <xf:switch>
                             <xf:case id="dateValid-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                         <xf:toggle case="dateValid-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -2168,7 +2168,7 @@
                                 <div class="node-adds">
                                     <xf:group appearance="full" ref=".[not(@altRepGroup)] |                                          .[not(mods:copyrightDate)] |                                          .[not(mods:dateValid)] |                                          .[not(mods:dateValid)] |                                          .[not(mods:dateValid)] |                                          .[not(mods:dateModified)] |                                          .[not(mods:dateOther)] |                                          .[not(mods:dateValid)] |                                          .[not(@displayLabel)] |                                          .[not(mods:edition)] |                                          .[not(mods:frequency)] |                                          .[not(mods:issuance)] |                                          .[not(@lang)] |                                          .[not(mods:place)] |                                          .[not(mods:publisher)] |                                          .[not(@script)] |                                          .[not(@transliteration)] |                                          .[not(@xml:lang)]                                         ">
                                         <xf:group appearance="full" ref=".[not(@encoding)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Encoding</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2178,7 +2178,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@keyDate)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Key Date</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2187,17 +2187,17 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <!--<xf:group appearance="full" ref=".[not(@lang)]">
-                                            <xf:trigger class="add-button">
+                                        <xf:group appearance="full" ref=".[not(@lang)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateValid-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateValid/@lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
+                                        </xf:group>
                                         <xf:group appearance="full" ref=".[not(@point)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Point</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2207,7 +2207,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@qualifier)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Qualifier</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2216,33 +2216,33 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <!--<xf:group appearance="full" ref=".[not(@script)]">
-                                            <xf:trigger class="add-button">
+                                        <xf:group appearance="full" ref=".[not(@script)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateValid-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateValid/@script"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
-                                        <!--<xf:group appearance="full" ref=".[not(@transliteration)]">
-                                            <xf:trigger class="add-button">
+                                        </xf:group>
+                                        <xf:group appearance="full" ref=".[not(@transliteration)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateValid-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateValid/@transliteration"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
-                                        <!--<xf:group appearance="full" ref=".[not(@xml:lang)]">
-                                            <xf:trigger class="add-button">
+                                        </xf:group>
+                                        <xf:group appearance="full" ref=".[not(@xml:lang)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateValid-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateValid/@xml:lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
+                                        </xf:group>
                                     </xf:group>
                                 </div>
                             </xf:case>
@@ -2388,7 +2388,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:dateModified" at="index('dateModified-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateModified"/>
+                                <xf:insert nodeset="mods:dateModified" at="index('dateModified-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateModified"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -2412,7 +2412,7 @@
                         <xf:switch>
                             <xf:case id="dateModified-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                         <xf:toggle case="dateModified-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -2428,7 +2428,7 @@
                                 <div class="node-adds">
                                     <xf:group appearance="full" ref=".[not(@altRepGroup)] |                                          .[not(mods:copyrightDate)] |                                          .[not(mods:dateModified)] |                                          .[not(mods:dateModified)] |                                          .[not(mods:dateModified)] |                                          .[not(mods:dateModified)] |                                          .[not(mods:dateOther)] |                                          .[not(mods:dateModified)] |                                          .[not(@displayLabel)] |                                          .[not(mods:edition)] |                                          .[not(mods:frequency)] |                                          .[not(mods:issuance)] |                                          .[not(@lang)] |                                          .[not(mods:place)] |                                          .[not(mods:publisher)] |                                          .[not(@script)] |                                          .[not(@transliteration)] |                                          .[not(@xml:lang)]                                         ">
                                         <xf:group appearance="full" ref=".[not(@encoding)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Encoding</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2438,7 +2438,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@keyDate)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Key Date</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2447,17 +2447,17 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <!--<xf:group appearance="full" ref=".[not(@lang)]">
-                                            <xf:trigger class="add-button">
+                                        <xf:group appearance="full" ref=".[not(@lang)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateModified-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateModified/@lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
+                                        </xf:group>
                                         <xf:group appearance="full" ref=".[not(@point)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Point</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2467,7 +2467,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@qualifier)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Qualifier</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2476,33 +2476,33 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <!--<xf:group appearance="full" ref=".[not(@script)]">
-                                            <xf:trigger class="add-button">
+                                        <xf:group appearance="full" ref=".[not(@script)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateModified-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateModified/@script"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
-                                        <!--<xf:group appearance="full" ref=".[not(@transliteration)]">
-                                            <xf:trigger class="add-button">
+                                        </xf:group>
+                                        <xf:group appearance="full" ref=".[not(@transliteration)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateModified-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateModified/@transliteration"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
-                                        <!--<xf:group appearance="full" ref=".[not(@xml:lang)]">
-                                            <xf:trigger class="add-button">
+                                        </xf:group>
+                                        <xf:group appearance="full" ref=".[not(@xml:lang)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateModified-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateModified/@xml:lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
+                                        </xf:group>
                                     </xf:group>
                                 </div>
                             </xf:case>
@@ -2648,7 +2648,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:copyrightDate" at="index('copyrightDate-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:copyrightDate"/>
+                                <xf:insert nodeset="mods:copyrightDate" at="index('copyrightDate-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:copyrightDate"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -2672,7 +2672,7 @@
                         <xf:switch>
                             <xf:case id="copyrightDate-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                         <xf:toggle case="copyrightDate-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -2688,7 +2688,7 @@
                                 <div class="node-adds">
                                     <xf:group appearance="full" ref=".[not(@altRepGroup)] |                                          .[not(mods:copyrightDate)] |                                          .[not(mods:copyrightDate)] |                                          .[not(mods:copyrightDate)] |                                          .[not(mods:copyrightDate)] |                                          .[not(mods:copyrightDate)] |                                          .[not(mods:dateOther)] |                                          .[not(mods:copyrightDate)] |                                          .[not(@displayLabel)] |                                          .[not(mods:edition)] |                                          .[not(mods:frequency)] |                                          .[not(mods:issuance)] |                                          .[not(@lang)] |                                          .[not(mods:place)] |                                          .[not(mods:publisher)] |                                          .[not(@script)] |                                          .[not(@transliteration)] |                                          .[not(@xml:lang)]                                         ">
                                         <xf:group appearance="full" ref=".[not(@encoding)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Encoding</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2698,7 +2698,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@keyDate)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Key Date</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2707,17 +2707,17 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <!--<xf:group appearance="full" ref=".[not(@lang)]">
-                                            <xf:trigger class="add-button">
+                                        <xf:group appearance="full" ref=".[not(@lang)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="copyrightDate-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:copyrightDate/@lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
+                                        </xf:group>
                                         <xf:group appearance="full" ref=".[not(@point)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Point</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2727,7 +2727,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@qualifier)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Qualifier</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2736,33 +2736,33 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <!--<xf:group appearance="full" ref=".[not(@script)]">
-                                            <xf:trigger class="add-button">
+                                        <xf:group appearance="full" ref=".[not(@script)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="copyrightDate-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:copyrightDate/@script"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
-                                        <!--<xf:group appearance="full" ref=".[not(@transliteration)]">
-                                            <xf:trigger class="add-button">
+                                        </xf:group>
+                                        <xf:group appearance="full" ref=".[not(@transliteration)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="copyrightDate-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:copyrightDate/@transliteration"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
-                                        <!--<xf:group appearance="full" ref=".[not(@xml:lang)]">
-                                            <xf:trigger class="add-button">
+                                        </xf:group>
+                                        <xf:group appearance="full" ref=".[not(@xml:lang)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="copyrightDate-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:copyrightDate/@xml:lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
+                                        </xf:group>
                                     </xf:group>
                                 </div>
                             </xf:case>
@@ -2908,7 +2908,7 @@
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:dateOther" at="index('dateOther-repeat')" position="before" origin="instance('insert-templates')/mods:originInfo/mods:dateOther"/>
+                                <xf:insert nodeset="mods:dateOther" at="index('dateOther-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateOther"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -2932,7 +2932,7 @@
                         <xf:switch>
                             <xf:case id="dateOther-add-node-hide">
                                 <div class="node-button">
-                                    <xf:trigger class="add-button">
+                                    <xf:trigger>
                                         <xf:label class="xforms-group-label-centered">&gt;</xf:label>
                                         <xf:toggle case="dateOther-add-node-unhide" ev:event="DOMActivate"/>
                                     </xf:trigger>
@@ -2948,7 +2948,7 @@
                                 <div class="node-adds">
                                     <xf:group appearance="full" ref=".[not(@altRepGroup)] |                                          .[not(mods:dateOther)] |                                          .[not(mods:dateOther)] |                                          .[not(mods:dateOther)] |                                          .[not(mods:dateOther)] |                                          .[not(mods:dateOther)] |                                          .[not(mods:dateOther)] |                                          .[not(mods:dateOther)] |                                          .[not(@displayLabel)] |                                          .[not(mods:edition)] |                                          .[not(mods:frequency)] |                                          .[not(mods:issuance)] |                                          .[not(@lang)] |                                          .[not(mods:place)] |                                          .[not(mods:publisher)] |                                          .[not(@script)] |                                          .[not(@transliteration)] |                                          .[not(@xml:lang)]                                         ">
                                         <xf:group appearance="full" ref=".[not(@encoding)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Encoding</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2958,7 +2958,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@keyDate)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Key Date</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2967,17 +2967,17 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <!--<xf:group appearance="full" ref=".[not(@lang)]">
-                                            <xf:trigger class="add-button">
+                                        <xf:group appearance="full" ref=".[not(@lang)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Language</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateOther-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateOther/@lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
+                                        </xf:group>
                                         <xf:group appearance="full" ref=".[not(@point)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Point</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2987,7 +2987,7 @@
                                             </xf:trigger>
                                         </xf:group>
                                         <xf:group appearance="full" ref=".[not(@qualifier)]">
-                                            <xf:trigger class="add-button">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add
                                                   Qualifier</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -2996,33 +2996,33 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <!--<xf:group appearance="full" ref=".[not(@script)]">
-                                            <xf:trigger class="add-button">
+                                        <xf:group appearance="full" ref=".[not(@script)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Script</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateOther-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateOther/@script"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
-                                        <!--<xf:group appearance="full" ref=".[not(@transliteration)]">
-                                            <xf:trigger class="add-button">
+                                        </xf:group>
+                                        <xf:group appearance="full" ref=".[not(@transliteration)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateOther-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateOther/@transliteration"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
-                                        <!--<xf:group appearance="full" ref=".[not(@xml:lang)]">
-                                            <xf:trigger class="add-button">
+                                        </xf:group>
+                                        <xf:group appearance="full" ref=".[not(@xml:lang)]">
+                                            <xf:trigger>
                                                 <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:toggle case="dateOther-add-node-hide" ev:event="DOMActivate"/>
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/mods:dateOther/@xml:lang"/>
                                                 </xf:action>
                                             </xf:trigger>
-                                        </xf:group>-->
+                                        </xf:group>
                                     </xf:group>
                                 </div>
                             </xf:case>
@@ -3163,7 +3163,7 @@
             </xf:group>
         </xf:repeat>
         <xf:group appearance="full" ref=".[not(mods:originInfo)]">
-            <xf:trigger class="add-button">
+            <xf:trigger>
                 <xf:label class="xforms-group-label-centered">Add Missing Origin
                     Information</xf:label>
                 <xf:action ev:event="DOMActivate">

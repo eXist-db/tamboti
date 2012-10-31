@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--node insertions: --><!--missing element insertion: --><!--hints moved to code-table: --><!--hints checked: --><!--saving of all nodes: --><!--schema instantiated: --><!--schema notations added: -->
+<!--node insertions: --><!--missing element insertion: --><!--hints moved to code-table: --><!--hints linked with id: --><!--hints checked: --><!--saving of all nodes: --><!--schema instantiated: --><!--schema notations added: -->
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="part block-form" tab-id="part" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group appearance="full" class="fieldset level-1">
         <!-- The DLF/Aquifer Implementation Guidelines for Shareable MODS Records recommend that the part element be used in cases where the part of a resource being represented is a physical or structural part of another resource. Examples include an issue of a journal or a single story from a collection. This element is repeatable. -->
@@ -48,6 +48,9 @@
         <!--part repeat begins-->
         <xf:repeat nodeset="instance('save-data')/mods:part" id="part-repeat">
             <!--part node-add begins-->
+            <!--Attributes: ID; type; order; lang; xml:lang; script; transliteration; displayLabel; altRepGroup.-->
+            <!--Subelements: detail; extent; date; text.-->	 
+            
             <!--NB: attributes do not work-->
             <xf:group appearance="full" ref=".[not(mods:detail)] | .[not(mods:extent)] | .[not(mods:date)] | .[not(mods:text)]">
                 <xf:switch>
@@ -115,11 +118,14 @@
             <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@ID]">
                 <xf:input ref="./@ID" class="text_50">
-                    <xf:label>ID</xf:label>
-                    <xf:hint>
-                        <p> ID is used to link among records inside the database and to reference a
-                            field inside the database from the outside. </p>
-                    </xf:hint>
+                    <xf:label>ID
+                        <span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_ID',instance('code-tables'))/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                 </xf:input>
                 <!-- <xf:trigger> <xf:label class="xforms-label-small">-</xf:label> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/@ID" at="index('part-repeat')"/> </xf:trigger> -->
             </xf:group>
@@ -127,14 +133,14 @@
             <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@type]">
                 <xf:input ref="./@type" class="text_50">
-                    <xf:label>Type</xf:label>
-                    <xf:hint>
-                        <p> A designation of a document segment type. Suggested values include
-                            volume, issue, chapter, section, paragraph, and track. Other values may
-                            be used as needed. Since there is not a controlled set of terms for
-                            type, if used, the value should be expressed clearly and be generally
-                            understandable. </p>
-                    </xf:hint>
+                    <xf:label>Type
+                        <span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-type',instance('code-tables'))/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                 </xf:input>
                 <!-- <xf:trigger> <xf:label class="xforms-label-small">-</xf:label> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/@type" at="index('part-repeat')"/> </xf:trigger> -->
             </xf:group>
@@ -142,10 +148,14 @@
             <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@order]">
                 <xf:input ref="./@order" class="text_50">
-                    <xf:label>Order</xf:label>
-                    <xf:hint>
-                        <p> An integer that designates the sequence of parts. </p>
-                    </xf:hint>
+                    <xf:label>Order
+                        <span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-order',instance('code-tables'))/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                 </xf:input>
                 <!-- <xf:trigger> <xf:label class="xforms-label-small">-</xf:label> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/@order" at="index('part-repeat')"/> </xf:trigger> -->
             </xf:group>
@@ -153,12 +163,14 @@
             <!--Cluster: include-->
             <xf:group appearance="full" class="input-group" ref=".[@lang]">
                 <xf:select1 ref="./@lang">
-                    <xf:label>Language</xf:label>
-                    <xf:hint>
-                        <p> The language used within Title Information is specified here, if this
-                            language is different from the language noted in Language of Resource.
-                            The most common languages have been moved to the top of the list. </p>
-                    </xf:hint>
+                    <xf:label>Language
+                        <span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_lang',instance('code-tables'))/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
@@ -170,16 +182,14 @@
             <!--Cluster: omit-->
             <xf:group appearance="full" class="input-group" ref=".[@xml:lang]">
                 <xf:select1 ref="./@xml:lang">
-                    <xf:label>xml:lang</xf:label>
-                    <xf:hint>
-                        <p> The language used within Title Information is specified here, if this
-                            language is different from the language noted in Language of Resource.
-                            xml:lang is used to specify the language used within a field, using
-                            specifications in RFC 3066. RFC 3066 uses the two-character ISO 639-1
-                            codes along with three-character ISO 639-2 codes for those languages not
-                            given in 639-1. </p>
-                        <p> The recommendation is not to use xml:lang, but to use the Language. </p>
-                    </xf:hint>
+                    <xf:label>xml:lang
+                        <span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
@@ -191,22 +201,14 @@
             <!--Cluster: include-->
             <xf:group appearance="full" class="input-group" ref=".[@type='transliterated']">
                 <xf:select1 ref="./@transliteration" selection="open">
-                    <xf:label>Transliteration</xf:label>
-                    <xf:hint>
-                        <p> Transliteration specifies the transliteration (transcription,
-                            romanisation) scheme used within Title Information. When specificing the
-                            transliteration used, also specify the language employed. There is at
-                            present no standard list of transliteration schemes available. If you
-                            wish to employ a transliteration on the scheme, please contact
-                            <!--contact -->. In general, the Library of Congress transliteration
-                            schemes (<!-- NB -->) should be used. If you follow a transliteration
-                            scheme authorised by <!--NB-->, choose <!--NB--> as the value and note
-                            the language from which the transliteration is made. The following
-                            transliteration schemes are authorised by <!--NB-->: Chinese: pinyin
-                            Japanese: (modified) Hepburn Korean: <!--NB--> Russian: <!--NB-->
-                            Sanskrit: <!--NB--> If you employ a different, but recognised,
-                            transliteration scheme, you may have it added to the list. </p>
-                    </xf:hint>
+                    <xf:label>Transliteration
+                        <span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_transliteration',instance('code-tables'))/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
@@ -218,14 +220,14 @@
             <!--Cluster: include-->
             <xf:group appearance="full" class="input-group" ref=".[not(@type='transliterated') and ./@script]">
                 <xf:select1 ref="./@script">
-                    <xf:label>Script</xf:label>
-                    <xf:hint>
-                        <p> Script specifies the script used within individual fields. The use of
-                            Latin script is not noted. "Chinese" is "Han (Simplified Variant)" or
-                            "Han (Traditional Variant)". If the two variants are not considered, it
-                            is "Han (Hanzi, Kanji, Hanja)", also used for Japanese, Korean and
-                            Vietnamese written in Chinese. </p>
-                    </xf:hint>
+                    <xf:label>Script
+                        <span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_script',instance('code-tables'))/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
@@ -237,13 +239,14 @@
             <!--Cluster: omit-->
             <xf:group appearance="full" ref=".[@altRepGroup]">
                 <xf:select1 ref="./@altRepGroup">
-                    <xf:label>Alternate Representation Group</xf:label>
-                    <xf:hint>
-                        <p>Alternate Representation Group is used to link alternate representations
-                            of the same element content, such as different scripts,
-                            transliterations, and translations. The same attribute value is applied
-                            to each of the element instances to be linked.</p>
-                    </xf:hint>
+                    <xf:label>Alternate Representation Group
+                        <span class="xforms-help">
+                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                            <div class="xforms-help-value">
+                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_altRepGroup',instance('code-tables'))/help"/>
+                            </div>
+                        </span>
+                    </xf:label>
                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='altRepGroup-code']/items/item">
                         <xf:label ref="label"/>
                         <xf:value ref="value"/>
@@ -278,53 +281,55 @@
                     <span class="xforms-hint">
                         <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
-                            <p> Use Detail to indicate the numbering and type of designation of the
-                                part in relation to the parent item. Detail contains the numbering
-                                and type of designation of the part in relation to the host/parent
-                                item in which a host item resides. </p>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-detail',instance('code-tables'))/help"/>
                         </div>
                     </span>
                 </div>
                 <!--part/detail repeat begins-->
+                <!--Attributes: type; level; lang; xml:lang; script; transliteration.-->
+                <!--Subelements: number; caption; title.-->
                 <xf:repeat nodeset="./mods:detail" id="part-detail-repeat">
                     <!--part/detail input begins-->
                     <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
                     <!--Cluster: include-->
                     <xf:group appearance="full" ref=".[@type]">
                         <xf:input ref="./@type" class="text_50">
-                            <xf:label>Type</xf:label>
-                            <xf:hint>
-                                <p> Use this field to indicate the type of the part described.
-                                    Suggested values include part, volume, issue, chapter, section,
-                                    paragraph, track. Other values may be used as needed. However,
-                                    since there is not a controlled set of terms for type, if used,
-                                    the value should be expressed clearly and be generally
-                                    understandable outside of the local context of the resource.
-                                    <!--NB: make open selcetion with code table?-->
-                                </p>
-                            </xf:hint>
+                            <xf:label>Type
+                                <span class="xforms-help">
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-help-value">
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-detail-type',instance('code-tables'))/help"/>
+                                    </div>
+                                </span>
+                            </xf:label>
                         </xf:input>
                     </xf:group>
                     <!--DLF/Aquifer: OPTIONAL]-->
                     <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@order]">
                         <xf:input ref="./@order" class="text_50">
-                            <xf:label>Order</xf:label>
-                            <xf:hint>
-                                <p> An integer that designates the sequence of parts. </p>
-                            </xf:hint>
+                            <xf:label>Order
+                                <span class="xforms-help">
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-help-value">
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-order',instance('code-tables'))/help"/>
+                                    </div>
+                                </span>
+                            </xf:label>
                         </xf:input>
                     </xf:group>
                     <!--DLF/Aquifer: N/A-->
                     <!--Cluster: omit-->
                     <xf:group appearance="full" ref=".[@level]">
                         <xf:input ref="./@level" class="text_50">
-                            <xf:label>Level</xf:label>
-                            <xf:hint>
-                                <p> Describes the level of numbering in the host/parent item. This
-                                    is used to ensure that the numbering is retained in the proper
-                                    order. An example is: "v. 2, no. 3". </p>
-                            </xf:hint>
+                            <xf:label>Level
+                                <span class="xforms-help">
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-help-value">
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-level',instance('code-tables'))/help"/>
+                                    </div>
+                                </span>
+                            </xf:label>
                         </xf:input>
                     </xf:group>
                     <!--part/detail input ends-->
@@ -333,33 +338,42 @@
                     <!--Cluster: ?-->
                     <xf:group appearance="full" ref=".[mods:number]">
                         <xf:input ref="./mods:number" class="text_50">
-                            <xf:label>Number</xf:label>
-                            <xf:hint>
-                                <p> Contains the actual number within the part. </p>
-                            </xf:hint>
+                            <xf:label>Number
+                                <span class="xforms-help">
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-help-value">
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-detail-number',instance('code-tables'))/help"/>
+                                    </div>
+                                </span>
+                            </xf:label>
                         </xf:input>
                     </xf:group>
                     <!--part/detail/number ends-->
                     <!--part/detail/caption begins-->
                     <xf:group appearance="full" ref=".[mods:caption]">
                         <xf:input ref="./mods:caption" class="text_50">
-                            <xf:label>Caption</xf:label>
-                            <xf:hint>
-                                <p> Contains the caption describing the enumeration within a part.
-                                    This may be the same as type, but conveys what is on the item
-                                    being described. </p>
-                            </xf:hint>
+                            <xf:label>Caption
+                                <span class="xforms-help">
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-help-value">
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-detail-caption',instance('code-tables'))/help"/>
+                                    </div>
+                                </span>
+                            </xf:label>
                         </xf:input>
                     </xf:group>
                     <!--part/detail/caption ends-->
                     <!--part/detail/title begins-->
                     <xf:group appearance="full" ref=".[mods:title]">
                         <xf:input ref="./mods:title" class="text_50">
-                            <xf:label>Title</xf:label>
-                            <xf:hint>
-                                <p> Contains the title of the part. Only include if this is
-                                    different than the Title in Title Information. </p>
-                            </xf:hint>
+                            <xf:label>Title
+                                <span class="xforms-help">
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-help-value">
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-detail-caption',instance('code-tables'))/help"/>
+                                    </div>
+                                </span>
+                            </xf:label>
                         </xf:input>
                     </xf:group>
                     <!--part/detail/title ends-->
@@ -392,12 +406,13 @@
                     <span class="xforms-hint">
                         <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                         <div class="xforms-hint-value">
-                            <p> Use this subfield to indicate the measured units making up the part
-                                (for example pages, minutes, etc.). </p>
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_extent',instance('code-tables'))/help"/>
                         </div>
                     </span>
                 </div>
                 <!--part/extent repeat begins-->
+                <!--Attribute: unit.-->
+                <!--Subelements: start; end; total; list.-->
                 <xf:repeat nodeset="./mods:extent" id="extent-repeat">
                     <!--part/extent input begins-->
                     <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
@@ -503,6 +518,8 @@
                         </div>
                     </span>
                 </div>
+                <!--Attributes: encoding; point; qualifier; lang; xml:lang; script; transliteration.-->
+                <!--Subelements: None.-->
                 <!--part/date repeat begins-->
                 <xf:repeat nodeset="./mods:date" id="part-date-repeat">
                     <!--part/date input begins-->
@@ -609,6 +626,8 @@
                     </span>
                 </div>
                 <!--part/text repeat begins-->
+                <!--Attributes: xlink; lang; xml:lang; transliteration; script; displayLabel; type.-->
+                <!--Subelements: None.-->
                 <xf:repeat nodeset="./mods:text" id="text-repeat">
                     <!--part/text input begins-->
                     <xf:group appearance="full" ref=".">
