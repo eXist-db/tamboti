@@ -256,17 +256,22 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
     (:If the record is hosted by a record linked to through an xlink, display the title of this record. 
     Only the xlink on the first relatedItem with type host is treated.:)
     let $related-publication-xlink := doc($record-data)/mods:mods/mods:relatedItem[@type eq 'host'][1]/@xlink:href/string()
-    let $related-publication-xlink := replace($related-publication-xlink, '^#?(.*)$', '$1')
-    let $related-publication := collection($config:mods-root)//mods:mods[@ID eq $related-publication-xlink][1]
-    let $related-publication := modsCommon:get-short-title($related-publication)
-    let $related-publication :=
-        if ($related-publication-xlink)
-        then
-            if (count($related-publication-xlink) eq 1)
-            then (<span class="intro">The publication is included in </span>, <a href="../../modules/search/index.html?filter=ID&amp;value={$related-publication-xlink}" target="_blank">{$related-publication}</a>,<span class="intro">.</span>)
-            else (<span class="intro">The publication is included in more than one publication.</span>)
+    let $related-publication-xlink-clear := 
+        if ($related-publication-xlink) 
+        then replace($related-publication-xlink[1], '^#?(.*)$', '$1') 
         else ()
-    return
+    let $related-publication := 
+        if ($related-publication-xlink-clear) 
+        then modsCommon:get-short-title(collection($config:mods-root)//mods:mods[@ID eq $related-publication-xlink-clear])
+        else ()
+    let $related-publication :=
+        if (count($related-publication-xlink) eq 1)
+        then (<span class="intro">The publication is included in </span>, <a href="../../modules/search/index.html?filter=ID&amp;value={$related-publication-xlink-clear}" target="_blank">{$related-publication}</a>,<span class="intro">.</span>)
+        else 
+            if (count($related-publication-xlink) gt 1) 
+            then (<span class="intro">The publication is included in more than one publication.</span>)
+            else ()
+        return
         <div class="content">
             <span class="info-line">
             {
