@@ -98,12 +98,10 @@ return
 		  </forward>
 	   </dispatch>
 
-        (: paths starting with /libs/ will be loaded from the webapp directory on the file system :)
-    else if (fn:starts-with($exist:path, "/item/libs/")) then
-        let $lib-path := fn:concat("/", substring-after($exist:path, 'item/libs/')) return
-            <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-                <forward url="{$lib-path}" absolute="yes"/>
-            </dispatch>
+    else if (contains($exist:path, "/$shared/")) then
+        <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+            <forward url="/apps/shared-resources/{substring-after($exist:path, '/$shared/')}" absolute="yes"/>
+        </dispatch>
 
     else if (starts-with($exist:path, "/item/theme")) then
         let $path := theme:resolve-uri($exist:prefix, $exist:root, substring-after($exist:path, "/item/theme"))
