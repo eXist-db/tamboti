@@ -9,6 +9,7 @@ import module namespace xdb="http://exist-db.org/xquery/xmldb";
 
 declare variable $home external;
 declare variable $dir external;
+declare variable $target external;
 declare variable $log-level := "INFO";
 declare variable $db-root := "/db";
 declare variable $system-collection := fn:concat($db-root, "/system/config");
@@ -33,7 +34,7 @@ declare variable $commons-exist-collection-name := "eXist";
 (:declare variable $commons-mads-collection-name := "mads";:)
 
 (:~ Collection paths :)
-declare variable $library-collection := fn:concat($db-root, "/", $library-collection-name);
+declare variable $library-collection := fn:concat($target, "/", $library-collection-name);
 declare variable $modules-collection := fn:concat($library-collection, "/", $modules-collection-name);
 declare variable $editor-app-collection := fn:concat($modules-collection, "/", $edit-app-collection-name);
 declare variable $editor-app-code-tables-collection := fn:concat($editor-app-collection, "/", $code-tables-collection-name);
