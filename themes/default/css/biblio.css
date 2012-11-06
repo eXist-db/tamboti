@@ -13,14 +13,26 @@ color scheme ends*/
 /*variables begin*/
 /*variables end*/
 /*new or temporary stuff begins*/
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font: 13px/1.231 arial, helvetica, clean, sans-serif;
+}
 hr {
   color: #5db0e6;
 }
+ul {
+  margin: 0 15px 1em 40px;
+}
+ul li {
+  margin-bottom: .5em;
+  margin-top: .5em;
+  line-height: 1.5em;
+}
 #query-tabs ul li:nth-of-type(5) {
   float: right;
-}
-#query-tabs ul .list {
-  float: left;
 }
 #query-tabs .list li:nth-of-type(5) {
   float: none;
@@ -48,6 +60,8 @@ hr {
 p,
 td {
   line-height: 1.25em;
+  padding: 5px 0 5px 5px;
+  font-size: 1em;
 }
 a {
   color: #4d4d4d;
@@ -71,6 +85,9 @@ img {
   height: 8em;
   margin-top: .5em;
   margin-bottom: 0;
+  margin-left: 50px;
+  margin-right: 50px;
+  position: relative;
 }
 #page-head-left {
   position: absolute;
@@ -85,6 +102,12 @@ img {
 /*content1col div begins*/
 #content1col {
   margin-bottom: 3em;
+  margin-left: 50px;
+  margin-right: 50px;
+  top: 215px;
+  display: block;
+  overflow: visible;
+  background-color: white;
 }
 #content1col .help {
   text-align: left;

@@ -22,16 +22,30 @@ color scheme ends*/
 /*variables end*/
 
 /*new or temporary stuff begins*/
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {font:13px/1.231 arial,helvetica,clean,sans-serif;}
+
 hr {
     color:@theme-color
     }
 
-#query-tabs ul li:nth-of-type(5) {
-    float:right;
+ul {
+    margin: 0 15px 1em 40px;
 }
 
-#query-tabs ul .list {
-    float:left;
+ul li {
+    margin-bottom: .5em;
+    margin-top: .5em;
+    line-height: 1.5em;
+}
+
+#query-tabs ul li:nth-of-type(5) {
+    float:right;
 }
 
 #query-tabs .list li:nth-of-type(5) {
@@ -69,6 +83,9 @@ p,
 td 
     {
     line-height:1.25em;
+    padding: 5px 0 5px 5px;
+    font-size:1em;
+
 }
 
 a {
@@ -99,6 +116,9 @@ img {border:0;
     height:8em;
     margin-top:.5em;
     margin-bottom:0;
+    margin-left: 50px;
+    margin-right: 50px;
+    position: relative;    
 }
 
 #page-head-left {
@@ -118,6 +138,12 @@ img {border:0;
 
 #content1col {
     margin-bottom:3em;
+    margin-left: 50px;
+    margin-right: 50px;
+    top: 215px;
+    display: block;
+    overflow: visible;
+    background-color: white;
 }
 
 #content1col .help {

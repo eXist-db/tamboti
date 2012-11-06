@@ -3,6 +3,7 @@
     <map path="/apps/library" theme="library" root="/db/resources/commons/samples"/>
     <map path="/apps/tamboti" theme="tamboti" root="/db/resources"/>
     <map path="/apps/wsc" theme="wsc" root="/db/resources/commons/Wissenschaftssprache%20Chinesisch"/>
+    <map path="/apps/dungan" theme="dungan" root="/db/resources"/>
 </themes><!--
     Dynamically resolve all resources depending on the current theme. 
     A theme is selected by looking at the URL prefix (as defined in controller-config.xml) and themes/configuration.xml. 
