@@ -347,16 +347,20 @@ function showHideCollectionControls() {
         if(isWriteable && !isUsersHome && isOwner) {
             $('#collection-rename-folder').show();
             $('#collection-move-folder').show();
+            $('#upload-file').show();
         } else {
             $('#collection-rename-folder').hide();
             $('#collection-move-folder').hide();
+            $('#upload-file').hide();
         }
         
         //parent is writeable and executable and its not the current users home folder
         if(isParentWriteable && isParentExecutable && !isUsersHome) {
             $('#collection-remove-folder').show();
+            $('#upload-file').show();
         } else {
             $('#collection-remove-folder').hide();
+            $('#upload-file').hide();
         }
     });
 };
