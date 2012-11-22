@@ -27,6 +27,9 @@ declare function functx:escape-for-regex($arg as xs:string?) as xs:string {
            '(\.|\[|\]|\\|\||\-|\^|\$|\?|\*|\+|\{|\}|\(|\))','\\$1')
  } ;
  
+
+
+
 (:~
 : Creates a collection inside a parent collection
 :
@@ -240,6 +243,19 @@ declare function op:unknown-action($action as xs:string) {
         <p>Unknown action: {$action}.</p>
 };
 
+declare function op:upload-file($filename, $data ,$collection) {
+
+(:
+let $store := xmldb:store($collection, $filename, request:get-uploaded-file-data($data))
+:)
+ 
+
+<results>
+   <message>File {$filename} has been stored at collection={$collection}.</message>
+</results>
+  
+};
+
 let $action := request:get-parameter("action", ()),
 $collection := uu:escape-collection-path(request:get-parameter("collection", ()))
 return
@@ -271,5 +287,11 @@ return
         op:get-move-folder-list($collection)
      else if($action eq "get-move-resource-list")then
         op:get-move-resource-list($collection)
-    else
+     else if($action eq "upload-file") then
+         let $name := request:get-uploaded-file-name('name')
+         let $data := request:get-uploaded-file-data('name')
+         return
+         op:upload-file($name,$data,$collection)
+        
+     else
         op:unknown-action($action)

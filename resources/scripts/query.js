@@ -48,8 +48,8 @@ function hideCollectionActionButtons() {
     $('#collection-remove-folder').hide();
     $('#collection-sharing').hide();
     $('#collection-create-resource').hide();
-    
     $('#remove-group-button').hide();
+    $('#upload-file').hide();
 };
 
 /* sharing dialog actions */
@@ -292,7 +292,7 @@ function showHideCollectionControls() {
     var collection = getCurrentCollection();
     
     var params = { action: "collection-relationship", collection: collection };
-    $.get("checkuser.xql", params, function(data) {
+    $.post("checkuser.xql", params, function(data) {
     
         /**
          data looks like this -
@@ -327,16 +327,20 @@ function showHideCollectionControls() {
         if(isWriteable){
              $('#collection-create-folder').show();
              $('#collection-create-resource').show();
+             $('#upload-file').show();
         } else {
             $('#collection-create-folder').hide();
             $('#collection-create-resource').hide();
+            $('#upload-file').hide();
         }
         
         //collection is not current users home and is owned by current user
         if(!isUsersHome && isOwner) {
             $('#collection-sharing').show();
+            $('#upload-file').show();
         } else {
             $('#collection-sharing').hide();
+            $('#upload-file').hide();
         }
         
         //collection is writeable and not the current users home and the current user is the owner
@@ -398,6 +402,7 @@ function moveResource(dialog) {
     var resource = $('#move-resource-form input[name = resource]').val();
     var params = { action: 'move-resource', path: path, resource: resource };
     $.get("operations.xql", params, function (data) {
+          
         dialog.dialog("close");
     });
 }
@@ -468,7 +473,22 @@ function refreshParentTreeNodeAndFocusOnChild(focusOnKey) {
     parentNode.expand(true); //expand the node after reloading the children
 }
 
+
+ 
 /*
+    Called when the user clicks on the "upload" button in the rename collection dialog.
+ */
+  
+function uploadFile(dialog) {
+    var name = $('#upload-file-form input[name = name]').val();
+    var collection = getCurrentCollection();
+    var params = { action: 'upload-file', name: name, collection: collection};
+     $.post("upload.xql", params, function (data) {
+     dialog.dialog("close");
+      });
+}
+ 
+ /*
     Called when the user clicks on the "rename" button in the rename collection dialog.
  */
 function renameCollection(dialog) {
@@ -566,7 +586,7 @@ function login() {
     $.ajax({
         url: "checkuser.xql",
         data: "user=" + user.val() + "&password=" + password.val(),
-        type: 'GET',
+        type: 'POST',
         success:
             function(data, message) { 
                 $('#login-form').submit(); 

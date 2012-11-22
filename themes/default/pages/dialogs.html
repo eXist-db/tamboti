@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
     Provides various dialogs used by tamboti
 -->
@@ -52,6 +53,19 @@
             </div>
             <div>
                 <input name="name" type="text"/>
+            </div>
+        </form>
+    </jquery:dialog>
+    
+    <!-- upload file-->
+    <jquery:dialog id="upload-file-dialog" modal="true" title="Upload File" trigger="#upload-file" width="450">
+        <jquery:button id="cancel" label="Cancel"/>
+        <form id="upload-file-form" action="upload.xql" enctype="multipart/form-data" method="post">
+            <input id="rename-collection-path_" type="hidden" name="collection"/>
+            <div> upload: </div>
+            <div>
+                <input type="file" name="files[]" multiple="multiple"/>
+                <button type="submit">Submit</button>
             </div>
         </form>
     </jquery:dialog>
