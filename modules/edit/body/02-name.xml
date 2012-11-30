@@ -4,6 +4,12 @@
     <xf:group class="schema_3.3 schema_3.4 fieldset level-1" appearance="full">
         <div class="join">
             <span class="legend">Names</span>
+            <span class="xforms-hint">
+                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                <div class="xforms-hint-value">
+                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name',instance('code-tables'))/help"/>
+                </div>
+            </span>
             <span class="join-button">
                 <xf:trigger ref=".[mods:name]">
                     <xf:label>+</xf:label>
@@ -19,12 +25,6 @@
                         <xf:delete nodeset="instance('save-data')/mods:name" at="index('name-repeat')"/>
                     </xf:action>
                 </xf:trigger>
-            </span>
-            <span class="xforms-hint">
-                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                <div class="xforms-hint-value">
-                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name',instance('code-tables'))/help"/>
-                </div>
             </span>
         </div>
         <!-- attributes: altRepGroup; authority; authorityURI; displayLabel; ID; lang;  nameTitleGroup; script; transliteration; type; usage; valueURI; xlink:href; xml:lang. -->
@@ -54,7 +54,7 @@
                                         <xf:label>Add Alternate Representation Group</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert context="." origin="instance('insert-templates')/mods:name/@altRepGroup"/>
+                                            <xf:insert context="."/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -175,13 +175,15 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                <hr/>
+                                <xf:group class="show-hide" ref=".[count(@*) &lt; 14 and (.[not(mods:namePart)] or .[not(mods:role)] or .[not(mods:displayForm)] or .[not(mods:affiliation)] or .[not(mods:description)])]">
+                                    <hr/>
+                                </xf:group>
                                 <xf:group appearance="full" ref=".[not(mods:affiliation)]">
                                     <xf:trigger>
                                         <xf:label>Add Affiliation</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:affiliation" at="index('name-repeat')" position="before" origin="instance('insert-templates')/mods:name/mods:affiliation"/>
+                                            <xf:insert nodeset="mods:affiliation" at="index('name-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:affiliation"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -190,7 +192,7 @@
                                         <xf:label>Add Description</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:description" at="index('name-repeat')" position="before" origin="instance('insert-templates')/mods:name/mods:description"/>
+                                            <xf:insert nodeset="mods:description" at="index('name-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:description"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -199,7 +201,7 @@
                                         <xf:label>Add Display Form</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:displayForm" at="index('name-repeat')" position="before" origin="instance('insert-templates')/mods:name/mods:displayForm"/>
+                                            <xf:insert nodeset="mods:displayForm" at="index('name-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:displayForm"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -208,7 +210,7 @@
                                         <xf:label>Add Name Part</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:namePart" at="index('namePart-repeat')" position="before" origin="instance('insert-templates')/mods:name/mods:namePart"/>
+                                            <xf:insert nodeset="mods:namePart" at="index('namePart-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:namePart"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -217,7 +219,7 @@
                                         <xf:label>Add Role</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                            <xf:insert nodeset="mods:role" at="index('name-repeat')" position="before" origin="instance('insert-templates')/mods:name/mods:role"/>
+                                            <xf:insert nodeset="mods:role" at="index('name-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:role"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
@@ -422,6 +424,12 @@
             <xf:group class="schema_3.3 schema_3.4 fieldset level-2" appearance="full" ref=".[mods:namePart]">
                 <div class="join">
                     <span class="legend">Name Part</span>
+                    <span class="xforms-hint">
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <div class="xforms-hint-value">
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_namePart',instance('code-tables'))/help"/>
+                        </div>
+                    </span>
                     <span class="join-button">
                         <xf:trigger>
                             <xf:label>+</xf:label>
@@ -437,12 +445,6 @@
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:name/mods:namePart" at="index('namePart-repeat')"/>
                             </xf:action>
                         </xf:trigger>
-                    </span>
-                    <span class="xforms-hint">
-                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                        <div class="xforms-hint-value">
-                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_namePart',instance('code-tables'))/help"/>
-                        </div>
                     </span>
                 </div>
                 <!-- attributes: type; lang; script; transliteration; xml:lang. -->
@@ -598,6 +600,12 @@
             <xf:group class="schema_3.3 schema_3.4 fieldset level-2" appearance="full" ref=".[mods:role]">
                 <div class="join">
                     <span class="legend">Role</span>
+                    <span class="xforms-hint">
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <div class="xforms-hint-value">
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_role',instance('code-tables'))/help"/>
+                        </div>
+                    </span>
                     <span class="join-button">
                         <xf:trigger>
                             <xf:label>+</xf:label>
@@ -613,12 +621,6 @@
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:name/mods:role" at="index('role-repeat')"/>
                             </xf:action>
                         </xf:trigger>
-                    </span>
-                    <span class="xforms-hint">
-                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                        <div class="xforms-hint-value">
-                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_role',instance('code-tables'))/help"/>
-                        </div>
                     </span>
                 </div>
                 <!-- attributes: none -->
@@ -647,7 +649,7 @@
                                             <xf:label>Add Role Term</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="role-add-node-hide" ev:event="DOMActivate"/>
-                                                <xf:insert nodeset="mods:roleTerm" at="index('role-repeat')" position="before" origin="instance('insert-templates')/mods:name/mods:role/mods:roleTerm"/>
+                                                <xf:insert nodeset="mods:roleTerm" at="index('role-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:role/mods:roleTerm"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
@@ -658,6 +660,12 @@
                     <xf:group appearance="full" class="fieldset level-3" ref=".[mods:roleTerm]">
                         <div class="join">
                             <span class="legend">Role Term</span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-hint-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_roleTerm',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
                             <span class="join-button">
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
@@ -673,12 +681,6 @@
                                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:name/mods:role/mods:roleTerm" at="index('roleTerm-repeat')"/>
                                     </xf:action>
                                 </xf:trigger>
-                            </span>
-                            <span class="xforms-hint">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_roleTerm',instance('code-tables'))/help"/>
-                                </div>
                             </span>
                         </div>
                         <!-- attributes: type; authority; authorityURI; valueURI; lang; xml:lang; script; transliteration. -->
@@ -812,8 +814,7 @@
                             </xf:group>
                             <xf:group class="schema_3.4" appearance="full">
                                 <xf:input ref="./@authorityURI" class="text_50">
-                                    <xf:label>Authority URI
-                                        <span class="xforms-help">
+                                    <xf:label>Authority URI <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_authority-uri',instance('code-tables'))/help"/>
@@ -938,6 +939,12 @@
             <xf:group class="schema_3.3 schema_3.4 fieldset level-2" appearance="full" ref=".[mods:displayForm]">
                 <div class="join">
                     <span class="legend">Display Form</span>
+                    <span class="xforms-hint">
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <div class="xforms-hint-value">
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-displayForm',instance('code-tables'))/help"/>
+                        </div>
+                    </span>
                     <span class="join-button">
                         <xf:trigger>
                             <xf:label>+</xf:label>
@@ -953,12 +960,6 @@
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:name/mods:displayForm" at="index('displayForm-repeat')"/>
                             </xf:action>
                         </xf:trigger>
-                    </span>
-                    <span class="xforms-hint">
-                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                        <div class="xforms-hint-value">
-                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-displayForm',instance('code-tables'))/help"/>
-                        </div>
                     </span>
                 </div>
                 <!-- attributes: lang; script; transliteration; xml:lang. -->
@@ -1098,6 +1099,12 @@
             <xf:group class="schema_3.3 schema_3.4 fieldset level-2" appearance="full" ref=".[mods:affiliation]">
                 <div class="join">
                     <span class="legend">Affiliation</span>
+                    <span class="xforms-hint">
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <div class="xforms-hint-value">
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_affiliation',instance('code-tables'))/help"/>
+                        </div>
+                    </span>
                     <span class="join-button">
                         <xf:trigger>
                             <xf:label>+</xf:label>
@@ -1113,12 +1120,6 @@
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:name/mods:affiliation" at="index('name-repeat')"/>
                             </xf:action>
                         </xf:trigger>
-                    </span>
-                    <span class="xforms-hint">
-                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                        <div class="xforms-hint-value">
-                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_affiliation',instance('code-tables'))/help"/>
-                        </div>
                     </span>
                 </div>
                 <!-- attributes: lang; script; transliteration; xml:lang. -->
@@ -1260,11 +1261,17 @@
             <xf:group class="schema_3.3 schema_3.4 fieldset level-2" appearance="full" ref=".[mods:description]">
                 <div class="join">
                     <span class="legend">Description</span>
+                    <span class="xforms-hint">
+                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                        <div class="xforms-hint-value">
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_description',instance('code-tables'))/help"/>
+                        </div>
+                    </span>
                     <span class="join-button">
                         <xf:trigger>
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:description" at="index('description-repeat')" position="before" origin="instance('insert-templates')/mods:name/mods:description"/>
+                                <xf:insert nodeset="mods:description" at="index('description-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:description"/>
                             </xf:action>
                         </xf:trigger>
                     </span>
@@ -1275,12 +1282,6 @@
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:name/mods:description" at="index('description-repeat')"/>
                             </xf:action>
                         </xf:trigger>
-                    </span>
-                    <span class="xforms-hint">
-                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                        <div class="xforms-hint-value">
-                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_description',instance('code-tables'))/help"/>
-                        </div>
                     </span>
                 </div>
                 <!-- attributes: lang; script; transliteration; xml:lang. -->

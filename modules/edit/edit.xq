@@ -195,11 +195,12 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
            </xf:submission>
         </xf:model>
 };
+
 declare function local:assemble-form($dummy-attributes as attribute()*, $style as node()*, $model as node(), $content as node()+, $debug as xs:boolean) as node()+ 
 {
     util:declare-option('exist:serialize', 'method=xhtml media-type=text/xml indent=yes process-xsl-pi=no')
     ,
-    processing-instruction xml-stylesheet {concat('type="text/xsl" href="', request:get-context-path(), '/xforms/xsltforms/xsltforms.xsl"')}
+    processing-instruction xml-stylesheet {concat('type="text/xsl" href="', '/exist/rest/db/apps/xsltforms/xsltforms.xsl"')}
     ,
     if ($debug) then 
         processing-instruction xsltforms-options {'debug="yes"'}

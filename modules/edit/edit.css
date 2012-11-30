@@ -465,6 +465,7 @@ select .xforms-value {
 
 
 /*help, hint, alert begins*/
+/*NB: hint and help should be merged*/
 
 div.join span.xforms-hint { /*the hard-coded fieldset hints*/
     margin-left:1px;
@@ -490,7 +491,7 @@ span.opaque:after { /*the regular hints*/
 	filter:alpha(opacity=0);
 }
 
-span.xforms-hint-icon { /*negating the xsltforms.css hint icon*/
+span.xforms-hint-icon { /*negating the xsltforms.css regular hint icon*/
     background-image:url("");
 }
 

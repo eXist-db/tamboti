@@ -37,20 +37,20 @@
         <issuance/>
         <frequency authority="marcfrequency" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
     </originInfo>
-    <part type="" order="">
-        <detail type="" level="" order="">
-            <number/>
-            <caption/>
+    <part type="" order="" ID="" lang="" xml:lang="" script="" transliteration="" displayLabel="" altRepGroup="">
+        <detail type="" level="" lang="" xml:lang="" script="" transliteration="">
+            <number lang="" xml:lang="" script="" transliteration=""/>
+            <caption lang="" xml:lang="" script="" transliteration=""/>
             <title/>
         </detail>
         <extent unit="">
-            <start/>
-            <end/>
+            <start lang="" xml:lang="" script="" transliteration=""/>
+            <end lang="" xml:lang="" script="" transliteration=""/>
             <total/>
-            <list/>
+            <list lang="" xml:lang="" script="" transliteration=""/>
         </extent>
-        <date encoding="w3cdtf" point="" qualifier=""/>
-        <text/>
+        <date encoding="w3cdtf" point="" qualifier="" lang="" xml:lang="" script="" transliteration=""/>
+        <text displayLabel="" type="" lang="" xml:lang="" script="" transliteration="" xlink:href=""/>
     </part>
     <physicalDescription lang="" xml:lang="" script="" transliteration="" displayLabel="" altRepGroup="">
         <form type="material" authority="marcform" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>

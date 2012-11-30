@@ -186,13 +186,15 @@
                                     </xf:trigger>
                                 </xf:group>
                             </xf:group>
-                            <hr/>
+                            <xf:group class="show-hide" ref=".[count(@*) &lt; 15 and count(*) &lt; 5]">
+                                <hr/>
+                            </xf:group>
                             <xf:group ref=".[not(mods:nonSort)]">
                                 <xf:trigger>
                                     <xf:label>Add Non Sort</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                        <xf:insert nodeset="instance('save-data')/mods:nonSort" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:nonSort"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:nonSort" at="index('titleInfo-repeat')" origin="instance('new-instance')/mods:titleInfo/mods:nonSort"/>
                                     </xf:action>
                                 </xf:trigger>
                             </xf:group>
@@ -201,7 +203,7 @@
                                     <xf:label>Add Part Name</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                        <xf:insert nodeset="instance('save-data')/mods:partName" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:partName"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:partName" at="index('titleInfo-repeat')" origin="instance('new-instance')/mods:titleInfo/mods:partName"/>
                                     </xf:action>
                                 </xf:trigger>
                             </xf:group>
@@ -210,7 +212,7 @@
                                     <xf:label>Add Part Number</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                        <xf:insert nodeset="instance('save-data')/mods:partNumber" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:partNumber"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:partNumber" at="index('titleInfo-repeat')" origin="instance('new-instance')/mods:titleInfo/mods:partNumber"/>
                                     </xf:action>
                                 </xf:trigger>
                             </xf:group>
@@ -219,7 +221,7 @@
                                     <xf:label>Add Subtitle</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                        <xf:insert nodeset="instance('save-data')/mods:subTitle" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:subTitle"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:subTitle" at="index('titleInfo-repeat')" origin="instance('new-instance')/mods:titleInfo/mods:subTitle"/>
                                     </xf:action>
                                 </xf:trigger>
                             </xf:group>
@@ -228,7 +230,7 @@
                                     <xf:label>Add Title</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
-                                        <xf:insert nodeset="instance('save-data')/mods:title" at="index('titleInfo-repeat')" origin="instance('insert-templates')/mods:titleInfo/mods:title"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:title" at="index('titleInfo-repeat')" origin="instance('new-instance')/mods:titleInfo/mods:title"/>
                                     </xf:action>
                                 </xf:trigger>
                             </xf:group>
