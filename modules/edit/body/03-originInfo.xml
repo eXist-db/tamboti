@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: OK--><!--missing element insertion: OK--><!--hints moved to code-table: OK--><!--hints linked with id: OK--><!--hints checked: OK--><!--saving of all nodes: OK--><!--schema instantiated: OK--><!--schema notations added: OK-->
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="origin block-form" tab-id="origin" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="origin block-form" tab-id="origin" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group class="schema_3.3 schema_3.4 fieldset level-1" appearance="full">
         <div class="join">
             <span class="legend">Origin Information</span>
@@ -329,7 +329,7 @@
                         </div>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:place]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="mods:place" at="index('place-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:place"/>
@@ -337,7 +337,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:place]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:place" at="index('place-repeat')"/>
@@ -419,7 +419,7 @@
                                 </div>
                             </span>
                             <span class="join-button">
-                                <xf:trigger>
+                                <xf:trigger ref=".[mods:placeTerm]">
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:insert nodeset="mods:placeTerm" at="index('place-term-repeat')" position="before" origin="instance('new-instance')/mods:originInfo//mods:place/mods:placeTerm"/>
@@ -427,7 +427,7 @@
                                 </xf:trigger>
                             </span>
                             <span class="join-button">
-                                <xf:trigger>
+                                <xf:trigger ref=".[mods:placeTerm]">
                                     <xf:label>–</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:place/mods:placeTerm" at="index('place-term-repeat')"/>
@@ -701,7 +701,7 @@
                         </div>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:publisher]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="mods:publisher" at="index('edition-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:publisher"/>
@@ -709,7 +709,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:publisher]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:publisher" at="index('publisher-repeat')"/>
@@ -887,7 +887,7 @@
                         </div>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:edition]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="mods:edition" at="index('edition-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:edition"/>
@@ -895,7 +895,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:edition]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:edition" at="index('edition-repeat')"/>
@@ -1067,7 +1067,7 @@
                 <div class="join">
                     <span class="legend">Issuance</span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:issuance]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="mods:issuance" at="index('issuance-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:issuance"/>
@@ -1075,7 +1075,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:issuance]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:issuance" at="index('issuance-repeat')"/>
@@ -1119,7 +1119,7 @@
                         </div>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:frequency]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="mods:frequency" at="index('frequency-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:frequency"/>
@@ -1127,7 +1127,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:frequency]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:frequency" at="index('frequency-repeat')"/>
@@ -1343,7 +1343,7 @@
                 <div class="join">
                     <span class="legend">Date Issued</span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:dateIssued]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="mods:dateIssued" at="index('dateIssued-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateIssued"/>
@@ -1351,7 +1351,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:dateIssued]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:dateIssued" at="index('dateIssued-repeat')"/>
@@ -1607,7 +1607,7 @@
                 <div class="join">
                     <span class="legend">Date Created</span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:dateCreated]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="mods:dateCreated" at="index('dateCreated-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateCreated"/>
@@ -1615,7 +1615,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:dateCreated]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:dateCreated" at="index('dateCreated-repeat')"/>
@@ -1869,7 +1869,7 @@
                 <div class="join">
                     <span class="legend">Date Captured</span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:dateCaptured]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="mods:dateCaptured" at="index('dateCaptured-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateCaptured"/>
@@ -1877,7 +1877,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:dateCaptured]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:dateCaptured" at="index('dateCaptured-repeat')"/>
@@ -2133,7 +2133,7 @@
                 <div class="join">
                     <span class="legend">Date Valid</span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:dateValid]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="mods:dateValid" at="index('dateValid-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateValid"/>
@@ -2141,7 +2141,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:dateValid]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:dateValid" at="index('dateValid-repeat')"/>
@@ -2397,7 +2397,7 @@
                 <div class="join">
                     <span class="legend">Date Modified</span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:dateModified]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="mods:dateModified" at="index('dateModified-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateModified"/>
@@ -2405,7 +2405,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:dateModified]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:dateModified" at="index('dateModified-repeat')"/>
@@ -2661,7 +2661,7 @@
                 <div class="join">
                     <span class="legend">Copyright Date</span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:copyrightDate]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="mods:copyrightDate" at="index('copyrightDate-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:copyrightDate"/>
@@ -2669,7 +2669,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:copyrightDate]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:copyrightDate" at="index('copyrightDate-repeat')"/>
@@ -2925,7 +2925,7 @@
                 <div class="join">
                     <span class="legend">Other Date</span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:dateOther]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="mods:dateOther" at="index('dateOther-repeat')" position="before" origin="instance('new-instance')/mods:originInfo/mods:dateOther"/>
@@ -2933,7 +2933,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:dateOther]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:dateOther" at="index('dateOther-repeat')"/>

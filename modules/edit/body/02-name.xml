@@ -431,7 +431,7 @@
                         </div>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:namePart]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="instance('save-data')/mods:namePart" at="index('namePart-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:namePart"/>
@@ -439,7 +439,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:namePart]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:name/mods:namePart" at="index('namePart-repeat')"/>
@@ -607,7 +607,7 @@
                         </div>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:role]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="instance('save-data')/mods:role" at="index('role-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:role"/>
@@ -615,7 +615,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:role]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:name/mods:role" at="index('role-repeat')"/>
@@ -667,7 +667,7 @@
                                 </div>
                             </span>
                             <span class="join-button">
-                                <xf:trigger>
+                                <xf:trigger ref=".[mods:roleTerm]">
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:insert nodeset="instance('save-data')/mods:roleTerm" at="index('roleTerm-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:role/mods:roleTerm"/>
@@ -675,7 +675,7 @@
                                 </xf:trigger>
                             </span>
                             <span class="join-button">
-                                <xf:trigger>
+                                <xf:trigger ref=".[mods:roleTerm]">
                                     <xf:label>–</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:name/mods:role/mods:roleTerm" at="index('roleTerm-repeat')"/>
@@ -946,7 +946,7 @@
                         </div>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:displayForm]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="instance('save-data')/mods:displayForm" at="index('displayForm-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:displayForm"/>
@@ -954,7 +954,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:displayForm]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:name/mods:displayForm" at="index('displayForm-repeat')"/>
@@ -1106,7 +1106,7 @@
                         </div>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:affiliation]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="instance('save-data')/mods:affiliation" at="index('affiliation-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:affiliation"/>
@@ -1114,7 +1114,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:affiliation]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:name/mods:affiliation" at="index('name-repeat')"/>
@@ -1268,7 +1268,7 @@
                         </div>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:description]">
                             <xf:label>+</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert nodeset="mods:description" at="index('description-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:description"/>
@@ -1276,7 +1276,7 @@
                         </xf:trigger>
                     </span>
                     <span class="join-button">
-                        <xf:trigger>
+                        <xf:trigger ref=".[mods:description]">
                             <xf:label>–</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:name/mods:description" at="index('description-repeat')"/>

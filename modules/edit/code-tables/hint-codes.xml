@@ -456,8 +456,6 @@
             <tab-id>compact-b-review</tab-id>
             <tab-id>compact-b-xlink</tab-id>
         </item>
-
-        <!--tab-id checked above-->
         <item xml:id="hint-code_dateIssued">
             <help>
                 <p> The date that the resource was published, released, or issued. </p>
@@ -547,18 +545,19 @@
             <value>displayLabel</value>
             <local-name>displayLabel</local-name>
             <parent/>
+            <tab-id>title</tab-id>
             <tab-id>name</tab-id>
             <tab-id>origin</tab-id>
-            <tab-id>title</tab-id>
             <tab-id>part</tab-id>
-            <tab-id>access-condition</tab-id>
-            <tab-id>identifier</tab-id>
+            <tab-id>physical-description</tab-id>
+            <tab-id>target-audience</tab-id>
             <tab-id>language</tab-id>
+            <tab-id>subject</tab-id>
+            <tab-id>note</tab-id>
+            <tab-id>identifier</tab-id>
+            <tab-id>access-condition</tab-id>
             <tab-id>location</tab-id>
             <tab-id>mads</tab-id>
-            <tab-id>note</tab-id>
-            <tab-id>subject</tab-id>
-            <tab-id>target-audience</tab-id>
         </item>
         <item xml:id="hint-code_edition">
             <help>
@@ -592,6 +591,7 @@
             <local-name>encoding</local-name>
             <parent/>
             <tab-id>origin</tab-id>
+            <tab-id>part</tab-id>
         </item>
         <item xml:id="hint-code_temporal-encoding">
             <help>
@@ -631,7 +631,6 @@
             <local-name>extension</local-name>
             <parent>mods</parent>
             <tab-id>extension</tab-id>
-            <tab-id>extension</tab-id>
         </item>
         <item xml:id="hint-code_extent">
             <help>
@@ -645,7 +644,8 @@
             <value>extent</value>
             <local-name>extent</local-name>
             <parent/>
-            <tab-id>titles</tab-id>
+            <tab-id>part</tab-id>
+            <tab-id>physical-description</tab-id>
         </item>
         <item xml:id="hint-code_extent-compact">
             <help>
@@ -704,6 +704,8 @@
             <parent>extent</parent>
             <tab-id>part</tab-id>
         </item>
+        
+        <!--tab-id checked above-->
         <item xml:id="hint-code_part-extent-start">
             <help>
                 <p> Contains the beginning unit of the extent within a part (e.g., first page). </p>
@@ -847,9 +849,10 @@
             <parent/>
             <tab-id>name</tab-id>
             <tab-id>title</tab-id>
+            <tab-id>part</tab-id>
+            <tab-id>physical-description</tab-id>
             <tab-id>mads</tab-id>
             <tab-id>note</tab-id>
-            <tab-id>part</tab-id>
             <tab-id>subject</tab-id>
         </item>
         <item xml:id="hint-code_part-type">
@@ -1085,12 +1088,13 @@
             <tab-id>compact-a</tab-id>
             <tab-id>name</tab-id>
             <tab-id>title</tab-id>
+            <tab-id>origin</tab-id>
+            <tab-id>part</tab-id>
+            <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
             <tab-id>language</tab-id>
             <tab-id>location</tab-id>
             <tab-id>mads</tab-id>
-            <tab-id>origin</tab-id>
-            <tab-id>part</tab-id>
             <tab-id>note</tab-id>
             <tab-id>subject</tab-id>
         </item>
@@ -1714,6 +1718,7 @@
             <parent/>
             <tab-id>compact-c</tab-id>
             <tab-id>compact-d</tab-id>
+            <tab-id>physical-description</tab-id>
             <tab-id>note</tab-id>
         </item>
         <item xml:id="hint-code_physicalDescription_note_type">
@@ -1727,6 +1732,7 @@
             <parent/>
             <tab-id>compact-c</tab-id>
             <tab-id>compact-d</tab-id>
+            <tab-id>physical-description</tab-id>
             <tab-id>note</tab-id>
         </item>
         <item xml:id="hint-code_physicalDescription_note_authority">
@@ -1954,6 +1960,7 @@
             <local-name>physicalDescription</local-name>
             <parent/>
             <tab-id>compact-a</tab-id>
+            <tab-id>physical-description</tab-id>
         </item>
         <item xml:id="hint-code_physicalDescription-form-type">
             <help>
@@ -1963,7 +1970,7 @@
             </help>
             <hint/>
             <value>physicalDescription-compact</value>
-            <local-name>physicalDescription</local-name>
+            <tab-id>physical-description</tab-id>
             <parent/>
             <tab-id>compact-a</tab-id>
         </item>
@@ -1977,7 +1984,7 @@
             </help>
             <hint/>
             <value>physicalDescription-compact</value>
-            <local-name>physicalDescription</local-name>
+            <tab-id>physical-description</tab-id>
             <parent/>
             <tab-id>compact-a</tab-id>
         </item>
@@ -1992,6 +1999,7 @@
             <local-name>physicalDescription</local-name>
             <parent/>
             <tab-id>compact-a</tab-id>
+            <tab-id>physical-description</tab-id>
         </item>
         <item xml:id="hint-code_physicalLocation">
             <help>
@@ -2535,6 +2543,7 @@
             <tab-id>name</tab-id>
             <tab-id>title</tab-id>
             <tab-id>part</tab-id>
+            <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
             <tab-id>language</tab-id>
             <tab-id>location</tab-id>
@@ -3119,6 +3128,7 @@
             <tab-id>name</tab-id>
             <tab-id>origin</tab-id>
             <tab-id>part</tab-id>
+            <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
             <tab-id>identifier</tab-id>
             <tab-id>language</tab-id>
@@ -3378,6 +3388,7 @@
             <tab-id>name</tab-id>
             <tab-id>title</tab-id>
             <tab-id>origin</tab-id>
+            <tab-id>physical-description</tab-id>
             <tab-id>language</tab-id>
             <tab-id>mads</tab-id>
             <tab-id>target-audience</tab-id>
@@ -3404,6 +3415,7 @@
             <tab-id>name</tab-id>
             <tab-id>title</tab-id>
             <tab-id>part</tab-id>
+            <tab-id>physical-description</tab-id>
             <tab-id>location</tab-id>
             <tab-id>mads</tab-id>
             <tab-id>note</tab-id>
@@ -3487,10 +3499,11 @@
             <value>xml:lang</value>
             <local-name>xml:lang</local-name>
             <parent/>
+            <tab-id>title</tab-id>
             <tab-id>name</tab-id>
             <tab-id>origin</tab-id>
             <tab-id>part</tab-id>
-            <tab-id>title</tab-id>
+            <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
             <tab-id>identifier</tab-id>
             <tab-id>language</tab-id>
