@@ -111,7 +111,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
           ,
           (:Save the library reference, the creation date, and the language and script of cataloguing:)
           let $recordInfo-insert :=
-              <mods:recordInfo lang="eng" script="latn">
+              <mods:recordInfo lang="eng" script="Latn">
                   <mods:recordContentSource authority="marcorg">DE-16-158</mods:recordContentSource>
                   <mods:recordCreationDate encoding="w3cdtf">
                       {current-date()}

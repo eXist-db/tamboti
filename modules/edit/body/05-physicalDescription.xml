@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: OK--><!--missing element insertion: OK--><!--hints moved to code-table: OK--><!--hints linked with id: OK--><!--hints checked: OK--><!--saving of all nodes: OK--><!--schema instantiated: OK--><!--schema notations added: OK-->
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="physical-description block-form" tab-id="physical-description" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="physical-description block-form" tab-id="physical-description" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group class="fieldset level-1">
         <div class="join wide">
             <span class="legend">Physical Description</span>
@@ -14,7 +14,7 @@
                 <xf:trigger ref=".[mods:physicalDescription]">
                     <xf:label>+</xf:label>
                     <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="mods:physicalDescription" at="index('physicalDescription-repeat')" position="before"/>
+                        <xf:insert nodeset="mods:physicalDescription" at="index('physicalDescription-repeat')" position="before" origin="instance('new-instance')/mods:physicalDescription"/>
                     </xf:action>
                 </xf:trigger>
             </span>

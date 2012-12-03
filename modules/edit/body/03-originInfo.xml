@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: OK--><!--missing element insertion: OK--><!--hints moved to code-table: OK--><!--hints linked with id: OK--><!--hints checked: OK--><!--saving of all nodes: OK--><!--schema instantiated: OK--><!--schema notations added: OK-->
-<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="origin block-form" tab-id="origin" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="origin block-form" tab-id="origin" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group class="schema_3.3 schema_3.4 fieldset level-1" appearance="full">
         <div class="join">
             <span class="legend">Origin Information</span>
@@ -565,7 +565,7 @@
                                     <xf:label>Type<span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
-                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_originInfo-type',instance('code-tables'))/help"/>
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_code-text',instance('code-tables'))/help"/>
                                             </div>
                                         </span>
                                     </xf:label>
