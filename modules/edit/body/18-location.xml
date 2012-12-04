@@ -3,677 +3,697 @@
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="location block-form" tab-id="location" e:dummy="dummy" xlink:dummy="dummy">
     <!-- Holding Simple is a set of internally defined elements and corresponds roughly to summary holdings information. If more granularity is required, Holding External may be used in lieu of Holding Simple with elements from an external schema. Holding Simple consists of a single subelement, Copy Information, which has several subelements. Holding Simple is not repeatable; if additional holdings statements are needed for the resource, repeat Location with appropriate subelements. -->
     <!-- Use of at least one location element with the subelement url is required by these guidelines. It is required that one and only one location/url must include the usage attribute value "primary display". Many aggregators may include only one URL in their brief display. Use of usage=”primary display” allows aggregators to easily identify which URL to display for their users. If a record describes multiple items (a multi-volume set, for example), these guidelines strongly recommend identifying a primary entry point for these. These guidelines also recommend that the "access" attribute with the appropriate value also be used. Best practice is that the "primary display" URL is a link to the resource with its contextual material (for example metadata, navigation to the collection homepage). If the primary link to a resource is to a stand alone version of the resource (such as a JPEG image only), an end user will have no context except for the metadata on the service provider’s site. At minimum, the URL should point to a page that contains the resource and a navigation bar that allows user to reach the collection homepage. It is highly desirable that this page also include the descriptive metadata for the resource. -->
-    <xf:group appearance="full" class="fieldset level-1">
-        <div class="join">
-            <span class="legend">Locations</span>
-            <span class="join-button">
-                <xf:trigger ref=".[mods:location]">
-                    <xf:label>+</xf:label>
-                    <xf:action ev:event="DOMActivate">
-                        <xf:insert nodeset="mods:location" at="index('location-repeat')" position="before"/>
-                    </xf:action>
-                </xf:trigger>
-            </span>
-            <span class="join-button">
-                <xf:trigger ref=".[mods:location]">
-                    <xf:label>–</xf:label>
-                    <xf:action ev:event="DOMActivate">
-                        <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location" at="index('location-repeat')"/>
-                    </xf:action>
-                </xf:trigger>
-            </span>
-            <span class="xforms-hint">
-                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                <div class="xforms-hint-value">
+    <xf:group appearance="full">
+        <fieldset class="level-1">
+            <div class="label-box">
+                <span class="legend">Locations</span>
+                <span class="add-delete-button">
+                    <xf:trigger ref=".[mods:location]">
+                        <xf:label>+</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert nodeset="mods:location" at="index('location-repeat')" position="before"/>
+                        </xf:action>
+                    </xf:trigger>
+                </span>
+                <span class="add-delete-button">
+                    <xf:trigger ref=".[mods:location]">
+                        <xf:label>–</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location" at="index('location-repeat')"/>
+                        </xf:action>
+                    </xf:trigger>
+                </span>
+                <span class="xforms-hint">
+                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-hint-value">
-                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location',instance('code-tables'))/help"/>
+                        <div class="xforms-hint-value">
+                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location',instance('code-tables'))/help"/>
+                        </div>
                     </div>
-                </div>
-            </span>
-        </div>
-        <xf:repeat nodeset="instance('save-data')/mods:location" id="location-repeat">
-            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:physicalLocation]">
-                <div class="join">
-                    <span class="legend">Physical Location</span>
-                    <span class="join-button">
-                        <xf:trigger>
-                            <xf:label>+</xf:label>
-                            <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:physicalLocation" at="index('physical-location-repeat')" position="before"/>
-                            </xf:action>
-                        </xf:trigger>
-                    </span>
-                    <span class="join-button">
-                        <xf:trigger>
-                            <xf:label>–</xf:label>
-                            <xf:action ev:event="DOMActivate">
-                                <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:physicalLocation" at="index('physical-location-repeat')"/>
-                            </xf:action>
-                        </xf:trigger>
-                    </span>
-                    <span class="xforms-hint">
-                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                        <div class="xforms-hint-value">
-                            <p> Record in Physical Location the institution or repository that holds
-                                the resource or where it is available. Physical Location may be
-                                expressed as text and/or as a code. If expressed as code, use the
-                                Authority field to designate the source of the code. </p>
-                            <p> Physical Location typically includes specific information used to
-                                locate a resource within a collection, such as the name or code of
-                                an institution/repository, and perhaps subcollection. A shelf number
-                                is given in Shelf Locator. </p>
-                        </div>
-                    </span>
-                </div>
-                <xf:repeat nodeset="./mods:physicalLocation" id="physical-location-repeat">
-                    <xf:group appearance="full" ref=".[@authority]">
-                        <xf:select1 ref="./@authority" selection="open">
-                            <xf:label>Authority<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_authority',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='record-content-source-authority-code']/items/item">
-                                <xf:label ref="label"/>
-                                <xf:value ref="value"/>
-                            </xf:itemset>
-                        </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@type]">
-                        <xf:input ref="./@type" class="text_50">
-                            <xf:label>Type<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-type',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                        </xf:input>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@xlink:href]">
-                        <xf:input ref="./@xlink:href" class="text_50">
-                            <xf:label>XLink<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xlink_href',instance('code-tables'))/help"/>
-                                        <p> Here, XLink may be used to link to additional
-                                            information about the resource recorded in Physical
-                                            Location, e.g. the institution's website.
-                                    </p>
-                                    </div>
-                                </span>
-                            </xf:label>
-                        </xf:input>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@lang]">
-                        <xf:select1 ref="./@lang">
-                            <xf:label>Language<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_lang',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
-                                <xf:label ref="label"/>
-                                <xf:value ref="value"/>
-                            </xf:itemset>
-                        </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@xml:lang]">
-                        <xf:select1 ref="./@xml:lang">
-                            <xf:label>xml:lang<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
-                                <xf:label ref="label"/>
-                                <xf:value ref="value"/>
-                            </xf:itemset>
-                        </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@script]">
-                        <xf:select1 ref="./@script">
-                            <xf:label>Script<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_script',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
-                                <xf:label ref="label"/>
-                                <xf:value ref="value"/>
-                            </xf:itemset>
-                        </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@transliteration]">
-                        <xf:select1 ref="./@transliteration" selection="open">
-                            <xf:label>Transliteration<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_transliteration',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
-                                <xf:label ref="label"/>
-                                <xf:value ref="value"/>
-                            </xf:itemset>
-                        </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@displayLabel]">
-                        <xf:input ref="./@displayLabel" class="text_50">
-                            <xf:label>Display Label<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_displayLabel',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                        </xf:input>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".">
-                        <xf:input ref="." class="text_50">
-                            <xf:label>Physical Location<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_physicalLocation',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                        </xf:input>
-                    </xf:group>
-                </xf:repeat>
-            </xf:group>
-            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:shelfLocator]">
-                <div class="join">
-                    <span class="legend">Shelf Locator</span>
-                    <span class="join-button">
-                        <xf:trigger>
-                            <xf:label>+</xf:label>
-                            <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:shelfLocator" at="index('location-shelfLocator-repeat')" position="before"/>
-                            </xf:action>
-                        </xf:trigger>
-                    </span>
-                    <span class="join-button">
-                        <xf:trigger>
-                            <xf:label>–</xf:label>
-                            <xf:action ev:event="DOMActivate">
-                                <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingSimple/mods:copyInformation/mods:shelfLocator" at="index('location-shelfLocator-repeat')"/>
-                            </xf:action>
-                        </xf:trigger>
-                    </span>
-                    <span class="xforms-hint">
-                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                        <div class="xforms-hint-value">
-                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_shelfLocator',instance('code-tables'))/help"/>
-                        </div>
-                    </span>
-                </div>
-                <xf:repeat nodeset="./mods:shelfLocator" id="shelf-locator-repeat">
-                    <xf:group appearance="full" ref=".">
-                        <xf:input ref="." class="text_50">
-                            <xf:label>Shelf Locator<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_shelfLocator',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                        </xf:input>
-                    </xf:group>
-                </xf:repeat>
-            </xf:group>
-            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:url]">
-                <div class="join">
-                    <span class="legend">URL</span>
-                    <span class="join-button">
-                        <xf:trigger>
-                            <xf:label>+</xf:label>
-                            <xf:action ev:event="DOMActivate">
-                                <xf:insert nodeset="mods:url" at="index('location-url-repeat')" position="before"/>
-                            </xf:action>
-                        </xf:trigger>
-                    </span>
-                    <span class="join-button">
-                        <xf:trigger>
-                            <xf:label>–</xf:label>
-                            <xf:action ev:event="DOMActivate">
-                                <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:url" at="index('location-url-repeat')"/>
-                            </xf:action>
-                        </xf:trigger>
-                    </span>
-                    <span class="xforms-hint">
-                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                        <div class="xforms-hint-value">
-                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-url',instance('code-tables'))/help"/>
-                        </div>
-                    </span>
-                </div>
-                <xf:repeat nodeset="./mods:url" id="location-url-repeat">
-                    <xf:group appearance="full" ref=".[@dateLastAccessed]">
-                        <xf:input ref="./@dateLastAccessed" class="text_50">
-                            <xf:label>Date Last Accessed<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateLastAccessed',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                        </xf:input>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@access]">
-                        <xf:select1 ref="./@access" selection="open">
-                            <xf:label>Access<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_url-access',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='url-access-type-code']/items/item">
-                                <xf:label ref="label"/>
-                                <xf:value ref="value"/>
-                            </xf:itemset>
-                        </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@usage]">
-                        <xf:select1 ref="./@usage">
-                            <xf:label>Usage<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-usage',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='url-usage-type-code']/items/item">
-                                <xf:label ref="label"/>
-                                <xf:value ref="value"/>
-                            </xf:itemset>
-                        </xf:select1>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@displayLabel]">
-                        <xf:input ref="./@displayLabel" class="text_50">
-                            <xf:label>Display Label<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_displayLabel',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                        </xf:input>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".[@note]">
-                        <xf:textarea ref="./@note" class="textarea" mediatype="dojo">
-                            <xf:label>Note<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-url-note',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                        </xf:textarea>
-                    </xf:group>
-                    <xf:group appearance="full" ref=".">
-                        <xf:input ref="." class="text_100">
-                            <xf:label>URL<span class="xforms-help">
-                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                    <div class="xforms-help-value">
-                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-url',instance('code-tables'))/help"/>
-                                    </div>
-                                </span>
-                            </xf:label>
-                        </xf:input>
-                    </xf:group>
-                </xf:repeat>
-            </xf:group>
-            <xf:group appearance="full" class="fieldset level-2" ref=".[mods:holdingSimple]">
-                <div class="join">
-                    <span class="legend">Holdings Simple</span>
-                    <span class="xforms-hint">
-                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                        <div class="xforms-hint-value">
-                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_holdingSimple',instance('code-tables'))/help"/>
-                        </div>
-                    </span>
-                </div>
-                <xf:repeat nodeset="./mods:holdingSimple" id="location-holding-simple-repeat">
-                    <xf:group appearance="full" class="fieldset level-3">
-                        <div class="join">
-                            <span class="legend">Copy Information</span>
-                            <span class="join-button">
+                </span>
+            </div>
+            <xf:repeat nodeset="instance('save-data')/mods:location" id="location-repeat">
+                <xf:group appearance="full" ref=".[mods:physicalLocation]">
+                    <fieldset class="level-2">
+                        <div class="label-box">
+                            <span class="legend">Physical Location</span>
+                            <span class="add-delete-button">
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="mods:copyInformation" at="index('copyInformation-repeat')" position="before"/>
+                                        <xf:insert nodeset="mods:physicalLocation" at="index('physical-location-repeat')" position="before"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
-                            <span class="join-button">
+                            <span class="add-delete-button">
                                 <xf:trigger>
                                     <xf:label>–</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingSimple/mods:copyInformation" at="index('copyInformation-repeat')"/>
+                                        <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:physicalLocation" at="index('physical-location-repeat')"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-hint-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_copyInformation',instance('code-tables'))/help"/>
+                                    <p> Record in Physical Location the institution or repository that holds
+                                the resource or where it is available. Physical Location may be
+                                expressed as text and/or as a code. If expressed as code, use the
+                                Authority field to designate the source of the code. </p>
+                                    <p> Physical Location typically includes specific information used to
+                                locate a resource within a collection, such as the name or code of
+                                an institution/repository, and perhaps subcollection. A shelf number
+                                is given in Shelf Locator. </p>
                                 </div>
                             </span>
                         </div>
-                        <xf:repeat nodeset="./mods:copyInformation" id="copyInformation-repeat">
-                            <xf:group appearance="full" class="fieldset level-4">
-                                <div class="join">
-                                    <span class="legend">Form</span>
-                                    <span class="xforms-hint">
-                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                        <div class="xforms-hint-value">
-                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-form',instance('code-tables'))/help"/>
-                                        </div>
-                                    </span>
+                        <xf:repeat nodeset="./mods:physicalLocation" id="physical-location-repeat">
+                            <xf:group appearance="full" ref=".[@authority]">
+                                <xf:select1 ref="./@authority" selection="open">
+                                    <xf:label>Authority<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_authority',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='record-content-source-authority-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group appearance="full" ref=".[@type]">
+                                <xf:input ref="./@type" class="text_50">
+                                    <xf:label>Type<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-type',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:input>
+                            </xf:group>
+                            <xf:group appearance="full" ref=".[@xlink:href]">
+                                <xf:input ref="./@xlink:href" class="text_50">
+                                    <xf:label>XLink<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xlink_href',instance('code-tables'))/help"/>
+                                                <p> Here, XLink may be used to link to additional
+                                            information about the resource recorded in Physical
+                                            Location, e.g. the institution's website.
+                                    </p>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:input>
+                            </xf:group>
+                            <xf:group appearance="full" ref=".[@lang]">
+                                <xf:select1 ref="./@lang">
+                                    <xf:label>Language<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_lang',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group appearance="full" ref=".[@xml:lang]">
+                                <xf:select1 ref="./@xml:lang">
+                                    <xf:label>xml:lang<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group appearance="full" ref=".[@script]">
+                                <xf:select1 ref="./@script">
+                                    <xf:label>Script<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_script',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group appearance="full" ref=".[@transliteration]">
+                                <xf:select1 ref="./@transliteration" selection="open">
+                                    <xf:label>Transliteration<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_transliteration',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group appearance="full" ref=".[@displayLabel]">
+                                <xf:input ref="./@displayLabel" class="text_50">
+                                    <xf:label>Display Label<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_displayLabel',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:input>
+                            </xf:group>
+                            <xf:group appearance="full" ref=".">
+                                <xf:input ref="." class="text_50">
+                                    <xf:label>Physical Location<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_physicalLocation',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:input>
+                            </xf:group>
+                        </xf:repeat>
+                    </fieldset>
+                </xf:group>
+                <xf:group appearance="full" ref=".[mods:shelfLocator]">
+                    <fieldset class="level-2">
+                        <div class="label-box">
+                            <span class="legend">Shelf Locator</span>
+                            <span class="add-delete-button">
+                                <xf:trigger>
+                                    <xf:label>+</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:insert nodeset="mods:shelfLocator" at="index('location-shelfLocator-repeat')" position="before"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
+                            <span class="add-delete-button">
+                                <xf:trigger>
+                                    <xf:label>–</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingSimple/mods:copyInformation/mods:shelfLocator" at="index('location-shelfLocator-repeat')"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-hint-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_shelfLocator',instance('code-tables'))/help"/>
                                 </div>
-                                <xf:repeat nodeset="./mods:form" id="form-repeat">
-                                    <xf:group appearance="full" ref=".[@authority]">
-                                        <xf:select1 ref="./@authority">
-                                            <xf:label>Authority<span class="xforms-help">
-                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                                    <div class="xforms-help-value">
-                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_authority',instance('code-tables'))/help"/>
-                                                    </div>
-                                                </span>
-                                            </xf:label>
-                                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='genre-authority-code']/items/item">
-                                                <xf:label ref="label"/>
-                                                <xf:value ref="value"/>
-                                            </xf:itemset>
-                                        </xf:select1>
-                                    </xf:group>
-                                    <xf:group appearance="full" ref=".[@authority='marcgt']">
-                                        <xf:select1 ref=".">
-                                            <xf:label>Form<span class="xforms-help">
-                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                                    <div class="xforms-help-value">
-                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-form',instance('code-tables'))/help"/>
-                                                    </div>
-                                                </span>
-                                            </xf:label>
-                                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='genre-marcgt-code']/items/item">
-                                                <xf:label ref="label"/>
-                                                <xf:value ref="value"/>
-                                            </xf:itemset>
-                                        </xf:select1>
-                                    </xf:group>
-                                    <xf:group appearance="full" ref=".[@authority='marcsmd']">
-                                        <xf:select1 ref=".">
-                                            <xf:label>Form<span class="xforms-help">
-                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                                    <div class="xforms-help-value">
-                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-form',instance('code-tables'))/help"/>
-                                                    </div>
-                                                </span>
-                                            </xf:label>
-                                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='genre-marcsmd-code']/items/item">
-                                                <xf:label ref="label"/>
-                                                <xf:value ref="value"/>
-                                            </xf:itemset>
-                                        </xf:select1>
-                                    </xf:group>
+                            </span>
+                        </div>
+                        <xf:repeat nodeset="./mods:shelfLocator" id="shelf-locator-repeat">
+                            <xf:group appearance="full" ref=".">
+                                <xf:input ref="." class="text_50">
+                                    <xf:label>Shelf Locator<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_shelfLocator',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:input>
+                            </xf:group>
+                        </xf:repeat>
+                    </fieldset>
+                </xf:group>
+                <xf:group appearance="full" ref=".[mods:url]">
+                    <fieldset class="level-2">
+                        <div class="label-box">
+                            <span class="legend">URL</span>
+                            <span class="add-delete-button">
+                                <xf:trigger>
+                                    <xf:label>+</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:insert nodeset="mods:url" at="index('location-url-repeat')" position="before"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
+                            <span class="add-delete-button">
+                                <xf:trigger>
+                                    <xf:label>–</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:url" at="index('location-url-repeat')"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-hint-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-url',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </div>
+                        <xf:repeat nodeset="./mods:url" id="location-url-repeat">
+                            <xf:group appearance="full" ref=".[@dateLastAccessed]">
+                                <xf:input ref="./@dateLastAccessed" class="text_50">
+                                    <xf:label>Date Last Accessed<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateLastAccessed',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:input>
+                            </xf:group>
+                            <xf:group appearance="full" ref=".[@access]">
+                                <xf:select1 ref="./@access" selection="open">
+                                    <xf:label>Access<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_url-access',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='url-access-type-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group appearance="full" ref=".[@usage]">
+                                <xf:select1 ref="./@usage">
+                                    <xf:label>Usage<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-usage',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='url-usage-type-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group appearance="full" ref=".[@displayLabel]">
+                                <xf:input ref="./@displayLabel" class="text_50">
+                                    <xf:label>Display Label<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_displayLabel',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:input>
+                            </xf:group>
+                            <xf:group appearance="full" ref=".[@note]">
+                                <xf:textarea ref="./@note" class="textarea" mediatype="dojo">
+                                    <xf:label>Note<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-url-note',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:textarea>
+                            </xf:group>
+                            <xf:group appearance="full" ref=".">
+                                <xf:input ref="." class="text_100">
+                                    <xf:label>URL<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-url',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:input>
+                            </xf:group>
+                        </xf:repeat>
+                    </fieldset>
+                </xf:group>
+                <xf:group appearance="full" ref=".[mods:holdingSimple]">
+                    <fieldset class="level-2">
+                        <div class="label-box">
+                            <span class="legend">Holdings Simple</span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-hint-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_holdingSimple',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </div>
+                        <xf:repeat nodeset="./mods:holdingSimple" id="location-holding-simple-repeat">
+                            <xf:group appearance="full">
+                                <fieldset class="level-3">
+                                    <div class="label-box">
+                                        <span class="legend">Copy Information</span>
+                                        <span class="add-delete-button">
+                                            <xf:trigger>
+                                                <xf:label>+</xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xf:insert nodeset="mods:copyInformation" at="index('copyInformation-repeat')" position="before"/>
+                                                </xf:action>
+                                            </xf:trigger>
+                                        </span>
+                                        <span class="add-delete-button">
+                                            <xf:trigger>
+                                                <xf:label>–</xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingSimple/mods:copyInformation" at="index('copyInformation-repeat')"/>
+                                                </xf:action>
+                                            </xf:trigger>
+                                        </span>
+                                        <span class="xforms-hint">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-hint-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_copyInformation',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <xf:repeat nodeset="./mods:copyInformation" id="copyInformation-repeat">
+                                        <xf:group appearance="full">
+                                            <fieldset class="level-4">
+                                                <div class="label-box">
+                                                    <span class="legend">Form</span>
+                                                    <span class="xforms-hint">
+                                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                        <div class="xforms-hint-value">
+                                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-form',instance('code-tables'))/help"/>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                                <xf:repeat nodeset="./mods:form" id="form-repeat">
+                                                    <xf:group appearance="full" ref=".[@authority]">
+                                                        <xf:select1 ref="./@authority">
+                                                            <xf:label>Authority<span class="xforms-help">
+                                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                                    <div class="xforms-help-value">
+                                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_authority',instance('code-tables'))/help"/>
+                                                                    </div>
+                                                                </span>
+                                                            </xf:label>
+                                                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='genre-authority-code']/items/item">
+                                                                <xf:label ref="label"/>
+                                                                <xf:value ref="value"/>
+                                                            </xf:itemset>
+                                                        </xf:select1>
+                                                    </xf:group>
+                                                    <xf:group appearance="full" ref=".[@authority='marcgt']">
+                                                        <xf:select1 ref=".">
+                                                            <xf:label>Form<span class="xforms-help">
+                                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                                    <div class="xforms-help-value">
+                                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-form',instance('code-tables'))/help"/>
+                                                                    </div>
+                                                                </span>
+                                                            </xf:label>
+                                                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='genre-marcgt-code']/items/item">
+                                                                <xf:label ref="label"/>
+                                                                <xf:value ref="value"/>
+                                                            </xf:itemset>
+                                                        </xf:select1>
+                                                    </xf:group>
+                                                    <xf:group appearance="full" ref=".[@authority='marcsmd']">
+                                                        <xf:select1 ref=".">
+                                                            <xf:label>Form<span class="xforms-help">
+                                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                                    <div class="xforms-help-value">
+                                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-form',instance('code-tables'))/help"/>
+                                                                    </div>
+                                                                </span>
+                                                            </xf:label>
+                                                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='genre-marcsmd-code']/items/item">
+                                                                <xf:label ref="label"/>
+                                                                <xf:value ref="value"/>
+                                                            </xf:itemset>
+                                                        </xf:select1>
+                                                    </xf:group>
                                     <!--NB: make other code tables-->
-                                    <xf:group appearance="full" ref=".[not(@authority='marcgt') and not(@authority='marcsmd')]">
-                                        <xf:select1 ref="." selection="open">
-                                            <xf:label>Form<span class="xforms-help">
-                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                                    <div class="xforms-help-value">
-                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-form',instance('code-tables'))/help"/>
-                                                    </div>
-                                                </span>
-                                            </xf:label>
-                                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='genre-marcgt-code']/items/item">
-                                                <xf:label ref="label"/>
-                                                <xf:value ref="value"/>
-                                            </xf:itemset>
-                                        </xf:select1>
-                                    </xf:group>
-                                </xf:repeat>
+                                                    <xf:group appearance="full" ref=".[not(@authority='marcgt') and not(@authority='marcsmd')]">
+                                                        <xf:select1 ref="." selection="open">
+                                                            <xf:label>Form<span class="xforms-help">
+                                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                                    <div class="xforms-help-value">
+                                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-form',instance('code-tables'))/help"/>
+                                                                    </div>
+                                                                </span>
+                                                            </xf:label>
+                                                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='genre-marcgt-code']/items/item">
+                                                                <xf:label ref="label"/>
+                                                                <xf:value ref="value"/>
+                                                            </xf:itemset>
+                                                        </xf:select1>
+                                                    </xf:group>
+                                                </xf:repeat>
                                 <!-- <xf:trigger ref=".[count(mods:form) > 0]" class="add-button"> <xf:label>Add Form</xf:label> <xf:action ev:event="DOMActivate"> <xf:insert nodeset="mods:form" at="index('form-repeat')" position="before" origin="instance('insert-templates')/mods:form"/> <xf:setvalue ref="instance('save-data')/mods:form[last()]" value="''"/> </xf:action> </xf:trigger> -->
-                            </xf:group>
-                            <xf:group appearance="full" class="fieldset level-4">
-                                <div class="join">
-                                    <span class="legend">Sublocation</span>
-                                    <span class="join-button">
-                                        <xf:trigger>
-                                            <xf:label>+</xf:label>
-                                            <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="mods:sublocation" at="index('sublocation-repeat')" position="before"/>
-                                            </xf:action>
-                                        </xf:trigger>
-                                    </span>
-                                    <span class="join-button">
-                                        <xf:trigger>
-                                            <xf:label>–</xf:label>
-                                            <xf:action ev:event="DOMActivate">
-                                                <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingSimple/mods:copyInformation/mods:sublocation" at="index('sublocation-repeat')"/>
-                                            </xf:action>
-                                        </xf:trigger>
-                                    </span>
-                                    <span class="xforms-hint">
-                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                        <div class="xforms-hint-value">
-                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_sublocation',instance('code-tables'))/help"/>
-                                        </div>
-                                    </span>
-                                </div>
-                                <xf:repeat nodeset="./mods:sublocation " id="sublocation-repeat">
-                                    <xf:group appearance="full" ref=".">
-                                        <xf:input ref="." class="text_50">
-                                            <xf:label>Sublocation<span class="xforms-help">
-                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                                    <div class="xforms-help-value">
-                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_sublocation',instance('code-tables'))/help"/>
-                                                    </div>
-                                                </span>
-                                            </xf:label>
-                                        </xf:input>
-                                    </xf:group>
-                                </xf:repeat>
-                            </xf:group>
-                            <xf:group appearance="full" class="fieldset level-4">
-                                <div class="join">
-                                    <span class="legend">Shelf Locator</span>
-                                    <span class="join-button">
-                                        <xf:trigger>
-                                            <xf:label>+</xf:label>
-                                            <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="mods:sublocation" at="index('sublocation-repeat')" position="before"/>
-                                            </xf:action>
-                                        </xf:trigger>
-                                    </span>
-                                    <span class="join-button">
-                                        <xf:trigger>
-                                            <xf:label>–</xf:label>
-                                            <xf:action ev:event="DOMActivate">
-                                                <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingSimple/mods:copyInformation/mods:sublocation" at="index('sublocation-repeat')"/>
-                                            </xf:action>
-                                        </xf:trigger>
-                                    </span>
-                                    <span class="xforms-hint">
-                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                        <div class="xforms-hint-value">
-                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_shelfLocator',instance('code-tables'))/help"/>
-                                        </div>
-                                    </span>
-                                </div>
-                                <xf:repeat nodeset="./mods:shelfLocator " id="location-shelfLocator-repeat">
-                                    <xf:group appearance="full" ref=".">
-                                        <xf:input ref="." class="text_50">
-                                            <xf:label>Shelf Locator<span class="xforms-help">
-                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                                    <div class="xforms-help-value">
-                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_shelfLocator',instance('code-tables'))/help"/>
-                                                    </div>
-                                                </span>
-                                            </xf:label>
-                                        </xf:input>
-                                    </xf:group>
-                                </xf:repeat>
-                            </xf:group>
-                            <xf:group appearance="full" class="fieldset level-4">
-                                <div class="join">
-                                    <span class="legend">Electronic Locator</span>
-                                    <span class="join-button">
-                                        <xf:trigger>
-                                            <xf:label>+</xf:label>
-                                            <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="mods:electronicLocator" at="index('location-electronicLocator-repeat')" position="before"/>
-                                            </xf:action>
-                                        </xf:trigger>
-                                    </span>
-                                    <span class="join-button">
-                                        <xf:trigger>
-                                            <xf:label>–</xf:label>
-                                            <xf:action ev:event="DOMActivate">
-                                                <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingSimple/mods:copyInformation/mods:electronicLocator" at="index('location-electronicLocator-repeat')"/>
-                                            </xf:action>
-                                        </xf:trigger>
-                                    </span>
-                                    <span class="xforms-hint">
-                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                        <div class="xforms-hint-value">
-                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_electronicLocator',instance('code-tables'))/help"/>
-                                        </div>
-                                    </span>
-                                </div>
-                                <xf:repeat nodeset="./mods:electronicLocator " id="location-electronicLocator-repeat">
-                                    <xf:group appearance="full" ref=".">
-                                        <xf:input ref="." class="text_50">
-                                            <xf:label>Electronic Locator<span class="xforms-help">
-                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                                    <div class="xforms-help-value">
-                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_electronicLocator',instance('code-tables'))/help"/>
-                                                    </div>
-                                                </span>
-                                            </xf:label>
-                                        </xf:input>
-                                    </xf:group>
-                                </xf:repeat>
-                            </xf:group>
-                            <xf:group appearance="full" class="fieldset level-4">
-                                <div class="join">
-                                    <span class="legend">Note</span>
-                                    <span class="join-button">
-                                        <xf:trigger>
-                                            <xf:label>+</xf:label>
-                                            <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="mods:note" at="index('location-note-repeat')" position="before"/>
-                                            </xf:action>
-                                        </xf:trigger>
-                                    </span>
-                                    <span class="join-button">
-                                        <xf:trigger>
-                                            <xf:label>–</xf:label>
-                                            <xf:action ev:event="DOMActivate">
-                                                <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingSimple/mods:copyInformation/mods:note" at="index('location-note-repeat')"/>
-                                            </xf:action>
-                                        </xf:trigger>
-                                    </span>
-                                    <span class="xforms-hint">
-                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                        <div class="xforms-hint-value">
-                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-note',instance('code-tables'))/help"/>
-                                        </div>
-                                    </span>
-                                </div>
+                                            </fieldset>
+                                        </xf:group>
+                                        <xf:group appearance="full">
+                                            <fieldset class="level-4">
+                                                <div class="label-box">
+                                                    <span class="legend">Sublocation</span>
+                                                    <span class="add-delete-button">
+                                                        <xf:trigger>
+                                                            <xf:label>+</xf:label>
+                                                            <xf:action ev:event="DOMActivate">
+                                                                <xf:insert nodeset="mods:sublocation" at="index('sublocation-repeat')" position="before"/>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </span>
+                                                    <span class="add-delete-button">
+                                                        <xf:trigger>
+                                                            <xf:label>–</xf:label>
+                                                            <xf:action ev:event="DOMActivate">
+                                                                <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingSimple/mods:copyInformation/mods:sublocation" at="index('sublocation-repeat')"/>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </span>
+                                                    <span class="xforms-hint">
+                                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                        <div class="xforms-hint-value">
+                                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_sublocation',instance('code-tables'))/help"/>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                                <xf:repeat nodeset="./mods:sublocation " id="sublocation-repeat">
+                                                    <xf:group appearance="full" ref=".">
+                                                        <xf:input ref="." class="text_50">
+                                                            <xf:label>Sublocation<span class="xforms-help">
+                                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                                    <div class="xforms-help-value">
+                                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_sublocation',instance('code-tables'))/help"/>
+                                                                    </div>
+                                                                </span>
+                                                            </xf:label>
+                                                        </xf:input>
+                                                    </xf:group>
+                                                </xf:repeat>
+                                            </fieldset>
+                                        </xf:group>
+                                        <xf:group appearance="full">
+                                            <fieldset class="level-4">
+                                                <div class="label-box">
+                                                    <span class="legend">Shelf Locator</span>
+                                                    <span class="add-delete-button">
+                                                        <xf:trigger>
+                                                            <xf:label>+</xf:label>
+                                                            <xf:action ev:event="DOMActivate">
+                                                                <xf:insert nodeset="mods:sublocation" at="index('sublocation-repeat')" position="before"/>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </span>
+                                                    <span class="add-delete-button">
+                                                        <xf:trigger>
+                                                            <xf:label>–</xf:label>
+                                                            <xf:action ev:event="DOMActivate">
+                                                                <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingSimple/mods:copyInformation/mods:sublocation" at="index('sublocation-repeat')"/>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </span>
+                                                    <span class="xforms-hint">
+                                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                        <div class="xforms-hint-value">
+                                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_shelfLocator',instance('code-tables'))/help"/>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                                <xf:repeat nodeset="./mods:shelfLocator " id="location-shelfLocator-repeat">
+                                                    <xf:group appearance="full" ref=".">
+                                                        <xf:input ref="." class="text_50">
+                                                            <xf:label>Shelf Locator<span class="xforms-help">
+                                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                                    <div class="xforms-help-value">
+                                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_shelfLocator',instance('code-tables'))/help"/>
+                                                                    </div>
+                                                                </span>
+                                                            </xf:label>
+                                                        </xf:input>
+                                                    </xf:group>
+                                                </xf:repeat>
+                                            </fieldset>
+                                        </xf:group>
+                                        <xf:group appearance="full">
+                                            <fieldset class="level-4">
+                                                <div class="label-box">
+                                                    <span class="legend">Electronic Locator</span>
+                                                    <span class="add-delete-button">
+                                                        <xf:trigger>
+                                                            <xf:label>+</xf:label>
+                                                            <xf:action ev:event="DOMActivate">
+                                                                <xf:insert nodeset="mods:electronicLocator" at="index('location-electronicLocator-repeat')" position="before"/>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </span>
+                                                    <span class="add-delete-button">
+                                                        <xf:trigger>
+                                                            <xf:label>–</xf:label>
+                                                            <xf:action ev:event="DOMActivate">
+                                                                <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingSimple/mods:copyInformation/mods:electronicLocator" at="index('location-electronicLocator-repeat')"/>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </span>
+                                                    <span class="xforms-hint">
+                                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                        <div class="xforms-hint-value">
+                                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_electronicLocator',instance('code-tables'))/help"/>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                                <xf:repeat nodeset="./mods:electronicLocator " id="location-electronicLocator-repeat">
+                                                    <xf:group appearance="full" ref=".">
+                                                        <xf:input ref="." class="text_50">
+                                                            <xf:label>Electronic Locator<span class="xforms-help">
+                                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                                    <div class="xforms-help-value">
+                                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_electronicLocator',instance('code-tables'))/help"/>
+                                                                    </div>
+                                                                </span>
+                                                            </xf:label>
+                                                        </xf:input>
+                                                    </xf:group>
+                                                </xf:repeat>
+                                            </fieldset>
+                                        </xf:group>
+                                        <xf:group appearance="full">
+                                            <fieldset class="level-4">
+                                                <div class="label-box">
+                                                    <span class="legend">Note</span>
+                                                    <span class="add-delete-button">
+                                                        <xf:trigger>
+                                                            <xf:label>+</xf:label>
+                                                            <xf:action ev:event="DOMActivate">
+                                                                <xf:insert nodeset="mods:note" at="index('location-note-repeat')" position="before"/>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </span>
+                                                    <span class="add-delete-button">
+                                                        <xf:trigger>
+                                                            <xf:label>–</xf:label>
+                                                            <xf:action ev:event="DOMActivate">
+                                                                <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingSimple/mods:copyInformation/mods:note" at="index('location-note-repeat')"/>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </span>
+                                                    <span class="xforms-hint">
+                                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                        <div class="xforms-hint-value">
+                                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_location-note',instance('code-tables'))/help"/>
+                                                        </div>
+                                                    </span>
+                                                </div>
                                 <!--location/note repeat begins-->
-                                <xf:repeat nodeset="./mods:note " id="location-note-repeat">
+                                                <xf:repeat nodeset="./mods:note " id="location-note-repeat">
                                     <!--location/note input begins-->
                                     <!-- Cluster: omit -->
-                                    <xf:group appearance="full" ref=".[@type]">
-                                        <xf:input ref="./@type" class="text_50">
-                                            <xf:label>Type<span class="xforms-help">
-                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                                    <div class="xforms-help-value">
-                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_note-type',instance('code-tables'))/help"/>
-                                                    </div>
-                                                </span>
-                                            </xf:label>
-                                            <xf:hint>
-                                                <p> This field is not controlled by a list and thus
+                                                    <xf:group appearance="full" ref=".[@type]">
+                                                        <xf:input ref="./@type" class="text_50">
+                                                            <xf:label>Type<span class="xforms-help">
+                                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                                    <div class="xforms-help-value">
+                                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_note-type',instance('code-tables'))/help"/>
+                                                                    </div>
+                                                                </span>
+                                                            </xf:label>
+                                                            <xf:hint>
+                                                                <p> This field is not controlled by a list and thus
                                                   is open-ended. </p>
-                                            </xf:hint>
-                                        </xf:input>
-                                    </xf:group>
+                                                            </xf:hint>
+                                                        </xf:input>
+                                                    </xf:group>
                                     <!-- Cluster: omit -->
-                                    <xf:group appearance="full" ref=".[@displayLabel]">
-                                        <xf:input ref="./@displayLabel" class="text_50">
-                                            <xf:label>Display Label<span class="xforms-help">
-                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                                    <div class="xforms-help-value">
-                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_template',instance('code-tables'))/help"/>
-                                                    </div>
-                                                </span>
-                                            </xf:label>
-                                            <xf:hint>
-                                                <p> Indicates that the note text is for display
+                                                    <xf:group appearance="full" ref=".[@displayLabel]">
+                                                        <xf:input ref="./@displayLabel" class="text_50">
+                                                            <xf:label>Display Label<span class="xforms-help">
+                                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                                    <div class="xforms-help-value">
+                                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_template',instance('code-tables'))/help"/>
+                                                                    </div>
+                                                                </span>
+                                                            </xf:label>
+                                                            <xf:hint>
+                                                                <p> Indicates that the note text is for display
                                                   purposes. Use when a particular label for display
                                                   is preferred to aid the user in understanding the
                                                   note. </p>
-                                            </xf:hint>
-                                        </xf:input>
-                                    </xf:group>
-                                    <xf:group appearance="full" ref=".">
-                                        <xf:textarea ref="." class="textarea" mediatype="dojo">
-                                            <xf:label>Note<span class="xforms-help">
-                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                                    <div class="xforms-help-value">
-                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_template',instance('code-tables'))/help"/>
-                                                    </div>
-                                                </span>
-                                            </xf:label>
-                                            <xf:hint>
-                                                <p> Note relating to a specific copy of a document.
+                                                            </xf:hint>
+                                                        </xf:input>
+                                                    </xf:group>
+                                                    <xf:group appearance="full" ref=".">
+                                                        <xf:textarea ref="." class="textarea" mediatype="dojo">
+                                                            <xf:label>Note<span class="xforms-help">
+                                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                                    <div class="xforms-help-value">
+                                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_template',instance('code-tables'))/help"/>
+                                                                    </div>
+                                                                </span>
+                                                            </xf:label>
+                                                            <xf:hint>
+                                                                <p> Note relating to a specific copy of a document.
                                                 </p>
-                                            </xf:hint>
-                                        </xf:textarea>
-                                    </xf:group>
+                                                            </xf:hint>
+                                                        </xf:textarea>
+                                                    </xf:group>
                                     <!--location/note input ends-->
-                                </xf:repeat>
+                                                </xf:repeat>
                                 <!--location/note repeat ends-->
-                            </xf:group>
+                                            </fieldset>
+                                        </xf:group>
                             <!--location/note ends-->
                             <!--location/enumerationAndChronology begins-->
-                            <xf:group appearance="full" class="fieldset level-4">
-                                <div class="join extra-wide">
-                                    <span class="legend">Enumeration And Chronology</span>
-                                    <span class="join-button">
-                                        <xf:trigger>
-                                            <xf:label>+</xf:label>
-                                            <xf:action ev:event="DOMActivate">
-                                                <xf:insert nodeset="mods:enumerationAndChronology" at="index('location-enumerationAndChronology-repeat')" position="before"/>
-                                            </xf:action>
-                                        </xf:trigger>
-                                    </span>
-                                    <span class="join-button">
-                                        <xf:trigger>
-                                            <xf:label>–</xf:label>
-                                            <xf:action ev:event="DOMActivate">
-                                                <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingSimple/mods:copyInformation/mods:enumerationAndChronology" at="index('location-enumerationAndChronology-repeat')"/>
-                                            </xf:action>
-                                        </xf:trigger>
-                                    </span>
-                                    <span class="xforms-hint">
-                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                        <div class="xforms-hint-value">
-                                            <p> Alpha-numeric identification, such as a volume or
+                                        <xf:group appearance="full">
+                                            <fieldset class="level-4">
+                                                <div class="label-box extra-wide">
+                                                    <span class="legend">Enumeration And Chronology</span>
+                                                    <span class="add-delete-button">
+                                                        <xf:trigger>
+                                                            <xf:label>+</xf:label>
+                                                            <xf:action ev:event="DOMActivate">
+                                                                <xf:insert nodeset="mods:enumerationAndChronology" at="index('location-enumerationAndChronology-repeat')" position="before"/>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </span>
+                                                    <span class="add-delete-button">
+                                                        <xf:trigger>
+                                                            <xf:label>–</xf:label>
+                                                            <xf:action ev:event="DOMActivate">
+                                                                <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingSimple/mods:copyInformation/mods:enumerationAndChronology" at="index('location-enumerationAndChronology-repeat')"/>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </span>
+                                                    <span class="xforms-hint">
+                                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                        <div class="xforms-hint-value">
+                                                            <p> Alpha-numeric identification, such as a volume or
                                                 issue, and an indication of the date of publication
                                                 or date of issue of a component of a multi-part
                                                 resource, distinguishing it from other components of
@@ -682,142 +702,146 @@
                                                 statement. If more granularity is needed, a parsed
                                                 statement using an external schema may be used
                                                 within Holding External. </p>
-                                        </div>
-                                    </span>
-                                </div>
+                                                        </div>
+                                                    </span>
+                                                </div>
                                 <!--location/enumerationAndChronology repeat begins-->
-                                <xf:repeat nodeset="./mods:enumerationAndChronology " id="location-enumerationAndChronology-repeat">
+                                                <xf:repeat nodeset="./mods:enumerationAndChronology " id="location-enumerationAndChronology-repeat">
                                     <!--location/enumerationAndChronology input begins-->
-                                    <xf:group appearance="full" ref=".[@unitType]">
-                                        <xf:select1 ref="./@unitType">
-                                            <xf:label>Unit Type<span class="xforms-help">
-                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                                    <div class="xforms-help-value">
-                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_template',instance('code-tables'))/help"/>
-                                                    </div>
-                                                </span>
-                                            </xf:label>
-                                            <xf:hint>
-                                                <p> The category of bibliographic entity for which
+                                                    <xf:group appearance="full" ref=".[@unitType]">
+                                                        <xf:select1 ref="./@unitType">
+                                                            <xf:label>Unit Type<span class="xforms-help">
+                                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                                    <div class="xforms-help-value">
+                                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_template',instance('code-tables'))/help"/>
+                                                                    </div>
+                                                                </span>
+                                                            </xf:label>
+                                                            <xf:hint>
+                                                                <p> The category of bibliographic entity for which
                                                   Enumeration And Chronology is given, i.e. basic
                                                   bibliographic unit, supplement, or index. </p>
-                                            </xf:hint>
-                                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='location-unittype-code']/items/item">
-                                                <xf:label ref="label"/>
-                                                <xf:value ref="value"/>
-                                            </xf:itemset>
-                                        </xf:select1>
-                                    </xf:group>
-                                    <xf:group appearance="full" ref=".">
-                                        <xf:textarea ref="." class="textarea" mediatype="dojo">
-                                            <xf:label>Enumeration And Chronology<span class="xforms-help">
-                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                                    <div class="xforms-help-value">
-                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_template',instance('code-tables'))/help"/>
-                                                    </div>
-                                                </span>
-                                            </xf:label>
-                                            <xf:hint>
-                                                <p> Alpha-numeric identification, such as a volume
+                                                            </xf:hint>
+                                                            <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='location-unittype-code']/items/item">
+                                                                <xf:label ref="label"/>
+                                                                <xf:value ref="value"/>
+                                                            </xf:itemset>
+                                                        </xf:select1>
+                                                    </xf:group>
+                                                    <xf:group appearance="full" ref=".">
+                                                        <xf:textarea ref="." class="textarea" mediatype="dojo">
+                                                            <xf:label>Enumeration And Chronology<span class="xforms-help">
+                                                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                                                    <div class="xforms-help-value">
+                                                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_template',instance('code-tables'))/help"/>
+                                                                    </div>
+                                                                </span>
+                                                            </xf:label>
+                                                            <xf:hint>
+                                                                <p> Alpha-numeric identification, such as a volume
                                                   or issue, and an indication of the date of
                                                   publication or date of issue of a component of a
                                                   multi-part resource, distinguishing it from other
                                                   components of the same resource. </p>
-                                            </xf:hint>
-                                        </xf:textarea>
-                                    </xf:group>
+                                                            </xf:hint>
+                                                        </xf:textarea>
+                                                    </xf:group>
                                     <!--location/enumerationAndChronology input ends-->
-                                </xf:repeat>
+                                                </xf:repeat>
                                 <!--location/enumerationAndChronology repeat ends-->
-                            </xf:group>
+                                            </fieldset>
+                                        </xf:group>
                             <!--location/enumerationAndChronology ends-->
                             <!--location/copyInformation input ends-->
-                        </xf:repeat>
+                                    </xf:repeat>
                         <!--location/copyInformation repeat ends-->
-                    </xf:group>
+                                </fieldset>
+                            </xf:group>
                     <!--location/copyInformation ends-->
                     <!--location/holdingSimple delete begins-->
                     <!-- NB: not used <xf:trigger ref=".[count(../mods:holdingSimple) > 1]" class="delete-button"> <xf:label class="xforms-group-label-centered">Delete This Holding Simple</xf:label> <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location//mods:holdingSimple" at="index('location-holding-simple-repeat')"/> </xf:trigger> -->
                     <!--location/holdingSimple delete ends-->
-                </xf:repeat>
+                        </xf:repeat>
                 <!--location/holdingSimple repeat ends-->
                 <!--location/holdingSimple add begins-->
                 <!-- NB: not used <xf:trigger ref=".[count(mods:holdingSimple) > 0]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Another Holding Simple</xf:label> <xf:action ev:event="DOMActivate"> <xf:insert nodeset="mods:holdingSimple" at="index('location-holding-simple-repeat')" position="before" origin="instance('insert-templates')/mods:holdingSimple"/> <xf:setvalue ref="instance('save-data')/mods:holdingSimple[last()]" value="''"/> </xf:action> </xf:trigger> -->
                 <!--location/holdingSimple add ends-->
-            </xf:group>
+                    </fieldset>
+                </xf:group>
             <!--location/holdingSimple ends-->
             <!--holdingExternal begins-->
             <!--Cluster: omit-->
-            <xf:group appearance="full" class="level-2" ref=".[mods:holdingExternal]">
-                <fieldset>
-                    <div class="join">
-                        <span class="legend">Holding External</span>
-                        <span class="join-button">
-                            <xf:trigger>
-                                <xf:label>+</xf:label>
-                                <xf:action ev:event="DOMActivate">
-                                    <xf:insert nodeset="mods:holdingExternal" at="index('holding-external-repeat')" position="before"/>
-                                </xf:action>
-                            </xf:trigger>
-                        </span>
-                        <span class="join-button">
-                            <xf:trigger>
-                                <xf:label>–</xf:label>
-                                <xf:action ev:event="DOMActivate">
-                                    <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingExternal" at="index('holding-external-repeat')"/>
-                                </xf:action>
-                            </xf:trigger>
-                        </span>
-                        <span class="xforms-hint">
-                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                            <div class="xforms-hint-value">
-                                <p> Holdings information that uses a schema defined externally to
+                <xf:group appearance="full" ref=".[mods:holdingExternal]">
+                    <fieldset class="level-2">
+                        <div class="label-box">
+                            <span class="legend">Holding External</span>
+                            <span class="add-delete-button">
+                                <xf:trigger>
+                                    <xf:label>+</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:insert nodeset="mods:holdingExternal" at="index('holding-external-repeat')" position="before"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
+                            <span class="add-delete-button">
+                                <xf:trigger>
+                                    <xf:label>–</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:location/mods:holdingExternal" at="index('holding-external-repeat')"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-hint-value">
+                                    <p> Holdings information that uses a schema defined externally to
                                     MODS. Holding External may include more detailed holdings
                                     information than that accommodated by the MODS schema. Holding
                                     External may include more detailed holdings information than
                                     that accommodated by the MODS schema. An example is ISO 20775
                                     and its accompanying schema. </p>
-                            </div>
-                        </span>
-                    </div>
+                                </div>
+                            </span>
+                        </div>
                     <!--holdingExternal repeat begins-->
-                    <xf:repeat nodeset="./mods:holdingExternal" id="holding-external-repeat">
+                        <xf:repeat nodeset="./mods:holdingExternal" id="holding-external-repeat">
 
                         <!--holdingExternal input begins-->
-                        <xf:group appearance="full" ref=".">
-                            <xf:textarea ref="." class="textarea" mediatype="dojo">
-                                <xf:label>Holding External<span class="xforms-help">
-                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                        <div class="xforms-help-value">
-                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_template',instance('code-tables'))/help"/>
-                                        </div>
-                                    </span>
-                                </xf:label>
-                                <xf:hint>
-                                    <p> Holdings information that uses a schema defined externally
+                            <xf:group appearance="full" ref=".">
+                                <xf:textarea ref="." class="textarea" mediatype="dojo">
+                                    <xf:label>Holding External<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_template',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:hint>
+                                        <p> Holdings information that uses a schema defined externally
                                         to MODS. Holding External may include more detailed holdings
                                         information than that accommodated by the MODS schema.
                                         Holding External may include more detailed holdings
                                         information than that accommodated by the MODS schema. An
                                         example is ISO 20775 and its accompanying schema. </p>
-                                </xf:hint>
-                            </xf:textarea>
-                        </xf:group>
+                                    </xf:hint>
+                                </xf:textarea>
+                            </xf:group>
                         <!--holdingExternal input ends-->
-                    </xf:repeat>
+                        </xf:repeat>
                     <!--holdingExternal repeat ends-->
-                </fieldset>
-            </xf:group>
+                    </fieldset>
+                </xf:group>
             <!--holdingExternal ends-->
-        </xf:repeat>
+            </xf:repeat>
         <!--location repeat ends-->
-        <xf:group appearance="full" ref=".[not(mods:location)]">
-            <xf:trigger class="add-button">
-                <xf:label class="xforms-group-label-centered">Add Missing Location</xf:label>
-                <xf:action ev:event="DOMActivate">
-                    <xf:insert nodeset="instance('save-data')/mods:location" origin="instance('new-instance')/mods:location"/>
-                </xf:action>
-            </xf:trigger>
-        </xf:group>
+            <xf:group appearance="full" ref=".[not(mods:location)]">
+                <xf:trigger class="add-button">
+                    <xf:label class="xforms-group-label-centered">Add Missing Location</xf:label>
+                    <xf:action ev:event="DOMActivate">
+                        <xf:insert nodeset="instance('save-data')/mods:location" origin="instance('new-instance')/mods:location"/>
+                    </xf:action>
+                </xf:trigger>
+            </xf:group>
+        </fieldset>
     </xf:group>
 </div>

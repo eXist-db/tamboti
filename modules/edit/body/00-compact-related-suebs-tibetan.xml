@@ -3,7 +3,7 @@
 <div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-suebs-tibetan" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
-            <div class="join">
+            <div class="label-box">
                 <span class="legend">
                     <span class="legend">Related Items</span>
                 </span>
@@ -12,7 +12,7 @@
             <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-suebs-tibetan-repeat">
                 <!--Output: <xf:output ref="./@xlink:href"/>-->
                 <fieldset class="level-2">
-                    <div class="join wide">
+                    <div class="label-box">
                         <span class="legend">Type of Related Item</span>
                     </div>
                     <xf:group ref=".[@type]" class="hide-label margin-plus">
@@ -39,7 +39,7 @@
                     </xf:group>
                 </fieldset>
                 <fieldset class="level-2">
-                    <div class="join center">
+                    <div class="label-box">
                         <span class="legend">XLink</span>
                     </div>
                     <xf:group class="hide-label margin-plus">
@@ -55,7 +55,7 @@
                 </fieldset>
                 <xf:group ref=".[mods:identifier]">
                     <fieldset class="level-2">
-                        <div class="join center">
+                        <div class="label-box">
                             <span class="legend">Identifiers</span>
                         </div>
                         <xf:repeat nodeset="./mods:identifier" id="identifier-suebs-tibetan-repeat">
@@ -78,7 +78,7 @@
                 </xf:group>
                 <xf:group ref=".[mods:titleInfo/mods:title]">
                     <fieldset class="level-2">
-                        <div class="join">
+                        <div class="label-box">
                             <span class="legend">Title</span>
                         </div>
                         <xf:repeat nodeset="./mods:titleInfo" id="titleInfo-suebs-tibetan-repeat">
@@ -110,7 +110,7 @@
                 </xf:group>
                 <xf:group ref=".[mods:part]">
                     <fieldset class="level-3">
-                        <div class="join wide">
+                        <div class="label-box">
                             <span class="legend">Location of Text in Collection</span>
                         </div>
                         <!--relatedItem/part repeat begins-->
@@ -121,7 +121,7 @@
                             <!--relatedItem/part/detail begins-->
                             <xf:group ref=".[mods:detail]">
                                 <fieldset class="level-4">
-                                    <div class="join">
+                                    <div class="label-box">
                                         <span class="legend">Part</span>
                                     </div>
                                     <!--relatedItem/part/detail repeat begins-->
@@ -142,7 +142,7 @@
                             <!--relatedItem/part/extent begins-->
                             <xf:group ref=".[mods:extent]">
                                 <fieldset class="level-4">
-                                    <div class="join">
+                                    <div class="label-box">
                                         <span class="legend">Page Extent</span>
                                         <div class="xforms-help-value">
                                             <p> Use this field to indicate from which page and to

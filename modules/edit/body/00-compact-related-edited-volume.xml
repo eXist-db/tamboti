@@ -3,7 +3,7 @@
 <div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-edited-volume" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
-            <div class="join">
+            <div class="label-box">
                 <span class="legend">
                     <span class="legend">Edited Volume</span>
                 </span>
@@ -17,7 +17,7 @@
             <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-edited-volume-repeat">
                 <xf:group>
                     <fieldset class="level-2">
-                        <div class="join">
+                        <div class="label-box">
                             <span class="legend">XLink of Edited Volume</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -36,7 +36,7 @@
                 </xf:group>
                 <xf:group>
                     <fieldset class="level-2">
-                        <div class="join">
+                        <div class="label-box">
                             <span class="legend">Title of Edited Volume</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -82,7 +82,7 @@
                 </xf:group>
                 <xf:group>
                     <fieldset class="level-2">
-                        <div class="join">
+                        <div class="label-box">
                             <span class="legend">Editors of Edited Volume</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -93,9 +93,9 @@
                         </div>
                         <xf:group>
                             <fieldset class="level-3">
-                                <div class="join">
+                                <div class="label-box">
                                     <span class="legend">Persons as Editors</span>
-                                    <span class="join-button wide">
+                                    <span class="add-delete-button">
                                         <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) &gt; 0]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
@@ -144,10 +144,10 @@
                         </xf:group>
                         <xf:group>
                             <fieldset class="level-3">
-                                <div class="join">
+                                <div class="label-box">
                                     <span class="legend">Institutions as
                                                   Editors</span>
-                                    <span class="join-button extra-wide">
+                                    <span class="add-delete-button">
                                         <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) &gt; 0]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
@@ -191,7 +191,7 @@
                 </xf:group>
                 <xf:group>
                     <fieldset class="level-2">
-                        <div class="join wide">
+                        <div class="label-box">
                             <span class="legend">Edited Volume Origin
                                                 Information</span>
                             <span class="xforms-help">
@@ -205,7 +205,7 @@
                         <xf:repeat nodeset="./mods:originInfo" id="relatedItem-origininfo-edited-volume-repeat">
                             <xf:group>
                                 <fieldset class="level-3">
-                                    <div class="join">
+                                    <div class="label-box">
                                         <span class="legend">City Name</span>
                                         <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -232,7 +232,7 @@
                             </xf:group>
                             <xf:group>
                                 <fieldset class="level-3">
-                                    <div class="join">
+                                    <div class="label-box">
                                         <span class="legend">Publisher</span>
                                         <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -253,9 +253,9 @@
                             </xf:group>
                             <xf:group ref=".[mods:dateIssued]">
                                 <fieldset class="level-2">
-                                    <div class="join">
+                                    <div class="label-box">
                                         <span class="legend">Date of Issue</span>
-                                        <span class="join-button">
+                                        <span class="add-delete-button">
                                             <xf:trigger>
                                                 <xf:label>+</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -289,9 +289,9 @@
                             </xf:group>
                             <xf:group ref=".[mods:copyrightDate]">
                                 <fieldset class="level-2">
-                                    <div class="join">
+                                    <div class="label-box">
                                         <span class="legend">Copyright Date</span>
-                                        <span class="join-button">
+                                        <span class="add-delete-button">
                                             <xf:trigger>
                                                 <xf:label>+</xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -330,7 +330,7 @@
                 </xf:group>
                 <xf:group>
                     <fieldset class="level-2">
-                        <div class="join extra-wide">
+                        <div class="label-box extra-wide">
                             <span class="legend">Location of Contribution in Edited
                                                 Volume</span>
                             <span class="xforms-help">
@@ -344,7 +344,7 @@
                         <xf:repeat nodeset="./mods:part" id="related-item-part-edited-volume-repeat">
                             <xf:group ref=".[mods:detail]">
                                 <fieldset class="level-3">
-                                    <div class="join">
+                                    <div class="label-box">
                                         <span class="legend">Volume</span>
                                     </div>
                                     <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-edited-volume-repeat">
@@ -358,7 +358,7 @@
                             </xf:group>
                             <xf:group ref=".[mods:extent]">
                                 <fieldset class="level-3">
-                                    <div class="join">
+                                    <div class="label-box">
                                         <span class="legend">Page Extent</span>
                                         <div class="xforms-help-value">
                                             <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_extent-compact',instance('code-tables'))/help"/>
@@ -383,9 +383,9 @@
                 </xf:group>
                 <xf:group ref=".[mods:identifier]">
                     <fieldset class="level-2">
-                        <div class="join wide">
+                        <div class="label-box">
                             <span class="legend">Identifiers of Edited Volume</span>
-                            <span class="join-button">
+                            <span class="add-delete-button">
                                 <xf:trigger ref=".[mods:identifier]">
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
@@ -419,7 +419,7 @@
                 </xf:group>
                 <xf:group>
                     <fieldset class="level-2">
-                        <div class="join wide">
+                        <div class="label-box">
                             <span class="legend">
                                 <span class="legend">Monograph Series of Edited
                                                   Volume</span>
@@ -435,7 +435,7 @@
                         <xf:repeat nodeset="./mods:relatedItem" id="relatedItem-relatedItem-series-repeat">
                             <xf:group>
                                 <fieldset class="level-2">
-                                    <div class="join">
+                                    <div class="label-box">
                                         <span class="legend">XLink of Monograph
                                                   Series</span>
                                         <span class="xforms-help">
@@ -454,7 +454,7 @@
                             </xf:group>
                             <xf:group>
                                 <fieldset class="level-3">
-                                    <div class="join">
+                                    <div class="label-box">
                                         <span class="legend">Series Title</span>
                                         <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -501,7 +501,7 @@
                             </xf:group>
                             <xf:group>
                                 <fieldset class="level-3">
-                                    <div class="join extra-wide">
+                                    <div class="label-box extra-wide">
                                         <span class="legend">Location of Edited Volume in
                                                   Monograph Series</span>
                                         <span class="xforms-help">
@@ -515,7 +515,7 @@
                                     <xf:repeat nodeset="./mods:part" id="part-relatedItem-relatedItem-series-repeat">
                                         <xf:group ref=".[mods:detail]">
                                             <fieldset class="level-4">
-                                                <div class="join">
+                                                <div class="label-box">
                                                     <span class="legend">Volume</span>
                                                     <span class="xforms-help">
                                                         <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>

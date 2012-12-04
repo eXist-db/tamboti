@@ -1,5 +1,4 @@
 <css>
-@namespace xf url(http://www.w3.org/2002/xforms);
 
 /* empty rule to recover from parse errors */
    empty {}
@@ -50,16 +49,6 @@ hr {
 
 .compact .xforms-group .xforms-group-content .output {
     margin-top:-2em !important;
-}
-
-.node-adds button .xforms-label 
-    {
-    text-align:center;
-    }
-
-.node-adds .xforms-group .xforms-group-content
-{
-    display:inline !important;
 }
 
 /*temporary stuff ends*/
@@ -236,18 +225,6 @@ button {
     margin-bottom:.1em;
     }
 
-.wide {
-    width:20em !important;
-}
-
-.extra-wide {
-    width:25em !important;
-}
-
-.super-wide {
-    width:35em !important;
-}
-
 /*buttons end*/
 
 /*boxes begin*/
@@ -255,9 +232,19 @@ button {
 .node-adds, 
 .node-adds-title, 
 .xforms-label,
-.join
+.label-box
 {
     color:#3681B3;
+}
+
+.node-adds button .xforms-label 
+    {
+    text-align:center;
+    }
+
+.node-adds .xforms-group .xforms-group-content
+{
+    display:inline !important;
 }
 
 .node-adds .xforms-group {
@@ -268,11 +255,6 @@ button {
     width:15em;
 }
 
-.compact .fieldset .xforms-repeat-item {
-	padding-bottom:1em !important;
-}
-
-.fieldset,/*delete*/
 fieldset,
 .xforms-repeat-item,
 .xforms-repeat-item-selected
@@ -280,7 +262,6 @@ fieldset,
     border-color:#CCCCCC;
 }
 
-.fieldset,
 fieldset,
 .block-form .xforms-repeat-item,
 .block-form .xforms-repeat-item-selected,
@@ -334,29 +315,6 @@ select
 	1margin-left:1em;
 }
 
-.join { /*rename:label-box*/
-    font-weight:bold;
-    border-style:solid;
-    background-color:#EDEDED;
-    border-width:1px;
-    padding:.5em 1em .3em 1em;
-    width:15em;
-    height:1.5em;
-    margin-top:-2.2em; /*to make the fieldset border hit the centre of the box*/
-    margin-left:1.55em;
-    margin-bottom:.75em;
-    text-align:center;    
-}
-
-.compact .join {
-	margin-top:-2.5em; /*to make the fieldset border hit the centre of the box*/
-}
-
-.join .float .xforms-group .xforms-group-content
-{
-    float:left;
-}
-
 .block-form .xforms-group-label-centered { /*button text*/
     display:inline-block;
     text-align:center;
@@ -379,54 +337,58 @@ select .xforms-value {
     padding-left:.25em;
 }
 
-.join-button .xforms-control button
-{
+.add-delete-button .xforms-control button {
     width:1.75em !important;
     height:1.7em;
     padding:0;
     margin:-.2em .5em 0 .5em;
 }
 
-.wide .xforms-control button
-{
-    width:2.5em !important;
-}
-
-.join-button .xforms-control button .xforms-label {
+.add-delete-button .xforms-control button .xforms-label { /*controls "+" and "-" on buttons for adding and removing repetitions*/
     display:inline;
-    1width:1em;
     text-align:center;
     padding:0;
     margin:0;
 }
 
-.title-button   {
-    margin:.5em;
+.label-box { 
+    font-weight:bold;
+    border-style:solid;
+    background-color:#EDEDED;
+    border-width:1px;
+    padding:.5em 1em .3em 1em;
+    width:20em;
+    height:1.5em;
+    margin-top:-2.2em; /*to make the fieldset border go through the centre of the box*/
+    margin-left:1.55em;
+    margin-bottom:.75em;
+    text-align:center;    
 }
 
-.title-button span.xforms-hint-icon  {
-    margin-left:.5em;
+.label-box .extra-wide {
+    width:25em !important;
 }
 
-.node-button .xforms-control button { /*not on Basic Input Forms*/
+.label-box .super-wide {
+    width:35em !important;
+}
+
+.open-close-button .xforms-control button { 
     height:2em;
     width:2em;
     padding:0;
-    margin-bottom:1em;
-}
-
-.node-button .xforms-control button .xforms-label {
-    display:inline;
-    width:1em;
-    text-align:center;
-    padding:0;
-}
-
-.xforms-case .node-button {
     margin-bottom:-1.5em;
     margin-left:.5em;
     margin-right:0;
     margin-top:-.5em;
+
+}
+
+.open-close-button .xforms-control button .xforms-label { /*controls the "&gt;" and "&lt;" on the button*/
+    display:inline;
+    width:1em;
+    text-align:center;
+    padding:0;
 }
 
 .node-adds {
@@ -467,7 +429,8 @@ select .xforms-value {
 /*help, hint, alert begins*/
 /*NB: hint and help should be merged*/
 
-div.join span.xforms-hint { /*the hard-coded fieldset hints*/
+
+.label-box .xforms-hint { /*the hard-coded fieldset hints*/
     margin-left:1px;
     vertical-align:top;
     font-style:normal;
@@ -569,10 +532,6 @@ div.xforms-hint-value strong
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=0)";
 	filter:alpha(opacity=0);
 }
-
-.compact fieldset.level-1 .join {
-    margin-bottom:1.25em;
-    } 
 
 .compact .xforms-repeat-item-selected
 {

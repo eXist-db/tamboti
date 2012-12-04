@@ -3,9 +3,9 @@
 <div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-a" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group ref=".[mods:name]">
         <fieldset class="level-1">
-            <div class="join">
+            <div class="label-box">
                 <span class="legend">Names and Roles</span>
-                <span class="join-button">
+                <span class="add-delete-button">
                     <xf:trigger ref=".[string-length(mods:extension/e:transliterationOfResource) = 0]">
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
@@ -30,7 +30,7 @@
             <xf:repeat nodeset="./mods:name" id="name-repeat">
                 <xf:group class="input">
                     <fieldset class="level-2">
-                        <div class="join">
+                        <div class="label-box">
                             <span class="legend">Name</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -86,9 +86,9 @@
                 </xf:group>
                 <xf:group ref=".[mods:role]">
                     <fieldset class="level-2">
-                        <div class="join">
+                        <div class="label-box">
                             <span class="legend">Role</span>
-                            <span class="join-button">
+                            <span class="add-delete-button">
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
@@ -124,7 +124,7 @@
     </xf:group>
     <xf:group ref=".[mods:titleInfo]">
         <fieldset class="level-1">
-            <div class="join">
+            <div class="label-box">
                 <span class="legend"> Title Information </span>
                 <span class="xforms-help">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -272,7 +272,7 @@
     </xf:group>
     <xf:group ref=".[string(mods:extension/e:template) = 'monograph-latin'] | .[string(mods:extension/e:template) = 'monograph-transliterated'] | .[string(mods:extension/e:template) = 'edited-volume-latin'] | .[string(mods:extension/e:template) = 'edited-volume-transliterated'] | .[string(mods:extension/e:template) = 'periodical-latin'] | .[string(mods:extension/e:template) = 'periodical-transliterated']">
         <fieldset class="level-1">
-            <div class="join">
+            <div class="label-box">
                 <span class="legend">Origin Information</span>
                 <span class="xforms-help">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -288,9 +288,9 @@
                 </xf:group>
                 <xf:group ref=".[mods:place]">
                     <fieldset class="level-2">
-                        <div class="join">
+                        <div class="label-box">
                             <span class="legend">City</span>
-                            <span class="join-button">
+                            <span class="add-delete-button">
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
@@ -328,7 +328,7 @@
                 </xf:group>
                 <xf:group ref=".[mods:publisher]">
                     <fieldset class="level-2">
-                        <div class="join">
+                        <div class="label-box">
                             <span class="legend">Publisher</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -354,9 +354,9 @@
                 </xf:group>
                 <xf:group ref=".[mods:dateIssued]">
                     <fieldset class="level-2">
-                        <div class="join">
+                        <div class="label-box">
                             <span class="legend">Date of Issue</span>
-                            <span class="join-button">
+                            <span class="add-delete-button">
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
@@ -390,9 +390,9 @@
                 </xf:group>
                 <xf:group ref=".[mods:copyrightDate]">
                     <fieldset class="level-2">
-                        <div class="join">
+                        <div class="label-box">
                             <span class="legend">Copyright Date</span>
-                            <span class="join-button">
+                            <span class="add-delete-button">
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
@@ -431,7 +431,7 @@
     </xf:group>
     <xf:group ref=".[string(mods:physicalDescription)]">
         <fieldset class="level-1">
-            <div class="join">
+            <div class="label-box">
                 <span class="legend">Physical Description</span>
                 <span class="xforms-help">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -444,7 +444,7 @@
             <xf:repeat nodeset="./mods:physicalDescription" id="physicalDescription-repeat">
                 <xf:group ref=".[mods:internetMediaType]">
                     <fieldset class="level-2">
-                        <div class="join">
+                        <div class="label-box">
                             <span class="legend">Internet Media Type</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -468,7 +468,7 @@
                 </xf:group>
                 <xf:group ref=".[mods:extent]">
                     <fieldset class="level-2">
-                        <div class="join">
+                        <div class="label-box">
                             <span class="legend">Extent</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -491,11 +491,11 @@
     </xf:group>
     <xf:group ref=".[mods:location]">
         <fieldset class="level-1">
-            <div class="join">
+            <div class="label-box">
                 <span class="legend">
                     <span class="legend">URL</span>
                 </span>
-                <span class="join-button">
+                <span class="add-delete-button">
                     <xf:trigger>
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
@@ -534,9 +534,9 @@
     </xf:group>
     <xf:group ref=".[mods:identifier]">
         <fieldset class="level-1">
-            <div class="join">
+            <div class="label-box">
                 <span class="legend">Identifiers</span>
-                <span class="join-button">
+                <span class="add-delete-button">
                     <xf:trigger ref=".[mods:identifier]">
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">

@@ -3,7 +3,7 @@
 <div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-article" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
-            <div class="join">
+            <div class="label-box">
                 <span class="legend">
                     <span class="legend">Periodical</span>
                 </span>
@@ -18,7 +18,7 @@
             <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-periodical-repeat">
                 <xf:group>
                     <fieldset class="level-2">
-                        <div class="join">
+                        <div class="label-box">
                             <span class="legend">Periodical Title</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -118,9 +118,9 @@
                 </xf:group>
                 <xf:group>
                     <fieldset class="level-2">
-                        <div class="join extra-wide">
+                        <div class="label-box extra-wide">
                             <span class="legend">Institutional Editor(s) of Periodical</span>
-                            <span class="join-button">
+                            <span class="add-delete-button">
                                 <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) &gt; 0]">
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
@@ -145,7 +145,7 @@
                         <xf:repeat nodeset="./mods:name" id="relatedItem-name-repeat-periodical">
                             <xf:group>
                                 <fieldset class="level-3">
-                                    <div class="join">
+                                    <div class="label-box">
                                         <span class="legend">Name</span>
                                         <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -172,7 +172,7 @@
                 </xf:group>
                 <xf:group>
                     <fieldset class="level-2">
-                        <div class="join wide">
+                        <div class="label-box">
                             <span class="legend">Location of Article in Periodical</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -184,7 +184,7 @@
                         <xf:repeat nodeset="./mods:part" id="related-item-part-periodical-repeat">
                             <xf:group ref=".[mods:detail]">
                                 <fieldset class="level-3">
-                                    <div class="join">
+                                    <div class="label-box">
                                         <span class="legend">Volume and Issue</span>
                                     </div>
                                     <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-periodical-repeat">
@@ -200,7 +200,7 @@
                             </xf:group>
                             <xf:group ref=".[mods:date]">
                                 <fieldset class="level-3">
-                                    <div class="join">
+                                    <div class="label-box">
                                         <span class="legend">
                                             <span class="legend">Year of Publication</span>
                                         </span>
@@ -218,7 +218,7 @@
                             </xf:group>
                             <xf:group ref=".[mods:extent]">
                                 <fieldset class="level-3">
-                                    <div class="join">
+                                    <div class="label-box">
                                         <span class="legend">Page Extent</span>
                                     </div>
                                     <xf:repeat nodeset="./mods:extent" id="related-item-extent-periodical-repeat">
@@ -240,9 +240,9 @@
                 </xf:group>
                 <xf:group ref=".[mods:identifier]">
                     <fieldset class="level-2">
-                        <div class="join">
+                        <div class="label-box">
                             <span class="legend">Identifiers</span>
-                            <span class="join-button">
+                            <span class="add-delete-button">
                                 <xf:trigger ref=".[mods:identifier]">
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
