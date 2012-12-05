@@ -303,6 +303,7 @@
             <tab-id>target-audience</tab-id>
             <tab-id>language</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>genre</tab-id>
         </item>
         <item xml:id="hint-code_cartographics">
             <help>
@@ -553,6 +554,7 @@
             <tab-id>target-audience</tab-id>
             <tab-id>language</tab-id>
             <tab-id>type</tab-id>
+            <tab-id>genre</tab-id>
             <tab-id>subject</tab-id>
             <tab-id>note</tab-id>
             <tab-id>identifier</tab-id>
@@ -763,8 +765,6 @@
             <parent>extent</parent>
             <tab-id>part</tab-id>
         </item>
-
-        <!--tab-id checked above-->
         <item xml:id="hint-code_part-extent-start">
             <help>
                 <p> Contains the beginning unit of the extent within a part (e.g., first page). </p>
@@ -839,16 +839,34 @@
         </item>
         <item xml:id="hint-code_genre">
             <help>
-                <p> One or more terms that designate a category characterising a particular style,
-                    form, or content, such as artistic, musical, literary composition, etc. Genre
-                    contains terms that give more specificity than the broad terms used in Type Of
-                    Resource. </p>
+                <p> One or more terms that characterise the resource as having a particular
+                    style, form, or content, such as artistic, musical, literary composition,
+                    etc. </p>
+                <p> Genre contains terms that give more specificity than the broad terms used in
+                    Type Of Resource. </p>
+                <p> If used in connection with a digital resource, Genre should be used to
+                    characterise the content of the digital resource rather than the digital
+                    resource itself. </p>
+                <p>The values should be chosen from a controlled vocabulary appropriate for the
+                    resource described. This source vocabulary should be indicated using the
+                    authority field. </p>
+                <p> Genre is a term that carries different specific meanings within different
+                    communities of practice, and the content of most information objects can be
+                    characterised by genre at different levels of granularity, either very broad
+                    or quite specific. For example, photographs and ambrotypes are both valid
+                    genre characterizations, depending on your perspective, for a specific type
+                    of direct positive photographic print. At the very least, provide a very
+                    broad genre term for materials being digitised.</p>
+                <p>Type of Resource, Genre, Form under Physical Description overlap to some
+                    degree. </p>
             </help>
             <value>genre</value>
             <local-name>genre</local-name>
             <parent>subject</parent>
             <tab-id>subject</tab-id>
+            <tab-id>genre</tab-id>
         </item>
+        <!--tab-id checked above-->
         <item xml:id="hint-code_geographic">
             <help>
                 <p> Use here standard names for geographical places.</p>
@@ -1152,6 +1170,7 @@
             <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
             <tab-id>language</tab-id>
+            <tab-id>genre</tab-id>
             <tab-id>location</tab-id>
             <tab-id>mads</tab-id>
             <tab-id>note</tab-id>
@@ -2605,6 +2624,7 @@
             <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
             <tab-id>language</tab-id>
+            <tab-id>genre</tab-id>
             <tab-id>location</tab-id>
             <tab-id>mads</tab-id>
             <tab-id>note</tab-id>
@@ -3189,6 +3209,7 @@
             <tab-id>part</tab-id>
             <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
+            <tab-id>genre</tab-id>
             <tab-id>identifier</tab-id>
             <tab-id>language</tab-id>
             <tab-id>location</tab-id>
@@ -3309,12 +3330,24 @@
         </item>
         <item xml:id="hint-code_genre-type">
             <help>
-                <p>(missing)</p>
+                <p>Distinguishes different aspects of genre, such as class, work type or style.</p>
             </help>
             <value>genre-type</value>
             <local-name>type</local-name>
             <parent>genre</parent>
-            <tab-id>titles</tab-id>
+            <tab-id>genre</tab-id>
+        </item>
+        <item xml:id="hint-code_genre-authority">
+            <help>
+                <p> The name of the authoritative list for a controlled value is
+                    recorded here. </p>
+                <p> See http://www.loc.gov/standards/sourcelist/genre-form.html for a
+                    list of authority files in this area. If you wish to employ an authority file that is not included in the dropdown, please contact HRA. </p>
+            </help>
+            <value>genre-type</value>
+            <local-name>type</local-name>
+            <parent>genre</parent>
+            <tab-id>genre</tab-id>
         </item>
         <item xml:id="hint-code_languageTerm-type">
             <help>
@@ -3434,6 +3467,7 @@
             <tab-id>language</tab-id>
             <tab-id>subject</tab-id>
             <tab-id>type</tab-id>
+            <tab-id>genre</tab-id>
         </item>
         <item xml:id="hint-code_value-uri">
             <help>
@@ -3453,6 +3487,7 @@
             <tab-id>language</tab-id>
             <tab-id>mads</tab-id>
             <tab-id>target-audience</tab-id>
+            <tab-id>genre</tab-id>
             <tab-id>subject</tab-id>
         </item>
         <item xml:id="hint-code_xlink_href">
@@ -3567,6 +3602,7 @@
             <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
             <tab-id>identifier</tab-id>
+            <tab-id>genre</tab-id>
             <tab-id>language</tab-id>
             <tab-id>location</tab-id>
             <tab-id>mads</tab-id>

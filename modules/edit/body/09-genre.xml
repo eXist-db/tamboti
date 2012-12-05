@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--node insertions: --><!--missing element insertion: --><!--hints moved to code-table: --><!--hints linked with id: --><!--hints checked: --><!--saving of all nodes: --><!--schema instantiated: --><!--schema notations added: -->
+<!--node insertions: --><!--missing element insertion: OK--><!--hints moved to code-table: OK--><!--hints linked with id: OK--><!--hints checked: OK--><!--saving of all nodes: OK--><!--schema instantiated: OK--><!--schema notations added: OK-->
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="genre block-form" tab-id="genre" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group appearance="full">
         <fieldset class="level-1">
             <div class="label-box">
                 <span class="legend">Genres</span>
+                <span class="xforms-help">
+                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                    <div class="xforms-help-value">
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_genre',instance('code-tables'))/help"/>
+                    </div>
+                </span>
                 <span class="add-delete-button">
                     <xf:trigger ref=".[mods:genre]">
                         <xf:label>+</xf:label>
@@ -21,126 +27,321 @@
                         </xf:action>
                     </xf:trigger>
                 </span>
-                <span class="xforms-hint">
-                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                    <div class="xforms-hint-value">
-                        <p> One or more terms that characterise the resource as having a particular
-                        style, form, or content, such as artistic, musical, literary composition,
-                        etc. </p>
-                        <p> Genre contains terms that give more specificity than the broad terms used in
-                        Type Of Resource. </p>
-                        <p> If used in connection with a digital resource, Genre should be used to
-                        characterise the content of the digital resource rather than the digital
-                        resource itself. </p>
-                        <p>The values should be chosen from a controlled vocabulary appropriate for the
-                        resource described. This source vocabulary should be indicated using the
-                        authority field. </p>
-                        <p> Genre is a term that carries different specific meanings within different
-                        communities of practice, and the content of most information objects can be
-                        characterised by genre at different levels of granularity, either very broad
-                        or quite specific. For example, photographs and ambrotypes are both valid
-                        genre characterizations, depending on your perspective, for a specific type
-                        of direct positive photographic print. At the very least, provide a very
-                        broad genre term for materials being digitised.</p>
-                        <p>Type of Resource, Genre, Form under Physical Description overlap to some
-                        degree. </p>
-                    </div>
-                </span>
             </div>
+            <!--Attributes: lang; xml:lang; script; transliteration, authority, authorityURI, valueURI, type, displayLabel, usage, altRepGroup-->
+            <!--Subelements: None-->
             <xf:repeat nodeset="instance('save-data')/mods:genre" id="genre-repeat">
-            <!--genre input begins-->
-            <!--DLF/Aquifer: N/A-->
-            <!--Cluster: include, with default "code"-->
-                <xf:group appearance="full" ref=".[@type]">
-                    <xf:input ref="./@type">
-                        <xf:label>Type</xf:label>
-                        <xf:hint>
-                            <p>Hint</p>
-                        </xf:hint>
-                    </xf:input>
+                <xf:group class="show-hide" ref=".[count(@*) &lt; 11]">
+                    <xf:switch>
+                        <xf:case id="genre-add-node-hide">
+                            <div class="open-close-button">
+                                <xf:trigger class="add-button">
+                                    <xf:label class="xforms-group-label-centered">&gt;</xf:label>
+                                    <xf:toggle case="genre-add-node-unhide" ev:event="DOMActivate"/>
+                                </xf:trigger>
+                            </div>
+                        </xf:case>
+                        <xf:case id="genre-add-node-unhide">
+                            <div class="open-close-button">
+                                <xf:trigger>
+                                    <xf:label class="xforms-group-label-centered">&lt;</xf:label>
+                                    <xf:toggle case="genre-add-node-hide" ev:event="DOMActivate"/>
+                                </xf:trigger>
+                            </div>
+                            <div class="node-adds">
+                                <xf:group appearance="full">
+                                    <xf:trigger ref=".[not(@altRepGroup)]" class="add-button">
+                                        <xf:label class="xforms-group-label-centered">Add Alternate Representation Group</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="genre-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:genre/@altRepGroup"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                    <xf:trigger ref=".[not(@authority)]" class="add-button">
+                                        <xf:label class="xforms-group-label-centered">Add
+                                            Authority</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="genre-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:genre/@authority"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                    <xf:trigger ref=".[not(@authorityURI)]" class="add-button">
+                                        <xf:label class="xforms-group-label-centered">Add
+                                            Authority URI</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="genre-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:genre/@authorityURI"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                    <xf:trigger ref=".[not(@displayLabel)]" class="add-button">
+                                        <xf:label class="xforms-group-label-centered">Add Display
+                                            Label</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="genre-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:genre/@displayLabel"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                    <xf:trigger ref=".[not(@lang)]" class="add-button">
+                                        <xf:label class="xforms-group-label-centered">Add
+                                            Language</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="genre-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:genre/@lang"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                    <xf:trigger ref=".[not(@script)]" class="add-button">
+                                        <xf:label class="xforms-group-label-centered">Add
+                                            Script</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="genre-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:genre/@script"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                    <xf:trigger ref=".[not(@transliteration)]" class="add-button">
+                                        <xf:label class="xforms-group-label-centered">Add
+                                            Transliteration</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="genre-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:genre/@transliteration"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                    <xf:trigger ref=".[not(@type)]" class="add-button">
+                                        <xf:label class="xforms-group-label-centered">Add
+                                            Type</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="genre-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:genre/@type"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                    <xf:trigger ref=".[not(@usage)]" class="add-button">
+                                        <xf:label class="xforms-group-label-centered">Add
+                                            Usage</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="genre-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:genre/@usage"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                    <xf:trigger ref=".[not(@valueURI)]" class="add-button">
+                                        <xf:label class="xforms-group-label-centered">Add Value
+                                            URI</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="genre-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:genre/@valueURI"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                    <xf:trigger ref=".[not(@xml:lang)]" class="add-button">
+                                        <xf:label class="xforms-group-label-centered">Add
+                                            xml:lang</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:toggle case="genre-add-node-hide" ev:event="DOMActivate"/>
+                                            <xf:insert context="." origin="instance('insert-templates')/mods:genre/@xml:lang"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
+                            </div>
+                        </xf:case>
+                    </xf:switch>
                 </xf:group>
-            <!--DLF/Aquifer: REQUIRED-->
-            <!--Cluster: include-->
-                <xf:group appearance="full" ref=".[@authority]">
+                <xf:group appearance="full" class="schema_3.4" ref=".[@altRepGroup]">
+                    <xf:select1 ref="./@altRepGroup">
+                        <xf:label>Alternate Representation Group<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_altRepGroup',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='altRepGroup-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[@authority]">
                     <xf:select1 ref="./@authority" selection="open">
-                        <xf:label>Authority</xf:label>
-                        <xf:hint>
-                            <p> The name of the authoritative list for a controlled value is recorded
-                            here. </p>
-                            <p> See http://www.loc.gov/standards/sourcelist/genre-form.html for a list
-                            of authority files in this area. If you wish to employ one of these,
-                            please contact <!--contact-->. </p>
-                        </xf:hint>
+                        <xf:label>Authority
+                            <span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_genre-authority',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='genre-authority-code']/items/item">
                             <xf:label ref="label"/>
                             <xf:value ref="value"/>
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-            <!--DLF/Aquifer: N/A-->
-            <!--Cluster: omit-->
-            <!-- <xf:group appearance="full" ref=".[@lang]"><xf:select1 ref="./@lang"> <xf:label>Language</xf:label> <xf:hint><p>Hint</p></xf:hint> <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item"> <xf:label ref="label"/> <xf:value ref="value"/> </xf:itemset> </xf:select1> -->
-            <!--DLF/Aquifer: NOT RECOMMENDED-->
-            <!--Cluster: omit-->
-            <!--<xf:group appearance="full" ref=".[@xml:lang]"> <xf:select1 ref="./@xml:lang"> <xf:label>xml:lang</xf:label> <xf:hint> <p> This field is used to specify the language used within a field, using specifications in RFC 3066. RFC 3066 uses the two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in 639-1. </p> <p> The recommendation is not to use xml:lang, but to use the above Language field. </p> </xf:hint> <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item"> <xf:label ref="label"/> <xf:value ref="value"/> </xf:itemset> </xf:select1> </xf:group> -->
-            <!--DLF/Aquifer: N/A-->
-            <!--Cluster: omit-->
-            <!-- <xf:group appearance="full" ref=".[@script]"><xf:select1 ref="./@script"> <xf:label>Script</xf:label> <xf:hint><p>Hint</p></xf:hint> <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item"> <xf:label ref="label"/> <xf:value ref="value"/> </xf:itemset> </xf:select1></xf:group> -->
-            <!--DLF/Aquifer: N/A-->
-            <!--Cluster: omit-->
-            <!-- <xf:group appearance="full" ref=".[@transliteration]"><xf:select1 ref="./@transliteration"> <xf:label>Transliteration</xf:label> <xf:hint><p>Hint</p></xf:hint> <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item"> <xf:label ref="label"/> <xf:value ref="value"/> </xf:itemset> </xf:select1></xf:group> -->
-            <!--DLF/Aquifer: REQUIRED-->
-            <!--Cluster: include-->
-                <xf:group appearance="full" ref=".[@authority='marcgt']">
+                <xf:group appearance="full" class="schema_3.4" ref=".[@authorityURI]">
+                    <xf:input ref="./@authorityURI" class="text_50">
+                        <xf:label>Authority URI<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_authority-uri',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                    </xf:input>
+                </xf:group>
+                <xf:group appearance="full" class="schema_3.4" ref=".[@displayLabel]">
+                    <xf:input ref="./@displayLabel" class="text_50">
+                        <xf:label>Display Label<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_displayLabel',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                    </xf:input>
+                </xf:group>
+                <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[@type]">
+                    <xf:input ref="./@type">
+                        <xf:label>Type<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_genre-type',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                    </xf:input>
+                </xf:group>
+                <xf:group appearance="full" class="schema_3.4" ref=".[@usage]">
+                    <xf:select1 ref="./@usage">
+                        <xf:label>Usage<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_usage',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='usage-type-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <xf:group appearance="full" class="schema_3.4" ref=".[@valueURI]">
+                    <xf:input ref="./@valueURI" class="text_50">
+                        <xf:label>Value URI<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_value-uri',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                    </xf:input>
+                </xf:group>
+                <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[@lang]">
+                    <xf:select1 ref="./@lang">
+                        <xf:label>Language<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_lang',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[@script]">
+                    <xf:select1 ref="./@script">
+                        <xf:label>Script<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_script',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[@transliteration]">
+                    <xf:select1 ref="./@transliteration">
+                        <xf:label>Transliteration<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_transliteration',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[@xml:lang]">
+                    <xf:select1 ref="./@xml:lang">
+                        <xf:label>xml:lang<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <br/>
+                <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[@authority='marcgt']">
                     <xf:select1 ref=".">
-                        <xf:label>Genre</xf:label>
-                        <xf:hint>
-                            <p> One or more terms that designate a category characterising a particular
-                            style, form, or content, such as artistic, musical, literary
-                            composition, etc. Genre contains terms that give more specificity than
-                            the broad terms used in Type Of Resource. </p>
-                        </xf:hint>
+                        <xf:label>Genre<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_genre',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='genre-marcgt-code']/items/item">
                             <xf:label ref="label"/>
                             <xf:value ref="value"/>
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                <xf:group appearance="full" ref=".[@authority='marcsmd']">
+                <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[@authority='marcsmd']">
                     <xf:select1 ref=".">
-                        <xf:label>Genre</xf:label>
-                        <xf:hint>
-                            <p> One or more terms that designate a category characterising a particular
-                            style, form, or content, such as artistic, musical, literary
-                            composition, etc. Genre contains terms that give more specificity than
-                            the broad terms used in Type Of Resource. </p>
-                        </xf:hint>
+                        <xf:label>Genre<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_genre',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='genre-marcsmd-code']/items/item">
                             <xf:label ref="label"/>
                             <xf:value ref="value"/>
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-            <!--NB: make other code tables-->
-                <xf:group appearance="full" ref=".[not(@authority='marcgt') and not(@authority='marcsmd')]">
+                <!--NB: make other code tables-->
+                <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[not(@authority='marcgt') and not(@authority='marcsmd')]">
                     <xf:select1 ref="." selection="open">
-                        <xf:label>Genre</xf:label>
-                        <xf:hint>
-                            <p> One or more terms that designate a category characterising a particular
-                            style, form, or content, such as artistic, musical, literary
-                            composition, etc. Genre contains terms that give more specificity than
-                            the broad terms used in Type Of Resource. </p>
-                        </xf:hint>
+                        <xf:label>Genre
+                            <span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_genre',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
                         <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='genre-marcgt-code']/items/item">
                             <xf:label ref="label"/>
                             <xf:value ref="value"/>
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-            <!--genre input ends-->
             </xf:repeat>
-        <!--genre repeat ends-->
-            <xf:group appearance="full" ref=".[not(mods:genre)]">
+            <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[not(mods:genre)]">
                 <xf:trigger class="add-button">
                     <xf:label class="xforms-group-label-centered">Add Missing Genre</xf:label>
                     <xf:action ev:event="DOMActivate">

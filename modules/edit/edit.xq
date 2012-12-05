@@ -223,7 +223,7 @@ declare function local:assemble-form($dummy-attributes as attribute()*, $style a
             <a href="../.." style="text-decoration: none">
                 <img src="{$img-left-src}" title="{$img-left-title}" alt="{$img-left-title}" style="border-style: none;" width="250px"/>
             </a>
-            <div class="documentation"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
+            <div class="documentation-link"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
         </div>
         <div id="page-head-right">
             <a href="{$img-right-href}" target="_blank">
