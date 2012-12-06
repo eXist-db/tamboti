@@ -9,13 +9,13 @@
                     <xf:trigger ref=".[string-length(mods:extension/e:transliterationOfResource) = 0]">
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:name[1]"/>
+                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('compact-name-repeat')" position="before" origin="instance('compact-template')/mods:name[1]"/>
                         </xf:action>
                     </xf:trigger>
                     <xf:trigger ref=".[string-length(mods:extension/e:transliterationOfResource) &gt; 0]">
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:name[2]"/>
+                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('compact-name-repeat')" position="before" origin="instance('compact-template')/mods:name[2]"/>
                         </xf:action>
                     </xf:trigger>
                 </span>
@@ -27,7 +27,25 @@
                     </div>
                 </span>
             </div>
-            <xf:repeat nodeset="./mods:name" id="name-repeat">
+            <xf:repeat nodeset="./mods:name" id="compact-name-repeat">
+                <xf:group ref="preceding-sibling::*[1][self::mods:name]" class="up-down-pointer">
+                    <xf:trigger>
+                        <xf:label>∧</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert nodeset="self::*" origin="following-sibling::*[1]" position="before"/>
+                            <xf:delete nodeset="following-sibling::*[1]"/>
+                        </xf:action>
+                    </xf:trigger>
+                </xf:group>
+                <xf:group ref="following-sibling::*[1][self::mods:name]" class="up-down-pointer">
+                    <xf:trigger>
+                        <xf:label>∨</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert nodeset="self::*" origin="preceding-sibling::*[1]" position="after"/>
+                            <xf:delete nodeset="preceding-sibling::*[1]"/>
+                        </xf:action>
+                    </xf:trigger>
+                </xf:group>
                 <xf:group class="input">
                     <fieldset class="level-2">
                         <div class="label-box">
@@ -92,7 +110,7 @@
                                 <xf:trigger>
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:role" at="index('name-repeat')" position="before" origin="instance('compact-template')/mods:name[8]/mods:role"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:role" at="index('compact-name-repeat')" position="before" origin="instance('compact-template')/mods:name[8]/mods:role"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>

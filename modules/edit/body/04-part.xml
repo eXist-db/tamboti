@@ -227,6 +227,11 @@
                     <xf:delete ev:event="DOMActivate"
                         nodeset="instance('save-data')/mods:part/@type" at="index('part-repeat')"/>
                 </xf:trigger>-->
+                <!--NB: One can also use:-->
+                <!--<xf:trigger>
+                    <xf:label>Delete</xf:label>
+                    <xf:delete ev:event="DOMActivate" nodeset="current()"/>
+                </xf:trigger>-->
                 <xf:group class="schema_3.4" appearance="full" ref=".[@lang]">
                     <xf:select1 ref="./@lang">
                         <xf:label>Language <span class="xforms-help">

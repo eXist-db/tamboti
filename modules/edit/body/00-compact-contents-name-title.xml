@@ -323,6 +323,24 @@
                                 </span>
                             </div>
                             <xf:repeat nodeset="./mods:name" id="subject-name-person-repeat">
+                                <xf:group ref="preceding-sibling::*[1][self::mods:name]" class="up-down-pointer">
+                                    <xf:trigger>
+                                        <xf:label>∧</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:insert nodeset="self::*" origin="following-sibling::*[1]" position="before"/>
+                                            <xf:delete nodeset="following-sibling::*[1]"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
+                                <xf:group ref="following-sibling::*[1][self::mods:name]" class="up-down-pointer">
+                                    <xf:trigger>
+                                        <xf:label>∨</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:insert nodeset="self::*" origin="preceding-sibling::*[1]" position="after"/>
+                                            <xf:delete nodeset="preceding-sibling::*[1]"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
                                 <xf:group ref=".[@type = 'personal']">
                                     <fieldset class="level-4">
                                         <div class="label-box">

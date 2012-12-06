@@ -5,6 +5,45 @@
    
 /*temporary stuff begins*/
 
+.up-down-pointer .value button {
+    float:right;
+    height: 1.5em;
+    margin-bottom: 0;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    margin-top: -1.75em;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    width: 1.75em !important;    
+}
+
+.up-down-pointer .value button .xforms-label {
+    width:1.5em;
+    display: inline;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    text-align: center;
+}
+
+#name-repeat .up-down-pointer .value button,
+#subject-name-repeat .up-down-pointer .value button 
+{
+    margin-top:-3em;
+    }
+
+#compact-name-repeat .up-down-pointer .value button 
+{
+    margin-top:-2em;
+    }
+
 hr {
     color:#fafafa;
     width:98%;
@@ -360,11 +399,11 @@ select .xforms-value {
     text-align:center;    
 }
 
-.label-box .extra-wide {
+.label-box.extra-wide {
     width:25em !important;
 }
 
-.label-box .super-wide {
+.label-box.super-wide {
     width:35em !important;
 }
 

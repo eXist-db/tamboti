@@ -136,7 +136,7 @@
                     </xf:group>
                     <xf:group>
                         <fieldset class="level-2">
-                            <div class="label-box">
+                            <div class="label-box extra-wide">
                                 <span class="legend">Institutional Editor(s) of
                                                   Periodical</span>
                                 <span class="add-delete-button">
@@ -162,6 +162,24 @@
                                 </span>
                             </div>
                             <xf:repeat nodeset="./mods:name" id="relatedItem-name-repeat-periodical">
+                                <xf:group ref="preceding-sibling::*[self::mods:name]" class="up-down-pointer">
+                                    <xf:trigger>
+                                        <xf:label>∧</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:insert nodeset="self::*" origin="following-sibling::*" position="before"/>
+                                            <xf:delete nodeset="following-sibling::*"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
+                                <xf:group ref="following-sibling::*[self::mods:name]" class="up-down-pointer">
+                                    <xf:trigger>
+                                        <xf:label>∨</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:insert nodeset="self::*" origin="preceding-sibling::*" position="after"/>
+                                            <xf:delete nodeset="preceding-sibling::*"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
                                 <xf:group>
                                     <fieldset class="level-3">
                                         <div class="label-box">

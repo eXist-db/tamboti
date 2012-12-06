@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: checked including temporal. No insertion of language attributes for subelements of hierarchicalGeographic, cartographics and geographicCode. --><!--missing element: OK. --><!--hints moved to code-table: OK--><!--hints linked with id: --><!--hints checked: --><!--saving of all nodes: checked including temporal --><!--schema instantiated: No language atrributes for subelements of cartographics and geographicCode.--><!--schema notations added: -->
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="subject bleck-form" tab-id="subject" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="subject block-form" tab-id="subject" e:dummy="dummy" xlink:dummy="dummy">
     <div class="block-form">
         <fieldset class="level-1">
             <div class="label-box">
@@ -1360,6 +1360,24 @@
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:name" id="subject-name-repeat">
+                            <xf:group ref="preceding-sibling::*[1][self::mods:name]" class="up-down-pointer">
+                                <xf:trigger>
+                                    <xf:label>∧</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:insert nodeset="self::*" origin="following-sibling::*[1]" position="before"/>
+                                        <xf:delete nodeset="following-sibling::*[1]"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </xf:group>
+                            <xf:group ref="following-sibling::*[1][self::mods:name]" class="up-down-pointer">
+                                <xf:trigger>
+                                    <xf:label>∨</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:insert nodeset="self::*" origin="preceding-sibling::*[1]" position="after"/>
+                                        <xf:delete nodeset="preceding-sibling::*[1]"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </xf:group>
                             <xf:group appearance="full" ref=".[not(mods:namePart)]">
                                 <xf:switch>
                                     <xf:case id="name-add-node-hide">
