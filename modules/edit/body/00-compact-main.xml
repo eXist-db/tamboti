@@ -95,7 +95,7 @@
                                         <xf:value ref="value"/>
                                     </xf:itemset>
                                 </xf:select1>
-                                <xf:input ref="." class="text_100">
+                                <xf:input ref="." class="text_100" id="first-field">
                                     <xf:label/>
                                 </xf:input>
                             </xf:group>

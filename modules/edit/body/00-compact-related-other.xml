@@ -86,7 +86,7 @@
                                             </div>
                                             <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-review-repeat">
                                                 <xf:group ref=".[mods:number]" class="margin-plus">
-                                                    <xf:input ref="./mods:number" class="text_10">
+                                                    <xf:input ref="./mods:number" class="text_10" id="first-field">
                                                         <xf:label>
                                                             <xf:output ref="./../@type"/>
                                                         </xf:label>
