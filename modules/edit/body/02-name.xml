@@ -73,7 +73,7 @@
                                             <xf:label>Add Alternate Representation Group</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                                <xf:insert context="."/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:name/@altRepGroup"/>/&gt;
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>

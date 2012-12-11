@@ -60,21 +60,27 @@
     </language>
     <typeOfResource collection="" manuscript=""/>
     <genre type="code" authority="marcgt"/>
-    <subject authority="" xlink:href="" ID="" lang="" script="" transliteration="">
+    <subject authority="" xlink:href="" ID="">
         <topic authority=""/>
         <geographic/>
         <temporal encoding="w3cdtf" point="" keyDate=""/>
-        <titleInfo lang="" type="" authority="" displayLabel="" script="" transliteration="" ID="" xlink:href="">
+        <titleInfo type="">
             <nonSort/>
             <title/>
             <subTitle/>
             <partNumber/>
             <partName/>
         </titleInfo>
-        <name type="" authority="" ID="" lang="" script="" transliteration="" xlink:href="">
+        <name type="">
             <namePart type=""/>
+            <displayForm/>
+            <affiliation/>
+            <description/>
+            <role>
+                <roleTerm type="code" authority="marcrelator"/>
+            </role>
         </name>
-        <genre type="code" authority="" lang="" script="" transliteration=""/>
+        <genre type="code" authority=""/>
         <hierarchicalGeographic>
             <continent/>
             <country/>

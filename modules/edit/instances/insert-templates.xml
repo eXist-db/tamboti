@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mods xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
     <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="">
-        <nonSort/>
-                <!--<nonSort lang="" xml:lang="" script="" transliteration=""/>-->
-        <title/>
-                <!--<title lang="" xml:lang="" script="" transliteration=""/>-->
-        <subTitle/>
-                <!--<subTitle lang="" xml:lang="" script="" transliteration=""/>-->
-        <partNumber/>
-                <!--<partNumber lang="" xml:lang="" script="" transliteration=""/>-->
-        <partName/>
-                <!--<partName lang="" xml:lang="" script="" transliteration=""/>-->
+        <nonSort lang="" xml:lang="" script="" transliteration=""/>
+        <title lang="" xml:lang="" script="" transliteration=""/>
+        <subTitle lang="" xml:lang="" script="" transliteration=""/>
+        <partNumber lang="" xml:lang="" script="" transliteration=""/>
+        <partName lang="" xml:lang="" script="" transliteration=""/>
     </titleInfo>
     <name altRepGroup="" authorityURI="" nameTitleGroup="" usage="" valueURI="" type="" authority="" lang="" script="" transliteration="" xlink:href="" displayLabel="" ID="" xml:lang="">
         <namePart type="" lang="" xml:lang="" script="" transliteration=""/>
@@ -67,15 +62,21 @@
         <topic authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
         <geographic authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
         <temporal encoding="w3cdtf" point="" keyDate="" authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration="" qualifier=""/>
-        <titleInfo xml:lang="" lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="">
-            <nonSort/>
-            <title/>
-            <subTitle/>
-            <partNumber/>
-            <partName/>
+        <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="">
+            <nonSort lang="" xml:lang="" script="" transliteration=""/>
+            <title lang="" xml:lang="" script="" transliteration=""/>
+            <subTitle lang="" xml:lang="" script="" transliteration=""/>
+            <partNumber lang="" xml:lang="" script="" transliteration=""/>
+            <partName lang="" xml:lang="" script="" transliteration=""/>
         </titleInfo>
-        <name type="" authority="" xml:lang="" lang="" script="" transliteration="">
-            <namePart type=""/>
+        <name altRepGroup="" authorityURI="" nameTitleGroup="" usage="" valueURI="" type="" authority="" lang="" script="" transliteration="" xlink:href="" displayLabel="" ID="" xml:lang="">
+            <namePart type="" lang="" xml:lang="" script="" transliteration=""/>
+            <displayForm lang="" xml:lang="" script="" transliteration=""/>
+            <affiliation lang="" xml:lang="" script="" transliteration=""/>
+            <role>
+                <roleTerm type="code" authority="marcrelator" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
+            </role>
+            <description lang="" xml:lang="" script="" transliteration=""/>
         </name>
         <genre authority="" authorityURI="" valueURI="" xml:lang="" lang="" script="" transliteration=""/>
         <hierarchicalGeographic authority="" authorityURI="" valueURI="">
@@ -93,9 +94,9 @@
             <extraterrestrialArea xml:lang="" lang="" script="" transliteration=""/>
         </hierarchicalGeographic>
         <cartographics>
-            <scale/>
-            <coordinates/>
-            <projection/>
+            <scale xml:lang="" lang="" script="" transliteration=""/>
+            <coordinates xml:lang="" lang="" script="" transliteration=""/>
+            <projection xml:lang="" lang="" script="" transliteration=""/>
         </cartographics>
         <geographicCode authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
         <occupation authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>

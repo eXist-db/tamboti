@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--node insertions: OK, except xml:lang and xlink:href in FF--><!--missing element insertion: OK.--><!--hints moved to code-table: OK--><!--hints linked with id: OK--><!--hints checked: OK--><!--saving of all nodes: OK--><!--schema instantiated: limitation: no language attributes on children of titleInfo.--><!--schema notations added: OK-->
+<!--node insertions: OK.--><!--missing element insertion: OK.--><!--hints moved to code-table: OK.--><!--hints linked with id: OK.--><!--hints checked: OK.--><!--saving of all nodes: OK.--><!--schema instantiated: OK.--><!--schema notations added: OK.-->
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="title block-form" tab-id="title" e:dummy="dummy" xlink:dummy="dummy">
     <xf:group class="schema_3.3 schema_3.4">
         <fieldset class="level-1">
@@ -10,14 +10,6 @@
                     <div class="xforms-help-value">
                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_titleInfo',instance('code-tables'))/help"/>
                     </div>
-                </span>
-                <span class="add-delete-button">
-                    <xf:trigger ref=".[mods:titleInfo]">
-                        <xf:label>+</xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="instance('save-data')/mods:titleInfo" at="index('titleInfo-repeat')" position="before" origin="instance('new-instance')/mods:titleInfo"/>
-                        </xf:action>
-                    </xf:trigger>
                 </span>
                 <span class="add-delete-button">
                     <xf:trigger ref=".[mods:titleInfo]">
@@ -239,16 +231,20 @@
                         </xf:case>
                     </xf:switch>
                 </xf:group>
-                <xf:group class="schema_3.4" ref=".[@altRepGroup]">
-                    <xf:input ref="./@altRepGroup">
-                        <xf:label>Alt. Representation Group<span class="xforms-help">
+                <xf:group appearance="full" ref=".[@altRepGroup]">
+                    <xf:select1 ref="./@altRepGroup">
+                        <xf:label>Alternate Representation Group<span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_altRepGroup',instance('code-tables'))/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" ref="id('hint-code_altRepGroup',instance('code-tables'))/help"/>
                                 </div>
                             </span>
                         </xf:label>
-                    </xf:input>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='altRepGroup-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
                 </xf:group>
                 <xf:group class="schema_3.3 schema_3.4" ref=".[@authority]">
                     <xf:select1 ref="./@authority" selection="open">
@@ -455,75 +451,740 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                <xf:group class="schema_3.3 schema_3.4" ref=".[mods:nonSort]">
                 <!-- non-repeating -->
-                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
+                <!-- attributes: lang; xml:lang; script; transliteration. -->
                 <!-- subelements: none. -->
-                    <xf:input ref="./mods:nonSort" class="text_10">
-                        <xf:label>Non Sort<span class="xforms-help">
+                <xf:group class="schema_3.3 schema_3.4" appearance="full" ref=".[mods:nonSort]">
+                    <fieldset class="level-2">
+                        <div class="label-box">
+                            <span class="legend">Non Sort</span>
+                            <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
+                                <div class="xforms-hint-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_nonSort',instance('code-tables'))/help"/>
                                 </div>
                             </span>
-                        </xf:label>
-                    </xf:input>
+                            <span class="add-delete-button">
+                                <xf:trigger ref=".[mods:nonSort]">
+                                    <xf:label>–</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:titleInfo/mods:nonSort" at="index('nonSort-repeat')"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
+                        </div>
+                        <!-- attributes: type; lang; script; transliteration; xml:lang. -->
+                        <!-- subelements: none. -->
+                        <xf:repeat nodeset="./mods:nonSort" id="nonSort-repeat">
+                            <xf:group class="show-hide" ref=".[count(@*) &lt; 4]">
+                                <xf:switch>
+                                    <xf:case id="nonSort-add-node-hide">
+                                        <div class="open-close-button">
+                                            <xf:trigger>
+                                                <xf:label>&gt;</xf:label>
+                                                <xf:toggle case="nonSort-add-node-unhide" ev:event="DOMActivate"/>
+                                            </xf:trigger>
+                                        </div>
+                                    </xf:case>
+                                    <xf:case id="nonSort-add-node-unhide">
+                                        <div class="open-close-button">
+                                            <xf:trigger>
+                                                <xf:label>&lt;</xf:label>
+                                                <xf:toggle case="nonSort-add-node-hide" ev:event="DOMActivate"/>
+                                            </xf:trigger>
+                                        </div>
+                                        <div class="node-adds">
+                                            <xf:group appearance="full">
+                                                <xf:trigger ref=".[not(@lang)]">
+                                                    <xf:label>Add Language</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:nonSort/@lang"/>
+                                                        <xf:toggle case="nonSort-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@script)]">
+                                                    <xf:label>Add Script</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:nonSort/@script"/>
+                                                        <xf:toggle case="nonSort-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@transliteration)]">
+                                                    <xf:label>Add Transliteration</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:nonSort/@transliteration"/>
+                                                        <xf:toggle case="nonSort-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@xml:lang)]">
+                                                    <xf:label>Add xml:lang</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:nonSort/@xml:lang"/>
+                                                        <xf:toggle case="nonSort-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                            </xf:group>
+                                        </div>
+                                    </xf:case>
+                                </xf:switch>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@lang]">
+                                <xf:select1 ref="./@lang">
+                                    <xf:label>Language<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-lang',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@script]">
+                                <xf:select1 ref="./@script">
+                                    <xf:label>Script<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-script',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@transliteration]">
+                                <xf:select1 ref="./@transliteration">
+                                    <xf:label>Transliteration<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_transliteration',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@xml:lang]">
+                                <xf:select1 ref="./@xml:lang">
+                                    <xf:label>xml:lang<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.3 schema_3.4" appearance="full">
+                                <xf:input ref="." class="text_100">
+                                    <xf:label>Non Sort<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_nonSort',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:input>
+                            </xf:group>
+                        </xf:repeat>
+                    </fieldset>
                 </xf:group>
-                <xf:group class="textarea schema_3.3 schema_3.4" ref=".[mods:title]">
-                <!-- non-repeating -->
-                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
-                <!-- subelements: none. -->
-                    <xf:textarea ref="./mods:title">
-                        <xf:label>Title<span class="xforms-help">
+                <xf:group class="schema_3.3 schema_3.4" appearance="full" ref=".[mods:title]">
+                    <fieldset class="level-2">
+                        <div class="label-box">
+                            <span class="legend">Title</span>
+                            <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
+                                <div class="xforms-hint-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_title',instance('code-tables'))/help"/>
                                 </div>
                             </span>
-                        </xf:label>
-                    </xf:textarea>
+                        </div>
+                        <!-- attributes: type; lang; script; transliteration; xml:lang. -->
+                        <!-- subelements: none. -->
+                        <xf:repeat nodeset="./mods:title" id="title-repeat">
+                            <xf:group class="show-hide" ref=".[count(@*) &lt; 4]">
+                                <xf:switch>
+                                    <xf:case id="title-add-node-hide">
+                                        <div class="open-close-button">
+                                            <xf:trigger>
+                                                <xf:label>&gt;</xf:label>
+                                                <xf:toggle case="title-add-node-unhide" ev:event="DOMActivate"/>
+                                            </xf:trigger>
+                                        </div>
+                                    </xf:case>
+                                    <xf:case id="title-add-node-unhide">
+                                        <div class="open-close-button">
+                                            <xf:trigger>
+                                                <xf:label>&lt;</xf:label>
+                                                <xf:toggle case="title-add-node-hide" ev:event="DOMActivate"/>
+                                            </xf:trigger>
+                                        </div>
+                                        <div class="node-adds">
+                                            <xf:group appearance="full">
+                                                <xf:trigger ref=".[not(@lang)]">
+                                                    <xf:label>Add Language</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:title/@lang"/>
+                                                        <xf:toggle case="title-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@script)]">
+                                                    <xf:label>Add Script</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:title/@script"/>
+                                                        <xf:toggle case="title-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@transliteration)]">
+                                                    <xf:label>Add Transliteration</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:title/@transliteration"/>
+                                                        <xf:toggle case="title-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@xml:lang)]">
+                                                    <xf:label>Add xml:lang</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:title/@xml:lang"/>
+                                                        <xf:toggle case="title-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                            </xf:group>
+                                        </div>
+                                    </xf:case>
+                                </xf:switch>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@lang]">
+                                <xf:select1 ref="./@lang">
+                                    <xf:label>Language<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-lang',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@script]">
+                                <xf:select1 ref="./@script">
+                                    <xf:label>Script<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-script',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@transliteration]">
+                                <xf:select1 ref="./@transliteration">
+                                    <xf:label>Transliteration<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_transliteration',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@xml:lang]">
+                                <xf:select1 ref="./@xml:lang">
+                                    <xf:label>xml:lang<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="textarea schema_3.3 schema_3.4" appearance="full">
+                                <xf:textarea ref=".">
+                                    <xf:label>Title<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_title',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:textarea>
+                            </xf:group>
+                        </xf:repeat>
+                    </fieldset>
                 </xf:group>
-                <xf:group class="textarea schema_3.3 schema_3.4" ref=".[mods:subTitle]">
-                <!-- non-repeating -->
-                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
-                <!-- subelements: none. -->
-                    <xf:textarea ref="./mods:subTitle">
-                        <xf:label>Subtitle<span class="xforms-help">
+                <xf:group class="schema_3.3 schema_3.4" appearance="full" ref=".[mods:subTitle]">
+                    <fieldset class="level-2">
+                        <div class="label-box">
+                            <span class="legend">Subtitle</span>
+                            <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
+                                <div class="xforms-hint-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_subTitle',instance('code-tables'))/help"/>
                                 </div>
                             </span>
-                        </xf:label>
-                    </xf:textarea>
+                            <span class="add-delete-button">
+                                <xf:trigger ref=".[mods:subTitle]">
+                                    <xf:label>–</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:titleInfo/mods:subTitle" at="index('subTitle-repeat')"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
+                        </div>
+                        <!-- attributes: type; lang; script; transliteration; xml:lang. -->
+                        <!-- subelements: none. -->
+                        <xf:repeat nodeset="./mods:subTitle" id="subTitle-repeat">
+                            <xf:group class="show-hide" ref=".[count(@*) &lt; 4]">
+                                <xf:switch>
+                                    <xf:case id="subTitle-add-node-hide">
+                                        <div class="open-close-button">
+                                            <xf:trigger>
+                                                <xf:label>&gt;</xf:label>
+                                                <xf:toggle case="subTitle-add-node-unhide" ev:event="DOMActivate"/>
+                                            </xf:trigger>
+                                        </div>
+                                    </xf:case>
+                                    <xf:case id="subTitle-add-node-unhide">
+                                        <div class="open-close-button">
+                                            <xf:trigger>
+                                                <xf:label>&lt;</xf:label>
+                                                <xf:toggle case="subTitle-add-node-hide" ev:event="DOMActivate"/>
+                                            </xf:trigger>
+                                        </div>
+                                        <div class="node-adds">
+                                            <xf:group appearance="full">
+                                                <xf:trigger ref=".[not(@lang)]">
+                                                    <xf:label>Add Language</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:subTitle/@lang"/>
+                                                        <xf:toggle case="subTitle-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@script)]">
+                                                    <xf:label>Add Script</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:subTitle/@script"/>
+                                                        <xf:toggle case="subTitle-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@transliteration)]">
+                                                    <xf:label>Add Transliteration</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:subTitle/@transliteration"/>
+                                                        <xf:toggle case="subTitle-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@xml:lang)]">
+                                                    <xf:label>Add xml:lang</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:subTitle/@xml:lang"/>
+                                                        <xf:toggle case="subTitle-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                            </xf:group>
+                                        </div>
+                                    </xf:case>
+                                </xf:switch>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@lang]">
+                                <xf:select1 ref="./@lang">
+                                    <xf:label>Language<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-lang',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@script]">
+                                <xf:select1 ref="./@script">
+                                    <xf:label>Script<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-script',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@transliteration]">
+                                <xf:select1 ref="./@transliteration">
+                                    <xf:label>Transliteration<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_transliteration',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@xml:lang]">
+                                <xf:select1 ref="./@xml:lang">
+                                    <xf:label>xml:lang<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="textarea schema_3.3 schema_3.4" appearance="full">
+                                <xf:textarea ref=".">
+                                    <xf:label>Subtitle<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_title',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:textarea>
+                            </xf:group>
+                        </xf:repeat>
+                    </fieldset>
                 </xf:group>
-                <xf:group class="text_50 schema_3.3 schema_3.4" ref=".[mods:partNumber]">
-                <!-- non-repeating -->
-                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
-                <!-- subelements: none. -->
-                    <xf:input ref="./mods:partNumber">
-                        <xf:label>Part Number<span class="xforms-help">
+                <xf:group class="schema_3.3 schema_3.4" appearance="full" ref=".[mods:partNumber]">
+                    <fieldset class="level-2">
+                        <div class="label-box">
+                            <span class="legend">Part Number</span>
+                            <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
+                                <div class="xforms-hint-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_partNumber',instance('code-tables'))/help"/>
                                 </div>
                             </span>
-                        </xf:label>
-                    </xf:input>
+                            <span class="add-delete-button">
+                                <xf:trigger ref=".[mods:partNumber]">
+                                    <xf:label>–</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:titleInfo/mods:partNumber" at="index('partNumber-repeat')"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
+                        </div>
+                        <!-- attributes: type; lang; script; transliteration; xml:lang. -->
+                        <!-- subelements: none. -->
+                        <xf:repeat nodeset="./mods:partNumber" id="partNumber-repeat">
+                            <xf:group class="show-hide" ref=".[count(@*) &lt; 4]">
+                                <xf:switch>
+                                    <xf:case id="partNumber-add-node-hide">
+                                        <div class="open-close-button">
+                                            <xf:trigger>
+                                                <xf:label>&gt;</xf:label>
+                                                <xf:toggle case="partNumber-add-node-unhide" ev:event="DOMActivate"/>
+                                            </xf:trigger>
+                                        </div>
+                                    </xf:case>
+                                    <xf:case id="partNumber-add-node-unhide">
+                                        <div class="open-close-button">
+                                            <xf:trigger>
+                                                <xf:label>&lt;</xf:label>
+                                                <xf:toggle case="partNumber-add-node-hide" ev:event="DOMActivate"/>
+                                            </xf:trigger>
+                                        </div>
+                                        <div class="node-adds">
+                                            <xf:group appearance="full">
+                                                <xf:trigger ref=".[not(@lang)]">
+                                                    <xf:label>Add Language</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:partNumber/@lang"/>
+                                                        <xf:toggle case="partNumber-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@script)]">
+                                                    <xf:label>Add Script</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:partNumber/@script"/>
+                                                        <xf:toggle case="partNumber-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@transliteration)]">
+                                                    <xf:label>Add Transliteration</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:partNumber/@transliteration"/>
+                                                        <xf:toggle case="partNumber-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@xml:lang)]">
+                                                    <xf:label>Add xml:lang</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:partNumber/@xml:lang"/>
+                                                        <xf:toggle case="partNumber-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                            </xf:group>
+                                        </div>
+                                    </xf:case>
+                                </xf:switch>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@lang]">
+                                <xf:select1 ref="./@lang">
+                                    <xf:label>Language<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-lang',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@script]">
+                                <xf:select1 ref="./@script">
+                                    <xf:label>Script<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-script',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@transliteration]">
+                                <xf:select1 ref="./@transliteration">
+                                    <xf:label>Transliteration<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_transliteration',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@xml:lang]">
+                                <xf:select1 ref="./@xml:lang">
+                                    <xf:label>xml:lang<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.3 schema_3.4" appearance="full">
+                                <xf:input ref="." class="text_100">
+                                    <xf:label>Part Number<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_partNumber',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:input>
+                            </xf:group>
+                        </xf:repeat>
+                    </fieldset>
                 </xf:group>
-                <xf:group class="textarea schema_3.3 schema_3.4" ref=".[mods:partName]">
-                <!-- non-repeating -->
-                <!-- attributes: lang; xml:lang; script; transliteration. Not implemented. -->
-                <!-- subelements: none. -->
-                    <xf:textarea ref="./mods:partName">
-                        <xf:label>Part Name<span class="xforms-help">
+                <xf:group class="schema_3.3 schema_3.4" appearance="full" ref=".[mods:partName]">
+                    <fieldset class="level-2">
+                        <div class="label-box">
+                            <span class="legend">Part Name</span>
+                            <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
+                                <div class="xforms-hint-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_partName',instance('code-tables'))/help"/>
                                 </div>
                             </span>
-                        </xf:label>
-                    </xf:textarea>
+                            <span class="add-delete-button">
+                                <xf:trigger ref=".[mods:partName]">
+                                    <xf:label>–</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:titleInfo/mods:partName" at="index('partName-repeat')"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
+                        </div>
+                        <!-- attributes: type; lang; script; transliteration; xml:lang. -->
+                        <!-- subelements: none. -->
+                        <xf:repeat nodeset="./mods:partName" id="partName-repeat">
+                            <xf:group class="show-hide" ref=".[count(@*) &lt; 4]">
+                                <xf:switch>
+                                    <xf:case id="partName-add-node-hide">
+                                        <div class="open-close-button">
+                                            <xf:trigger>
+                                                <xf:label>&gt;</xf:label>
+                                                <xf:toggle case="partName-add-node-unhide" ev:event="DOMActivate"/>
+                                            </xf:trigger>
+                                        </div>
+                                    </xf:case>
+                                    <xf:case id="partName-add-node-unhide">
+                                        <div class="open-close-button">
+                                            <xf:trigger>
+                                                <xf:label>&lt;</xf:label>
+                                                <xf:toggle case="partName-add-node-hide" ev:event="DOMActivate"/>
+                                            </xf:trigger>
+                                        </div>
+                                        <div class="node-adds">
+                                            <xf:group appearance="full">
+                                                <xf:trigger ref=".[not(@lang)]">
+                                                    <xf:label>Add Language</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:partName/@lang"/>
+                                                        <xf:toggle case="partName-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@script)]">
+                                                    <xf:label>Add Script</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:partName/@script"/>
+                                                        <xf:toggle case="partName-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@transliteration)]">
+                                                    <xf:label>Add Transliteration</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:partName/@transliteration"/>
+                                                        <xf:toggle case="partName-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <xf:trigger ref=".[not(@xml:lang)]">
+                                                    <xf:label>Add xml:lang</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/mods:partName/@xml:lang"/>
+                                                        <xf:toggle case="partName-add-node-hide" ev:event="DOMActivate"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                            </xf:group>
+                                        </div>
+                                    </xf:case>
+                                </xf:switch>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@lang]">
+                                <xf:select1 ref="./@lang">
+                                    <xf:label>Language<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-lang',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@script]">
+                                <xf:select1 ref="./@script">
+                                    <xf:label>Script<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-script',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@transliteration]">
+                                <xf:select1 ref="./@transliteration">
+                                    <xf:label>Transliteration<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_transliteration',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.4" appearance="full" ref=".[@xml:lang]">
+                                <xf:select1 ref="./@xml:lang">
+                                    <xf:label>xml:lang<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-short-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="textarea schema_3.3 schema_3.4" appearance="full">
+                                <xf:textarea ref=".">
+                                    <xf:label>Part Name<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_partName',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:textarea>
+                            </xf:group>
+                        </xf:repeat>
+                    </fieldset>
                 </xf:group>
             </xf:repeat>
             <xf:group appearance="full" ref=".[not(mods:titleInfo)]">

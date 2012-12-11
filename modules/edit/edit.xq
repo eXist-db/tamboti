@@ -175,10 +175,6 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
            <!--
            <xf:bind nodeset="instance('save-data')/mods:titleInfo/mods:title" required="true()"/>       
            -->
-           <!--Set the cursor in field with id "first-field".:)-->
-           <xf:action ev:event="xforms-ready">
-            <xf:setfocus control="first-field"/>
-           </xf:action>
            
            <xf:submission id="save-submission" method="post"
               ref="instance('save-data')"

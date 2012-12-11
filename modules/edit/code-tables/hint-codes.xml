@@ -1745,6 +1745,7 @@
             <tab-id>name</tab-id>
             <tab-id>title</tab-id>
             <tab-id>mads</tab-id>
+            <tab-id>subject</tab-id>
         </item>
         <item xml:id="hint-code_nonSort">
             <help>
@@ -2829,6 +2830,7 @@
             <local-name>supplied</local-name>
             <parent>originInfo</parent>
             <parent>titleInfo</parent>
+            <tab-id>subject</tab-id>
             <tab-id>origin</tab-id>
         </item>
         <item xml:id="hint-code_digitalOrigin">
@@ -3408,6 +3410,7 @@
             <parent>note</parent>
             <tab-id>origin</tab-id>
             <tab-id>language</tab-id>
+            <tab-id>subject</tab-id>
         </item>
         <item xml:id="hint-code_url-compact">
             <help>

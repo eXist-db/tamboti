@@ -60,7 +60,7 @@
                                 </xf:input>
                             </xf:group>
                             <xf:group class="text_150 margin-plus">
-                                <xf:input ref="./mods:title" id="first-field">
+                                <xf:input ref="./mods:title">
                                     <xf:label>
                                         <xf:group ref=".[string-length(../@type) = 0]">Title</xf:group>
                                         <xf:group ref=".[../@type='translated' and not(../@lang)]">Transliterated Title</xf:group>
