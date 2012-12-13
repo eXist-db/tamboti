@@ -1,3 +1,4 @@
+(: adapted from eXide's modules/upload.xql :)
 (:
  :  eXide - web-based XQuery IDE
  :  
@@ -18,39 +19,13 @@
  :)
 xquery version "3.0";
 
-declare namespace expath="http://expath.org/ns/pkg";
-declare namespace upload="http://exist-db.org/eXide/upload";
+import module namespace json = "http://www.json.org";
 
-declare option exist:serialize "method=json media-type=application/json";
+declare namespace expath = "http://expath.org/ns/pkg";
+declare namespace upload = "http://exist-db.org/eXide/upload";
+import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
 
-declare function upload:get-descriptors($zipPath) {
-    let $binary := util:binary-doc($zipPath)
-    return
-        if (exists($binary)) then
-            let $dataCb := function($path as xs:anyURI, $type as xs:string, $data as item()?, $param as item()*) { $data }
-            let $entryCb := function($path as xs:anyURI, $type as xs:string, $param as item()*) { $path = "expath-pkg.xml" }
-            return
-                compression:unzip($binary, $entryCb, (), $dataCb, ())
-        else
-            error(xs:QName("upload:not-found"), "Could not deploy uploaded xar package: " || $zipPath || " not found.")
-};
-
-declare function upload:deploy($name) {
-let $deploy := request:get-parameter("deploy", ())
-return
-    if ($deploy and ends-with($name, ".xar")) then 
-        let $descriptors := upload:get-descriptors($name)
-        let $port := request:get-server-port()
-        let $url := concat('http://localhost:',$port,"/exist/rest/", $name)
-        let $appName := $descriptors/expath:package/@name
-        return (
-            repo:remove($appName),
-            repo:install($url),
-            repo:deploy($appName)
-        )
-    else
-        ()
-};
+declare option exist:serialize "media-type=application/json";
 
 declare function upload:mkcol-recursive($collection, $components) {
     if (exists($components)) then
@@ -79,26 +54,52 @@ declare function upload:store($root as xs:string, $path as xs:string, $data) {
 };
 
 declare function upload:upload($collection, $path, $data) {
-    let $path := upload:store($collection, $path, $data)
-    let $upload :=
-        <result>
-           <name>{$path}</name>
-           <type>{xmldb:get-mime-type($path)}</type>
-           <size>93928</size>
-       </result>
-    let $deploy := upload:deploy($path)
+    let $upload := 
+        (: authenticate as the user account set in the app's repo.xml, since we need write permissions to
+         : upload the file.  then set the uploaded file's permissions to allow guest/world to delete the file 
+         : for the purposes of the demo :)
+        system:as-user('admin', '', 
+            (
+            let $mkdir := if (xmldb:collection-available($collection)) then() else ()
+            let $upload := xmldb:store($collection, $path, $data)
+            let $chmod := sm:chmod(xs:anyURI($upload), 'o+rw')
+            return ()
+            )
+        )
     return
-        $upload
+        let $result :=
+            <result>
+               <name>{$path}</name>
+               <type>{xmldb:get-mime-type(xs:anyURI(concat($collection, '/', $path)))}</type>
+               <size>{xmldb:size($collection, $path)}</size>
+               <url>{xs:anyURI(concat($collection, '/', $path))}</url>
+              
+           </result>
+        let $json-output := concat('[', json:xml-to-json($result), ']')
+        return 
+            $json-output
 };
 
-let $collection := request:get-parameter("collection", ())
-let $name := request:get-uploaded-file-name("file[]")
-let $data := request:get-uploaded-file-data("file[]")
-return
-    util:catch("*",
-        upload:upload(xmldb:encode-uri($collection), $name, $data),
-        <result>
-           <name>{$name}</name>
-           <error>{$util:exception-message}</error>
-        </result>
-   )
+let $collection := uu:escape-collection-path(request:get-parameter("collection", ()))
+let $name := request:get-uploaded-file-name('files[]')
+let $data := request:get-uploaded-file-data('files[]')
+let $result := 
+    if (exists($name)) then
+        try {
+            upload:upload(xmldb:encode-uri($collection), xmldb:encode-uri($name), $data)
+        } catch * {
+            concat (
+                '[',
+                json:xml-to-json(
+                    <result>
+                        <name>{$name}</name>
+                        <error>{$err:code, $err:value, $err:description}</error>
+                    </result>
+                ),
+                ']'
+            )
+        }
+    else
+        ''
+return 
+    $result
