@@ -234,7 +234,7 @@
                                 </fieldset>
                             </xf:group>
                             <xf:group ref=".[mods:part/mods:text]">
-                                <xf:textarea ref="instance('save-data')/mods:part/mods:text" class="textarea" mediatype="dojo">
+                                <xf:textarea ref="instance('save-data')/mods:part/mods:text" class="textarea">
                                     <xf:label>Text</xf:label>
                                 </xf:textarea>
                             </xf:group>

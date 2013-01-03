@@ -691,7 +691,7 @@
                     <!--DLF/Aquifer: [REQUIRED]-->
                     <!--Cluster: require-->
                             <xf:group appearance="full">
-                                <xf:textarea ref="./mods:title" class="textarea" mediatype="dojo">
+                                <xf:textarea ref="./mods:title" class="textarea">
                                     <xf:label>Title</xf:label>
                                     <xf:hint>
                                         <p> Title contains the core title of the resource catalogued. </p>
@@ -726,7 +726,7 @@
                     <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
                     <!--Cluster: include-->
                             <xf:group appearance="full" ref=".[mods:subTitle]">
-                                <xf:textarea ref="./mods:subTitle" class="textarea" mediatype="dojo">
+                                <xf:textarea ref="./mods:subTitle" class="textarea">
                                     <xf:label>Subtitle</xf:label>
                                     <xf:hint>
                                         <p> Subtitle is used to record a part of a title deemed secondary to

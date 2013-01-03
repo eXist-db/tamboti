@@ -32,15 +32,48 @@
         </item>
         <item xml:id="hint-code_abstract">
             <help>
-                <p> Abstract is used to record a succinct summary of some aspect of the content of
-                    the resource. </p>
+                <p> Abstract is used to record a succinct summary of some
+                    aspect of the content of the resource. </p>
+                <p> Use one Abstract in every record, except when Title
+                    Information serves as an adequate summary of the
+                    content of the resource. </p>
+                <p> When creating a record for a digital surrogate, record a
+                    summary of the content of the original resource. If
+                    only a portion of the resource was digitized,
+                    summarize only that portion. </p>
+                <p> A link may be supplied in lieu of or in addition to a summary of the
+                    content. </p>
+                <p> Repeat Abstract as many times as necessary. </p>
             </help>
             <hint/>
             <value>abstract</value>
             <local-name>abstract</local-name>
             <parent>subject</parent>
+            <tab-id>abstract</tab-id>
             <tab-id>compact-c</tab-id>
             <tab-id>compact-d</tab-id>
+        </item>
+        <item xml:id="hint-code_shareable">
+            <help>
+                <p>Identifies data that cannot be shared outside the institution.</p>
+                <p>This attribute is used with shareable="no" for data that may be proprietary or is rights protected and should not be used outside of a local system (such as providing to harvesters).</p>
+            </help>
+            <hint/>
+            <value>accessCondition</value>
+            <local-name>accessCondition</local-name>
+            <parent>abstract</parent>
+            <tab-id>abstract</tab-id>
+        </item>
+        <item xml:id="hint-code_abstract-type">
+            <help>
+                <p>Identifies what type of summary is recorded.</p>
+                <p>There is no controlled list of abstract types. Examples include scope, subject, content advice, review.</p>
+            </help>
+            <hint/>
+            <value>accessCondition</value>
+            <local-name>accessCondition</local-name>
+            <parent>abstract</parent>
+            <tab-id>abstract</tab-id>
         </item>
         <item xml:id="hint-code_accessCondition">
             <help>
@@ -586,6 +619,7 @@
             <tab-id>type</tab-id>
             <tab-id>genre</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>abstract</tab-id>
             <tab-id>classification</tab-id>
             <tab-id>note</tab-id>
             <tab-id>identifier</tab-id>
@@ -1322,6 +1356,7 @@
             <parent/>
             <tab-id>language</tab-id>
             <tab-id>target-audience</tab-id>
+            <tab-id>abstract</tab-id>
             <tab-id>classification</tab-id>
         </item>
         <item xml:id="hint-code_languageTerm">
@@ -2662,6 +2697,7 @@
             <tab-id>mads</tab-id>
             <tab-id>note</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>abstract</tab-id>
             <tab-id>target-audience</tab-id>
             <tab-id>classification</tab-id>
         </item>
@@ -3252,6 +3288,7 @@
             <tab-id>mads</tab-id>
             <tab-id>note</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>abstract</tab-id>
             <tab-id>target-audience</tab-id>
             <tab-id>classification</tab-id>
         </item>
@@ -3556,6 +3593,7 @@
             <tab-id>mads</tab-id>
             <tab-id>note</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>abstract</tab-id>
         </item>
         <item xml:id="hint-code_accessCondition-xlink_href">
             <help>
@@ -3648,6 +3686,7 @@
             <tab-id>mads</tab-id>
             <tab-id>note</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>abstract</tab-id>
             <tab-id>target-audience</tab-id>
             <tab-id>classification</tab-id>
         </item>

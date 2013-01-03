@@ -317,7 +317,7 @@
                                 </xf:input>
                             </xf:group>
                             <xf:group appearance="full" ref=".[@note]">
-                                <xf:textarea ref="./@note" class="textarea" mediatype="dojo">
+                                <xf:textarea ref="./@note" class="textarea">
                                     <xf:label>Note<span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
@@ -649,7 +649,7 @@
                                                         </xf:input>
                                                     </xf:group>
                                                     <xf:group appearance="full" ref=".">
-                                                        <xf:textarea ref="." class="textarea" mediatype="dojo">
+                                                        <xf:textarea ref="." class="textarea">
                                                             <xf:label>Note<span class="xforms-help">
                                                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                                     <div class="xforms-help-value">
@@ -729,7 +729,7 @@
                                                         </xf:select1>
                                                     </xf:group>
                                                     <xf:group appearance="full" ref=".">
-                                                        <xf:textarea ref="." class="textarea" mediatype="dojo">
+                                                        <xf:textarea ref="." class="textarea">
                                                             <xf:label>Enumeration And Chronology<span class="xforms-help">
                                                                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                                                     <div class="xforms-help-value">
@@ -808,7 +808,7 @@
 
                         <!--holdingExternal input begins-->
                             <xf:group appearance="full" ref=".">
-                                <xf:textarea ref="." class="textarea" mediatype="dojo">
+                                <xf:textarea ref="." class="textarea">
                                     <xf:label>Holding External<span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">

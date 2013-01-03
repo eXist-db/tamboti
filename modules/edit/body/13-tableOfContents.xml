@@ -137,7 +137,7 @@
                     </xf:select1>
                 </xf:group>
                 <xf:group appearance="full" ref=".">
-                    <xf:textarea ref="." class="textarea" mediatype="dojo">
+                    <xf:textarea ref="." class="textarea">
                         <xf:label>TOC</xf:label>
                         <xf:hint>
                             <p>A description of the contents of a resource.</p>

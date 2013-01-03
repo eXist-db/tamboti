@@ -1149,7 +1149,7 @@
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
-                            <xf:textarea class="textarea schema_3.3 schema_3.4" ref="." mediatype="dojo">
+                            <xf:textarea class="textarea schema_3.3 schema_3.4" ref=".">
                                 <xf:label>Note <span class="xforms-help">
                                         <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                         <div class="xforms-help-value">

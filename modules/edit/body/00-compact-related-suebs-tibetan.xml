@@ -176,7 +176,7 @@
                             <!--relatedItem/part/extent ends-->
                             <!--relatedItem/part/text begins-->
                             <xf:group ref=".[mods:part/mods:text]" class="margin-plus">
-                                <xf:textarea ref="instance('save-data')/mods:part/mods:text" class="textarea" mediatype="dojo">
+                                <xf:textarea ref="instance('save-data')/mods:part/mods:text" class="textarea">
                                     <xf:label>Text</xf:label>
                                 </xf:textarea>
                             </xf:group>

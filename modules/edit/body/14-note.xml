@@ -175,7 +175,7 @@
                     </xf:input>
                 </xf:group>
                 <xf:group appearance="full" ref=".">
-                    <xf:textarea ref="." class="textarea" mediatype="dojo">
+                    <xf:textarea ref="." class="textarea">
                         <xf:label>Note<span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
