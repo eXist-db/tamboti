@@ -30,6 +30,26 @@
             <value>save</value>
             <tab-id>edit.xq</tab-id>
         </item>
+        <item xml:id="hint-code_table-of-contents">
+            <help>
+                <p> A description of the contents of a resource.</p>
+                <p> A Table Of Contents can be rendered e.g. with dashes separating the chapter
+                    titles.</p>
+                <p> Use of Table Of Contents should be determined by the complexity of the
+                    digital object and whether or not the information is readily available. If
+                    more structured information is needed, consider using Related Item with the
+                    type="constituent" field instead. Table Of Contents can also be used as an
+                    empty field with an XLink field to link to an external table of contents.
+                </p>
+            </help>
+            <hint/>
+            <value>abstract</value>
+            <local-name>abstract</local-name>
+            <parent>subject</parent>
+            <tab-id>table-of-contents</tab-id>
+            <tab-id>compact-c</tab-id>
+            <tab-id>compact-d</tab-id>
+        </item>
         <item xml:id="hint-code_abstract">
             <help>
                 <p> Abstract is used to record a succinct summary of some
@@ -62,6 +82,7 @@
             <value>accessCondition</value>
             <local-name>accessCondition</local-name>
             <parent>abstract</parent>
+            <tab-id>table-of-contents</tab-id>
             <tab-id>abstract</tab-id>
         </item>
         <item xml:id="hint-code_abstract-type">
@@ -70,10 +91,21 @@
                 <p>There is no controlled list of abstract types. Examples include scope, subject, content advice, review.</p>
             </help>
             <hint/>
-            <value>accessCondition</value>
-            <local-name>accessCondition</local-name>
+            <value>abstract</value>
+            <local-name>abstract</local-name>
             <parent>abstract</parent>
             <tab-id>abstract</tab-id>
+        </item>
+        <item xml:id="hint-code_toc-type">
+            <help>
+                <p>Identifies what type of contents is recorded.</p>
+                <p>There is no controlled list of table of contents types.</p>
+            </help>
+            <hint/>
+            <value>type</value>
+            <local-name>type</local-name>
+            <parent>table-of-contents</parent>
+            <tab-id>table-of-contents</tab-id>
         </item>
         <item xml:id="hint-code_accessCondition">
             <help>
@@ -244,6 +276,7 @@
             <tab-id>classification</tab-id>
             <tab-id>note</tab-id>
             <tab-id>access-condition</tab-id>
+            <tab-id>table-of-contents</tab-id>
             <tab-id>mads</tab-id>
         </item>
         <item xml:id="hint-code_area">
@@ -621,6 +654,7 @@
             <tab-id>subject</tab-id>
             <tab-id>abstract</tab-id>
             <tab-id>classification</tab-id>
+            <tab-id>table-of-contents</tab-id>
             <tab-id>note</tab-id>
             <tab-id>identifier</tab-id>
             <tab-id>access-condition</tab-id>
@@ -1358,6 +1392,7 @@
             <tab-id>target-audience</tab-id>
             <tab-id>abstract</tab-id>
             <tab-id>classification</tab-id>
+            <tab-id>table-of-contents</tab-id>
         </item>
         <item xml:id="hint-code_languageTerm">
             <help>
@@ -2698,6 +2733,7 @@
             <tab-id>note</tab-id>
             <tab-id>subject</tab-id>
             <tab-id>abstract</tab-id>
+            <tab-id>table-of-contents</tab-id>
             <tab-id>target-audience</tab-id>
             <tab-id>classification</tab-id>
         </item>
@@ -3290,6 +3326,7 @@
             <tab-id>subject</tab-id>
             <tab-id>abstract</tab-id>
             <tab-id>target-audience</tab-id>
+            <tab-id>table-of-contents</tab-id>
             <tab-id>classification</tab-id>
         </item>
         <item xml:id="hint-code_transliteration-global-compact">
@@ -3593,6 +3630,7 @@
             <tab-id>mads</tab-id>
             <tab-id>note</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>table-of-contents</tab-id>
             <tab-id>abstract</tab-id>
         </item>
         <item xml:id="hint-code_accessCondition-xlink_href">
@@ -3686,6 +3724,7 @@
             <tab-id>mads</tab-id>
             <tab-id>note</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>table-of-contents</tab-id>
             <tab-id>abstract</tab-id>
             <tab-id>target-audience</tab-id>
             <tab-id>classification</tab-id>

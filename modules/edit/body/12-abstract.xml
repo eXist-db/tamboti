@@ -166,7 +166,7 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                <xf:group appearance="full" ref=".[@type]">
+                <xf:group class="schema_3.3 schema_3.4" appearance="full" ref=".[@type]">
                     <xf:input ref="./@type" class="text_50">
                         <xf:label>Type<span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -177,7 +177,7 @@
                         </xf:label>
                     </xf:input>
                 </xf:group>
-                <xf:group appearance="full" ref=".[@xlink:href]">
+                <xf:group class="schema_3.3 schema_3.4" appearance="full" ref=".[@xlink:href]">
                     <xf:input ref="./@xlink:href" class="text_50">
                         <xf:label>XLink<span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -249,7 +249,7 @@
                     </xf:select1>
                 </xf:group>
                 <br/>
-                <xf:group appearance="full" ref=".">
+                <xf:group class="schema_3.3 schema_3.4" appearance="full" ref=".">
                     <xf:textarea ref="." class="textarea">
                         <xf:label>Abstract
                             <span class="xforms-help">
