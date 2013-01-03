@@ -208,6 +208,7 @@
             <tab-id>target-audience</tab-id>
             <tab-id>language</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>classification</tab-id>
             <tab-id>note</tab-id>
             <tab-id>access-condition</tab-id>
             <tab-id>mads</tab-id>
@@ -239,8 +240,36 @@
             <tab-id>target-audience</tab-id>
             <tab-id>language</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>classification</tab-id>
             <tab-id>note</tab-id>
             <tab-id>location</tab-id>
+        </item>
+        <item xml:id="hint-code_classification">
+            <help>
+                <p> A designation applied to a resource that indicates the
+                    subject by applying a formal system of coding and
+                    organising resources according to subject areas.
+                    Classification contains the classification number of
+                    a resource. It may also include the full call number
+                    if desired. </p>
+            </help>
+            <hint/>
+            <value>classification</value>
+            <local-name>classification</local-name>
+            <parent/>
+            <tab-id>classification</tab-id>
+        </item>
+        <item xml:id="hint-code_classification-edition">
+            <help>
+                <p> This field contains a designation of the edition of the particular
+                    classification scheme indicated in authority for those schemes that
+                    are issued in editions. </p>
+            </help>
+            <hint/>
+            <value>edition</value>
+            <local-name>edition</local-name>
+            <parent>classification</parent>
+            <tab-id>classification</tab-id>
         </item>
         <item xml:id="hint-code_name-authority">
             <help>
@@ -303,6 +332,7 @@
             <tab-id>target-audience</tab-id>
             <tab-id>language</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>classification</tab-id>
             <tab-id>genre</tab-id>
         </item>
         <item xml:id="hint-code_cartographics">
@@ -556,6 +586,7 @@
             <tab-id>type</tab-id>
             <tab-id>genre</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>classification</tab-id>
             <tab-id>note</tab-id>
             <tab-id>identifier</tab-id>
             <tab-id>access-condition</tab-id>
@@ -1291,6 +1322,7 @@
             <parent/>
             <tab-id>language</tab-id>
             <tab-id>target-audience</tab-id>
+            <tab-id>classification</tab-id>
         </item>
         <item xml:id="hint-code_languageTerm">
             <help>
@@ -2630,6 +2662,8 @@
             <tab-id>mads</tab-id>
             <tab-id>note</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>target-audience</tab-id>
+            <tab-id>classification</tab-id>
         </item>
         <item xml:id="hint-code_script-global-compact">
             <help>
@@ -3219,6 +3253,7 @@
             <tab-id>note</tab-id>
             <tab-id>subject</tab-id>
             <tab-id>target-audience</tab-id>
+            <tab-id>classification</tab-id>
         </item>
         <item xml:id="hint-code_transliteration-global-compact">
             <help>
@@ -3469,6 +3504,7 @@
             <tab-id>title</tab-id>
             <tab-id>language</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>classification</tab-id>
             <tab-id>type</tab-id>
             <tab-id>genre</tab-id>
         </item>
@@ -3492,6 +3528,7 @@
             <tab-id>target-audience</tab-id>
             <tab-id>genre</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>classification</tab-id>
         </item>
         <item xml:id="hint-code_xlink_href">
             <help>
@@ -3612,6 +3649,7 @@
             <tab-id>note</tab-id>
             <tab-id>subject</tab-id>
             <tab-id>target-audience</tab-id>
+            <tab-id>classification</tab-id>
         </item>
         <item xml:id="hint-code_reformattingQuality">
             <help>

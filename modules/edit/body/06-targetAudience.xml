@@ -213,7 +213,7 @@
                         <xf:label>Script<span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_xml_lang',instance('code-tables'))/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_script',instance('code-tables'))/help"/>
                                 </div>
                             </span>
                         </xf:label>
