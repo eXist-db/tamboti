@@ -734,14 +734,66 @@ declare function biblio:resource-types($node as node(), $params as element(param
     let $classifier := tokenize($node/@class, "\s")
     let $classifier := $classifier[2]
     let $code-table-path := concat($config:edit-app-root, '/code-tables')
+    
     let $document-type-codes-path := concat($code-table-path, '/document-type-codes.xml')
-    let $language-type-codes-path := concat($code-table-path, '/language-3-type-codes.xml')
-    let $transliteration-codes-path := concat($code-table-path, '/transliteration-short-codes.xml')
-    let $script-codes-path := concat($code-table-path, '/script-codes.xml')
     let $document-type-code-table := doc($document-type-codes-path)/code-table
+    
+    let $language-type-codes-path := concat($code-table-path, '/language-3-type-codes.xml')
     let $language-type-code-table := doc($language-type-codes-path)/code-table
-    let $transliteration-code-table := doc($transliteration-codes-path)/code-table
+    let $language-options :=
+                    for $item in $language-type-code-table//item[(frequencyClassifier)]
+                        let $label := $item/label/text()
+                        let $labelValue := $item/value/text()
+                        let $sortOrder :=                                  
+                            if ($item/frequencyClassifier[. = 'common']) 
+                            then 'A' 
+                            (: else frequencyClassifier = 'default':)
+                            else ''
+                        order by $sortOrder, $label
+                        return
+                            <option value="{$labelValue}">{$item/label/text()}</option>
+    (:to get all values:
+                    for $item in $language-type-code-table//item
+                        let $label := $item/label/text()
+                        let $labelValue := $item/value/text()
+                        let $sortOrder := 
+                            if (empty($item/frequencyClassifier)) 
+                            then 'B' 
+                            else 
+                                if ($item/frequencyClassifier[. = 'common']) 
+                                then 'A' 
+                                else ''
+                        order by $sortOrder, $label
+                        return
+                            <option value="{$labelValue}">{$item/label/text()}</option>:)
+                            
+    let $script-codes-path := concat($code-table-path, '/script-short-codes.xml')
     let $script-code-table := doc($script-codes-path)/code-table
+    let $script-options :=
+                    for $item in $script-code-table//item
+                        let $label := $item/label/text()
+                        let $labelValue := $item/value/text()
+                        let $sortOrder := 
+                        if (empty($item/frequencyClassifier)) 
+                        then 'B' 
+                        else 
+                            if ($item/frequencyClassifier[. = 'common']) 
+                            then 'A'
+                            else ''
+                        order by $sortOrder, $label
+                        return
+                            <option value="{$labelValue}">{$item/label/text()}</option>
+    
+    let $transliteration-codes-path := concat($code-table-path, '/transliteration-short-codes.xml')
+    let $transliteration-code-table := doc($transliteration-codes-path)/code-table
+    let $transliteration-options :=
+                    for $item in $transliteration-code-table//item
+                        let $label := $item/label/text()
+                        let $labelValue := $item/value/text()
+                        return
+                            <option value="{$labelValue}">{$item/label/text()}</option>
+                    
+    
     return 
         <div class="content">
             <form id="{if ($classifier eq 'stand-alone') then 'new-resource-form' else 'add-related-form'}" action="../edit/edit.xq" method="GET">
@@ -760,21 +812,7 @@ declare function biblio:resource-types($node as node(), $params as element(param
                     <label for="languageOfResource">Resource Language: </label>
                 <span class="language-list">
                 <select name="languageOfResource">
-                    {
-                        for $item in $language-type-code-table//item
-                        let $label := $item/label/text()
-                        let $labelValue := $item/value/text()
-                        let $sortOrder := 
-                            if (empty($item/frequencyClassifier)) 
-                            then 'B' 
-                            else 
-                                if ($item/frequencyClassifier[. = 'common']) 
-                                then 'A' 
-                                else ''
-                        order by $sortOrder, $label
-                        return
-                            <option value="{$labelValue}">{$item/label/text()}</option>
-                    }
+                    {$language-options}
                     </select>
                 </span>
                 </div>
@@ -783,21 +821,7 @@ declare function biblio:resource-types($node as node(), $params as element(param
                     <label for="scriptOfResource">Resource Script: </label>
                 <span class="language-list">
                 <select name="scriptOfResource">
-                    {
-                        for $item in $script-code-table//item
-                        let $label := $item/label/text()
-                        let $labelValue := $item/value/text()
-                        let $sortOrder := 
-                        if (empty($item/frequencyClassifier)) 
-                        then 'B' 
-                        else 
-                            if ($item/frequencyClassifier[. = 'common']) 
-                            then 'A'
-                            else ''
-                        order by $sortOrder, $label
-                        return
-                            <option value="{$labelValue}">{$item/label/text()}</option>
-                    }
+                    {$script-options}
                     </select>
                 </span>
                 </div>
@@ -806,13 +830,7 @@ declare function biblio:resource-types($node as node(), $params as element(param
                     <label for="transliterationOfResource">Transliteration Scheme: </label>
                 <span class="language-list">
                 <select name="transliterationOfResource">
-                    {
-                        for $item in $transliteration-code-table//item
-                        let $label := $item/label/text()
-                        let $labelValue := $item/value/text()
-                        return
-                            <option value="{$labelValue}">{$item/label/text()}</option>
-                    }
+                    {$transliteration-options}
                     </select>
                 </span>
                 </div>
@@ -821,19 +839,7 @@ declare function biblio:resource-types($node as node(), $params as element(param
                     <label for="languageOfCataloging">Cataloging Language: </label>
                 <span class="language-list">
                 <select name="languageOfCataloging">
-                    {
-                        for $item in $language-type-code-table//item[(frequencyClassifier)]
-                        let $label := $item/label/text()
-                        let $labelValue := $item/value/text()
-                        let $sortOrder :=                                  
-                            if ($item/frequencyClassifier[. = 'common']) 
-                            then 'A' 
-                            (: else frequencyClassifier = 'default':)
-                            else ''
-                        order by $sortOrder, $label
-                        return
-                            <option value="{$labelValue}">{$item/label/text()}</option>
-                    }
+                    {$language-options}
                     </select>
                 </span>
                 </div>
@@ -842,19 +848,7 @@ declare function biblio:resource-types($node as node(), $params as element(param
                     <label for="scriptOfCataloging">Cataloging Script: </label>
                 <span class="language-list">
                 <select name="scriptOfCataloging">
-                    {
-                        for $item in $script-code-table//item[(frequencyClassifier)]
-                        let $label := $item/label/text()
-                        let $labelValue := $item/value/text()
-                        let $sortOrder :=  
-                            if ($item/frequencyClassifier[. = 'common']) 
-                            then 'A' 
-                            (: else frequencyClassifier = 'default':)
-                            else ''
-                        order by $sortOrder, $label
-                        return
-                            <option value="{$labelValue}">{$item/label/text()}</option>
-                    }
+                    {$script-options}
                     </select>
                 </span>
                 </div>
