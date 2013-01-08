@@ -236,21 +236,24 @@ declare function bs:get-icon-from-folder($size as xs:int, $collection as xs:stri
     Get the preview icon for a linked image resource or get the thumbnail showing the resource type.
 :)
 declare function bs:get-icon($size as xs:int, $item, $currentPos as xs:int) {
-    let $image-url := 
+    let $image-url :=
+    (: NB: Refine criteria for existence of image:)
         ( 
             $item/mods:location/mods:url[@access="preview"]/string(), 
-            $item/mods:location/mods:url[@displayLabel="Path to Folder"] 
+            $item/mods:location/mods:url[@displayLabel="Path to Folder"]/string() 
         )[1]
-    let $title := $item/mods:typeOfResource/string()
-    let $title := 
-        if ($title)
-        then functx:capitalize-first($title)
+    let $type := $item/mods:typeOfResource/string()
+    let $hint := 
+        if ($type)
+        then functx:capitalize-first($type)
         else
             if (in-scope-prefixes($item) = 'xml')
             then 'Unknown Type'
             else 'Extracted Text'
     return
-        if (exists($image-url)) 
+        if (string-length($image-url)) 
+        (: Only run if there actually is a URL:)
+        (: NB: It should be checked if the URL leads to an image described in the record:)
         then
             let $image-path := concat(util:collection-name($item), "/", xmldb:encode($image-url))
             return
@@ -259,13 +262,16 @@ declare function bs:get-icon($size as xs:int, $item, $currentPos as xs:int) {
                 else
                     let $imgLink := concat(substring-after(util:collection-name($item), "/db"), "/", $image-url)
                     return
-                        <img title="{$title}" src="images/{$imgLink}?s={$size}"/>
+                        <img title="{$hint}" src="images/{$imgLink}?s={$size}"/>
+        
         else
+        (: For non-image records:)
             let $type := $item/mods:typeOfResource[1]/string()           
             let $type := 
                 (: If there is a typeOfResource, render the icon for it. :)
                 if ($type)
-                then replace(replace($type,' ','_'),',','')
+                (: Remove spaces and commas from the image name:)
+                then translate(translate($type,' ','_'),',','')
                 else
                     (: If there is no typeOfResource, but the resource is XML, render the default icon for it. :)
                     if (in-scope-prefixes($item) = 'xml')
@@ -273,7 +279,7 @@ declare function bs:get-icon($size as xs:int, $item, $currentPos as xs:int) {
                     (: Otherwise it is non-XML contents extracted from a document by tika. This could be a PDF, a Word document, etc. :) 
                     else 'text-x-changelog'
             return 
-                <img title="{$title}" src="theme/images/{$type}.png"/>
+                <img title="{$hint}" src="theme/images/{$type}.png"/>
 };
 
 declare function bs:view-table($cached as item()*, $stored as item()*, $start as xs:int, 
