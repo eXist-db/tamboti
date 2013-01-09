@@ -7,7 +7,7 @@
                 <span class="legend">Origin Information</span>
                 <span class="xforms-hint">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                    <div class="xforms-hint-value">
+                    <div class="xforms-help-value">
                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_originInfo',instance('code-tables'))/help"/>
                     </div>
                 </span>
@@ -240,7 +240,7 @@
                 </xf:group>
                 <xf:group class="schema_3.4" appearance="full" ref=".[@altRepGroup]">
                     <xf:input ref="./@altRepGroup" class="text_50">
-                        <xf:label>Alternate Representation Group<span class="xforms-help">
+                        <xf:label>Alt. Representation Group<span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_altRepGroup',instance('code-tables'))/help"/>
@@ -326,7 +326,7 @@
                             <span class="legend">Place</span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_place',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -417,7 +417,7 @@
                                         <span class="legend">Place Term</span>
                                         <span class="xforms-hint">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-hint-value">
+                                            <div class="xforms-help-value">
                                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_supplied',instance('code-tables'))/help"/>
                                             </div>
                                         </span>
@@ -702,7 +702,7 @@
                             <span class="legend">Publisher</span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_publisher',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -890,7 +890,7 @@
                             <span class="legend">Edition</span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_edition',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -1094,7 +1094,7 @@
                             </span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_issuance',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -1126,7 +1126,7 @@
                             <span class="legend">Frequency</span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_frequency',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -1374,7 +1374,7 @@
                             </span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateIssued',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -1640,7 +1640,7 @@
                             </span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateCreated',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -1904,7 +1904,7 @@
                             </span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateCaptured',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -2170,7 +2170,7 @@
                             </span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateValid',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -2436,7 +2436,7 @@
                             </span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateModified',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -2702,7 +2702,7 @@
                             </span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_copyrightDate',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -2968,7 +2968,7 @@
                             </span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateOther',instance('code-tables'))/help"/>
                                 </div>
                             </span>

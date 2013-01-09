@@ -88,7 +88,7 @@
                 </xf:group>
                 <xf:group appearance="full" ref=".[@altRepGroup]" class="schema_3.4">
                     <xf:select1 ref="./@altRepGroup">
-                        <xf:label>Alternate Representation Group<span class="xforms-help">
+                        <xf:label>Alt. Representation Group<span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_altRepGroup',instance('code-tables'))/help"/>

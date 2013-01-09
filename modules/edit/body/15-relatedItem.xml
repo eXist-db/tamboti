@@ -24,7 +24,7 @@
                 </span>
                 <span class="xforms-hint">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                    <div class="xforms-hint-value">
+                    <div class="xforms-help-value">
                         <p> Information that identifies other resources related to the one being
                         described. </p>
                     </div>
@@ -164,7 +164,7 @@
                             </span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <p> At least one Title inside a Title Information is required. Title
                                 Information can be repeated for alternative, translated,
                                 transliterated or uniform titles. These values are chosen in Type.
@@ -837,7 +837,7 @@
                             </span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <p> The designation of physical parts of a resource in a detailed form.
                                 Part is used to provide detailed coding for physical parts of a
                                 resource. It may be used as a top level element to designate
@@ -1015,7 +1015,7 @@
                                         </span>
                                         <span class="xforms-hint">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-hint-value">
+                                            <div class="xforms-help-value">
                                                 <p> Use this field to indicate the numbering and type of
                                         designation of the part in relation to the parent item.
                                         Detail contains numbering and type of designation of the
@@ -1140,7 +1140,7 @@
                                         </span>
                                         <span class="xforms-hint">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-hint-value">
+                                            <div class="xforms-help-value">
                                                 <p> Use this field to indicate the measured units making up the
                                         part (for example volumes, pages, square centimeters,
                                         minutes, etc.). </p>
@@ -1255,7 +1255,7 @@
                                         </span>
                                         <span class="xforms-hint">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-hint-value">
+                                            <div class="xforms-help-value">
                                                 <p> Date contains date information relevant to the part
                                         described. </p>
                                             </div>
@@ -1368,7 +1368,7 @@
                                         </span>
                                         <span class="xforms-hint">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-hint-value">
+                                            <div class="xforms-help-value">
                                                 <p>Hint</p>
                                             </div>
                                         </span>

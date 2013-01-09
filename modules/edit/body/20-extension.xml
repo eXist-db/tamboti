@@ -7,7 +7,7 @@
                 <span class="legend">Extension</span>
                 <span class="xforms-hint">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                    <div class="xforms-hint-value">
+                    <div class="xforms-help-value">
                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_extension',instance('code-tables'))/help"/>
                     </div>
                 </span>

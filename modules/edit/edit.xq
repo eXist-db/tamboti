@@ -334,7 +334,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                 </xf:trigger>
                 <span class="xforms-hint">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                    <div class="xforms-hint-value">
+                    <div class="xforms-help-value">
                         {$save-hint}
                     </div>
                 </span>
@@ -369,7 +369,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                 </xf:trigger>
                 <span class="xforms-hint">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                    <div class="xforms-hint-value">
+                    <div class="xforms-help-value">
                         {$save-hint}
                     </div>
                 </span>

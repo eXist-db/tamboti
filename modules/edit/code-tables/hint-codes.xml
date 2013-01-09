@@ -134,7 +134,14 @@
         </item>
         <item xml:id="hint-code_url-access">
             <help>
-                <p>(under construction)</p>
+                <p>Indicates the type of resource that the user will access when following the URL link.</p>
+                <p>This attribute is particularly useful to provide a flag in the context of OAI service providers harvesting metadata.</p>
+                <p>The following values may be used with the access attribute:</p>
+                <ul>
+                    <li>preview – Indicates a link to a thumbnail or snippet of text.</li>
+                    <li>raw object – Indicates a direct link to the object described (e.g., a jpg or pdf document). Used only when the object is represented by a single file.</li>
+                    <li>object in context – Indicates a link to the object within the context of its environment (with associated metadata, navigation, etc.)</li>
+                </ul>
             </help>
             <hint/>
             <value>access</value>
@@ -142,19 +149,31 @@
             <parent>url</parent>
             <tab-id>location</tab-id>
         </item>
-        <item xml:id="hint-code_name-authority-uri">
+        <item xml:id="hint-code_location-url-note">
             <help>
-                <p>(under construction)</p>
+                <p>Includes notes that are associated with the link that is included as the value of the URL element.</p>
+                <p>Use the note attribute only when other attributes (access, usage, or displayLabel) are not appropriate.</p>
+            </help>
+            <hint/>
+            <value>access</value>
+            <local-name>access</local-name>
+            <parent>url</parent>
+            <tab-id>location</tab-id>
+        </item>
+        <item xml:id="hint-code_note-type">
+            <help>
+                <p>Describes the type of note that is recorded.</p>
             </help>
             <hint/>
             <value/>
             <local-name/>
             <parent/>
-            <tab-id>mads</tab-id>
+            <tab-id>location</tab-id>
         </item>
         <item xml:id="hint-code_sublocation">
             <help>
-                <p>(under construction)</p>
+                <p>Department, division, or section of an institution holding a copy of the resource.</p>
+                <p>Sublocation may be repeated for multiple equivalent items in different sublocations within the institution named in Physical Location.</p>
             </help>
             <hint/>
             <value/>
@@ -164,7 +183,13 @@
         </item>
         <item xml:id="hint-code_holdingSimple">
             <help>
-                <p>(under construction)</p>
+                <p>General information about what the institution identified in Physical Location holds of the resource and its specific location.</p>
+                <p>Holdings information consists of copy-specific information about the resource, information about the specific location within an institution, 
+                    version information, and other information that is peculiar to the institution.</p>
+                <p>Holding Simple is a set of MODS internally defined elements and corresponds roughly to summary holdings information. </p>
+                <p>Holding Simple is a container element for the single subelement, Copy Information which has several subelements.</p>
+                <p>Holding Simple is not repeatable; if additional holdings statements are needed for the resource, repeat Location with appropriate subelements</p>
+                <p>For more information see <a href="http://www.loc.gov/standards/mods/v3/mods-holdings.html">http://www.loc.gov/standards/mods/v3/mods-holdings.html</a> (MODS Holdings Information).</p>
             </help>
             <hint/>
             <value>holdingSimple</value>
@@ -174,7 +199,25 @@
         </item>
         <item xml:id="hint-code_location-form">
             <help>
-                <p>(under construction)</p>
+                <p>Designation of a particular physical presentation of a resource.</p>
+                <p>The Form subelement is equivalent to MODS Form under Physical Description.</p>
+                <p>It may be included under Copy Information when the MODS record refers to multiple forms and there is different detailed holdings information associated with each form.</p>
+                <p>Form is not repeatable; Copy Information is repeated within Holding Simple for multiple forms.</p>
+            </help>
+            <hint/>
+            <value/>
+            <local-name/>
+            <parent/>
+            <tab-id>location</tab-id>
+        </item>
+        <item xml:id="hint-code_location-form-type">
+            <help>
+                <p>May be used to specify whether the form concerns materials or techniques, for example:</p>
+                <ul>
+                    <li>&lt;form type="material&gt;oil paint&lt;/form&gt;</li>
+                    <li>&lt;form type="technique&gt;painting&lt;/form&gt;</li>
+                </ul>
+                <p>There are no controlled values for the type attribute.</p>
             </help>
             <hint/>
             <value/>
@@ -184,7 +227,10 @@
         </item>
         <item xml:id="hint-code_location-note">
             <help>
-                <p>(under construction)</p>
+                <p>Note relating to a specific copy of a document.</p>
+                <p>Use for notes relating to the specific copy information of a resource that do not fit in one of the other available subelements.</p>
+                <p>A link may be supplied in lieu of or in addition to the content.</p>
+                <p>Each note should be entered in a separate Note subelement.</p>
             </help>
             <hint/>
             <value/>
@@ -194,7 +240,19 @@
         </item>
         <item xml:id="hint-code_location-url">
             <help>
-                <p>(under construction)</p>
+                <p>URL is for an electronic location from which the resource is available. 
+                    It is recommended that all URLs used with the Location element be persistent.
+                </p>
+                <p>Note that Identifier is used for persistent identifiers that may or may not be resolvable.</p>
+                <p>
+                    The Location element with the URL subelement may be used to indicate locations of additional versions of the digital resource such as thumbnails of the digital resource. 
+                    It is recommended that in these cases the access attribute be used to help an aggregator determine what versions of the resource are available. 
+                    Best practice is that the "primary display" URL is a link to the resource with its contextual material (for example metadata, navigation to the collection homepage). 
+                    If the primary link to a resource is to a stand-alone version of the resource (such as a JPEG image only), an end user will have no context except for the metadata on the service provider's site. 
+                    At a minimum, the URL should point to a page that contains the resource and a navigation bar that allows users to reach the collection homepage. 
+                    It is highly desirable that this page also include the descriptive metadata for the resource.</p>
+                <p>Use of the access attribute is recommended with all instances of URL. 
+                </p>
             </help>
             <hint/>
             <value/>
@@ -204,7 +262,13 @@
         </item>
         <item xml:id="hint-code_location-usage">
             <help>
-                <p>(under construction)</p>
+                <p>Indicates how the object represented by the link will be used.</p>
+                <p>This attribute may be used to indicate special purpose of the URL in the element, which may be marked as such using the access attribute.</p>
+                <p>The following values is defined:</p>
+                <ul>
+                    <li>primary display – Indicates that the link is the most appropriate to display for end users.</li>
+                    <li>primary – Added for consistency when usage was defined for several other elements. This value has the same definition as "primary display". The intent is that "primary display" will be depricated in favor of "primary" in a future MODS version. Use of " primary" instead of "primary display" is therefore recommended in this attribute.</li>
+                </ul>
             </help>
             <hint/>
             <value/>
@@ -214,7 +278,7 @@
         </item>
         <item xml:id="hint-code_electronicLocator">
             <help>
-                <p>(under construction)</p>
+                <p>The Uniform Resource Location of the resource.</p>
             </help>
             <hint/>
             <value>electronicLocator</value>
@@ -224,7 +288,8 @@
         </item>
         <item xml:id="hint-code_copyInformation">
             <help>
-                <p>(under construction)</p>
+                <p>Information about a specific tangible instance of a bibliographic resource or set which comprises one or more pieces via indication of sublocation and/or locator.</p>
+                <p>Copy Information is a container element. Data is entered in the subelements.</p>
             </help>
             <hint/>
             <value>access</value>
@@ -234,7 +299,9 @@
         </item>
         <item xml:id="hint-code_dateLastAccessed">
             <help>
-                <p>(under construction)</p>
+                <p>Intended to express the date that a digital resource has been accessed remotely.
+                </p>
+                <p>This attribute may be useful to a user because of the volatility of Web content. There is no encoding scheme specified for use with this attribute, however, a structured date is recommended.</p>
             </help>
             <hint/>
             <value>dateLastAccessed</value>
@@ -278,6 +345,7 @@
             <tab-id>access-condition</tab-id>
             <tab-id>table-of-contents</tab-id>
             <tab-id>identifier</tab-id>
+            <tab-id>location</tab-id>
             <tab-id>mads</tab-id>
         </item>
         <item xml:id="hint-code_area">
@@ -401,6 +469,7 @@
             <tab-id>subject</tab-id>
             <tab-id>classification</tab-id>
             <tab-id>genre</tab-id>
+            <tab-id>location</tab-id>
         </item>
         <item xml:id="hint-code_cartographics">
             <help>
@@ -1031,6 +1100,7 @@
             <tab-id>mads</tab-id>
             <tab-id>note</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>location</tab-id>
         </item>
         <item xml:id="hint-code_part-type">
             <help>
@@ -1903,6 +1973,61 @@
             <tab-id>physical-description</tab-id>
             <tab-id>note</tab-id>
         </item>
+        <item xml:id="hint-code_location_note">
+            <help>
+                <p> Note relating to a specific copy of a
+                    document. </p>
+            </help>
+            <hint/>
+            <value>note</value>
+            <local-name>note</local-name>
+            <parent/>
+            <tab-id>location</tab-id>
+        </item>
+        <item xml:id="hint-code_enumerationAndChronology">
+            <help>
+                <p> Alpha-numeric identification, such as a volume
+                    or issue, and an indication of the date of
+                    publication or date of issue of a component of a
+                    multi-part resource, distinguishing it from other
+                    components of the same resource. Enumeration And
+                    Chronology is an unparsed string that comprises a
+                    summary holdings statement. If more granularity is
+                    needed, a parsed statement using an external
+                    schema may be used within Holdings External. </p>
+            </help>
+            <hint/>
+            <value>note</value>
+            <local-name>note</local-name>
+            <parent/>
+            <tab-id>location</tab-id>
+        </item>
+        <item xml:id="hint-code_holdingExternal">
+            <help>
+                <p> Holdings information that uses a schema defined externally
+                    to MODS.</p>
+                <p>Holdings External may include more detailed
+                    holdings information than that accommodated by the MODS
+                    schema. An example is ISO 20775 and its accompanying schema. </p>
+            </help>
+            <hint/>
+            <value>holdingExternal</value>
+            <local-name>holdingExternal</local-name>
+            <parent/>
+            <tab-id>location</tab-id>
+        </item>
+        <item xml:id="hint-code_unitType">
+            <help>
+                <p> The category of bibliographic entity for which
+                    Enumeration And Chronology is given, i.e. basic
+                    bibliographic unit, supplement, or index. </p>
+            </help>
+            <hint/>
+            <value>note</value>
+            <local-name>note</local-name>
+            <parent/>
+            <tab-id>location</tab-id>
+        </item>
         <item xml:id="hint-code_physicalDescription_note_type">
             <help>
                 <p> This field is used if desired to specify whether the note concerns materials or
@@ -2074,6 +2199,7 @@
             <local-name>part</local-name>
             <parent>relatedItem</parent>
             <tab-id>titles</tab-id>
+            <tab-id>compact-b-monograph</tab-id>
         </item>
         <item xml:id="hint-code_partName">
             <help>
@@ -3297,8 +3423,8 @@
                 <p> There is at present no standard list of transliteration schemes available, but
                     use the American Library Association-Library of Congress transliteration, if
                     possible. These are postfixed "ALA-LC" in the drop-down list. For more
-                    information on these transliteration schemes, see <a href="http://www.loc.gov/catdir/cpso/roman.html">ALA-LC Romanization
-                        Tables</a>. </p>
+                    information on these transliteration schemes, see <a href="http://www.loc.gov/catdir/cpso/roman.html">http://www.loc.gov/catdir/cpso/roman.html</a> (ALA-LC Romanization
+                    Tables). </p>
                 <p> If you wish to employ a transliteration scheme not in the list, please contact
                     &lt;tamboti-admins@asia-europe.uni-heidelberg.de&gt;. </p>
                 <p> Apply transliteration as high as possible. For instance it is possible to apply
@@ -3480,7 +3606,7 @@
             <value>location-type</value>
             <local-name>type</local-name>
             <parent>location</parent>
-            <tab-id>type</tab-id>
+            <tab-id>location</tab-id>
         </item>
         <item xml:id="hint-code_name-type">
             <help>
@@ -3535,18 +3661,6 @@
             <tab-id>compact-a</tab-id>
             <tab-id>compact-b-review</tab-id>
             <tab-id>compact-b-xlink</tab-id>
-        </item>
-        <item xml:id="hint-code_location-url">
-            <help>
-                <p> In URL, record the Uniform Resource Locator (URL) of the networked location of a
-                    resource. It is recommended that all URLs used with the Location element be
-                    persistent. </p>
-            </help>
-            <hint/>
-            <value>location-url</value>
-            <local-name>url</local-name>
-            <parent>location</parent>
-            <tab-id>titles</tab-id>
         </item>
         <item xml:id="hint-code_name-usage">
             <help>
@@ -3603,6 +3717,7 @@
             <tab-id>target-audience</tab-id>
             <tab-id>genre</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>location</tab-id>
             <tab-id>classification</tab-id>
         </item>
         <item xml:id="hint-code_xlink_href">

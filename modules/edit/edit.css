@@ -208,7 +208,7 @@ table, td, th {
     font-weight:400;
 }
 
-.save-buttons .xforms-hint-value {
+.save-buttons .xforms-help-value {
     font-weight:normal;
 }
 
@@ -505,23 +505,12 @@ span.xforms-hint-icon { /*negating the xsltforms.css regular hint icon*/
     /*margin:2em;*/
 }
 
-div.xforms-help-value {
-    width:73em;
+div.xforms-help-value { 
+    width:65em;
     white-space: normal;
 }
 
-.save-buttons div.xforms-hint-value {
-    width:70em;
-    text-decoration:none;
-    }
-
-div.xforms-hint-value {
-    width:40em;
-}
-
-div.xforms-help-value, 
-div.xforms-hint-value 
-    { 
+div.xforms-help-value { 
     text-align:left;
     color:#666666;
     display:none;
@@ -541,16 +530,6 @@ div.xforms-help-value li
     { 
 	margin-top:.25em;
 	font-weight:normal;
-}
-
-.compact div.xforms-hint-value 
- {
-    width:70em;
-}
-
-div.xforms-hint-value strong 
- {
-    color:#3681B3;
 }
 
 /*help ends*/

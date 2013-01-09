@@ -233,7 +233,7 @@
                 </xf:group>
                 <xf:group appearance="full" ref=".[@altRepGroup]">
                     <xf:select1 ref="./@altRepGroup">
-                        <xf:label>Alternate Representation Group<span class="xforms-help">
+                        <xf:label>Alt. Representation Group<span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" ref="id('hint-code_altRepGroup',instance('code-tables'))/help"/>
@@ -460,7 +460,7 @@
                             <span class="legend">Non Sort</span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_nonSort',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -588,6 +588,7 @@
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
+                            <br/>
                             <xf:group class="schema_3.3 schema_3.4" appearance="full">
                                 <xf:input ref="." class="text_100">
                                     <xf:label>Non Sort<span class="xforms-help">
@@ -608,7 +609,7 @@
                             <span class="legend">Title</span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_title',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -728,6 +729,7 @@
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
+                            <br/>
                             <xf:group class="textarea schema_3.3 schema_3.4" appearance="full">
                                 <xf:textarea ref=".">
                                     <xf:label>Title<span class="xforms-help">
@@ -748,7 +750,7 @@
                             <span class="legend">Subtitle</span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_subTitle',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -876,6 +878,7 @@
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
+                            <br/>
                             <xf:group class="textarea schema_3.3 schema_3.4" appearance="full">
                                 <xf:textarea ref=".">
                                     <xf:label>Subtitle<span class="xforms-help">
@@ -896,7 +899,7 @@
                             <span class="legend">Part Number</span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_partNumber',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -1024,6 +1027,7 @@
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
+                            <br/>
                             <xf:group class="schema_3.3 schema_3.4" appearance="full">
                                 <xf:input ref="." class="text_100">
                                     <xf:label>Part Number<span class="xforms-help">
@@ -1044,7 +1048,7 @@
                             <span class="legend">Part Name</span>
                             <span class="xforms-hint">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-hint-value">
+                                <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_partName',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -1172,6 +1176,7 @@
                                     </xf:itemset>
                                 </xf:select1>
                             </xf:group>
+                            <br/>
                             <xf:group class="textarea schema_3.3 schema_3.4" appearance="full">
                                 <xf:textarea ref=".">
                                     <xf:label>Part Name<span class="xforms-help">
