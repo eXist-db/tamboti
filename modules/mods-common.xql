@@ -1,4 +1,4 @@
-module namespace modsCommon="http://exist-db.org/mods/common";
+module namespace mods-common="http://exist-db.org/mods/common";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
 declare namespace mads="http://www.loc.gov/mads/v2";
@@ -8,47 +8,52 @@ declare namespace e = "http://www.asia-europe.uni-heidelberg.de/";
 
 import module namespace config="http://exist-db.org/mods/config" at "config.xqm";
 
-declare variable $modsCommon:given-name-first-languages := ('eng', 'fre', 'ger', 'ita', 'por', 'spa');
-declare variable $modsCommon:no-word-space-languages := ('chi', 'jpn', 'kor');
+declare variable $mods-common:given-name-first-languages := ('eng', 'fre', 'ger', 'ita', 'por', 'spa');
+declare variable $mods-common:no-word-space-languages := ('chi', 'jpn', 'kor');
 
 (:
 Formatting functions:
-modsCommon:clean-up-punctuation()
-modsCommon:simple-row()
-modsCommon:add-part()
-modsCommon:serialize-list()
-modsCommon:remove-parent-with-missing-required-node()
+mods-common:clean-up-punctuation()
+mods-common:simple-row()
+mods-common:add-part()
+mods-common:serialize-list()
+mods-common:remove-parent-with-missing-required-node()
 functx:capitalize-first()
 functx:camel-case-to-words()
 functx:trim()
 
 Name-related functions:
-modsCommon:retrieve-names()
-modsCommon:format-name()
-modsCommon:get-name-order()
-modsCommon:get-role-label-for-list-view()
-modsCommon:format-multiple-names()
-modsCommon:retrieve-name()
+mods-common:retrieve-names()
+mods-common:format-name()
+mods-common:get-name-order()
+mods-common:get-role-label-for-list-view()
+mods-common:format-multiple-names()
+mods-common:retrieve-name()
+mods-common:retrieve-mads-names()    
+mods-common:names-full()
+mods-common:get-roles-for-detail-view()
+mods-common:get-role-terms-for-detail-view()
+mods-common:get-role-term-label-for-detail-view()
 
 Language-related function:
-modsCommon:get-language-label()
-modsCommon:get-script-label()
+mods-common:get-language-label()
+mods-common:get-script-label()
 
 Subject-related functions:
-modsCommon:format-subjects()
+mods-common:format-subjects()
 
 Title-related functions:
-modsCommon:get-short-title()
+mods-common:get-short-title()
 
 Related Items-related functions:
-modsCommon:format-related-item()
+mods-common:format-related-item()
 
 Place, Date, Extent-related functions:
-modsCommon:get-part-and-origin()
-modsCommon:get-publisher()
-modsCommon:get-place()
-modsCommon:get-date()
-modsCommon:get-extent()
+mods-common:get-part-and-origin()
+mods-common:get-publisher()
+mods-common:get-place()
+mods-common:get-date()
+mods-common:get-extent()
 :)
 
 
@@ -58,7 +63,7 @@ modsCommon:get-extent()
 : @return
 :)
 (: Function to clean up unintended punctuation. These should ideally be removed at the source. :)
-declare function modsCommon:clean-up-punctuation($element as node()) as node() {
+declare function mods-common:clean-up-punctuation($element as node()) as node() {
 	element {node-name($element)}
 		{$element/@*,
 			for $child in $element/node()
@@ -82,7 +87,7 @@ declare function modsCommon:clean-up-punctuation($element as node()) as node() {
 					, '\.,', ',')
 					, '\?:', '?')
 					, '\?', '?')
-				else modsCommon:clean-up-punctuation($child)
+				else mods-common:clean-up-punctuation($child)
       }
 };
 
@@ -94,7 +99,7 @@ declare function modsCommon:clean-up-punctuation($element as node()) as node() {
 : @param $label
 : @return element(tr)
 :)
-declare function modsCommon:simple-row($data as item()?, $label as xs:string) as element(tr)? {
+declare function mods-common:simple-row($data as item()?, $label as xs:string) as element(tr)? {
     for $d in $data
     return
         <tr xmlns="http://www.w3.org/1999/xhtml">
@@ -111,7 +116,7 @@ declare function modsCommon:simple-row($data as item()?, $label as xs:string) as
 : @param $sep
 : @return element(tr)
 :)
-declare function modsCommon:add-part($part, $sep as xs:string?) {
+declare function mods-common:add-part($part, $sep as xs:string?) {
     (:If there is no part or if the first part there is has no string contents.:)
     if (empty($part) or not(string($part[1]))) 
     then ()
@@ -130,7 +135,7 @@ declare function modsCommon:add-part($part, $sep as xs:string?) {
 : @param $sequence-count The count of this sequence (also used by the calling function)
 : @return A string
 :)
-declare function modsCommon:serialize-list($sequence as item()+, $sequence-count as xs:integer) as xs:string {       
+declare function mods-common:serialize-list($sequence as item()+, $sequence-count as xs:integer) as xs:string {       
     if ($sequence-count eq 1)
         then $sequence
         else
@@ -153,11 +158,11 @@ declare function modsCommon:serialize-list($sequence as item()+, $sequence-count
 };
 
 (:~
-: The <em>modsCommon:remove-parent-with-missing-required-node</em> function removes titleIfo, name and relatedItem elements that do not contain children required by the respective elements. 
+: The <em>mods-common:remove-parent-with-missing-required-node</em> function removes titleIfo, name and relatedItem elements that do not contain children required by the respective elements. 
 : @param $node A mods element, either mods:mods or mods:relatedItem.
 : @return The same element, with parents with children without required children removed.
 :)
-declare function modsCommon:remove-parent-with-missing-required-node($node as node()) as node() {
+declare function mods-common:remove-parent-with-missing-required-node($node as node()) as node() {
 element {node-name($node)} 
 {
 for $element in $node/*
@@ -218,7 +223,7 @@ declare function functx:trim($arg as xs:string?) as xs:string {
  
 
 (:~
-: The <b>modsCommon:get-short-title</b> function returns 
+: The <b>mods-common:get-short-title</b> function returns 
 : a compact title for list view, for subject in detail view, and for related items in list and detail view.
 : The function seeks to approach the Chicago style.
 :
@@ -230,7 +235,7 @@ declare function functx:trim($arg as xs:string?) as xs:string {
 : @param $entry The MODS entry as a whole or a relatedItem element
 : @return The titleInfo formatted as XHTML.
 :)
-declare function modsCommon:get-short-title($entry as element()) {
+declare function mods-common:get-short-title($entry as element()) {
     (: If the entry has a related item of @type host with an extent in part, it is a periodical article or a contribution to an edited volume and the title should be enclosed in quotation marks. :)
     (: In order to avoid having to iterate through the (extremely rare) instances of multiple elements and in order to guard against cardinality errors in faulty records duplicating elements that are supposed to be unique, a lot of filtering for first child is performed. :)
     
@@ -369,7 +374,7 @@ declare function modsCommon:get-short-title($entry as element()) {
 };
 
 (:~
-: The <b>modsCommon:get-language-label</b> function returns 
+: The <b>mods-common:get-language-label</b> function returns 
 : the <b>human-readable label</b> of the language value passed to it.  
 : This value can set in many MODS elements and attributes. 
 : The language-string can have two types, text and code.
@@ -386,7 +391,7 @@ declare function modsCommon:get-short-title($entry as element()) {
 : @param $language-string The string value of an attribute or element recording the language used within a certain element or in the MODS record as a whole, in textual or coded form
 : @return $language-label A human-readable language label
 :)
-declare function modsCommon:get-language-label($languageTerm as xs:string) as xs:string* {
+declare function mods-common:get-language-label($languageTerm as xs:string) as xs:string* {
         let $language-label :=
             let $language-label := doc(concat($config:edit-app-root, '/code-tables/language-3-type-codes.xml'))/code-table/items/item[value eq $languageTerm]/label
             return
@@ -417,7 +422,7 @@ declare function modsCommon:get-language-label($languageTerm as xs:string) as xs
 };
 
 (:~
-: The <b>modsCommon:get-script-label</b> function returns 
+: The <b>mods-common:get-script-label</b> function returns 
 : the <b>human-readable label</b> of the script value passed to it.
 : This value can set in many MODS elements and attributes. 
 : The language-string can have two types, text and code.
@@ -428,7 +433,7 @@ declare function modsCommon:get-language-label($languageTerm as xs:string) as xs
 : @param $scriptTerm The string value of an element or attribute recording a script, in textual or coded form
 : @return $script-label A human-readable script label
 :)
-declare function modsCommon:get-script-label($scriptTerm as xs:string) as xs:string* {
+declare function mods-common:get-script-label($scriptTerm as xs:string) as xs:string* {
         let $scriptTerm-upper-case := upper-case($scriptTerm)
 
         let $script-label :=
@@ -446,10 +451,10 @@ declare function modsCommon:get-script-label($scriptTerm as xs:string) as xs:str
 };
 
 (: Retrieves names. :)
-(: Called from modsCommon:format-multiple-names() :)
+(: Called from mods-common:format-multiple-names() :)
 (:~
-: The <b>modsCommon:retrieve-names(</b> function returns 
-: a a sequence of names to be passed to modsCommon:retrieve-name().  
+: The <b>mods-common:retrieve-names(</b> function returns 
+: a a sequence of names to be passed to mods-common:retrieve-name().  
 : The function seeks to approach the Chicago style.
 :
 : @author Wolfgang M. Meier
@@ -461,18 +466,16 @@ declare function modsCommon:get-script-label($scriptTerm as xs:string) as xs:str
 : @param $global-language The value set for the language of the resource catalogued, set in language/languageTerm
 : @return The name formatted as XHTML.
 :)
-declare function modsCommon:retrieve-names(
+declare function mods-common:retrieve-names(
         $entry as element()*, $destination as xs:string, 
         $global-transliteration as xs:string?, $global-language as xs:string?) {
     for $name at $position in $entry/mods:name
     return
-    <span xmlns="http://www.w3.org/1999/xhtml" class="name">{modsCommon:retrieve-name($name, $position, $destination, $global-transliteration, $global-language)}</span>
+    <span xmlns="http://www.w3.org/1999/xhtml" class="name">{mods-common:retrieve-name($name, $position, $destination, $global-transliteration, $global-language)}</span>
 };
 
-
-
 (:~
-: The <b>modsCommon:format-name(</b> function returns 
+: The <b>mods-common:format-name(</b> function returns 
 : a formatted name. The function returns the name as it appears in first place in a list of names, with family name first, 
 : and as it appears elsewhere, with given name first. The case of names in a script that is also transliterated is covered.
 : If the name has an authoritative form according to a MADS record, this form is rendered.
@@ -490,7 +493,7 @@ declare function modsCommon:retrieve-names(
 : @param $global-language The value set for the language of the resource catalogued, set in language/languageTerm
 : @return The name formatted as XHTML.
 :)
-declare function modsCommon:format-name($name as element()?, $position as xs:integer, $destination as xs:string, $global-transliteration as xs:string?, $global-language as xs:string?) {	
+declare function mods-common:format-name($name as element()?, $position as xs:integer, $destination as xs:string, $global-transliteration as xs:string?, $global-language as xs:string?) {	
     (: Get the type of the name, personal, corporate, conference, or family. :)
     let $name-language := $name/@lang
     let $name-type := $name/@type
@@ -593,7 +596,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
     	                    (:If we know for sure that no transliteration is used anywhere in the name, then grab the parts in which Western script is used or in which no script is set.:) 
     	                    then <name>{$name/*:namePart[not(@transliteration)][(not(@script) or @script = ('Latn', 'latn', 'Latin'))]}</name>
                         	(:If we know for sure that transliteration is used somewhere in the name, then grab the untransliterated parts.:)
-                        	else <name>{$name/*:namePart[(@lang = $modsCommon:given-name-first-languages or not(@lang)) and not(@transliteration)]}</name>
+                        	else <name>{$name/*:namePart[(@lang = $mods-common:given-name-first-languages or not(@lang)) and not(@transliteration)]}</name>
                         	(:else <name>{$name/*:namePart[not(@transliteration)]}</name>:)
                         (:let $log := util:log("DEBUG", ("##$name-basic): ", $name-basic)):)
                         (: If there is transliteration, there are nameParts with transliteration. 
@@ -613,7 +616,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                         and which do not have script set to Latin, and which do not have English as their language. :)
                         let $name-in-non-latin-script := 
     	                    if ($name-contains-transliteration)
-    	                    then <name>{$name/*:namePart[(not(@transliteration) or not(string(@transliteration)))][(@script)][not(@script = ('Latn', 'latn', 'Latin'))][not(@lang = $modsCommon:given-name-first-languages)]}</name>
+    	                    then <name>{$name/*:namePart[(not(@transliteration) or not(string(@transliteration)))][(@script)][not(@script = ('Latn', 'latn', 'Latin'))][not(@lang = $mods-common:given-name-first-languages)]}</name>
     	                    else ()
                         (:let $log := util:log("DEBUG", ("##$name-in-non-latin-script): ", $name-in-non-latin-script)):)
                         (:Switch around $name-in-non-latin-script and $name-basic if there is $name-in-transliteration. 
@@ -645,7 +648,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                 let $termsOfAddress-basic := <name>{$name-basic/*:namePart[@type eq 'termsOfAddress']}</name>
                                 let $untyped-name-basic := <name>{$name-basic/*:namePart[not(@type)]}</name>
                                 (: $date-basic already has the date. :)
-                                (: To get the name order, get the language of the namePart and send it to modsCommon:get-name-order(), along with higher-level language values. :)
+                                (: To get the name order, get the language of the namePart and send it to mods-common:get-name-order(), along with higher-level language values. :)
                                 let $language-basic := 
                                     if ($family-name-basic/*:namePart/@lang)
                                     then $family-name-basic/*:namePart/@lang
@@ -660,7 +663,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                 then $untyped-name-basic/*:namePart/@lang
                                                 else ()
                                 (:let $log := util:log("DEBUG", ("##$language-basic): ", $language-basic)):)
-                                let $nameOrder-basic := modsCommon:get-name-order(distinct-values($language-basic), distinct-values($name-language), $global-language)
+                                let $nameOrder-basic := mods-common:get-name-order(distinct-values($language-basic), distinct-values($name-language), $global-language)
                                 (:let $log := util:log("DEBUG", ("##$nameOrder-basic): ", $nameOrder-basic)):)
                                 return
                                     if (string($untyped-name-basic))
@@ -748,7 +751,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                             , 
                             (: ## 2 ##:)
                             (: If there is a "European" name, enclose the transliterated and Eastern script name in parenthesis. :)
-                            if ($name/*:namePart[@lang  = $modsCommon:given-name-first-languages])
+                            if ($name/*:namePart[@lang  = $mods-common:given-name-first-languages])
                             then ' ('
                             else ()
                             ,
@@ -759,7 +762,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                 let $family-name-in-transliteration := <name>{$name-in-transliteration/*:namePart[@type eq 'family']}</name>
                                 let $given-name-in-transliteration := <name>{$name-in-transliteration/*:namePart[@type eq 'given']}</name>
                                 let $termsOfAddress-in-transliteration := <name>{$name-in-transliteration/*:namePart[@type eq 'termsOfAddress']}</name>
-                                (: To get the name order, get the language of the namePart and send it to modsCommon:get-name-order(), along with higher-level language values. :)
+                                (: To get the name order, get the language of the namePart and send it to mods-common:get-name-order(), along with higher-level language values. :)
                                 let $language-in-transliteration := 
                                     if ($family-name-in-transliteration/*:namePart/@lang)
                                     then $family-name-in-transliteration/*:namePart/@lang
@@ -773,7 +776,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                 if ($untyped-name-in-transliteration/*:namePart/@lang)
                                                 then $untyped-name-in-transliteration/*:namePart/@lang
                                                 else ()
-                                let $nameOrder-in-transliteration := modsCommon:get-name-order($language-in-transliteration, distinct-values($name-language), $global-language)                                
+                                let $nameOrder-in-transliteration := mods-common:get-name-order($language-in-transliteration, distinct-values($name-language), $global-language)                                
                                 return       
                                     (: If there are name parts that are not typed, there is nothing we can do to order their sequence. :)
                                     if (string($untyped-name-in-transliteration))
@@ -854,7 +857,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
                                                         if ($untyped-name-in-non-latin-script/*:namePart/@lang)
                                                         then $untyped-name-in-non-latin-script/*:namePart/@lang
                                                         else ()
-                                        let $nameOrder-in-non-latin-script := modsCommon:get-name-order($language-in-non-latin-script, distinct-values($name-language), $global-language)
+                                        let $nameOrder-in-non-latin-script := mods-common:get-name-order($language-in-non-latin-script, distinct-values($name-language), $global-language)
                                         return       
                                             if (string($untyped-name-in-non-latin-script))
                                             (: If the name parts are not typed, there is nothing we can do to order their sequence. When name parts are not typed, it is generally because the whole name occurs in one name part, formatted for display (usually with a comma between family and given name), but it may also be used when names that cannot be divided into family and given names are in evidence. We trust that any sequence of nameparts are meaningfully ordered and string-join them. :)
@@ -930,7 +933,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
     };
 
 (:~
-: The <b>modsCommon:get-name-order</b> function returns 
+: The <b>mods-common:get-name-order</b> function returns 
 : 'family-given' for languages in which the family name occurs,
 : according to the code-table language-3-type-codes.xml.
 : before the given name.
@@ -941,7 +944,7 @@ declare function modsCommon:format-name($name as element()?, $position as xs:int
 : @param $global-language The string value of mods/language/languageTerm
 : @return $nameOrder The string 'family-given' or the empty string
 :)
-declare function modsCommon:get-name-order($namePart-language as xs:string*, $name-language as xs:string*, $global-language as xs:string?) {
+declare function mods-common:get-name-order($namePart-language as xs:string*, $name-language as xs:string*, $global-language as xs:string?) {
     let $language :=
         (:This appears to be needed if several namePart have @lang and name does not. We assume that they have the same @lang.:)
         if (distinct-values($namePart-language))
@@ -958,7 +961,7 @@ declare function modsCommon:get-name-order($namePart-language as xs:string*, $na
 };
 
 (:~
-: The <em>modsCommon:get-role-label-for-list-view</em> function returns 
+: The <em>mods-common:get-role-label-for-list-view</em> function returns 
 : the <em>human-readable value</em> of the roleTerm passed to it.
 : Whereas mods:get-role-label-for-detail-view returns the author/creator roles that are placed in front of the title in detail view,
 : mods:get-role-label-for-detail-view returns the secondary roles that are placed after the title in list view and in relatedItem in detail view.: The value occurs in mods/name/role/roleTerm.
@@ -970,7 +973,7 @@ declare function modsCommon:get-name-order($namePart-language as xs:string*, $na
 : @param $node A mods element or attribute recording a role term value, in textual or coded form
 : @return The role term label string
 :)
-declare function modsCommon:get-role-label-for-list-view($roleTerm as xs:string?) as xs:string* {
+declare function mods-common:get-role-label-for-list-view($roleTerm as xs:string?) as xs:string* {
         let $roleLabel :=
             let $roleLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/code-table/items/item[upper-case(label) eq upper-case($roleTerm)]/labelSecondary
             (: Prefer labelSecondary, since it contains the form presented in the list view output, e.g. "edited by" instead of "editor". :)
@@ -1000,7 +1003,7 @@ declare function modsCommon:get-role-label-for-list-view($roleTerm as xs:string?
 
 
 (:~
-: The <b>modsCommon:format-multiple-names</b> function returns
+: The <b>mods-common:format-multiple-names</b> function returns
 : names for list view and for related items. 
 : The function is called from two positions. 
 : One is for names of authors etc. that are positioned before the title.
@@ -1017,12 +1020,12 @@ declare function modsCommon:get-role-label-for-list-view($roleTerm as xs:string?
 : @param $global-language The value set for the language of the resource catalogued, set in language/languageTerm
 : @return The string rendition of the name
 :)
-declare function modsCommon:format-multiple-names($entry as element()*, $destination as xs:string, $global-transliteration as xs:string?, $global-language as xs:string?) as xs:string? {
-    let $names := modsCommon:retrieve-names($entry, $destination, $global-transliteration, $global-language)
+declare function mods-common:format-multiple-names($entry as element()*, $destination as xs:string, $global-transliteration as xs:string?, $global-language as xs:string?) as xs:string? {
+    let $names := mods-common:retrieve-names($entry, $destination, $global-transliteration, $global-language)
     let $nameCount := count($names)
     let $formatted :=
         if ($nameCount gt 0) 
-        then modsCommon:serialize-list($names, $nameCount)
+        then mods-common:serialize-list($names, $nameCount)
         (:NB: Original function removed any trailing periods, with functx:substring-before-last-match($names, '\.'). Move to function called.:)
         else ()
     return <span xmlns="http://www.w3.org/1999/xhtml" class="name">{normalize-space($formatted)}</span>
@@ -1045,9 +1048,9 @@ declare function modsCommon:format-multiple-names($entry as element()*, $destina
 :)
 (: NB: also used in search.xql ?:)
 (: Each name in the list view should have an authority name added to it in parentheses, if it exists and is different from the name as given in the MODS record. :)
-declare function modsCommon:retrieve-name($name as element(), $position as xs:int, $destination as xs:string, 
+declare function mods-common:retrieve-name($name as element(), $position as xs:int, $destination as xs:string, 
     $global-transliteration as xs:string?, $global-language as xs:string?) {    
-    let $mods-name := modsCommon:format-name($name, $position, $destination, $global-transliteration, $global-language)
+    let $mods-name := mods-common:format-name($name, $position, $destination, $global-transliteration, $global-language)
     let $mads-reference := replace($name/@xlink:href, '^#?(.*)$', '$1')
     return
         if ($mads-reference)
@@ -1059,7 +1062,7 @@ declare function modsCommon:retrieve-name($name as element(), $position as xs:in
             let $mads-preferred-name :=
                 if (empty($mads-record)) 
                 then ()
-                else modsCommon:format-name($mads-record/mads:name, 1, $destination, $global-transliteration, $global-language)
+                else mods-common:format-name($mads-record/mads:name, 1, $destination, $global-transliteration, $global-language)
             let $mads-preferred-name-display :=
                 if (empty($mads-preferred-name))
                 then ()
@@ -1072,7 +1075,157 @@ declare function modsCommon:retrieve-name($name as element(), $position as xs:in
 };
 
 (:~
-: The <b>modsCommon:format-subjects</b> function returns 
+: The <b>mods-common:retrieve-mads-names</b> function returns
+: the preferred name from the MADS authority file by means of xlink:href.    
+: @param $name A name element in a MODS record
+: @param $position  The position of the name in a list of names
+: @param $destination The function that calls the format-name function passes here the values 'detail', 'list', or 'list-first' according to its destination
+: @return A string representation of the preferred name.
+:)
+declare function mods-common:retrieve-mads-names($name as element(), $position as xs:int, $destination as xs:string) as xs:string {    
+    let $mads-reference := replace($name/@xlink:href, '^#?(.*)$', '$1')
+    let $mads-record :=
+        if (empty($mads-reference)) 
+        then ()        
+        else collection($config:mads-collection)/mads:mads[@ID eq $mads-reference]
+    let $mads-preferred-name :=
+        if (empty($mads-record)) 
+        then ()
+        else $mads-record/mads:authority/mads:name
+    let $mads-preferred-name-formatted := mods-common:format-name($mads-preferred-name, 1, 'list-first', '', '')
+    let $mads-variant-names := $mads-record/mads:variant/mads:name
+    let $mads-variant-name-nos := count($mads-record/mads:variant/mads:name)
+    let $mads-variant-names-formatted := 
+    	string-join(
+	    	for $name in $mads-variant-names 
+    		return mods-common:format-name($name, 1, 'list-first', '', '')
+    	, ', ')
+    return
+        if ($mads-preferred-name)
+        then 
+        	concat
+        		(
+        		' (Preferred Name: ', 
+        		$mads-preferred-name-formatted, 
+        			if ($mads-variant-name-nos eq 1) 
+        			then '; Variant Name: ' 
+        			else '; Variant Names: '
+        		, 
+        		$mads-variant-names-formatted
+        		, 
+        		')'
+        		)
+        else ()
+};
+
+(:~
+: The <b>mods-common:names-full</b> function returns
+: the full representation of a name for the detail view.    
+: @param $entry A MODS record
+: @param $global-transliteration The value set for the transliteration scheme to be used in the record as a whole, set in e:extension
+: @param $global-language The string value of mods/language/languageTerm
+: @return A <tr> with the full representation of a name. 
+:)
+declare function mods-common:names-full($entry as element(), $global-transliteration, $global-language) {
+        (: NB: conference? :)
+        let $names := $entry/*:name[@type = ('personal', 'corporate', 'family') or not(@type)]
+        for $name in $names
+        return
+                <tr xmlns="http://www.w3.org/1999/xhtml"><td class="label">
+                    {
+                    mods-common:get-roles-for-detail-view($name)
+                    }
+                </td><td class="record">
+                    {
+                    mods-common:format-name($name, 1, 'list-first', $global-transliteration, $global-language)
+                    }
+                    {
+                    if ($name/@xlink:href)
+                    then mods-common:retrieve-mads-names($name, 1,'list-first')
+                    else ()
+                    }</td>
+                
+                </tr>
+};
+
+(:~
+: The <em>mods-common:get-roles-for-detail-view()</em> function returns the roles of the name passed to it.
+: It is used in mods-common:names-full().
+: It sends these to mods-common:get-role-terms-for-detail-view() to obtain the terms used to designate the roles, 
+: and for each of these terms a human-readbale label is found by mods-common:get-role-term-label-for-detail-view().
+: Whereas mods-common:get-roles-for-detail-view() returns the author/creator roles that are placed in front of the title in detail view,
+: mods-common:get-role-label-for-list-view() returns the secondary roles that are placed after the title in list view and in relatedItem in detail view.
+:
+: @param $name A mods element recording a name, in code or as a human-readable label
+: @return The role term label string
+:)
+declare function mods-common:get-roles-for-detail-view($name as element()*) as xs:string* {
+    if ($name/mods:role/mods:roleTerm/text())
+    then
+        let $distinct-role-labels := distinct-values(mods-common:get-role-terms-for-detail-view($name/mods:role))
+        let $distinct-role-labels-count := count($distinct-role-labels)
+            return
+                if ($distinct-role-labels-count gt 0)
+                then
+                    mods-common:serialize-list($distinct-role-labels, $distinct-role-labels-count)
+                else ()
+    else
+        (: Supply a default value in the absence of any role term. :)
+        if ($name/@type eq 'corporate')
+        then 'Corporate Author'
+        else 'Author'
+};
+
+(:~
+: The <em>mods-common:get-role-terms-for-detail-view()</em> function returns the role terms of the roles passed to it.
+: It is used in mods-common:get-roles-for-detail-view().
+: It sends these to mods-common:get-role-term-label-for-detail-view() to obtain a human-readbale label.
+: Whereas mods-common:get-roles-for-detail-view() returns the author/creator roles that are placed in front of the title in detail view,
+: mods-common:get-role-label-for-list-view() returns the secondary roles that are placed after the title in list view and in relatedItem in detail view.
+: The function returns a sequences of human-readable labels, based on searches in the code values and in the label values.  
+:
+: @param $element A mods element recording a role
+: @return The role term string
+:)
+declare function mods-common:get-role-terms-for-detail-view($role as element()*) as xs:string* {
+    let $roleTerms := $role/mods:roleTerm
+    for $roleTerm in distinct-values($roleTerms)
+        return
+    	    if ($roleTerm)
+    	    then mods-common:get-role-term-label-for-detail-view($roleTerm)
+    	    else ()
+};
+
+(:~
+: The <em>mods-common:get-role-term-label-for-detail-view()</em> function returns the <em>human-readable value</em> of the role term passed to it.
+: It is used in mods-common:get-role-terms-for-detail-view().
+: Type code can use the marcrelator authority, recorded in the code table role-codes.xml.
+: The most commonly used values are checked first, letting the function exit quickly.
+: The function returns the human-readable label, based on look-ups in the code values and in the label values.  
+:
+: @param $node A role term value string
+: @return The role term label string
+:)
+declare function mods-common:get-role-term-label-for-detail-view($roleTerm as xs:string?) as xs:string* {        
+        let $roleTermLabel :=
+            (: Is the roleTerm itself a role label, i.e. is the full form used in the document? :)
+            let $roleTermLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/code-table/items/item[upper-case(label) eq upper-case($roleTerm)]/label
+            (: Prefer the label proper, since it contains the form presented in the detail view, e.g. "Editor" instead of "edited by". :)
+            return
+                if ($roleTermLabel)
+                then $roleTermLabel
+                else
+                    (: Is the roleTerm a coded role term? :)
+                    let $roleTermLabel := doc(concat($config:edit-app-root, '/code-tables/role-codes.xml'))/code-table/items/item[value eq $roleTerm]/label
+                    return
+                        if ($roleTermLabel)
+                        then $roleTermLabel
+                        else $roleTerm
+        return  functx:capitalize-first($roleTermLabel)
+};
+
+(:~
+: The <b>mods-common:format-subjects</b> function returns 
 : a table-formatted representation of each MODS subject.
 : The values for topic, geographic, temporal, titleInfo, name, 
 : genre, hierarchicalGeographic, cartographics, geographicCode, occupation are represented in subtables.
@@ -1084,7 +1237,7 @@ declare function modsCommon:retrieve-name($name as element(), $position as xs:in
 : @see http://www.loc.gov/standards/mods/userguide/subject.html
 : @return $nameOrder The string 'family-given' or the empty string
 :)
-declare function modsCommon:format-subjects($entry as element(), $global-transliteration as xs:string?, $global-language as xs:string?) as element()+ {
+declare function mods-common:format-subjects($entry as element(), $global-transliteration as xs:string?, $global-language as xs:string?) as element()+ {
     for $subject in $entry/mods:subject
     let $authority := 
         if (string($subject/@authority)) 
@@ -1128,11 +1281,11 @@ declare function modsCommon:format-subjects($entry as element(), $global-transli
                         {
                         (: If it is a name. :)
                             if ($item/name() eq 'name')
-                            then modsCommon:format-name($item, 1, 'list-first', $global-transliteration, $global-language)
+                            then mods-common:format-name($item, 1, 'list-first', $global-transliteration, $global-language)
                             else
                                 (: If it is a titleInfo. :)
                                 if ($item/name() eq 'titleInfo')
-                                then string-join(modsCommon:get-short-title(<titleInfo>{$item}</titleInfo>), '')
+                                then string-join(mods-common:get-short-title(<titleInfo>{$item}</titleInfo>), '')
                                 else
                                     (: If it is something else, no special formatting takes place. :)
                                     for $subitem in ($item/mods:*)
@@ -1181,7 +1334,7 @@ declare function modsCommon:format-subjects($entry as element(), $global-transli
 };
 
 (:~
-: The <b>modsCommon:format-related-item</b> function returns 
+: The <b>mods-common:format-related-item</b> function returns 
 : a compact presentation of a relatedItem for the detail view of the item that related to it.
 : The function seeks to approach the Chicago style.
 :
@@ -1192,8 +1345,8 @@ declare function modsCommon:format-subjects($entry as element(), $global-transli
 : @param $global-language  The value set for the language of the resource catalogued, set in language/languageTerm
 : @return The relatedItem formatted as XHTML.
 :)
-declare function modsCommon:format-related-item($relatedItem as element(mods:relatedItem), $global-language as xs:string?, $collection-short as xs:string) {
-	let $relatedItem := modsCommon:remove-parent-with-missing-required-node($relatedItem)
+declare function mods-common:format-related-item($relatedItem as element(mods:relatedItem), $global-language as xs:string?, $collection-short as xs:string) {
+	let $relatedItem := mods-common:remove-parent-with-missing-required-node($relatedItem)
 	let $global-transliteration := $relatedItem/../mods:extension/e:transliterationOfResource/text()
 	(:If several terms are used for the same role, we assume them to be synonymous.:)
 	let $relatedItem-role-terms := distinct-values($relatedItem/mods:name/mods:role/mods:roleTerm[1])
@@ -1203,12 +1356,12 @@ declare function modsCommon:format-related-item($relatedItem as element(mods:rel
 	   return lower-case($relatedItem-role-term)
 	   )
 	return
-        modsCommon:clean-up-punctuation
+        mods-common:clean-up-punctuation
         (
             <result>{(
                 (:Display author roles:)
                 if ($relatedItem-role-terms = $mods:author-roles or not($relatedItem-role-terms))
-                then modsCommon:format-multiple-names($relatedItem, 'list-first', $global-transliteration, $global-language)
+                then mods-common:format-multiple-names($relatedItem, 'list-first', $global-transliteration, $global-language)
                 else ()
                 ,
                 if ($relatedItem-role-terms = $mods:author-roles)
@@ -1218,7 +1371,7 @@ declare function modsCommon:format-related-item($relatedItem as element(mods:rel
                 (:Get title:)
                 if (contains($collection-short, 'Annotated%20Videos')) 
                 then ()
-                else modsCommon:get-short-title($relatedItem)
+                else mods-common:get-short-title($relatedItem)
                 ,
                 (:Display secondary roles.:)
                 (:Do not display these (editors) for periodicals, here interpreted as publications with issuance "continuing".:)
@@ -1239,13 +1392,13 @@ declare function modsCommon:format-related-item($relatedItem as element(mods:rel
                                                     (
                                                     ', '
                                                     ,
-                                                    modsCommon:get-role-label-for-list-view($roleTerm)
+                                                    mods-common:get-role-label-for-list-view($roleTerm)
                                                     ,
-                                                    modsCommon:format-multiple-names($names, 'secondary', $global-transliteration, $global-language)
+                                                    mods-common:format-multiple-names($names, 'secondary', $global-transliteration, $global-language)
                                                     )
                                                 else '.'
                 ,
-                modsCommon:get-part-and-origin($relatedItem)
+                mods-common:get-part-and-origin($relatedItem)
                 ,                
                 let $urls := $relatedItem/mods:location/mods:url
                 return
@@ -1268,7 +1421,7 @@ declare function modsCommon:format-related-item($relatedItem as element(mods:rel
                 then 
                     let $extent := $relatedItem/mods:part/mods:physicalDescription/mods:extent
                     return
-                    ('(Extent: ', modsCommon:get-extent($extent), ')')
+                    ('(Extent: ', mods-common:get-extent($extent), ')')
                 else ()
                 ,
                 if (contains($collection-short, 'Annotated%20Videos')) 
@@ -1285,7 +1438,7 @@ declare function modsCommon:format-related-item($relatedItem as element(mods:rel
 };
 
 (:~
-: The <b>modsCommon:get-part-and-origin</b> function returns 
+: The <b>mods-common:get-part-and-origin</b> function returns 
 : information relating to where a publication has been published and 
 : where in a container publication (periodical, edited volume) another publication occurs.
 : The function seeks to approach the Chicago style.
@@ -1305,17 +1458,17 @@ declare function modsCommon:format-related-item($relatedItem as element(mods:rel
 :)
 (: NB: This function should be split up in a part and an originInfo function.:)
 (: NB: where is the relatedItem type? :)
-declare function modsCommon:get-part-and-origin($entry as element()) as xs:string* {
+declare function mods-common:get-part-and-origin($entry as element()) as xs:string* {
     let $originInfo := $entry/mods:originInfo[1]
     (: contains: place, publisher, dateIssued, dateCreated, dateCaptured, dateValid, 
        dateModified, copyrightDate, dateOther, edition, issuance, frequency. :)
     (: has: lang; xml:lang; script; transliteration. :)
-    let $place := $originInfo/mods:place
+    let $place := $originInfo/mods:place[1]
     (: contains: placeTerm. :)
     (: has no attributes. :)
     (: handled by get-place(). :)
     
-    let $publisher := $originInfo/mods:publisher
+    let $publisher := $originInfo/mods:publisher[1]
     (: contains no subelements. :)
     (: has no attributes. :)
     (: handled by get-publisher(). :)
@@ -1323,22 +1476,22 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
     let $dateIssued := $originInfo/mods:dateIssued[1]
     (: contains no subelements. :)
     (: has: encoding; point; keyDate; qualifier. :)
-    let $dateCreated := $originInfo/mods:dateCreated
+    let $dateCreated := $originInfo/mods:dateCreated[1]
     (: contains no subelements. :)
     (: has: encoding; point; keyDate; qualifier. :)
-    let $dateCaptured := $originInfo/mods:dateCaptured
+    let $dateCaptured := $originInfo/mods:dateCaptured[1]
     (: contains no subelements. :)
     (: has: encoding; point; keyDate; qualifier. :)
-    let $dateValid := $originInfo/mods:dateValid
+    let $dateValid := $originInfo/mods:dateValid[1]
     (: contains no subelements. :)
     (: has: encoding; point; keyDate; qualifier. :)
-    let $dateModified := $originInfo/mods:dateModified
+    let $dateModified := $originInfo/mods:dateModified[1]
     (: contains no subelements. :)
     (: has: encoding; point; keyDate; qualifier. :)
-    let $copyrightDate := $originInfo/mods:copyrightDate
+    let $copyrightDate := $originInfo/mods:copyrightDate[1]
     (: contains no subelements. :)
     (: has: encoding; point; keyDate; qualifier. :)
-    let $dateOther := $originInfo/mods:dateOther
+    let $dateOther := $originInfo/mods:dateOther[1]
     (: contains no subelements. :)
     (: has: encoding; point; keyDate; qualifier. :)
     (: pick the "strongest" value for the hitlist. :)
@@ -1364,39 +1517,39 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
 						        if ($dateOther) 
 						        then $dateOther 
 						        else ()
-	let $dateOriginInfo := modsCommon:get-date($dateOriginInfo)
+	let $dateOriginInfo := mods-common:get-date($dateOriginInfo)
 	
     (: NB: this should iterate over part, since there are e.g. multi-part installments of articles. :)
     let $part := $entry/mods:part[1]
     (: contains: detail, extent, date, text. :)
     (: has: type, order, ID. :)
-    let $detail := $part/mods:detail
+    let $detail := $part/mods:detail[1]
     (: contains: number, caption, title. :)
     (: has: type, level. :)
-        let $issue := $detail[@type=('issue', 'number')]/mods:number[1]/text()
+        let $issue := $detail[@type = ('issue', 'number')]/mods:number[1]/text()
         let $volume := 
-        	if ($detail[@type='volume']/mods:number/text())
-        	then $detail[@type='volume']/mods:number/text()
-			(: NB: to accommodate erroneous Zotero export. Only number is valid. :)
-        	else $detail[@type='volume']/mods:text/text()
+        	if ($detail[@type = 'volume']/mods:number/text())
+        	then $detail[@type = 'volume']/mods:number/text()
+			(: NB: "text" is allowed to accommodate erroneous Zotero export. Only "number" is valid. :)
+        	else $detail[@type = 'volume']/mods:text/text()
         (: NB: Does $page exist? :)
-        let $page := $detail[@type='page']/mods:number/text()
+        let $page := $detail[@type = 'page']/mods:number/text()
         (: $page resembles list. :)
     
-    let $extent := $part/mods:extent
+    let $extent := $part/mods:extent[1]
     (: contains: start, end, total, list. :)
     (: has: unit. :)
-    (: handled by modsCommon:get-extent(). :)
+    (: handled by mods-common:get-extent(). :)
     
     (: NB: If the date of a periodical issue is wrongly put in originInfo/dateIssued. Delete when MODS export is corrected.:)
     let $datePart := 
-	    if ($part/mods:date) 
-	    then modsCommon:get-date($part/mods:date)
+	    if ($part/mods:date[1]) 
+	    then mods-common:get-date($part/mods:date)
 	    else $dateOriginInfo
     (: contains no subelements. :)
     (: has: encoding; point; qualifier. :)
     
-    let $text := $part/mods:text
+    let $text := $part/mods:text[1]
     (: contains no subelements. :)
     (: has no attributes. :)
     
@@ -1429,7 +1582,7 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
 				(: NB: We assume that there will not be both $page and $extent.:)
 				if ($extent) 
 				(:NB: iterate.:)
-				then concat(': ', modsCommon:get-extent($extent[1]), '.')
+				then concat(': ', mods-common:get-extent($extent[1]), '.')
 				else
 					if ($page) 
 					then concat(': ', $page[1], '.')
@@ -1447,13 +1600,13 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
                 if ($extent or $page)
                 then
                 	if ($volume and $extent)
-                	then concat(': ', modsCommon:get-extent($extent))
+                	then concat(': ', mods-common:get-extent($extent))
                 	else
 	                	if ($volume and $page)
 	                	then concat(': ', $page)
 	                	else
 	                		if ($extent)
-                			then concat(', ', modsCommon:get-extent($extent))
+                			then concat(', ', mods-common:get-extent($extent))
 		                	else
 		                		if ($page)
 	                			then concat(': ', $page)
@@ -1464,11 +1617,11 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
 	            	else ()
                 ,
                 if ($place)
-                then concat('. ', modsCommon:get-place($place))
+                then concat('. ', mods-common:get-place($place))
                 else ()
                 ,
                 if ($place and $publisher)
-                then (': ', modsCommon:get-publisher($publisher))
+                then (': ', mods-common:get-publisher($publisher))
                 else ()
                 ,
                 if ($datePart)
@@ -1486,7 +1639,7 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
             else
                 (
                 if ($place)
-                then modsCommon:get-place($place)
+                then mods-common:get-place($place)
                 else ()
                 ,
                 if ($publisher)
@@ -1494,11 +1647,11 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
 	                	if ($place)
 	                	then ': '
 	                	else ()
-                	, normalize-space(modsCommon:add-part(modsCommon:get-publisher($publisher), ', '))
+                	, normalize-space(mods-common:add-part(mods-common:get-publisher($publisher), ', '))
                 	)
                 else ()
                 , 
-                modsCommon:add-part
+                mods-common:add-part
                 (
                     $dateOriginInfo
                     , 
@@ -1508,7 +1661,7 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
                 )
                 ,
                 if (exists($extent/mods:start) or exists($extent/mods:end) or exists($extent/mods:list))
-                then (': ', modsCommon:get-extent($extent))            
+                then (': ', mods-common:get-extent($extent))            
                 else ()
                 ,
                 (: If it is a series:)
@@ -1525,7 +1678,7 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
 
 
 (:~
-: The <b>modsCommon:get-extent</b> function returns 
+: The <b>mods-common:get-extent</b> function returns 
 : information relating to the number of pages etc. of a publication. 
 : The function seeks to approach the Chicago style.
 
@@ -1536,7 +1689,7 @@ declare function modsCommon:get-part-and-origin($entry as element()) as xs:strin
 : @param $extent A MODS extent element
 : @return a string
 :)
-declare function modsCommon:get-extent($extent as element(mods:extent)?) as xs:string* {
+declare function mods-common:get-extent($extent as element(mods:extent)?) as xs:string* {
 let $unit := $extent/@unit
 let $start := $extent/mods:start
 let $end := $extent/mods:end
@@ -1572,7 +1725,7 @@ return
 };
 
 (:~
-: The <b>modsCommon:get-publisher(</b> function returns 
+: The <b>mods-common:get-publisher(</b> function returns 
 : information relating to the publisher of a publication. 
 : The function seeks to approach the Chicago style.
 
@@ -1582,14 +1735,14 @@ return
 : @param $extent A MODS publisher element from originInfo
 : @return an item
 :)
-declare function modsCommon:get-publisher($publishers as element(mods:publisher)*) as item()* {
+declare function mods-common:get-publisher($publishers as element(mods:publisher)*) as item()* {
         string-join(
 	        for $publisher in $publishers
 	        order by $publisher/@transliteration 
 	        return
 	        	(: NB: Using name here is an expansion of the MODS schema.:)
 	            if ($publisher/mods:name)
-	            then modsCommon:retrieve-name($publisher/mods:name, 1, 'secondary', '', '')
+	            then mods-common:retrieve-name($publisher/mods:name, 1, 'secondary', '', '')
 	            else $publisher
         , 
         (: If there is a transliterated publisher and an untransliterated publisher, probably only one publisher is referred to. :)
@@ -1601,7 +1754,7 @@ declare function modsCommon:get-publisher($publishers as element(mods:publisher)
 
 
 (:~
-: The <b>modsCommon:get-place(</b> function returns 
+: The <b>mods-common:get-place(</b> function returns 
 : information relating to the place of the domicile of the publisher of a publication. 
 : The function seeks to approach the Chicago style.
 
@@ -1611,8 +1764,8 @@ declare function modsCommon:get-publisher($publishers as element(mods:publisher)
 : @param $places One or more MODS place elements from originInfo
 : @return a string
 :)
-declare function modsCommon:get-place($places as element(mods:place)*) as xs:string {
-    modsCommon:serialize-list(
+declare function mods-common:get-place($places as element(mods:place)*) as xs:string {
+    mods-common:serialize-list(
         for $place in $places
         let $placeTerms := $place/mods:placeTerm
         return
@@ -1643,28 +1796,28 @@ declare function modsCommon:get-place($places as element(mods:place)*) as xs:str
 };
 
 (:~
-: The <b>modsCommon:get-date(</b> function returns 
+: The <b>mods-common:get-date(</b> function returns 
 : a date, either as a single date or as a span. 
 : The function seeks to approach the Chicago style.
 
 : @author Wolfgang M. Meier
 : @author Jens Østergaard Petersen
-: @see 
-: @param $places One or more MODS place elements from originInfo
+: @see http://www.loc.gov/standards/mods/userguide/origininfo.html#dateissued
+: @param $date a date element from originInfo
 : @return a string
 :)
-declare function modsCommon:get-date($date as element()*) as xs:string* {
+declare function mods-common:get-date($date as element()*) as xs:string* {
     (: contains no subelements. :)
     (: has: encoding; point; qualifier. :)
     (: NB: some dates have keyDate. :)
 
-let $start := $date[@point eq 'start']/text()
-let $end := $date[@point eq 'end']/text()
-let $qualifier := $date/@qualifier/text()
+let $start := $date[@point eq 'start']
+let $end := $date[@point eq 'end']
+let $qualifier := $date/@qualifier/string()
+(:let $encoding := $date/@encoding/string():)
 
-let $encoding := $date/@encoding
 return
-    (
+    concat(
     if ($start and $end) 
     then 
         if ($start ne $end)
@@ -1677,10 +1830,10 @@ return
             then concat($start, '-?')
             else concat('?-', $end)
         (: if neither $start nor $end. :)
-        else $date
+        else $date/string()
     ,
     if ($qualifier) 
-    then ('(', $qualifier, ')')
+    then concat(' (', $qualifier, ')')
     else ()
     )
 };
