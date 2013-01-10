@@ -305,10 +305,10 @@ let $user := session:get-attribute($security:SESSION_USER_ATTRIBUTE)
 let $last-modified := xmldb:last-modified($config:mods-temp-collection, concat($incoming-id,'.xml'))
 (:There is no way to store the user name in MODS, therefore it is stored in extension.:)
 let $last-modified-extension :=
-    <e:modified>
-        <e:when>{$last-modified}</e:when>
-        <e:who>{$user}</e:who>
-    </e:modified>
+    <ext:modified>
+        <ext:when>{$last-modified}</ext:when>
+        <ext:who>{$user}</ext:who>
+    </ext:modified>
 (: If we do not have an ID, then throw an error. :) 
 return
     if (string-length($incoming-id) eq 0)
