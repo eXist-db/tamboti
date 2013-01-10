@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: OK.--><!--hints moved to code-table: OK--><!--hints checked: OK--><!--saving of all nodes: OK-->
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-c" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ext="http://exist-db.org/mods/extension" class="compact block-form" tab-id="compact-c" ext:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
             <div class="label-box">
@@ -248,13 +248,13 @@
                             <div class="label-box">
                                 <span class="legend">Institutions(s) as Topic</span>
                                 <span class="add-delete-button">
-                                    <xf:trigger ref=".[string-length(mods:extension/e:transliterationOfResource) = 0]">
+                                    <xf:trigger ref=".[string-length(mods:extension/ext:transliterationOfResource) = 0]">
                                         <xf:label>+</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:insert nodeset="instance('save-data')/mods:name" at="index('subject-name-person-repeat')" position="before" origin="instance('compact-template')/mods:subject/mods:name[2]"/>
                                         </xf:action>
                                     </xf:trigger>
-                                    <xf:trigger ref=".[string-length(mods:extension/e:transliterationOfResource) &gt; 0]">
+                                    <xf:trigger ref=".[string-length(mods:extension/ext:transliterationOfResource) &gt; 0]">
                                         <xf:label>+</xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:insert nodeset="instance('save-data')/mods:name" at="index('subject-name-institution-repeat')" position="before" origin="instance('compact-template')/mods:name[2]"/>

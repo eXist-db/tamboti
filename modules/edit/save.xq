@@ -9,7 +9,7 @@ import module namespace security = "http://exist-db.org/mods/security" at "../se
 import module namespace uu = "http://exist-db.org/mods/uri-util" at "../search/uri-util.xqm";
 
 declare namespace mods = "http://www.loc.gov/mods/v3";
-declare namespace e="http://www.asia-europe.uni-heidelberg.de/";
+declare namespace ext="http://exist-db.org/mods/extension";
 
 declare function local:do-updates($item, $doc) {
     (: This first checks to see if we have a titleInfo in the saved document.  
@@ -259,27 +259,27 @@ declare function local:do-updates($item, $doc) {
     (:If there is an extension in $doc, check whether it has the required children and insert them if they are missing.:)
     if ($doc/mods:extension)
     then 
-    (:If there is no e:template in $doc/extension, insert one.:)
+    (:If there is no ext:template in $doc/extension, insert one.:)
         (
-        if ($doc/mods:extension/e:template)
+        if ($doc/mods:extension/ext:template)
         then ()
         else
-            update insert <e:template/>
+            update insert <ext:template/>
             into $doc/mods:extension
         ,
-        (:If there is no e:transliterationOfResource in $doc/extension, insert one.:)
-        if ($doc/mods:extension/e:transliterationOfResource)
+        (:If there is no ext:transliterationOfResource in $doc/extension, insert one.:)
+        if ($doc/mods:extension/ext:transliterationOfResource)
         then ()
         else
-            update insert <e:transliterationOfResource/>                    
+            update insert <ext:transliterationOfResource/>                    
             into $doc/mods:extension
         )
     (:If there is no extension in $doc, insert one with the required children.:)
     else
         update insert
-            <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://www.asia-europe.uni-heidelberg.de/">
-                <e:template/>
-                <e:transliterationOfResource/>
+            <extension xmlns="http://www.loc.gov/mods/v3" xmlns:ext="http://exist-db.org/mods/extension">
+                <ext:template/>
+                <ext:transliterationOfResource/>
             </extension>        
         into $doc
     

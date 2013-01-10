@@ -4,7 +4,7 @@ declare namespace mods="http://www.loc.gov/mods/v3";
 declare namespace mads="http://www.loc.gov/mads/v2";
 declare namespace functx="http://www.functx.com";
 declare namespace xlink="http://www.w3.org/1999/xlink";
-declare namespace e = "http://www.asia-europe.uni-heidelberg.de/";
+declare namespace ext="http://exist-db.org/mods/extension";
 
 import module namespace config="http://exist-db.org/mods/config" at "config.xqm";
 
@@ -54,6 +54,9 @@ mods-common:get-publisher()
 mods-common:get-place()
 mods-common:get-date()
 mods-common:get-extent()
+
+Type of Resource-related functions:
+
 :)
 
 
@@ -462,7 +465,7 @@ declare function mods-common:get-script-label($scriptTerm as xs:string) as xs:st
 : @see http://www.loc.gov/standards/mods/userguide/name.html
 : @param $entry The MODS element or relatedItem element
 : @param $destination The function that calls the format-name function passes here the values 'detail', 'list', or 'list-first' according to its destination
-: @param $global-transliteration The value set for the transliteration scheme to be used in the record as a whole, set in e:extension
+: @param $global-transliteration The value set for the transliteration scheme to be used in the record as a whole, set in ext:extension
 : @param $global-language The value set for the language of the resource catalogued, set in language/languageTerm
 : @return The name formatted as XHTML.
 :)
@@ -489,7 +492,7 @@ declare function mods-common:retrieve-names(
 : @param $name The MODS name element as it appears as a top level element or as an element elsewhere
 : @param $position The position of the name in a list of names
 : @param $destination The function that calls the format-name function passes here the values 'detail', 'list', or 'list-first' according to its destination
-: @param $global-transliteration The value set for the transliteration scheme to be used in the record as a whole, set in e:extension
+: @param $global-transliteration The value set for the transliteration scheme to be used in the record as a whole, set in ext:extension
 : @param $global-language The value set for the language of the resource catalogued, set in language/languageTerm
 : @return The name formatted as XHTML.
 :)
@@ -1016,7 +1019,7 @@ declare function mods-common:get-role-label-for-list-view($roleTerm as xs:string
 : The absence of a role term is also interpreted as the attribution of authorship, so a name without a role term will also be positioned before the title.
 : @param $entry A mods entry
 : @param $destination A string indication whether the name is to be formatted for use in 'list' or 'detail' view 
-: @param $global-transliteration The value set for the transliteration scheme to be used in the record as a whole, set in e:extension
+: @param $global-transliteration The value set for the transliteration scheme to be used in the record as a whole, set in ext:extension
 : @param $global-language The value set for the language of the resource catalogued, set in language/languageTerm
 : @return The string rendition of the name
 :)
@@ -1041,7 +1044,7 @@ declare function mods-common:format-multiple-names($entry as element()*, $destin
 : @param $name A name element in a MODS record
 : @param $position The position of the name in a sequence of names
 : @param $destination The function that calls the format-name function passes here the values 'detail', 'list', or 'list-first' according to its destination
-: @param $global-transliteration The value set for the transliteration scheme to be used in the record as a whole, set in e:extension
+: @param $global-transliteration The value set for the transliteration scheme to be used in the record as a whole, set in ext:extension
 : @param $global-language The string value of mods/language/languageTerm
 : @see http://www.loc.gov/standards/mods/userguide/name.html
 : @return 
@@ -1122,7 +1125,7 @@ declare function mods-common:retrieve-mads-names($name as element(), $position a
 : The <b>mods-common:names-full</b> function returns
 : the full representation of a name for the detail view.    
 : @param $entry A MODS record
-: @param $global-transliteration The value set for the transliteration scheme to be used in the record as a whole, set in e:extension
+: @param $global-transliteration The value set for the transliteration scheme to be used in the record as a whole, set in ext:extension
 : @param $global-language The string value of mods/language/languageTerm
 : @return A <tr> with the full representation of a name. 
 :)
@@ -1197,7 +1200,8 @@ declare function mods-common:get-role-terms-for-detail-view($role as element()*)
 };
 
 (:~
-: The <em>mods-common:get-role-term-label-for-detail-view()</em> function returns the <em>human-readable value</em> of the role term passed to it.
+: The <em>mods-common:get-role-term-label-for-detail-view()</em> function 
+: returns the <em>human-readable value</em> of the role term passed to it.
 : It is used in mods-common:get-role-terms-for-detail-view().
 : Type code can use the marcrelator authority, recorded in the code table role-codes.xml.
 : The most commonly used values are checked first, letting the function exit quickly.
@@ -1224,6 +1228,51 @@ declare function mods-common:get-role-term-label-for-detail-view($roleTerm as xs
         return  functx:capitalize-first($roleTermLabel)
 };
 
+
+(:~
+: The <em>mods-common:get-conference-hitlist()</em> function 
+: returns a string consisting of three parts,
+: 'Paper presented at' plus the name of the conference plus the date of the presentation.
+:
+: @param $node A MODS record
+: @return A string containing information about which conference a paper was presented and at which date 
+:)
+declare function mods-common:get-conference-hitlist($entry as element(mods:mods)) as xs:string {
+    let $date := 
+        (
+            string($entry/mods:originInfo[1]/mods:dateIssued[1]), 
+            string($entry/mods:part/mods:date[1]),
+            string($entry/mods:originInfo[1]/mods:dateCreated[1])
+        )
+    let $conference := $entry/mods:name[@type eq 'conference']/mods:namePart
+    return
+    if ($conference) 
+    then
+        concat('Paper presented at ', 
+            mods-common:add-part(string($conference), ', '),
+            mods-common:add-part($entry/mods:originInfo[1]/mods:place[1]/mods:placeTerm[1], ', '),
+            $date[1]
+        )
+    else ()
+};
+
+declare function mods-common:get-conference-detail-view($entry as element()) {
+    (: let $date := ($entry/mods:originInfo/mods:dateIssued/string()[1], $entry/mods:part/mods:date/string()[1],
+            $entry/mods:originInfo/mods:dateCreated/string())[1]
+    return :)
+    let $conference := $entry/mods:name[@type eq 'conference']/mods:namePart
+    return
+    if ($conference) 
+    then
+        concat('Paper presented at ', string($conference)
+            (: , mods-common:add-part($entry/mods:originInfo/mods:place/mods:placeTerm, ', '), $date:)
+            (: no need to duplicate placeinfo in detail view. :)
+        )
+    else ()
+};
+
+
+
 (:~
 : The <b>mods-common:format-subjects</b> function returns 
 : a table-formatted representation of each MODS subject.
@@ -1232,7 +1281,7 @@ declare function mods-common:get-role-term-label-for-detail-view($roleTerm as xs
 :
 : @author Jens Østergaard Petersen
 : @param $entry A subject element in a MODS record
-: @param $global-transliteration  The value set for the transliteration scheme to be used in the record as a whole, set in e:extension
+: @param $global-transliteration  The value set for the transliteration scheme to be used in the record as a whole, set in ext:extension
 : @param $global-language The string value of mods/language/languageTerm
 : @see http://www.loc.gov/standards/mods/userguide/subject.html
 : @return $nameOrder The string 'family-given' or the empty string
@@ -1347,7 +1396,7 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
 :)
 declare function mods-common:format-related-item($relatedItem as element(mods:relatedItem), $global-language as xs:string?, $collection-short as xs:string) {
 	let $relatedItem := mods-common:remove-parent-with-missing-required-node($relatedItem)
-	let $global-transliteration := $relatedItem/../mods:extension/e:transliterationOfResource/text()
+	let $global-transliteration := $relatedItem/../mods:extension/ext:transliterationOfResource/text()
 	(:If several terms are used for the same role, we assume them to be synonymous.:)
 	let $relatedItem-role-terms := distinct-values($relatedItem/mods:name/mods:role/mods:roleTerm[1])
 	let $relatedItem-role-terms := 

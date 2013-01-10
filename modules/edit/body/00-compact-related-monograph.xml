@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--node insertions: --><!--hints moved to code-table: OK--><!--hints checked: OK--><!--saving of all nodes: OK-->
-<div xmlns:e="http://www.asia-europe.uni-heidelberg.de/" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-monograph" e:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ext="http://exist-db.org/mods/extension" class="compact block-form" tab-id="compact-b-monograph" ext:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
             <div class="label-box">
@@ -50,7 +50,7 @@
                                 <br/>
                             </xf:group>
                             <xf:group ref=".[(@transliteration)]" class="margin-plus">
-                                <xf:select1 ref="/mods:mods/mods:extension/e:transliterationOfResource">
+                                <xf:select1 ref="/mods:mods/mods:extension/ext:transliterationOfResource">
                                     <xf:label>Transliteration</xf:label>
                                     <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
                                         <xf:label ref="label"/>
@@ -114,13 +114,13 @@
                                 <div class="label-box">
                                     <span class="legend">Persons as Editors</span>
                                     <span class="add-delete-button">
-                                        <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) &gt; 0]">
+                                        <xf:trigger ref=".[string-length(./../mods:extension/ext:transliterationOfResource) &gt; 0]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-person-repeat')" position="before" origin="instance('compact-template')/mods:name[4]"/>
                                             </xf:action>
                                         </xf:trigger>
-                                        <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) = 0]">
+                                        <xf:trigger ref=".[string-length(./../mods:extension/ext:transliterationOfResource) = 0]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-series-name-person-repeat')" position="before" origin="instance('compact-template')/mods:name[3]"/>
@@ -166,13 +166,13 @@
                                 <div class="label-box">
                                     <span class="legend">Institutions as Editors</span>
                                     <span class="add-delete-button">
-                                        <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) &gt; 0]">
+                                        <xf:trigger ref=".[string-length(./../mods:extension/ext:transliterationOfResource) &gt; 0]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-series-name-institution-namePart-repeat')" position="before" origin="instance('compact-template')/mods:name[6]"/>
                                             </xf:action>
                                         </xf:trigger>
-                                        <xf:trigger ref=".[string-length(./../mods:extension/e:transliterationOfResource) = 0]">
+                                        <xf:trigger ref=".[string-length(./../mods:extension/ext:transliterationOfResource) = 0]">
                                             <xf:label>+</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-series-name-institution-namePart-repeat')" position="before" origin="instance('compact-template')/mods:name[5]"/>

@@ -3,7 +3,7 @@ module namespace mods="http://www.loc.gov/mods/v3";
 declare namespace mads="http://www.loc.gov/mads/v2";
 declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace functx = "http://www.functx.com";
-declare namespace e = "http://www.asia-europe.uni-heidelberg.de/";
+declare namespace ext="http://exist-db.org/mods/extension";
 
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
 import module namespace uu="http://exist-db.org/mods/uri-util" at "../../../modules/search/uri-util.xqm";
@@ -121,60 +121,7 @@ Under <physicalDescription>, <extent> has no subelements.:)
 
 (: Both the name as given in the publication and the autority name should be rendered. :)
 
-declare function mods:get-conference-hitlist($entry as element(mods:mods)) {
-    let $date := 
-        (
-            string($entry/mods:originInfo[1]/mods:dateIssued[1]), 
-            string($entry/mods:part/mods:date[1]),
-            string($entry/mods:originInfo[1]/mods:dateCreated[1])
-        )
-    let $conference := $entry/mods:name[@type eq 'conference']/mods:namePart
-    return
-    if ($conference) 
-    then
-        concat('Paper presented at ', 
-            mods-common:add-part(string($conference), ', '),
-            mods-common:add-part($entry/mods:originInfo[1]/mods:place[1]/mods:placeTerm[1], ', '),
-            $date[1]
-        )
-    else ()
-};
 
-declare function mods:get-conference-detail-view($entry as element()) {
-    (: let $date := ($entry/mods:originInfo/mods:dateIssued/string()[1], $entry/mods:part/mods:date/string()[1],
-            $entry/mods:originInfo/mods:dateCreated/string())[1]
-    return :)
-    let $conference := $entry/mods:name[@type eq 'conference']/mods:namePart
-    return
-    if ($conference) 
-    then
-        concat('Paper presented at ', string($conference)
-            (: , mods-common:add-part($entry/mods:originInfo/mods:place/mods:placeTerm, ', '), $date:)
-            (: no need to duplicate placeinfo in detail view. :)
-        )
-    else ()
-};
-
-
-
-(: ### <typeOfResource> begins ### :)
-
-declare function mods:return-type($entry ) {
-    let $type := string($entry/mods:typeOfResource[1])
-    return
-        if (exists($type))
-        then  
-            translate(translate(
-            if ($type)
-            then $type
-            else 'text'
-            ,' ','_'),',','')
-        else 'text-x-changelog'
-};
-
-(: ### <typeOfResource> ends ### :)
-
-(: ### <name> ends ### :)
 
 (: NB! Create function to get <typeOfResource>! :)
 (: The DLF/Aquifer Implementation Guidelines for Shareable MODS Records require the use in all records of at least one <typeOfResource> element using the required enumerated values. This element is repeatable. :)
@@ -272,7 +219,7 @@ if ($titleInfo)
         }
         {
         let $transliteration := string($titleInfo/@transliteration)
-        let $global-transliteration := $titleInfo/../mods:extension/e:transliterationOfResource/text()
+        let $global-transliteration := $titleInfo/../mods:extension/ext:transliterationOfResource/text()
         (:Prefer local transliteration to global.:)
         let $transliteration := 
         	if ($transliteration)
@@ -461,7 +408,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
 	let $ID := $entry/@ID
 	(:let $log := util:log("DEBUG", ("##$ID): ", $ID)):)
 	let $entry := mods-common:remove-parent-with-missing-required-node($entry)
-	let $global-transliteration := $entry/mods:extension/e:transliterationOfResource/text()
+	let $global-transliteration := $entry/mods:extension/ext:transliterationOfResource/text()
 	let $global-language := $entry/mods:language[1]/mods:languageTerm[1]/text()
 	return
     <table xmlns="http://www.w3.org/1999/xhtml" class="biblio-full">
@@ -484,7 +431,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     ,
     
     (: conferences :)
-    mods-common:simple-row(mods:get-conference-detail-view($entry), 'Conference')
+    mods-common:simple-row(mods-common:get-conference-detail-view($entry), 'Conference')
     ,
 
     (: place :)
@@ -915,7 +862,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     ,
     
     (:modification date:)
-    let $last-modified := $entry/mods:extension/e:modified/e:when
+    let $last-modified := $entry/mods:extension/ext:modified/ext:when
     (:let $log := util:log("DEBUG", ("##$last-modified): ", $last-modified)):)
     return 
         if ($last-modified) then
@@ -930,7 +877,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
 declare function mods:format-list-view($id as xs:string, $entry as element(), $collection-short as xs:string) {
 	let $entry := mods-common:remove-parent-with-missing-required-node($entry)
 	(:let $log := util:log("DEBUG", ("##$id): ", $entry)):)
-	let $global-transliteration := $entry/mods:extension/e:transliterationOfResource/text()
+	let $global-transliteration := $entry/mods:extension/ext:transliterationOfResource/text()
 	let $global-language := $entry/mods:language[1]/mods:languageTerm[1]/text()
 	return
     let $format :=
@@ -980,7 +927,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(), $c
         ,
         (: The conference of the primary publication, containing originInfo and part information. :)
         if ($entry/mods:name[@type eq 'conference']) 
-        then mods:get-conference-hitlist($entry)
+        then mods-common:get-conference-hitlist($entry)
         (: If not a conference publication, get originInfo and part information for the primary publication. :)
         else 
             (:The series that the primary publication occurs in is spliced in between the secondary names and the originInfo.:)

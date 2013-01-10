@@ -1,7 +1,7 @@
 xquery version "1.0";
 
 (:TODO: change all 'monograph' to 'book' in tabs-data.xml and compact body files:)
-(:TODO: delete all '-compact' from e:template in records, then delete all code that removes this from type in session.xql, edit.xql, tabs.xqm.:)
+(:TODO: delete all '-compact' from ext:template in records, then delete all code that removes this from type in session.xql, edit.xql, tabs.xqm.:)
 (:TODO: Code related to MADS files.:)
 
 import module namespace request="http://exist-db.org/xquery/request";
@@ -18,7 +18,7 @@ import module namespace uu="http://exist-db.org/mods/uri-util" at "../search/uri
 declare namespace xf="http://www.w3.org/2002/xforms";
 declare namespace ev="http://www.w3.org/2001/xml-events";
 declare namespace xlink="http://www.w3.org/1999/xlink";
-declare namespace e="http://www.asia-europe.uni-heidelberg.de/";
+declare namespace ext="http://exist-db.org/mods/extension";
 declare namespace mads="http://www.loc.gov/mads/";
 declare namespace functx="http://www.functx.com";
 
@@ -131,9 +131,9 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
           ,
           (:Save the name of the template used and transliteration scheme used into mods:extension.:)  
           update insert
-              <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://www.asia-europe.uni-heidelberg.de/">
-                  <e:template>{$template-request}</e:template>
-                  <e:transliterationOfResource>{$transliterationOfResource}</e:transliterationOfResource>                    
+              <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://exist-db.org/mods/extension">
+                  <ext:template>{$template-request}</ext:template>
+                  <ext:transliterationOfResource>{$transliterationOfResource}</ext:transliterationOfResource>                    
               </extension>
           into $doc/mods:mods
           ,
