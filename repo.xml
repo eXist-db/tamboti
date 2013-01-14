@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<repo:meta xmlns="http://exist-db.org/xquery/repo" xmlns:repo="http://exist-db.org/xquery/repo">
-    <repo:author>Adam Retter</repo:author>
-    <repo:author>Dan McCreary</repo:author>
-    <repo:author>Dulip Withanage</repo:author>
-    <repo:author>Jens Østergaard Petersen</repo:author>
-    <repo:author>Wolfgang Meier</repo:author>
-    <repo:website>http://exist-db.org</repo:website>
-    <repo:license>GNU-LGPL</repo:license>
-    <repo:copyright>true</repo:copyright>
-    <repo:description>Tamboti Metadata Framework</repo:description>
-    <repo:type>application</repo:type>
-    <repo:target>/db/tamboti</repo:target>
-    <repo:permissions user="editor" password="editor" group="biblio.users" mode="0444"/>
-    <repo:status>stable</repo:status>
-    <repo:prepare>pre-install.xql</repo:prepare>
-    <repo:finish>post-install.xql</repo:finish>
-    <deployed>2012-11-16T20:57:20.79+01:00</deployed>
-</repo:meta>
+<meta xmlns="http://exist-db.org/xquery/repo" xmlns:repo="http://exist-db.org/xquery/repo">
+    <author>Adam Retter</author>
+    <author>Dan McCreary</author>
+    <author>Dulip Withanage</author>
+    <author>Jens Østergaard Petersen</author>
+    <author>Wolfgang Meier</author>
+    <website>http://exist-db.org</website>
+    <license>GNU-LGPL</license>
+    <copyright>true</copyright>
+    <description>Tamboti Metadata Framework</description>
+    <type>application</type>
+    <target>tamboti</target>
+    <permissions user="editor" password="editor" group="biblio.users" mode="0444"/>
+    <status>stable</status>
+    <prepare>pre-install.xql</prepare>
+    <finish>post-install.xql</finish>
+</meta>
