@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
     <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="">
         <nonSort lang="" xml:lang="" script="" transliteration=""/>
         <title lang="" xml:lang="" script="" transliteration=""/>
@@ -147,18 +147,19 @@
         <holdingExternal/>
     </location>
     <accessCondition xlink:href="" lang="" type="" displayLabel="" altRepGroup="" xml:lang="" script="" transliteration=""/>
-    <recordInfo xml:lang="" lang="eng" script="" transliteration="" type="" authority="">
-        <recordContentSource authority=""/>
-        <recordCreationDate encoding="w3cdtf" point="" keyDate="" qualifier=""/>
-        <recordChangeDate encoding="w3cdtf" point="" keyDate="" qualifier=""/>
-        <recordIdentifier source=""/>
-        <recordOrigin/>
-        <languageOfCataloging>
-            <languageTerm authority="iso639-2b" type="code">eng</languageTerm>
-            <languageTerm type="text">English</languageTerm>
-            <scriptTerm type="" authority=""/>
+    <recordInfo lang="" xml:lang="" script="" transliteration="" displayLabel="" altRepGroup="">
+        <recordContentSource authority="" authorityURI="" lang="" script="" transliteration="" valueURI="" xml:lang=""/>
+        <recordCreationDate encoding="w3cdtf" point="" keyDate="" qualifier="" lang="" script="" transliteration="" xml:lang=""/>
+        <recordChangeDate encoding="w3cdtf" point="" keyDate="" qualifier="" lang="" script="" transliteration="" xml:lang=""/>
+        <recordIdentifier source="" lang="" xml:lang="" script="" transliteration=""/>
+        <recordOrigin lang="" xml:lang="" script="" transliteration=""/>/&gt;
+        <languageOfCataloging objectPart="" displayLabel="" usage="" altRepGroup="">
+            <languageTerm authority="iso639-2b" type="code" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
+            <languageTerm type="text" authority="iso639-2b" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>/&gt;
+            <scriptTerm type="code" authority="iso15924" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
+            <scriptTerm authority="" type="text" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
         </languageOfCataloging>
-        <descriptionStandard authority=""/>
+        <descriptionStandard authority="" authorityURI="" lang="" script="" transliteration="" valueURI="" xml:lang=""/>
     </recordInfo>
     <language objectPart="" lang="" xml:lang="" script="" transliteration="" displayLabel="" usage="" altRepGroup="">
         <languageTerm authority="iso639-2b" type="code" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>

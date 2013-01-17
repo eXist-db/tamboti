@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--node insertions: OK--><!--missing element insertion: OK--><!--hints moved to code-table: OK--><!--hints linked with id: OK--><!--hints checked: OK--><!--saving of all nodes: OK--><!--schema instantiated: OK--><!--schema notations added: OK-->
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ext="http://exist-db.org/mods/extension" class="physical-description block-form" tab-id="physical-description" ext:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="physical-description block-form" tab-id="physical-description" ext:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
             <div class="label-box">
@@ -11,14 +10,14 @@
                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_physicalDescription',instance('code-tables'))/help"/>
                     </div>
                 </span>
-                <span class="add-delete-button">
+                <!--<span class="add-delete-button">
                     <xf:trigger ref=".[mods:physicalDescription]">
                         <xf:label>+</xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:insert nodeset="mods:physicalDescription" at="index('physicalDescription-repeat')" position="before" origin="instance('new-instance')/mods:physicalDescription"/>
                         </xf:action>
                     </xf:trigger>
-                </span>
+                </span>-->
                 <span class="add-delete-button">
                     <xf:trigger ref=".[mods:physicalDescription]">
                         <xf:label>–</xf:label>
@@ -30,6 +29,7 @@
             </div>
         <!--Attributes: lang; xml:lang; script; transliteration; displayLabel; altRepGroup. -->
         <!--Subelements: form; reformattingQuality; internetMediaType; extent; digitalOrigin; note. -->
+        <!--Repeating this element is not recommended.-->
             <xf:repeat nodeset="instance('save-data')/mods:physicalDescription" id="physicalDescription-repeat">
                 <xf:group class="show-hide" ref=".[count(@*) &lt; 5 or .[not(mods:form)] or .[not(mods:reformattingQuality)] or .[not(mods:internetMediaType)] or .[not(mods:extent)] or .[not(mods:digitalOrigin)] or .[not(mods:note)]]">
                     <xf:switch>

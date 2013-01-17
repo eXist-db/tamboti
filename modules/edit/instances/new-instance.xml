@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
     <titleInfo lang="" script="" transliteration="" type="">
         <nonSort/>
         <title/>
@@ -57,6 +57,8 @@
     <language objectPart="" lang="" xml:lang="" script="" transliteration="" displayLabel="" usage="" altRepGroup="">
         <languageTerm authority="iso639-2b" type="code"/>
         <languageTerm type="text"/>
+        <scriptTerm authority="iso15924" type="code"/>
+        <scriptTerm type="text"/>
     </language>
     <typeOfResource collection="" manuscript=""/>
     <genre type="code" authority="marcgt"/>
@@ -154,15 +156,17 @@
         </part>
     </relatedItem>
     <identifier type=""/>
-    <recordInfo lang="eng" script="" transliteration="" type="" authority="">
+    <recordInfo lang="eng" script="Latn" authority="">
         <recordContentSource authority=""/>
-        <recordCreationDate encoding="w3cdtf" point="" keyDate="" qualifier=""/>
-        <recordChangeDate encoding="w3cdtf" point="" keyDate="" qualifier=""/>
+        <recordCreationDate encoding="w3cdtf"/>
+        <recordChangeDate encoding="w3cdtf"/>
         <recordIdentifier source=""/>
         <recordOrigin/>
         <languageOfCataloging>
             <languageTerm authority="iso639-2b" type="code">eng</languageTerm>
             <languageTerm type="text">English</languageTerm>
+            <scriptTerm authority="iso15924" type="code"/>
+            <scriptTerm type="text"/>
         </languageOfCataloging>
         <descriptionStandard authority=""/>
     </recordInfo>

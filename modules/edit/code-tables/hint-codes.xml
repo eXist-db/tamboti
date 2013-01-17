@@ -30,17 +30,137 @@
             <value>save</value>
             <tab-id>edit.xq</tab-id>
         </item>
+        <item xml:id="hint-code_recordIdentifier">
+            <help>
+                <p>Used to record the system control number assigned by the organization creating,
+                    using, or distributing the record.</p>
+            </help>
+            <hint/>
+            <value>descriptionStandard</value>
+            <local-name>descriptionStandard</local-name>
+            <parent>recordInfo</parent>
+            <tab-id>record-info</tab-id>
+        </item>
+        <item xml:id="hint-code_record-content-source">
+            <help>
+                <p>Contains the code or name of the organization whose system control number is
+                    located in the Record Identifier element.</p>
+                <p>The Library of Congress maintains <a href="http://www.loc.gov/standards/sourcelist/organization.html">http://www.loc.gov/standards/sourcelist/organization.html</a> (Organization
+                    Code Source Codes), an online listing of source values.</p>
+            </help>
+            <hint/>
+            <value>descriptionStandard</value>
+            <local-name>descriptionStandard</local-name>
+            <parent>recordInfo</parent>
+            <tab-id>record-info</tab-id>
+        </item>
+        <item xml:id="hint-code_descriptionStandard">
+            <help>
+                <p>Here are noted any specific rules used for the description.</p>
+            </help>
+            <hint/>
+            <value>descriptionStandard</value>
+            <local-name>descriptionStandard</local-name>
+            <parent>recordInfo</parent>
+            <tab-id>record-info</tab-id>
+        </item>
+        <item xml:id="hint-code_languageOfCataloging">
+            <help>
+                <p> Note here the language used in cataloging the current record. Use both Text and
+                    Code input. </p>
+            </help>
+            <hint/>
+            <value>languageOfCataloging</value>
+            <local-name>languageOfCataloging</local-name>
+            <parent>recordInfo</parent>
+            <tab-id>record-info</tab-id>
+        </item>
+        <item xml:id="hint-code_recordContentSource">
+            <help>
+                <p> The code or name of the organization that either created or modified the
+                    original record. This information can be useful to trace the provenance of a
+                    particular metadata record. The name or code should be pulled from an
+                    authoritative list and indicated in Authority. Record Content Source should be
+                    repeated for each code or name recorded. </p>
+            </help>
+            <hint/>
+            <value>recordContentSource</value>
+            <local-name>recordContentSource</local-name>
+            <parent>recordInfo</parent>
+            <tab-id>record-info</tab-id>
+        </item>
+        <item xml:id="hint-code_recordOrigin">
+            <help>
+                <p> Record Origin is intended to show the origin, or provenance of the record. Note
+                    the original format and transformation process if the record has been
+                    transformed from a record in another format. </p>
+            </help>
+            <hint/>
+            <value>recordOrigin</value>
+            <local-name>recordOrigin</local-name>
+            <parent>recordInfo</parent>
+            <tab-id>record-info</tab-id>
+        </item>
+        <item xml:id="hint-code_recordIdentifier">
+            <help>
+                <p> Record Identifier is used to record the system control number assigned by the
+                    organization creating, using, or distributing the record. Consult <a href="http://www.loc.gov/marc/organizations/org-search.php">http://www.loc.gov/marc/organizations/org-search.php</a> (MARC Code List
+                    for Organizations) and <a href="http://www.oclc.org/contacts/libraries/">OCLC
+                        Participating Institutions</a>
+                </p>
+            </help>
+            <hint/>
+            <value>recordIdentifier</value>
+            <local-name>recordIdentifier</local-name>
+            <parent>recordInfo</parent>
+            <tab-id>record-info</tab-id>
+        </item>
+        <item xml:id="hint-code_recordChangeDate">
+            <help>
+                <p>The date(s) on which the record has been changed.</p>
+            </help>
+            <hint/>
+            <value>recordChangeDate</value>
+            <local-name>recordChangeDate</local-name>
+            <parent>recordInfo</parent>
+            <tab-id>record-info</tab-id>
+        </item>
+        <item xml:id="hint-code_recordCreationDate">
+            <help>
+                <p>The date on which the record was first created.</p>
+            </help>
+            <hint/>
+            <value>recordInfo</value>
+            <local-name>recordCreationDate</local-name>
+            <parent>recordInfo</parent>
+            <tab-id>record-info</tab-id>
+        </item>
+        <item xml:id="hint-code_recordInfo">
+            <help>
+                <p>Information about the metadata record.</p>
+                <p>This type of administrative information can help establish the provenance of a
+                    metadata record and may enable better interpretation of the content of the
+                    record. Record Information may also include information that is relevant only to
+                    the creating or managing institution. This type of administrative information
+                    can help establish the provenance of a metadata record and may enable better
+                    interpretation of the content of the record. </p>
+            </help>
+            <hint/>
+            <value>recordInfo</value>
+            <local-name>recordInfo</local-name>
+            <parent>mods</parent>
+            <tab-id>record-info</tab-id>
+        </item>
         <item xml:id="hint-code_table-of-contents">
             <help>
                 <p> A description of the contents of a resource.</p>
                 <p> A Table Of Contents can be rendered e.g. with dashes separating the chapter
                     titles.</p>
-                <p> Use of Table Of Contents should be determined by the complexity of the
-                    digital object and whether or not the information is readily available. If
-                    more structured information is needed, consider using Related Item with the
-                    type="constituent" field instead. Table Of Contents can also be used as an
-                    empty field with an XLink field to link to an external table of contents.
-                </p>
+                <p> Use of Table Of Contents should be determined by the complexity of the digital
+                    object and whether or not the information is readily available. If more
+                    structured information is needed, consider using Related Item with the
+                    type="constituent" field instead. Table Of Contents can also be used as an empty
+                    field with an XLink field to link to an external table of contents. </p>
             </help>
             <hint/>
             <value>abstract</value>
@@ -52,17 +172,14 @@
         </item>
         <item xml:id="hint-code_abstract">
             <help>
-                <p> Abstract is used to record a succinct summary of some
-                    aspect of the content of the resource. </p>
-                <p> Use one Abstract in every record, except when Title
-                    Information serves as an adequate summary of the
-                    content of the resource. </p>
-                <p> When creating a record for a digital surrogate, record a
-                    summary of the content of the original resource. If
-                    only a portion of the resource was digitized,
+                <p> Abstract is used to record a succinct summary of some aspect of the content of
+                    the resource. </p>
+                <p> Use one Abstract in every record, except when Title Information serves as an
+                    adequate summary of the content of the resource. </p>
+                <p> When creating a record for a digital surrogate, record a summary of the content
+                    of the original resource. If only a portion of the resource was digitized,
                     summarize only that portion. </p>
-                <p> A link may be supplied in lieu of or in addition to a summary of the
-                    content. </p>
+                <p> A link may be supplied in lieu of or in addition to a summary of the content. </p>
                 <p> Repeat Abstract as many times as necessary. </p>
             </help>
             <hint/>
@@ -76,7 +193,9 @@
         <item xml:id="hint-code_shareable">
             <help>
                 <p>Identifies data that cannot be shared outside the institution.</p>
-                <p>This attribute is used with shareable="no" for data that may be proprietary or is rights protected and should not be used outside of a local system (such as providing to harvesters).</p>
+                <p>This attribute is used with shareable="no" for data that may be proprietary or is
+                    rights protected and should not be used outside of a local system (such as
+                    providing to harvesters).</p>
             </help>
             <hint/>
             <value>accessCondition</value>
@@ -88,7 +207,8 @@
         <item xml:id="hint-code_abstract-type">
             <help>
                 <p>Identifies what type of summary is recorded.</p>
-                <p>There is no controlled list of abstract types. Examples include scope, subject, content advice, review.</p>
+                <p>There is no controlled list of abstract types. Examples include scope, subject,
+                    content advice, review.</p>
             </help>
             <hint/>
             <value>abstract</value>
@@ -134,13 +254,18 @@
         </item>
         <item xml:id="hint-code_url-access">
             <help>
-                <p>Indicates the type of resource that the user will access when following the URL link.</p>
-                <p>This attribute is particularly useful to provide a flag in the context of OAI service providers harvesting metadata.</p>
+                <p>Indicates the type of resource that the user will access when following the URL
+                    link.</p>
+                <p>This attribute is particularly useful to provide a flag in the context of OAI
+                    service providers harvesting metadata.</p>
                 <p>The following values may be used with the access attribute:</p>
                 <ul>
                     <li>preview – Indicates a link to a thumbnail or snippet of text.</li>
-                    <li>raw object – Indicates a direct link to the object described (e.g., a jpg or pdf document). Used only when the object is represented by a single file.</li>
-                    <li>object in context – Indicates a link to the object within the context of its environment (with associated metadata, navigation, etc.)</li>
+                    <li>raw object – Indicates a direct link to the object described (e.g., a jpg or
+                        pdf document). Used only when the object is represented by a single
+                        file.</li>
+                    <li>object in context – Indicates a link to the object within the context of its
+                        environment (with associated metadata, navigation, etc.)</li>
                 </ul>
             </help>
             <hint/>
@@ -151,8 +276,10 @@
         </item>
         <item xml:id="hint-code_location-url-note">
             <help>
-                <p>Includes notes that are associated with the link that is included as the value of the URL element.</p>
-                <p>Use the note attribute only when other attributes (access, usage, or displayLabel) are not appropriate.</p>
+                <p>Includes notes that are associated with the link that is included as the value of
+                    the URL element.</p>
+                <p>Use the note attribute only when other attributes (access, usage, or
+                    displayLabel) are not appropriate.</p>
             </help>
             <hint/>
             <value>access</value>
@@ -172,8 +299,10 @@
         </item>
         <item xml:id="hint-code_sublocation">
             <help>
-                <p>Department, division, or section of an institution holding a copy of the resource.</p>
-                <p>Sublocation may be repeated for multiple equivalent items in different sublocations within the institution named in Physical Location.</p>
+                <p>Department, division, or section of an institution holding a copy of the
+                    resource.</p>
+                <p>Sublocation may be repeated for multiple equivalent items in different
+                    sublocations within the institution named in Physical Location.</p>
             </help>
             <hint/>
             <value/>
@@ -183,13 +312,19 @@
         </item>
         <item xml:id="hint-code_holdingSimple">
             <help>
-                <p>General information about what the institution identified in Physical Location holds of the resource and its specific location.</p>
-                <p>Holdings information consists of copy-specific information about the resource, information about the specific location within an institution, 
-                    version information, and other information that is peculiar to the institution.</p>
-                <p>Holding Simple is a set of MODS internally defined elements and corresponds roughly to summary holdings information. </p>
-                <p>Holding Simple is a container element for the single subelement, Copy Information which has several subelements.</p>
-                <p>Holding Simple is not repeatable; if additional holdings statements are needed for the resource, repeat Location with appropriate subelements</p>
-                <p>For more information see <a href="http://www.loc.gov/standards/mods/v3/mods-holdings.html">http://www.loc.gov/standards/mods/v3/mods-holdings.html</a> (MODS Holdings Information).</p>
+                <p>General information about what the institution identified in Physical Location
+                    holds of the resource and its specific location.</p>
+                <p>Holdings information consists of copy-specific information about the resource,
+                    information about the specific location within an institution, version
+                    information, and other information that is peculiar to the institution.</p>
+                <p>Holding Simple is a set of MODS internally defined elements and corresponds
+                    roughly to summary holdings information. </p>
+                <p>Holding Simple is a container element for the single subelement, Copy Information
+                    which has several subelements.</p>
+                <p>Holding Simple is not repeatable; if additional holdings statements are needed
+                    for the resource, repeat Location with appropriate subelements</p>
+                <p>For more information see <a href="http://www.loc.gov/standards/mods/v3/mods-holdings.html">http://www.loc.gov/standards/mods/v3/mods-holdings.html</a> (MODS Holdings
+                    Information).</p>
             </help>
             <hint/>
             <value>holdingSimple</value>
@@ -201,8 +336,11 @@
             <help>
                 <p>Designation of a particular physical presentation of a resource.</p>
                 <p>The Form subelement is equivalent to MODS Form under Physical Description.</p>
-                <p>It may be included under Copy Information when the MODS record refers to multiple forms and there is different detailed holdings information associated with each form.</p>
-                <p>Form is not repeatable; Copy Information is repeated within Holding Simple for multiple forms.</p>
+                <p>It may be included under Copy Information when the MODS record refers to multiple
+                    forms and there is different detailed holdings information associated with each
+                    form.</p>
+                <p>Form is not repeatable; Copy Information is repeated within Holding Simple for
+                    multiple forms.</p>
             </help>
             <hint/>
             <value/>
@@ -212,7 +350,8 @@
         </item>
         <item xml:id="hint-code_location-form-type">
             <help>
-                <p>May be used to specify whether the form concerns materials or techniques, for example:</p>
+                <p>May be used to specify whether the form concerns materials or techniques, for
+                    example:</p>
                 <ul>
                     <li>&lt;form type="material&gt;oil paint&lt;/form&gt;</li>
                     <li>&lt;form type="technique&gt;painting&lt;/form&gt;</li>
@@ -228,7 +367,8 @@
         <item xml:id="hint-code_location-note">
             <help>
                 <p>Note relating to a specific copy of a document.</p>
-                <p>Use for notes relating to the specific copy information of a resource that do not fit in one of the other available subelements.</p>
+                <p>Use for notes relating to the specific copy information of a resource that do not
+                    fit in one of the other available subelements.</p>
                 <p>A link may be supplied in lieu of or in addition to the content.</p>
                 <p>Each note should be entered in a separate Note subelement.</p>
             </help>
@@ -240,19 +380,23 @@
         </item>
         <item xml:id="hint-code_location-url">
             <help>
-                <p>URL is for an electronic location from which the resource is available. 
-                    It is recommended that all URLs used with the Location element be persistent.
-                </p>
-                <p>Note that Identifier is used for persistent identifiers that may or may not be resolvable.</p>
-                <p>
-                    The Location element with the URL subelement may be used to indicate locations of additional versions of the digital resource such as thumbnails of the digital resource. 
-                    It is recommended that in these cases the access attribute be used to help an aggregator determine what versions of the resource are available. 
-                    Best practice is that the "primary display" URL is a link to the resource with its contextual material (for example metadata, navigation to the collection homepage). 
-                    If the primary link to a resource is to a stand-alone version of the resource (such as a JPEG image only), an end user will have no context except for the metadata on the service provider's site. 
-                    At a minimum, the URL should point to a page that contains the resource and a navigation bar that allows users to reach the collection homepage. 
-                    It is highly desirable that this page also include the descriptive metadata for the resource.</p>
-                <p>Use of the access attribute is recommended with all instances of URL. 
-                </p>
+                <p>URL is for an electronic location from which the resource is available. It is
+                    recommended that all URLs used with the Location element be persistent. </p>
+                <p>Note that Identifier is used for persistent identifiers that may or may not be
+                    resolvable.</p>
+                <p> The Location element with the URL subelement may be used to indicate locations
+                    of additional versions of the digital resource such as thumbnails of the digital
+                    resource. It is recommended that in these cases the access attribute be used to
+                    help an aggregator determine what versions of the resource are available. Best
+                    practice is that the "primary display" URL is a link to the resource with its
+                    contextual material (for example metadata, navigation to the collection
+                    homepage). If the primary link to a resource is to a stand-alone version of the
+                    resource (such as a JPEG image only), an end user will have no context except
+                    for the metadata on the service provider's site. At a minimum, the URL should
+                    point to a page that contains the resource and a navigation bar that allows
+                    users to reach the collection homepage. It is highly desirable that this page
+                    also include the descriptive metadata for the resource.</p>
+                <p>Use of the access attribute is recommended with all instances of URL. </p>
             </help>
             <hint/>
             <value/>
@@ -263,11 +407,17 @@
         <item xml:id="hint-code_location-usage">
             <help>
                 <p>Indicates how the object represented by the link will be used.</p>
-                <p>This attribute may be used to indicate special purpose of the URL in the element, which may be marked as such using the access attribute.</p>
+                <p>This attribute may be used to indicate special purpose of the URL in the element,
+                    which may be marked as such using the access attribute.</p>
                 <p>The following values is defined:</p>
                 <ul>
-                    <li>primary display – Indicates that the link is the most appropriate to display for end users.</li>
-                    <li>primary – Added for consistency when usage was defined for several other elements. This value has the same definition as "primary display". The intent is that "primary display" will be depricated in favor of "primary" in a future MODS version. Use of " primary" instead of "primary display" is therefore recommended in this attribute.</li>
+                    <li>primary display – Indicates that the link is the most appropriate to display
+                        for end users.</li>
+                    <li>primary – Added for consistency when usage was defined for several other
+                        elements. This value has the same definition as "primary display". The
+                        intent is that "primary display" will be depricated in favor of "primary" in
+                        a future MODS version. Use of " primary" instead of "primary display" is
+                        therefore recommended in this attribute.</li>
                 </ul>
             </help>
             <hint/>
@@ -288,7 +438,9 @@
         </item>
         <item xml:id="hint-code_copyInformation">
             <help>
-                <p>Information about a specific tangible instance of a bibliographic resource or set which comprises one or more pieces via indication of sublocation and/or locator.</p>
+                <p>Information about a specific tangible instance of a bibliographic resource or set
+                    which comprises one or more pieces via indication of sublocation and/or
+                    locator.</p>
                 <p>Copy Information is a container element. Data is entered in the subelements.</p>
             </help>
             <hint/>
@@ -299,9 +451,10 @@
         </item>
         <item xml:id="hint-code_dateLastAccessed">
             <help>
-                <p>Intended to express the date that a digital resource has been accessed remotely.
-                </p>
-                <p>This attribute may be useful to a user because of the volatility of Web content. There is no encoding scheme specified for use with this attribute, however, a structured date is recommended.</p>
+                <p>Intended to express the date that a digital resource has been accessed remotely. </p>
+                <p>This attribute may be useful to a user because of the volatility of Web content.
+                    There is no encoding scheme specified for use with this attribute, however, a
+                    structured date is recommended.</p>
             </help>
             <hint/>
             <value>dateLastAccessed</value>
@@ -346,6 +499,7 @@
             <tab-id>table-of-contents</tab-id>
             <tab-id>identifier</tab-id>
             <tab-id>location</tab-id>
+            <tab-id>record-info</tab-id>
             <tab-id>mads</tab-id>
         </item>
         <item xml:id="hint-code_area">
@@ -378,15 +532,14 @@
             <tab-id>classification</tab-id>
             <tab-id>note</tab-id>
             <tab-id>location</tab-id>
+            <tab-id>record-info</tab-id>
         </item>
         <item xml:id="hint-code_classification">
             <help>
-                <p> A designation applied to a resource that indicates the
-                    subject by applying a formal system of coding and
-                    organising resources according to subject areas.
-                    Classification contains the classification number of
-                    a resource. It may also include the full call number
-                    if desired. </p>
+                <p> A designation applied to a resource that indicates the subject by applying a
+                    formal system of coding and organising resources according to subject areas.
+                    Classification contains the classification number of a resource. It may also
+                    include the full call number if desired. </p>
             </help>
             <hint/>
             <value>classification</value>
@@ -397,8 +550,8 @@
         <item xml:id="hint-code_classification-edition">
             <help>
                 <p> This field contains a designation of the edition of the particular
-                    classification scheme indicated in authority for those schemes that
-                    are issued in editions. </p>
+                    classification scheme indicated in authority for those schemes that are issued
+                    in editions. </p>
             </help>
             <hint/>
             <value>edition</value>
@@ -470,6 +623,7 @@
             <tab-id>classification</tab-id>
             <tab-id>genre</tab-id>
             <tab-id>location</tab-id>
+            <tab-id>record-info</tab-id>
         </item>
         <item xml:id="hint-code_cartographics">
             <help>
@@ -729,6 +883,7 @@
             <tab-id>identifier</tab-id>
             <tab-id>access-condition</tab-id>
             <tab-id>location</tab-id>
+            <tab-id>record-info</tab-id>
             <tab-id>mads</tab-id>
         </item>
         <item xml:id="hint-code_edition">
@@ -888,16 +1043,15 @@
         <item xml:id="hint-code_typeOfResource-collection">
             <help>
                 <p> "Yes" indicates that the resource is a collection. </p>
-                <p> A collection is defined as a multi-part group of resources. One example
-                    would be an anthology. If there are multiple resource types within the
-                    collection, these should be enumerated in separate Type Of Resource
-                    fields. </p>
-                <p> Collection and Manuscript are associated with a specific value used in
-                    Type Of Resource. </p>
-                <p> For example, an object which consists of a collection of maps with
-                    associated text would be represented by two instances of Type Of
-                    Resource. The first would be "Cartographic" with Collection "yes," and
-                    the second would be "Text" with Collection "No". </p>
+                <p> A collection is defined as a multi-part group of resources. One example would be
+                    an anthology. If there are multiple resource types within the collection, these
+                    should be enumerated in separate Type Of Resource fields. </p>
+                <p> Collection and Manuscript are associated with a specific value used in Type Of
+                    Resource. </p>
+                <p> For example, an object which consists of a collection of maps with associated
+                    text would be represented by two instances of Type Of Resource. The first would
+                    be "Cartographic" with Collection "yes," and the second would be "Text" with
+                    Collection "No". </p>
             </help>
             <hint/>
             <value>type</value>
@@ -908,13 +1062,12 @@
         <item xml:id="hint-code_typeOfResource-manuscript">
             <help>
                 <p> "Yes" indicates that the resource is handwritten or typescript. </p>
-                <p> The fields "collection" and "manuscript" are associated with a specific
-                    value used in Type Of Resource. </p>
-                <p> For example, an object which consists of a collection of maps with
-                    associated text would be represented by two instances of Type Of
-                    Resource. </p>
-                <p> The first would be "Cartographic" with Collection "yes," and the second
-                    would be "text" with Collection "No". </p>
+                <p> The fields "collection" and "manuscript" are associated with a specific value
+                    used in Type Of Resource. </p>
+                <p> For example, an object which consists of a collection of maps with associated
+                    text would be represented by two instances of Type Of Resource. </p>
+                <p> The first would be "Cartographic" with Collection "yes," and the second would be
+                    "text" with Collection "No". </p>
             </help>
             <hint/>
             <value>type</value>
@@ -1008,9 +1161,8 @@
         </item>
         <item xml:id="hint-code_genre">
             <help>
-                <p> One or more terms that characterise the resource as having a particular
-                    style, form, or content, such as artistic, musical, literary composition,
-                    etc. </p>
+                <p> One or more terms that characterise the resource as having a particular style,
+                    form, or content, such as artistic, musical, literary composition, etc. </p>
                 <p> Genre contains terms that give more specificity than the broad terms used in
                     Type Of Resource. </p>
                 <p> If used in connection with a digital resource, Genre should be used to
@@ -1021,13 +1173,13 @@
                     authority field. </p>
                 <p> Genre is a term that carries different specific meanings within different
                     communities of practice, and the content of most information objects can be
-                    characterised by genre at different levels of granularity, either very broad
-                    or quite specific. For example, photographs and ambrotypes are both valid
-                    genre characterizations, depending on your perspective, for a specific type
-                    of direct positive photographic print. At the very least, provide a very
-                    broad genre term for materials being digitised.</p>
-                <p>Type of Resource, Genre, Form under Physical Description overlap to some
-                    degree. </p>
+                    characterised by genre at different levels of granularity, either very broad or
+                    quite specific. For example, photographs and ambrotypes are both valid genre
+                    characterizations, depending on your perspective, for a specific type of direct
+                    positive photographic print. At the very least, provide a very broad genre term
+                    for materials being digitised.</p>
+                <p>Type of Resource, Genre, Form under Physical Description overlap to some degree.
+                </p>
             </help>
             <value>genre</value>
             <local-name>genre</local-name>
@@ -1345,6 +1497,7 @@
             <tab-id>mads</tab-id>
             <tab-id>note</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>record-info</tab-id>
         </item>
         <item xml:id="hint-code_lang-global-compact">
             <help>
@@ -1481,6 +1634,7 @@
             <local-name>languageTerm</local-name>
             <parent>language</parent>
             <tab-id>language</tab-id>
+            <tab-id>record-info</tab-id>
         </item>
         <item xml:id="hint-code_location">
             <help>
@@ -1975,8 +2129,7 @@
         </item>
         <item xml:id="hint-code_location_note">
             <help>
-                <p> Note relating to a specific copy of a
-                    document. </p>
+                <p> Note relating to a specific copy of a document. </p>
             </help>
             <hint/>
             <value>note</value>
@@ -1986,15 +2139,12 @@
         </item>
         <item xml:id="hint-code_enumerationAndChronology">
             <help>
-                <p> Alpha-numeric identification, such as a volume
-                    or issue, and an indication of the date of
-                    publication or date of issue of a component of a
-                    multi-part resource, distinguishing it from other
-                    components of the same resource. Enumeration And
-                    Chronology is an unparsed string that comprises a
-                    summary holdings statement. If more granularity is
-                    needed, a parsed statement using an external
-                    schema may be used within Holdings External. </p>
+                <p> Alpha-numeric identification, such as a volume or issue, and an indication of
+                    the date of publication or date of issue of a component of a multi-part
+                    resource, distinguishing it from other components of the same resource.
+                    Enumeration And Chronology is an unparsed string that comprises a summary
+                    holdings statement. If more granularity is needed, a parsed statement using an
+                    external schema may be used within Holdings External. </p>
             </help>
             <hint/>
             <value>note</value>
@@ -2004,11 +2154,10 @@
         </item>
         <item xml:id="hint-code_holdingExternal">
             <help>
-                <p> Holdings information that uses a schema defined externally
-                    to MODS.</p>
-                <p>Holdings External may include more detailed
-                    holdings information than that accommodated by the MODS
-                    schema. An example is ISO 20775 and its accompanying schema. </p>
+                <p> Holdings information that uses a schema defined externally to MODS.</p>
+                <p>Holdings External may include more detailed holdings information than that
+                    accommodated by the MODS schema. An example is ISO 20775 and its accompanying
+                    schema. </p>
             </help>
             <hint/>
             <value>holdingExternal</value>
@@ -2018,9 +2167,8 @@
         </item>
         <item xml:id="hint-code_unitType">
             <help>
-                <p> The category of bibliographic entity for which
-                    Enumeration And Chronology is given, i.e. basic
-                    bibliographic unit, supplement, or index. </p>
+                <p> The category of bibliographic entity for which Enumeration And Chronology is
+                    given, i.e. basic bibliographic unit, supplement, or index. </p>
             </help>
             <hint/>
             <value>note</value>
@@ -2863,6 +3011,7 @@
             <tab-id>table-of-contents</tab-id>
             <tab-id>target-audience</tab-id>
             <tab-id>classification</tab-id>
+            <tab-id>record-info</tab-id>
         </item>
         <item xml:id="hint-code_script-global-compact">
             <help>
@@ -2923,13 +3072,20 @@
         </item>
         <item xml:id="hint-code_scriptTerm">
             <help>
-                <p>Hint</p>
+                <p>Script Term may be expressed in textual or coded form.</p>
+                <p>If in coded form, the source of the code is contained in the value of the
+                    authority attribute. If no authority is given, it is assumed that the content is
+                    textual.</p>
+                <p>If there is more than one representation of the same script (e.g., text and
+                    code), Script Term is repeated. If the record is in more than one script,
+                    Language Of Cataloging is repeated.</p>
             </help>
             <hint/>
             <value>scriptTerm</value>
             <local-name>scriptTerm</local-name>
             <parent>language</parent>
             <tab-id>language</tab-id>
+            <tab-id>record-info</tab-id>
         </item>
         <item xml:id="hint-code_shelfLocator">
             <help>
@@ -3423,8 +3579,7 @@
                 <p> There is at present no standard list of transliteration schemes available, but
                     use the American Library Association-Library of Congress transliteration, if
                     possible. These are postfixed "ALA-LC" in the drop-down list. For more
-                    information on these transliteration schemes, see <a href="http://www.loc.gov/catdir/cpso/roman.html">http://www.loc.gov/catdir/cpso/roman.html</a> (ALA-LC Romanization
-                    Tables). </p>
+                    information on these transliteration schemes, see <a href="http://www.loc.gov/catdir/cpso/roman.html">http://www.loc.gov/catdir/cpso/roman.html</a> (ALA-LC Romanization Tables). </p>
                 <p> If you wish to employ a transliteration scheme not in the list, please contact
                     &lt;tamboti-admins@asia-europe.uni-heidelberg.de&gt;. </p>
                 <p> Apply transliteration as high as possible. For instance it is possible to apply
@@ -3453,6 +3608,7 @@
             <tab-id>subject</tab-id>
             <tab-id>abstract</tab-id>
             <tab-id>target-audience</tab-id>
+            <tab-id>record-info</tab-id>
             <tab-id>table-of-contents</tab-id>
             <tab-id>classification</tab-id>
         </item>
@@ -3577,10 +3733,10 @@
         </item>
         <item xml:id="hint-code_genre-authority">
             <help>
-                <p> The name of the authoritative list for a controlled value is
-                    recorded here. </p>
-                <p> See http://www.loc.gov/standards/sourcelist/genre-form.html for a
-                    list of authority files in this area. If you wish to employ an authority file that is not included in the dropdown, please contact HRA. </p>
+                <p> The name of the authoritative list for a controlled value is recorded here. </p>
+                <p> See http://www.loc.gov/standards/sourcelist/genre-form.html for a list of
+                    authority files in this area. If you wish to employ an authority file that is
+                    not included in the dropdown, please contact HRA. </p>
             </help>
             <value>genre-type</value>
             <local-name>type</local-name>
@@ -3719,6 +3875,7 @@
             <tab-id>subject</tab-id>
             <tab-id>location</tab-id>
             <tab-id>classification</tab-id>
+            <tab-id>record-info</tab-id>
         </item>
         <item xml:id="hint-code_xlink_href">
             <help>
@@ -3844,6 +4001,7 @@
             <tab-id>abstract</tab-id>
             <tab-id>target-audience</tab-id>
             <tab-id>classification</tab-id>
+            <tab-id>record-info</tab-id>
         </item>
         <item xml:id="hint-code_reformattingQuality">
             <help>
