@@ -20,6 +20,7 @@ declare option exist:serialize "media-type=text/xml";
 : The functx:substring-before-last-match function returns the part of $arg that appears before the last match of $regex. 
 : If $arg does not match $regex, the entire $arg is returned. 
 : If $arg is the empty sequence, the empty sequence is returned.
+: @author Jenny Tennison
 : @param $arg the string to substring
 : @param $regex the regular expression (string)
 : @return xs:string?
@@ -33,7 +34,8 @@ declare function functx:substring-before-last-match($arg as xs:string, $regex as
 : The functx:camel-case-to-words function turns a camel-case string 
 : (one that uses upper-case letters to start new words, as in "thisIsACamelCaseTerm"), 
 : and turns them into a string of words using a space or other delimiter.
-: Used to transform the camel-case names of MODS elements into space-separated words.  
+: Used to transform the camel-case names of MODS elements into space-separated words.
+: @author Jenny Tennison
 : @param $arg the string to modify
 : @param $delim the delimiter for the words (e.g. a space)
 : @return xs:string
@@ -47,6 +49,7 @@ declare function functx:camel-case-to-words($arg as xs:string?, $delim as xs:str
 : The functx:capitalize-first function capitalizes the first character of $arg. 
 : If the first character is not a lowercase letter, $arg is left unchanged. 
 : It capitalizes only the first character of the entire string, not the first letter of every word.
+: @author Jenny Tennison
 : @param $arg the word or phrase to capitalize
 : @return xs:string?
 : @see http://www.xqueryfunctions.com/xq/functx_capitalize-first.html
@@ -515,7 +518,6 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
     
     (:modification date:)
     let $last-modified := $entry/mods:extension/ext:modified/ext:when
-    (:let $log := util:log("DEBUG", ("##$last-modified): ", $last-modified)):)
     return 
         if ($last-modified) then
             mods-common:simple-row(functx:substring-before-last-match($last-modified[last()], 'T'), 'Record Last Modified')
@@ -533,7 +535,6 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
 :)
 declare function mods:format-list-view($position as xs:string, $entry as element(), $collection-short as xs:string) as element(span) {
 	let $entry := mods-common:remove-parent-with-missing-required-node($entry)
-	(:let $log := util:log("DEBUG", ("##$id): ", $entry)):)
 	let $global-transliteration := $entry/mods:extension/ext:transliterationOfResource/text()
 	let $global-language := $entry/mods:language[1]/mods:languageTerm[1]/text()
 	return
@@ -542,11 +543,12 @@ declare function mods:format-list-view($position as xs:string, $entry as element
         (: The author, etc. of the primary publication. These occur in front, with no role labels.:)
         (: NB: conference? :)
         let $names := $entry/mods:name
-        let $names-primary := <entry>{
-            $names
-                [@type = ('personal', 'corporate', 'family') or not(@type)]
-                [lower-case(mods:role/mods:roleTerm[1]) = $mods:primary-roles or empty(mods:role/mods:roleTerm)]
-            }</entry>
+        let $names-primary := 
+            <primary-names>{
+                $names
+                    [@type = ('personal', 'corporate', 'family') or not(@type)]
+                    [(mods:role/mods:roleTerm[lower-case(.) = $mods:primary-roles]) or empty(mods:role/mods:roleTerm)]
+            }</primary-names>
             return
     	        if (string($names-primary))
     	        then (mods-common:format-multiple-names($names-primary, 'list-first', $global-transliteration, $global-language)
@@ -557,9 +559,9 @@ declare function mods:format-list-view($position as xs:string, $entry as element
         mods-common:get-short-title($entry)
         ,
         let $names := $entry/mods:name
-        let $role-terms-secondary := $names/mods:role/mods:roleTerm[. != $mods:primary-roles]
+        let $role-terms-secondary := $names/mods:role/mods:roleTerm[not(lower-case(.) = $mods:primary-roles)]
             return
-                for $role-term-secondary in distinct-values($role-terms-secondary)
+                for $role-term-secondary in distinct-values($role-terms-secondary) 
                     return
                         let $names-secondary := <entry>{$entry/mods:name[mods:role/lower-case(mods:roleTerm) eq $role-term-secondary]}</entry>
                             return                            (
@@ -574,7 +576,7 @@ declare function mods:format-list-view($position as xs:string, $entry as element
                                 )
         ,
         (:If there are no secondary names, insert a period after the title, if there is no related item.:)
-        if (not($entry/mods:name/mods:role/mods:roleTerm[. != $mods:primary-roles]))
+        if (not($entry/mods:name/mods:role/mods:roleTerm[not(lower-case(.) = $mods:primary-roles)]))
         then
             if (not($entry/mods:relatedItem[@type eq 'host'])) 
             then ''

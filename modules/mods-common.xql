@@ -180,7 +180,7 @@ return
         else
             if ($element instance of element(mods:relatedItem))
             then 
-            	if (not($element/mods:title/text() or $element/@xlink:href/string()))
+            	if (not($element/mods:titleInfo/mods:title/text() or $element/@xlink:href/string()))
             	then ()
             	else $element
 	        else $element
@@ -189,25 +189,27 @@ return
 
 
 (:~
-: Capitalizes the first character of a string.   
-:
+: The functx:capitalize-first function capitalizes the first character of $arg. 
+: If the first character is not a lowercase letter, $arg is left unchanged. 
+: It capitalizes only the first character of the entire string, not the first letter of every word.
 : @author Jenny Tennison
-: @param $arg A string
-: @return A string
-: @see http://http://www.xqueryfunctions.com/xq/functx_capitalize-first.html
+: @param $arg the word or phrase to capitalize
+: @return xs:string?
+: @see http://www.xqueryfunctions.com/xq/functx_capitalize-first.html
 :)
 declare function functx:capitalize-first($arg as xs:string?) as xs:string {       
    concat(upper-case(substring($arg,1,1)), substring($arg,2))
 };
 
 (:~
-: Transforms to the camel-case a string.
-: Used to camel-case the names of MODS elements into space-separated words.  
-:
+: The functx:camel-case-to-words function turns a camel-case string 
+: (one that uses upper-case letters to start new words, as in "thisIsACamelCaseTerm"), 
+: and turns them into a string of words using a space or other delimiter.
+: Used to transform the camel-case names of MODS elements into space-separated words.
 : @author Jenny Tennison
-: @param $arg A string
-: @param $delim A string
-: @return A string
+: @param $arg the string to modify
+: @param $delim the delimiter for the words (e.g. a space)
+: @return xs:string
 : @see http://www.xqueryfunctions.com/xq/functx_camel-case-to-words.html
 :)
 declare function functx:camel-case-to-words($arg as xs:string?, $delim as xs:string ) as xs:string {
@@ -215,12 +217,15 @@ declare function functx:camel-case-to-words($arg as xs:string?, $delim as xs:str
 };
 
 (:~
-: Removes whitespace at the beginning and end of a string.   
-:
+: The functx:trim function removes whitespace at the beginning and end of a string. 
+: Unlike the built-in fn:normalize-space function, it only removes leading and trailing whitespace, 
+: not whitespace in the middle of the value. 
+: Whitespace is defined as it is in XML, namely as space, tab, carriage return and line feed characters. 
+: If $arg is the empty sequence, it returns a zero-length string.
 : @author Jenny Tennison
-: @param $arg A string
+: @param $arg the string to trim
 : @return A string
-: @see http://http://www.xqueryfunctions.com/xq/functx_trim.html
+: @see http://www.xqueryfunctions.com/xq/functx_trim.html
 :)
 declare function functx:trim($arg as xs:string?) as xs:string {       
    replace(replace($arg,'\s+$',''),'^\s+','')
@@ -2082,6 +2087,7 @@ declare function mods-common:get-related-items($entry as element(mods:mods), $de
         		if ($item/mods:titleInfo/mods:title)
         		then $item
         		else ()
+
     return
         if ($related-item)
         then 
