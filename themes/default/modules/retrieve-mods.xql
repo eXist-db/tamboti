@@ -9,24 +9,34 @@ import module namespace config="http://exist-db.org/mods/config" at "../../../mo
 import module namespace uu="http://exist-db.org/mods/uri-util" at "../../../modules/search/uri-util.xqm";
 import module namespace mods-common="http://exist-db.org/mods/common" at "../../../modules/mods-common.xql";
 
-(:The $mods:author-roles values are lower-cased when compared.:)
-declare variable $mods:author-roles := ('aut', 'author', 'cre', 'creator', 'composer', 'cmp', 'artist', 'art', 'director', 'drt');
-declare variable $mods:secondary-roles := ('com', 'compiler', 'Compiler', 'editor', 'Editor', 'edt', 'trl', 'translator', 'Translator', 'annotator', 'Annotator', 'ann');
+(:The $mods:primary-roles values are lower-cased when compared.:)
+declare variable $mods:primary-roles := ('aut', 'author', 'cre', 'creator', 'composer', 'cmp', 'artist', 'art', 'director', 'drt');
 
 declare option exist:serialize "media-type=text/xml";
 
 (: TODO: A lot of restrictions to the first item in a sequence ([1]) have been made; these must all be changed to for-structures or string-joins. :)
 
-(: ### general functions begin ###:)
-
+(:~
+: The functx:substring-before-last-match function returns the part of $arg that appears before the last match of $regex. 
+: If $arg does not match $regex, the entire $arg is returned. 
+: If $arg is the empty sequence, the empty sequence is returned.
+: @param $arg the string to substring
+: @param $regex the regular expression (string)
+: @return xs:string?
+: @see http://www.xqueryfunctions.com/xq/functx_substring-before-last-match.html 
+:)
 declare function functx:substring-before-last-match($arg as xs:string, $regex as xs:string) as xs:string? {       
    replace($arg,concat('^(.*)',$regex,'.*'),'$1')
 } ;
  
 (:~
+: The functx:camel-case-to-words function turns a camel-case string 
+: (one that uses upper-case letters to start new words, as in "thisIsACamelCaseTerm"), 
+: and turns them into a string of words using a space or other delimiter.
 : Used to transform the camel-case names of MODS elements into space-separated words.  
-: @param
-: @return
+: @param $arg the string to modify
+: @param $delim the delimiter for the words (e.g. a space)
+: @return xs:string
 : @see http://www.xqueryfunctions.com/xq/functx_camel-case-to-words.html
 :)
 declare function functx:camel-case-to-words($arg as xs:string?, $delim as xs:string ) as xs:string {
@@ -34,379 +44,28 @@ declare function functx:camel-case-to-words($arg as xs:string?, $delim as xs:str
 };
 
 (:~
-: Used to capitalize the first character of $arg.   
-: @param
-: @return
-: @see http://http://www.xqueryfunctions.com/xq/functx_capitalize-first.html
+: The functx:capitalize-first function capitalizes the first character of $arg. 
+: If the first character is not a lowercase letter, $arg is left unchanged. 
+: It capitalizes only the first character of the entire string, not the first letter of every word.
+: @param $arg the word or phrase to capitalize
+: @return xs:string?
+: @see http://www.xqueryfunctions.com/xq/functx_capitalize-first.html
 :)
 declare function functx:capitalize-first($arg as xs:string?) as xs:string? {       
    concat(upper-case(substring($arg,1,1)),
              substring($arg,2))
 };
  
+
 (:~
-: Used to remove whitespace at the beginning and end of a string.   
-: @param
-: @return
-: @see http://http://www.xqueryfunctions.com/xq/functx_trim.html
+: The <b>mods:format-detail-view</b> function returns the detail view of a MODS record.
+: @param $entry a MODS record, processed by clean:cleanup() in session.xql.
+: @param $collection-short the location of the MODS record, with '/db/' removed.
+: @param $position the position of the record displayed with the search results (this parameter is not used).
+: @return an XHTML table.
 :)
-declare function functx:trim($arg as xs:string?) as xs:string {       
-   replace(replace($arg,'\s+$',''),'^\s+','')
-};
- 
-
-(: ### general functions end ###:)
-
-
-(: ### <extent> begins ### :)
-
-(: <extent> belongs to <physicalDescription>, to <part> as a top level element and to <part> under <relatedItem>. 
-Under <physicalDescription>, <extent> has no subelements.:)
-
-(: ### <originInfo> begins ### :)
-
-(: The DLF/Aquifer Implementation Guidelines for Shareable MODS Records require the use of at least one <originInfo> element with at least one date subelement in every record, one of which must be marked as a key date. <place>, <publisher>, and <edition> are recommended if applicable. These guidelines make no recommendation on the use of the elements <issuance> and <frequency>. This element is repeatable. :)
- (: Application: :)
-    (: Problem:  :)
-(: Attributes: lang, xml:lang, script, transliteration. :)
-    (: Unaccounted for:  :)
-(: Subelements: <place> [RECOMMENDED IF APPLICABLE], <publisher> [RECOMMENDED IF APPLICABLE], <dateIssued> [AT LEAST ONE DATE ELEMENT IS REQUIRED], <dateCreated> [AT LEAST ONE DATE ELEMENT IS REQUIRED], <dateCaptured> [NOT RECOMMENDED], <dateValid> [NOT RECOMMENDED], <dateModified> [NOT RECOMMENDED], <copyrightDate> [AT LEAST ONE DATE ELEMENT IS REQUIRED], <dateOther> [AT LEAST ONE DATE ELEMENT IS REQUIRED], <edition> [RECOMMENDED IF APPLICABLE], <issuance> [OPTIONAL], <frequency> [OPTIONAL]. :)
-    (: Unaccounted for: . :)
-    (: <place> :)
-        (: Repeat <place> for recording multiple places. :)
-        (: Attributes: type [RECOMMENDED IF APPLICABLE] authority [RECOMMENDED IF APPLICABLE]. :)
-            (: @type :)
-                (: Values:  :)    
-                    (: Unaccounted for:  :)
-        (: Subelements: <placeTerm> [REQUIRED]. :)
-            (: Attributes: type [REQUIRED]. :)
-                (: Values: text, code. :)
-    (: <publisher> :)
-        (: Attributes: none. :)
-    (: dates [AT LEAST ONE DATE ELEMENT IS REQUIRED] :)
-        (: The MODS schema includes several date elements intended to record different events that may be important in the life of a resource. :)
-
-
-(: ### <originInfo> ends ### :)
-
-(: ### <name> begins ### :)
-
-(: The DLF/Aquifer Implementation Guidelines for Shareable MODS Records requires the use of at least one <name> element to describe the creator of the intellectual content of the resource, if available. The guidelines recommend the use of the type attribute with all <name> elements whenever possible for greater control and interoperability. In addition, they require the use of <namePart> as a subelement of <name>. This element is repeatable. :)
- (: Application:  :)
-    (: Problem:  :)
-(: Attributes: type [RECOMMENDED], authority [RECOMMENDED], xlink, ID, lang, xml:lang, script, transliteration. :)
-    (: Unaccounted for: authority, xlink, ID, (lang), xml:lang, script. :)
-    (: @type :)
-        (: Values: personal, corporate, conference. :)
-            (: Unaccounted for: none. :)
-(: Subelements: <namePart> [REQUIRED], <displayForm> [OPTIONAL], <affiliation> [OPTIONAL], <role> [RECOMMENDED], <description> [NOT RECOMMENDED]. :)
-    (: Unaccounted for: <displayForm>, <affiliation>, <role>, <description>. :)
-    (: <namePart> :)
-    (: "namePart" includes each part of the name that is parsed. Parsing is used to indicate a date associated with the name, to parse the parts of a corporate name (MARC 21 fields X10 subfields $a and $b), or to parse parts of a personal name if desired (into family and given name). The latter is not done in MARC 21. Names are expected to be in a structured form (e.g. surname, forename). :)
-        (: Attributes: type [RECOMMENDED IF APPLICABLE]. :)
-            (: @type :)
-                (: Values: date, family, given, termsOfAddress. :)    
-                    (: Unaccounted for: date, termsOfAddress :)
-        (: Subelements: none. :)
-    (: <role> :)
-        (: Attributes: none. :)
-        (: Subelements: <roleTerm> [REQUIRED]. :)
-            (: <roleTerm> :)
-            (: Unaccounted for: none. :)
-                (: Attributes: type [RECOMMENDED], authority [RECOMMENDED IF APPLICABLE]. :)
-                (: Unaccounted for: type [RECOMMENDED], authority [RECOMMENDED IF APPLICABLE] :)
-                    (: @type :)
-                        (: Values: text, code. :)    
-                            (: Unaccounted for: text, code :)
-
-(: Both the name as given in the publication and the autority name should be rendered. :)
-
-
-
-(: NB! Create function to get <typeOfResource>! :)
-(: The DLF/Aquifer Implementation Guidelines for Shareable MODS Records require the use in all records of at least one <typeOfResource> element using the required enumerated values. This element is repeatable. :)
-    (: The values for <typeOfResource> are restricted to those in the following list: text, cartographic, notated music, sound recording [if not possible to specify "musical" or "nonmusical"], sound recording-musical, sound recording-nonmusical, still image, moving image, three dimensional object, (software, multimedia) [NB! comma in value], mixed material :)
-    (: Subelements: none. :)
-    (: Attributes: collection [RECOMMENDED IF APPLICABLE], manuscript [RECOMMENDED IF APPLICABLE]. :)
-        (: @collection, @manuscript :)
-            (: Values: yes, no. :)
-(:
-declare function mods:get-resource-type() {
-};
-:)
-
-(: NB! Create function to get <genre>! :)
-(: The DLF /Aquifer Implementation Guidelines for Shareable MODS Records recommend the use of at least one <genre> element in every MODS record and, if a value is provided, require the use of a value from a controlled list and the designation of this list in the authority attribute. This element is repeatable. :)
-    (: The values for <typeOfResource> are restricted to those in the following list: text, cartographic, notated music, sound recording [if not possible to specify "musical" or "nonmusical"], sound recording-musical, sound recording-nonmusical, still image, moving image, three dimensional object, software, multimedia, mixed material :)
-    (: Subelements: none. :)
-    (: Attributes: type, authority [REQUIRED], lang, xml:lang, script, transliteration. :)
-(:
-declare function mods:get-genre() {
-};
-:)
-
-(: ### <titleInfo> begins ### :)
-
-(: The DLF/Aquifer Implementation Guidelines for Shareable MODS Records require the use in all records of at least one <titleInfo> element with one <title> subelement. Other subelements of <titleInfo> are recommended when they apply. This element is repeatable. :)
-(: Application: <titleInfo> is repeated for each type attribute value. If multiple titles are recorded, repeat <titleInfo><title> for each. The language of the title may be indicated if desired using the xml:lang (RFC3066) or lang (3-character ISO 639-2 code) attributes. :)
-    (: Problem: the wrong (2-character) language codes seem to be used in Academy samples. :)
-(: 3.3 Attributes: type [RECOMMENDED IF APPLICABLE], authority [RECOMMENDED IF APPLICABLE], displayLabel [OPTIONAL], xlink:simpleLink, ID, lang, xml:lang, script, transliteration. :)
-    (: All 3.3 attributes are applied to the <titleInfo> element; none are used on any subelements. 
-    In 3.4 all subelements have lang, xml:lang, script, transliteration. :)
-    (: Unaccounted for: authority, displayLabel, xlink, ID, xml:lang, script. :)
-    (: @type :)
-        (: For the primary title of the resource, do not use the type attribute (NB: this does not mean that the attribute should be empty, but absent). For all additional titles, the guidelines recommend using this attribute to indicate the type of the title being recorded. :)
-        (: Values: abbreviated, translated, alternative, uniform. :)
-        (: NB: added value: transliterated. :)
-            (: Unaccounted for: transliterated. :)
-(: Subelements: <title> [REQUIRED], <subTitle> [RECOMMENDED IF APPLICABLE], <partNumber> [RECOMMENDED IF APPLICABLE], <partName> [RECOMMENDED IF APPLICABLE], <nonSort> [RECOMMENDED IF APPLICABLE]. :)
-    (: Unaccounted for: <nonSort>. :)
-    (: <nonSort> :)
-        (: The guidelines strongly recommend the use of this element when non-sorting characters are present, rather than including them in the text of the <title> element. :)
-    (: <partName> :)
-        (: Multiple <partName> elements may be nested in a single <titleInfo> to describe a single part with multiple hierarchical levels. :)
-
-(: !!! function mods:get-title-transliteration !!! :)
-(: Constructs a transliterated title for Japanese and Chinese. :)
-    (: Problem: What if other languages than Chinese and Japanese occur in a MODS record? :)
-    (: Problem: What if several languages with transliteration occur in one MODS record? :)
-
-
-(: If there is a Japanese or Chinese title, any English title will be a translated title. :) 
-    (: Problem: a variant or parallel title in English? :)
-
-(: Constructs title for the detail view. 
-It is called by mods:format-detail-view(), which iterates through a sequence of titleInfo elements. :)
-declare function mods:title-full($titleInfo as element(mods:titleInfo)) {
-if ($titleInfo)
-    then
-    <tr xmlns="http://www.w3.org/1999/xhtml">
-        <td class="label">
-        {
-            if (($titleInfo/@type eq 'translated') and (not($titleInfo/@transliteration) or string($titleInfo/@lang))) 
-            then 'Translated Title'
-            else 
-                if ($titleInfo/@type eq 'alternative') 
-                then 'Alternative Title'
-                else 
-                    if ($titleInfo/@type eq 'uniform') 
-                    then 'Uniform Title'
-                    else 
-                        if ($titleInfo/@transliteration)
-                        then 'Transliterated Title'
-                        else
-                            (:NB: In mods:format-detail-view(), titleInfo with @type eq 'abbreviated' are removed.:) 
-                            if ($titleInfo/@type eq 'abbreviated') 
-                            then 'Abbreviated Title'
-                            (:Default value.:)
-                            else 'Title'
-        }
-        <span class="deemph">
-        {
-        let $lang := string($titleInfo/@lang)
-        let $xml-lang := string($titleInfo/@xml:lang)
-        (: Prefer @lang to @xml:lang. :)
-        let $lang := if ($lang) then $lang else $xml-lang
-        return
-            if ($lang)
-            then        
-                (
-                <br/>, 'Language: '
-                ,
-                mods-common:get-language-label($lang)
-                )
-            else ()
-        }
-        {
-        let $transliteration := string($titleInfo/@transliteration)
-        let $global-transliteration := $titleInfo/../mods:extension/ext:transliterationOfResource/text()
-        (:Prefer local transliteration to global.:)
-        let $transliteration := 
-        	if ($transliteration)
-        	then $transliteration
-        	else $global-transliteration
-        return
-        (:The local transliteration attribute may be empty, so we check if it is there anyway. 
-        If it is there, but empty, we use the global value.:)
-        if ($titleInfo/@transliteration and $transliteration)
-        then
-            (<br/>, 'Transliteration: ',
-            let $transliteration-label := doc(concat($config:edit-app-root, '/code-tables/transliteration-codes.xml'))/*:code-table/*:items/*:item[*:value eq $transliteration]/*:label
-            return
-                if ($transliteration-label)
-                then $transliteration-label
-                else $transliteration
-            )
-        else
-        ()
-        }
-        </span>
-        </td>
-        <td class='record'>
-        {
-        if ($titleInfo/mods:partNumber | $titleInfo/mods:partName)
-        then 
-	        concat(
-	        concat(
-	        concat(
-	        	$titleInfo/mods:nonSort, 
-	        	' ', 
-	        	$titleInfo/mods:title), 
-	        		(
-	        			if ($titleInfo/mods:subTitle) 
-	        			then ': ' 
-	        			else ()
-	        		), 
-	        	string-join($titleInfo/mods:subTitle, '; ')), 
-	        	'. ', 
-	        	string-join(($titleInfo/mods:partNumber, $titleInfo/mods:partName),
-	        	': ')
-	        	)
-        else 
-        	concat(
-        	concat(
-        	$titleInfo/mods:nonSort, ' ', 
-        	$titleInfo/mods:title), 
-        		(
-        			if ($titleInfo/mods:subTitle) 
-        			then ': ' 
-        			else ()
-        		), 
-        	string-join($titleInfo/mods:subTitle, '; '))
-        }
-        </td>
-    </tr>
-    else
-    ()
-};
-
-(: ### <titleInfo> ends ### :)
-
-(: ### <relatedItem> begins ### :)
-
-(: Application: relatedItem includes a designation of the specific type of relationship as a value of the type attribute and is a controlled list of types enumerated in the schema. <relatedItem> is a container element under which any MODS element may be used as a subelement. It is thus fully recursive. :)
-(: Attributes: type, xlink:href, displayLabel, ID. :)
-(: Values for @type: preceding, succeeding, original, host, constituent, series, otherVersion, otherFormat, isReferencedBy. :)
-(: Subelements: any MODS element. :)
-(: NB! This function is constructed differently from mods:entry-full; the two should be harmonised. :)
-
-declare function mods:get-related-items($entry as element(mods:mods), $destination as xs:string, $global-language as xs:string?, $collection-short as xs:string) {
-    for $item in $entry/mods:relatedItem
-        let $type := string($item/@type)
-        (:NB: do we use @ID on relatedItem?:) 
-        let $ID := string($item/@ID)
-        let $titleInfo := $item/mods:titleInfo
-        let $displayLabel := string($item/@displayLabel)
-        let $label-displayed :=
-            string(
-                if ($displayLabel)
-                then $displayLabel
-                else
-                    if ($type)
-                    then functx:capitalize-first(functx:camel-case-to-words($type, ' '))
-                    else 'Related Item'
-            )
-        let $part := $item/mods:part
-        let $xlinked-ID := replace($item/@xlink:href, '^#?(.*)$', '$1')
-        let $xlinked-record :=
-            (: Any MODS record in /db/resources is retrieved if there is a @xlink:href/@ID match and the relatedItem has no string value. If there should be duplicated IDs, only the first record is retrieved.:)
-            if (exists($xlinked-ID) and not($titleInfo))
-            then collection($config:mods-root-minus-temp)//mods:mods[@ID eq $xlinked-ID][1]
-            else ()
-        let $related-item :=
-        	(:If the related item is noted in another record than the current record.:)
-        	if ($xlinked-record) 
-        	(: NB: There must be a smarter way to merge the retrieved relatedItem with the native part! :)
-        	(:update insert $part into $xlinked-record:)
-        	then 
-        	   <mods:relatedItem ID="{$ID}" displayLabel ="{$displayLabel}" type="{$type}" xlink:href="{$xlinked-ID}">
-        	       {($xlinked-record/mods:titleInfo, $part)}
-        	   </mods:relatedItem> 
-        	else
-        	(:If the related item is noted in the current record.:)
-        		(:If there is no title, then discard.:)
-        		if (string-join($item/mods:titleInfo/mods:title, ''))
-        		then $item
-        		else ()
-    return
-        (: Check for the most common types first. :)
-        if ($related-item)
-        then
-            (:If the related item is a periodical, an edited volume, or a series.:) 
-	        if ($type = ('host', 'series'))
-	        then
-	            if ($destination eq 'list')
-	            then
-	                <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">
-	                	<span class="relatedItem-record">{mods-common:format-related-item($related-item, $global-language, $collection-short)}</span>
-	                </span>
-	            else
-	                (:If not 'list', $destination will be 'detail'.:)
-	                (:If the related item is pulled in with an xlink, use this to make a link.:) 
-	                if (string($xlinked-ID))
-	                then
-	                    <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
-							<td class="url label relatedItem-label">
-	                            <a href="?filter=ID&amp;value={$xlinked-ID}">&lt;&lt; In</a>
-	                        </td>
-	                        <td class="relatedItem-record">
-								<span class="relatedItem-span">{mods-common:format-related-item($related-item, $global-language, $collection-short)}</span>
-	                        </td>
-	                    </tr>
-	                else
-                        (:If the related item is in the record itself, format it without a link.:)	                
-	                    <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
-							<td class="url label relatedItem-label">In</td>
-	                        <td class="relatedItem-record">
-								<span class="relatedItem-span">{mods-common:format-related-item($related-item, $global-language, $collection-short)}</span>
-	                        </td>
-	                    </tr>
-	        (: if @type is not 'host' or 'series':)
-	        else
-	            (:If the related item is pulled in with an xlink, use this to make a link.:) 
-	            if ($destination eq 'detail' and string($xlinked-ID))
-	            then
-	                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
-						<td class="url label relatedItem-label">
-	                        <a href="?filter=ID&amp;value={$xlinked-ID}">&lt;&lt; {$label-displayed}</a>
-	                    </td>
-	                    <td class="relatedItem-record">
-							<span class="relatedItem-span">{mods-common:format-related-item($related-item, $global-language, $collection-short)}</span>
-	                    </td>
-	                </tr>
-	            else
-	                (:If the related item is in the record itself, format it without a link.:)
-	                if ($destination eq 'detail')
-	                then
-	                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
-	                    <td class="url label relatedItem-label">
-	                        {functx:capitalize-first(functx:camel-case-to-words($type, ' '))}
-	                    </td>
-	                    <td class="relatedItem-record">
-	                        <span class="relatedItem-span">{mods-common:format-related-item($related-item, $global-language, $collection-short)}</span>
-	                    </td>
-	                </tr>
-	                (:Only @type 'host' and 'series' are displayed in list view.:)
-	                else ()
-        else ()
-};
-
-(: ### <relatedItem> ends ### :)
-
-declare function mods:format-url($url as element(mods:url), $collection-short as xs:string){
-let $url := 
-    if ($url/@access eq 'preview')
-    (:Special formatting for image collections.:)
-    then concat('images/',$collection-short,'/',$url,'?s',$config:url-image-size) 
-    else $url
-return $url
-};
-
-(: Creates view for detail view. :)
-(: NB: "mods:format-detail-view()" is referenced in session.xql. :)
-declare function mods:format-detail-view($id as xs:string, $entry as element(mods:mods), $collection-short as xs:string) {
-	let $ID := $entry/@ID
-	(:let $log := util:log("DEBUG", ("##$ID): ", $ID)):)
+declare function mods:format-detail-view($position as xs:string, $entry as element(mods:mods), $collection-short as xs:string) as element(table) {
+    let $ID := $entry/@ID
 	let $entry := mods-common:remove-parent-with-missing-required-node($entry)
 	let $global-transliteration := $entry/mods:extension/ext:transliterationOfResource/text()
 	let $global-language := $entry/mods:language[1]/mods:languageTerm[1]/text()
@@ -427,7 +86,7 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     
     (: titles :)
     for $titleInfo in $entry/mods:titleInfo[not(@type eq 'abbreviated')]
-    return mods:title-full($titleInfo)
+    return mods-common:title-full($titleInfo)
     ,
     
     (: conferences :)
@@ -594,18 +253,11 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
             }
             </td>
             <td class="record">
-            <a href="{mods:format-url($url, $collection-short)}" target="_blank">
-                {
-                    if ((string-length($url) le 70))
-                    then $url
-                    (:avoid too long urls that do not line-wrap:)
-                    else (substring($url, 1, 70), '...')
-                }
-                </a></td>
+            {mods-common:format-url($url, $collection-short)}</td>
         </tr>
     ,
     (: relatedItem :)
-    mods:get-related-items($entry, 'detail', $global-language, $collection-short)
+    mods-common:get-related-items($entry, 'detail', $global-language, $collection-short)
     ,
     (: typeOfResource :)
     mods-common:simple-row(string($entry/mods:typeOfResource[1]), 'Type of Resource')
@@ -872,9 +524,14 @@ declare function mods:format-detail-view($id as xs:string, $entry as element(mod
     </table>
 };
 
-(: Creates view for hitlist. :)
-(: NB: "mods:format-list-view()" is referenced in session.xql. :)
-declare function mods:format-list-view($id as xs:string, $entry as element(), $collection-short as xs:string) {
+(:~
+: The <b>mods:format-list-view</b> function returns the list view of a sequence of MODS records.
+: @param $entry a MODS record, processed by clean:cleanup().
+: @param $collection-short the location of the MODS record, with '/db/' removed
+: @param $position the position of the record displayed with the search results (this parameter is not used)
+: @return an XHTML span.
+:)
+declare function mods:format-list-view($position as xs:string, $entry as element(), $collection-short as xs:string) as element(span) {
 	let $entry := mods-common:remove-parent-with-missing-required-node($entry)
 	(:let $log := util:log("DEBUG", ("##$id): ", $entry)):)
 	let $global-transliteration := $entry/mods:extension/ext:transliterationOfResource/text()
@@ -888,7 +545,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(), $c
         let $names-primary := <entry>{
             $names
                 [@type = ('personal', 'corporate', 'family') or not(@type)]
-                [mods:role/mods:roleTerm = $mods:author-roles or empty(mods:role/mods:roleTerm)]
+                [lower-case(mods:role/mods:roleTerm[1]) = $mods:primary-roles or empty(mods:role/mods:roleTerm)]
             }</entry>
             return
     	        if (string($names-primary))
@@ -900,11 +557,11 @@ declare function mods:format-list-view($id as xs:string, $entry as element(), $c
         mods-common:get-short-title($entry)
         ,
         let $names := $entry/mods:name
-        let $role-terms-secondary := $names/mods:role/mods:roleTerm[. = $mods:secondary-roles]
+        let $role-terms-secondary := $names/mods:role/mods:roleTerm[. != $mods:primary-roles]
             return
                 for $role-term-secondary in distinct-values($role-terms-secondary)
                     return
-                        let $names-secondary := <entry>{$entry/mods:name[mods:role/mods:roleTerm = $role-term-secondary]}</entry>
+                        let $names-secondary := <entry>{$entry/mods:name[mods:role/lower-case(mods:roleTerm) eq $role-term-secondary]}</entry>
                             return                            (
                                 (: Introduce secondary role label with comma. :)
                                 (: NB: What if there are multiple secondary roles? :)
@@ -917,7 +574,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(), $c
                                 )
         ,
         (:If there are no secondary names, insert a period after the title, if there is no related item.:)
-        if (not($entry/mods:name/mods:role/mods:roleTerm[. = $mods:secondary-roles]))
+        if (not($entry/mods:name/mods:role/mods:roleTerm[. != $mods:primary-roles]))
         then
             if (not($entry/mods:relatedItem[@type eq 'host'])) 
             then ''
@@ -933,7 +590,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(), $c
             (:The series that the primary publication occurs in is spliced in between the secondary names and the originInfo.:)
             (:NB: Should not be  italicised.:)
             if ($entry/mods:relatedItem[@type eq'series'])
-            then ('. ', <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods:get-related-items($entry, 'list', $global-language, $collection-short)}</span>)
+            then ('. ', <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods-common:get-related-items($entry, 'list', $global-language, $collection-short)}</span>)
             else ()
             ,
             mods-common:get-part-and-origin($entry)
@@ -941,7 +598,7 @@ declare function mods:format-list-view($id as xs:string, $entry as element(), $c
         (: The periodical, edited volume or series that the primary publication occurs in. :)
         (: if ($entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:extent or $entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:detail/mods:number/text()) :)
         if ($entry/mods:relatedItem[@type eq 'host'])
-        then <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods:get-related-items($entry, 'list', $global-language, $collection-short)}</span>
+        then <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods-common:get-related-items($entry, 'list', $global-language, $collection-short)}</span>
         else 
         (: The url of the primary publication. :)
         	if (contains($collection-short, 'Priya')) then () else

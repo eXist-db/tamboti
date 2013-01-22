@@ -55,7 +55,9 @@ mods-common:get-place()
 mods-common:get-date()
 mods-common:get-extent()
 
-Type of Resource-related functions:
+Related Items-related functions:
+mods-common:get-related-items()
+
 
 :)
 
@@ -162,7 +164,7 @@ declare function mods-common:serialize-list($sequence as item()+, $sequence-coun
 
 (:~
 : The <em>mods-common:remove-parent-with-missing-required-node</em> function removes titleIfo, name and relatedItem elements that do not contain children required by the respective elements. 
-: @param $node A mods element, either mods:mods or mods:relatedItem.
+: @param $node A MODS element, either mods:mods or mods:relatedItem.
 : @return The same element, with parents with children without required children removed.
 :)
 declare function mods-common:remove-parent-with-missing-required-node($node as node()) as node() {
@@ -170,7 +172,7 @@ element {node-name($node)}
 {
 for $element in $node/*
 return
-    if ($element instance of element(mods:titleInfo) and not(string($element/mods:title))) 
+    if ($element instance of element(mods:titleInfo) and not(string($element/mods:title/text()))) 
     then ()
     else
         if ($element instance of element(mods:name) and not($element/mods:namePart/text()))
@@ -178,7 +180,7 @@ return
         else
             if ($element instance of element(mods:relatedItem))
             then 
-            	if (not((string($element) or ($element/@xlink:href))))
+            	if (not($element/mods:title/text() or $element/@xlink:href/string()))
             	then ()
             	else $element
 	        else $element
@@ -224,6 +226,127 @@ declare function functx:trim($arg as xs:string?) as xs:string {
    replace(replace($arg,'\s+$',''),'^\s+','')
 };
  
+(:~
+: The <b>mods-common:title-full</b> function returns 
+: a full title for detail view.
+: The function seeks to approach the Chicago style.
+:
+: @author Wolfgang M. Meier
+: @author Jens Østergaard Petersen
+: @see http://www.loc.gov/standards/mods/userguide/titleinfo.html
+: @see http://www.loc.gov/standards/mods/userguide/relateditem.html
+: @see http://www.loc.gov/standards/mods/userguide/subject.html#titleinfo
+: @param $titleInfo A MODS titleInfo element
+: @return The titleInfo formatted as XHTML.
+:)
+declare function mods-common:title-full($titleInfo as element(mods:titleInfo)) as element() {
+if ($titleInfo)
+    then
+    <tr xmlns="http://www.w3.org/1999/xhtml">
+        <!--Left column-->
+        <!--Main label-->
+        <td class="label">
+        {
+            if (($titleInfo/@type eq 'translated') and (not($titleInfo/@transliteration) or string($titleInfo/@lang) or string($titleInfo/@xml:lang))) 
+            then 'Translated Title'
+            else 
+                if ($titleInfo/@type eq 'alternative') 
+                then 'Alternative Title'
+                else 
+                    if ($titleInfo/@type eq 'uniform') 
+                    then 'Uniform Title'
+                    else 
+                        if ($titleInfo/@transliteration)
+                        then 'Transliterated Title'
+                        else
+                            (:NB: In mods:format-detail-view(), titleInfo with @type eq 'abbreviated' are removed.:) 
+                            if ($titleInfo/@type eq 'abbreviated') 
+                            then 'Abbreviated Title'
+                            (:Default value.:)
+                            else 'Title'
+        }
+        <span class="deemph">
+        <!--Language sublabel-->
+        {
+        let $lang := string($titleInfo/@lang)
+        let $xml-lang := string($titleInfo/@xml:lang)
+        (: Prefer @lang to @xml:lang. :)
+        let $lang := if ($lang) then $lang else $xml-lang
+        return
+            if ($lang)
+            then        
+                (
+                <br/>, 'Language: '
+                ,
+                mods-common:get-language-label($lang)
+                )
+            else ()
+        }
+        <!--Transliteration sublabel-->
+        {
+        let $transliteration := string($titleInfo/@transliteration)
+        let $global-transliteration := $titleInfo/../mods:extension/ext:transliterationOfResource/text()
+        (:Prefer local transliteration to global.:)
+        let $transliteration := 
+        	if ($transliteration)
+        	then $transliteration
+        	else $global-transliteration
+        return
+        (:The local transliteration attribute may be empty, so we check if it is there anyway. 
+        If it is there, but empty, we use the global value.:)
+        if ($titleInfo/@transliteration and $transliteration)
+        then
+            (<br/>, 'Transliteration: ',
+            let $transliteration-label := doc(concat($config:edit-app-root, '/code-tables/transliteration-codes.xml'))/*:code-table/*:items/*:item[*:value eq $transliteration]/*:label
+            return
+                if ($transliteration-label)
+                then $transliteration-label
+                else $transliteration
+            )
+        else
+        ()
+        }
+        </span>
+        </td>
+        <!--Right column-->
+        <td class='record'>
+        {
+        if ($titleInfo/mods:partNumber | $titleInfo/mods:partName)
+        then 
+	        concat(
+	        concat(
+	        concat(
+	        	$titleInfo/mods:nonSort, 
+	        	' ', 
+	        	$titleInfo/mods:title), 
+	        		(
+	        			if ($titleInfo/mods:subTitle) 
+	        			then ': ' 
+	        			else ()
+	        		), 
+	        	string-join($titleInfo/mods:subTitle, '; ')), 
+	        	'. ', 
+	        	string-join(($titleInfo/mods:partNumber, $titleInfo/mods:partName),
+	        	': ')
+	        	)
+        else 
+        	concat(
+        	concat(
+        	$titleInfo/mods:nonSort, ' ', 
+        	$titleInfo/mods:title), 
+        		(
+        			if ($titleInfo/mods:subTitle) 
+        			then ': ' 
+        			else ()
+        		), 
+        	string-join($titleInfo/mods:subTitle, '; '))
+        }
+        </td>
+    </tr>
+    else
+    ()
+};
+
 
 (:~
 : The <b>mods-common:get-short-title</b> function returns 
@@ -377,6 +500,32 @@ declare function mods-common:get-short-title($entry as element()) {
 };
 
 (:~
+: The <b>mods-common:format-url</b> function returns 
+: a the URL of a publication, for display in detail view.
+: Special formatting is provided for image collections.
+:
+: @see http://www.loc.gov/standards/mods/userguide/location.html#url
+: @param $url The MODS url element
+: @return The url as XHTML a element.
+:)
+declare function mods-common:format-url($url as element(mods:url), $collection-short as xs:string) as element() {
+let $url := 
+    if ($url/@access eq 'preview')
+    (:Special formatting for image collections.:)
+    then concat('images/',$collection-short,'/',$url,'?s',$config:url-image-size) 
+    else $url
+let $url-for-display := 
+    if ((string-length($url) le 70))
+    then $url
+    (:avoid too long urls that do not line-wrap:)
+    else (substring($url, 1, 70), '...') 
+return 
+    <a href="{$url}" target="_blank">{$url-for-display}</a>
+};
+
+
+
+(:~
 : The <b>mods-common:get-language-label</b> function returns 
 : the <b>human-readable label</b> of the language value passed to it.  
 : This value can set in many MODS elements and attributes. 
@@ -453,10 +602,11 @@ declare function mods-common:get-script-label($scriptTerm as xs:string) as xs:st
         return $script-label
 };
 
+
 (: Retrieves names. :)
 (: Called from mods-common:format-multiple-names() :)
 (:~
-: The <b>mods-common:retrieve-names(</b> function returns 
+: The <b>mods-common:retrieve-names</b> function returns 
 : a a sequence of names to be passed to mods-common:retrieve-name().  
 : The function seeks to approach the Chicago style.
 :
@@ -478,7 +628,7 @@ declare function mods-common:retrieve-names(
 };
 
 (:~
-: The <b>mods-common:format-name(</b> function returns 
+: The <b>mods-common:format-name</b> function returns 
 : a formatted name. The function returns the name as it appears in first place in a list of names, with family name first, 
 : and as it appears elsewhere, with given name first. The case of names in a script that is also transliterated is covered.
 : If the name has an authoritative form according to a MADS record, this form is rendered.
@@ -1029,7 +1179,6 @@ declare function mods-common:format-multiple-names($entry as element()*, $destin
     let $formatted :=
         if ($nameCount gt 0) 
         then mods-common:serialize-list($names, $nameCount)
-        (:NB: Original function removed any trailing periods, with functx:substring-before-last-match($names, '\.'). Move to function called.:)
         else ()
     return <span xmlns="http://www.w3.org/1999/xhtml" class="name">{normalize-space($formatted)}</span>
 };
@@ -1384,17 +1533,18 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
 
 (:~
 : The <b>mods-common:format-related-item</b> function returns 
-: a compact presentation of a relatedItem for the detail view of the item that related to it.
+: a compact presentation of a relatedItem for the detail view of the item that relates to it.
 : The function seeks to approach the Chicago style.
 :
 : @author Wolfgang M. Meier
 : @author Jens Østergaard Petersen
 : @see http://www.loc.gov/standards/mods/userguide/relateditem.html
-: @param $relatedItem One MODS relatedItem element
+: @param $relatedItem A MODS relatedItem element
 : @param $global-language  The value set for the language of the resource catalogued, set in language/languageTerm
 : @return The relatedItem formatted as XHTML.
 :)
-declare function mods-common:format-related-item($relatedItem as element(mods:relatedItem), $global-language as xs:string?, $collection-short as xs:string) {
+declare function mods-common:format-related-item($relatedItem as element(mods:relatedItem), $global-language as xs:string?, $collection-short as xs:string) as element()? {
+	(:Remove related items with no @xlink:href or no titleInfo/title :)
 	let $relatedItem := mods-common:remove-parent-with-missing-required-node($relatedItem)
 	let $global-transliteration := $relatedItem/../mods:extension/ext:transliterationOfResource/text()
 	(:If several terms are used for the same role, we assume them to be synonymous.:)
@@ -1409,11 +1559,11 @@ declare function mods-common:format-related-item($relatedItem as element(mods:re
         (
             <result>{(
                 (:Display author roles:)
-                if ($relatedItem-role-terms = $mods:author-roles or not($relatedItem-role-terms))
+                if ($relatedItem-role-terms = $mods:primary-roles or not($relatedItem-role-terms))
                 then mods-common:format-multiple-names($relatedItem, 'list-first', $global-transliteration, $global-language)
                 else ()
                 ,
-                if ($relatedItem-role-terms = $mods:author-roles)
+                if ($relatedItem-role-terms = $mods:primary-roles)
                 then '. '
                 else ()
                 ,
@@ -1429,10 +1579,9 @@ declare function mods-common:format-related-item($relatedItem as element(mods:re
                     if ($issuance eq "continuing")
                     then ()
                     else
-                        let $roleTerms := $relatedItem/mods:name/mods:role/mods:roleTerm
+                        let $roleTerms := distinct-values($relatedItem/mods:name/mods:role/mods:roleTerm)
                         return
-                            for $roleTerm in distinct-values($roleTerms)
-                                where $roleTerm = $mods:secondary-roles        
+                            for $roleTerm in $roleTerms[. != $mods:primary-roles]        
                                     return
                                         let $names := <entry>{$relatedItem/mods:name[mods:role/mods:roleTerm eq $roleTerm]}</entry>
                                             return
@@ -1728,7 +1877,9 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
 
 (:~
 : The <b>mods-common:get-extent</b> function returns 
-: information relating to the number of pages etc. of a publication. 
+: information relating to the number of pages etc. of a publication.
+: <extent> belongs to <physicalDescription>, to <part> as a top level element and to <part> under <relatedItem>. 
+: Under <physicalDescription>, <extent> has no subelements.
 : The function seeks to approach the Chicago style.
 
 : @author Wolfgang M. Meier
@@ -1774,7 +1925,7 @@ return
 };
 
 (:~
-: The <b>mods-common:get-publisher(</b> function returns 
+: The <b>mods-common:get-publisher</b> function returns 
 : information relating to the publisher of a publication. 
 : The function seeks to approach the Chicago style.
 
@@ -1803,7 +1954,7 @@ declare function mods-common:get-publisher($publishers as element(mods:publisher
 
 
 (:~
-: The <b>mods-common:get-place(</b> function returns 
+: The <b>mods-common:get-place</b> function returns 
 : information relating to the place of the domicile of the publisher of a publication. 
 : The function seeks to approach the Chicago style.
 
@@ -1845,7 +1996,7 @@ declare function mods-common:get-place($places as element(mods:place)*) as xs:st
 };
 
 (:~
-: The <b>mods-common:get-date(</b> function returns 
+: The <b>mods-common:get-date</b> function returns 
 : a date, either as a single date or as a span. 
 : The function seeks to approach the Chicago style.
 
@@ -1885,4 +2036,86 @@ return
     then concat(' (', $qualifier, ')')
     else ()
     )
+};
+
+(:~
+: The <b>get-related-items</b> function returns 
+: the XHTML view of a relatedItem element. 
+
+: @see http://www.loc.gov/standards/mods/userguide/relateditem.html
+: @param $entry a MODS record
+: @return XHTML formatting of related items with the MODS record.
+:)
+declare function mods-common:get-related-items($entry as element(mods:mods), $destination as xs:string, $global-language as xs:string?, $collection-short as xs:string) as element()* {
+    for $item in $entry/mods:relatedItem
+        let $type := string($item/@type) 
+        let $titleInfo := $item/mods:titleInfo
+        let $displayLabel := string($item/@displayLabel)
+        let $label :=
+            string(
+                if ($displayLabel)
+                then $displayLabel
+                else
+                    if ($type)
+                    then functx:capitalize-first(functx:camel-case-to-words($type, ' '))
+                    else 'Related Item'
+            )
+        let $part := $item/mods:part
+        let $xlinked-ID := replace($item/@xlink:href, '^#?(.*)$', '$1')
+        let $xlinked-record :=
+            (: Any MODS record in /db/resources is retrieved if there is a @xlink:href/@ID match and the relatedItem has no string value. If there should be duplicate IDs, only the first record is retrieved.:)
+            (: The linked record is only retrieved if there is no title information inside the related item. :)
+            if (exists($xlinked-ID) and not($titleInfo))
+            then collection($config:mods-root-minus-temp)//mods:mods[@ID eq $xlinked-ID][1]
+            else ()
+        let $related-item :=
+        	(:If the related item is recorded in another record than the current record.:)
+        	if ($xlinked-record) 
+        	(: NB: There must be a smarter way to merge the retrieved relatedItem with the native part element! :)
+        	(: "update insert $part into $xlinked-record2 does not work for in-memory fragments :)
+        	then 
+        	   <mods:relatedItem displayLabel ="{$displayLabel}" type="{$type}" xlink:href="{$xlinked-ID}">
+        	       {($xlinked-record/mods:titleInfo, $part)}
+        	   </mods:relatedItem> 
+        	else
+        	(:If the related item is described with title in the current record.:)
+        		if ($item/mods:titleInfo/mods:title)
+        		then $item
+        		else ()
+    return
+        if ($related-item)
+        then 
+            (: Check for the most common types first. :)
+            (: If the related item is a periodical, an edited volume, or a series.:) 
+            if ($destination eq 'list')
+            then
+                (: Only display 'host' and 'series' in list view :)
+                if ($type = ('host', 'series'))
+                then
+                    <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">
+                        <span class="relatedItem-record">{mods-common:format-related-item($related-item, $global-language, $collection-short)}</span>
+                    </span>
+                else ()
+            else
+            (:If not 'list', $destination will be 'detail'.:)
+            (:If the related item is pulled in with an xlink, use this to make a link.:) 
+                if ($xlinked-ID)
+                then
+                    <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
+        				<td class="url label relatedItem-label">
+                            <a href="?filter=ID&amp;value={$xlinked-ID}">&lt;&lt; In</a>
+                        </td>
+                        <td class="relatedItem-record">
+        					<span class="relatedItem-span">{mods-common:format-related-item($related-item, $global-language, $collection-short)}</span>
+                        </td>
+                    </tr>
+                else
+                    (:If the related item is in the record itself, format it without a link.:)	                
+                    <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
+        				<td class="url label relatedItem-label">In</td>
+                        <td class="relatedItem-record">
+        					<span class="relatedItem-span">{mods-common:format-related-item($related-item, $global-language, $collection-short)}</span>
+                        </td>
+                    </tr>
+        else ()
 };
