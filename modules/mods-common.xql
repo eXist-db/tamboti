@@ -1472,7 +1472,10 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
                 <table class="subject">
                     <tr><td class="sublabel">
                         {
-                        replace(functx:capitalize-first(replace($item/name(), 'mods:','')),'Info',''),
+                        functx:capitalize-first
+                        (
+                        replace(replace($item/name(), 'mods:',''), 'titleInfo','Work')
+                        ),
                         $authority, $encoding, $type, $point
                         }
                         </td>
@@ -1483,11 +1486,11 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
                         <td class="subrecord">
                         {
                         (: If it is a name. :)
-                            if ($item/name() eq 'name')
+                            if ($item/local-name() eq 'name')
                             then mods-common:format-name($item, 1, 'list-first', $global-transliteration, $global-language)
                             else
                                 (: If it is a titleInfo. :)
-                                if ($item/name() eq 'titleInfo')
+                                if ($item/local-name() eq 'titleInfo')
                                 then string-join(mods-common:get-short-title(<titleInfo>{$item}</titleInfo>), '')
                                 else
                                     (: If it is something else, no special formatting takes place. :)

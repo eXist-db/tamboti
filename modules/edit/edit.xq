@@ -254,24 +254,30 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
     let $last-modified-hour := hours-from-dateTime($last-modified)
     let $last-modified-minute := minutes-from-dateTime($last-modified)
     let $last-modified-minute := functx:pad-integer-to-length($last-modified-minute, 2)
+    
     (:If the record is hosted by a record linked to through an xlink, display the title of this record. 
     Only the xlink on the first relatedItem with type host is treated.:)
-    let $related-publication-xlink := doc($record-data)/mods:mods/mods:relatedItem[@type eq 'host'][1]/@xlink:href/string()
-    let $related-publication-xlink-clear := 
-        if ($related-publication-xlink) 
-        then replace($related-publication-xlink[1], '^#?(.*)$', '$1') 
+    let $related-item-xlink := doc($record-data)/mods:mods/mods:relatedItem[@type eq 'host']/@xlink:href
+    let $related-publication-id := 
+        if ($related-item-xlink) 
+        then replace($related-item-xlink[1]/string(), '^#?(.*)$', '$1') 
         else ()
-    let $related-publication := 
-        if ($related-publication-xlink-clear) 
-        then modsCommon:get-short-title(collection($config:mods-root)//mods:mods[@ID eq $related-publication-xlink-clear])
+    let $related-publication-title := 
+        if ($related-publication-id) 
+        then modsCommon:get-short-title(collection($config:mods-root)//mods:mods[@ID eq $related-publication-id])
         else ()
-    let $related-publication :=
-        if (count($related-publication-xlink) eq 1)
-        then (<span class="intro">The publication is included in </span>, <a href="../../modules/search/index.html?filter=ID&amp;value={$related-publication-xlink-clear}" target="_blank">{$related-publication}</a>,<span class="intro">.</span>)
-        else 
-            if (count($related-publication-xlink) gt 1) 
-            then (<span class="intro">The publication is included in more than one publication.</span>)
-            else ()
+    let $related-publication-title :=
+        if ($related-item-xlink eq ())
+        then ()
+            else 
+            if (count($related-item-xlink) eq 1)
+            then
+            (<span class="intro">The publication is included in </span>, <a href="../../modules/search/index.html?filter=ID&amp;value={$related-publication-id}" target="_blank">{$related-publication-title}</a>,<span class="intro">.</span>)
+            else 
+                if (count($related-item-xlink) gt 1) 
+                then (<span class="intro">The publication is included in more than one publication.</span>)
+                else ()
+                
         return
         <div class="content">
             <span class="info-line">
@@ -339,7 +345,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     </div>
                 </span>
                 <span class="related-title">
-                        {$related-publication}
+                        {$related-publication-title}
                 </span>
             </div>
             

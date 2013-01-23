@@ -426,7 +426,9 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
             (
                 'Identifier',
                 if (string($type)) 
-                then concat(' (', string($type), ')') 
+                then concat(' (', 
+                string($type)
+                , ')') 
                 else ()
                 , 
                 if ($type eq 'local')
@@ -435,6 +437,7 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
                     let $local-identifiers := 
                         (for $local-identifier in $local-identifiers where $local-identifier ne $ID return $local-identifier)
                     return
+                    (:warn about duplications of local ids:)
                         if (count($local-identifiers) gt 0)
                         then concat(' NB: This identifier has already been used on record(s) with the following IDs: ', string-join($local-identifiers, ', '))
                         else ()
@@ -452,7 +455,7 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
     return mods-common:simple-row($item, concat('Classification', $authority))
     ,
     
-    (: find records that refer to the current record if this records a periodical or an edited volume or a similar kind of publication. :)
+    (: find records that refer to the current record if this record is a periodical or an edited volume or a similar kind of publication. :)
     (:NB: This takes time!:)
     (:NB: allowing empty genre to triger this: remove when WSC has genre.:)
     if ($entry/mods:genre = ('series', 'periodical', 'editedVolume', 'newspaper', 'journal', 'festschrift', 'encyclopedia', 'conference publication', 'canonical scripture') or empty($entry/mods:genre)) 
@@ -497,10 +500,10 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
     mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
     ,
 
-    (: languageOfCataloging :)
+    (: language of cataloging :)
     let $distinct-language-labels := distinct-values(
         for $language in $entry/mods:recordInfo/mods:languageOfCataloging
-        return mods-common:get-language-label($language/mods:languageTerm/text())
+        return mods-common:get-language-label($language/mods:languageTerm)
         )
     let $distinct-language-labels-count := count($distinct-language-labels)
         return
@@ -516,7 +519,26 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
             else ()
     ,
     
-    (:modification date:)
+    (: script of cataloging :)
+    let $distinct-script-labels := distinct-values(
+        for $language in $entry/mods:recordInfo/mods:languageOfCataloging
+        return mods-common:get-script-label($language/mods:scriptTerm)
+        )
+    let $distinct-script-labels-count := count($distinct-script-labels)
+        return
+            if ($distinct-script-labels-count gt 0)
+            then
+                mods-common:simple-row(
+                    mods-common:serialize-list($distinct-script-labels, $distinct-script-labels-count)
+                ,
+                if ($distinct-script-labels-count gt 1) 
+                then 'Scripts of Cataloging' 
+                else 'Script of Cataloging'
+                    )
+            else ()
+    ,
+    
+    (: last modification date :)
     let $last-modified := $entry/mods:extension/ext:modified/ext:when
     return 
         if ($last-modified) then
