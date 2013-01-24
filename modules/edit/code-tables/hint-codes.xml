@@ -1024,7 +1024,7 @@
         </item>
         <item xml:id="hint-code_part-type">
             <help>
-                <p> A designation of a document segment type. Suggested values include volume,
+                <p> A designation of a document segment type. Suggested values include series (of a periodical), volume,
                     issue, chapter, section, paragraph, and track. Other values may be used as
                     needed. </p>
                 <p> Since there is not a controlled set of terms for type, if used, the
@@ -1038,7 +1038,8 @@
             <help>
                 <p> Contains the actual number within the part. </p>
                 <p>Numbering can be sequencing in any form, e.g., Part 1, Supplement A, Book
-                    two.</p>
+                    Two.</p>
+                <p> Text can be used as well as digits.</p>
             </help>
             <local-name>number</local-name>
             <tab-id>part</tab-id>
@@ -1048,6 +1049,7 @@
             <help>
                 <p> Contains the caption describing the enumeration within a part. This may be the
                     same as type, but conveys what is on the item being described. </p>
+                <p> Text can be used as well as digits.</p>
             </help>
             <hint/>
             <value>part-detail-caption</value>
@@ -1109,7 +1111,7 @@
             <help>
                 <p> Describes the level of numbering in the host/parent item. This is used to ensure
                     that the numbering is retained in the proper order. An example is: "v. 2, no.
-                    3". </p>
+                    3", where the first value would have level 1 and the second level 2. </p>
             </help>
             <hint/>
             <value>part-level</value>

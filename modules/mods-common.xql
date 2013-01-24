@@ -163,16 +163,17 @@ declare function mods-common:serialize-list($sequence as item()+, $sequence-coun
 };
 
 (:~
-: The <em>mods-common:remove-parent-with-missing-required-node</em> function removes titleIfo, name and relatedItem elements that do not contain children required by the respective elements. 
+: The <em>mods-common:remove-parent-with-missing-required-node</em> function 
+: removes titleIfo, name and relatedItem elements that do not contain children required by the respective elements. 
 : @param $node A MODS element, either mods:mods or mods:relatedItem.
-: @return The same element, with parents with children without required children removed.
+: @return The same element, with elements removed that do not have the required children.
 :)
 declare function mods-common:remove-parent-with-missing-required-node($node as node()) as node() {
 element {node-name($node)} 
 {
 for $element in $node/*
 return
-    if ($element instance of element(mods:titleInfo) and not(string($element/mods:title/text()))) 
+    if ($element instance of element(mods:titleInfo) and not($element/mods:title/text())) 
     then ()
     else
         if ($element instance of element(mods:name) and not($element/mods:namePart/text()))
@@ -1727,19 +1728,21 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
 	
     (: NB: this should iterate over part, since there are e.g. multi-part installments of articles. :)
     let $part := $entry/mods:part[1]
+
     (: contains: detail, extent, date, text. :)
     (: has: type, order, ID. :)
-    let $detail := $part/mods:detail[1]
+    let $detail := $part/mods:detail
     (: contains: number, caption, title. :)
     (: has: type, level. :)
-        let $issue := $detail[@type = ('issue', 'number')]/mods:number[1]/text()
+        let $series := $detail[@type eq 'series']/mods:number[1]
+        let $issue := $detail[@type = ('issue', 'number', 'part')]/mods:number[1]
         let $volume := 
-        	if ($detail[@type = 'volume']/mods:number/text())
-        	then $detail[@type = 'volume']/mods:number/text()
+        	if ($detail[@type eq 'volume']/mods:number)
+        	then $detail[@type eq 'volume']/mods:number[1]
 			(: NB: "text" is allowed to accommodate erroneous Zotero export. Only "number" is valid. :)
-        	else $detail[@type = 'volume']/mods:text/text()
+        	else $detail[@type eq 'volume']/mods:text[1]
         (: NB: Does $page exist? :)
-        let $page := $detail[@type = 'page']/mods:number/text()
+        let $page := $detail[@type eq 'page']/mods:number
         (: $page resembles list. :)
     
     let $extent := $part/mods:extent[1]
@@ -1765,6 +1768,10 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
         then 
             concat(
             ' '
+            ,
+            if ($series)
+            then concat(' (', $series, ') ')
+            else ()
             ,
             if ($volume and $issue)
             then concat($volume, ', no. ', $issue

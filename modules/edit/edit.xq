@@ -267,7 +267,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
         then modsCommon:get-short-title(collection($config:mods-root)//mods:mods[@ID eq $related-publication-id])
         else ()
     let $related-publication-title :=
-        if ($related-item-xlink eq ())
+        if ($related-item-xlink eq '')
         then ()
             else 
             if (count($related-item-xlink) eq 1)

@@ -416,24 +416,26 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
 
     (: identifier :)
     let $identifiers := $entry/mods:identifier
-    for $item in $identifiers
-    let $type := $item/@type
+    for $identifer in $identifiers
+    let $type := $identifer/@type/string()
     return 
         mods-common:simple-row
         (
-            $item, 
+            $identifer, 
             concat
             (
                 'Identifier',
                 if (string($type)) 
-                then concat(' (', 
-                string($type)
-                , ')') 
-                else ()
+                then concat(
+                    ' (', 
+                    doc(concat($config:edit-app-root, "/code-tables/identifier-type-codes.xml"))/*:code-table/*:items/*:item[*:value eq $type]/*:label
+                    , ')'
+                )
+                else ' (unknown type)'
                 , 
                 if ($type eq 'local')
                 then
-                    let $local-identifiers := collection($config:mods-root-minus-temp)//mods:mods[.//mods:identifier eq $item]/@ID/string()
+                    let $local-identifiers := collection($config:mods-root-minus-temp)//mods:mods[.//mods:identifier eq $identifer]/@ID/string()
                     let $local-identifiers := 
                         (for $local-identifier in $local-identifiers where $local-identifier ne $ID return $local-identifier)
                     return
