@@ -193,8 +193,22 @@
     </tab>
     <tab>
         <top-tab-label>Related Items Forms</top-tab-label>
-        <label>Related Items</label>
+        <label>Related Items With XLink to Record</label>
+        <tab-id>related-xlink</tab-id>
+        <top-tab-number>4</top-tab-number>
+        <path>mods:relatedItem</path>
+    </tab>
+    <tab>
+        <top-tab-label>Related Items Forms</top-tab-label>
+        <label>Related Items With Record Data</label>
         <tab-id>related</tab-id>
+        <top-tab-number>4</top-tab-number>
+        <path>mods:relatedItem</path>
+    </tab>
+    <tab>
+        <top-tab-label>Related Items Forms</top-tab-label>
+        <label>Related Items With Record Data, Abbreviated</label>
+        <tab-id>related-abbreviated</tab-id>
         <top-tab-number>4</top-tab-number>
         <path>mods:relatedItem</path>
     </tab>

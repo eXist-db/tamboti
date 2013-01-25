@@ -1075,6 +1075,12 @@
                     <fieldset class="level-2">
                         <div class="label-box">
                             <span class="legend">Issuance</span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_issuance',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
                             <span class="add-delete-button">
                                 <xf:trigger ref=".[mods:issuance]">
                                     <xf:label>+</xf:label>
@@ -1090,12 +1096,6 @@
                                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:issuance" at="index('issuance-repeat')"/>
                                     </xf:action>
                                 </xf:trigger>
-                            </span>
-                            <span class="xforms-hint">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_issuance',instance('code-tables'))/help"/>
-                                </div>
                             </span>
                         </div>
                 <!--Attributes: None.-->
@@ -1355,6 +1355,12 @@
                     <fieldset class="level-2">
                         <div class="label-box">
                             <span class="legend">Date Issued</span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateIssued',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
                             <span class="add-delete-button">
                                 <xf:trigger ref=".[mods:dateIssued]">
                                     <xf:label>+</xf:label>
@@ -1370,12 +1376,6 @@
                                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:dateIssued" at="index('dateIssued-repeat')"/>
                                     </xf:action>
                                 </xf:trigger>
-                            </span>
-                            <span class="xforms-hint">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateIssued',instance('code-tables'))/help"/>
-                                </div>
                             </span>
                         </div>
                 <!--Attributes: encoding; point; keyDate; qualifier; lang; xml:lang; script; transliteration.-->
@@ -1621,6 +1621,12 @@
                     <fieldset class="level-2">
                         <div class="label-box">
                             <span class="legend">Date Created</span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateCreated',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
                             <span class="add-delete-button">
                                 <xf:trigger ref=".[mods:dateCreated]">
                                     <xf:label>+</xf:label>
@@ -1636,12 +1642,6 @@
                                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:dateCreated" at="index('dateCreated-repeat')"/>
                                     </xf:action>
                                 </xf:trigger>
-                            </span>
-                            <span class="xforms-hint">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateCreated',instance('code-tables'))/help"/>
-                                </div>
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:dateCreated" id="dateCreated-repeat">
@@ -1885,6 +1885,12 @@
                     <fieldset class="level-2">
                         <div class="label-box">
                             <span class="legend">Date Captured</span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateCaptured',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
                             <span class="add-delete-button">
                                 <xf:trigger ref=".[mods:dateCaptured]">
                                     <xf:label>+</xf:label>
@@ -1900,12 +1906,6 @@
                                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:dateCaptured" at="index('dateCaptured-repeat')"/>
                                     </xf:action>
                                 </xf:trigger>
-                            </span>
-                            <span class="xforms-hint">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateCaptured',instance('code-tables'))/help"/>
-                                </div>
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:dateCaptured" id="dateCaptured-repeat">
@@ -2151,6 +2151,12 @@
                     <fieldset class="level-2">
                         <div class="label-box">
                             <span class="legend">Date Valid</span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateValid',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
                             <span class="add-delete-button">
                                 <xf:trigger ref=".[mods:dateValid]">
                                     <xf:label>+</xf:label>
@@ -2166,12 +2172,6 @@
                                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:dateValid" at="index('dateValid-repeat')"/>
                                     </xf:action>
                                 </xf:trigger>
-                            </span>
-                            <span class="xforms-hint">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateValid',instance('code-tables'))/help"/>
-                                </div>
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:dateValid" id="dateValid-repeat">
@@ -2417,6 +2417,12 @@
                     <fieldset class="level-2">
                         <div class="label-box">
                             <span class="legend">Date Modified</span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateModified',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
                             <span class="add-delete-button">
                                 <xf:trigger ref=".[mods:dateModified]">
                                     <xf:label>+</xf:label>
@@ -2432,12 +2438,6 @@
                                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:dateModified" at="index('dateModified-repeat')"/>
                                     </xf:action>
                                 </xf:trigger>
-                            </span>
-                            <span class="xforms-hint">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateModified',instance('code-tables'))/help"/>
-                                </div>
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:dateModified" id="dateModified-repeat">
@@ -2683,6 +2683,12 @@
                     <fieldset class="level-2">
                         <div class="label-box">
                             <span class="legend">Copyright Date</span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_copyrightDate',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
                             <span class="add-delete-button">
                                 <xf:trigger ref=".[mods:copyrightDate]">
                                     <xf:label>+</xf:label>
@@ -2698,12 +2704,6 @@
                                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:copyrightDate" at="index('copyrightDate-repeat')"/>
                                     </xf:action>
                                 </xf:trigger>
-                            </span>
-                            <span class="xforms-hint">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_copyrightDate',instance('code-tables'))/help"/>
-                                </div>
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:copyrightDate" id="copyrightDate-repeat">
@@ -2949,6 +2949,12 @@
                     <fieldset class="level-2">
                         <div class="label-box">
                             <span class="legend">Other Date</span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateOther',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
                             <span class="add-delete-button">
                                 <xf:trigger ref=".[mods:dateOther]">
                                     <xf:label>+</xf:label>
@@ -2964,12 +2970,6 @@
                                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:originInfo/mods:dateOther" at="index('dateOther-repeat')"/>
                                     </xf:action>
                                 </xf:trigger>
-                            </span>
-                            <span class="xforms-hint">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_dateOther',instance('code-tables'))/help"/>
-                                </div>
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:dateOther" id="dateOther-repeat">

@@ -29,6 +29,57 @@
             </help>
             <tab-id>edit.xq</tab-id>
         </item>
+        <item xml:id="hint-code_relatedItem">
+            <help>
+                <p> Information that identifies other resources related to the one being
+                    described. </p>
+            </help>
+            <local-name>type</local-name>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
+        </item>
+        <item xml:id="hint-code_relatedItem-type">
+            <help>
+                <p> The type field describes the relationship between the resource in
+                    Related Item and the resource in the parent record.</p>
+                <p> Use one of the following values: Host, Constituent, Series, Other Version.</p>
+                <p>  
+                    "Host" is used to describe a host or parent resource, for example a book or
+                    periodical in which an article appears or a collection in which an item belongs. </p>
+                <p> 
+                    "Constituent" is used to describe parts of the resource, except information that falls within the scope of the
+                    Table Of Contents element. </p>
+                <p> 
+                    "Series" is used to describe a named series of which the resource is a part. 
+                </p>
+                <p> 
+                    "Other Version" is used to describe other versions of the work contained in the resource. </p>
+            </help>
+            <local-name>type</local-name>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
+        </item>
+        <item xml:id="hint-code_relatedItem-xlink_href">
+            <help>
+                <p> The type field describes the relationship between the resource in
+                    Related Item and the resource in the parent record.</p>
+                <p> Use one of the following values: Host, Constituent, Series, Other Version.</p>
+                <p>  
+                    "Host" is used to describe a host or parent resource, for example a book or
+                    periodical in which an article appears or a collection in which an item belongs. </p>
+                <p> 
+                    "Constituent" is used to describe parts of the resource, except information that falls within the scope of the
+                    Table Of Contents element. </p>
+                <p> 
+                    "Series" is used to describe a named series of which the resource is a part. 
+                </p>
+                <p> 
+                    "Other Version" is used to describe other versions of the work contained in the resource. </p>
+            </help>
+            <local-name>type</local-name>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
+        </item>
         <item xml:id="hint-code_recordIdentifier">
             <help>
                 <p>Used to record the system control number assigned by the organization creating,
@@ -395,6 +446,8 @@
             <local-name>altRepGroup</local-name>
             <tab-id>name</tab-id>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
             <tab-id>physical-description</tab-id>
             <tab-id>target-audience</tab-id>
             <tab-id>language</tab-id>
@@ -718,6 +771,8 @@
             <tab-id>location</tab-id>
             <tab-id>record-info</tab-id>
             <tab-id>mads</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_edition">
             <help>
@@ -746,6 +801,8 @@
             <local-name>encoding</local-name>
             <tab-id>origin</tab-id>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_temporal-encoding">
             <help>
@@ -791,6 +848,8 @@
             </help>
             <local-name>extent</local-name>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
             <tab-id>physical-description</tab-id>
         </item>
         <item xml:id="hint-code_extent-compact">
@@ -820,6 +879,8 @@
             </help>
             <local-name>unit</local-name>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-text-type">
             <help>
@@ -828,6 +889,8 @@
             </help>
             <local-name>unit</local-name>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_typeOfResource">
             <help>
@@ -884,6 +947,8 @@
             </help>
             <local-name>unit</local-name>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-extent-start">
             <help>
@@ -891,6 +956,8 @@
             </help>
             <local-name>start</local-name>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-extent-end">
             <help>
@@ -898,6 +965,8 @@
             </help>
             <local-name>end</local-name>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-extent-total">
             <help>
@@ -906,6 +975,8 @@
             </help>
             <local-name>total</local-name>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-extent-list">
             <help>
@@ -913,6 +984,8 @@
             </help>
             <local-name>total</local-name>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-date">
             <help>
@@ -920,6 +993,8 @@
             </help>
             <local-name>date</local-name>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_extraterrestrialArea">
             <help>
@@ -1021,6 +1096,8 @@
             <tab-id>note</tab-id>
             <tab-id>subject</tab-id>
             <tab-id>location</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-type">
             <help>
@@ -1033,6 +1110,8 @@
             <local-name>type</local-name>
             <parent>part</parent>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-detail-number">
             <help>
@@ -1043,6 +1122,8 @@
             </help>
             <local-name>number</local-name>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <!--tab-id checked above-->
         <item xml:id="hint-code_part-detail-caption">
@@ -1052,10 +1133,10 @@
                 <p> Text can be used as well as digits.</p>
             </help>
             <hint/>
-            <value>part-detail-caption</value>
             <local-name>caption</local-name>
-            <parent/>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-detail-title">
             <help>
@@ -1067,6 +1148,8 @@
             <local-name>title</local-name>
             <parent/>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-detail">
             <help>
@@ -1080,6 +1163,8 @@
             <local-name>detail</local-name>
             <parent/>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-detail-type">
             <help>
@@ -1096,6 +1181,8 @@
             <local-name>type</local-name>
             <parent/>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-order">
             <help>
@@ -1106,6 +1193,8 @@
             <local-name>order</local-name>
             <parent/>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-detail-level">
             <help>
@@ -1118,6 +1207,8 @@
             <local-name>level</local-name>
             <parent/>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_isbn">
             <help>
@@ -1256,6 +1347,8 @@
             <tab-id>title</tab-id>
             <tab-id>origin</tab-id>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
             <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
             <tab-id>language</tab-id>
@@ -2074,6 +2167,8 @@
             <local-name>part</local-name>
             <parent/>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_other-part">
             <help>
@@ -2770,6 +2865,8 @@
             <tab-id>name</tab-id>
             <tab-id>title</tab-id>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
             <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
             <tab-id>language</tab-id>
@@ -3368,6 +3465,8 @@
             <tab-id>name</tab-id>
             <tab-id>origin</tab-id>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
             <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
             <tab-id>genre</tab-id>
@@ -3669,6 +3768,8 @@
             <tab-id>name</tab-id>
             <tab-id>title</tab-id>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
             <tab-id>physical-description</tab-id>
             <tab-id>location</tab-id>
             <tab-id>mads</tab-id>
@@ -3759,6 +3860,8 @@
             <tab-id>name</tab-id>
             <tab-id>origin</tab-id>
             <tab-id>part</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
             <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
             <tab-id>identifier</tab-id>

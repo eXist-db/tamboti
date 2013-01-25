@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="name block-form" tab-id="name" ext:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ext="http://exist-db.org/mods/extension" class="name block-form" tab-id="name" ext:dummy="dummy" xlink:dummy="dummy">
     <xf:group class="schema_3.3 schema_3.4" appearance="full">
         <fieldset class="level-1">
             <div class="label-box">
@@ -228,7 +228,7 @@
                                             <xf:label>Add Name Part</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/>
-                                                <xf:insert nodeset="mods:namePart" at="index('namePart-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:namePart"/>
+                                                <xf:insert nodeset="mods:namePart" at="index('name-repeat')" position="before" origin="instance('new-instance')/mods:name/mods:namePart"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>

@@ -296,6 +296,12 @@
                     <fieldset class="level-2">
                         <div class="label-box">
                             <span class="legend">Detail</span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-detail',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
                             <span class="add-delete-button">
                                 <xf:trigger ref=".[mods:detail]">
                                     <xf:label>+</xf:label>
@@ -311,12 +317,6 @@
                                         <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/mods:detail" at="index('part-detail-repeat')"/>
                                     </xf:action>
                                 </xf:trigger>
-                            </span>
-                            <span class="xforms-hint">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-detail',instance('code-tables'))/help"/>
-                                </div>
                             </span>
                         </div>
 
@@ -520,6 +520,12 @@
                                 <fieldset class="level-3">
                                     <div class="label-box">
                                         <span class="legend">Number</span>
+                                        <span class="xforms-hint">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-detail-number',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
                             <!--<span class="add-delete-button">
                                 <xf:trigger ref=".[mods:number]">
                                     <xf:label>+</xf:label>
@@ -539,12 +545,6 @@
                                     </xf:action>
                                 </xf:trigger>
                             </span>-->
-                                        <span class="xforms-hint">
-                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-help-value">
-                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-detail-number',instance('code-tables'))/help"/>
-                                            </div>
-                                        </span>
                                     </div>
                         <!--Attributes: lang; xml:lang; script; transliteration.-->
                         <!--Subelements: None.-->
@@ -684,6 +684,12 @@
                                 <fieldset class="level-3">
                                     <div class="label-box">
                                         <span class="legend">Caption</span>
+                                        <span class="xforms-hint">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-detail-caption',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
                             <!--<span class="add-delete-button">
                                 <xf:trigger ref=".[mods:caption]">
                                     <xf:label>+</xf:label>
@@ -703,12 +709,6 @@
                                     </xf:action>
                                 </xf:trigger>
                             </span>-->
-                                        <span class="xforms-hint">
-                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-help-value">
-                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-detail-caption',instance('code-tables'))/help"/>
-                                            </div>
-                                        </span>
                                     </div>
                         <!--Attributes: lang; xml:lang; script; transliteration.-->
                         <!--Subelements: None.-->
@@ -848,6 +848,12 @@
                                 <fieldset class="level-3">
                                     <div class="label-box">
                                         <span class="legend">Title</span>
+                                        <span class="xforms-hint">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-detail-title',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
                             <!--<span class="add-delete-button">
                                 <xf:trigger ref=".[mods:title]">
                                     <xf:label>+</xf:label>
@@ -867,12 +873,6 @@
                                     </xf:action>
                                 </xf:trigger>
                             </span>-->
-                                        <span class="xforms-hint">
-                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-help-value">
-                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-detail-title',instance('code-tables'))/help"/>
-                                            </div>
-                                        </span>
                                     </div>
                         <!--Attributes: None.-->
                         <!--Subelements: None.-->
@@ -898,6 +898,12 @@
                     <fieldset class="level-2">
                         <div class="label-box">
                             <span class="legend">Extent</span>
+                            <span class="xforms-hint">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_extent',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
                             <span class="add-delete-button">
                                 <xf:trigger ref=".[mods:extent]">
                                     <xf:label>+</xf:label>
@@ -914,12 +920,6 @@
                                     </xf:action>
                                 </xf:trigger>
                             </span>
-                            <span class="xforms-hint">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_extent',instance('code-tables'))/help"/>
-                                </div>
-                            </span>
                         </div>
 
                 <!--Attributes: unit.-->
@@ -927,7 +927,7 @@
                         <xf:repeat nodeset="./mods:extent" id="extent-repeat">
                             <xf:group appearance="full" ref=".[count(@unit) &gt; 0]">
                                 <xf:select1 ref="./@unit" selection="open">
-                                    <xf:label>Unit <span class="xforms-hint">
+                                    <xf:label>Unit <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-extent-unit',instance('code-tables'))/help"/>
@@ -944,6 +944,12 @@
                                 <fieldset class="level-3">
                                     <div class="label-box">
                                         <span class="legend">Start</span>
+                                        <span class="xforms-hint">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-extent-start',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
                             <!--<span class="add-delete-button">
                                 <xf:trigger ref=".[mods:start]">
                                     <xf:label>+</xf:label>
@@ -963,12 +969,6 @@
                                     </xf:action>
                                 </xf:trigger>
                             </span>-->
-                                        <span class="xforms-hint">
-                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-help-value">
-                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-extent-start',instance('code-tables'))/help"/>
-                                            </div>
-                                        </span>
                                     </div>
                         <!--Attributes: lang; xml:lang; script; transliteration.-->
                         <!--Subelements: None.-->
@@ -1108,6 +1108,12 @@
                                 <fieldset class="level-3">
                                     <div class="label-box">
                                         <span class="legend">End</span>
+                                        <span class="xforms-hint">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-extent-end',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
                             <!--<span class="add-delete-button">
                                 <xf:trigger ref=".[mods:end]">
                                     <xf:label>+</xf:label>
@@ -1127,12 +1133,6 @@
                                     </xf:action>
                                 </xf:trigger>
                             </span>-->
-                                        <span class="xforms-hint">
-                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-help-value">
-                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-extent-end',instance('code-tables'))/help"/>
-                                            </div>
-                                        </span>
                                     </div>
                         <!--Attributes: lang; xml:lang; script; transliteration.-->
                         <!--Subelements: None.-->
@@ -1272,6 +1272,12 @@
                                 <fieldset class="level-3">
                                     <div class="label-box">
                                         <span class="legend">Total</span>
+                                        <span class="xforms-hint">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-extent-total',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
                             <!--<span class="add-delete-button">
                                 <xf:trigger ref=".[mods:total]">
                                     <xf:label>+</xf:label>
@@ -1291,12 +1297,6 @@
                                     </xf:action>
                                 </xf:trigger>
                             </span>-->
-                                        <span class="xforms-hint">
-                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-help-value">
-                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-extent-total',instance('code-tables'))/help"/>
-                                            </div>
-                                        </span>
                                     </div>
                         <!--Attributes: None.-->
                         <!--Subelements: None.-->
@@ -1319,6 +1319,12 @@
                                 <fieldset class="level-3">
                                     <div class="label-box">
                                         <span class="legend">List</span>
+                                        <span class="xforms-hint">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-extent-list',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
                             <!--<span class="add-delete-button">
                                 <xf:trigger ref=".[mods:list]">
                                     <xf:label>+</xf:label>
@@ -1338,12 +1344,6 @@
                                     </xf:action>
                                 </xf:trigger>
                             </span>-->
-                                        <span class="xforms-hint">
-                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                            <div class="xforms-help-value">
-                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-extent-list',instance('code-tables'))/help"/>
-                                            </div>
-                                        </span>
                                     </div>
                         <!--Attributes: None.-->
                         <!--Subelements: None.-->
@@ -1598,7 +1598,7 @@
                             </xf:group>
                             <xf:group appearance="full" ref=".[@encoding]">
                                 <xf:select1 ref="./@encoding">
-                                    <xf:label>Encoding <span class="xforms-hint">
+                                    <xf:label>Encoding <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_date-encoding',instance('code-tables'))/help"/>
@@ -1613,7 +1613,7 @@
                             </xf:group>
                             <xf:group appearance="full" ref=".[@point]">
                                 <xf:select1 ref="./@point">
-                                    <xf:label>Point <span class="xforms-hint">
+                                    <xf:label>Point <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_point',instance('code-tables'))/help"/>
@@ -1628,7 +1628,7 @@
                             </xf:group>
                             <xf:group appearance="full" ref=".[@qualifier]">
                                 <xf:select1 ref="./@qualifier">
-                                    <xf:label>Qualifier <span class="xforms-hint">
+                                    <xf:label>Qualifier <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_qualifier',instance('code-tables'))/help"/>
@@ -1704,7 +1704,7 @@
                             <br/>
                             <xf:group appearance="full" ref=".">
                                 <xf:input ref="." class="text_50">
-                                    <xf:label>Date <span class="xforms-hint">
+                                    <xf:label>Date <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                             <div class="xforms-help-value">
                                                 <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-date',instance('code-tables'))/help"/>
