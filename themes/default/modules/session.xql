@@ -13,6 +13,7 @@ xquery version "3.0";
 
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
 import module namespace mods="http://www.loc.gov/mods/v3" at "retrieve-mods.xql";
+import module namespace retrieve-vra="http://www.vraweb.org/vracore4.htm" at "retrieve-vra.xql";
 import module namespace jquery="http://exist-db.org/xquery/jquery" at "resource:org/exist/xquery/lib/jquery.xql";
 import module namespace security="http://exist-db.org/mods/security" at "../../../modules/search/security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "../../../modules/search/sharing.xqm";
@@ -22,6 +23,7 @@ import module namespace modsCommon="http://exist-db.org/mods/common" at "../../.
 
 declare namespace bs="http://exist-db.org/xquery/biblio/session";
 declare namespace functx = "http://www.functx.com";
+declare namespace vra = "http://www.vraweb.org/vracore4.htm";
 
 declare option exist:serialize "method=xhtml media-type=application/xhtml+xml enforce-xhtml=yes";
 
@@ -31,7 +33,33 @@ declare variable $bs:THUMB_SIZE_GRID := 64;
 declare variable $bs:THUMB_SIZE_GALLERY := 128;
 declare variable $bs:THUMB_SIZE_DETAIL := 256;
 
-declare function functx:capitalize-first($arg as xs:string?) as xs:string? {       
+
+declare function functx:substring-before-last 
+  ( $arg as xs:string? ,
+    $delim as xs:string )  as xs:string {
+       
+   if (matches($arg, functx:escape-for-regex($delim)))
+   then replace($arg,
+            concat('^(.*)', functx:escape-for-regex($delim),'.*'),
+            '$1')
+   else ''
+ } ;
+ 
+ declare function functx:escape-for-regex 
+  ( $arg as xs:string? )  as xs:string {
+       
+   replace($arg,
+           '(\.|\[|\]|\\|\||\-|\^|\$|\?|\*|\+|\{|\}|\(|\))','\\$1')
+ } ;
+ 
+ declare function functx:substring-after-last 
+  ( $arg as xs:string? ,
+    $delim as xs:string )  as xs:string {
+       
+   replace ($arg,concat('^.*',functx:escape-for-regex($delim)),'')
+ } ;
+ 
+ declare function functx:capitalize-first($arg as xs:string?) as xs:string? {       
    concat(upper-case(substring($arg,1,1)),
              substring($arg,2))
 };
@@ -82,7 +110,48 @@ declare function bs:view-gallery-item($mode as xs:string, $item as element(mods:
         </li>
 };
 
-declare function bs:detail-view-table($item as element(mods:mods), $currentPos as xs:int) {
+declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos as xs:int) {
+    let $isWritable := bs:collection-is-writable(util:collection-name($item))
+    let $id := concat(document-uri(root($item)), '#', util:node-id($item))
+    let $id := functx:substring-after-last($id, '/')
+    let $id := functx:substring-before-last($id, '.')
+    let $type := substring($id, 1, 1)
+    let $id-position :=
+        if ($type eq 'c')
+        then '/vra:collection/@id'
+        else 
+            if ($type eq 'w')
+            then '/vra:work/@id'
+            else '/vra:image/@id'
+    let $stored := session:get-attribute("personal-list")
+    let $saved := exists($stored//*[@id = $id])
+
+    return
+        <tr class="pagination-item detail" xmlns="http://www.w3.org/1999/xhtml">
+            <td class="pagination-number">{$currentPos}</td>
+            <td class="actions-cell">
+                <a id="save_{$id}" href="#{$currentPos}" class="save">
+                    <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+                </a>
+            </td>
+            <td class="magnify detail-type">
+            { bs:get-icon($bs:THUMB_SIZE_DETAIL, $item, $currentPos)}
+            </td>
+            <td class="detail-xml">
+                { bs:toolbar($item, $isWritable, $id) }
+                <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>
+                {
+                    let $collection := util:collection-name($item)
+                    let $collection-short := functx:replace-first($collection, '/db/', '')
+                    let $clean := clean:cleanup($item)
+                    return
+                        retrieve-vra:format-detail-view(string($currentPos), $clean, $collection-short, $type, $id)
+                }
+            </td>
+        </tr>
+};
+
+declare function bs:mods-detail-view-table($item as element(mods:mods), $currentPos as xs:int) {
     let $isWritable := bs:collection-is-writable(util:collection-name($item))
     let $id := concat(document-uri(root($item)), '#', util:node-id($item))
     let $stored := session:get-attribute("personal-list")
@@ -149,6 +218,50 @@ declare function bs:mods-list-view-table($item as node(), $currentPos as xs:int)
         </tr>
 };
 
+declare function bs:vra-list-view-table($item as node(), $currentPos as xs:int) {
+    let $id := concat(document-uri(root($item)), '#', util:node-id($item))
+    let $id := functx:substring-after-last($id, '/')
+    let $id := functx:substring-before-last($id, '.')
+    let $type := substring($id, 1, 1)
+    let $id-position :=
+        if ($type eq 'c')
+        then '/vra:collection/@id'
+        else 
+            if ($type eq 'w')
+            then '/vra:work/@id'
+            else '/vra:image/@id'
+    let $stored := session:get-attribute("personal-list")
+    let $saved := exists($stored//*[@id = $id])
+    return
+        <tr xmlns="http://www.w3.org/1999/xhtml" class="pagination-item list">
+            <td class="pagination-number">{$currentPos}</td>
+            {
+            <td class="actions-cell">
+                <a id="save_{$id}" href="#{$currentPos}" class="save">
+                    <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+                </a>
+            </td>
+            }
+            <td class="list-type icon magnify">
+            { bs:get-icon($bs:THUMB_SIZE_GALLERY, $item, $currentPos)}
+            </td>
+            {
+            <td class="pagination-toggle">
+                <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>
+                <a>
+                {
+                    let $collection := util:collection-name($item)
+                    let $collection-short := functx:replace-first($collection, '/db/', '')
+                    let $clean := clean:cleanup($item)
+                    return
+                        retrieve-vra:format-list-view(string($currentPos), $clean, $collection-short)
+                }
+                </a>
+            </td>
+            }
+        </tr>
+};
+
 declare function bs:plain-list-view-table($item as node(), $currentPos as xs:int) {
     let $kwic := kwic:summarize($item/field[1], <config xmlns="" width="40"/>)
     let $id := concat(document-uri(root($item)), '#', util:node-id($item))
@@ -188,11 +301,13 @@ declare function bs:list-view-table($item as node(), $currentPos as xs:int) {
     typeswitch ($item)
         case element(mods:mods) return
             bs:mods-list-view-table($item, $currentPos)
+        case element(vra:vra) return
+            bs:vra-list-view-table($item, $currentPos)
         default return
             bs:plain-list-view-table($item, $currentPos)
 };
 
-declare function bs:toolbar($item as element(mods:mods), $isWritable as xs:boolean, $id as xs:string) {
+declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id as xs:string) {
     let $home := security:get-home-collection-uri($bs:USER)
     return
         <div class="actions-toolbar">
@@ -289,10 +404,12 @@ declare function bs:view-table($cached as item()*, $stored as item()*, $start as
         for $item at $pos in subsequence($cached, $start, $available)
         let $currentPos := $start + $pos - 1
         return
-            if ($count eq 1 and $item instance of element(mods:mods)) then
-                bs:detail-view-table($item, $currentPos)
+            if ($count eq 1 and $item instance of element(mods:mods)) 
+            then bs:mods-detail-view-table($item, $currentPos)
             else
-                bs:list-view-table($item, $currentPos)
+                if ($count eq 1 and $item instance of element(vra:vra)) 
+                then bs:vra-detail-view-table($item, $currentPos)
+                else bs:list-view-table($item, $currentPos)
     }
     </table>
 };

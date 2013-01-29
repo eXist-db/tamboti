@@ -28,6 +28,7 @@ declare namespace xmldb="http://exist-db.org/xquery/xmldb";
 declare namespace functx="http://www.functx.com";
 declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace mods="http://www.loc.gov/mods/v3";
+declare namespace vra = "http://www.vraweb.org/vracore4.htm";
 
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace theme="http://exist-db.org/xquery/biblio/theme" at "../theme.xqm";
@@ -63,8 +64,20 @@ declare function functx:substring-before-if-contains($arg as xs:string?, $delim 
 :)
 declare variable $biblio:FIELDS :=
 	<fields>
-		<field name="Title">mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]</field>
-		<field name="Name">mods:mods[ft:query(.//mods:name, '$q', $options)]</field>
+		<field name="Title">
+		      (
+		      mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]
+		      union
+		      vra:vra[ft:query(.//vra:titleSet, '$q', $options)]
+		      )
+		</field>
+		<field name="Name">
+		      (
+		      mods:mods[ft:query(.//mods:name, '$q', $options)]
+		      union
+		      vra:vra[ft:query(.//vra:agentSet, '$q', $options)]
+		      )
+		      </field>
 		<field name="Origin">
 		      (
 		      mods:mods[ft:query(.//mods:placeTerm , '$q*', $options)]
@@ -88,7 +101,13 @@ declare variable $biblio:FIELDS :=
 		<field name="Identifier">mods:mods[mods:identifier = '$q']</field>
 		<field name="Abstract">mods:mods[ft:query(mods:abstract, '$q', $options)]</field>
         <field name="Note">mods:mods[ft:query(mods:note, '$q', $options)]</field>
-        <field name="Subject">mods:mods[ft:query(mods:subject, '$q', $options)]</field>
+        <field name="Subject">
+            (
+            mods:mods[ft:query(mods:subject, '$q', $options)]
+            union
+            vra:vra[ft:query(.//vra:subjectSet, '$q', $options)]
+            )
+        </field>
        	<field name="Full Text">ft:search('page:$q')</field>
        	<field name="ID">mods:mods[@ID eq '$q']</field>
        	<field name="XLink">mods:mods[mods:relatedItem[ends-with(@xlink:href, '$q')]]</field>

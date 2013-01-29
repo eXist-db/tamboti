@@ -80,7 +80,11 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
         <td><div class="collection">{replace(replace(uu:unescape-collection-path($collection-short), '^resources/commons/', 'resources/'),'^resources/users/', 'resources/')}</div></td>
     </tr>
     ,
-    
+    <tr>
+        <td class="collection-label">Record Format</td>
+        <td>MODS</td>
+    </tr>
+    ,
     (: names :)
     if ($entry/mods:name)
     then mods-common:names-full($entry, $global-transliteration, $global-language)
@@ -499,27 +503,6 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
                 </tr>
         else ()
     ,
-    mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
-    ,
-
-    (: language of cataloging :)
-    let $distinct-language-labels := distinct-values(
-        for $language in $entry/mods:recordInfo/mods:languageOfCataloging
-        return mods-common:get-language-label($language/mods:languageTerm)
-        )
-    let $distinct-language-labels-count := count($distinct-language-labels)
-        return
-            if ($distinct-language-labels-count gt 0)
-            then
-                mods-common:simple-row(
-                    mods-common:serialize-list($distinct-language-labels, $distinct-language-labels-count)
-                ,
-                if ($distinct-language-labels-count gt 1) 
-                then 'Languages of Cataloging' 
-                else 'Language of Cataloging'
-                    )
-            else ()
-    ,
     
     (: script of cataloging :)
     let $distinct-script-labels := distinct-values(
@@ -539,6 +522,24 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
                     )
             else ()
     ,
+    (: language of cataloging :)
+    let $distinct-language-labels := distinct-values(
+        for $language in $entry/mods:recordInfo/mods:languageOfCataloging
+        return mods-common:get-language-label($language/mods:languageTerm)
+        )
+    let $distinct-language-labels-count := count($distinct-language-labels)
+        return
+            if ($distinct-language-labels-count gt 0)
+            then
+                mods-common:simple-row(
+                    mods-common:serialize-list($distinct-language-labels, $distinct-language-labels-count)
+                ,
+                if ($distinct-language-labels-count gt 1) 
+                then 'Languages of Cataloging' 
+                else 'Language of Cataloging'
+                    )
+            else ()
+        ,
     
     (: last modification date :)
     let $last-modified := $entry/mods:extension/ext:modified/ext:when
@@ -546,6 +547,24 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
         if ($last-modified) then
             mods-common:simple-row(functx:substring-before-last-match($last-modified[last()], 'T'), 'Record Last Modified')
         else ()
+        ,
+    mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
+    ,
+    if (contains($collection-short, 'Priya Paul Collection')) 
+    then 
+    let $link := concat('http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/ppcoll/modules/search/index.html', '?filter=ID&amp;value=', $ID)
+    return
+    mods-common:simple-row(
+        <a target="_blank" href="{$link}">{$link}</a>, 'View Full Record with Image in The Priya Paul Collection') 
+    else ()
+    ,
+    if (contains($collection-short, 'Naddara')) 
+    then 
+    let $link := concat('http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/naddara/modules/search/index.html', '?filter=ID&amp;value=', $ID)
+    return
+    mods-common:simple-row(
+        <a target="_blank" href="{$link}">{$link}</a>, 'View Full Record with Image in The Abou Naddara Collection') 
+    else ()
     }
     </table>
 };
@@ -557,7 +576,7 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
 : @param $position the position of the record displayed with the search results (this parameter is not used)
 : @return an XHTML span.
 :)
-declare function mods:format-list-view($position as xs:string, $entry as element(), $collection-short as xs:string) as element(span) {
+declare function mods:format-list-view($position as xs:string, $entry as element(mods:mods), $collection-short as xs:string) as element(span) {
 	let $entry := mods-common:remove-parent-with-missing-required-node($entry)
 	let $global-transliteration := $entry/mods:extension/ext:transliterationOfResource/text()
 	let $global-language := $entry/mods:language[1]/mods:languageTerm[1]/text()

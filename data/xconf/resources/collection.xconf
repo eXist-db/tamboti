@@ -1,7 +1,8 @@
 <collection xmlns="http://exist-db.org/collection-config/1.0">
-    <index xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mods="http://www.loc.gov/mods/v3">
+    <index xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:vra="http://www.vraweb.org/vracore4.htm" xmlns:mods="http://www.loc.gov/mods/v3">
         <fulltext default="none" attributes="no"/>
         <lucene>
+            <!--mods-->
             <text qname="mods:mods"/>
             
             <!--top level elements-->
@@ -34,6 +35,11 @@
             <text qname="mods:copyrightDate"/>
             <text qname="mods:placeTerm"/>
             <text qname="mods:publisher"/>
+            
+            <!--vra-->
+            <text qname="vra:titleSet"/>
+            <text qname="vra:subjectSet"/>
+            <text qname="vra:agentSet"/>
         </lucene>
         <create qname="@ID" type="xs:string"/>
         <create qname="@type" type="xs:string"/>
