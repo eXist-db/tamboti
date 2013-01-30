@@ -67,14 +67,14 @@ declare variable $biblio:FIELDS :=
 		<field name="Title">
 		      (
 		      mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]
-		      union
+		          union
 		      vra:vra[ft:query(.//vra:titleSet, '$q', $options)]
 		      )
 		</field>
 		<field name="Name">
 		      (
 		      mods:mods[ft:query(.//mods:name, '$q', $options)]
-		      union
+		          union
 		      vra:vra[ft:query(.//vra:agentSet, '$q', $options)]
 		      )
 		      </field>
@@ -99,21 +99,45 @@ declare variable $biblio:FIELDS :=
 			)
 		</field>
 		<field name="Identifier">mods:mods[mods:identifier = '$q']</field>
-		<field name="Abstract">mods:mods[ft:query(mods:abstract, '$q', $options)]</field>
+		<field name="Abstract/Description">
+		    (
+		    mods:mods[ft:query(mods:abstract, '$q', $options)]
+		      union
+            vra:vra[ft:query(.//vra:descriptionSet, '$q', $options)]
+            )
+		      </field>
         <field name="Note">mods:mods[ft:query(mods:note, '$q', $options)]</field>
         <field name="Subject">
             (
             mods:mods[ft:query(mods:subject, '$q', $options)]
-            union
+                union
             vra:vra[ft:query(.//vra:subjectSet, '$q', $options)]
             )
         </field>
-       	<field name="Full Text">ft:search('page:$q')</field>
-       	<field name="ID">mods:mods[@ID eq '$q']</field>
+       	<field name="Text">
+       	    (
+       	    ft:search('page:$q')
+       	        union
+            vra:vra[ft:query(.//vra:inscriptionSet, '$q', $options)]
+       	    )
+       	</field>
+       	<field name="ID">
+       	    (
+       	    mods:mods[@ID eq '$q']
+       	        union
+       	    vra:vra[vra:collection/@id eq '$q']
+       	        union
+       	    vra:vra[vra:work/@id eq '$q']
+       	        union
+       	    vra:vra[vra:image/@id eq '$q']
+       	    )
+       	</field>
        	<field name="XLink">mods:mods[mods:relatedItem[ends-with(@xlink:href, '$q')]]</field>
         <field name="All">
        		(
        		mods:mods[ft:query(., '$q', $options)]
+       		   union
+       		vra:vra[ft:query(., '$q', $options)]
        		   union
 	        ft:search('page:$q')
 	           union
@@ -317,8 +341,8 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                     Therefore a search is made in all other sub-collections of /db/resources.
                     Both this and the identical replacement in biblio:evaluate-query() are necessary.:)
                     if ($query-as-xml/string() eq '/resources')
-                    then ('(collection("/resources/commons","/resources/users", "/resources/groups"))//mods:mods')
-                    else ('collection("', $query-as-xml/string(), '")//mods:mods')
+                    then ('(collection("/resources/commons","/resources/users", "/resources/groups"))//(mods:mods | vra:vra)')
+                    else ('collection("', $query-as-xml/string(), '")//(mods:mods | vra:vra)')
                 else ()
             default 
                 return ()

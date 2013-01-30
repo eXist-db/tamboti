@@ -113,11 +113,78 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
                 <td>{$name/text()}</td>
             </tr>
     ,
+    (: location :)
+    for $location in $entry//vra:locationSet/vra:location[@source eq 'EXC']
+        return
+            <tr>
+                <td class="collection-label">{functx:capitalize-first($location/@type/string())}</td><td>{$location/vra:name}</td>
+            </tr>
+    ,
+    (: description :)
+    for $description in $entry//vra:descriptionSet/vra:description
+        return
+            <tr>
+                <td class="collection-label">Description</td>
+                <td>{$description/text()}</td>
+            </tr>
+    ,
+    (: relation :)
+    (:NB: why is this not rendered?:)
+    let $log := util:log("DEBUG", ("##$entry): ", $entry))
+    return
+    for $relation in $entry//vra:relationSet/vra:relation
+    let $log := util:log("DEBUG", ("##$relation): ", $relation))
+    let $type := $relation/@type
+    let $log := util:log("DEBUG", ("##$type): ", $type))
+
+    let $type := functx:capitalize-first(functx:camel-case-to-words($type, ' '))
+    let $relids := $relation/@relids
+    let $relids := tokenize($relids, ' ')
+        return
+            <tr>
+                <td class="collection-label">{$type}</td>
+                <td>{
+                    for $relid in $relids
+                    let $type := substring($relid, 1, 1)
+                    let $type := 
+                        if ($type eq 'i')
+                        then 'Image'
+                        else
+                            if ($type eq 'w')
+                            then 'Work'
+                            else 'Collection'
+                    return
+                    <a href="{$relid}">{$type}</a>
+                    }
+                </td>
+            </tr>
+    ,
     (: subjects :)
-    for $subject in $entry//vra:subjectSet/vra:subject
+    
+    (:for $subject in $entry//vra:subjectSet/vra:subject
         return
             <tr>
                 <td class="collection-label">Subject</td><td>{$subject}</td>
+            </tr>
+    :)
+    
+    if ($entry//vra:subjectSet/vra:subject)
+    then
+        <tr>
+            <td class="collection-label">Subjects</td>
+            <td>{
+            string-join(for $subject in $entry//vra:subjectSet/vra:subject
+            return
+            $subject, ', ')
+            }</td>
+        </tr>
+    else ()
+    ,
+    (: inscription :)
+    for $inscription in $entry//vra:inscriptionSet/vra:inscription
+        return
+            <tr>
+                <td class="collection-label">Inscription</td><td>{$inscription}</td>
             </tr>
     ,
     (: material :)
@@ -133,6 +200,13 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
             <tr>
                 <td class="collection-label">Technique</td><td>{$technique}</td>
             </tr>
+    ,
+    (: measurements :)
+    for $measurements in $entry//vra:measurementsSet/vra:measurements
+        return
+            <tr>
+                <td class="collection-label">{functx:capitalize-first($measurements/@type/string())}</td><td>{concat($measurements, ' ', $measurements/@unit/string())}</td>
+            </tr>    
     
     }
     </table>

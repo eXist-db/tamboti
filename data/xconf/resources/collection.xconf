@@ -37,10 +37,14 @@
             <text qname="mods:publisher"/>
             
             <!--vra-->
+            <text qname="vra:vra"/>
             <text qname="vra:titleSet"/>
             <text qname="vra:subjectSet"/>
             <text qname="vra:agentSet"/>
+            <text qname="vra:inscriptionSet"/>
+            <text qname="vra:descriptionSet"/>
         </lucene>
+        <create qname="@id" type="xs:string"/>
         <create qname="@ID" type="xs:string"/>
         <create qname="@type" type="xs:string"/>
         <create qname="@authority" type="xs:string"/>
