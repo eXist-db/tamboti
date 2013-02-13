@@ -36,6 +36,7 @@
             </help>
             <local-name>type</local-name>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_relatedItem-type">
@@ -57,6 +58,7 @@
             </help>
             <local-name>type</local-name>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_relatedItem-xlink_href">
@@ -78,6 +80,7 @@
             </help>
             <local-name>type</local-name>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_recordIdentifier">
@@ -447,6 +450,7 @@
             <tab-id>name</tab-id>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
             <tab-id>physical-description</tab-id>
             <tab-id>target-audience</tab-id>
@@ -772,6 +776,7 @@
             <tab-id>record-info</tab-id>
             <tab-id>mads</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_edition">
@@ -802,6 +807,7 @@
             <tab-id>origin</tab-id>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_temporal-encoding">
@@ -849,6 +855,7 @@
             <local-name>extent</local-name>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
             <tab-id>physical-description</tab-id>
         </item>
@@ -880,6 +887,7 @@
             <local-name>unit</local-name>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-text-type">
@@ -890,6 +898,7 @@
             <local-name>unit</local-name>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_typeOfResource">
@@ -948,6 +957,7 @@
             <local-name>unit</local-name>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-extent-start">
@@ -957,6 +967,7 @@
             <local-name>start</local-name>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-extent-end">
@@ -966,6 +977,7 @@
             <local-name>end</local-name>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-extent-total">
@@ -976,6 +988,7 @@
             <local-name>total</local-name>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-extent-list">
@@ -985,6 +998,7 @@
             <local-name>total</local-name>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-date">
@@ -994,6 +1008,7 @@
             <local-name>date</local-name>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_extraterrestrialArea">
@@ -1097,6 +1112,7 @@
             <tab-id>subject</tab-id>
             <tab-id>location</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-type">
@@ -1111,6 +1127,7 @@
             <parent>part</parent>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-detail-number">
@@ -1123,6 +1140,7 @@
             <local-name>number</local-name>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <!--tab-id checked above-->
@@ -1136,6 +1154,7 @@
             <local-name>caption</local-name>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-detail-title">
@@ -1149,6 +1168,7 @@
             <parent/>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-detail">
@@ -1164,6 +1184,7 @@
             <parent/>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-detail-type">
@@ -1182,6 +1203,7 @@
             <parent/>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-order">
@@ -1194,6 +1216,7 @@
             <parent/>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_part-detail-level">
@@ -1208,6 +1231,7 @@
             <parent/>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_isbn">
@@ -1348,6 +1372,7 @@
             <tab-id>origin</tab-id>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
             <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
@@ -2168,6 +2193,7 @@
             <parent/>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
         </item>
         <item xml:id="hint-code_other-part">
@@ -2435,6 +2461,9 @@
             <tab-id>compact-d</tab-id>
             <tab-id>origin</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
+            <tab-id>related-abbreviated</tab-id>
         </item>
         <item xml:id="hint-code_projection">
             <help>
@@ -2506,6 +2535,9 @@
             <parent/>
             <tab-id>origin</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>related</tab-id>
+            <tab-id>related-xlink</tab-id>
+            <tab-id>related-abbreviated</tab-id>
         </item>
         <item xml:id="hint-code_region">
             <help>
@@ -2866,6 +2898,7 @@
             <tab-id>title</tab-id>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
             <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
@@ -3466,6 +3499,7 @@
             <tab-id>origin</tab-id>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
             <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>
@@ -3769,6 +3803,7 @@
             <tab-id>title</tab-id>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
             <tab-id>physical-description</tab-id>
             <tab-id>location</tab-id>
@@ -3861,6 +3896,7 @@
             <tab-id>origin</tab-id>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
+            <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
             <tab-id>physical-description</tab-id>
             <tab-id>access-condition</tab-id>

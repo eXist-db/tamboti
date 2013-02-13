@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mods xmlns="http://www.loc.gov/mods/v3" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
     <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="">
         <nonSort lang="" xml:lang="" script="" transliteration=""/>
         <title lang="" xml:lang="" script="" transliteration=""/>
@@ -57,7 +57,7 @@
     </physicalDescription>
     <targetAudience authority="marctarget" authorityURI="" valueURI="" displayLabel="" altRepGroup="" lang="" xml:lang="" script="" transliteration=""/>
     <typeOfResource collection="" manuscript="" displayLabel="" usage="" altRepGroup=""/>
-    <genre type="code" authority="marcgt" lang="" xml:lang="" script="" transliteration="" authorityURI="" valueURI="" displayLabel="" usage="" altRepGroup=""/>
+    <genre type="" authority="marcgt" lang="" xml:lang="" script="" transliteration="" authorityURI="" valueURI="" displayLabel="" usage="" altRepGroup=""/>
     <subject authority="" xlink:href="" ID="" lang="" xml:lang="" script="" transliteration="" authorityURI="" valueURI="" displayLabel="" usage="" altRepGroup="">
         <topic authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
         <geographic authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
@@ -234,6 +234,21 @@
             <languageTerm authority="iso639-2b" type="code" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
             <scriptTerm type="" authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
         </language>
+        <relatedItem type="" xlink:href="" ID="">
+            <part type="" order="" ID="">
+                <detail type="">
+                    <number/>
+                </detail>
+                <extent unit="">
+                    <start/>
+                    <end/>
+                    <total/>
+                    <list/>
+                </extent>
+                <date encoding="w3cdtf" point="" qualifier=""/>
+                <text/>
+            </part>
+        </relatedItem>
     </relatedItem>
     <identifier displayLabel="" type="" invalid="" altRepGroup="" lang="" script="" transliteration="" xml:lang=""/>
     <location lang="" xml:lang="" script="" transliteration="" displayLabel="" altRepGroup="">
