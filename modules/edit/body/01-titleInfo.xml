@@ -12,6 +12,14 @@
                 </span>
                 <span class="add-delete-button">
                     <xf:trigger ref=".[mods:titleInfo]">
+                        <xf:label>+</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert nodeset="instance('save-data')/mods:titleInfo" at="index('titleInfo-repeat')" position="before" origin="instance('new-instance')/mods:titleInfo"/>
+                        </xf:action>
+                    </xf:trigger>
+                </span>
+                <span class="add-delete-button">
+                    <xf:trigger ref=".[mods:titleInfo]">
                         <xf:label>–</xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:delete nodeset="instance('save-data')/mods:titleInfo" at="index('titleInfo-repeat')"/>
