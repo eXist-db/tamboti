@@ -20,23 +20,21 @@ module namespace biblio="http://exist-db.org/xquery/biblio";
     of the query.
 :)
 
-declare namespace group="http://commons/sharing/group";
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace session="http://exist-db.org/xquery/session";
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace xmldb="http://exist-db.org/xquery/xmldb";
 declare namespace functx="http://www.functx.com";
 declare namespace xlink="http://www.w3.org/1999/xlink";
+
 declare namespace mods="http://www.loc.gov/mods/v3";
 declare namespace vra = "http://www.vraweb.org/vracore4.htm";
+declare namespace tei="http://www.tei-c.org/ns/1.0";
 
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace theme="http://exist-db.org/xquery/biblio/theme" at "../theme.xqm";
 import module namespace templates="http://exist-db.org/xquery/templates" at "../templates.xql";
-
 import module namespace jquery="http://exist-db.org/xquery/jquery" at "resource:org/exist/xquery/lib/jquery.xql";
-
-import module namespace sort="http://exist-db.org/xquery/sort" at "java:org.exist.xquery.modules.sort.SortModule";
 import module namespace security="http://exist-db.org/mods/security" at "security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "sharing.xqm";
 import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
@@ -49,17 +47,17 @@ declare function functx:substring-before-if-contains($arg as xs:string?, $delim 
    else $arg
  } ;
  
- declare function functx:replace-first($arg as xs:string?, $pattern as xs:string, $replacement as xs:string ) as xs:string {       
+declare function functx:replace-first($arg as xs:string?, $pattern as xs:string, $replacement as xs:string ) as xs:string {       
    replace($arg, concat('(^.*?)', $pattern),
              concat('$1',$replacement))
  } ;
 
 (:~
     Mapping field names to XPath expressions.
-    Changes in field names should be reflected in autocomplete.xql and biblio:construct-order-by-expression().
+    NB: Changes in field names should be reflected in autocomplete.xql, biblio:construct-order-by-expression() and biblio:get-year().
     Fields used should be reflected in the collection.xconf in /db/system/config/db/resources/.
     'q' is expanded in biblio:generate-query().
-    An XLink may be passed through mods:format-detail-view() without a hash or or it may be passed with a hash through the search interface; 
+    An XLink may be passed through retrieve-mods:format-detail-view() without a hash or or it may be passed with a hash through the search interface; 
     therefore any leading hash is first removed and then added, to prevent double hashes. 
 :)
 declare variable $biblio:FIELDS :=
@@ -69,6 +67,12 @@ declare variable $biblio:FIELDS :=
 		      mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]
 		          union
 		      vra:vra[ft:query(.//vra:titleSet, '$q', $options)]
+		          union
+		      tei:TEI//tei:p[ft:query(tei:title, '$q', $options)]
+		          union
+		      tei:TEI//tei:bibl[ft:query(.//tei:title, '$q', $options)]
+		          union
+		      tei:TEI//tei:titleStmt[ft:query(./tei:title, '$q', $options)]
 		      )
 		</field>
 		<field name="Name">
@@ -76,6 +80,12 @@ declare variable $biblio:FIELDS :=
 		      mods:mods[ft:query(.//mods:name, '$q', $options)]
 		          union
 		      vra:vra[ft:query(.//vra:agentSet, '$q', $options)]
+		          union
+		      tei:TEI//tei:p[ft:query(tei:name, '$q', $options)]
+		          union
+		      tei:TEI//tei:bibl[ft:query(.//tei:name, '$q', $options)]
+		          union
+		      tei:TEI//tei:person[ft:query(.//tei:persName, '$q', $options)]
 		      )
 		      </field>
 		<field name="Origin">
@@ -112,13 +122,25 @@ declare variable $biblio:FIELDS :=
             mods:mods[ft:query(mods:subject, '$q', $options)]
                 union
             vra:vra[ft:query(.//vra:subjectSet, '$q', $options)]
+                union
+            tei:TEI//tei:p[ft:query(.//tei:term, '$q', $options)]
+                union
+            tei:TEI//tei:head[ft:query(.//tei:term, '$q', $options)]
             )
         </field>
-       	<field name="Text">
+        <field name="Genre">
+            (
+            mods:mods[ft:query(.//mods:genre, '$q', $options)]
+            )
+        </field>
+        <field name="Language">
+            (
+            mods:mods[ft:query(.//mods:language, '$q', $options)]
+            )
+        </field>
+       	<field name="Extracted Text">
        	    (
        	    ft:search('page:$q')
-       	        union
-            vra:vra[ft:query(.//vra:inscriptionSet, '$q', $options)]
        	    )
        	</field>
        	<field name="ID">
@@ -138,8 +160,10 @@ declare variable $biblio:FIELDS :=
        		mods:mods[ft:query(., '$q', $options)]
        		   union
        		vra:vra[ft:query(., '$q', $options)]
+       		union
+       		tei:TEI[ft:query(., '$q', $options)]
        		   union
-	        ft:search('page:$q')
+       		ft:search('page:$q')
 	           union
        		mods:mods[@ID eq '$q']
        		   union
@@ -184,8 +208,13 @@ declare variable $biblio:TEMPLATE_QUERY :=
 :)
 declare function biblio:form-from-query($node as node(), $params as element(parameters)?, $model as item()*) as element()+ {
     let $incoming-query := $model[1]
+    (:let $log := util:log("DEBUG", ("##$incoming-query): ", $incoming-query)):)
     (:let $log := util:log("DEBUG", ("##$model): ", $model)):)
-    let $query := if ($incoming-query//field) then $incoming-query else $biblio:TEMPLATE_QUERY
+    (:let $log := util:log("DEBUG", ("##$params): ", $params)):)
+    let $query := 
+        if ($incoming-query//field) 
+        then $incoming-query 
+        else $biblio:TEMPLATE_QUERY
     (:let $log := util:log("DEBUG", ("##$query): ", $query)):)
     for $field at $pos in $query//field
     (:let $log := util:log("DEBUG", ("##$field): ", $field)):)
@@ -247,9 +276,9 @@ declare function biblio:form-from-query($node as node(), $params as element(para
     of the query.
     $query-as-xml has the form:
     <query>
-        <collection>/resources/commons/Buddhist%20Logic</collection>
+        <collection>/resources/commons/EAST</collection>
         <and>
-            <field m="1" name="All">logic</field>
+            <field m="1" name="Name">Kellner</field>
             <field m="2" name="Title">buddhist</field>
         </and>
     </query>
@@ -301,6 +330,7 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
             let $expr := $biblio:FIELDS/field[@name eq $query-as-xml/@name]
             (:let $log := util:log("DEBUG", ("##$query-as-xml-1): ", $query-as-xml)):)
             (:let $log := util:log("DEBUG", ("##$expr-1): ", $expr)):)
+            
             (:Default to "All" if no operator is supplied.:)
             let $expr := 
                 if ($expr) 
@@ -310,8 +340,9 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
             (:This results in expressions like:
             <field name="Title">mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]</field>.
             The search term, to be substituted for 'q', is held in $query-as-xml. :)
+            
+            (: When searching for ID and xlink:href, do not use the chosen collection-path, but search throughout all of /resources. :)
             let $collection-path := 
-                (: When searching for ID and xlink:href, do not use the chosen collection-path, but search throughout all of /resources. :)
                 if ($expr/@name = ('ID', 'XLink')) 
                 then '/resources'
                 else $query-as-xml/ancestor::query/collection/string()
@@ -329,9 +360,10 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                     (: search one of the user's own collections or a commons collection. :)
                     concat("collection('", $collection-path, "')//")
                 )
+            (:let $log := util:log("DEBUG", ("##$collection): ", $collection)):)
             return
                 (:The search term held in $query-as-xml is substituted for the 'q' held in $expr.:)
-                ($collection, replace($expr, '\$q', biblio:escape-search-string($query-as-xml/string())))
+                ($collection, replace($expr, '\$q', biblio:normalize-search-string($query-as-xml/string())))
         case element(collection) 
             return
                 if (not($query-as-xml/..//field)(: and not($config:require-query):)) 
@@ -341,17 +373,24 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                     Therefore a search is made in all other sub-collections of /db/resources.
                     Both this and the identical replacement in biblio:evaluate-query() are necessary.:)
                     if ($query-as-xml/string() eq '/resources')
-                    then ('(collection("/resources/commons","/resources/users", "/resources/groups"))//(mods:mods | vra:vra)')
-                    else ('collection("', $query-as-xml/string(), '")//(mods:mods | vra:vra)')
+                    then ('(collection("/resources/commons","/resources/users", "/resources/groups"))//(mods:mods | vra:vra | tei:TEI)')
+                    else ('collection("', $query-as-xml, '")//(mods:mods | vra:vra | tei:TEI)')
                 else ()
             default 
                 return ()
 };
 
-(: If an apostrophe occurs in the search string, it is escaped.:)
-(:NB: "&" should be escaped as well.:)
-declare function biblio:escape-search-string($search-string as xs:string?) as xs:string? {
-	replace($search-string, "'", "''")
+(: If an apostrophe occurs in the search string (as in "China's"), it is escaped. 
+This means that phrase searches can only be performed with double quotation marks.:)
+(: If the search string starts with a "*" or a "?" (illegal in Lucene search syntax), it is removed.:)
+(: ":" and "&" are replaced with empty spaces.:)
+(:NB: In case of an unequal number of double quotation marks, all double quotation marks should be removed.:)
+declare function biblio:normalize-search-string($search-string as xs:string?) as xs:string? {
+	let $search-string := replace($search-string, '^[?*]?(.*)$', '$1')
+	let $search-string := replace($search-string, "'", "''")
+	let $search-string := translate($search-string, ":", " ")
+	let $search-string := translate($search-string, "&amp;", " ")
+    	return $search-string
 };
 
 (:~
@@ -449,11 +488,11 @@ declare function biblio:process-form() as element(query)? {
 
 declare variable $biblio:eastern-languages := ('chi', 'jpn', 'kor', 'skt', 'tib');
 declare variable $biblio:author-roles := ('aut', 'author', 'cre', 'creator', 'composer', 'cmp', 'artist', 'art', 'director', 'drt');
-(: This function is adapted in nameutil:format-name() from names.xql. Any changes should be coordinated. :)
-declare function biblio:order-by-author($m as element()) as xs:string?
+(: This function is adapted in nameutil:format-name() in names.xql. Any changes should be coordinated. :)
+declare function biblio:order-by-author($hit as element()) as xs:string?
 {
     (: Pick the first name of an author/creator. :)
-    let $names := $m/mods:name[mods:role/mods:roleTerm = $biblio:author-roles or not(mods:role/mods:roleTerm)][1] 
+    let $names := $hit/mods:name[mods:role/mods:roleTerm = $biblio:author-roles or not(mods:role/mods:roleTerm)][1] 
     (: Iterate through the single name in order to be able to order it in a return statement. :)
     for $name in $names
     (: Sort according to family and given names.:)
@@ -504,6 +543,8 @@ declare function biblio:order-by-author($m as element()) as xs:string?
 
 declare function biblio:get-year($hit as element()) as xs:string? {
 (:number() is used to filter out string values like "unknown".:)
+(:NB: year is sorted as string.:)
+(:NB: TEI documents hard to fit in.:)
     if ($hit/mods:originInfo[1]/mods:dateIssued[1]/number()) 
     then functx:substring-before-if-contains($hit/mods:originInfo[1]/mods:dateIssued[1],'-') 
     else 
@@ -536,11 +577,11 @@ declare function biblio:construct-order-by-expression($sort as xs:string?) as xs
     if ($sort eq "Score") 
     then "ft:score($hit) descending"
     else 
-        if ($sort eq "Name") 
+        if ($sort eq "Author") 
         then "biblio:order-by-author($hit)"
         else 
             if ($sort eq "Title") 
-            then "$hit/mods:titleInfo[not(@type)][1]/mods:title[1] ascending empty greatest"
+            then "$hit/(mods:titleInfo[not(@type)][1]/mods:title[1] | vra:work/vra:titleSet[1]/vra:title[1] | tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]) ascending empty greatest"
             (:Default: if ($sort eq "Year"):)
             else "biblio:get-year($hit) descending empty least"
 };
@@ -629,6 +670,7 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
         (:let $log := util:log("DEBUG", ("##$query): ", $query)):)
         let $sort := if ($sort) then $sort else session:get-attribute("sort")
         let $results := biblio:evaluate-query($query, $sort)
+        (:let $log := util:log("DEBUG", ("##$results): ", $results)):)
         let $processed :=
             for $item in $results
             return
@@ -751,11 +793,19 @@ declare function biblio:login($node as node(), $params as element(parameters)?, 
             <div class="login"><a href="#" id="login-link">Login</a></div>
         )
         else
-        (
-            <div class="help"><a href="../../docs/index.xml">Help</a></div>
-            ,
-            <div class="login">Logged in as <span class="username">{let $human-name := security:get-human-name-for-user($user) return if (not(empty($human-name))) then $human-name else $user}</span>. <a href="?logout=1">Logout</a></div>
-        )
+            if ($user eq 'admin')
+            then 
+                (
+                    <div class="help"><a id="optimize-trigger" href="#">Create custom indexes for sorting</a></div>
+                    ,
+                    <div class="login">Logged in as <span class="username">{let $human-name := security:get-human-name-for-user($user) return if (not(empty($human-name))) then $human-name else $user}</span>. <a href="?logout=1">Logout</a></div>
+                )
+            else
+            (
+                <div class="help"><a href="../../docs/index.xml">Help</a></div>
+                ,
+                <div class="login">Logged in as <span class="username">{let $human-name := security:get-human-name-for-user($user) return if (not(empty($human-name))) then $human-name else $user}</span>. <a href="?logout=1">Logout</a></div>
+            )
 };
 
 declare function biblio:collection-path($node as node(), $params as element(parameters)?, $model as item()*) {
@@ -1015,11 +1065,9 @@ declare function biblio:prepare-query($id as xs:string?, $collection as xs:strin
                     then biblio:clear-search-terms($collection)
                     else 
                         if ($filter) 
-                        then  biblio:apply-filter($filter, $value)
-                        else 
-                            if ($mylist eq 'display') 
-                            then ()
-                            else biblio:process-form()
+                        then biblio:apply-filter($filter, $value)
+                        (:"else" includes "if ($mylist eq 'display')", the search made when displaying items in My List.:)
+                        else biblio:process-form()
 };
 
 (:~
