@@ -1,0 +1,46 @@
+<div>
+    <h4>Search syntax</h4>
+    <p>In Tamboti, when one searches for a specific term, only matches with the full term are
+        retrieved, that is, a search for "Chin" does not retrieve all words beginning with "Chin"
+        ("China", "Chinese" …), but only "Chin".</p>
+    <p>One can use <em>wildcards</em> to perform broader searches. "?" can be used for a single
+        character and "*" for zero, one or more characters: "China" is thus found with "Ch?na" and
+        "C*a", and "China" and "Chine" are found with "Chin?", just as "China", "Chine" and
+        "Chinese" are found with "Chin?". Note that "*" and "?" (unfortunately) cannot occur in the
+        beginning of a word.</p>
+    <p>
+        <em>Fuzzy searches</em> can be performed by putting "~" at the end of a word, make it
+        possible to retrieve "Chine" through "China~". One can quantify the fuzziness, by appending
+        a number between 0.0 and 1.0, "complete fuzziness" (finding everything) being 0.0 and
+        complete identity being "1.0". If you append a "~" with no number, you use the value 0.5.
+        (Note that the actual value "1.0" is illegal: use "0.999…" instead.)</p>
+    <p>
+        <em>Phrases </em>can be searched for by putting them in quotation marks. Use "straight"
+        double quotation marks only, that is, not single quotations marks or double quotation marks
+        that are curly.</p>
+    <p>If one searches for ""Popular Propaganda"", putting the two words in quotation marks, one
+        will only find records in which the two words occurs in sequence, not if they occurs in the
+        opposite sequence or at different points in the record.</p>
+    <p>Note that Chinese, Japanese and Korean characters are indexed as separate words, so a search
+        for "本日" (without quotation marks) will find records with the two characters in the opposite
+        sequence, that is, with "日本" as well. However, if you enclose "日本" in quotation marks, you
+        only retrieve records with the two characters in the specified sequence.</p>
+    <p>The <em>boolean operators</em> "AND" and "OR" can be used. If you search for "China AND
+        Japan", you will find only records with both the words. If you search for "China OR Japan",
+        you will find records in which either or both the two words occur. The first search will
+        normally result in fewer records than the second search. "NOT" can also be used. If you
+        search for "China NOT Japan", you will only find records that have "China" but not "Japan".
+        This search would also normally result in fewer records.</p>
+    <p>One can make even more complicated searches by using parentheses: "(China OR Japan) NOT
+        Korea" will thus find records in which the words "China" or "Japan" occur, but only those in
+        which "Korea" does not occur.</p>
+    <p>One can write "AND", "OR" and "NOT" in lowercase letters. In fact, searches are made in
+        lower-case letters only, so writing "China" with initial lower-case "C" has the exact same
+        effect as using an initial upper-case "C". As you will have figured out, you can spare
+        yourself the effort of using upper-case letters and write all your search instructions in
+        lower-case letters only.</p>
+    <p>Note that since "and", "or" and "not" are reserved for making boolean searches, it is
+        difficult to search for "hardship" in German (Not), "gold" in French (or) - and "duck" in
+        Danish (and)! If you need to search for these three strings of letters, you will have to
+        enclose them in quotation marks and include other search terms as well.</p>
+</div>
