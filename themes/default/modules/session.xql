@@ -12,26 +12,30 @@ xquery version "3.0";
 :)
 
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
-import module namespace mods="http://www.loc.gov/mods/v3" at "retrieve-mods.xql";
-import module namespace retrieve-vra="http://www.vraweb.org/vracore4.htm" at "retrieve-vra.xql";
+import module namespace retrieve-mods="http://exist-db.org/mods/retrieve" at "retrieve-mods.xql";
+import module namespace retrieve-vra="http://exist-db.org/vra/retrieve" at "retrieve-vra.xql";
+import module namespace retrieve-tei="http://exist-db.org/tei/retrieve" at "retrieve-tei.xql";
 import module namespace jquery="http://exist-db.org/xquery/jquery" at "resource:org/exist/xquery/lib/jquery.xql";
 import module namespace security="http://exist-db.org/mods/security" at "../../../modules/search/security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "../../../modules/search/sharing.xqm";
 import module namespace clean="http://exist-db.org/xquery/mods/cleanup" at "../../../modules/search/cleanup.xql";
 import module namespace kwic="http://exist-db.org/xquery/kwic" at "resource:org/exist/xquery/lib/kwic.xql";
-import module namespace modsCommon="http://exist-db.org/mods/common" at "../../../modules/mods-common.xql";
+import module namespace mods-common="http://exist-db.org/mods/common" at "mods-common.xql";
+
+declare namespace mods="http://www.loc.gov/mods/v3";
+declare namespace vra = "http://www.vraweb.org/vracore4.htm";
+declare namespace tei="http://www.tei-c.org/ns/1.0";
 
 declare namespace bs="http://exist-db.org/xquery/biblio/session";
 declare namespace functx = "http://www.functx.com";
-declare namespace vra = "http://www.vraweb.org/vracore4.htm";
 
 declare option exist:serialize "method=xhtml media-type=application/xhtml+xml enforce-xhtml=yes";
 
 declare variable $bs:USER := security:get-user-credential-from-session()[1];
 
-declare variable $bs:THUMB_SIZE_GRID := 64;
-declare variable $bs:THUMB_SIZE_GALLERY := 128;
-declare variable $bs:THUMB_SIZE_DETAIL := 256;
+declare variable $bs:THUMB_SIZE_FOR_GRID := 64;
+declare variable $bs:THUMB_SIZE_FOR_GALLERY := 128;
+declare variable $bs:THUMB_SIZE_FOR_DETAIL_VIEW := 256;
 
 
 declare function functx:substring-before-last 
@@ -92,13 +96,13 @@ declare function bs:get-item-uri($item-id as xs:string) {
 };
 
 declare function bs:view-gallery-item($mode as xs:string, $item as element(mods:mods), $currentPos as xs:int) {
-    let $thumbSize := if ($mode eq "gallery") then $bs:THUMB_SIZE_GALLERY else $bs:THUMB_SIZE_GRID
-    let $title := modsCommon:get-short-title($item)
+    let $thumbSize := if ($mode eq "gallery") then $bs:THUMB_SIZE_FOR_GALLERY else $bs:THUMB_SIZE_FOR_GRID
+    let $title := mods-common:get-short-title($item)
     return
         <li class="pagination-item {$mode}" xmlns="http://www.w3.org/1999/xhtml">
             <span class="pagination-number">{ $currentPos }</span>
             <div class="icon pagination-toggle" title="{$title}">
-                <img class="magnify icon-magnifier" src="theme/images/search.png" title="Click for full screen image"/>
+                <img class="magnify icon-magnifier" src="theme/images/search.png" title="Click to view full screen image"/>
                 { bs:get-icon($thumbSize, $item, $currentPos) }
             </div>
             {
@@ -109,6 +113,38 @@ declare function bs:view-gallery-item($mode as xs:string, $item as element(mods:
             }
         </li>
 };
+
+declare function bs:mods-detail-view-table($item as element(mods:mods), $currentPos as xs:int) {
+    let $isWritable := bs:collection-is-writable(util:collection-name($item))
+    let $id := concat(document-uri(root($item)), '#', util:node-id($item))
+    let $stored := session:get-attribute("personal-list")
+    let $saved := exists($stored//*[@id = $id])
+    return
+        <tr class="pagination-item detail" xmlns="http://www.w3.org/1999/xhtml">
+            <td class="pagination-number">{$currentPos}</td>
+            <td class="actions-cell">
+                <a id="save_{$id}" href="#{$currentPos}" class="save">
+                    <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+                </a>
+            </td>
+            <td class="magnify detail-type">
+            { bs:get-icon($bs:THUMB_SIZE_FOR_DETAIL_VIEW, $item, $currentPos)}
+            </td>
+            <td class="detail-xml">
+                { bs:toolbar($item, $isWritable, $id) }
+                <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
+                {
+                    let $collection := util:collection-name($item)
+                    let $collection-short := functx:replace-first($collection, '/db/', '')
+                    let $clean := clean:cleanup($item)
+                    return
+                        retrieve-mods:format-detail-view(string($currentPos), $clean, $collection-short)
+                        (: What is $currentPos used for? :)
+                }
+            </td>
+        </tr>
+};
+
 
 declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos as xs:int) {
     let $isWritable := bs:collection-is-writable(util:collection-name($item))
@@ -134,11 +170,12 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
                     <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
                 </a>
             </td>
-            <td class="magnify detail-type">
-            { bs:get-icon($bs:THUMB_SIZE_DETAIL, $item, $currentPos)}
-            </td>
+            <!--<td class="magnify detail-type">
+            { bs:get-icon($bs:THUMB_SIZE_FOR_DETAIL_VIEW, $item, $currentPos)}
+            </td>-->
             <td class="detail-xml">
                 { bs:toolbar($item, $isWritable, $id) }
+                <!--NB: why is this phoney HTML tag used to anchor the Zotero unIPA?-->
                 <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>
                 {
                     let $collection := util:collection-name($item)
@@ -151,9 +188,15 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
         </tr>
 };
 
-declare function bs:mods-detail-view-table($item as element(mods:mods), $currentPos as xs:int) {
+
+declare function bs:tei-detail-view-table($item as element(), $currentPos as xs:int) {
     let $isWritable := bs:collection-is-writable(util:collection-name($item))
+    let $document-uri  := document-uri(root($item))
+    let $node-id := util:node-id($item)
     let $id := concat(document-uri(root($item)), '#', util:node-id($item))
+    let $id := functx:substring-after-last($id, '/')
+    let $id := functx:substring-before-last($id, '.')
+    let $type := substring($id, 1, 1)
     let $stored := session:get-attribute("personal-list")
     let $saved := exists($stored//*[@id = $id])
 
@@ -165,19 +208,16 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
                     <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
                 </a>
             </td>
-            <td class="magnify detail-type">
-            { bs:get-icon($bs:THUMB_SIZE_DETAIL, $item, $currentPos)}
-            </td>
             <td class="detail-xml">
                 { bs:toolbar($item, $isWritable, $id) }
-                <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
+                <!--NB: why is this phoney HTML tag used to anchor the Zotero unIPA?-->
+                <abbr class="unapi-id" title="{bs:get-item-uri($item)}"></abbr>
                 {
                     let $collection := util:collection-name($item)
                     let $collection-short := functx:replace-first($collection, '/db/', '')
                     let $clean := clean:cleanup($item)
                     return
-                        mods:format-detail-view(string($currentPos), $clean, $collection-short)
-                        (: What is $currentPos used for? :)
+                        retrieve-tei:format-detail-view(string($currentPos), $clean, $collection-short, $document-uri, $node-id)
                 }
             </td>
         </tr>
@@ -198,7 +238,7 @@ declare function bs:mods-list-view-table($item as node(), $currentPos as xs:int)
             </td>
             }
             <td class="list-type icon magnify">
-            { bs:get-icon($bs:THUMB_SIZE_GALLERY, $item, $currentPos)}
+            { bs:get-icon($bs:THUMB_SIZE_FOR_GALLERY, $item, $currentPos)}
             </td>
             {
             <td class="pagination-toggle">
@@ -209,8 +249,8 @@ declare function bs:mods-list-view-table($item as node(), $currentPos as xs:int)
                     let $collection-short := functx:replace-first($collection, '/db/', '')
                     let $clean := clean:cleanup($item)
                     return
-                        mods:format-list-view(string($currentPos), $clean, $collection-short)
-                        (: Originally $item was passed to mods:format-list-view() - was there a reason for that? Performance? :)
+                        retrieve-mods:format-list-view(string($currentPos), $clean, $collection-short)
+                        (: Originally $item was passed to retrieve-mods:format-list-view() - was there a reason for that? Performance? :)
                 }
                 </a>
             </td>
@@ -242,9 +282,9 @@ declare function bs:vra-list-view-table($item as node(), $currentPos as xs:int) 
                 </a>
             </td>
             }
-            <td class="list-type icon magnify">
-            { bs:get-icon($bs:THUMB_SIZE_GALLERY, $item, $currentPos)}
-            </td>
+            <!--<td class="list-type icon magnify">
+            { bs:get-icon($bs:THUMB_SIZE_FOR_GALLERY, $item, $currentPos)}
+            </td>-->
             {
             <td class="pagination-toggle">
                 <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>
@@ -262,11 +302,51 @@ declare function bs:vra-list-view-table($item as node(), $currentPos as xs:int) 
         </tr>
 };
 
+declare function bs:tei-list-view-table($item as node(), $currentPos as xs:int) {
+    let $document-uri  := document-uri(root($item))
+    let $node-id := util:node-id($item)
+    let $id := concat($document-uri, '#', $node-id)
+    let $id := functx:substring-after-last($id, '/')
+    let $id := functx:substring-before-last($id, '.')
+    let $type := substring($id, 1, 1)
+    let $stored := session:get-attribute("personal-list")
+    let $saved := exists($stored//*[@id = $id])
+    return
+        <tr xmlns="http://www.w3.org/1999/xhtml" class="pagination-item list">
+            <td class="pagination-number">{$currentPos}</td>
+            {
+            <td class="actions-cell">
+                <a id="save_{$id}" href="#{$currentPos}" class="save">
+                    <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+                </a>
+            </td>
+            }
+            <td class="list-type icon magnify">
+            { bs:get-icon($bs:THUMB_SIZE_FOR_GALLERY, $item, $currentPos)}
+            </td>
+            {
+            <td class="pagination-toggle">
+                <abbr class="unapi-id" title="{bs:get-item-uri($item)}"></abbr>
+                <a>
+                {
+                    let $collection := util:collection-name($item)
+                    let $collection-short := functx:replace-first($collection, '/db/', '')
+                    (:let $clean := clean:cleanup($item):)
+                    return
+                        retrieve-tei:format-list-view(string($currentPos), $item, $collection-short, $document-uri, $node-id)
+                }
+                </a>
+            </td>
+            }
+        </tr>
+};
+
 declare function bs:plain-list-view-table($item as node(), $currentPos as xs:int) {
-    let $kwic := kwic:summarize($item/field[1], <config xmlns="" width="40"/>)
+    let $kwic := kwic:summarize($item, <config xmlns="" width="40"/>)
     let $id := concat(document-uri(root($item)), '#', util:node-id($item))
     let $stored := session:get-attribute("personal-list")
     let $saved := exists($stored//*[@id = $id])
+    (:NB: This gives NEP 2013-03-16, but Wolfgang has a fix. :)
     let $titleField := ft:get-field($item/@uri, "Title")
     let $title := if ($titleField) then $titleField else replace($item/@uri, "^.*/([^/]+)$", "$1")
     let $clean := clean:cleanup($item)
@@ -284,12 +364,12 @@ declare function bs:plain-list-view-table($item as node(), $currentPos as xs:int
             }
             <td class="list-type">
                 <a href="{substring($item/@uri, 2)}" target="_new">
-                { bs:get-icon($bs:THUMB_SIZE_GALLERY, $item, $currentPos)}
+                { bs:get-icon($bs:THUMB_SIZE_FOR_GALLERY, $item, $currentPos)}
                 </a>
             </td>
             {
             <td class="pagination-toggle">
-                <span>{mods:format-list-view(string($currentPos), $clean, $collection-short)}</span>
+                <span>{retrieve-mods:format-list-view(string($currentPos), $clean, $collection-short)}</span>
                 <h4>{xmldb:decode-uri($title)}</h4>
                 { $kwic }
             </td>
@@ -297,21 +377,41 @@ declare function bs:plain-list-view-table($item as node(), $currentPos as xs:int
         </tr>
 };
 
+(:NB: If an element is returned which is not covered by this typeswitch, the following error occurs, i.e. it defaults to kwic:summarize():
+the actual cardinality for parameter 1 does not match the cardinality declared in the function's signature: kwic:summarize($hit as element(), $config as element()) element()*. Expected cardinality: exactly one, got 0. [at line 349, column 34, source: /db/apps/tamboti/themes/default/modules/session.xql]
+:)
+(:NB: each element checked for here should appear in bs:view-table(), otherwise the detail view will show the list view.:)
 declare function bs:list-view-table($item as node(), $currentPos as xs:int) {
     typeswitch ($item)
         case element(mods:mods) return
             bs:mods-list-view-table($item, $currentPos)
         case element(vra:vra) return
             bs:vra-list-view-table($item, $currentPos)
+        case element(tei:person) return
+            bs:tei-list-view-table($item, $currentPos)
+        case element(tei:p) return
+            bs:tei-list-view-table($item, $currentPos)
+        case element(tei:term) return
+            bs:tei-list-view-table($item, $currentPos)
+        case element(tei:head) return
+            bs:tei-list-view-table($item, $currentPos)
+        case element(tei:bibl) return
+            bs:tei-list-view-table($item, $currentPos)
         default return
             bs:plain-list-view-table($item, $currentPos)
 };
 
 declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id as xs:string) {
     let $home := security:get-home-collection-uri($bs:USER)
+    (:If there is a MODS @ID, use it; otherwise take a VRA @id.:)
+    let $id := $item/@ID
+    let $id := 
+        if ($id) 
+        then $id 
+        else $item/vra:work/@id
     return
         <div class="actions-toolbar">
-            <a target="_new" href="source.xql?id={$item/@ID}&amp;clean=yes">
+            <a target="_new" href="source.xql?id={$id}&amp;clean=yes">
                 <img title="View XML Source of Record" src="theme/images/script_code.png"/>
             </a>
             {
@@ -357,7 +457,7 @@ declare function bs:get-icon($size as xs:int, $item, $currentPos as xs:int) {
             $item/mods:location/mods:url[@access="preview"]/string(), 
             $item/mods:location/mods:url[@displayLabel="Path to Folder"]/string() 
         )[1]
-    let $type := $item/mods:typeOfResource/string()
+    let $type := $item/mods:typeOfResource[1]/string()
     let $hint := 
         if ($type)
         then functx:capitalize-first($type)
@@ -377,11 +477,9 @@ declare function bs:get-icon($size as xs:int, $item, $currentPos as xs:int) {
                 else
                     let $imgLink := concat(substring-after(util:collection-name($item), "/db"), "/", $image-url)
                     return
-                        <img title="{$hint}" src="images/{$imgLink}?s={$size}"/>
-        
+                        <img title="{$hint}" src="images/{$imgLink}?s={$size}"/>        
         else
         (: For non-image records:)
-            let $type := $item/mods:typeOfResource[1]/string()           
             let $type := 
                 (: If there is a typeOfResource, render the icon for it. :)
                 if ($type)
@@ -409,7 +507,25 @@ declare function bs:view-table($cached as item()*, $stored as item()*, $start as
             else
                 if ($count eq 1 and $item instance of element(vra:vra)) 
                 then bs:vra-detail-view-table($item, $currentPos)
-                else bs:list-view-table($item, $currentPos)
+                else 
+                    if ($count eq 1 and $item instance of element(tei:TEI)) 
+                    then bs:list-view-table($item, $currentPos)
+                    else
+                        if ($count eq 1 and $item instance of element(tei:person)) 
+                        then bs:tei-detail-view-table($item, $currentPos)
+                        else
+                            if ($count eq 1 and $item instance of element(tei:p)) 
+                            then bs:tei-detail-view-table($item, $currentPos)
+                            else
+                                if ($count eq 1 and $item instance of element(tei:term)) 
+                                then bs:tei-detail-view-table($item, $currentPos)
+                                else
+                                    if ($count eq 1 and $item instance of element(tei:head)) 
+                                    then bs:tei-detail-view-table($item, $currentPos)
+                                    else
+                                        if ($count eq 1 and $item instance of element(tei:bibl)) 
+                                        then bs:tei-detail-view-table($item, $currentPos)
+                                        else bs:list-view-table($item, $currentPos)
     }
     </table>
 };

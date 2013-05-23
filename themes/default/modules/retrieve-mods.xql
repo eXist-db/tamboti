@@ -1,5 +1,6 @@
-module namespace mods="http://www.loc.gov/mods/v3";
+module namespace retrieve-mods="http://exist-db.org/mods/retrieve";
 
+declare namespace mods="http://www.loc.gov/mods/v3";
 declare namespace mads="http://www.loc.gov/mads/v2";
 declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace functx = "http://www.functx.com";
@@ -9,8 +10,8 @@ import module namespace config="http://exist-db.org/mods/config" at "../../../mo
 import module namespace uu="http://exist-db.org/mods/uri-util" at "../../../modules/search/uri-util.xqm";
 import module namespace mods-common="http://exist-db.org/mods/common" at "../../../modules/mods-common.xql";
 
-(:The $mods:primary-roles values are lower-cased when compared.:)
-declare variable $mods:primary-roles := ('aut', 'author', 'cre', 'creator', 'composer', 'cmp', 'artist', 'art', 'director', 'drt');
+(:The $retrieve-mods:primary-roles values are lower-cased when compared.:)
+declare variable $retrieve-mods:primary-roles := ('aut', 'author', 'cre', 'creator', 'composer', 'cmp', 'artist', 'art', 'director', 'drt');
 
 declare option exist:serialize "media-type=text/xml";
 
@@ -61,13 +62,13 @@ declare function functx:capitalize-first($arg as xs:string?) as xs:string? {
  
 
 (:~
-: The <b>mods:format-detail-view</b> function returns the detail view of a MODS record.
+: The <b>retrieve-mods:format-detail-view</b> function returns the detail view of a MODS record.
 : @param $entry a MODS record, processed by clean:cleanup() in session.xql.
 : @param $collection-short the location of the MODS record, with '/db/' removed.
 : @param $position the position of the record displayed with the search results (this parameter is not used).
 : @return an XHTML table.
 :)
-declare function mods:format-detail-view($position as xs:string, $entry as element(mods:mods), $collection-short as xs:string) as element(table) {
+declare function retrieve-mods:format-detail-view($position as xs:string, $entry as element(mods:mods), $collection-short as xs:string) as element(table) {
     let $ID := $entry/@ID
 	let $entry := mods-common:remove-parent-with-missing-required-node($entry)
 	let $global-transliteration := $entry/mods:extension/ext:transliterationOfResource/text()
@@ -266,117 +267,6 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
     (: relatedItem :)
     mods-common:get-related-items($entry, 'detail', $global-language, $collection-short)
     ,
-    (: typeOfResource :)
-    mods-common:simple-row(string($entry/mods:typeOfResource[1]), 'Type of Resource')
-    ,
-    (: internetMediaType :)
-    mods-common:simple-row(
-    (
-	    let $label := doc(concat($config:edit-app-root, '/code-tables/internet-media-type-codes.xml'))/*:code-table/*:items/*:item[*:value eq $entry/mods:physicalDescription[1]/mods:internetMediaType]/*:label
-	    return
-	        if ($label) 
-	        then $label
-	        else $entry/mods:physicalDescription[1]/mods:internetMediaType)
-    , 'Internet Media Type')
-    ,
-    
-    (: genre :)
-    for $genre in ($entry/mods:genre)
-    let $authority := string($genre/@authority)
-    return   
-        mods-common:simple-row(
-            if ($authority eq 'local')
-                then doc(concat($config:edit-app-root, '/code-tables/genre-local-codes.xml'))/*:code-table/*:items/*:item[*:value eq $genre]/*:label
-                else
-                	if ($authority eq 'marcgt')
-                	then doc(concat($config:edit-app-root, '/code-tables/genre-marcgt-codes.xml'))/*:code-table/*:items/*:item[*:value eq $genre]/*:label
-					else string($genre)
-                , 
-                concat(
-                    'Genre'
-                    , 
-                    if ($authority)
-                    then
-                        if ($authority eq 'marcgt')
-                        then ' (MARC Genre Terms)'
-                        else concat(' (', $authority, ')')
-                    else ()            
-            )
-    )
-    ,
-
-    (: language :)
-    let $distinct-language-labels := distinct-values(
-        for $language in $entry/mods:language
-        for $languageTerm in $language/mods:languageTerm
-        return mods-common:get-language-label($languageTerm/text())
-        )
-    let $distinct-language-labels-count := count($distinct-language-labels)
-        return
-            if ($distinct-language-labels-count gt 0)
-            then
-                mods-common:simple-row(
-                    mods-common:serialize-list($distinct-language-labels, $distinct-language-labels-count)
-                ,
-                if ($distinct-language-labels-count gt 1) 
-                then 'Languages of Resource' 
-                else 'Language of Resource'
-                    )
-            else ()
-    ,
-
-    (: script :)
-
-    let $distinct-script-labels := distinct-values(
-        for $language in $entry/mods:language
-        for $scriptTerm in $language/mods:scriptTerm
-        return mods-common:get-script-label($scriptTerm/text())
-        )
-    let $distinct-script-labels-count := count($distinct-script-labels)
-        return
-            if ($distinct-script-labels-count gt 0)
-            then
-                mods-common:simple-row(
-                    mods-common:serialize-list($distinct-script-labels, $distinct-script-labels-count)
-                ,
-                if ($distinct-script-labels-count gt 1) 
-                then 'Scripts of Resource' 
-                else 'Script of Resource'
-                    )
-            else ()
-    ,
-    
-    (: abstract :)
-    for $abstract in ($entry/mods:abstract)
-    return
-    mods-common:simple-row($abstract, 'Abstract')
-    ,
-    
-    (: note :)
-    for $note in $entry/mods:note
-    let $displayLabel := string($note/@displayLabel)
-    let $type := string($note/@type)
-    let $text := $note/text()
-    (: The following serves to render html markup in Zotero exports. Stylesheet should be changed to accommodate standard markup. :)
-    (:NB: Do $double-escapes occur?:)
-    let $double-escapes-fixed := replace(replace(replace($text, '&amp;nbsp;', '&#160;'), '&amp;gt;', '&gt;'), '&amp;lt;', '&lt;')
-    let $wrapped-with-span := concat('&lt;span>', $double-escapes-fixed, '</span>')
-    return        
-        mods-common:simple-row(util:parse($wrapped-with-span)
-	    , 
-	    concat('Note', 
-	        concat(
-	        if ($displayLabel)
-	        then concat(' (', $displayLabel, ')')            
-	        else ()
-	        ,
-	        if ($type)
-	        then concat(' (', $type, ')')            
-	        else ()
-	        )
-	        )
-	    )
-    ,
     (: subject :)
     (: We assume that there are no subjects with an empty topic element. If it is empty, we skip processing.:)
     if (normalize-space(string($entry/mods:subject[1])))
@@ -416,6 +306,198 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
                 </td>
             </tr>
         else ()
+        ,
+    
+    (: find records that refer to the current record if this record is a periodical or an edited volume or a similar kind of publication. :)
+    (:NB: This takes time!:)
+    (:NB: allowing empty genre to triger this: remove when WSC has genre.:)
+    if ($entry/mods:genre = ('series', 'periodical', 'editedVolume', 'newspaper', 'journal', 'festschrift', 'encyclopedia', 'conference publication', 'canonical scripture') or empty($entry/mods:genre)) 
+    then
+        (:The $ID is passed to the query; when the query is constructed, the hash is appended (application.xql, $biblio:FIELDS). 
+        This is necessary since a hash in the URL is interpreted as a fragment identifier and not passed as a param.:)
+        let $linked-ID := concat('#',$ID)
+        let $linked-records := collection($config:mods-root-minus-temp)//mods:mods[mods:relatedItem[@type = ('host', 'series', 'otherFormat')]/@xlink:href eq $linked-ID]
+        let $linked-records-count := count($linked-records)
+        return
+        if ($linked-records-count eq 0)
+        then ()
+        else 
+            if ($linked-records-count gt 10)
+            then
+                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
+                    <td class="url label relatedItem-label"> 
+                        <a href="?action=&amp;filter=XLink&amp;value={$ID}&amp;query-tabs=simple">&lt;&lt; Catalogued Contents</a>
+                    </td>
+                    <td class="relatedItem-record">
+                        <span class="relatedItem-span">{$linked-records-count} records</span>
+                    </td>
+                </tr>
+            else
+                for $linked-record in $linked-records
+                let $link-ID := $linked-record/@ID/string()
+                let $link-contents := 
+                    if (string-join($linked-record/mods:titleInfo/mods:title, ''))
+                    then retrieve-mods:format-list-view('', $linked-record, '') 
+                    else ()
+                return
+                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
+                    <td class="url label relatedItem-label">
+                        <a href="?filter=ID&amp;value={$link-ID}">&lt;&lt; Catalogued Contents</a>
+                    </td>
+                    <td class="relatedItem-record">
+                        <span class="relatedItem-span">{$link-contents}</span>
+                    </td>
+                </tr>
+        else ()
+    
+        ,
+    (: typeOfResource :)
+    mods-common:simple-row(string($entry/mods:typeOfResource[1]), 'Type of Resource')
+    ,
+    (: internetMediaType :)
+    mods-common:simple-row(
+    (
+	    let $label := doc(concat($config:edit-app-root, '/code-tables/internet-media-type-codes.xml'))/*:code-table/*:items/*:item[*:value eq $entry/mods:physicalDescription[1]/mods:internetMediaType]/*:label
+	    return
+	        if ($label) 
+	        then $label
+	        else $entry/mods:physicalDescription[1]/mods:internetMediaType)
+    , 'Internet Media Type')
+    ,
+    
+    (: genre :)
+    for $genre in ($entry/mods:genre)
+    let $authority := string($genre/@authority)
+    return   
+        mods-common:simple-row(
+            if ($authority eq 'local')
+                then doc(concat($config:edit-app-root, '/code-tables/genre-local-codes.xml'))/*:code-table/*:items/*:item[*:value eq $genre]/*:label
+                else
+                	if ($authority eq 'marcgt')
+                	then doc(concat($config:edit-app-root, '/code-tables/genre-marcgt-codes.xml'))/*:code-table/*:items/*:item[*:value eq $genre]/*:label
+					else string($genre)
+                , 
+                concat(
+                    'Genre'
+                    , 
+                    if ($authority)
+                    then
+                        if ($authority eq 'marcgt')
+                        then ' (MARC Genre Terms)'
+                        else concat(' (', $authority, ')')
+                    else ()            
+            )
+    )
+    ,
+    
+    (: abstract :)
+    for $abstract in ($entry/mods:abstract)
+    return
+    mods-common:simple-row($abstract, 'Abstract')
+    ,
+    
+    (: note :)
+    for $note in $entry/mods:note
+    let $displayLabel := string($note/@displayLabel)
+    let $type := string($note/@type)
+    let $text := $note/text()
+    (: The following serves to render html markup in Zotero exports. Stylesheet should be changed to accommodate standard markup. :)
+    (:NB: Do $double-escapes occur?:)
+    let $double-escapes-fixed := replace(replace(replace($text, '&amp;nbsp;', '&#160;'), '&amp;gt;', '&gt;'), '&amp;lt;', '&lt;')
+    let $wrapped-with-span := concat('&lt;span>', $double-escapes-fixed, '</span>')
+    return        
+        mods-common:simple-row(util:parse($wrapped-with-span)
+	    , 
+	    concat('Note', 
+	        concat(
+	        if ($displayLabel)
+	        then concat(' (', $displayLabel, ')')            
+	        else ()
+	        ,
+	        if ($type)
+	        then concat(' (', $type, ')')            
+	        else ()
+	        )
+	        )
+	    )
+    
+    ,
+
+    (: language of resource :)
+    let $distinct-language-labels := distinct-values(
+        for $language in $entry/mods:language
+        for $languageTerm in $language/mods:languageTerm
+        return mods-common:get-language-label($languageTerm/text())
+        )
+    let $distinct-language-labels-count := count($distinct-language-labels)
+        return
+            if ($distinct-language-labels-count gt 0)
+            then
+                mods-common:simple-row(
+                    mods-common:serialize-list($distinct-language-labels, $distinct-language-labels-count)
+                ,
+                if ($distinct-language-labels-count gt 1) 
+                then 'Languages of Resource' 
+                else 'Language of Resource'
+                    )
+            else ()
+    ,
+
+    (: script of resource :)
+    let $distinct-script-labels := distinct-values(
+        for $language in $entry/mods:language
+        for $scriptTerm in $language/mods:scriptTerm
+        return mods-common:get-script-label($scriptTerm/text())
+        )
+    let $distinct-script-labels-count := count($distinct-script-labels)
+        return
+            if ($distinct-script-labels-count gt 0)
+            then
+                mods-common:simple-row(
+                    mods-common:serialize-list($distinct-script-labels, $distinct-script-labels-count)
+                ,
+                if ($distinct-script-labels-count gt 1) 
+                then 'Scripts of Resource' 
+                else 'Script of Resource'
+                    )
+            else ()
+    ,
+    (: language of cataloging :)
+    let $distinct-language-labels := distinct-values(
+        for $language in $entry/mods:recordInfo/mods:languageOfCataloging
+        return mods-common:get-language-label($language/mods:languageTerm)
+        )
+    let $distinct-language-labels-count := count($distinct-language-labels)
+        return
+            if ($distinct-language-labels-count gt 0)
+            then
+                mods-common:simple-row(
+                    mods-common:serialize-list($distinct-language-labels, $distinct-language-labels-count)
+                ,
+                if ($distinct-language-labels-count gt 1) 
+                then 'Languages of Cataloging' 
+                else 'Language of Cataloging'
+                    )
+            else ()
+    ,
+    
+    (: script of cataloging :)
+    let $distinct-script-labels := distinct-values(
+        for $language in $entry/mods:recordInfo/mods:languageOfCataloging
+        return mods-common:get-script-label($language/mods:scriptTerm)
+        )
+    let $distinct-script-labels-count := count($distinct-script-labels)
+        return
+            if ($distinct-script-labels-count gt 0)
+            then
+                mods-common:simple-row(
+                    mods-common:serialize-list($distinct-script-labels, $distinct-script-labels-count)
+                ,
+                if ($distinct-script-labels-count gt 1) 
+                then 'Scripts of Cataloging' 
+                else 'Script of Cataloging'
+                    )
+            else ()
     ,
 
     (: identifier :)
@@ -425,7 +507,7 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
     return 
         mods-common:simple-row
         (
-            $identifer, 
+            $identifer/text(), 
             concat
             (
                 'Identifier',
@@ -461,94 +543,16 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
     return mods-common:simple-row($item, concat('Classification', $authority))
     ,
     
-    (: find records that refer to the current record if this record is a periodical or an edited volume or a similar kind of publication. :)
-    (:NB: This takes time!:)
-    (:NB: allowing empty genre to triger this: remove when WSC has genre.:)
-    if ($entry/mods:genre = ('series', 'periodical', 'editedVolume', 'newspaper', 'journal', 'festschrift', 'encyclopedia', 'conference publication', 'canonical scripture') or empty($entry/mods:genre)) 
-    then
-        (:The $ID is passed to the query; when the query is constructed, the hash is appended (application.xql, $biblio:FIELDS). 
-        This is necessary since a hash in the URL is interpreted as a fragment identifier and not passed as a param.:)
-        let $linked-ID := concat('#',$ID)
-        let $linked-records := collection($config:mods-root-minus-temp)//mods:mods[mods:relatedItem[@type = ('host', 'series', 'otherFormat')]/@xlink:href eq $linked-ID]
-        let $linked-records-count := count($linked-records)
-        return
-        if ($linked-records-count eq 0)
-        then ()
-        else 
-            if ($linked-records-count gt 10)
-            then
-                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
-                    <td class="url label relatedItem-label"> 
-                        <a href="?action=&amp;filter=XLink&amp;value={$ID}&amp;query-tabs=simple">&lt;&lt; Catalogued Contents:</a>
-                    </td>
-                    <td class="relatedItem-record">
-                        <span class="relatedItem-span">{$linked-records-count} records</span>
-                    </td>
-                </tr>
-            else
-                for $linked-record in $linked-records
-                let $link-ID := $linked-record/@ID/string()
-                let $link-contents := 
-                    if (string-join($linked-record/mods:titleInfo/mods:title, ''))
-                    then mods:format-list-view('', $linked-record, '') 
-                    else ()
-                return
-                <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
-                    <td class="url label relatedItem-label">
-                        <a href="?filter=ID&amp;value={$link-ID}">&lt;&lt; Catalogued Contents:</a>
-                    </td>
-                    <td class="relatedItem-record">
-                        <span class="relatedItem-span">{$link-contents}</span>
-                    </td>
-                </tr>
-        else ()
-    ,
-    
-    (: script of cataloging :)
-    let $distinct-script-labels := distinct-values(
-        for $language in $entry/mods:recordInfo/mods:languageOfCataloging
-        return mods-common:get-script-label($language/mods:scriptTerm)
-        )
-    let $distinct-script-labels-count := count($distinct-script-labels)
-        return
-            if ($distinct-script-labels-count gt 0)
-            then
-                mods-common:simple-row(
-                    mods-common:serialize-list($distinct-script-labels, $distinct-script-labels-count)
-                ,
-                if ($distinct-script-labels-count gt 1) 
-                then 'Scripts of Cataloging' 
-                else 'Script of Cataloging'
-                    )
-            else ()
-    ,
-    (: language of cataloging :)
-    let $distinct-language-labels := distinct-values(
-        for $language in $entry/mods:recordInfo/mods:languageOfCataloging
-        return mods-common:get-language-label($language/mods:languageTerm)
-        )
-    let $distinct-language-labels-count := count($distinct-language-labels)
-        return
-            if ($distinct-language-labels-count gt 0)
-            then
-                mods-common:simple-row(
-                    mods-common:serialize-list($distinct-language-labels, $distinct-language-labels-count)
-                ,
-                if ($distinct-language-labels-count gt 1) 
-                then 'Languages of Cataloging' 
-                else 'Language of Cataloging'
-                    )
-            else ()
-        ,
-    
     (: last modification date :)
     let $last-modified := $entry/mods:extension/ext:modified/ext:when
     return 
         if ($last-modified) then
-            mods-common:simple-row(functx:substring-before-last-match($last-modified[last()], 'T'), 'Record Last Modified')
+            mods-common:simple-row(functx:substring-before-last-match($last-modified[count(.)], 'T'), 'Record Last Modified')
         else ()
-        ,
-    mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
+    ,
+    if (contains($collection-short, 'Naddara')) 
+    then () 
+    else mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
     ,
     if (contains($collection-short, 'Priya Paul Collection')) 
     then 
@@ -560,23 +564,23 @@ declare function mods:format-detail-view($position as xs:string, $entry as eleme
     ,
     if (contains($collection-short, 'Naddara')) 
     then 
-    let $link := concat('http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/naddara/modules/search/index.html', '?filter=ID&amp;value=', $ID)
+    let $link := concat(replace(replace(request:get-url(), '/metadata.xql', '/search/index.html'), '/naddara', '/tamboti'), '?filter=ID&amp;value=', $ID)
     return
     mods-common:simple-row(
-        <a target="_blank" href="{$link}">{$link}</a>, 'View Full Record with Image in The Abou Naddara Collection') 
+        <a target="_blank" href="{$link}">{$link}</a>, 'View Full MODS Record with Image in The Abou Naddara Collection') 
     else ()
     }
     </table>
 };
 
 (:~
-: The <b>mods:format-list-view</b> function returns the list view of a sequence of MODS records.
+: The <b>retrieve-mods:format-list-view</b> function returns the list view of a sequence of MODS records.
 : @param $entry a MODS record, processed by clean:cleanup().
 : @param $collection-short the location of the MODS record, with '/db/' removed
 : @param $position the position of the record displayed with the search results (this parameter is not used)
 : @return an XHTML span.
 :)
-declare function mods:format-list-view($position as xs:string, $entry as element(mods:mods), $collection-short as xs:string) as element(span) {
+declare function retrieve-mods:format-list-view($position as xs:string, $entry as element(mods:mods), $collection-short as xs:string) as element(span) {
 	let $entry := mods-common:remove-parent-with-missing-required-node($entry)
 	let $global-transliteration := $entry/mods:extension/ext:transliterationOfResource/text()
 	let $global-language := $entry/mods:language[1]/mods:languageTerm[1]/text()
@@ -590,7 +594,7 @@ declare function mods:format-list-view($position as xs:string, $entry as element
             <primary-names>{
                 $names
                     [@type = ('personal', 'corporate', 'family') or not(@type)]
-                    [(mods:role/mods:roleTerm[lower-case(.) = $mods:primary-roles]) or empty(mods:role/mods:roleTerm)]
+                    [(mods:role/mods:roleTerm[lower-case(.) = $retrieve-mods:primary-roles]) or empty(mods:role/mods:roleTerm)]
             }</primary-names>
             return
     	        if (string($names-primary))
@@ -602,7 +606,7 @@ declare function mods:format-list-view($position as xs:string, $entry as element
         mods-common:get-short-title($entry)
         ,
         let $names := $entry/mods:name
-        let $role-terms-secondary := $names/mods:role/mods:roleTerm[not(lower-case(.) = $mods:primary-roles)]
+        let $role-terms-secondary := $names/mods:role/mods:roleTerm[not(lower-case(.) = $retrieve-mods:primary-roles)]
             return
                 for $role-term-secondary in distinct-values($role-terms-secondary) 
                     return
@@ -619,7 +623,7 @@ declare function mods:format-list-view($position as xs:string, $entry as element
                                 )
         ,
         (:If there are no secondary names, insert a period after the title, if there is no related item.:)
-        if (not($entry/mods:name/mods:role/mods:roleTerm[not(lower-case(.) = $mods:primary-roles)]))
+        if (not($entry/mods:name/mods:role/mods:roleTerm[not(lower-case(.) = $retrieve-mods:primary-roles)]))
         then
             if (not($entry/mods:relatedItem[@type eq 'host'])) 
             then ''

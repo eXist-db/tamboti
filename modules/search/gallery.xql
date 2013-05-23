@@ -6,7 +6,7 @@ import module namespace request = "http://exist-db.org/xquery/request";
 import module namespace session = "http://exist-db.org/xquery/session";
 import module namespace util = "http://exist-db.org/xquery/util";
 
-import module namespace modsCommon="http://exist-db.org/mods/common" at "../mods-common.xql";
+import module namespace mods-common="http://exist-db.org/mods/common" at "../mods-common.xql";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
 
@@ -114,7 +114,7 @@ declare function local:image($item as xs:int) {
             return
                 <image>
                     <src>{ $imgLink }</src>
-                    <title>{ string-join(modsCommon:get-short-title($entry), " ") }</title>
+                    <title>{ string-join(mods-common:get-short-title($entry), " ") }</title>
                 </image>
         else
             ()
