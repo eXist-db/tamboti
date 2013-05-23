@@ -504,6 +504,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     let $identifiers := $entry/mods:identifier
     for $identifer in $identifiers
     let $type := $identifer/@type/string()
+    let $type := doc(concat($config:edit-app-root, "/code-tables/identifier-type-codes.xml"))/*:code-table/*:items/*:item[*:value eq $type]/*:label
     return 
         mods-common:simple-row
         (
@@ -513,9 +514,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
                 'Identifier',
                 if (string($type)) 
                 then concat(
-                    ' (', 
-                    doc(concat($config:edit-app-root, "/code-tables/identifier-type-codes.xml"))/*:code-table/*:items/*:item[*:value eq $type]/*:label
-                    , ')'
+                    ' (', $type, ')'
                 )
                 else ' (unknown type)'
                 , 
@@ -550,9 +549,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
             mods-common:simple-row(functx:substring-before-last-match($last-modified[count(.)], 'T'), 'Record Last Modified')
         else ()
     ,
-    if (contains($collection-short, 'Naddara')) 
-    then () 
-    else mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
+    mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
     ,
     if (contains($collection-short, 'Priya Paul Collection')) 
     then 
@@ -564,10 +561,10 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     ,
     if (contains($collection-short, 'Naddara')) 
     then 
-    let $link := concat(replace(replace(request:get-url(), '/metadata.xql', '/search/index.html'), '/naddara', '/tamboti'), '?filter=ID&amp;value=', $ID)
+    let $link := concat('http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/naddara/modules/search/index.html', '?filter=ID&amp;value=', $ID)
     return
     mods-common:simple-row(
-        <a target="_blank" href="{$link}">{$link}</a>, 'View Full MODS Record with Image in The Abou Naddara Collection') 
+        <a target="_blank" href="{$link}">{$link}</a>, 'View Full Record with Image in The Abou Naddara Collection') 
     else ()
     }
     </table>
