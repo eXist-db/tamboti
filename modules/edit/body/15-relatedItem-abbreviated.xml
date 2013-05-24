@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="related block-form" tab-id="related-abbreviated" ext:dummy="dummy" xlink:dummy="dummy">
     <xf:group appearance="full">
         <fieldset class="level-1">
@@ -2049,6 +2048,14 @@
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_titleInfo',instance('code-tables'))/help"/>
                                 </div>
+                            </span>
+                            <span class="add-delete-button">
+                                <xf:trigger ref=".[mods:titleInfo]">
+                                    <xf:label>+</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:insert nodeset="instance('save-data')/mods:titleInfo" at="index('titleInfo-repeat')" position="before" origin="instance('new-instance')/mods:titleInfo"/>
+                                    </xf:action>
+                                </xf:trigger>
                             </span>
                             <span class="add-delete-button">
                                 <xf:trigger ref=".[mods:titleInfo]">
