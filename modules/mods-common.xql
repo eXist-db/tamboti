@@ -6,7 +6,8 @@ declare namespace functx="http://www.functx.com";
 declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace ext="http://exist-db.org/mods/extension";
 
-import module namespace config="http://exist-db.org/mods/config" at "config.xqm";
+import module namespace retrieve-mods="http://exist-db.org/mods/retrieve" at "../themes/default/modules/retrieve-mods.xql";
+import module namespace config="http://exist-db.org/mods/config" at "../themes/default/modules/retrieve-mods.xql";
 
 declare variable $mods-common:given-name-first-languages := ('eng', 'fre', 'ger', 'ita', 'por', 'spa');
 declare variable $mods-common:no-word-space-languages := ('chi', 'jpn', 'kor');
@@ -246,29 +247,58 @@ declare function functx:trim($arg as xs:string?) as xs:string {
 : @return The titleInfo formatted as XHTML.
 :)
 declare function mods-common:title-full($titleInfo as element(mods:titleInfo)) as element() {
-if ($titleInfo)
-    then
+let $transliteration := $titleInfo/@transliteration
+let $global-transliteration := $titleInfo/../mods:extension/ext:transliterationOfResource
+let $type := $titleInfo/@type
+let $type := 
+    if (not($type))
+    then ()
+    else
+        if ($type eq 'alternative')
+        then 'alternative'
+        else
+            if ($type eq 'uniform')
+            then 'uniform'
+            else
+                if ($type eq 'abbreviated')
+                then 'abbreviated'
+                else
+                    (:First, demand that type is 'translated'; 
+                    second, since type 'translated' may also used for transliterations, 
+                    demand that it is not the case that there is an explicit transliteration scheme indicated 
+                    or that it is not the case that there is an implicit transliteration scheme indicated 
+                    (using empty or "unspecified" @transliteration with transliteration scheme indicated in extension).:)
+                    if ($type eq 'translated' and (not($transliteration) or ($transliteration = ('', 'unspecified') and $global-transliteration eq ''))) 
+                    then 'translated'
+                    else
+                        (:Either there is explicit indication of transliteration scheme used on the element 
+                        or the transliteration scheme used is indicated in the extension 
+                        and one of two ways to show that some transliteration scheme is used on the element.:)
+                        if (($transliteration/string() and $transliteration ne 'unspecified') or ($transliteration = ('', 'unspecified') and $global-transliteration ne ''))
+                        then 'transliterated'
+                        else ()
+    return
     <tr xmlns="http://www.w3.org/1999/xhtml">
         <!--Left column-->
         <!--Main label-->
         <td class="label">
         {
-            if (($titleInfo/@type eq 'translated') and (not($titleInfo/@transliteration) or string($titleInfo/@lang) or string($titleInfo/@xml:lang))) 
+            if ($type eq 'translated') 
             then 'Translated Title'
-            else 
-                if ($titleInfo/@type eq 'alternative') 
-                then 'Alternative Title'
-                else 
-                    if ($titleInfo/@type eq 'uniform') 
-                    then 'Uniform Title'
+            else   
+                if ($type eq 'transliterated')
+                then 'Transliterated Title'
+                else
+                    if ($type eq 'alternative') 
+                    then 'Alternative Title'
                     else 
-                        if ($titleInfo/@transliteration)
-                        then 'Transliterated Title'
-                        else
-                            (:NB: In mods:format-detail-view(), titleInfo with @type eq 'abbreviated' are removed.:) 
-                            if ($titleInfo/@type eq 'abbreviated') 
+                        if ($type eq 'uniform') 
+                        then 'Uniform Title'
+                        else 
+                            (:NB: In retrieve-mods:format-detail-view(), titleInfo with @type eq 'abbreviated' are removed.:) 
+                            if ($type eq 'abbreviated') 
                             then 'Abbreviated Title'
-                            (:Default value.:)
+                            (:Default value, if no type is indicated.:)
                             else 'Title'
         }
         <span class="deemph">
@@ -349,8 +379,6 @@ if ($titleInfo)
         }
         </td>
     </tr>
-    else
-    ()
 };
 
 
@@ -504,6 +532,23 @@ declare function mods-common:get-short-title($entry as element()) {
         else ()
         )
 };
+
+(:~
+: The <b>mods-common:format-location</b> function returns 
+: the location of a publication, for display in detail view (except the URL, which is separately formatted).
+:
+: @see http://www.loc.gov/standards/mods/userguide/location.html#url
+: @param $location The MODS location element minus the url child
+: @return The location as XHTML a element.
+:)
+declare function mods-common:format-location($location as element(mods:location), $collection-short as xs:string) as xs:string {
+    let $location := $location[not(url)][mods:physicalLocation]
+    let $physical-location := $location/mods:physicalLocation
+    let $shelf-locator := $location/mods:holdingSimple/mods:copyInformation/mods:shelfLocator
+    return 
+        concat($physical-location, if ($shelf-locator) then ': ' else (), $shelf-locator)
+};
+
 
 (:~
 : The <b>mods-common:format-url</b> function returns 
@@ -909,9 +954,14 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                             ' '
                             , 
                             (: ## 2 ##:)
-                            (: If there is a "European" name, enclose the transliterated and Eastern script name in parenthesis. :)
-                            if ($name/*:namePart[@lang  = $mods-common:given-name-first-languages])
-                            then ' ('
+                            (: If there is a "European" name and an Eastern name, enclose the transliterated and Eastern script name in parenthesis. :)
+                            (:Is there a Western name?:)
+                            if ($name/*:namePart[not(@type eq 'date')][@lang = $mods-common:given-name-first-languages or not(@lang)])
+                            then
+                                (:Is there an Eastern name?:)
+                                if ($name/*:namePart[not(@type eq 'date')][@lang != $mods-common:given-name-first-languages])
+                                then ' ('
+                                else ()
                             else ()
                             ,
                             if (string($name-in-transliteration))
@@ -1079,10 +1129,13 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                                                         )
                                     else ()
                                 ,     
-    	                        (: Close Chinese alias.:)
-    	                        if ($name/*:namePart[@lang eq 'eng'])
-    	                        then ') '
-    	                        else ()
+    	                        (: Close Chinese alias set in beginning of (: ## 2 ##:).:)
+    	                        if ($name/*:namePart[not(@type eq 'date')][@lang = $mods-common:given-name-first-languages or not(@lang)])
+                                then
+                                    if ($name/*:namePart[not(@type eq 'date')][@lang != $mods-common:given-name-first-languages])
+                                    then ') '
+                                    else ()
+                                else ()
     	                        ,
     	                        (: Finish off by giving the dates of the person, in parenthesis.:)
                                 if ($date-basic)
@@ -1568,11 +1621,11 @@ declare function mods-common:format-related-item($relatedItem as element(mods:re
         (
             <result>{(
                 (:Display author roles:)
-                if ($relatedItem-role-terms = $mods:primary-roles or not($relatedItem-role-terms))
+                if ($relatedItem-role-terms = $retrieve-mods:primary-roles or not($relatedItem-role-terms))
                 then mods-common:format-multiple-names($relatedItem, 'list-first', $global-transliteration, $global-language)
                 else ()
                 ,
-                if ($relatedItem-role-terms = $mods:primary-roles)
+                if ($relatedItem-role-terms = $retrieve-mods:primary-roles)
                 then '. '
                 else ()
                 ,
@@ -1590,7 +1643,7 @@ declare function mods-common:format-related-item($relatedItem as element(mods:re
                     else
                         let $roleTerms := distinct-values($relatedItem/mods:name/mods:role/mods:roleTerm)
                         return
-                            for $roleTerm in $roleTerms[. != $mods:primary-roles]        
+                            for $roleTerm in $roleTerms[. != $retrieve-mods:primary-roles]        
                                     return
                                         let $names := <entry>{$relatedItem/mods:name[mods:role/mods:roleTerm eq $roleTerm]}</entry>
                                             return
@@ -1727,7 +1780,9 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
 	let $dateOriginInfo := mods-common:get-date($dateOriginInfo)
 	
     (: NB: this should iterate over part, since there are e.g. multi-part installments of articles. :)
-    let $part := $entry/mods:part[1]
+    let $parts := $entry/mods:part
+    for $part at $i in $parts
+    return
 
     (: contains: detail, extent, date, text. :)
     (: has: type, order, ID. :)
@@ -1795,7 +1850,7 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
 				(: NB: We assume that there will not be both $page and $extent.:)
 				if ($extent) 
 				(:NB: iterate.:)
-				then concat(': ', mods-common:get-extent($extent[1]), '.')
+				then concat(': ', mods-common:get-extent($extent[1]), if ($i eq count($parts)) then '.' else '; ')
 				else
 					if ($page) 
 					then concat(': ', $page[1], '.')
@@ -2119,7 +2174,7 @@ declare function mods-common:get-related-items($entry as element(mods:mods), $de
                 then
                     <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
         				<td class="url label relatedItem-label">
-                            <a href="?filter=ID&amp;value={$xlinked-ID}">&lt;&lt; In</a>
+                            <a href="?filter=ID&amp;value={$xlinked-ID}">{concat('&lt;&lt; ', $label)}</a>
                         </td>
                         <td class="relatedItem-record">
         					<span class="relatedItem-span">{mods-common:format-related-item($related-item, $global-language, $collection-short)}</span>

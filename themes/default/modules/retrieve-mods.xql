@@ -264,6 +264,15 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
             {mods-common:format-url($url, $collection-short)}</td>
         </tr>
     ,
+    (: location :)
+    for $location in $entry/mods:location
+    return
+        <tr xmlns="http://www.w3.org/1999/xhtml">
+            <td class="label">Location</td>
+            <td class="record">
+            {mods-common:format-location($location, $collection-short)}</td>
+        </tr>
+    ,
     (: relatedItem :)
     mods-common:get-related-items($entry, 'detail', $global-language, $collection-short)
     ,
