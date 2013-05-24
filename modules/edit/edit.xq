@@ -10,7 +10,7 @@ import module namespace util="http://exist-db.org/xquery/util";
 import module namespace xmldb="http://exist-db.org/xquery/xmldb";
 
 import module namespace mods="http://www.loc.gov/mods/v3" at "tabs.xqm";
-import module namespace modsCommon="http://exist-db.org/mods/common" at "../mods-common.xql";
+import module namespace mods-common="http://exist-db.org/mods/common" at "../mods-common.xql";
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace security="http://exist-db.org/mods/security" at "../search/security.xqm"; (:TODO move security module up one level:)
 import module namespace uu="http://exist-db.org/mods/uri-util" at "../search/uri-util.xqm";
@@ -247,7 +247,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
     let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id eq $instance-id]
     (:Get the relevant information to display in the info-line, the label for the template chosen (if any) and the hint belonging to it (if any). :)
     let $hint-data := concat($config:edit-app-root, '/code-tables/hint-codes.xml')
-    let $save-hint := doc($hint-data)/code-table//item[value eq "save"]/help
+    let $save-hint := doc($hint-data)/id('hint-code_save')/help
     
     (:Get the time of the last save to the temp collection and parse it.:)
     let $last-modified := xmldb:last-modified($config:mods-temp-collection, concat($id,'.xml'))
@@ -264,7 +264,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
         else ()
     let $related-publication-title := 
         if ($related-publication-id) 
-        then modsCommon:get-short-title(collection($config:mods-root)//mods:mods[@ID eq $related-publication-id])
+        then mods-common:get-short-title(collection($config:mods-root)//mods:mods[@ID eq $related-publication-id][1])
         else ()
     let $related-publication-title :=
         if ($related-item-xlink eq '')
