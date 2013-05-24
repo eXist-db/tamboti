@@ -65,20 +65,23 @@
         </item>
         <item type="added">
             <label>Is a Commentary On</label>
-            <value>commentaryOn</value>
+            <value>isCommentaryOn</value>
         </item>
         <item type="added">
             <label>Has Commentary In</label>
-            <value>commentedOnIn</value>
+            <value>hasCommentaryIn</value>
         </item>
         <item type="added">
             <label>Is a Translation Of</label>
-            <value>translationOf</value>
+            <value>isTranslationOf</value>
         </item>
         <item type="added">
             <label>Has Translation In</label>
-            <value>translatedIn</value>
+            <value>hasTranslationIn</value>
         </item>
-        
+        <item type="added">
+            <label>Has Other Relation To</label>
+            <value>hasOtherRelationTo</value>
+        </item>
     </items>
 </code-table>
