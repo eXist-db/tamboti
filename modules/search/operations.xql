@@ -102,29 +102,24 @@ declare function op:remove-collection($collection as xs:string) as element(statu
 
 (:~
 :
-: @ resource-id has the format db-document-path#node-id e.g. /db/mods/eXist/exist-articles.xml#1.36
+: @ resource-id is the @ID of the MODS record
 :)
 declare function op:remove-resource($resource-id as xs:string) as element(status) {
-    
-    let $path := substring-before($resource-id, "#")
-    let $id := substring-after($resource-id, "#")
-    let $doc := doc($path)
-    (:Do not remove a record that another record links to.:)
-    (:NB: A message should be given to the user that the delete is not possible.:)
-    let $doc-id := functx:substring-after-last($path, '/')
-    let $doc-id := substring-before($doc-id, '.xml')
-    (:NB: The $doc-id should be obtained from $doc.:)
-    let $xlink := concat('#', $doc-id)
+    let $doc := collection($config:mods-root-minus-temp)//mods:mods[@ID eq $resource-id]
+    let $xlink := concat('#', $resource-id)
     let $xlink-recs := collection($config:mods-root-minus-temp)//mods:relatedItem[@xlink:href eq $xlink]
     return (
-        if (count($xlink-recs/..) eq 0) 
+        (:do not remove records which erroneously have the same ID:)
+        (:NB: inform user that this is the case:)
+        if (count($doc) eq 1)
         then
-            if ($id eq "1") 
+            (:do not remove records which are linked to from other records:)
+            (:NB: inform user that this is the case:)
+            if (count($xlink-recs/..) eq 0) 
             then
-                xmldb:remove(util:collection-name($doc), util:document-name($doc))
-            else
-                update delete util:node-by-id($doc, $id)
-        else ()
+                    xmldb:remove(util:collection-name($doc), util:document-name($doc))
+            else ()
+        else()
         ,
         <status id="removed">{$resource-id}</status>
     )
@@ -132,37 +127,22 @@ declare function op:remove-resource($resource-id as xs:string) as element(status
 
 (:~
 :
-: @ resource-id has the format db-document-path#node-id e.g. /db/mods/eXist/exist-articles.xml#1.36
+: @ resource-id is the @ID of the MODS record
 :)
 declare function op:move-resource($resource-id as xs:string, $destination-collection as xs:string) as element(status) {
-    let $destination-collection := uu:escape-collection-path($destination-collection) return
-        let $path := substring-before($resource-id, "#")
-        let $id := substring-after($resource-id, "#")
-        let $destination-resource-name := replace($path, ".*/", "")
-        let $destination-path := concat($destination-collection, "/", $destination-resource-name)
-        let $sourceDoc := doc($path)
+    let $doc := collection($config:mods-root-minus-temp)//mods:mods[@ID eq $resource-id]
+    let $path := base-uri($doc)
+    let $destination-collection := uu:escape-collection-path($destination-collection)
         return
-            if (contains($id, ".")) then
-                let $resource := util:node-by-id($sourceDoc, $id)
-                let $mods-destination := 
-                    if(doc-available($destination-path))then
-                        doc($destination-path)/mods:modsCollection
-                    else
-                        let $mods-collection-doc-path := xmldb:store($destination-collection, $destination-resource-name, <modsCollection xmlns="http://www.loc.gov/mods/v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/mods/v3 ../../webapp/WEB-INF/entities/mods-3-3.xsd"/>) return
-                            let $null := security:apply-parent-collection-permissions($mods-collection-doc-path) return
-                                doc($mods-collection-doc-path)/mods:modsCollection
+            (:do not move records which erroneously have the same ID:)
+            if (count($doc) eq 1)
+            then
+                let $moved := xmldb:move(util:collection-name($doc), $destination-collection, util:document-name($doc))
                 return
-                (
-                    update insert util:node-by-id(doc($path), $id) into $mods-destination,
-                    update delete util:node-by-id(doc($path), $id),
-                    
-                    <status id="moved" from="{$resource-id}">{$destination-path}</status>
-                )
-            else
-                let $moved := xmldb:move(util:collection-name($sourceDoc), $destination-collection, util:document-name($sourceDoc)) return
-                    let $null := security:apply-parent-collection-permissions(fn:document-uri(fn:root($sourceDoc))) return
-                
-                        <status id="moved" from="{$resource-id}">{$destination-path}</status>
+                    let $null := security:apply-parent-collection-permissions(document-uri(root($doc))) 
+                        return
+                            <status id="moved" from="{$resource-id}">{$destination-collection}</status>
+            else ()
 };
 
 declare function op:set-ace-writeable($collection as xs:anyURI, $id as xs:int, $is-writeable as xs:boolean) as element(status) {
