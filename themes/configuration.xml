@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <themes>
     <map path="/apps/library" theme="library" root="/db/resources/commons/samples"/>
-    <map path="/apps/tamboti" theme="tamboti" root="/db/resources/commons/samples"/>
-    <map path="/apps/wsc" theme="wsc" root="/db/resources/commons/Wissenschaftssprache%20Chinesisch"/>
-    <map path="/apps/dungan" theme="dungan" root="/db/resources/dungan"/>
+    <map path="/apps/tamboti" theme="tamboti" root="/db/resources/commons/Cluster Publications"/>
+    <map path="/apps/wsc" theme="wsc" root="/db/resources/commons/Wissenschaftssprache Chinesisch"/>
+    <map path="/apps/dungan" theme="dungan" root="/db/resources/commons/Dungan Archive"/>
+    <map path="/apps/ppcoll" theme="ppcoll" root="/db/resources/commons/ppcoll"/>
 </themes><!--
     Dynamically resolve all resources depending on the current theme. 
     A theme is selected by looking at the URL prefix (as defined in controller-config.xml) and themes/configuration.xml. 
