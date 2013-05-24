@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="genre block-form" tab-id="genre" ext:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ext="http://exist-db.org/mods/extension" class="genre block-form" tab-id="genre" ext:dummy="dummy" xlink:dummy="dummy">
     <xf:group appearance="full">
         <fieldset class="level-1">
             <div class="label-box">
@@ -307,6 +307,36 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
+                <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[@authority='bgtchm']">
+                    <xf:select1 ref=".">
+                        <xf:label>Genre<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_genre',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='genre-bgtchm-genre-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
+                <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[@authority='dct']">
+                    <xf:select1 ref=".">
+                        <xf:label>Genre<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_genre',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='genre-dct-genre-code']/items/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:group>
                 <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[@authority='marcsmd']">
                     <xf:select1 ref=".">
                         <xf:label>Genre<span class="xforms-help">
@@ -322,8 +352,7 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                <!--NB: make other code tables-->
-                <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[not(@authority='marcgt') and not(@authority='marcsmd')]">
+                <xf:group appearance="full" class="schema_3.3 schema_3.4" ref=".[@authority='local']">
                     <xf:select1 ref="." selection="open">
                         <xf:label>Genre
                             <span class="xforms-help">
