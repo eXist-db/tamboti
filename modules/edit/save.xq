@@ -355,25 +355,31 @@ return
                         (:Insert modification date-time and user name.:)
                         update insert $last-modified-extension into $doc/mods:extension
                         ,
+                        (:clear any lock on doc in target collection:)
+                        xmldb:clear-lock($target-collection, $file-to-update)
+                        ,
                         (:Move $doc from temp to target collection.:)
                         (:NB: To avoid potential problems with xmldb:move(), xmldb:store() and xmldb:remove() are used.
-                        xmldb:move() is suspected to create zero bytes "ghost" files in backups in __lost_and_found__.:)
+                        xmldb:move() is suspected to create zero byte "ghost" files in backups in __lost_and_found__.:)
                         
                         (:NB: The code used formerly, covering next three steps: 
                         xmldb:move($config:mods-temp-collection, $target-collection, $file-to-update),:)
 
-                        (:Only attempt to delete the original record if it exists; otherwise script terminates. 
+                        (:Only attempt to delete the original record if it exists; 
+                        if an attempt is made to delete a file which does not exist, the script will terminate. 
                         This means that no attempt is made to delete newly created records.:)                        
                         if (xmldb:document(concat($target-collection, '/', $file-to-update))) 
                         then xmldb:remove($target-collection, $file-to-update) 
                         else ()
                         ,
-                        (:Store $doc in the target collection, whether this be where the file originally came from or 
-                        the collection from which a new record has been created.:)
+                        (:Store $doc in the target collection, whether this is where the record originally was located or 
+                        the collection chosen to store a new record.:)
                         xmldb:store($target-collection, $file-to-update, $doc)
                         ,
-                        (:Remove the $doc record from temp.:)
-                        xmldb:remove($config:mods-temp-collection, $file-to-update)
+                        (:Remove the $doc record from temp if store in target was successful.:)
+                        if (xmldb:document(concat($target-collection, '/', $file-to-update))) 
+                        then xmldb:remove($config:mods-temp-collection, $file-to-update) 
+                        else ()
                         ,
                         (:Set the same permissions on the moved file that the parent collection has.:)
                         security:apply-parent-collection-permissions(xs:anyURI(concat($target-collection, "/", $file-to-update)))
