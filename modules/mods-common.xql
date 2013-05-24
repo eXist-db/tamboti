@@ -1606,9 +1606,13 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
 : @return The relatedItem formatted as XHTML.
 :)
 declare function mods-common:format-related-item($relatedItem as element(mods:relatedItem), $global-language as xs:string?, $collection-short as xs:string) as element()? {
-	(:Remove related items with no @xlink:href or no titleInfo/title :)
+	(:Remove related items which have neither @xlink:href nor titleInfo/title :)
 	let $relatedItem := mods-common:remove-parent-with-missing-required-node($relatedItem)
+	
+	(:Get the global transliteration:)
 	let $global-transliteration := $relatedItem/../mods:extension/ext:transliterationOfResource/text()
+	
+	(:Get the roles of persons associated with the publication:)
 	(:If several terms are used for the same role, we assume them to be synonymous.:)
 	let $relatedItem-role-terms := distinct-values($relatedItem/mods:name/mods:role/mods:roleTerm[1])
 	let $relatedItem-role-terms := 
@@ -1616,6 +1620,7 @@ declare function mods-common:format-related-item($relatedItem as element(mods:re
 	   for $relatedItem-role-term in $relatedItem-role-terms 
 	   return lower-case($relatedItem-role-term)
 	   )
+	
 	return
         mods-common:clean-up-punctuation
         (
@@ -1779,7 +1784,7 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
 						        else ()
 	let $dateOriginInfo := mods-common:get-date($dateOriginInfo)
 	
-    (: NB: this should iterate over part, since there are e.g. multi-part installments of articles. :)
+    (: this iterate over part, since there are e.g. multi-part installments of articles. :)
     let $parts := $entry/mods:part
     for $part at $i in $parts
     return
