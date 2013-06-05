@@ -7,7 +7,6 @@ declare namespace functx = "http://www.functx.com";
 declare namespace ext="http://exist-db.org/mods/extension";
 
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
-import module namespace uu="http://exist-db.org/mods/uri-util" at "../../../modules/search/uri-util.xqm";
 import module namespace mods-common="http://exist-db.org/mods/common" at "../../../modules/mods-common.xql";
 
 (:The $retrieve-mods:primary-roles values are lower-cased when compared.:)
@@ -78,7 +77,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     {
     <tr>
         <td class="collection-label">Record Location</td>
-        <td><div class="collection">{replace(replace(uu:unescape-collection-path($collection-short), '^resources/commons/', 'resources/'),'^resources/users/', 'resources/')}</div></td>
+        <td><div class="collection">{replace(replace(xmldb:decode-uri($collection-short), '^resources/commons/', 'resources/'),'^resources/users/', 'resources/')}</div></td>
     </tr>
     ,
     <tr>

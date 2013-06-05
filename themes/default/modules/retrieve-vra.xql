@@ -1,4 +1,4 @@
-module namespace retrieve-vra="http://www.vraweb.org/vracore4.htm";
+module namespace retrieve-vra="http://exist-db.org/vra/retrieve";
 
 declare namespace vra="http://www.vraweb.org/vracore4.htm";
 declare namespace mads="http://www.loc.gov/mads/v2";
@@ -8,8 +8,7 @@ declare namespace ext="http://exist-db.org/mods/extension";
 declare namespace hra="http://cluster-schemas.uni-hd.de";
 
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
-import module namespace uu="http://exist-db.org/mods/uri-util" at "../../../modules/search/uri-util.xqm";
-import module namespace vra-common="http://www.vraweb.org/vracore4.htm/common" at "../../../modules/vra-common.xql";
+import module namespace vra-common="http://exist-db.org/vra/common" at "../../../modules/vra-common.xql";
 
 (:The $retrieve-vra:primary-roles values are lower-cased when compared.:)
 declare variable $retrieve-vra:primary-roles := ('aut', 'author', 'cre', 'creator', 'composer', 'cmp', 'artist', 'art', 'director', 'drt');
@@ -72,7 +71,7 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
     {
     <tr>
         <td class="collection-label">Record Location</td>
-        <td><div class="collection">{replace(replace(uu:unescape-collection-path($collection-short), '^resources/commons/', 'resources/'),'^resources/users/', 'resources/')}</div></td>
+        <td><div class="collection">{replace(replace(xmldb:decode-uri($collection-short), '^resources/commons/', 'resources/'),'^resources/users/', 'resources/')}</div></td>
     </tr>
     ,
     let $format := concat('VRA'
@@ -129,13 +128,13 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
             </tr>
     ,
     (: relation :)
-    (:NB: why is this not rendered?:)
-    let $log := util:log("DEBUG", ("##$entry): ", $entry))
-    return
-    for $relation in $entry//vra:relationSet/vra:relation
-    let $log := util:log("DEBUG", ("##$relation): ", $relation))
+    (:let $log := util:log("DEBUG", ("##$entry): ", $entry)):)
+    (:return:)
+    (:Do not display image links until they lead somewhere.:)
+    for $relation in $entry//vra:relationSet/vra:relation[@type ne 'imageIs']
+    (:let $log := util:log("DEBUG", ("##$relation): ", $relation)):)
     let $type := $relation/@type
-    let $log := util:log("DEBUG", ("##$type): ", $type))
+    (:let $log := util:log("DEBUG", ("##$type): ", $type)):)
 
     let $type := functx:capitalize-first(functx:camel-case-to-words($type, ' '))
     let $relids := $relation/@relids
