@@ -2,33 +2,41 @@ xquery version "1.0";
 
 import module namespace security="http://exist-db.org/mods/security" at "security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "sharing.xqm";
-import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
+import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
 
-declare namespace group = "http://commons/sharing/group";
 declare namespace op="http://exist-db.org/xquery/biblio/operations";
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace xmldb="http://exist-db.org/xquery/xmldb";
+declare namespace functx = "http://www.functx.com";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
 declare namespace xlink="http://www.w3.org/1999/xlink";
-declare namespace functx = "http://www.functx.com"; 
 
 declare variable $HTTP-FORBIDDEN := 403;
 
-declare function functx:substring-after-last($arg as xs:string?, $delim as xs:string)as xs:string {       
+declare function functx:substring-before-last-match 
+  ( $arg as xs:string? ,
+    $regex as xs:string )  as xs:string? {
+       
+   replace($arg,concat('^(.*)',$regex,'.*'),'$1')
+ } ;
+ 
+declare function functx:substring-after-last 
+  ( $arg as xs:string? ,
+    $delim as xs:string )  as xs:string {
+       
    replace ($arg,concat('^.*',functx:escape-for-regex($delim)),'')
  } ;
-
-declare function functx:escape-for-regex($arg as xs:string?) as xs:string {       
+ 
+declare function functx:escape-for-regex 
+  ( $arg as xs:string? )  as xs:string {
+       
    replace($arg,
            '(\.|\[|\]|\\|\||\-|\^|\$|\?|\*|\+|\{|\}|\(|\))','\\$1')
  } ;
- 
-
-
 
 (:~
 : Creates a collection inside a parent collection
@@ -40,23 +48,28 @@ declare function functx:escape-for-regex($arg as xs:string?) as xs:string {
 :)
 declare function op:create-collection($parent as xs:string, $name as xs:string) as element(status) {
     
-        let $collection := xmldb:create-collection($parent, uu:escape-collection-path($name)),
-        
+        let $collection := xmldb:create-collection($parent, $name)
+        (:let $collection := xmldb:create-collection($parent, uu:escape-collection-path($name)):)
+        (:escaped:)
+
         (: just the owner has full access - to start with :)
-        $null := sm:chmod(xs:anyURI($collection), "rwx--x---"),
+        let $null := sm:chmod(xs:anyURI($collection), "rwx--x---")
         
         (:
         if this collection was created
         inside a different users collection,
         allow the owner of the parent collection access 
         :)
-        $null := security:grant-parent-owner-access-if-foreign-collection($collection) return
+        let $null := security:grant-parent-owner-access-if-foreign-collection($collection) return
         
-            <status id="created">{uu:unescape-collection-path($collection)}</status>
+            <status id="created">{xmldb:decode-uri($collection)}</status>
 };
 
 declare function op:move-collection($collection as xs:string, $to-collection as xs:string) as element(status) {
-    let $to-collection := uu:escape-collection-path($to-collection) return
+    let $collection := xmldb:encode-uri($collection)
+    let $to-collection := xmldb:encode-uri($to-collection)
+
+    return
         let $null := xmldb:move($collection, $to-collection) return
         
             (:
@@ -66,17 +79,19 @@ declare function op:move-collection($collection as xs:string, $to-collection as 
             :)
             let $null := security:grant-parent-owner-access-if-foreign-collection($to-collection) return
         
-                <status id="moved" from="{uu:unescape-collection-path($collection)}">{$to-collection}</status>
+                <status id="moved" from="{xmldb:decode-uri($collection)}">{xmldb:decode-uri($to-collection)}</status>
 };
 
 declare function op:rename-collection($path as xs:string, $name as xs:string) as element(status) {
     let $null := xmldb:rename($path, $name) return
-        <status id="renamed" from="{uu:unescape-collection-path($path)}">{$name}</status>
+        <status id="renamed" from="{xmldb:decode-uri($path)}">{xmldb:decode-uri($name)}</status>
 };
 
 declare function op:remove-collection($collection as xs:string) as element(status) {
     (:Only allow deletion of a collection if none of the records in it are referred to in xlinks outside the collection itself.:)
     (:Get the ids of the records in the collection that the user wants to delete.:)
+    let $collection := xmldb:encode-uri($collection)
+    (:escaped:)
     let $collection-ids := collection($collection)//@ID
     (:Get the ids of the records that are linked to the records in the collection that the user wants to delete.:)
     let $xlinked-rec-ids :=
@@ -86,18 +101,18 @@ declare function op:remove-collection($collection as xs:string) as element(statu
             let $xlink-recs := collection($config:mods-root-minus-temp)//mods:relatedItem[@xlink:href eq $xlink]/ancestor::mods:mods/@ID
             return
                 (:It is OK to delete a record using an ID as an xlink if the record is inside the folder to be deleted.:)
-                if (not($xlink-recs = $collection-ids))
+                if(not($xlink-recs = $collection-ids))
                 then $xlink-recs
                 else ''
                 (:This should return '' for each iteration for deletion to proceed.:)
                 ,'')
     let $null := 
          (:If $xlinked-rec-ids is not empty, do not delete.:)
-         if ($xlinked-rec-ids)
+         if($xlinked-rec-ids)
          then ()
-         else xmldb:remove($collection) 
+         else xmldb:remove(xmldb:decode-uri($collection)) 
              return
-            <status id="removed">{uu:unescape-collection-path($collection)}</status>
+            <status id="removed">{xmldb:decode-uri($collection)}</status>
 };
 
 (:~
@@ -107,7 +122,31 @@ declare function op:remove-collection($collection as xs:string) as element(statu
 declare function op:remove-resource($resource-id as xs:string) as element(status) {
     let $doc := collection($config:mods-root-minus-temp)//mods:mods[@ID eq $resource-id]
     let $xlink := concat('#', $resource-id)
-    let $xlink-recs := collection($config:mods-root-minus-temp)//mods:relatedItem[@xlink:href eq $xlink]
+    (:since xlinks are also inserted manually, check also for cases when the pound sign has been forgotten:)
+    let $xlink-recs := collection($config:mods-root-minus-temp)//mods:relatedItem[@xlink:href = ($xlink, $resource-id)]
+    (:let $base-uri := concat(util:collection-name($doc), '/', util:document-name($doc)):)
+    let $location := util:collection-name($doc)
+    let $name := util:document-name($doc)
+    let $last-modified := xmldb:last-modified($location, $name)
+    let $created := xmldb:created($location, $name)
+    let $size := xmldb:size($location, $name)
+    let $owner := xmldb:get-owner($location, $name)
+    let $group := xmldb:get-group($location, $name)
+    let $time := current-dateTime()
+    let $user := request:get-parameter("username",())
+    let $record :=
+    <record>
+        <name>{$name}</name>
+        <location>{$location}</location>
+        <created>{$created}</created>
+        <last-modified>{$last-modified}</last-modified>
+        <size>{$size}</size>
+        <owner>{$owner}</owner>
+        <group>{$group}</group>
+        <deletion-time>{$time}</deletion-time>
+        <deleting-user>{$user}</deleting-user>
+    </record>
+let $log := util:log("DEBUG", ("##$record): ", $record))
     return (
         (:do not remove records which erroneously have the same ID:)
         (:NB: inform user that this is the case:)
@@ -121,6 +160,7 @@ declare function op:remove-resource($resource-id as xs:string) as element(status
             else ()
         else()
         ,
+        update insert $record into doc('/db/resources/temp/deletions.xml')/records,
         <status id="removed">{$resource-id}</status>
     )
 };
@@ -132,7 +172,7 @@ declare function op:remove-resource($resource-id as xs:string) as element(status
 declare function op:move-resource($resource-id as xs:string, $destination-collection as xs:string) as element(status) {
     let $doc := collection($config:mods-root-minus-temp)//mods:mods[@ID eq $resource-id]
     let $path := base-uri($doc)
-    let $destination-collection := uu:escape-collection-path($destination-collection)
+    let $destination-collection := xmldb:encode-uri($destination-collection)
         return
             (:do not move records which erroneously have the same ID:)
             if (count($doc) eq 1)
@@ -194,14 +234,42 @@ declare function op:is-valid-user-for-share($username as xs:string) as element(s
     )
 };
 
-declare function op:get-move-folder-list($collection as xs:anyURI) as element(select) {
+declare function op:get-child-collection-paths($start-collection as xs:anyURI) {
+    for $child-collection in xmldb:get-child-collections($start-collection)
+        return
+            (concat($start-collection, '/', $child-collection), 
+            op:get-child-collection-paths(concat($start-collection, '/', $child-collection) cast as xs:anyURI))
+};
+
+declare function op:get-move-folder-list($chosen-collection as xs:anyURI) as element(select) {
     <select>{
-        for $collection-path in (security:get-home-collection-uri(security:get-user-credential-from-session()[1]), sharing:get-shared-collection-roots(true())) return
-            if($collection-path ne $collection)then
-            (
-                <option value="{uu:unescape-collection-path($collection-path)}">{uu:unescape-collection-path($collection-path)}</option>
-            )
-            else()
+        (:the user can move records to their home folder and to folders that are shared with the user:)
+        let $available-collection-paths := (security:get-home-collection-uri(security:get-user-credential-from-session()[1]))
+        let $move-folder-list :=
+        for $available-collection-path in $available-collection-paths 
+            return (op:get-child-collection-paths($available-collection-path),
+            sharing:get-shared-collection-roots(true()))
+            for $path in distinct-values($move-folder-list)
+            let $log := util:log("DEBUG", ("##$path): ", $path))
+            let $log := util:log("DEBUG", ("##$chosen-collection): ", $chosen-collection))
+            let $log := util:log("DEBUG", ("##$starts-with): ", starts-with($path, $chosen-collection)))
+            let $log := util:log("DEBUG", ("##$home): ", security:get-home-collection-uri(security:get-user-credential-from-session()[1])))
+            let $log := util:log("DEBUG", ("##$shared): ", sharing:get-shared-collection-roots(true())))
+
+                let $display-path := substring-after($path, '/db/')
+                let $user := xmldb:get-current-user()
+                let $display-path := replace($path, concat('users/', $user), 'Home')
+                order by $display-path
+            return
+            (:leave out the folder that the user has marked, since you cannot move something to itself:)
+            (:leave out descendant folders, since you cannot move a folders into a descendant:)
+                (:if (contains($path, $chosen-collection) or contains($chosen-collection, $path)):)
+                if ($path eq $chosen-collection)
+                then () 
+                else
+                    (
+                        <option value="{xmldb:decode-uri($path)}">{xmldb:decode-uri($display-path)}</option>
+                    )
     }</select>
 };
 
@@ -236,13 +304,15 @@ let $store := xmldb:store($collection, $filename, request:get-uploaded-file-data
   
 };
 
-let $action := request:get-parameter("action", ()),
-$collection := uu:escape-collection-path(request:get-parameter("collection", ()))
+let $action := request:get-parameter("action", ())
+let $collection := request:get-parameter("collection", ())
+let $collection := if($collection)then xmldb:encode-uri($collection) else ()
+
 return
     if($action eq "create-collection")then
         op:create-collection($collection, request:get-parameter("name",()))
     else if($action eq "move-collection")then
-        op:move-collection($collection, request:get-parameter("path",()))
+        op:move-collection(xmldb:decode-uri($collection), request:get-parameter("path",()))
     else if($action eq "rename-collection")then
         op:rename-collection($collection, request:get-parameter("name",()))
     else if($action eq "remove-collection")then
@@ -267,7 +337,7 @@ return
         op:get-move-folder-list($collection)
      else if($action eq "get-move-resource-list")then
         op:get-move-resource-list($collection)
-     else if($action eq "upload-file") then
+     else if($action eq "upload-file")then
          let $name := request:get-uploaded-file-name('name')
          let $data := request:get-uploaded-file-data('name')
          return

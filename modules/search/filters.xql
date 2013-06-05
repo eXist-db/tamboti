@@ -8,8 +8,12 @@ xquery version "1.0";
 :)
 import module namespace names="http://exist-db.org/xquery/biblio/names"
     at "names.xql";
+import module namespace mods-common="http://exist-db.org/mods/common"
+    at "../mods-common.xql";
+import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
+declare namespace vra = "http://www.vraweb.org/vracore4.htm";
 
 declare option exist:serialize "method=xhtml enforce-xhtml=yes";
 
@@ -39,7 +43,7 @@ return
         <li>There are too many records ({$record-count}) to process without overloading the server. Please restrict the result set by performing a narrower search. The maximum number is {$local:MAX_RECORD_COUNT}.</li>
     else
         <ul class="{if (empty($max-terms)) then 'complete' else $max-terms}">
-        { util:index-keys($results//mods:titleInfo, $prefix, $callback, $max-terms, "lucene-index") }
+        { util:index-keys($results//(mods:titleInfo | vra:titleSet), $prefix, $callback, $max-terms, "lucene-index") }
         </ul>
 };
 
@@ -55,12 +59,11 @@ let $cached :=
     then ()
     else session:get-attribute("mods:cached")
 return
-    if ($type eq 'author') 
+    if ($type eq 'name') 
     then
         <ul>
         {
-            let $names := $cached//mods:name
-            (: Here we count to string values of the name element, not the formatted result. :)
+            let $names := $cached//(mods:name | vra:agentSet)
             let $names-count := count(distinct-values($names))
             return
                 if ($names-count gt $local:MAX_RESULTS_NAMES) 
@@ -119,7 +122,7 @@ return
             then
                 <ul>
                 {
-                    let $subjects := distinct-values($cached/mods:subject)
+                    let $subjects := distinct-values($cached/(mods:subject | vra:work/vra:subjectSet/vra:subject/vra:term))
                     let $subjects-count := count($subjects)
                     return
                         if ($subjects-count gt $local:MAX_RESULTS_SUBJECTS)
@@ -130,14 +133,84 @@ return
                             then
                                 <li>There are too many records ({$record-count}) to process without overloading the server. Please restrict the result set by performing a narrower search. The maximum number is {$local:MAX_RECORD_COUNT}.</li>
                             else
+                                (:No distinction is made between different kinds of subjects - topics, temporal, geographic, etc.:)
                                 for $subject in $subjects
                                 order by upper-case($subject) ascending
                                 return
-                                    (:LCSH have '--':)
+                                    (:LCSH have '--', so they have to be replaced.:)
                                     <li><a href="?filter=Subject&amp;value={replace($subject, '-', '')}&amp;query-tabs=advanced-search-form">{$subject}</a></li>
                  }
                  </ul>
              else
-                 if ($type eq 'keywords')
-                 then local:keywords($cached, $record-count)
-                 else ()
+                 if ($type eq 'language')
+                 then 
+                     <ul>
+                     {
+                        let $languages := distinct-values($cached/(mods:language/mods:languageTerm))
+                        let $languages-count := count($languages)
+                        return
+                            if ($languages-count gt $local:MAX_RESULTS_SUBJECTS)
+                            then
+                                <li>There are too many languages ({$languages-count}) to process without overloading the server. Please restrict the result set by performing a narrower search. The maximum number is {$local:MAX_RESULTS_SUBJECTS}.</li>
+                            else
+                                if ($record-count gt $local:MAX_RECORD_COUNT)
+                                then
+                                    <li>There are too many records ({$record-count}) to process without overloading the server. Please restrict the result set by performing a narrower search. The maximum number is {$local:MAX_RECORD_COUNT}.</li>
+                                else
+                                    for $language in $languages
+                                        let $label := mods-common:get-language-label($language)
+                                        let $label := 
+                                            if ($label eq $language) 
+                                            then ()
+                                            else
+                                                if ($label)
+                                                then concat(' (', $label, ')') 
+                                                else ()
+                                        order by upper-case($language) ascending
+                                        return
+                                            <li><a href="?filter=Language&amp;value={replace($language, '-', '')}&amp;query-tabs=advanced-search-form">{$language}{$label}</a></li>
+                     }
+                     </ul>
+                 else
+                     if ($type eq 'genre')
+                     then 
+                         <ul>
+                         {
+                            let $genres := distinct-values($cached/(mods:genre))
+                            let $genres-count := count($genres)
+                            return
+                                if ($genres-count gt $local:MAX_RESULTS_SUBJECTS)
+                                then
+                                    <li>There are too many genres ({$genres-count}) to process without overloading the server. Please restrict the result set by performing a narrower search. The maximum number is {$local:MAX_RESULTS_SUBJECTS}.</li>
+                                else
+                                    if ($record-count gt $local:MAX_RECORD_COUNT)
+                                    then
+                                        <li>There are too many records ({$record-count}) to process without overloading the server. Please restrict the result set by performing a narrower search. The maximum number is {$local:MAX_RECORD_COUNT}.</li>
+                                    else
+                                        for $genre in $genres
+                                            let $label-1 := doc(concat($config:edit-app-root, '/code-tables/genre-local-codes.xml'))/*:code-table/*:items/*:item[*:value eq $genre]/*:label
+                                            let $label-2 := doc(concat($config:edit-app-root, '/code-tables/genre-marcgt-codes.xml'))/*:code-table/*:items/*:item[*:value eq $genre]/*:label
+                                            let $label := 
+                                                if ($label-1)
+                                                then $label-1
+                                                else 
+                                                    if ($label-2)
+                                                    then $label-2
+                                                    else $genre
+                                            let $label := 
+                                                if ($label eq $genre) 
+                                                then ()
+                                                else
+                                                    if ($label)
+                                                    then concat(' (', $label, ')') 
+                                                    else ()
+                                            order by upper-case($genre) ascending
+                                            return
+                                                <li><a href="?filter=Genre&amp;value={$genre}&amp;query-tabs=advanced-search-form">{$genre}{$label}</a></li>
+                         }
+                         </ul>
+                 else
+                     if ($type eq 'keywords')
+                     then local:keywords($cached, $record-count)
+                     else ()
+                 

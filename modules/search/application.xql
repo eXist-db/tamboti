@@ -456,6 +456,7 @@ declare function biblio:process-form-parameters($params as xs:string*) as elemen
     the query. Filter out empty parameters and take care of boolean operators.
 :)
 declare function biblio:process-form() as element(query)? {
+    (:let $collection := xmldb:encode-uri(request:get-parameter("collection", theme:get-root())):)
     let $collection := uu:escape-collection-path(request:get-parameter("collection", theme:get-root()))
     let $fields :=
         (:  Get a list of all input parameters which are not empty,
@@ -809,10 +810,11 @@ declare function biblio:login($node as node(), $params as element(parameters)?, 
 };
 
 declare function biblio:collection-path($node as node(), $params as element(parameters)?, $model as item()*) {
+    (:let $collection := functx:replace-first(xmldb:encode-uri(request:get-parameter("collection", theme:get-root())), "/db/", ""):)
     let $collection := functx:replace-first(uu:escape-collection-path(request:get-parameter("collection", theme:get-root())), "/db/", "")
     
     return
-        templates:copy-set-attribute($node, "value", uu:unescape-collection-path($collection), $model)
+        templates:copy-set-attribute($node, "value", xmldb:decode-uri($collection), $model)
 };
 
 declare function biblio:result-count($node as node(), $params as element(parameters)?, $model as item()*) {
@@ -1109,6 +1111,7 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     let $clear := request:get-parameter("clear", ())
     let $mylist := request:get-parameter("mylist", ()) (:clear, display:)
     (:let $log := util:log("DEBUG", ("##$mylist): ", $mylist)):)
+    (:let $collection := xmldb:encode-uri(request:get-parameter("collection", $config:mods-root)):)
     let $collection := uu:escape-collection-path(request:get-parameter("collection", $config:mods-root))
     let $collection := if (starts-with($collection, "/db")) then $collection else concat("/db", $collection)
     let $id := request:get-parameter("id", ())
@@ -1120,6 +1123,7 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $mylist, $value)
     (:let $log := util:log("DEBUG", ("##$query-as-xml): ", $query-as-xml)):)
     (: Get the results :)
+    let $username := request:get-attribute("xquery.user")
     let $results := biblio:get-or-create-cached-results($mylist, $query-as-xml, $sort)
     return
         templates:process($node/node(), ($query-as-xml, $results))

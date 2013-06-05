@@ -1,4 +1,4 @@
-module namespace vra-common="http://www.vraweb.org/vracore4.htm/common";
+module namespace vra-common="http://exist-db.org/vra/common";
 
 declare namespace vra="http://www.vraweb.org/vracore4.htm";
 declare namespace mods-common="http://exist-db.org/mods/common";
@@ -267,7 +267,7 @@ if ($titleInfo)
                         if ($titleInfo/@transliteration)
                         then 'Transliterated Title'
                         else
-                            (:NB: In mods:format-detail-view(), titleInfo with @type eq 'abbreviated' are removed.:) 
+                            (:NB: In retrieve-mods:format-detail-view(), titleInfo with @type eq 'abbreviated' are removed.:) 
                             if ($titleInfo/@type eq 'abbreviated') 
                             then 'Abbreviated Title'
                             (:Default value.:)

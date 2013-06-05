@@ -301,17 +301,6 @@ declare function security:set-ace-writeable($resource as xs:anyURI, $id as xs:in
                 false()
             else (
                 
-                (: TODO - write implies update until update is replaced with execute :)
-                let $regexp-replacement := 
-                    if ($is-writeable) then "wx"    
-                    else "--"
-                ,
-                $new-mode := fn:replace($ace/@mode, "(.)..", fn:concat("$1", $regexp-replacement)),
-                $null := sm:modify-ace($resource, $id, $ace/@access_type eq 'ALLOWED', $new-mode) 
-                    return
-                        true()
-            
-                (:
                 let $regexp-replacement := if ($is-writeable) then
                     "w"    
                 else
@@ -320,7 +309,7 @@ declare function security:set-ace-writeable($resource as xs:anyURI, $id as xs:in
                 $new-mode := fn:replace($ace/@mode, "(.).(.)", fn:concat("$1", $regexp-replacement, "$2")),
                 $null := sm:modify-ace($resource, $id, $ace/@access_type eq 'ALLOWED', $new-mode) return
                     true()
-                :)
+                
             )
 };
 

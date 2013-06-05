@@ -1,12 +1,15 @@
 module namespace nameutil="http://exist-db.org/xquery/biblio/names";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
+declare namespace vra = "http://www.vraweb.org/vracore4.htm";
 
 declare variable $nameutil:eastern-languages := ('chi', 'jpn', 'kor', 'skt', 'tib');
 
 (: Called from filter.xql. :)
 (: An adaption of biblio:order-by-author() from application.xql. Any changes should be coordinated. :)
-declare function nameutil:format-name($name as element(mods:name)) as xs:string* {
+declare function nameutil:format-name($name as element()) as xs:string* {
+    let $vraName := $name//vra:name[1]/text()
+    (:let $log := util:log("DEBUG", ("##$vraName): ", $vraName)):)
     let $sortFirst :=
     	(: If there is a namePart marked as being in a Western language, there could in addition be a transliterated and a Eastern-script "nick-name", but the Western namePart should have precedence over the nick-name, therefore pick out the Western-language nameParts first. :)
     	if ($name/mods:namePart[@lang != $nameutil:eastern-languages]/text())
@@ -61,11 +64,14 @@ declare function nameutil:format-name($name as element(mods:name)) as xs:string*
 		    	else concat(' ', $name/mods:namePart[not(@transliteration)][@script][1]/text())
 		    else ()
     return
-        concat(
-        	$sortFirst,
-        	$sortLast, 
-	        	if ($nameOriginalScript) 
-	        	then $nameOriginalScript
-	        	else ()
-	        )
+        if ($vraName) 
+        then $vraName 
+        else
+            concat(
+            	$sortFirst,
+            	$sortLast, 
+    	        	if ($nameOriginalScript) 
+    	        	then $nameOriginalScript
+    	        	else ()
+    	        )
 };

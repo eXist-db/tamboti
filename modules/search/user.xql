@@ -41,6 +41,7 @@ declare function user:personal-list($list as xs:string) {
 
 declare function user:personal-list-size() {
     let $list := session:get-attribute("personal-list")
+    (:let $log := util:log("DEBUG", ("##$list): ", $list)):)
     return
         if (count($list/listitem) eq 1)
         then <span>{count($list/listitem)} item</span>
@@ -56,6 +57,9 @@ declare function user:export-personal-list() as element(mods:modsCollection) {
     }
     </mods:modsCollection>
 };
+
+let $log := util:log("DEBUG", ("##param-names: ", string-join(request:get-parameter-names(), ' || ')))
+let $log := util:log("DEBUG", ("##$module-param): ", request:get-parameter('action', '')))
 
 let $list := request:get-parameter("list", ())
 let $export := request:get-parameter("export", ())

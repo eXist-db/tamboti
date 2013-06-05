@@ -24,7 +24,7 @@ declare function theme:resolve-uri($prefix as xs:string?, $root as xs:string, $r
             "/", $theme, "/",
             $resource
         )
-    let $log := util:log("DEBUG", ("resolved theme path: ", $path))
+    (:let $log := util:log("DEBUG", ("resolved theme path: ", $path)):)
     return
         $path
 };
@@ -49,8 +49,8 @@ declare function theme:resolve($prefix as xs:string?, $root as xs:string, $resou
             "/", $theme, "/",
             $resource
         )
-    let $log := util:log("DEBUG", ("resolved theme path: ", $path, " prefix: ", $prefix, " root: ", $root,
-        " $config:themes: ", $config:themes))
+    (:let $log := util:log("DEBUG", ("resolved theme path: ", $path, " prefix: ", $prefix, " root: ", $root,
+        " $config:themes: ", $config:themes)):)
     return
         $path
 };
@@ -73,13 +73,13 @@ declare function theme:resolve-by-id($root as xs:string, $id as xs:string) {
         if (empty($prefix)) then
             error(QName("http://exist-db.org/xquery/tamboti", "error"), ("No prefix set!"))
         else
-            let $log := util:log("DEBUG", ("Checking for id ", $id, " in ", $root))
+            (:let $log := util:log("DEBUG", ("Checking for id ", $id, " in ", $root)):)
             let $theme := theme:check-for-id($id, theme:theme-for-prefix($prefix))
             let $path :=
                 concat(
                     $config:themes, "/", $theme
                 )
-            let $log := util:log("DEBUG", ("resolved theme path: ", $path))
+            (:let $log := util:log("DEBUG", ("resolved theme path: ", $path)):)
             return
                 collection($path)//*[@id = $id]
 };

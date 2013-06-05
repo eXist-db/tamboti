@@ -5,16 +5,15 @@ module namespace sharing = "http://exist-db.org/mods/sharing";
 import module namespace config = "http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace mail = "http://exist-db.org/xquery/mail";
 import module namespace security = "http://exist-db.org/mods/security" at "security.xqm";
-declare namespace group = "http://commons/sharing/group";
 
-(: sets an ace on a collection and all the documents in that xcollection :)
+(: sets an ace on a collection and all the documents in that collection :)
 declare function sharing:set-collection-ace-writeable($collection as xs:anyURI, $id as xs:int, $is-writeable as xs:boolean) as xs:boolean {
     
     if(security:set-ace-writeable($collection, $id, $is-writeable))then
     (
         for $resource in xmldb:get-child-resources($collection)
         let $resource-path := fn:concat($collection, "/", $resource) return
-            if(security:set-ace-writeable($resource-path, $id, $is-writeable))then
+            if (security:set-ace-writeable($resource-path, $id, $is-writeable)) then
             ()
             else
                 fn:error(xs:QName("sharing:set-collection-ace-writeable"), fn:concat("Could not set ace at index '", $id, "' for '", $resource-path, "'"))
@@ -25,7 +24,7 @@ declare function sharing:set-collection-ace-writeable($collection as xs:anyURI, 
         false()
 };
 
-(: removes an ace on a collection and all the documents in that xcollection :)
+(: removes an ace on a collection and all the documents in that collection :)
 declare function sharing:remove-collection-ace($collection as xs:anyURI, $id as xs:int) as xs:boolean {
     
     let $removed := security:remove-ace($collection, $id) return
@@ -49,14 +48,14 @@ declare function sharing:remove-collection-ace($collection as xs:anyURI, $id as 
             false()
 };
 
-(: adds a user ace on a collection, and also to all the documents in that xcollection (at the same acl index) :)
+(: adds a user ace on a collection, and also to all the documents in that collection (at the same acl index) :)
 declare function sharing:add-collection-user-ace($collection as xs:anyURI, $username as xs:string) as xs:boolean {
     
     let $id := security:add-user-ace($collection, $username, "r--") return
         if(fn:not(fn:empty($id)))then(
             for $resource in xmldb:get-child-resources($collection)
             let $resource-path := fn:concat($collection, "/", $resource) return
-                if(security:insert-user-ace($resource-path, $id, $username, "r--"))then
+                if (security:insert-user-ace($resource-path, $id, $username, "r--")) then
                 ()
                 else
                     fn:error(xs:QName("sharing:add-collection-user-ace"), fn:concat("Could not insert ace at index '", $id, "' for '", $resource-path, "'"))
@@ -69,7 +68,7 @@ declare function sharing:add-collection-user-ace($collection as xs:anyURI, $user
             false()
 };
 
-(: adds a group ace on a collection, and also to all the documents in that xcollection (at the same acl index) :)
+(: adds a group ace on a collection, and also to all the documents in that collection (at the same acl index) :)
 declare function sharing:add-collection-group-ace($collection as xs:anyURI, $groupname as xs:string) as xs:boolean {
     
     let $id := security:add-group-ace($collection, $groupname, "r--") return
@@ -156,19 +155,21 @@ declare function sharing:process-email-template($element as element(), $collecti
 };
 
 declare function sharing:get-shared-collection-roots($write-required as xs:boolean) as xs:string* {
-    for $child-collection in xmldb:get-child-collections($config:users-collection)
-    let $child-collection-path := fn:concat($config:users-collection, "/", $child-collection) return
-        for $user-subcollection in xmldb:get-child-collections($child-collection-path)
-        let $user-subcollection-path := fn:concat($child-collection-path, "/", $user-subcollection) return
-            
-            if($write-required)then
-                if(security:can-write-collection($user-subcollection-path))then
-                    $user-subcollection-path
-                else()
-            else
-                if(security:can-read-collection($user-subcollection-path))then
-                    $user-subcollection-path
-                else()
+    if (fn:not((xmldb:get-current-user() eq 'guest'))) then
+        for $child-collection in xmldb:get-child-collections($config:users-collection)
+        let $child-collection-path := fn:concat($config:users-collection, "/", $child-collection) return
+            for $user-subcollection in xmldb:get-child-collections($child-collection-path)
+            let $user-subcollection-path := fn:concat($child-collection-path, "/", $user-subcollection) return
+                
+                if($write-required)then
+                    if(security:can-write-collection($user-subcollection-path))then
+                        $user-subcollection-path
+                    else()
+                else
+                    if(security:can-read-collection($user-subcollection-path))then
+                        $user-subcollection-path
+                    else()
+    else()
 };
 
 declare function sharing:get-shared-with($collection-path as xs:string) as xs:string* {

@@ -4,7 +4,6 @@
 
 module namespace clean="http://exist-db.org/xquery/mods/cleanup";
 
-declare namespace mods="http://www.loc.gov/mods/v3";
 declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace functx = "http://www.functx.com";
 
