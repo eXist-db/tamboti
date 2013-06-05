@@ -95,18 +95,12 @@
                 </form>
             </p>
         </jquery:tab>
-        <jquery:tab id="visual" label="Visual Resources">
-            <p>
-                Please access our visual resources through the following links:
-                <ul>
-                    <li>
-                        <a href="http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/naddara/" target="_blank">Abou Naddara Collection</a>
-                    </li>
-                    <li>
-                        <a href="http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/ppcoll/" target="_blank">Priya Paul Collection</a>
-                    </li>
-                </ul>
-            </p>
+        <jquery:tab id="search-help" label="Search Help">
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="/db/apps/tamboti/includes/search-help.xml">
+                <xi:fallback>
+                    <p>The included document was not found!</p>
+                </xi:fallback>
+            </xi:include>
         </jquery:tab>
     </jquery:tabset>
 </div>
