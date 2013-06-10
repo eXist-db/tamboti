@@ -293,9 +293,6 @@ declare function col:get-child-tree-nodes-recursive($base-collection as xs:strin
           else()
 };
 
-
-
-
 declare function col:get-child-tree-nodes-recursive-for-group($collections as xs:string*, $expanded-collections as xs:string*) as element(node)* { 
     for $collection in $collections
     let $base-collection := fn:replace($collection, fn:concat("(", $config:users-collection, "/[^/]*)/.*"), "$1")
@@ -358,11 +355,6 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
                 ()
 };
 
-
-
-
-
-
 (:~
 : Request routing
 :
@@ -388,7 +380,9 @@ else if(request:get-parameter("activeKey",()))then
                 uu:escape-collection-path($expanded-key)
         else()
     return
-        col:get-from-root-for-prev-state($config:mods-root, uu:escape-collection-path(request:get-parameter("activeKey",())), uu:escape-collection-path(request:get-parameter("focusedKey",())), $expanded-collections)
+        col:get-from-root-for-prev-state($config:mods-root, 
+        (:xmldb:encode-uri(request:get-parameter("activeKey",())),:)
+        uu:escape-collection-path(request:get-parameter("activeKey",())), uu:escape-collection-path(request:get-parameter("focusedKey",())), $expanded-collections)
 
 else
     (: no key, so its the root that we want :)
