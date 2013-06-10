@@ -6,10 +6,13 @@ import module namespace security="http://exist-db.org/mods/security" at "securit
 import module namespace sharing="http://exist-db.org/mods/sharing" at "sharing.xqm";
 import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
 
+import module namespace session = "http://exist-db.org/xquery/session";
 import module namespace request = "http://exist-db.org/xquery/request";
+import module namespace util="http://exist-db.org/xquery/util";
 import module namespace xmldb = "http://exist-db.org/xquery/xmldb";
 
 declare namespace exist = "http://exist.sourceforge.net/NS/exist";
+declare namespace group = "http://commons/sharing/group";
 declare namespace col = "http://library/search/collections";
 
 declare option exist:serialize "method=json media-type=text/javascript";
@@ -65,8 +68,8 @@ declare variable $commons-folder-icon := "../skin/ltFld.png";
 :)
 declare function col:create-tree-node($title as xs:string, $collection-path as xs:string, $is-folder as xs:boolean, $icon-path as xs:string?, $tooltip as xs:string?, $writeable as xs:boolean, $additonal-classes as xs:string*, $expand as xs:boolean, $has-lazy-children as xs:boolean, $explicit-children as element(node)*) as element(node) {
     <node>
-        <title>{xmldb:decode-uri($title)}</title>
-        <key>{xmldb:decode-uri($collection-path)}</key>
+        <title>{uu:unescape-collection-path($title)}</title>
+        <key>{uu:unescape-collection-path($collection-path)}</key>
         <isFolder>{$is-folder}</isFolder>
         <writeable>{$writeable}</writeable>
         <addClass>{
@@ -290,6 +293,9 @@ declare function col:get-child-tree-nodes-recursive($base-collection as xs:strin
           else()
 };
 
+
+
+
 declare function col:get-child-tree-nodes-recursive-for-group($collections as xs:string*, $expanded-collections as xs:string*) as element(node)* { 
     for $collection in $collections
     let $base-collection := fn:replace($collection, fn:concat("(", $config:users-collection, "/[^/]*)/.*"), "$1")
@@ -340,7 +346,10 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
                     let $commons-child-children := col:get-child-tree-nodes-recursive($collection-path, $distinct-collection-paths[fn:starts-with(., $collection-path)], $expanded-collections)
                     order by upper-case($child)
                     return
+                    if (sm:has-access($collection-path,'r-x')) (:check for public access:)
+                    then
                         <node>{col:get-collection($collection-path, $commons-child-children, fn:contains($expanded-collections, $collection-path))/child::node()}</node>
+                        else ()
                 return
                 
                     (: root collection, containing home and group collection as children :)
@@ -348,6 +357,11 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
             else
                 ()
 };
+
+
+
+
+
 
 (:~
 : Request routing
@@ -357,8 +371,7 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
 : If there is no key we deliver the tree root
 :)
 if(request:get-parameter("key",()))then
-    (:let $collection-path := xmldb:encode-uri(request:get-parameter("key",())) return:)
-        let $collection-path := uu:escape-collection-path(request:get-parameter("key",())) return
+    let $collection-path := uu:escape-collection-path(request:get-parameter("key",())) return
         if($collection-path eq $config:groups-collection) then
             (: start of groups collection - the groups collection is virtual and so receives special treatment :)
             col:get-groups-virtual-root()
@@ -372,16 +385,10 @@ else if(request:get-parameter("activeKey",()))then
     let $expanded-collections :=
         if(request:get-parameter("expandedKeyList", ()))then
             for $expanded-key in fn:tokenize(request:get-parameter("expandedKeyList", ()), ",") return
-                (:xmldb:encode-uri($expanded-key):)
                 uu:escape-collection-path($expanded-key)
         else()
     return
-        col:get-from-root-for-prev-state($config:mods-root, 
-        (:xmldb:encode-uri(request:get-parameter("activeKey",())),:)
-        uu:escape-collection-path(request:get-parameter("activeKey",())),
-        (:xmldb:encode-uri(request:get-parameter("focusedKey",())),:)
-        uu:escape-collection-path(request:get-parameter("focusedKey",())),
-        $expanded-collections)
+        col:get-from-root-for-prev-state($config:mods-root, uu:escape-collection-path(request:get-parameter("activeKey",())), uu:escape-collection-path(request:get-parameter("focusedKey",())), $expanded-collections)
 
 else
     (: no key, so its the root that we want :)
