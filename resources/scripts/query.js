@@ -49,7 +49,7 @@ function hideCollectionActionButtons() {
     $('#collection-sharing').hide();
     $('#collection-create-resource').hide();
     $('#remove-group-button').hide();
-    $('#upload-file').hide();
+    $('#upload-file-to-resource').hide();
 };
 
 /* sharing dialog actions */
@@ -73,6 +73,11 @@ $(document).ready(function(){
     hideCollectionActionButtons();
     
     prepareCollectionSharingDetails();
+    //attachment
+    prepareAttachmentSharingDetails();
+    
+    
+    
     
     //add new user to share event
     $('#add-new-user-to-share-button').click(function(){
@@ -91,9 +96,20 @@ $(document).ready(function(){
     $('#add-project-to-share-button').click(function(){
         addProjectToShare();
     });
-    
+    emptyFileList();
     showNotices();
+    $('a#upload-file-to-resource').click(function(){ 
+    $('#upload-resource-id').empty();
+    //$('#file-location-folder').empty();
+    //var collection = getCurrentCollection();
+    //$('#file-location-folder').val(collection);
+    });
+  
+    
 });
+
+
+
 
 function pingSession() {
     $.getJSON("check-session.xql", function (result) {
@@ -111,6 +127,7 @@ function bindAdditionalDialogTriggers() {
     $("#collection-move-folder").click(function(){
         refreshCollectionMoveList();
     });
+    
     
     $("#collection-create-folder").click(function(){
         $("#new-collection-name").val('');
@@ -196,6 +213,7 @@ function initCollectionTree() {
             addExpandedKeyList: true // add &expandedKeyList= parameter to URL
         },
         autoFocus: false,
+        
         onActivate: function (dtnode) {
             /**
             Executed when a tree node is clicked
@@ -219,9 +237,16 @@ function initCollectionTree() {
             this.reactivate();
         },
         clickFolderMode: 1,
+        minExpandLevel:2,
         onDblClick: function (node) {
             $('#simple-search-form input[name=input1]').val('');
             $('#simple-search-form').submit();
+            refreshCurrentTreeNode();
+            refreshParentTreeNode();
+            var name = $('#rename-collection-form input[name = name]').val();
+            var currentKey = $("#collection-tree-tree").dynatree("getActiveNode").data.key;
+            var newKey = currentKey.replace(/(.*)\/.*/, "$1/" + name);
+            refreshParentTreeNodeAndFocusOnChild(newKey);
             return false;
         }
     });
@@ -327,40 +352,45 @@ function showHideCollectionControls() {
         if(isWriteable){
              $('#collection-create-folder').show();
              $('#collection-create-resource').show();
-             $('#upload-file').show();
+             if (!isUsersHome){
+                $('#upload-file-to-resource').show();
+             }
+             else{
+                $('#upload-file-to-resource').hide();
+             }
         } else {
             $('#collection-create-folder').hide();
             $('#collection-create-resource').hide();
-            $('#upload-file').hide();
+            $('#upload-file-to-resource').hide();
         }
         
         //collection is not current users home and is owned by current user
         if(!isUsersHome && isOwner) {
             $('#collection-sharing').show();
-            $('#upload-file').show();
+           
         } else {
             $('#collection-sharing').hide();
-            $('#upload-file').hide();
+           
         }
         
         //collection is writeable and not the current users home and the current user is the owner
         if(isWriteable && !isUsersHome && isOwner) {
             $('#collection-rename-folder').show();
             $('#collection-move-folder').show();
-            $('#upload-file').show();
+            //$('#upload-file-to-resource').show();
         } else {
             $('#collection-rename-folder').hide();
             $('#collection-move-folder').hide();
-            $('#upload-file').hide();
+            //$('#upload-file-to-resource').hide();
         }
         
         //parent is writeable and executable and its not the current users home folder
         if(isParentWriteable && isParentExecutable && !isUsersHome) {
             $('#collection-remove-folder').show();
-            $('#upload-file').show();
+            //$('#upload-file-to-resource').show();
         } else {
             $('#collection-remove-folder').hide();
-            $('#upload-file').hide();
+            //$('#upload-file-to-resource').hide();
         }
     });
 };
@@ -398,6 +428,16 @@ function refreshResourceMoveList() {
     });
 }
 
+
+
+/*
+ * called when the user  clicks the add attachment button
+ */
+ function emptyFileList(){
+  //  $('#file-list').empty();
+    
+ }
+
 /*
     Called when the user clicks on the "move" button in the remove resource dialog
  */
@@ -407,7 +447,7 @@ function moveResource(dialog) {
     var params = { action: 'move-resource', path: path, resource: resource };
     $.get("operations.xql", params, function (data) {
           
-        dialog.dialog("close");
+     dialog.dialog("close");
     });
 }
 
@@ -478,23 +518,19 @@ function refreshParentTreeNodeAndFocusOnChild(focusOnKey) {
 }
 
 
- 
-/*
-    Called when the user clicks on the "upload" button in the rename collection dialog.
- */
-  
-function uploadFile(dialog) {
-    var name = $('#upload-file-form input[name = name]').val();
-    var collection = getCurrentCollection();
-    var params = { action: 'upload-file', name: name, collection: collection};
-     $.post("upload.xql", params, function (data) {
-     dialog.dialog("close");
-      });
+
+//called each time the collection/folder sharing dialog is opened
+function updateFileList() {
+   $('#uploadFileList').dataTable().fnReloadAjax("filelist.xql?collection=" + escape(getCurrentCollection()));
 }
  
  /*
     Called when the user clicks on the "rename" button in the rename collection dialog.
  */
+ 
+
+
+
 function renameCollection(dialog) {
     var name = $('#rename-collection-form input[name = name]').val();
     var collection = getCurrentCollection();
@@ -704,7 +740,8 @@ function resultsLoaded(options) {
     $('#filters .expand').removeClass('expanded');
  
     // trigger image viewer when user clicks on thumbnail
-    $("#results .detail-xml .magnify").click(function (ev) {
+    /*
+    $("#results .magnify").click(function (ev) {
         ev.stopPropagation();
         var num = $(this).closest(".pagination-item").find(".pagination-number").text();
         if (num) {
@@ -712,7 +749,7 @@ function resultsLoaded(options) {
             galleries.show(parseInt(num));
         }
     });
-    
+    */
     //detail view
     $('.actions-toolbar .save', this).click(function (ev) {
         saveToPersonalList(this);
@@ -744,6 +781,21 @@ function resultsLoaded(options) {
         $('#add-related-form input[name = collection]').val(params[0]);
         $('#add-related-form input[name = host]').val(params[1]);
         $('#add-related-dialog').dialog('open');
+        
+    });
+    
+    /**  add upload action*/
+     $('.actions-toolbar .upload-file-style', this).click(function(ev) {
+        ev.preventDefault();
+        $('#upload-resource-id').html($(this).attr('href').substr(1));
+        $('#file-upload-folder').empty();
+        var collection = getCurrentCollection();
+        $('#upload-resource-folder').html(collection);
+        //clean old  files
+        emptyFileList();
+        $('#upload-file-dialog').dialog('open');
+        
+        
     });
     
     //notify zotero that the dom has changed
@@ -775,13 +827,105 @@ function prepareCollectionSharingDetails() {
     });
 };
 
+function prepareAttachmentSharingDetails() {
+    //add reloadAjax function
+    $.fn.dataTableExt.oApi.fnReloadAjax = attachedDataTableReloadAjax;
+    
+
+    //initialise with initial data
+    $('#attachedFilesDetails').dataTable({
+        "bProcessing": true,
+        "sPaginationType": "full_numbers",
+        "fnRowCallback": attachedDetailsRowCallback,
+        "sAjaxSource": "sharing.xql",
+        "bDestroy":true
+        
+    });
+};
+
+
+function attachedDetailsRowCallback(nRow, aData, iDisplayIndex) {
+    //determine user or group icon for first column
+       var img_src=aData[0];
+       $('td:eq(0)', nRow).html('<img alt="User Icon" src="'+img_src+'" width="100px"/>');
+        
+    /*else if(aData[0] == "GROUP") {
+        $('td:eq(0)', nRow).html('<img alt="Group Icon" src="theme/images/group.png"/>');
+    }
+    */
+        
+    //determine writeable for fourth column
+    //var isWriteable = aData[3].indexOf("w") > -1;
+    //add the checkbox, with action to perform an update on the server
+    //var inpWriteableId = 'inpWriteable_' + iDisplayIndex;
+    //$('td:eq(3)', nRow).html('<input id="' + inpWriteableId + '" type="checkbox" value="true"' + (isWriteable ? ' checked="checked"' : '') + ' onclick="javascript: setAceWriteable(this,\'' + getCurrentCollection() + '\',' + iDisplayIndex + ', this.checked);"/>');
+    
+    //add a delete button, with action to perform an update on the server
+    //var imgDeleteId = 'imgDelete_' + iDisplayIndex;
+    //$('td:eq(4)', nRow).html('<img id="' + imgDeleteId + '" alt="Delete Icon" src="theme/images/cross.png" onclick="javascript: removeAce(\'' + getCurrentCollection() + '\',' + iDisplayIndex + ');"/>');
+    //add jQuery cick action to image to perform an update on the server
+    
+    return nRow;
+}
+
 //called each time the collection/folder sharing dialog is opened
 function updateSharingDialog() {
    $('#collectionSharingDetails').dataTable().fnReloadAjax("sharing.xql?collection=" + escape(getCurrentCollection()));
+   
 }
+
+
+function updateAttachmentDialog() {
+    var oTable = $('#attachedFilesDetails').dataTable();
+    oTable.fnClearTable();
+    var uuid = $('#upload-resource-id').html();
+    if (uuid.length>0) {
+        $('#attachedFilesDetails').dataTable().fnReloadAjax("sharing.xql?file=" + uuid);
+    }
+   else
+    {
+     var collection = getCurrentCollection();
+     $('#file-upload-folder').text(collection);
+     $('#attachedFilesDetails').dataTable().fnReloadAjax("sharing.xql?upload-folder="+escape(collection));
+    }
+}
+
+
+
+
+
 
 //custom fnReloadAjax for sharing dataTable
 function dataTableReloadAjax(oSettings, sNewSource, fnCallback, bStandingRedraw) {
+    if(typeof sNewSource != 'undefined' && sNewSource != null) {
+        oSettings.sAjaxSource = sNewSource;
+    }
+    this.oApi._fnProcessingDisplay(oSettings, true);
+    var that = this;
+    var iStart = oSettings._iDisplayStart;
+    oSettings.fnServerData(oSettings.sAjaxSource, [], function(json) {
+    /* Clear the old information from the table */
+    that.oApi._fnClearTable(oSettings);
+    /* Got the data - add it to the table */
+     for(var i = 0 ; i < json.aaData.length; i++) {
+            that.oApi._fnAddData(oSettings, json.aaData[i]);
+      }
+     oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+     that.fnDraw();
+        
+     if(typeof bStandingRedraw != 'undefined' && bStandingRedraw === true) {
+			oSettings._iDisplayStart = iStart;
+			that.fnDraw(false);
+     }
+     that.oApi._fnProcessingDisplay(oSettings, false);
+      /* Callback user function - for event handlers etc */
+     if(typeof fnCallback == 'function' && fnCallback != null){
+            fnCallback(oSettings);
+      }
+    }, oSettings);
+}
+
+function attachedDataTableReloadAjax(oSettings, sNewSource, fnCallback, bStandingRedraw) {
     if(typeof sNewSource != 'undefined' && sNewSource != null) {
         oSettings.sAjaxSource = sNewSource;
     }
@@ -797,10 +941,28 @@ function dataTableReloadAjax(oSettings, sNewSource, fnCallback, bStandingRedraw)
         that.oApi._fnClearTable(oSettings);
         
         /* Got the data - add it to the table */
-        for(var i = 0 ; i < json.aaData.length; i++) {
-            that.oApi._fnAddData(oSettings, json.aaData[i]);
+        
+        if (json){
+            for(var i = 0 ; i < json.aaData.length; i++) {
+                var t = json.aaData[i].items;
+                if (t != null){
+                    for(var j = 0 ; j < t.length; j++) {
+                        //if (t[j].name.indexOf(".xml") == -1){ // check if the file is binary
+                            var values = [t[j].collection, t[j].name, t[j].lastmodified];
+                            that.oApi._fnAddData(oSettings, values);
+                        
+                    }
+                }
+            }
         }
-
+        
+        /*
+        if (json){
+            for(var i = 0 ; i < json.aaData.length; i++) {
+                that.oApi._fnAddData(oSettings,json.aaData[i]);
+            }
+        }
+        */
         oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
         that.fnDraw();
         
@@ -817,6 +979,7 @@ function dataTableReloadAjax(oSettings, sNewSource, fnCallback, bStandingRedraw)
         }
     }, oSettings);
 }
+
 
 //custom rendered for each row of the sharing dataTable
 function collectionSharingDetailsRowCallback(nRow, aData, iDisplayIndex) {
