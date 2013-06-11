@@ -404,11 +404,20 @@ declare function bs:list-view-table($item as node(), $currentPos as xs:int) {
 declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id as xs:string) {
     let $home := security:get-home-collection-uri($bs:USER)
     (:If there is a MODS @ID, use it; otherwise take a VRA @id.:)
+    let $collection := util:collection-name($item)
     let $id := $item/@ID
     let $id := 
         if ($id) 
         then $id 
-        else $item/vra:work/@id
+        else (
+            (: Handle id from vra:work and vra:image for ziziphus :)
+            if (exists($item/vra:work))
+            then ($item/vra:work/@id)
+            else ($item/vra:image/vra:relationSet/vra:relation/@relids)
+         )
+     let $workdir := if(contains($collection, 'VRA_images')) then (  functx:substring-before-last($collection, "/")) else ($collection)
+     let $workdir := if(ends-with($workdir,'/')) then ($workdir) else ($workdir || '/')
+
     return
         <div class="actions-toolbar">
             <a target="_new" href="source.xql?id={$id}&amp;clean=yes">
@@ -418,8 +427,14 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
                 (: if the item's collection is writable, display edit/delete and move buttons :)
                 if ($isWritable) 
                 then (
+                    if (xmldb:collection-available("/apps/ziziphus/"))
+                    then (
+                     <a target="_new" href="/exist/apps/ziziphus/record.html?id={$id}&amp;workdir={$workdir}">
+                        <img title="Open Record in Ziziphus Editor" src="theme/images/ziziphus_edit.png"/>
+                     </a>
+                    ) else (),
                     (:remove '-compact' from type, used previously.:)
-                    <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}&amp;type={replace($item/mods:extension/*:template, '-compact', '')}">
+                    <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={$collection}&amp;type={replace($item/mods:extension/*:template, '-compact', '')}">
                         <img title="Edit Record" src="theme/images/page_edit.png"/>
                     </a>
                     ,
@@ -432,7 +447,7 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
                 (: button to add a related item :)
                 if ($bs:USER ne "guest") 
                 then
-                    <a class="add-related" href="#{if ($isWritable) then util:collection-name($item) else $home}#{$item/@ID}">
+                    <a class="add-related" href="#{if ($isWritable) then $collection else $home}#{$item/@ID}">
                         <img title="Create Related Record" src="theme/images/page_add.png"/>
                     </a>
                     else ()
