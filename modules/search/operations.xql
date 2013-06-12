@@ -5,19 +5,20 @@ import module namespace sharing="http://exist-db.org/mods/sharing" at "sharing.x
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
 
+declare namespace group = "http://commons/sharing/group";
 declare namespace op="http://exist-db.org/xquery/biblio/operations";
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace xmldb="http://exist-db.org/xquery/xmldb";
-declare namespace functx = "http://www.functx.com";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
 declare namespace xlink="http://www.w3.org/1999/xlink";
+declare namespace functx = "http://www.functx.com"; 
 
 declare variable $HTTP-FORBIDDEN := 403;
 
-declare function functx:substring-before-last-match 
+declare function functx:substring-after-last-match 
   ( $arg as xs:string? ,
     $regex as xs:string )  as xs:string? {
        
@@ -291,16 +292,28 @@ declare function op:unknown-action($action as xs:string) {
         <p>Unknown action: {$action}.</p>
 };
 
-declare function op:upload-file($filename, $data ,$collection) {
 
-(:
-let $store := xmldb:store($collection, $filename, request:get-uploaded-file-data($data))
-:)
+declare function op:upload($collection, $path, $data) {
+    let $upload := 
+        (: authenticate as the user account set in the app's repo.xml, since we need write permissions to
+         : upload the file.  then set the uploaded file's permissions to allow guest/world to delete the file 
+         : for the purposes of the demo :)
+        system:as-user('admin', '', 
+            (
+            let $mkdir := if (xmldb:collection-available($collection)) then() else ()
+            let $upload := xmldb:store($collection, $path, $data)
+            let $chmod := sm:chmod(xs:anyURI($upload), 'o+rw')
+            return ()
+            )
+        )
+    return ()
+ };
  
-
-<results>
-   <message>File {$filename} has been stored at collection={$collection}.</message>
-</results>
+ 
+ 
+    
+declare function op:upload-file($name, $data ,$collection) {
+ op:upload(xmldb:encode-uri($collection), xmldb:encode-uri($name), $data)
   
 };
 
@@ -312,7 +325,7 @@ return
     if($action eq "create-collection")then
         op:create-collection($collection, request:get-parameter("name",()))
     else if($action eq "move-collection")then
-        op:move-collection(xmldb:decode-uri($collection), request:get-parameter("path",()))
+        op:move-collection(xmldb:decode-uri($collection, request:get-parameter("path",()))
     else if($action eq "rename-collection")then
         op:rename-collection($collection, request:get-parameter("name",()))
     else if($action eq "remove-collection")then
@@ -337,10 +350,10 @@ return
         op:get-move-folder-list($collection)
      else if($action eq "get-move-resource-list")then
         op:get-move-resource-list($collection)
-     else if($action eq "upload-file")then
-         let $name := request:get-uploaded-file-name('name')
-         let $data := request:get-uploaded-file-data('name')
-         return
+     else if($action eq "upload-file") then
+        let $name := request:get-uploaded-file-name('files[]')
+        let $data := request:get-uploaded-file-data('files[]')
+        return
          op:upload-file($name,$data,$collection)
         
      else
