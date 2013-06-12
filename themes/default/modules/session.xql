@@ -32,6 +32,7 @@ declare namespace functx = "http://www.functx.com";
 declare option exist:serialize "method=xhtml media-type=application/xhtml+xml enforce-xhtml=yes";
 
 declare variable $bs:USER := security:get-user-credential-from-session()[1];
+declare variable $bs:USERPASS := security:get-user-credential-from-session()[2];
 
 declare variable $bs:THUMB_SIZE_FOR_GRID := 64;
 declare variable $bs:THUMB_SIZE_FOR_GALLERY := 128;
@@ -119,17 +120,42 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
     let $id := concat(document-uri(root($item)), '#', util:node-id($item))
     let $stored := session:get-attribute("personal-list")
     let $saved := exists($stored//*[@id = $id])
+    let $results :=  collection($config:mods-root)//mods:mods[@ID=$item/@ID]/mods:relatedItem
     return
         <tr class="pagination-item detail" xmlns="http://www.w3.org/1999/xhtml">
             <td class="pagination-number">{$currentPos}</td>
             <td class="actions-cell">
                 <a id="save_{$id}" href="#{$currentPos}" class="save">
-                    <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+                    <img title="{if ($saved) then 'Removes Record from My List' else 'Saves Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
                 </a>
             </td>
             <td class="magnify detail-type">
             { bs:get-icon($bs:THUMB_SIZE_FOR_DETAIL_VIEW, $item, $currentPos)}
             </td>
+            <td style="vertical-align:top;">
+               <div id="image-cover-box"> 
+                {
+                   let $image-return :=
+                   for $entry in $results
+                         let $image-is-preview := $entry//mods:typeOfResource eq 'still image' and  $entry//mods:url[@access='preview']
+                            let $print-image :=
+                            if ($image-is-preview)
+                            then 
+                            (
+                                let $image := collection($config:mods-root)//vra:image[@id=data($entry//mods:url)]
+                                return local:return-thumbnail($image)
+                            )
+                            else()
+                            
+                          return $print-image
+                   let $elements := for $element in  $item/node()
+                        return  $element
+                      
+                  return $image-return
+                  }
+                </div>
+            </td>
+            
             <td class="detail-xml">
                 { bs:toolbar($item, $isWritable, $id) }
                 <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
@@ -145,6 +171,24 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
         </tr>
 };
 
+declare function local:basic-get-http($uri,$username,$password) {
+  let $credentials := concat($username,":",$password)
+  let $credentials := util:string-to-binary($credentials)
+  let $headers  := 
+    <headers>
+      <header name="Authorization" value="Basic {$credentials}"/>
+    </headers>
+  return httpclient:get(xs:anyURI($uri),false(), $headers)
+};
+declare function local:return-thumbnail($image){
+let $image-name := $image/@href
+let $image-suffix := fn:tokenize($image-name,'.')[2]
+let $image-url := <img src="{
+                        concat('data:image/',$image-suffix,';base64,',local:basic-get-http(concat(request:get-scheme(),'://',request:get-server-name(),':',request:get-server-port(),request:get-context-path(),'/rest', util:collection-name($image),"/" ,$image-name),$bs:USER,$bs:USERPASS)
+                        )
+                        }"  width="200px"/>
+return $image-url
+};
 
 declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos as xs:int) {
     let $isWritable := bs:collection-is-writable(util:collection-name($item))
@@ -161,7 +205,8 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
             else '/vra:image/@id'
     let $stored := session:get-attribute("personal-list")
     let $saved := exists($stored//*[@id = $id])
-
+    let $vra-work :=  collection($config:mods-root)//vra:work[@id=$id]/vra:relationset/vra:relation
+    
     return
         <tr class="pagination-item detail" xmlns="http://www.w3.org/1999/xhtml">
             <td class="pagination-number">{$currentPos}</td>
@@ -169,6 +214,30 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
                 <a id="save_{$id}" href="#{$currentPos}" class="save">
                     <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
                 </a>
+            </td>
+            <td style="vertical-align:top;">
+                <div id="image-cover-box"> 
+                { 
+                    if ($vra-work) then (
+                    for $entry in $vra-work
+                    (:return <img src="{$entry/@relids}"/>:)
+                    let $image := collection($config:mods-root)//vra:image[@id=$entry/@relids]
+                  return
+                    local:return-thumbnail($image)
+                        
+                    )
+                    else (
+                     let $image := collection($config:mods-root)//vra:image[@id=$id]
+                      return
+                    local:return-thumbnail($image)
+                     (: 
+                     return <img src="{concat(request:get-scheme(),'://',request:get-server-name(),':',request:get-server-port(),request:get-context-path(),'/rest', util:collection-name($image),"/" ,$image-name)}"  width="200px"/>
+                     :)
+                    )
+                    
+                   
+                }
+                </div>
             </td>
             <!--<td class="magnify detail-type">
             { bs:get-icon($bs:THUMB_SIZE_FOR_DETAIL_VIEW, $item, $currentPos)}
@@ -403,6 +472,9 @@ declare function bs:list-view-table($item as node(), $currentPos as xs:int) {
 
 declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id as xs:string) {
     let $home := security:get-home-collection-uri($bs:USER)
+    (:determine for image record:)
+   
+
     (:If there is a MODS @ID, use it; otherwise take a VRA @id.:)
     let $collection := util:collection-name($item)
     let $id := $item/@ID
@@ -417,7 +489,12 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
          )
      let $workdir := if(contains($collection, 'VRA_images')) then (  functx:substring-before-last($collection, "/")) else ($collection)
      let $workdir := if(ends-with($workdir,'/')) then ($workdir) else ($workdir || '/')
-
+    
+     
+     let $upload-button:=  
+        if (not($item/vra:image/@id))
+            then <a class="upload-file-style"  directory="false" href="#{$id}" onclick="updateAttachmentDialog"><img title="Upload Attachment" src="theme/images/database_add.png" /> </a>
+        else ()
     return
         <div class="actions-toolbar">
             <a target="_new" href="source.xql?id={$id}&amp;clean=yes">
@@ -434,12 +511,14 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
                      </a>
                     ) else (),
                     (:remove '-compact' from type, used previously.:)
-                    <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={$collection}&amp;type={replace($item/mods:extension/*:template, '-compact', '')}">
+                    <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}&amp;type={replace($item/mods:extension/*:template, '-compact', '')}">
                         <img title="Edit Record" src="theme/images/page_edit.png"/>
                     </a>
                     ,
                     <a class="remove-resource" href="#{$id}"><img title="Delete Record" src="theme/images/delete.png"/></a>,
-                    <a class="move-resource" href="#{$id}"><img title="Move Record" src="theme/images/shape_move_front.png"/></a>
+                    <a class="move-resource" href="#{$id}"><img title="Move Record" src="theme/images/shape_move_front.png"/></a>,
+                    $upload-button
+                        
                     )
                 else ()
             }
@@ -562,6 +641,15 @@ declare function bs:view-gallery($mode as xs:string, $cached as item()*, $stored
     Main function: retrieves query results from session cache and
     checks which display mode to use.
 :)
+
+ declare function bs:get-resource($start as xs:int, $count as xs:int){
+ 
+  let $resouce := session:get-attribute("mods:cached")
+ 
+  return $resouce
+ };
+ 
+ 
 declare function bs:retrieve($start as xs:int, $count as xs:int) {
     let $mode := request:get-parameter("mode", "gallery")
     let $cached := session:get-attribute("mods:cached")
