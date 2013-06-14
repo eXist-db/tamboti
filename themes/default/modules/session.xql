@@ -133,7 +133,7 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
             { bs:get-icon($bs:THUMB_SIZE_FOR_DETAIL_VIEW, $item, $currentPos)}
             </td>
             <td style="vertical-align:top;">
-               <div id="image-cover-box"> 
+               <div id="image-cover-box" > 
                 {
                    let $image-return :=
                    for $entry in $results
@@ -156,7 +156,7 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
                 </div>
             </td>
             
-            <td class="detail-xml">
+            <td class="detail-xml" style="vertical-align:top;">
                 { bs:toolbar($item, $isWritable, $id) }
                 <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
                 {
@@ -223,13 +223,13 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
                     (:return <img src="{$entry/@relids}"/>:)
                     let $image := collection($config:mods-root)//vra:image[@id=$entry/@relids]
                   return
-                    local:return-thumbnail($image)
+                    <p>{local:return-thumbnail($image)}</p>
                         
                     )
                     else (
                      let $image := collection($config:mods-root)//vra:image[@id=$id]
                       return
-                    local:return-thumbnail($image)
+                    <p>{local:return-thumbnail($image)}</p>
                      (: 
                      return <img src="{concat(request:get-scheme(),'://',request:get-server-name(),':',request:get-server-port(),request:get-context-path(),'/rest', util:collection-name($image),"/" ,$image-name)}"  width="200px"/>
                      :)
@@ -242,7 +242,7 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
             <!--<td class="magnify detail-type">
             { bs:get-icon($bs:THUMB_SIZE_FOR_DETAIL_VIEW, $item, $currentPos)}
             </td>-->
-            <td class="detail-xml">
+            <td class="detail-xml" style="vertical-align:top;">
                 { bs:toolbar($item, $isWritable, $id) }
                 <!--NB: why is this phoney HTML tag used to anchor the Zotero unIPA?-->
                 <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>
