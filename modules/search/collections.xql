@@ -139,7 +139,10 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
                 let $collection-path := fn:concat($config:mods-commons, "/", $child)
                 order by upper-case($child)
                 return
+                  if (security:can-read-collection($collection-path)) 
+                  then
                     <node>{col:get-collection($collection-path)/child::node()}</node>
+                    else ()
             return
             
                 (: root collection, containing home and group collection as children :)
@@ -343,10 +346,9 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
                     let $commons-child-children := col:get-child-tree-nodes-recursive($collection-path, $distinct-collection-paths[fn:starts-with(., $collection-path)], $expanded-collections)
                     order by upper-case($child)
                     return
-                    if (sm:has-access($collection-path,'r-x')) (:check for user access , to set a folder only readable for users who  have direct access:)
-                    then
+                   
                         <node>{col:get-collection($collection-path, $commons-child-children, fn:contains($expanded-collections, $collection-path))/child::node()}</node>
-                        else ()
+                     
                 return
                 
                     (: root collection, containing home and group collection as children :)

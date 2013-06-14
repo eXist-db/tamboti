@@ -143,7 +143,9 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
                             then 
                             (
                                 let $image := collection($config:mods-root)//vra:image[@id=data($entry//mods:url)]
-                                return local:return-thumbnail($image)
+                                return 
+                                   <p>{local:return-thumbnail($image)}</p>
+                  
                             )
                             else()
                             
