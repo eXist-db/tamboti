@@ -325,8 +325,8 @@ return
     if($action eq "create-collection")then
         op:create-collection($collection, request:get-parameter("name",()))
     else if($action eq "move-collection")then
-        op:move-collection(xmldb:decode-uri($collection, request:get-parameter("path",()))
-    else if($action eq "rename-collection")then
+        op:move-collection(xmldb:decode-uri($collection), request:get-parameter("path",()))
+    else if($action eq "rename-collection") then
         op:rename-collection($collection, request:get-parameter("name",()))
     else if($action eq "remove-collection")then
         op:remove-collection($collection)
