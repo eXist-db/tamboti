@@ -497,6 +497,8 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
         if (not($item/vra:image/@id))
             then <a class="upload-file-style"  directory="false" href="#{$id}" onclick="updateAttachmentDialog"><img title="Upload Attachment" src="theme/images/database_add.png" /> </a>
         else ()
+    let $log := util:log("DEBUG", ("##$collection): ", node-name($item)))
+
     return
         <div class="actions-toolbar">
             <a target="_new" href="source.xql?id={$id}&amp;clean=yes">
@@ -506,16 +508,18 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
                 (: if the item's collection is writable, display edit/delete and move buttons :)
                 if ($isWritable) 
                 then (
-                    if (xmldb:collection-available("/apps/ziziphus/"))
+                    if (xmldb:collection-available("/apps/ziziphus/") and name($item) eq 'vra')
                     then (
                      <a target="_new" href="/exist/apps/ziziphus/record.html?id={$id}&amp;workdir={$workdir}">
-                        <img title="Open Record in Ziziphus Editor" src="theme/images/ziziphus_edit.png"/>
+                        <img title="Edit VRA Record" src="theme/images/page_edit.png"/>
                      </a>
                     ) else (),
-                    (:remove '-compact' from type, used previously.:)
-                    <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}&amp;type={replace($item/mods:extension/*:template, '-compact', '')}">
-                        <img title="Edit Record" src="theme/images/page_edit.png"/>
+                    if (name($item) eq 'mods')
+                    then
+                    <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}&amp;type={$item/mods:extension/*:template}">
+                        <img title="Edit MODS Record" src="theme/images/page_edit.png"/>
                     </a>
+                    else ()
                     ,
                     <a class="remove-resource" href="#{$id}"><img title="Delete Record" src="theme/images/delete.png"/></a>,
                     <a class="move-resource" href="#{$id}"><img title="Move Record" src="theme/images/shape_move_front.png"/></a>,
