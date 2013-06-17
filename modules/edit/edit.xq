@@ -428,6 +428,7 @@ declare function local:get-tab-id($tab-id as xs:string, $type-request as xs:stri
 
 (:Main:)
 (:Find the record.:)
+let $dummy := request:set-attribute("betterform.filter.ignoreResponseBody", "true")
 let $record-id := request:get-parameter('id', '')
 let $temp-record-path := concat($config:mods-temp-collection, "/", $record-id,'.xml')
 
