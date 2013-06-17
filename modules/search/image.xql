@@ -1,11 +1,14 @@
 xquery version "3.0";
+(:author  Dulip withanage:)
 declare namespace vra="http://www.vraweb.org/vracore4.htm";
 declare namespace upload = "http://exist-db.org/eXide/upload";
+import module namespace util = "http://exist-db.org/xquery/util";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
 
 import module namespace config="http://exist-db.org/mods/config" at "../../modules/config.xqm";
-
+declare option exist:serialize "method=json media-type=text/javascript";
+import module namespace json="http://www.json.org";
 
 declare variable $col := $config:mods-root;
 declare variable $user := 'admin';
@@ -26,23 +29,40 @@ let $result_set := if (not($results)) then <xml>image uuid not found</xml> else 
 
 :)
  
- declare function upload:determine-type($workrecord){
+ declare function upload:get-collection($uuid){
     
-    let $vra_image := collection($rootdatacollection)//vra:work[@id=$workrecord]/@id
-    let $type := if (exists($vra_image))
+    let $vra_image := collection($rootdatacollection)//vra:image[@id=$uuid]
+    let $col := if (exists($vra_image))
     then 
-    ('vra')
+    util:collection-name($vra_image/@id)
     else(
-    let $mods := collection($rootdatacollection)//mods:mods[@ID=$workrecord]/@ID
-    let $mods_type := if (exists($mods))
-    then ('mods')
-    else ()
-    return $mods_type
     
-    )
+    (:
+    let $mods := collection($rootdatacollection)//mods:mods[@ID=$uuid]/@ID
     
-    return  $type
+    let $mods_col := if (exists($mods))
+    then  util:collection-name($mods)
+    else (
+        let $vra_work := collection($rootdatacollection)//vra:work[@id=$uuid]/@id
+        let $col := if (exists($vra_work))
+        then 
+          util:collection-name($vra_work)
+            else()
+          return $col
+     )
+    return $mods_col
+     :)
+     )
+     
+         return <json:value>
+                <collection>{$col}</collection>
+                <filename>{data($vra_image/@href)}</filename>
+            </json:value>
 }; 
+(:
 let $x := system:as-user($user, $userpass,xmldb:reindex($rootdatacollection))
-let $test := upload:determine-type('uuid-f418d59d-7313-40e3-b90a-a2de6c5829ad')
-return <xml>{$test}</xml>
+:)
+
+let $uuid := request:get-parameter('uuid',())
+let $results := upload:get-collection($uuid)
+return   $results
