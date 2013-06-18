@@ -95,7 +95,8 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     
     (: titles :)
     for $titleInfo in $entry/mods:titleInfo[not(@type eq 'abbreviated')]
-    return mods-common:title-full($titleInfo)
+    let $titleInfo := mods-common:title-full($titleInfo) 
+    return $titleInfo
     ,
     
     (: conferences :)

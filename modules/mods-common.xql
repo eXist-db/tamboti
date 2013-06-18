@@ -250,6 +250,7 @@ declare function mods-common:title-full($titleInfo as element(mods:titleInfo)) a
 let $transliteration := $titleInfo/@transliteration
 let $global-transliteration := $titleInfo/../mods:extension/ext:transliterationOfResource
 let $type := $titleInfo/@type
+let $otherType := $titleInfo/@otherType
 let $type := 
     if (not($type))
     then ()
@@ -263,24 +264,22 @@ let $type :=
                 if ($type eq 'abbreviated')
                 then 'abbreviated'
                 else
-                    (:First, demand that type is 'translated'; 
-                    second, since type 'translated' may also used for transliterations, 
-                    demand that it is not the case that there is an explicit transliteration scheme indicated 
-                    or that it is not the case that there is an implicit transliteration scheme indicated 
-                    (using empty or "unspecified" @transliteration with transliteration scheme indicated in extension).:)
+                    (:Check whether @type is 'translated'; since @type 'translated' may also used for transliteration, check whether it is the case that there is an explicit transliteration scheme indicated or that there is an implicit transliteration scheme indicated (using empty or "unspecified" @transliteration with the transliteration scheme used indicated in extension). Only if there is not, do we have a real translated title.:)
                     if ($type eq 'translated' and (not($transliteration) or ($transliteration = ('', 'unspecified') and $global-transliteration eq ''))) 
                     then 'translated'
                     else
-                        (:Either there is explicit indication of transliteration scheme used on the element 
-                        or the transliteration scheme used is indicated in the extension 
-                        and one of two ways to show that some transliteration scheme is used on the element.:)
-                        if (($transliteration/string() and $transliteration ne 'unspecified') or ($transliteration = ('', 'unspecified') and $global-transliteration ne ''))
+                        (:Either there is explicit indication of transliteration scheme used on the element, set on @type or @otherType, or the transliteration scheme used is indicated in the extension and one of two ways to show that some transliteration scheme is used on the element.:)
+                        if (($transliteration/string() and $transliteration ne 'unspecified')
+                               or
+                           ($transliteration = ('', 'unspecified') and string($global-transliteration))
+                               or
+                           ($otherType eq 'transliterated')
+                           )
                         then 'transliterated'
                         else ()
     return
+    (:Write the type label, the labguage label and the transliteration label:)
     <tr xmlns="http://www.w3.org/1999/xhtml">
-        <!--Left column-->
-        <!--Main label-->
         <td class="label">
         {
             if ($type eq 'translated') 
@@ -302,7 +301,6 @@ let $type :=
                             else 'Title'
         }
         <span class="deemph">
-        <!--Language sublabel-->
         {
         let $lang := string($titleInfo/@lang)
         let $xml-lang := string($titleInfo/@xml:lang)
@@ -318,65 +316,58 @@ let $type :=
                 )
             else ()
         }
-        <!--Transliteration sublabel-->
         {
         let $transliteration := string($titleInfo/@transliteration)
+        (:$global-transliteration is not set for relatedItem:)
         let $global-transliteration := $titleInfo/../mods:extension/ext:transliterationOfResource/text()
-        (:Prefer local transliteration to global.:)
+        (:Prefer local transliteration to global transliteration.:)
         let $transliteration := 
         	if ($transliteration)
         	then $transliteration
         	else $global-transliteration
         return
-        (:The local transliteration attribute may be empty, so we check if it is there anyway. 
-        If it is there, but empty, we use the global value.:)
-        if ($titleInfo/@transliteration and $transliteration)
-        then
-            (<br/>, 'Transliteration: ',
-            let $transliteration-label := doc(concat($config:edit-app-root, '/code-tables/transliteration-codes.xml'))/*:code-table/*:items/*:item[*:value eq $transliteration]/*:label
-            return
-                if ($transliteration-label)
-                then $transliteration-label
-                else $transliteration
-            )
-        else
-        ()
+            (:The local transliteration attribute may be empty, so we check if the (possibly empty) attribute is there.:)
+            if ($titleInfo/@transliteration and $transliteration)
+            then
+                (<br/>, 'Transliteration: ',
+                let $transliteration-label := doc(concat($config:edit-app-root, '/code-tables/transliteration-codes.xml'))/*:code-table/*:items/*:item[*:value eq $transliteration]/*:label
+                return
+                    if ($transliteration-label)
+                    then $transliteration-label
+                    else $transliteration
+                )
+            else
+            ()
         }
         </span>
         </td>
-        <!--Right column-->
         <td class='record'>
         {
-        if ($titleInfo/mods:partNumber | $titleInfo/mods:partName)
-        then 
-	        concat(
-	        concat(
-	        concat(
-	        	$titleInfo/mods:nonSort, 
-	        	' ', 
-	        	$titleInfo/mods:title), 
-	        		(
-	        			if ($titleInfo/mods:subTitle) 
-	        			then ': ' 
-	        			else ()
-	        		), 
-	        	string-join($titleInfo/mods:subTitle, '; ')), 
-	        	'. ', 
-	        	string-join(($titleInfo/mods:partNumber, $titleInfo/mods:partName),
-	        	': ')
-	        	)
-        else 
-        	concat(
-        	concat(
-        	$titleInfo/mods:nonSort, ' ', 
-        	$titleInfo/mods:title), 
-        		(
-        			if ($titleInfo/mods:subTitle) 
-        			then ': ' 
-        			else ()
-        		), 
-        	string-join($titleInfo/mods:subTitle, '; '))
-        }
+        let $nonSort := $titleInfo/mods:nonSort
+        let $title := $titleInfo/mods:title
+        let $log := util:log("DEBUG", ("##$title0): ", $title))
+        let $subTitle := $titleInfo/mods:subTitle
+        (:Allow several subtitles:)
+        let $subTitle := string-join($subTitle, '; ')
+        let $title := 
+            if ($subTitle)
+            then concat($nonSort, ' ', $title, ': ', $subTitle) 
+            else concat($nonSort, ' ', $title) 
+        let $log := util:log("DEBUG", ("##$title1): ", $title))
+        let $partNumber := $titleInfo/mods:partNumber
+        let $partName := $titleInfo/mods:partName
+        let $title :=
+            if ($partNumber | $partName)
+            then 
+    	        concat(
+    	        concat($title, '. '), 
+    	        	string-join(($partNumber, $partName), ': ')
+    	        	)
+            else $title
+        let $log := util:log("DEBUG", ("##$title2): ", $title))
+        return util:parse(concat('&lt;span>', $title, '</span>'))
+            }
+        
         </td>
     </tr>
 };
@@ -413,6 +404,7 @@ declare function mods-common:get-short-title($entry as element()) {
     Hence a titleInfo with @type "translated" with be a translation if it has no @transliteration (empty or not); otherwise it will be a transliteration.
     A translated titleInfo ought to have a @lang, but it is not necessary to check for this. :)
     (: NB: Parsing this would be a lot easier if MODS accepted "transliterated" as value for @type on titleInfo. :)
+    (: NB: With 3.5 MODS accepts "transliterated" as value for @otherType on titleInfo. :)
     let $titleInfo-transliterated := $titleInfo[@transliteration][@type eq 'translated'][1]
     let $titleInfo-translated := $titleInfo[not(@transliteration)][@type eq 'translated'][1]
     let $titleInfo := $titleInfo[not(@type)][1]
@@ -460,6 +452,7 @@ declare function mods-common:get-short-title($entry as element()) {
         else ()
         )
     let $title-formatted := string-join($title-formatted, '')
+    let $title-formatted := util:parse(concat('&lt;span>', $title-formatted, '</span>'))
     
     let $title-transliterated-formatted := 
         (
@@ -505,7 +498,7 @@ declare function mods-common:get-short-title($entry as element()) {
         )
     let $title-translated-formatted := string-join($title-translated-formatted, '')
     
-    (: Assemble the full short title to display. :)    
+    (: Assemble the full short title to display. :)
     return
         ( 
 		if ($title-transliterated)
