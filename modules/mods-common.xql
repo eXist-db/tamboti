@@ -345,7 +345,6 @@ let $type :=
         {
         let $nonSort := $titleInfo/mods:nonSort
         let $title := $titleInfo/mods:title
-        let $log := util:log("DEBUG", ("##$title0): ", $title))
         let $subTitle := $titleInfo/mods:subTitle
         (:Allow several subtitles:)
         let $subTitle := string-join($subTitle, '; ')
@@ -353,7 +352,6 @@ let $type :=
             if ($subTitle)
             then concat($nonSort, ' ', $title, ': ', $subTitle) 
             else concat($nonSort, ' ', $title) 
-        let $log := util:log("DEBUG", ("##$title1): ", $title))
         let $partNumber := $titleInfo/mods:partNumber
         let $partName := $titleInfo/mods:partName
         let $title :=
@@ -364,7 +362,6 @@ let $type :=
     	        	string-join(($partNumber, $partName), ': ')
     	        	)
             else $title
-        let $log := util:log("DEBUG", ("##$title2): ", $title))
         return util:parse(concat('&lt;span>', $title, '</span>'))
             }
         
