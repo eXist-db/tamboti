@@ -262,7 +262,8 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                     for $f in $biblio:FIELDS/field
                     return
                         <option>
-                            { if ($f/@name eq $field/@name) then attribute selected { "selected" } else () }
+                            { if ($f/@name eq $field/@name) then attribute selected { "selected" } else () } 
+                            <!--NB: tooltip to show which types of records are searched for-->
                             {$f/@name/string()}
                         </option>
                 }
@@ -814,6 +815,7 @@ declare function biblio:collection-path($node as node(), $params as element(para
     let $collection := functx:replace-first(uu:escape-collection-path(request:get-parameter("collection", theme:get-root())), "/db/", "")
     
     return
+        (:templates:copy-set-attribute($node, "value", uu:unescape-collection-path($collection), $model):)
         templates:copy-set-attribute($node, "value", xmldb:decode-uri($collection), $model)
 };
 

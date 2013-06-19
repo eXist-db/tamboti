@@ -16,6 +16,7 @@ declare variable $uu:encodings := (
 );
 
 declare function uu:escape-collection-path($path as xs:string?) as xs:string? {
+    (:uu:_escape($path):)
     xmldb:encode-uri($path)
 };
 

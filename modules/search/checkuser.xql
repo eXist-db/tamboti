@@ -79,8 +79,10 @@ if (request:get-parameter("action",())) then
 (:        if ($action eq "is-collection-owner") then
             local:user-is-collection-owner(security:get-user-credential-from-session()[1], xmldb:encode-uri(request:get-parameter("collection",())))
 :)
-        if($action eq "is-collection-owner")then
-            local:user-is-collection-owner(security:get-user-credential-from-session()[1], uu:escape-collection-path(request:get-parameter("collection",())))else if ($action eq "collection-relationship") then
+        if ($action eq "is-collection-owner") then
+            local:user-is-collection-owner(security:get-user-credential-from-session()[1], uu:escape-collection-path(request:get-parameter("collection",())))
+        else if ($action eq "collection-relationship") then
+            (:local:collection-relationship(uu:escape-collection-path(request:get-parameter(collection",()))):)
             local:collection-relationship(xmldb:encode-uri(request:get-parameter("collection",())))
         else
         (

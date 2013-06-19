@@ -13,6 +13,7 @@ declare namespace util="http://exist-db.org/xquery/util";
 declare namespace xmldb="http://exist-db.org/xquery/xmldb";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
+declare namespace vra="http://www.vraweb.org/vracore4.htm";
 declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace functx = "http://www.functx.com"; 
 
@@ -63,10 +64,13 @@ declare function op:create-collection($parent as xs:string, $name as xs:string) 
         :)
         let $null := security:grant-parent-owner-access-if-foreign-collection($collection) return
         
-            <status id="created">{xmldb:decode-uri($collection)}</status>
+                        (:<status id="created">{uu:unescape-collection-path($collection)}</status>:)
+						<status id="created">{xmldb:decode-uri($collection)}</status>
 };
 
 declare function op:move-collection($collection as xs:string, $to-collection as xs:string) as element(status) {
+    (:let $to-collection := uu:escape-collection-path($to-collection) return
+    let $null := xmldb:move($collection, $to-collection):)
     let $collection := xmldb:encode-uri($collection)
     let $to-collection := xmldb:encode-uri($to-collection)
 
@@ -80,11 +84,13 @@ declare function op:move-collection($collection as xs:string, $to-collection as 
             :)
             let $null := security:grant-parent-owner-access-if-foreign-collection($to-collection) return
         
+                (:<status id="moved" from="{uu:unescape-collection-path($collection)}">{$to-collection}</status>:)
                 <status id="moved" from="{xmldb:decode-uri($collection)}">{xmldb:decode-uri($to-collection)}</status>
 };
 
 declare function op:rename-collection($path as xs:string, $name as xs:string) as element(status) {
     let $null := xmldb:rename($path, $name) return
+        (:<status id="renamed" from="{uu:unescape-collection-path($path)}">{$name}</status>:)
         <status id="renamed" from="{xmldb:decode-uri($path)}">{xmldb:decode-uri($name)}</status>
 };
 
@@ -102,30 +108,57 @@ declare function op:remove-collection($collection as xs:string) as element(statu
             let $xlink-recs := collection($config:mods-root-minus-temp)//mods:relatedItem[@xlink:href eq $xlink]/ancestor::mods:mods/@ID
             return
                 (:It is OK to delete a record using an ID as an xlink if the record is inside the folder to be deleted.:)
-                if(not($xlink-recs = $collection-ids))
+                if (not($xlink-recs = $collection-ids))
                 then $xlink-recs
                 else ''
                 (:This should return '' for each iteration for deletion to proceed.:)
                 ,'')
     let $null := 
          (:If $xlinked-rec-ids is not empty, do not delete.:)
-         if($xlinked-rec-ids)
+         if ($xlinked-rec-ids)
          then ()
+         (:else xmldb:remove($collection):)
          else xmldb:remove(xmldb:decode-uri($collection)) 
              return
-            <status id="removed">{xmldb:decode-uri($collection)}</status>
+                (:<status id="removed">{uu:unescape-collection-path($collection)}</status>:)
+                <status id="removed">{xmldb:decode-uri($collection)}</status>
 };
 
 (:~
 :
-: @ resource-id is the @ID of the MODS record
+: @resource-id is the uuid of the MODS or VRA record
 :)
-declare function op:remove-resource($resource-id as xs:string) as element(status) {
-    let $doc := collection($config:mods-root-minus-temp)//mods:mods[@ID eq $resource-id]
+declare function op:remove-resource($resource-id as xs:string) as element(status)* {
+    let $log := util:log("DEBUG", ("##$resource-id): ", $resource-id))
+    let $mods-doc := collection($config:mods-root-minus-temp)//mods:mods[@ID eq $resource-id]
     let $xlink := concat('#', $resource-id)
     (:since xlinks are also inserted manually, check also for cases when the pound sign has been forgotten:)
-    let $xlink-recs := collection($config:mods-root-minus-temp)//mods:relatedItem[@xlink:href = ($xlink, $resource-id)]
+    let $mods-xlink-recs := collection($config:mods-root-minus-temp)//mods:relatedItem[@xlink:href = ($xlink, $resource-id)]
     (:let $base-uri := concat(util:collection-name($doc), '/', util:document-name($doc)):)
+    
+    let $vra-work := collection($config:mods-root-minus-temp)//vra:work[@id eq $resource-id]
+    let $log := util:log("DEBUG", ("##$vra-work): ", $vra-work))
+    let $vra-images := collection($config:mods-root-minus-temp)//vra:image[vra:relationSet/vra:relation/@relids eq $resource-id]/@id
+    let $log := util:log("DEBUG", ("##$vra-images-count-1): ", count($vra-images)))
+    let $log := util:log("DEBUG", ("##$vra-images-1): ", string-join($vra-images, ' ||| ')))
+    let $vra-images := 
+        for $vra-image in $vra-images
+        (:let $image-id := collection($config:mods-root)//vra:image[@id=$entry/@relids]:)
+        let $image-id := collection($config:mods-root)//vra:image[@id eq $vra-image]
+        return
+            $vra-image
+    let $log := util:log("DEBUG", ("##$vra-images-count-2): ", count($vra-images)))
+    let $log := util:log("DEBUG", ("##$vra-images-2): ", string-join($vra-images, ' ||| ')))
+    let $vra-binaries :=
+        for $vra-image in $vra-images
+        return $vra-image/vra:image/@href 
+    let $log := util:log("DEBUG", ("##$vra-binaries): ", string($vra-binaries)))
+    
+    let $vra-docs := ($vra-work, $vra-images)
+    
+    let $docs := if ($mods-doc) then $mods-doc else $vra-docs 
+    for $doc in $docs return
+    
     let $location := util:collection-name($doc)
     let $name := util:document-name($doc)
     let $last-modified := xmldb:last-modified($location, $name)
@@ -147,7 +180,7 @@ declare function op:remove-resource($resource-id as xs:string) as element(status
         <deletion-time>{$time}</deletion-time>
         <deleting-user>{$user}</deleting-user>
     </record>
-let $log := util:log("DEBUG", ("##$record): ", $record))
+    (:let $log := util:log("DEBUG", ("##$record): ", $record)):)
     return (
         (:do not remove records which erroneously have the same ID:)
         (:NB: inform user that this is the case:)
@@ -155,35 +188,52 @@ let $log := util:log("DEBUG", ("##$record): ", $record))
         then
             (:do not remove records which are linked to from other records:)
             (:NB: inform user that this is the case:)
-            if (count($xlink-recs/..) eq 0) 
+            if (count($mods-xlink-recs/..) eq 0) 
             then
                     xmldb:remove(util:collection-name($doc), util:document-name($doc))
             else ()
         else()
-        ,
-        update insert $record into doc('/db/resources/temp/deletions.xml')/records,
+        (:,
+        update insert $record into doc('/db/resources/temp/deletions.xml')/records:),
         <status id="removed">{$resource-id}</status>
     )
 };
 
+
+
 (:~
 :
-: @ resource-id is the @ID of the MODS record
+: @ resource-id has the format db-document-path#node-id e.g. /db/mods/eXist/exist-articles.xml#1.36
 :)
 declare function op:move-resource($resource-id as xs:string, $destination-collection as xs:string) as element(status) {
-    let $doc := collection($config:mods-root-minus-temp)//mods:mods[@ID eq $resource-id]
-    let $path := base-uri($doc)
-    let $destination-collection := xmldb:encode-uri($destination-collection)
+    let $destination-collection := uu:escape-collection-path($destination-collection) return
+        let $path := substring-before($resource-id, "#")
+        let $id := substring-after($resource-id, "#")
+        let $destination-resource-name := replace($path, ".*/", "")
+        let $destination-path := concat($destination-collection, "/", $destination-resource-name)
+        let $sourceDoc := doc($path)
         return
-            (:do not move records which erroneously have the same ID:)
-            if (count($doc) eq 1)
-            then
-                let $moved := xmldb:move(util:collection-name($doc), $destination-collection, util:document-name($doc))
+            if (contains($id, ".")) then
+                let $resource := util:node-by-id($sourceDoc, $id)
+                let $mods-destination := 
+                    if(doc-available($destination-path))then
+                        doc($destination-path)/mods:modsCollection
+                    else
+                        let $mods-collection-doc-path := xmldb:store($destination-collection, $destination-resource-name, <modsCollection xmlns="http://www.loc.gov/mods/v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/mods/v3 ../../webapp/WEB-INF/entities/mods-3-3.xsd"/>) return
+                            let $null := security:apply-parent-collection-permissions($mods-collection-doc-path) return
+                                doc($mods-collection-doc-path)/mods:modsCollection
                 return
-                    let $null := security:apply-parent-collection-permissions(document-uri(root($doc))) 
-                        return
-                            <status id="moved" from="{$resource-id}">{$destination-collection}</status>
-            else ()
+                (
+                    update insert util:node-by-id(doc($path), $id) into $mods-destination,
+                    update delete util:node-by-id(doc($path), $id),
+                    
+                    <status id="moved" from="{$resource-id}">{$destination-path}</status>
+                )
+            else
+                let $moved := xmldb:move(util:collection-name($sourceDoc), $destination-collection, util:document-name($sourceDoc)) return
+                    let $null := security:apply-parent-collection-permissions(fn:document-uri(fn:root($sourceDoc))) return
+                
+                        <status id="moved" from="{$resource-id}">{$destination-path}</status>
 };
 
 declare function op:set-ace-writeable($collection as xs:anyURI, $id as xs:int, $is-writeable as xs:boolean) as element(status) {
@@ -317,6 +367,8 @@ declare function op:upload-file($name, $data ,$collection) {
   
 };
 
+(:let $action := request:get-parameter("action", ()),
+$collection := uu:escape-collection-path(request:get-parameter("collection", ())):)
 let $action := request:get-parameter("action", ())
 let $collection := request:get-parameter("collection", ())
 let $collection := if($collection)then xmldb:encode-uri($collection) else ()
@@ -325,6 +377,7 @@ return
     if($action eq "create-collection")then
         op:create-collection($collection, request:get-parameter("name",()))
     else if($action eq "move-collection")then
+        (:op:move-collection($collection, request:get-parameter("path",())):)
         op:move-collection(xmldb:decode-uri($collection), request:get-parameter("path",()))
     else if($action eq "rename-collection")then
         op:rename-collection($collection, request:get-parameter("name",()))
