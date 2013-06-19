@@ -466,7 +466,6 @@ let $tab-id := request:get-parameter('tab-id', $tab-id)
 (:Get the chosen location for the record.:)
 (:let $target-collection := xmldb:encode-uri(request:get-parameter("collection", '')):)
 let $target-collection := uu:escape-collection-path(request:get-parameter("collection", ''))
-let $log := util:log("DEBUG", ("##$target-collection): ", $target-collection))
 
 (:Get the id of the record, if it has one; otherwise mark it "new" in order to give it one.:)
 let $id-param := request:get-parameter('id', 'new')

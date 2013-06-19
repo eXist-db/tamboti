@@ -6,6 +6,7 @@ import module namespace request = "http://exist-db.org/xquery/request";
 import module namespace xmldb = "http://exist-db.org/xquery/xmldb";
 import module namespace config = "http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace security = "http://exist-db.org/mods/security" at "../search/security.xqm"; (: TODO move security module up one level :)
+import module namespace uu = "http://exist-db.org/mods/uri-util" at "../search/uri-util.xqm";
 
 declare namespace mods = "http://www.loc.gov/mods/v3";
 declare namespace ext="http://exist-db.org/mods/extension";
@@ -319,7 +320,8 @@ return
         (: If there is an ID, we are doing an update to an existing file (unless the action is cancel). :)
         (:Locate the document in temp and and load it in $doc.:)
         let $file-to-update := concat($incoming-id, '.xml')
-        let $temp-file-path := concat($config:mods-temp-collection, '/', $file-to-update)
+        (:let $temp-file-path := concat($config:mods-temp-collection, '/', $file-to-update):)
+        let $temp-file-path := concat(xmldb:encode-uri($config:mods-temp-collection), '/', $file-to-update)
         let $log := util:log("DEBUG", ("##$temp-file-path): ", $temp-file-path))
         (:This is the document in temp to be updated during saves and the document to be saved in the target collection when the user has finished editing.:)
         let $doc := doc($temp-file-path)/mods:mods
@@ -334,9 +336,7 @@ return
                     (:Get the target collection. If it's an edit to an existing document, we can find its location by means of its uuid.
                     If it is a new record, the target collection can be captured as the collection parameter passed in the URL. :)
                     let $target-collection := local:find-live-collection-containing-uuid($incoming-id)
-                    (:let $new-target-collection := xmldb:encode-uri(request:get-parameter("collection", "")):)
                     let $new-target-collection := uu:escape-collection-path(request:get-parameter("collection", ""))
-                    let $log := util:log("DEBUG", ("##$new-target-collection): ", $new-target-collection))
                     let $target-collection :=
                         if ($target-collection)
                         then $target-collection
@@ -356,9 +356,6 @@ return
                         ,
                         (:Insert modification date-time and user name.:)
                         update insert $last-modified-extension into $doc/mods:extension
-                        ,
-                        (:clear any lock on doc in target collection:)
-                        xmldb:clear-lock($target-collection, $file-to-update)
                         ,
                         (:Move $doc from temp to target collection.:)
                         (:NB: To avoid potential problems with xmldb:move(), xmldb:store() and xmldb:remove() are used.
