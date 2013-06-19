@@ -497,8 +497,6 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
         if (not($item/vra:image/@id))
             then <a class="upload-file-style"  directory="false" href="#{$id}" onclick="updateAttachmentDialog"><img title="Upload Attachment" src="theme/images/database_add.png" /> </a>
         else ()
-    let $log := util:log("DEBUG", ("##$collection): ", node-name($item)))
-
     return
         <div class="actions-toolbar">
             <a target="_new" href="source.xql?id={$id}&amp;clean=yes">
