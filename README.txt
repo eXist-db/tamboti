@@ -2,13 +2,11 @@ Notes for Developers -
 
 Icon stock is from - http://www.famfamfam.com/lab/icons/silk/
 
-JQuery processing framework is found in src/org/exist/xquery/lib
-
 To install:
 
-cd into the tamboti directory and call ant; a file, tamboti-1.0.xar, is created.
+cd into the tamboti directory and call ant; a file, tamboti-X.XX.xar, is created.
 
-log in as admin to eXist, go to the Package Reposistory, choose tamboti-1.0.xar and upload it.
+log in as admin to eXist, go to the Package Reposistory, choose tamboti-X.XX.xar and upload it.
 
 click "Install" and access tamboti at <http://localhost:8080/exist/apps/library/> or <http://localhost:8080/exist/apps/tamboti/>.
 
