@@ -45,6 +45,7 @@ mods-common:format-subjects()
 
 Title-related functions:
 mods-common:get-short-title()
+mods-common:title-full()
 
 Related Items-related functions:
 mods-common:format-related-item()
@@ -362,7 +363,10 @@ let $type :=
     	        	string-join(($partNumber, $partName), ': ')
     	        	)
             else $title
-        return util:parse(concat('&lt;span>', $title, '</span>'))
+        let $title := mods-common:clean-up-punctuation(<span xmlns="http://www.w3.org/1999/xhtml" class="title">{$title}</span>)
+        let $title := util:parse(concat('&lt;span>', $title, '</span>'))
+        return
+            $title
             }
         
         </td>
@@ -1774,8 +1778,10 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
 						        else ()
 	let $dateOriginInfo := mods-common:get-date($dateOriginInfo)
 	
-    (: this iterate over part, since there are e.g. multi-part installments of articles. :)
-    let $parts := $entry/mods:part
+    (: this iterates over part, since there are e.g. multi-part installments of articles. :)
+    (:NB: a dummy part is introduced to allow output from entries with no part.:) 
+    let $parts := 
+        if ($entry/mods:part) then $entry/mods:part else <mods:part>dummy</mods:part>
     for $part at $i in $parts
     return
 
@@ -1812,7 +1818,7 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
     (: contains no subelements. :)
     (: has no attributes. :)
     
-    return
+    let $part-and-origin :=
         (: If there is a part with issue information and a date, i.e. if the publication is an article in a periodical. :)
         if ($datePart and ($volume or $issue or $extent or $page)) 
         then 
@@ -1844,7 +1850,6 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
 				,	
 				(: NB: We assume that there will not be both $page and $extent.:)
 				if ($extent) 
-				(:NB: iterate.:)
 				then concat(': ', mods-common:get-extent($extent[1]), if ($i eq count($parts)) then '.' else '; ')
 				else
 					if ($page) 
@@ -1937,6 +1942,7 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
                 then concat(' ', $text)
                 else ()
                 )
+            return $part-and-origin
 };
 
 

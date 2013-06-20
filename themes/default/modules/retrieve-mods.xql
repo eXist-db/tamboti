@@ -637,7 +637,7 @@ declare function retrieve-mods:format-list-view($position as xs:string, $entry a
             then ''
             else '.'
         else ()
-      , ' '
+        , ' '
         ,
         (: The conference of the primary publication, containing originInfo and part information. :)
         if ($entry/mods:name[@type eq 'conference']) 
@@ -646,11 +646,11 @@ declare function retrieve-mods:format-list-view($position as xs:string, $entry a
         else 
             (:The series that the primary publication occurs in is spliced in between the secondary names and the originInfo.:)
             (:NB: Should not be  italicised.:)
-            if ($entry/mods:relatedItem[@type eq'series'])
+            if ($entry/mods:relatedItem[@type eq 'series'])
             then ('. ', <span xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-span">{mods-common:get-related-items($entry, 'list', $global-language, $collection-short)}</span>)
             else ()
-            ,
-            mods-common:get-part-and-origin($entry)
+        ,
+        mods-common:get-part-and-origin($entry)
         ,
         (: The periodical, edited volume or series that the primary publication occurs in. :)
         (: if ($entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:extent or $entry/mods:relatedItem[@type=('host','series')]/mods:part/mods:detail/mods:number/text()) :)
