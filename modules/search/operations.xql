@@ -129,36 +129,24 @@ declare function op:remove-collection($collection as xs:string) as element(statu
 : @resource-id is the uuid of the MODS or VRA record
 :)
 declare function op:remove-resource($resource-id as xs:string) as element(status)* {
-    let $log := util:log("DEBUG", ("##$resource-id): ", $resource-id))
     let $mods-doc := collection($config:mods-root-minus-temp)//mods:mods[@ID eq $resource-id]
     let $xlink := concat('#', $resource-id)
     (:since xlinks are also inserted manually, check also for cases when the pound sign has been forgotten:)
     let $mods-xlink-recs := collection($config:mods-root-minus-temp)//mods:relatedItem[@xlink:href = ($xlink, $resource-id)]
     (:let $base-uri := concat(util:collection-name($doc), '/', util:document-name($doc)):)
+    (:NB: we assume that @relids (plural) can hold several values:)
     
-    let $vra-work := collection($config:mods-root-minus-temp)//vra:work[@id eq $resource-id]
-    let $log := util:log("DEBUG", ("##$vra-work): ", $vra-work))
-    let $vra-images := collection($config:mods-root-minus-temp)//vra:image[vra:relationSet/vra:relation/@relids eq $resource-id]/@id
-    let $log := util:log("DEBUG", ("##$vra-images-count-1): ", count($vra-images)))
-    let $log := util:log("DEBUG", ("##$vra-images-1): ", string-join($vra-images, ' ||| ')))
-    let $vra-images := 
-        for $vra-image in $vra-images
-        (:let $image-id := collection($config:mods-root)//vra:image[@id=$entry/@relids]:)
-        let $image-id := collection($config:mods-root)//vra:image[@id eq $vra-image]
-        return
-            $vra-image
-    let $log := util:log("DEBUG", ("##$vra-images-count-2): ", count($vra-images)))
-    let $log := util:log("DEBUG", ("##$vra-images-2): ", string-join($vra-images, ' ||| ')))
-    let $vra-binaries :=
-        for $vra-image in $vra-images
-        return $vra-image/vra:image/@href 
-    let $log := util:log("DEBUG", ("##$vra-binaries): ", string($vra-binaries)))
-    
+    let $vra-work := collection($config:mods-root-minus-temp)//vra:vra/vra:work[@id eq $resource-id]
+    let $vra-images := collection($config:mods-root-minus-temp)//vra:vra[vra:image/vra:relationSet/vra:relation[contains(@relids, $resource-id)]]
+    (:NB: we assume that all image files are in the same collection as their metadata and that all image records belonging to a work record are in the same collection:)
+    let $vra-image-collection := util:collection-name($vra-images[1])
+    let $vra-binary-names := $vra-images/vra:image/@href    
     let $vra-docs := ($vra-work, $vra-images)
     
     let $docs := if ($mods-doc) then $mods-doc else $vra-docs 
-    for $doc in $docs return
     
+    for $doc in $docs return
+(:    
     let $location := util:collection-name($doc)
     let $name := util:document-name($doc)
     let $last-modified := xmldb:last-modified($location, $name)
@@ -180,8 +168,10 @@ declare function op:remove-resource($resource-id as xs:string) as element(status
         <deletion-time>{$time}</deletion-time>
         <deleting-user>{$user}</deleting-user>
     </record>
-    (:let $log := util:log("DEBUG", ("##$record): ", $record)):)
-    return (
+
+    return
+:) 
+    (
         (:do not remove records which erroneously have the same ID:)
         (:NB: inform user that this is the case:)
         if (count($doc) eq 1)
@@ -193,8 +183,21 @@ declare function op:remove-resource($resource-id as xs:string) as element(status
                     xmldb:remove(util:collection-name($doc), util:document-name($doc))
             else ()
         else()
-        (:,
-        update insert $record into doc('/db/resources/temp/deletions.xml')/records:),
+        (:
+        ,
+        update insert $record into doc('/db/resources/temp/deletions.xml')/records
+        :)
+        ,
+        if (count($vra-binary-names) gt 0) then
+            for $vra-binary-name in $vra-binary-names
+                return
+                    (:NB: since this iterates inside another iteration, files are attempted deleted which have been deleted already, causing the script to halt. However,:)
+                    (:the existence of the file to be deleted should first be checked, in order to prevent the function from halting in case the file does not exist.:)
+                    if (util:binary-doc-available(concat($vra-image-collection, '/', $vra-binary-name))) then
+                    xmldb:remove($vra-image-collection, $vra-binary-name)
+                    else ()
+        else ()
+        ,
         <status id="removed">{$resource-id}</status>
     )
 };
@@ -301,11 +304,11 @@ declare function op:get-move-folder-list($chosen-collection as xs:anyURI) as ele
             return (op:get-child-collection-paths($available-collection-path),
             sharing:get-shared-collection-roots(true()))
             for $path in distinct-values($move-folder-list)
-            let $log := util:log("DEBUG", ("##$path): ", $path))
+            (:let $log := util:log("DEBUG", ("##$path): ", $path))
             let $log := util:log("DEBUG", ("##$chosen-collection): ", $chosen-collection))
             let $log := util:log("DEBUG", ("##$starts-with): ", starts-with($path, $chosen-collection)))
             let $log := util:log("DEBUG", ("##$home): ", security:get-home-collection-uri(security:get-user-credential-from-session()[1])))
-            let $log := util:log("DEBUG", ("##$shared): ", sharing:get-shared-collection-roots(true())))
+            let $log := util:log("DEBUG", ("##$shared): ", sharing:get-shared-collection-roots(true()))):)
 
                 let $display-path := substring-after($path, '/db/')
                 let $user := xmldb:get-current-user()
