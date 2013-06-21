@@ -183,12 +183,16 @@ declare function local:basic-get-http($uri,$username,$password) {
   return httpclient:get(xs:anyURI($uri),false(), $headers)
 };
 declare function local:return-thumbnail($image){
+(:
 let $image-name := $image/@href
 let $image-suffix := fn:tokenize($image-name,'.')[2]
 let $image-url := <img src="{
                         concat('data:image/',$image-suffix,';base64,',local:basic-get-http(concat(request:get-scheme(),'://',request:get-server-name(),':',request:get-server-port(),request:get-context-path(),'/rest', util:collection-name($image),"/" ,$image-name),$bs:USER,$bs:USERPASS)
                         )
                         }"  width="200px"/>
+:)
+let $image-url := <img src="http://kjc-ws2.kjc.uni-heidelberg.de/images/service/download_uuid/{$image/@id}?width=150" alt="" class="relatedImage"/>
+
 return $image-url
 };
 
@@ -207,7 +211,7 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
             else '/vra:image/@id'
     let $stored := session:get-attribute("personal-list")
     let $saved := exists($stored//*[@id = $id])
-    let $vra-work :=  collection($config:mods-root)//vra:work[@id=$id]/vra:relationset/vra:relation
+    let $vra-work :=  collection($config:mods-root)//vra:work[@id=$id]/vra:relationSet/vra:relation
     
     return
         <tr class="pagination-item detail" xmlns="http://www.w3.org/1999/xhtml">
@@ -506,18 +510,16 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
                 (: if the item's collection is writable, display edit/delete and move buttons :)
                 if ($isWritable) 
                 then (
-                    if (xmldb:collection-available("/apps/ziziphus/") and name($item) eq 'vra')
+                    if (xmldb:collection-available("/apps/ziziphus/"))
                     then (
                      <a target="_new" href="/exist/apps/ziziphus/record.html?id={$id}&amp;workdir={$workdir}">
-                        <img title="Edit VRA Record" src="theme/images/page_edit.png"/>
+                        <img title="Open Record in Ziziphus Editor" src="theme/images/ziziphus_edit.png"/>
                      </a>
                     ) else (),
-                    if (name($item) eq 'mods')
-                    then
-                    <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}&amp;type={$item/mods:extension/*:template}">
-                        <img title="Edit MODS Record" src="theme/images/page_edit.png"/>
+                    (:remove '-compact' from type, used previously.:)
+                    <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}&amp;type={replace($item/mods:extension/*:template, '-compact', '')}">
+                        <img title="Edit Record" src="theme/images/page_edit.png"/>
                     </a>
-                    else ()
                     ,
                     <a class="remove-resource" href="#{$id}"><img title="Delete Record" src="theme/images/delete.png"/></a>,
                     <a class="move-resource" href="#{$id}"><img title="Move Record" src="theme/images/shape_move_front.png"/></a>,

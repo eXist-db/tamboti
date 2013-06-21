@@ -12,16 +12,17 @@ declare namespace functx = "http://www.functx.com";
 declare namespace vra="http://www.vraweb.org/vracore4.htm";
 declare namespace mods="http://www.loc.gov/mods/v3";
 
-
+(:
 declare variable $user := $config:dba-credentials[1];
 declare variable $userpass := $config:dba-credentials[2];
 
-(:
+
 declare variable $user := xmldb:get-current-user();
 declare variable $userpass := security:get-user-credential-from-session()[1];
-declare variable $user :='editor';
-declare variable $userpass :='editor';
 :)
+declare variable $user :='admin';
+declare variable $userpass :='';
+
 declare variable $logged-user := xmldb:get-current-user();
 
 declare variable $rootdatacollection:='/db/resources/';
@@ -81,9 +82,9 @@ let $vra-content := <vra xmlns="http://www.vraweb.org/vracore4.htm" xmlns:ext="h
                  <image id="{$uuid}" source="Tamboti" refid="" href="{$file-uuid}">
                      <titleSet><display/><title type="generalView">
                      {xmldb:decode(concat('Image record ',$title))}</title></titleSet>  
-                     <relationset>
+                     <relationSet>
              <relation type="imageOf" relids="{$workrecord}" refid="" source="Tamboti">attachment</relation>
-                </relationset>
+                </relationSet>
              </image> </vra>
 return $vra-content
 };
@@ -114,6 +115,51 @@ declare function upload:mkcol-recursive($collection, $components) {
 declare function upload:mkcol($collection, $path) {
     upload:mkcol-recursive($collection, tokenize($path, "/"))[last()]
 };
+
+declare function local:recurse-items($collection-path as xs:string, $username as xs:string, $mode as xs:string) {
+   local:apply-perms($collection-path, $username, $mode),
+   for $child in xmldb:get-child-resources($collection-path)
+
+   let $resource-path := fn:concat($collection-path, "/", $child) return
+
+       local:apply-perms($resource-path, $username, $mode)
+   ,
+
+
+   for $child in xmldb:get-child-collections($collection-path)
+   let $child-collection-path := fn:concat($collection-path, "/", $child) return
+      local:recurse-items($child-collection-path, $username, $mode)
+};
+
+declare function local:apply-perms($path as xs:string, $username as xs:string, $mode as xs:string) {
+
+   sm:add-user-ace(xs:anyURI($path), $username,true(), $mode)    
+
+};
+
+
+
+
+
+declare function local:recurse-items($collection-path as xs:string, $username as xs:string, $mode as xs:string) {
+   local:apply-perms($collection-path, $username, $mode),
+
+   for $child in xmldb:get-child-resources($collection-path)
+   let $resource-path := fn:concat($collection-path, "/", $child) return
+       local:apply-perms($resource-path, $username, $mode)
+   ,
+   for $child in xmldb:get-child-collections($collection-path)
+    let $child-collection-path := fn:concat($collection-path, "/", $child) return
+    local:recurse-items($child-collection-path, $username, $mode)
+
+};
+
+declare function local:apply-perms($path as xs:string, $username as xs:string, $mode as xs:string) {
+    sm:add-user-ace(xs:anyURI($path), $username,true(), $mode)    
+
+};
+
+
 
 declare function upload:upload( $filetype , $filesize,  $filename, $data, $doc-type, $workrecord) {
      let $myuuid := concat('i_',util:uuid())
@@ -166,7 +212,16 @@ declare function upload:upload( $filetype , $filesize,  $filename, $data, $doc-t
                 (:save binary file:)
                 let $upload := xmldb:store($newcol, $file-uuid,$data)
                 
-                let $none := security:apply-parent-collection-permissions(xs:anyURI($newcol))
+                (::let $none := security:apply-parent-collection-permissions(xs:anyURI($newcol)):)
+                let $none := sm:chown(xs:anyURI(concat($newcol,'/', $file-uuid)),'editor')
+                let $none := sm:chmod(xs:anyURI(concat($newcol,'/', $file-uuid)),'rwxrwxr-x')
+                let $none := sm:chgrp(xs:anyURI(concat($newcol,'/', $file-uuid)),'biblio.users')
+                
+                
+                let $none := sm:chown(xs:anyURI(concat($newcol,'/', $xml-uuid)),'editor' )
+                let $none := sm:chmod(xs:anyURI(concat($newcol,'/', $xml-uuid)),'rwxrwxr-x')
+                let $none := sm:chgrp(xs:anyURI(concat($newcol,'/', $xml-uuid)),'biblio.users')
+                
                 let $none := security:apply-parent-collection-permissions(xs:anyURI(concat($newcol,'/', $file-uuid)))
                 let $none := security:apply-parent-collection-permissions(xs:anyURI(concat($newcol,'/', $xml-uuid)))
                 (:
@@ -200,7 +255,7 @@ declare function upload:upload( $filetype , $filesize,  $filename, $data, $doc-t
     then (
     let $vra_insert := <vra:relation type="imageIs" relids="{$myuuid}" source="Tamboti" refid="" >general view</vra:relation>
    
-    let $relationTag := $parentdoc/vra:vra/vra:work/vra:relationset
+    let $relationTag := $parentdoc/vra:vra/vra:work/vra:relationSet
     return
         let $vra-insert := $parentdoc
        let $insert_or_updata := 
@@ -208,14 +263,14 @@ declare function upload:upload( $filetype , $filesize,  $filename, $data, $doc-t
            then( 
             if (sm:has-access($parentdoc_path,'w'))
                 then
-                update insert  <vra:relationset></vra:relationset> into $vra-insert/vra:vra/vra:work
+                update insert  <vra:relationSet></vra:relationSet> into $vra-insert/vra:vra/vra:work
                 else (
                 util:log('error','no write access')
                 )
            )
        else()
            
-       let $vra-update := update insert  $vra_insert into $parentdoc/vra:vra/vra:work/vra:relationset
+       let $vra-update := update insert  $vra_insert into $parentdoc/vra:vra/vra:work/vra:relationSet
        return  $vra-update
     )
     else if ($parent_type eq 'mods')

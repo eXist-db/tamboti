@@ -28,16 +28,7 @@ let $result_set := if (not($results)) then <xml>image uuid not found</xml> else 
 
 
 :)
- 
- declare function upload:get-collection($uuid){
-    
-    let $vra_image := collection($rootdatacollection)//vra:image[@id=$uuid]
-    let $col := if (exists($vra_image))
-    then 
-    util:collection-name($vra_image/@id)
-    else(
-    
-    (:
+ (:
     let $mods := collection($rootdatacollection)//mods:mods[@ID=$uuid]/@ID
     
     let $mods_col := if (exists($mods))
@@ -52,12 +43,21 @@ let $result_set := if (not($results)) then <xml>image uuid not found</xml> else 
      )
     return $mods_col
      :)
-     )
-     
-         return <json:value>
+ 
+ declare function upload:get-collection($uuid){
+    system:as-user($user, $userpass, (
+    let $vra_image := collection($rootdatacollection)//vra:image[@id=$uuid]
+    let $col := if (exists($vra_image))
+    then 
+    util:collection-name($vra_image/@id)
+    else()
+    return <json:value>
                 <collection>{$col}</collection>
                 <filename>{data($vra_image/@href)}</filename>
             </json:value>
+            )
+     )
+            
 }; 
 (:
 let $x := system:as-user($user, $userpass,xmldb:reindex($rootdatacollection))
