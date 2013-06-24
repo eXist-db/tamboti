@@ -49,6 +49,7 @@ mods-common:title-full()
 
 Related Items-related functions:
 mods-common:format-related-item()
+mods-common:get-related-items()
 
 Place, Date, Extent-related functions:
 mods-common:get-part-and-origin()
@@ -56,10 +57,6 @@ mods-common:get-publisher()
 mods-common:get-place()
 mods-common:get-date()
 mods-common:get-extent()
-
-Related Items-related functions:
-mods-common:get-related-items()
-
 
 :)
 
@@ -1701,7 +1698,7 @@ declare function mods-common:format-related-item($relatedItem as element(mods:re
 : information relating to where a publication has been published and 
 : where in a container publication (periodical, edited volume) another publication occurs.
 : The function seeks to approach the Chicago style.
-: The problem here is that information derived from different MODS elements, mods:originInfo and mods:part, are intermingled.
+: The function intermingles information derived from different MODS elements, mods:originInfo and mods:part.
 : The information occurs after the title and after any secondary names.
 : For a book, the information is presented as follows: {Place}: {Publisher}, {Date}. There is no information derived from mods:part.
 : For an article in a periodical, the information is presented as follows: {Volume}, no. {Issue} ({Date}), {Extent}.
@@ -1715,13 +1712,12 @@ declare function mods-common:format-related-item($relatedItem as element(mods:re
 : @param $entry A MODS record or a relatedItem
 : @return a string
 :)
-(: NB: This function should be split up in a part and an originInfo function.:)
-(: NB: where is the relatedItem type? :)
 declare function mods-common:get-part-and-origin($entry as element()) as xs:string* {
     let $originInfo := $entry/mods:originInfo[1]
     (: contains: place, publisher, dateIssued, dateCreated, dateCaptured, dateValid, 
        dateModified, copyrightDate, dateOther, edition, issuance, frequency. :)
     (: has: lang; xml:lang; script; transliteration. :)
+    let $issuance := $originInfo/mods:issuance[1]
     let $place := $originInfo/mods:place[1]
     (: contains: placeTerm. :)
     (: has no attributes. :)
@@ -1753,6 +1749,7 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
     let $dateOther := $originInfo/mods:dateOther[1]
     (: contains no subelements. :)
     (: has: encoding; point; keyDate; qualifier. :)
+    
     (: pick the "strongest" value for the hitlist. :)
     let $dateOriginInfo :=
         if ($dateIssued) 
@@ -1781,7 +1778,9 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
     (: this iterates over part, since there are e.g. multi-part installments of articles. :)
     (:NB: a dummy part is introduced to allow output from entries with no part.:) 
     let $parts := 
-        if ($entry/mods:part) then $entry/mods:part else <mods:part>dummy</mods:part>
+        if ($entry/mods:part) 
+        then $entry/mods:part 
+        else <mods:part>dummy</mods:part>
     for $part at $i in $parts
     return
 
@@ -1790,16 +1789,16 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
     let $detail := $part/mods:detail
     (: contains: number, caption, title. :)
     (: has: type, level. :)
-        let $series := $detail[@type eq 'series']/mods:number[1]
-        let $issue := $detail[@type = ('issue', 'number', 'part')]/mods:number[1]
-        let $volume := 
-        	if ($detail[@type eq 'volume']/mods:number)
-        	then $detail[@type eq 'volume']/mods:number[1]
-			(: NB: "text" is allowed to accommodate erroneous Zotero export. Only "number" is valid. :)
-        	else $detail[@type eq 'volume']/mods:text[1]
-        (: NB: Does $page exist? :)
-        let $page := $detail[@type eq 'page']/mods:number
-        (: $page resembles list. :)
+    let $series := $detail[@type eq 'series']/mods:number[1]
+    let $issue := $detail[@type = ('issue', 'number', 'part')]/mods:number[1]
+    let $volume := 
+        if ($detail[@type eq 'volume']/mods:number)
+        then $detail[@type eq 'volume']/mods:number[1]
+		(: NB: "text" is allowed to accommodate erroneous Zotero export. Only "number" is valid. :)
+        else $detail[@type eq 'volume']/mods:text[1]
+    (: NB: Does $page exist? :)
+    let $page := $detail[@type eq 'page']/mods:number[1]
+    (: $page resembles list. :)
     
     let $extent := $part/mods:extent[1]
     (: contains: start, end, total, list. :)
@@ -1819,8 +1818,8 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
     (: has no attributes. :)
     
     let $part-and-origin :=
-        (: If there is a part with issue information and a date, i.e. if the publication is an article in a periodical. :)
-        if ($datePart and ($volume or $issue or $extent or $page)) 
+        (: If there is a part with issue information and a date and the issuance is continuing, i.e. if the publication is an article in a periodical. :)
+        if ($datePart and ($volume or $issue or $extent or $page) and $issuance eq 'continuing') 
         then 
             concat(
             ' '
@@ -1838,27 +1837,27 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
             else
             	if ($volume or $issue)
             	then
-                    (: If the year is used as volume. :)
+                    (: If the year is used as volume, as e.g. in Chinese periodicals. :)
 	                if ($issue)
 	                then concat(' ', $datePart, ', no. ', $issue)
 	                else concat($volume, concat(' (', string-join($datePart, ', '), ')'))
 				else
 					if ($extent and $datePart)
-				    (: We have no volume or issue, but date and extent alone. :)
+				    (: We have no volume or issue, but date and extent alone (i.e. an incomplete entry). :)
 					then concat(' ', $datePart)
 					else ()
 				,	
 				(: NB: We assume that there will not be both $page and $extent.:)
 				if ($extent) 
-				then concat(': ', mods-common:get-extent($extent[1]), if ($i eq count($parts)) then '.' else '; ')
+				then concat(': ', mods-common:get-extent($extent), if ($i eq count($parts)) then '.' else '; ')
 				else
 					if ($page) 
-					then concat(': ', $page[1], '.')
+					then concat(': ', $page, '.')
 					else '.'
             )
         else
             (: If there is no issue, but a dateOriginInfo (loaded in $datePart) and a place or a publisher, i.e. if the publication is an an edited volume. :)
-            if ($datePart and ($place or $publisher)) 
+            if ($datePart and ($place or $publisher) and not($issue)) 
             then
                 (
                 if ($volume) 
@@ -1935,7 +1934,7 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
                 (: If it is a series:)
                 (: NB: elaborate! :)
                 if ($volume)
-	            then concat(', Vol. ', $volume, '.')
+	            then concat(', Vol. ', $volume)
 	            else ()
                 ,
                 if ($text)
