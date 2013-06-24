@@ -144,16 +144,17 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
                 <td class="collection-label">{$type}</td>
                 <td>{
                     for $relid in $relids
-                    let $type := substring($relid, 1, 1)
-                    let $type := 
-                        if ($type eq 'i')
-                        then 'Image'
-                        else
-                            if ($type eq 'w')
-                            then 'Work'
-                            else 'Collection'
-                    return
-                    <a href="{$relid}">{$type}</a>
+                        let $type := substring($relid, 1, 1)
+                        let $type := 
+                            if ($type eq 'i')
+                            then 'Image'
+                            else
+                                if ($type eq 'w')
+                                then 'Work'
+                                else 'Collection'
+                        let $relid := concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $relid)
+                        return
+                            <a href="{$relid}">{$type}</a>
                     }
                 </td>
             </tr>
