@@ -798,6 +798,8 @@ declare function biblio:login($node as node(), $params as element(parameters)?, 
             if ($user eq 'admin')
             then 
                 (
+                    <div class="help"><a href="../../docs/index.xml">Help</a></div>
+                    ,   
                     <div class="help"><a id="optimize-trigger" href="#">Create custom indexes for sorting</a></div>
                     ,
                     <div class="login">Logged in as <span class="username">{let $human-name := security:get-human-name-for-user($user) return if (not(empty($human-name))) then $human-name else $user}</span>. <a href="?logout=1">Logout</a></div>

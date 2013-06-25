@@ -11,7 +11,7 @@ import module namespace uu="http://exist-db.org/mods/uri-util" at "../../../modu
 import module namespace mods-common="http://exist-db.org/mods/common" at "../../../modules/mods-common.xql";
 
 (:The $retrieve-mods:primary-roles values are lower-cased when compared.:)
-declare variable $retrieve-mods:primary-roles := ('aut', 'author', 'cre', 'creator', 'composer', 'cmp', 'artist', 'art', 'director', 'drt');
+declare variable $retrieve-mods:primary-roles := ('artist', 'art', 'author', 'aut', 'composer', 'cmp', 'composer', 'cmp', 'correspondent', 'crp', 'creator', 'cre', 'director', 'drt', 'interviewee', 'ive', 'photographer', 'ive', 'reporter', 'rpt');
 
 declare option exist:serialize "media-type=text/xml";
 

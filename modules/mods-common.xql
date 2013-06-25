@@ -1789,6 +1789,7 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
     let $detail := $part/mods:detail
     (: contains: number, caption, title. :)
     (: has: type, level. :)
+    let $section := $detail[@type eq 'section']/mods:number[1]
     let $series := $detail[@type eq 'series']/mods:number[1]
     let $issue := $detail[@type = ('issue', 'number', 'part')]/mods:number[1]
     let $volume := 
@@ -1817,8 +1818,10 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
     (: contains no subelements. :)
     (: has no attributes. :)
     
+    let $log := util:log("DEBUG", ("##$datePart): ", $datePart))
+
     let $part-and-origin :=
-        (: If there is a part with issue information and a date and the issuance is continuing, i.e. if the publication is an article in a periodical. :)
+        (: If there is a part with issue information and a date and the issuance is continuing, i.e. if the publication is an article in a periodical or a newspaper. :)
         if ($datePart and ($volume or $issue or $extent or $page) and $issuance eq 'continuing') 
         then 
             concat(
@@ -1842,18 +1845,23 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
 	                then concat(' ', $datePart, ', no. ', $issue)
 	                else concat($volume, concat(' (', string-join($datePart, ', '), ')'))
 				else
+					(: If e.g a newspaper article. :)
 					if ($extent and $datePart)
 				    (: We have no volume or issue, but date and extent alone (i.e. an incomplete entry). :)
 					then concat(' ', $datePart)
 					else ()
-				,	
-				(: NB: We assume that there will not be both $page and $extent.:)
-				if ($extent) 
-				then concat(': ', mods-common:get-extent($extent), if ($i eq count($parts)) then '.' else '; ')
-				else
-					if ($page) 
-					then concat(': ', $page, '.')
-					else '.'
+			,
+			if ($section)
+			then concat(' (', $section, ')')
+			else ()	
+			,
+			(: NB: We assume that there will not be both $page and $extent.:)
+			if ($extent) 
+			then concat(': ', mods-common:get-extent($extent), if ($i eq count($parts)) then '.' else '; ')
+			else
+				if ($page) 
+				then concat(': ', $page, '.')
+				else '.'
             )
         else
             (: If there is no issue, but a dateOriginInfo (loaded in $datePart) and a place or a publisher, i.e. if the publication is an an edited volume. :)
