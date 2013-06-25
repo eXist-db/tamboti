@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.0";
 
 (:TODO: change all 'monograph' to 'book' in tabs-data.xml and compact body files:)
 (:TODO: delete all '-compact' from ext:template in records, then delete all code that removes this from type in session.xql, edit.xql, tabs.xqm.:)
@@ -392,38 +392,27 @@ the only filtering that is performed is for transliteration.:)
 declare function local:get-tab-id($tab-id as xs:string, $type-request as xs:string) {
     (:Remove any 'latin' and 'transliterated' appended the original type request. :)
     (:Also remove "-compact" suffix used previously.:)
+    let $log := util:log("DEBUG", ("##$tab-id): ", $tab-id))
+    let $log := util:log("DEBUG", ("##$type-request): ", $type-request))
     let $type-request := replace(replace(replace($type-request, '-latin', ''), '-transliterated', ''), '-compact', '')
         return
             if ($tab-id ne 'compact-b')
             (:Only treat compact-b types.:)
             then $tab-id
             else
-        	    if ($type-request eq 'article-in-periodical')
-        	    then 'compact-b-article' 
-        	    else 
-        		    if ($type-request eq 'contribution-to-edited-volume')
-        		    then 'compact-b-edited-volume'
-        		    else
-            		    if ($type-request eq 'monograph')
-            		    then 'compact-b-monograph'
-            		    else
-                		    if ($type-request eq 'edited-volume')
-                		    then 'compact-b-monograph'
-                		    else
-                			    if ($type-request eq 'book-review')
-                			    then 'compact-b-review'
-                			    else 
-                				    if ($type-request eq 'suebs-tibetan')
-                				    then 'compact-b-suebs-tibetan'
-                				    else
-                    				    if ($type-request eq 'suebs-chinese')
-                    				    then 'compact-b-suebs-chinese'
-                    				    else
-                    				        if ($type-request eq 'mads')
-                    				        then 'mads'
-                    				        else 'compact-b-xlink'
-                    				        (:Used for records related to other records through an xlink:href.:)
-                    				        (:NB: Should be split up in three: article, book review and contribution.:)
+                switch ($type-request) 
+                    case "article-in-periodical" return "compact-b-article"
+                    case "newspaper-article" return "compact-b-newspaper-article"
+                    case "contribution-to-edited-volume" return "compact-b-edited-volume"
+                    case "monograph" return "compact-b-monograph"
+                    case "edited-volume" return "compact-b-monograph"
+                    case "book-review" return "compact-b-review"
+                    case "suebs-tibetan" return "compact-b-suebs-tibetan"
+                    case "suebs-chinese" return "compact-b-suebs-chinese"
+                    case "mads" return "mads"
+                        default return "compact-b-xlink"
+                        (:compact-b-xlink is used for records related to other records through an xlink:href.:)
+                        (:NB: Should be split up in three: article, book review and contribution.:)
 };
 
 (:Main:)

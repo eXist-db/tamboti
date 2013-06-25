@@ -56,6 +56,26 @@
                                     </span>
                                 </div>
                             </xf:group>
+                            <xf:group ref=".[instance('save-data')/mods:extension/ext:template='related-newspaper-article-latin'] | .[instance('save-data')/mods:extension/ext:template='related-newspaper-article-transliterated']">
+                                <div class="label-box">
+                                    <span class="legend">Location of Article in
+                                        Newspaper</span>
+                                    <span class="xforms-help">
+                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                        <div class="xforms-help-value">
+                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-relatedItem-periodical-compact',instance('code-tables'))/help"/>
+                                        </div>
+                                    </span>
+                                    <span class="add-delete-button">
+                                        <xf:trigger>
+                                            <xf:label>+</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:insert nodeset="instance('save-data')/mods:part" at="index('related-item-part-repeat')" position="before" origin="instance('compact-template')/mods:part"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </span>
+                                </div>
+                            </xf:group>
                             <xf:group ref=".[instance('save-data')/mods:extension/ext:template='related-contribution-to-edited-volume']">
                                 <div class="label-box extra-wide">
                                     <span class="legend">Location of Contribution in

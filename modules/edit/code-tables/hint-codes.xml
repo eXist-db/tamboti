@@ -1269,6 +1269,7 @@
             <parent/>
             <tab-id>compact-a</tab-id>
             <tab-id>compact-b-article</tab-id>
+            <tab-id>compact-b-newspaper-article</tab-id>
             <tab-id>compact-b-edited-volume</tab-id>
             <tab-id>compact-b-monograph</tab-id>
             <tab-id>identifier</tab-id>
@@ -1547,6 +1548,7 @@
             <local-name>more</local-name>
             <parent/>
             <tab-id>compact-b-article</tab-id>
+            <tab-id>compact-b-newspaper-article</tab-id>
             <tab-id>compact-b-edited-volume</tab-id>
             <tab-id>compact-b-monograph</tab-id>
             <tab-id>compact-b-review</tab-id>
@@ -1685,6 +1687,7 @@
             <local-name>name</local-name>
             <parent/>
             <tab-id>compact-b-article</tab-id>
+            <tab-id>compact-b-newspaper-article</tab-id>
             <tab-id>compact-b-review</tab-id>
         </item>
         <item xml:id="hint-code_name-compact">
@@ -1753,6 +1756,7 @@
             <local-name>name</local-name>
             <parent/>
             <tab-id>compact-b-article</tab-id>
+            <tab-id>compact-b-newspaper-article</tab-id>
             <tab-id>compact-b-review</tab-id>
         </item>
         <item xml:id="hint-code_subject-name-personal-compact">
@@ -1972,6 +1976,7 @@
             <parent/>
             <tab-id>compact-a</tab-id>
             <tab-id>compact-b-article</tab-id>
+            <tab-id>compact-b-newspaper-article</tab-id>
             <tab-id>compact-b-review</tab-id>
             <tab-id>compact-b-xlink</tab-id>
             <tab-id>title</tab-id>
@@ -2164,6 +2169,7 @@
             <local-name>part</local-name>
             <parent/>
             <tab-id>compact-b-article</tab-id>
+            <tab-id>compact-b-newspaper-article</tab-id>
             <tab-id>compact-b-review</tab-id>
             <tab-id>compact-b-xlink</tab-id>
         </item>
@@ -2561,6 +2567,7 @@
             <local-name>relatedItem</local-name>
             <parent/>
             <tab-id>compact-b-article</tab-id>
+            <tab-id>compact-b-newspaper-article</tab-id>
         </item>
         <item xml:id="hint-code_relatedItem-periodical-titleInfo-compact">
             <help>
@@ -2579,6 +2586,7 @@
             <local-name>relatedItem</local-name>
             <parent/>
             <tab-id>compact-b-article</tab-id>
+            <tab-id>compact-b-newspaper-article</tab-id>
         </item>
         <item xml:id="hint-code_other-location">
             <help>
@@ -3107,6 +3115,7 @@
             <parent/>
             <tab-id>compact-a</tab-id>
             <tab-id>compact-b-article</tab-id>
+            <tab-id>compact-b-newspaper-article</tab-id>
             <tab-id>compact-b-review</tab-id>
             <tab-id>compact-b-xlink</tab-id>
         </item>
@@ -3253,6 +3262,7 @@
             <parent/>
             <tab-id>compact-a</tab-id>
             <tab-id>compact-b-article</tab-id>
+            <tab-id>compact-b-newspaper-article</tab-id>
             <tab-id>compact-b-review</tab-id>
             <tab-id>compact-b-xlink</tab-id>
         </item>

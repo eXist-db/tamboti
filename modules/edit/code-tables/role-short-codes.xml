@@ -20,10 +20,7 @@
         <item>
             <label>commentator for written text</label>
             <value>cwt</value>
-        </item>
-        <item>
-            <label>composer</label>
-            <value>cmp</value>
+            <labelSecondary>commentary by</labelSecondary>
         </item>
         <item>
             <label>compiler</label>
@@ -31,25 +28,54 @@
             <labelSecondary>compiled by</labelSecondary>
         </item>
         <item>
+            <label>composer</label>
+            <value>cmp</value>
+        </item>
+        <item>
+            <label>correspondent</label>
+            <value>crp</value>
+        </item>
+        <item>
             <label>creator</label>
             <value>cre</value>
         </item>
         <item>
             <label>editor</label>
-            <labelSecondary>edited by</labelSecondary>
             <value>edt</value>
+            <labelSecondary>edited by</labelSecondary>
         </item>
         <item>
             <label>illustrator</label>
             <value>ill</value>
+            <labelSecondary>illustrated by</labelSecondary>
+        </item>
+        <item>
+            <label>interviewee</label>
+            <value>ive</value>
+        </item>
+        <item>
+            <label>interviewer</label>
+            <value>ivr</value>
+            <labelSecondary>interviewed by</labelSecondary>
         </item>
         <item>
             <label>photographer</label>
             <value>pht</value>
+            <labelSecondary>photography by</labelSecondary>
+        </item>
+        <item>
+            <label>reporter</label>
+            <value>rpt</value>
         </item>
         <item>
             <label>reviewer</label>
             <value>rev</value>
+            <labelSecondary>reviewed by</labelSecondary>
+        </item>
+        <item>
+            <label>thesis advisor</label>
+            <value>ths</value>
+            <labelSecondary>thesis advisor</labelSecondary>
         </item>
         <item>
             <label>translator</label>

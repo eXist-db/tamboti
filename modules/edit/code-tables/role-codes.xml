@@ -9,8 +9,8 @@
     <tab-id>related-abbreviated</tab-id>
     <items>
         <item>
-            <value/>
             <label>(none selected)</label>
+            <value/>
         </item>
         <item>
             <label>artist</label>
@@ -25,13 +25,17 @@
             <value>cwt</value>
         </item>
         <item>
+            <label>compiler</label>
+            <value>com</value>
+            <labelSecondary>compiled by</labelSecondary>
+        </item>
+        <item>
             <label>composer</label>
             <value>cmp</value>
         </item>
         <item>
-            <label>compiler</label>
-            <value>com</value>
-            <labelSecondary>compiled by</labelSecondary>
+            <label>correspondent</label>
+            <value>crp</value>
         </item>
         <item>
             <label>creator</label>
@@ -47,8 +51,28 @@
             <value>ill</value>
         </item>
         <item>
+            <label>interviewee</label>
+            <value>ive</value>
+        </item>
+        <item>
+            <label>interviewer</label>
+            <value>ivr</value>
+        </item>
+        <item>
             <label>photographer</label>
             <value>pht</value>
+        </item>
+        <item>
+            <label>reporter</label>
+            <value>rpt</value>
+        </item>
+        <item>
+            <label>reviewer</label>
+            <value>rev</value>
+        </item>
+        <item>
+            <label>thesis advisor</label>
+            <value>ths</value>
         </item>
         <item>
             <label>translator</label>
@@ -109,10 +133,7 @@
             <label>associated name</label>
             <value>asn</value>
         </item>
-        <item>
-            <label>attributed name</label>
-            <value>att</value>
-        </item>
+        <!--<item> <label>attributed name</label> <value>att</value> </item>-->
         <item>
             <label>auctioneer</label>
             <value>auc</value>
@@ -137,10 +158,7 @@
             <label>author of screenplay, etc.</label>
             <value>aus</value>
         </item>
-        <item>
-            <label>bibliographic antecedent</label>
-            <value>ant</value>
-        </item>
+        <!--<item> <label>bibliographic antecedent</label> <value>ant</value> </item>-->
         <item>
             <label>binder</label>
             <value>bnd</value>
@@ -297,10 +315,7 @@
             <label>corrector</label>
             <value>crr</value>
         </item>
-        <item>
-            <label>correspondent</label>
-            <value>crp</value>
-        </item>
+        <!--<item> <label>correspondent</label> <value>crp</value> </item>-->
         <item>
             <label>costume designer</label>
             <value>cst</value>
@@ -374,10 +389,7 @@
             <label>dissertant</label>
             <value>dis</value>
         </item>
-        <item>
-            <label>distribution place</label>
-            <value>dbp</value>
-        </item>
+        <!--<item> <label>distribution place</label> <value>dbp</value> </item>-->
         <item>
             <label>distributor</label>
             <value>dst</value>
@@ -475,14 +487,7 @@
             <label>instrumentalist</label>
             <value>itr</value>
         </item>
-        <item>
-            <label>interviewee</label>
-            <value>ive</value>
-        </item>
-        <item>
-            <label>interviewer</label>
-            <value>ivr</value>
-        </item>
+        <!--<item> <label>interviewee</label> <value>ive</value> </item> <item> <label>interviewer</label> <value>ivr</value> </item>-->
         <item>
             <label>inventor</label>
             <value>inv</value>
@@ -731,10 +736,7 @@
             <label>renderer</label>
             <value>ren</value>
         </item>
-        <item>
-            <label>reporter</label>
-            <value>rpt</value>
-        </item>
+        <!--<item> <label>reporter</label> <value>rpt</value> </item>-->
         <item>
             <label>repository</label>
             <value>rps</value>
@@ -771,10 +773,7 @@
             <label>restager</label>
             <value>rsg</value>
         </item>
-        <item>
-            <label>reviewer</label>
-            <value>rev</value>
-        </item>
+        <!--<item> <label>reviewer</label> <value>rev</value> </item>-->
         <item>
             <label>rubricator</label>
             <value>rbr</value>
@@ -843,8 +842,8 @@
             <label>storyteller</label>
             <value>stl</value>
         </item>
+        <!--<item><label>subscriber</label> <value>sht</value> <use>Use for the named entity responsible for purchasing or pledging to purchase an item in advance of its publication. </use> </item> <item>-->
         <item>
-            <!-- <label>subscriber</label> <value>sht</value> <use>Use for the named entity responsible for purchasing or pledging to purchase an item in advance of its publication. </use> </item> <item> -->
             <label>supporting host</label>
             <value>sht</value>
         </item>
@@ -860,10 +859,7 @@
             <label>technical director</label>
             <value>tcd</value>
         </item>
-        <item>
-            <label>thesis advisor</label>
-            <value>ths</value>
-        </item>
+        <!--<item> <label>thesis advisor</label> <value>ths</value> </item>-->
         <item>
             <label>transcriber</label>
             <value>trc</value>

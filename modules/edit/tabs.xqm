@@ -15,13 +15,13 @@ declare function mods:tabs($tab-id as xs:string, $record-id as xs:string, $data-
 (: Get the type and transliterationOfResource params from the URL. :)
 let $type := request:get-parameter("type", '')
 (: When a new Tamboti record is created, '-latin', and '-transliterated' are not appended, but in old Tamboti records they are. The easiest thing is to strip them, if there, and construct them again. :)
-(:It is unclear why space has to be normalized here; at least 'insert-templates' has space appended when received here.:) 
+(:NB: It is unclear why space has to be normalized here; at least 'insert-templates' has space appended when received here.:) 
 let $type := normalize-space(replace(replace(replace($type, '-latin', ''), '-transliterated', ''), '-compact', ''))
 let $transliterationOfResource := request:get-parameter("transliterationOfResource", "")
 (: Construct the full types. :)
 let $type := 
         if ($type = ('related-book-review-in-periodical', 'related-article-in-periodical', 'related-monograph-chapter','related-contribution-to-edited-volume','suebs-tibetan', 'suebs-chinese', 'insert-templates', 'new-instance', 'mads'))
-        (: These document types do not (yet) divide into latin and transliterated. :)
+        (: NB: These document types do not (yet) divide into latin and transliterated. :)
         then $type
         else
             if (contains($type, '-transliterated') or contains($type, '-latin')) 
@@ -35,7 +35,7 @@ let $type :=
                     else ()
 (: Get the top-tab-number param from the URL.
 If it is empty, it is because the record has just been initialised, because a record not made with Tamboti is loaded; 
-or because it is a non-basic template - set it to 2 to show Citation Forms/Title Information (and hide the Basic Input Forms tab). 
+or because it is a non-basic template. In these cases, set it to 2 to show Citation Forms/Title Information (and hide the Basic Input Forms tab). 
 Otherwise set it to 1 to show Basic Input Forms/Main Publication. :)
 let $top-tab-number := xs:integer(request:get-parameter("top-tab-number", 0))
 let $top-tab-number := 
@@ -100,7 +100,7 @@ return
                 let $tab-for-type := $tab/*[local-name() = $type]/text()
 				let $tab-count := count($tabs-data[top-tab-label/text() = $tab/top-tab-label/text()])
                 (: There are no containers for periodicals. :)
-                where $tab-for-type != ('periodical-latin', 'periodical-transliterated') or $top-tab-number gt 1
+                where $tab-for-type != ('periodical-latin', 'periodical-transliterated', 'newspaper-latin', 'newspaper-transliterated') or $top-tab-number gt 1
                 return
                 <td style="{
                     if ($tab-id eq $tab/tab-id) 
