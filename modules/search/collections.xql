@@ -139,10 +139,7 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
                 let $collection-path := fn:concat($config:mods-commons, "/", $child)
                 order by upper-case($child)
                 return
-                  if (security:can-read-collection($collection-path)) 
-                  then
                     <node>{col:get-collection($collection-path)/child::node()}</node>
-                    else ()
             return
             
                 (: root collection, containing home and group collection as children :)
@@ -296,6 +293,9 @@ declare function col:get-child-tree-nodes-recursive($base-collection as xs:strin
           else()
 };
 
+
+
+
 declare function col:get-child-tree-nodes-recursive-for-group($collections as xs:string*, $expanded-collections as xs:string*) as element(node)* { 
     for $collection in $collections
     let $base-collection := fn:replace($collection, fn:concat("(", $config:users-collection, "/[^/]*)/.*"), "$1")
@@ -346,9 +346,7 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
                     let $commons-child-children := col:get-child-tree-nodes-recursive($collection-path, $distinct-collection-paths[fn:starts-with(., $collection-path)], $expanded-collections)
                     order by upper-case($child)
                     return
-                   
                         <node>{col:get-collection($collection-path, $commons-child-children, fn:contains($expanded-collections, $collection-path))/child::node()}</node>
-                     
                 return
                 
                     (: root collection, containing home and group collection as children :)
@@ -356,6 +354,11 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
             else
                 ()
 };
+
+
+
+
+
 
 (:~
 : Request routing
@@ -365,7 +368,7 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
 : If there is no key we deliver the tree root
 :)
 if(request:get-parameter("key",()))then
-    let $collection-path := uu:escape-collection-path(request:get-parameter("key",())) return
+    let $collection-path := uu:unescape-collection-path(request:get-parameter("key",())) return
         if($collection-path eq $config:groups-collection) then
             (: start of groups collection - the groups collection is virtual and so receives special treatment :)
             col:get-groups-virtual-root()
@@ -382,9 +385,7 @@ else if(request:get-parameter("activeKey",()))then
                 uu:escape-collection-path($expanded-key)
         else()
     return
-        col:get-from-root-for-prev-state($config:mods-root, 
-        (:xmldb:encode-uri(request:get-parameter("activeKey",())),:)
-        uu:escape-collection-path(request:get-parameter("activeKey",())), uu:escape-collection-path(request:get-parameter("focusedKey",())), $expanded-collections)
+        col:get-from-root-for-prev-state($config:mods-root, uu:escape-collection-path(request:get-parameter("activeKey",())), uu:escape-collection-path(request:get-parameter("focusedKey",())), $expanded-collections)
 
 else
     (: no key, so its the root that we want :)
