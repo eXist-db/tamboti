@@ -374,7 +374,7 @@ declare function op:upload-file($name, $data ,$collection) {
 $collection := uu:escape-collection-path(request:get-parameter("collection", ())):)
 let $action := request:get-parameter("action", ())
 let $collection := request:get-parameter("collection", ())
-let $collection := if($collection)then xmldb:encode-uri($collection) else ()
+let $collection := if($collection)then xmldb:decode-uri($collection) else ()
 
 return
     if($action eq "create-collection")then
