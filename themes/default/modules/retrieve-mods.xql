@@ -267,7 +267,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
         </tr>
     ,
     (: location :)
-    for $location in $entry/mods:location
+    for $location in $entry/mods:location/(* except mods:url)
     return
         <tr xmlns="http://www.w3.org/1999/xhtml">
             <td class="label">Location</td>

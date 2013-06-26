@@ -1,4 +1,4 @@
-<mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
     <titleInfo>
         <nonSort/>
         <title/>
@@ -29,13 +29,14 @@
             <roleTerm type="code" authority="marcrelator">aut</roleTerm>
         </role>
     </name>
-    <originInfo/>
+    <originInfo>
+        <issuance>monographic</issuance>
+    </originInfo>
     <part/>
     <physicalDescription/>
     <targetAudience authority="marctarget">adult</targetAudience>
     <typeOfResource>text</typeOfResource>
-    <genre authority="marcgt">article</genre>
-    <genre authority="zotero">newspaperArticle</genre>
+    <genre>article</genre>
     <subject authority="" xlink:href="">
         <topic authority=""/>
         <geographic authority=""/>
@@ -59,63 +60,59 @@
     <tableOfContents lang="" script="" xlink:href=""/>
     <note lang="" type="content"/>
     <relatedItem type="host" xlink:href="">
+        <part>
+            <detail type="volume">
+                <number/>
+            </detail>
+            <detail type="issue">
+                <number/>
+            </detail>
+            <extent unit="pages">
+                <start/>
+                <end/>
+                <total/>
+                <list/>
+            </extent>
+            <date encoding="w3cdtf"/>
+        </part>
+    </relatedItem>
+    <relatedItem type="references" xlink:href="">
         <titleInfo>
             <nonSort/>
             <title/>
             <subTitle/>
+            <partNumber/>
+            <partName/>
         </titleInfo>
-        <titleInfo script="Latn" transliteration="" type="translated">
-            <nonSort/>
-            <title/>
-            <subTitle/>
-        </titleInfo>
-        <titleInfo lang="" script="Latn" type="translated">
-            <nonSort/>
-            <title/>
-            <subTitle/>
-        </titleInfo>
-        <name type="corporate" xlink:href="">
-            <namePart type=""/>
-            <namePart type=""/>
-            <namePart script="Latn" transliteration=""/>
-            <namePart script="Latn" transliteration=""/>
+        <name type="personal" xlink:href="">
+            <namePart type="given"/>
+            <namePart type="family"/>
             <role>
-                <roleTerm type="code" authority="marcrelator">edt</roleTerm>
+                <roleTerm type="code" authority="marcrelator">aut</roleTerm>
             </role>
         </name>
         <originInfo>
             <place>
                 <placeTerm type="text"/>
-                <placeTerm type="text" script="Latn" transliteration=""/>
             </place>
             <dateIssued encoding="w3cdtf"/>
+            <copyrightDate encoding="w3cdtf"/>
             <publisher/>
-            <publisher script="Latn" transliteration=""/>
-            <edition/>
-            <edition script="Latn" transliteration=""/>
-            <issuance>continuing</issuance>
+            <issuance>monographic</issuance>
         </originInfo>
-        <genre type="code" authority="marcgt">newspaper</genre>
-        <identifier type="issn"/>
-        <identifier type="doi"/>
-        <part>
-            <!--<detail type="volume">
-                <number/>
-            </detail>-->
-            <detail type="section">
-                <number/>
-            </detail>
-            <!--<detail type="issue">
-                <number/>
-            </detail>-->
-            <extent unit="pages">
-                <start/>
-                <end/>
-            </extent>
-            <date encoding="w3cdtf"/>
-        </part>
+        <part/>
+        <physicalDescription>
+            <extent unit="pages"/>
+        </physicalDescription>
+        <targetAudience authority="marctarget">adult</targetAudience>
+        <typeOfResource>text</typeOfResource>
+        <genre type="code" authority="marcgt">book</genre>
+        <classification authority="lcc"/>
+        <abstract lang="eng"/>
+        <tableOfContents lang="" script="" xlink:href=""/>
+        <note lang="" type=""/>
     </relatedItem>
-    <!--<identifier type="doi"/>-->
+    <identifier type="doi"/>
     <location>
         <url dateLastAccessed=""/>
     </location>

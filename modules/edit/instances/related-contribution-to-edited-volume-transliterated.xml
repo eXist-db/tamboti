@@ -37,7 +37,6 @@
     <targetAudience authority="marctarget">adult</targetAudience>
     <typeOfResource>text</typeOfResource>
     <genre authority="marcgt">article</genre>
-    <genre authority="zotero">newspaperArticle</genre>
     <subject authority="" xlink:href="">
         <topic authority=""/>
         <geographic authority=""/>
@@ -56,31 +55,26 @@
             <namePart/>
         </name>
     </subject>
-    <classification authority="lcc"/>
-    <abstract lang=""/>
+    <classification authority="lcc" displayLabel="" lang=""/>
+    <abstract/>
     <tableOfContents lang="" script="" xlink:href=""/>
-    <note lang="" type="content"/>
+    <note lang="" type=""/>
     <relatedItem type="host" xlink:href="">
         <part>
-            <!--<detail type="volume">
-                <number/>
-            </detail>-->
-            <detail type="section">
+            <detail type="volume">
                 <number/>
             </detail>
-            <!--<detail type="issue">
-                <number/>
-            </detail>-->
             <extent unit="pages">
                 <start/>
                 <end/>
+                <total/>
+                <list/>
             </extent>
             <date encoding="w3cdtf"/>
         </part>
     </relatedItem>
-    <!--<identifier type="doi"/>-->
-    <location>
-        <url dateLastAccessed=""/>
-    </location>
+    <identifier displayLabel="" type="local"/>
+    <location dateLastAccessed="" displayLabel="" note="" access="" usage=""/>
     <accessCondition/>
+    <note/>
 </mods>

@@ -20,8 +20,8 @@ let $type := normalize-space(replace(replace(replace($type, '-latin', ''), '-tra
 let $transliterationOfResource := request:get-parameter("transliterationOfResource", "")
 (: Construct the full types. :)
 let $type := 
-        if ($type = ('related-book-review-in-periodical', 'related-article-in-periodical', 'related-monograph-chapter','related-contribution-to-edited-volume','suebs-tibetan', 'suebs-chinese', 'insert-templates', 'new-instance', 'mads'))
-        (: NB: These document types do not (yet) divide into latin and transliterated. :)
+        if ($type = ('suebs-tibetan', 'suebs-chinese', 'insert-templates', 'new-instance', 'mads'))
+        (: NB: These document types do not divide into latin and transliterated. :)
         then $type
         else
             if (contains($type, '-transliterated') or contains($type, '-latin')) 

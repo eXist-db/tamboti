@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
     <titleInfo>
         <nonSort/>
         <title/>
@@ -19,7 +18,8 @@
     <physicalDescription/>
     <targetAudience authority="marctarget">adult</targetAudience>
     <typeOfResource>text</typeOfResource>
-    <genre>article</genre>
+    <genre authority="marcgt">article</genre>
+    <genre authority="zotero">newspaperArticle</genre>
     <subject authority="" xlink:href="">
         <topic authority=""/>
         <geographic authority=""/>
@@ -44,22 +44,23 @@
     <note lang="" type="content"/>
     <relatedItem type="host" xlink:href="">
         <part>
-            <detail type="volume">
+            <!--<detail type="volume">
+                <number/>
+            </detail>-->
+            <detail type="section">
                 <number/>
             </detail>
-            <detail type="issue">
+            <!--<detail type="issue">
                 <number/>
-            </detail>
+            </detail>-->
             <extent unit="pages">
                 <start/>
                 <end/>
-                <total/>
-                <list/>
             </extent>
             <date encoding="w3cdtf"/>
         </part>
     </relatedItem>
-    <identifier type="doi"/>
+    <!--<identifier type="doi"/>-->
     <location>
         <url dateLastAccessed=""/>
     </location>

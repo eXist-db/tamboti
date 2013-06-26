@@ -9,7 +9,7 @@ declare namespace ext="http://exist-db.org/mods/extension";
 import module namespace retrieve-mods="http://exist-db.org/mods/retrieve" at "../themes/default/modules/retrieve-mods.xql";
 import module namespace config="http://exist-db.org/mods/config" at "../themes/default/modules/retrieve-mods.xql";
 
-declare variable $mods-common:given-name-first-languages := ('eng', 'fre', 'ger', 'ita', 'por', 'spa');
+declare variable $mods-common:given-name-last-languages := ('chi', 'jpn', 'kor', 'vie'); 
 declare variable $mods-common:no-word-space-languages := ('chi', 'jpn', 'kor');
 
 (:
@@ -791,7 +791,7 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
     	                    (:If we know for sure that no transliteration is used anywhere in the name, then grab the parts in which Western script is used or in which no script is set.:) 
     	                    then <name>{$name/*:namePart[not(@transliteration)][(not(@script) or @script = ('Latn', 'latn', 'Latin'))]}</name>
                         	(:If we know for sure that transliteration is used somewhere in the name, then grab the untransliterated parts.:)
-                        	else <name>{$name/*:namePart[(@lang = $mods-common:given-name-first-languages or not(@lang)) and not(@transliteration)]}</name>
+                        	else <name>{$name/*:namePart[(not(@lang = $mods-common:given-name-last-languages) or not(@lang)) and not(@transliteration)]}</name>
                         	(:else <name>{$name/*:namePart[not(@transliteration)]}</name>:)
                         (:let $log := util:log("DEBUG", ("##$name-basic): ", $name-basic)):)
                         (: If there is transliteration, there are nameParts with transliteration. 
@@ -811,7 +811,7 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                         and which do not have script set to Latin, and which do not have English as their language. :)
                         let $name-in-non-latin-script := 
     	                    if ($name-contains-transliteration)
-    	                    then <name>{$name/*:namePart[(not(@transliteration) or not(string(@transliteration)))][(@script)][not(@script = ('Latn', 'latn', 'Latin'))][not(@lang = $mods-common:given-name-first-languages)]}</name>
+    	                    then <name>{$name/*:namePart[(not(@transliteration) or not(string(@transliteration)))][(@script)][not(@script = ('Latn', 'latn', 'Latin'))][@lang = $mods-common:given-name-last-languages]}</name>
     	                    else ()
                         (:let $log := util:log("DEBUG", ("##$name-in-non-latin-script): ", $name-in-non-latin-script)):)
                         (:Switch around $name-in-non-latin-script and $name-basic if there is $name-in-transliteration. 
@@ -947,10 +947,10 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                             (: ## 2 ##:)
                             (: If there is a "European" name and an Eastern name, enclose the transliterated and Eastern script name in parenthesis. :)
                             (:Is there a Western name?:)
-                            if ($name/*:namePart[not(@type eq 'date')][@lang = $mods-common:given-name-first-languages or not(@lang)])
+                            if ($name/*:namePart[not(@type eq 'date')][not(@lang = $mods-common:given-name-last-languages) or not(@lang)])
                             then
                                 (:Is there an Eastern name?:)
-                                if ($name/*:namePart[not(@type eq 'date')][@lang != $mods-common:given-name-first-languages])
+                                if ($name/*:namePart[not(@type eq 'date')][@lang = $mods-common:given-name-last-languages])
                                 then ' ('
                                 else ()
                             else ()
@@ -1121,9 +1121,9 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                                     else ()
                                 ,     
     	                        (: Close Chinese alias set in beginning of (: ## 2 ##:).:)
-    	                        if ($name/*:namePart[not(@type eq 'date')][@lang = $mods-common:given-name-first-languages or not(@lang)])
+    	                        if ($name/*:namePart[not(@type eq 'date')][not(@lang = $mods-common:given-name-last-languages) or not(@lang)])
                                 then
-                                    if ($name/*:namePart[not(@type eq 'date')][@lang != $mods-common:given-name-first-languages])
+                                    if ($name/*:namePart[not(@type eq 'date')][@lang = $mods-common:given-name-last-languages])
                                     then ') '
                                     else ()
                                 else ()
@@ -1599,7 +1599,7 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
 declare function mods-common:format-related-item($relatedItem as element(mods:relatedItem), $global-language as xs:string?, $collection-short as xs:string) as element()? {
 	(:Remove related items which have neither @xlink:href nor titleInfo/title :)
 	let $relatedItem := mods-common:remove-parent-with-missing-required-node($relatedItem)
-	
+	let $log := util:log("DEBUG", ("##$relatedItem): ", $relatedItem))
 	(:Get the global transliteration:)
 	let $global-transliteration := $relatedItem/../mods:extension/ext:transliterationOfResource/text()
 	
@@ -1818,8 +1818,6 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
     (: contains no subelements. :)
     (: has no attributes. :)
     
-    let $log := util:log("DEBUG", ("##$datePart): ", $datePart))
-
     let $part-and-origin :=
         (: If there is a part with issue information and a date and the issuance is continuing, i.e. if the publication is an article in a periodical or a newspaper. :)
         if ($datePart and ($volume or $issue or $extent or $page) and $issuance eq 'continuing') 
@@ -2153,7 +2151,7 @@ declare function mods-common:get-related-items($entry as element(mods:mods), $de
         	(: "update insert $part into $xlinked-record2 does not work for in-memory fragments :)
         	then 
         	   <mods:relatedItem displayLabel ="{$displayLabel}" type="{$type}" xlink:href="{$xlinked-ID}">
-        	       {($xlinked-record/mods:titleInfo, $part)}
+        	       {($xlinked-record/mods:titleInfo,$xlinked-record/mods:originInfo, $part)}
         	   </mods:relatedItem> 
         	else
         	(:If the related item is described with title in the current record.:)

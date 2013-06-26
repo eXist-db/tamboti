@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ext="http://exist-db.org/mods/extension" class="compact block-form" tab-id="compact-b-xlink" ext:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-xlink" ext:dummy="dummy" xlink:dummy="dummy">
     <xf:group ref=".[mods:relatedItem[@type='host']]">
         <fieldset class="level-1">
             <div class="label-box extra-wide">
@@ -16,7 +15,7 @@
                 <xf:group ref=".[@type='host']">
                     <xf:group ref=".[mods:part]">
                         <fieldset class="level-2">
-                            <xf:group ref=".[instance('save-data')/mods:extension/ext:template='related-book-review-in-periodical']">
+                            <xf:group ref=".[instance('save-data')/mods:extension/ext:template='related-book-review-in-periodical-latin' or instance('save-data')/mods:extension/ext:template='related-book-review-in-periodical-transliterated']">
                                 <div class="label-box">
                                     <span class="legend">Location of Review in
                                                   Periodical</span>
@@ -36,7 +35,7 @@
                                     </span>
                                 </div>
                             </xf:group>
-                            <xf:group ref=".[instance('save-data')/mods:extension/ext:template='related-article-in-periodical']">
+                            <xf:group ref=".[instance('save-data')/mods:extension/ext:template='related-article-in-periodical-latin' or instance('save-data')/mods:extension/ext:template='related-article-in-periodical-transliterated']">
                                 <div class="label-box">
                                     <span class="legend">Location of Article in
                                                   Periodical</span>
@@ -56,7 +55,7 @@
                                     </span>
                                 </div>
                             </xf:group>
-                            <xf:group ref=".[instance('save-data')/mods:extension/ext:template='related-newspaper-article-latin'] | .[instance('save-data')/mods:extension/ext:template='related-newspaper-article-transliterated']">
+                            <xf:group ref=".[instance('save-data')/mods:extension/ext:template='related-newspaper-article-latin' or instance('save-data')/mods:extension/ext:template='related-newspaper-article-transliterated']">
                                 <div class="label-box">
                                     <span class="legend">Location of Article in
                                         Newspaper</span>
@@ -76,7 +75,7 @@
                                     </span>
                                 </div>
                             </xf:group>
-                            <xf:group ref=".[instance('save-data')/mods:extension/ext:template='related-contribution-to-edited-volume']">
+                            <xf:group ref=".[instance('save-data')/mods:extension/ext:template='related-contribution-to-edited-volume-latin' or instance('save-data')/mods:extension/ext:template='related-contribution-to-edited-volume-transliterated']">
                                 <div class="label-box extra-wide">
                                     <span class="legend">Location of Contribution in
                                                   Edited Volume</span>
@@ -98,10 +97,10 @@
                             </xf:group>
                             <xf:group>
                                 <xf:repeat nodeset="./mods:part" id="related-item-part-review-repeat">
-                                    <xf:group ref=".[mods:detail]">
+                                    <xf:group ref=".[mods:detail and (instance('save-data')/mods:extension/ext:template='related-article-in-periodical-latin' or instance('save-data')/mods:extension/ext:template='related-article-in-periodical-transliterated' or instance('save-data')/mods:extension/ext:template='related-book-review-in-periodical-latin'or instance('save-data')/mods:extension/ext:template='related-book-review-in-periodical-transliterated' or instance('save-data')/mods:extension/ext:template='related-newspaper-article-latin' or instance('save-data')/mods:extension/ext:template='related-newspaper-article-transliterated')]">
                                         <fieldset class="level-3">
                                             <div class="label-box">
-                                                <span class="legend">Volume and Issue</span>
+                                                <span class="legend">Volume and Issue/Section</span>
                                             </div>
                                             <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-review-repeat">
                                                 <xf:group ref=".[mods:number]" class="margin-plus">
@@ -114,11 +113,11 @@
                                             </xf:repeat>
                                         </fieldset>
                                     </xf:group>
-                                    <xf:group ref=".[mods:date and (instance('save-data')/mods:extension/ext:template='related-article-in-periodical' or instance('save-data')/mods:extension/ext:template='related-book-review-in-periodical')]">
+                                    <xf:group ref=".[mods:date and (instance('save-data')/mods:extension/ext:template='related-article-in-periodical-latin' or instance('save-data')/mods:extension/ext:template='related-article-in-periodical-transliterated' or instance('save-data')/mods:extension/ext:template='related-book-review-in-periodical-latin'or instance('save-data')/mods:extension/ext:template='related-book-review-in-periodical-transliterated' or instance('save-data')/mods:extension/ext:template='related-newspaper-article-latin' or instance('save-data')/mods:extension/ext:template='related-newspaper-article-transliterated')]">
                                         <fieldset class="level-3">
                                             <div class="label-box">
                                                 <span class="legend">
-                                                    <span class="legend">Year of Issue</span>
+                                                    <span class="legend">Year/Date of Issue</span>
                                                 </span>
                                             </div>
                                             <xf:repeat nodeset="./mods:date" id="related-item-part-date-review-repeat">

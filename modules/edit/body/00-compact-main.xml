@@ -1,144 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ext="http://exist-db.org/mods/extension" class="compact block-form" tab-id="compact-a" ext:dummy="dummy" xlink:dummy="dummy">
-    <xf:group ref=".[mods:name]">
-        <fieldset class="level-1">
-            <div class="label-box">
-                <span class="legend">Names and Roles</span>
-                <span class="xforms-help">
-                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                    <div class="xforms-help-value">
-                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-compact',instance('code-tables'))/help"/>
-                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_more-name-information',instance('code-tables'))/help"/>
-                    </div>
-                </span>
-                <span class="add-delete-button">
-                    <xf:trigger ref=".[string-length(mods:extension/ext:transliterationOfResource) = 0]">
-                        <xf:label>+</xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('compact-name-repeat')" position="before" origin="instance('compact-template')/mods:name[1]"/>
-                        </xf:action>
-                    </xf:trigger>
-                    <xf:trigger ref=".[string-length(mods:extension/ext:transliterationOfResource) &gt; 0]">
-                        <xf:label>+</xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('compact-name-repeat')" position="before" origin="instance('compact-template')/mods:name[2]"/>
-                        </xf:action>
-                    </xf:trigger>
-                </span>
-            </div>
-            <xf:repeat nodeset="./mods:name" id="compact-name-repeat">
-                <xf:group ref="preceding-sibling::*[1][self::mods:name]" class="up-down-pointer">
-                    <xf:trigger>
-                        <xf:label>∧</xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="self::*" origin="following-sibling::*[1]" position="before"/>
-                            <xf:delete nodeset="following-sibling::*[1]"/>
-                        </xf:action>
-                    </xf:trigger>
-                </xf:group>
-                <xf:group ref="following-sibling::*[1][self::mods:name]" class="up-down-pointer">
-                    <xf:trigger>
-                        <xf:label>∨</xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <xf:insert nodeset="self::*" origin="preceding-sibling::*[1]" position="after"/>
-                            <xf:delete nodeset="preceding-sibling::*[1]"/>
-                        </xf:action>
-                    </xf:trigger>
-                </xf:group>
-                <xf:group class="input">
-                    <fieldset class="level-2">
-                        <div class="label-box">
-                            <span class="legend">Name</span>
-                            <span class="xforms-help">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_namePart-compact',instance('code-tables'))/help"/>
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_more-name-information',instance('code-tables'))/help"/>
-                                </div>
-                            </span>
-                        </div>
-                        <xf:group class="hide-label margin-plus">
-                            <xf:select1 ref="./@type">
-                                <xf:label>Type of Name</xf:label>
-                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-type-code']/items/item">
-                                    <xf:label ref="label"/>
-                                    <xf:value ref="value"/>
-                                </xf:itemset>
-                            </xf:select1>
-                        </xf:group>
-                        <xf:group ref=".[mods:namePart/@transliteration]" class="margin-plus">
-                            <xf:select1 ref="/mods:mods/mods:extension/ext:transliterationOfResource">
-                                <xf:label>Global Transliteration<span class="xforms-help">
-                                        <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                        <div class="xforms-help-value">
-                                            <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_transliteration-global-compact',instance('code-tables'))/help"/>
-                                        </div>
-                                    </span>
-                                </xf:label>
-                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
-                                    <xf:label ref="label"/>
-                                    <xf:value ref="value"/>
-                                </xf:itemset>
-                            </xf:select1>
-                        </xf:group>
-                        <xf:repeat nodeset="./mods:namePart">
-                            <xf:group class="margin-plus">
-                                <xf:select1 ref="./@type">
-                                    <xf:label>
-                                        <xf:group ref="../.[@script='Latn']">Transliterated<span class="xforms-hint-icon opaque"/>
-                                        </xf:group>
-                                        <xf:group ref="../.[not(@script='Latn')]"/>
-                                    </xf:label>
-                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-part-type-compact-code']/items/item">
-                                        <xf:label ref="label"/>
-                                        <xf:value ref="value"/>
-                                    </xf:itemset>
-                                </xf:select1>
-                                <xf:input ref="." class="text_100">
-                                    <xf:label/>
-                                </xf:input>
-                            </xf:group>
-                        </xf:repeat>
-                    </fieldset>
-                </xf:group>
-                <xf:group ref=".[mods:role]">
-                    <fieldset class="level-2">
-                        <div class="label-box">
-                            <span class="legend">Role</span>
-                            <span class="xforms-help">
-                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
-                                <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_role-compact',instance('code-tables'))/help"/>
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_more-name-information',instance('code-tables'))/help"/>
-                                </div>
-                            </span>
-                            <span class="add-delete-button">
-                                <xf:trigger>
-                                    <xf:label>+</xf:label>
-                                    <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:role" at="index('compact-name-repeat')" position="before" origin="instance('compact-template')/mods:name[8]/mods:role"/>
-                                    </xf:action>
-                                </xf:trigger>
-                            </span>
-                        </div>
-                        <xf:repeat nodeset="./mods:role" id="role-repeat">
-                            <xf:repeat nodeset="./mods:roleTerm" id="roleTerm-repeat">
-                                <xf:group class="hide-label margin-plus">
-                                    <xf:select1 ref=".">
-                                        <xf:label>Role Term</xf:label>
-                                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='role-short-code']/items/item">
-                                            <xf:label ref="label"/>
-                                            <xf:value ref="value"/>
-                                        </xf:itemset>
-                                    </xf:select1>
-                                </xf:group>
-                            </xf:repeat>
-                        </xf:repeat>
-                    </fieldset>
-                </xf:group>
-            </xf:repeat>
-        </fieldset>
-    </xf:group>
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-a" ext:dummy="dummy" xlink:dummy="dummy">
     <xf:group ref=".[mods:titleInfo]">
         <fieldset class="level-1">
             <div class="label-box">
@@ -283,6 +143,145 @@
                             </xf:group>
                         </xf:label>
                     </xf:input>
+                </xf:group>
+            </xf:repeat>
+        </fieldset>
+    </xf:group>
+    <xf:group ref=".[mods:name]">
+        <fieldset class="level-1">
+            <div class="label-box">
+                <span class="legend">Names and Roles</span>
+                <span class="xforms-help">
+                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                    <div class="xforms-help-value">
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-compact',instance('code-tables'))/help"/>
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_more-name-information',instance('code-tables'))/help"/>
+                    </div>
+                </span>
+                <span class="add-delete-button">
+                    <xf:trigger ref=".[string-length(mods:extension/ext:transliterationOfResource) = 0]">
+                        <xf:label>+</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('compact-name-repeat')" position="before" origin="instance('compact-template')/mods:name[1]"/>
+                        </xf:action>
+                    </xf:trigger>
+                    <xf:trigger ref=".[string-length(mods:extension/ext:transliterationOfResource) &gt; 0]">
+                        <xf:label>+</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert nodeset="instance('save-data')/mods:name" at="index('compact-name-repeat')" position="before" origin="instance('compact-template')/mods:name[2]"/>
+                        </xf:action>
+                    </xf:trigger>
+                </span>
+            </div>
+            <xf:repeat nodeset="./mods:name" id="compact-name-repeat">
+                <xf:group ref="preceding-sibling::*[1][self::mods:name]" class="up-down-pointer">
+                    <xf:trigger>
+                        <xf:label>∧</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert nodeset="self::*" origin="following-sibling::*[1]" position="before"/>
+                            <xf:delete nodeset="following-sibling::*[1]"/>
+                        </xf:action>
+                    </xf:trigger>
+                </xf:group>
+                <xf:group ref="following-sibling::*[1][self::mods:name]" class="up-down-pointer">
+                    <xf:trigger>
+                        <xf:label>∨</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert nodeset="self::*" origin="preceding-sibling::*[1]" position="after"/>
+                            <xf:delete nodeset="preceding-sibling::*[1]"/>
+                        </xf:action>
+                    </xf:trigger>
+                </xf:group>
+                <xf:group class="input">
+                    <fieldset class="level-2">
+                        <div class="label-box">
+                            <span class="legend">Name</span>
+                            <span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_namePart-compact',instance('code-tables'))/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_more-name-information',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </div>
+                        <xf:group class="hide-label margin-plus">
+                            <xf:select1 ref="./@type">
+                                <xf:label>Type of Name</xf:label>
+                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-type-code']/items/item">
+                                    <xf:label ref="label"/>
+                                    <xf:value ref="value"/>
+                                </xf:itemset>
+                            </xf:select1>
+                        </xf:group>
+                        <xf:group ref=".[mods:namePart/@transliteration]" class="margin-plus">
+                            <xf:select1 ref="/mods:mods/mods:extension/ext:transliterationOfResource">
+                                <xf:label>Global Transliteration<span class="xforms-help">
+                                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                    <div class="xforms-help-value">
+                                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_transliteration-global-compact',instance('code-tables'))/help"/>
+                                    </div>
+                                </span>
+                                </xf:label>
+                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-short-code']/items/item">
+                                    <xf:label ref="label"/>
+                                    <xf:value ref="value"/>
+                                </xf:itemset>
+                            </xf:select1>
+                        </xf:group>
+                        <xf:repeat nodeset="./mods:namePart">
+                            <xf:group class="margin-plus">
+                                <xf:select1 ref="./@type">
+                                    <xf:label>
+                                        <xf:group ref="../.[@script='Latn']">Transliterated<span class="xforms-hint-icon opaque"/>
+                                        </xf:group>
+                                        <xf:group ref="../.[not(@script='Latn')]"/>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='name-part-type-compact-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                                <xf:input ref="." class="text_100">
+                                    <xf:label/>
+                                </xf:input>
+                            </xf:group>
+                        </xf:repeat>
+                    </fieldset>
+                </xf:group>
+                <xf:group ref=".[mods:role]">
+                    <fieldset class="level-2">
+                        <div class="label-box">
+                            <span class="legend">Role</span>
+                            <span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_role-compact',instance('code-tables'))/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_more-name-information',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                            <span class="add-delete-button">
+                                <xf:trigger>
+                                    <xf:label>+</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:insert nodeset="instance('save-data')/mods:role" at="index('compact-name-repeat')" position="before" origin="instance('compact-template')/mods:name[8]/mods:role"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
+                        </div>
+                        <xf:repeat nodeset="./mods:role" id="role-repeat">
+                            <xf:repeat nodeset="./mods:roleTerm" id="roleTerm-repeat">
+                                <xf:group class="hide-label margin-plus">
+                                    <xf:select1 ref=".">
+                                        <xf:label>Role Term</xf:label>
+                                        <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='role-short-code']/items/item">
+                                            <xf:label ref="label"/>
+                                            <xf:value ref="value"/>
+                                        </xf:itemset>
+                                    </xf:select1>
+                                </xf:group>
+                            </xf:repeat>
+                        </xf:repeat>
+                    </fieldset>
                 </xf:group>
             </xf:repeat>
         </fieldset>

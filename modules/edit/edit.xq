@@ -52,15 +52,12 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
     let $transliterationOfResource := request:get-parameter("transliterationOfResource", '')
     let $template-request := 
         if ($type-request = (
-                        'related-book-review-in-periodical', 
-                        'related-article-in-periodical', 
-                        'related-contribution-to-edited-volume', 
                         'suebs-tibetan', 
                         'suebs-chinese', 
                         'insert-templates', 
                         'new-instance', 
                         'mads'))
-        (:These document types do not (yet) divide into latin and transliterated.:)
+        (:These document types do not divide into latin and transliterated.:)
         then $type-request
         else
             (:Append '-transliterated' if there is transliteration, otherwise append '-latin'.:)

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <tabs>
     <tab>
         <top-tab-label>Basic Input Forms</top-tab-label>
@@ -13,17 +12,24 @@
         <periodical-transliterated>Periodical</periodical-transliterated>
         <article-in-periodical-latin>Article</article-in-periodical-latin>
         <article-in-periodical-transliterated>Article</article-in-periodical-transliterated>
-        <related-article-in-periodical>Article</related-article-in-periodical>
-        <related-contribution-to-edited-volume>Contribution</related-contribution-to-edited-volume>
+        <related-article-in-periodical-latin>Article</related-article-in-periodical-latin>
+        <related-article-in-periodical-transliterated>Article</related-article-in-periodical-transliterated>
+        <related-contribution-to-edited-volume-latin>Contribution</related-contribution-to-edited-volume-latin>
+        <related-contribution-to-edited-volume-transliterated>Contribution</related-contribution-to-edited-volume-transliterated>
         <book-review-latin>Book Review</book-review-latin>
         <book-review-transliterated>Book Review</book-review-transliterated>
-        <related-book-review-in-periodical>Book Review</related-book-review-in-periodical>
+        <related-book-review-in-periodical-latin>Book Review</related-book-review-in-periodical-latin>
+        <related-book-review-in-periodical-transliterated>Book Review</related-book-review-in-periodical-transliterated>
         <contribution-to-edited-volume-latin>Contribution</contribution-to-edited-volume-latin>
         <contribution-to-edited-volume-transliterated>Contribution</contribution-to-edited-volume-transliterated>
         <suebs-tibetan>Main Publication</suebs-tibetan>
         <suebs-chinese>Main Publication</suebs-chinese>
+        <newspaper-latin>Newspaper</newspaper-latin>
+        <newspaper-transliterated>Newspaper</newspaper-transliterated>
         <newspaper-article-latin>Newspaper Article</newspaper-article-latin>
         <newspaper-article-transliterated>Newspaper Article</newspaper-article-transliterated>
+        <related-newspaper-article-latin>Newspaper Article</related-newspaper-article-latin>
+        <related-newspaper-article-transliterated>Newspaper Article</related-newspaper-article-transliterated>
         <path>mods:titleInfo</path>
         <path>mods:name</path>
         <path>mods:originInfo</path>
@@ -45,21 +51,28 @@
             Volume</edited-volume-transliterated>
         <article-in-periodical-latin>Periodical</article-in-periodical-latin>
         <article-in-periodical-transliterated>Periodical</article-in-periodical-transliterated>
-        <related-article-in-periodical>Place in Periodical</related-article-in-periodical>
-        <related-contribution-to-edited-volume>Place in Edited
-            Volume</related-contribution-to-edited-volume>
+        <related-article-in-periodical-latin>Place in Periodical</related-article-in-periodical-latin>
+        <related-article-in-periodical-transliterated>Place in Periodical</related-article-in-periodical-transliterated>
+        <related-contribution-to-edited-volume-latin>Place in Edited
+            Volume</related-contribution-to-edited-volume-latin>
+        <related-contribution-to-edited-volume-transliterated>Place in Edited
+            Volume</related-contribution-to-edited-volume-transliterated>
         <book-review-latin>Periodical With Book Review and Book Reviewed</book-review-latin>
         <book-review-transliterated>Periodical With Book Review and Book
             Reviewed</book-review-transliterated>
-        <related-book-review-in-periodical>Periodical With Book Review and Book
-            Reviewed</related-book-review-in-periodical>
-        <contribution-to-edited-volume-latin>Edited Volume</contribution-to-edited-volume-latin>
+        <related-book-review-in-periodical-latin>Periodical With Book Review and Book
+            Reviewed</related-book-review-in-periodical-latin>
+        <related-book-review-in-periodical-transliterated>Periodical With Book Review and Book
+            Reviewed</related-book-review-in-periodical-transliterated>
+        <contribution-to-edited-volume-transliterated>Edited Volume</contribution-to-edited-volume-transliterated>
         <contribution-to-edited-volume-transliterated>Edited
             Volume</contribution-to-edited-volume-transliterated>
         <suebs-tibetan>Container Publication</suebs-tibetan>
         <suebs-chinese>Container Publication</suebs-chinese>
         <newspaper-article-latin>Newspaper</newspaper-article-latin>
         <newspaper-article-transliterated>Newspaper</newspaper-article-transliterated>
+        <related-newspaper-article-latin>Newspaper</related-newspaper-article-latin>
+        <related-newspaper-article-transliterated>Newspaper</related-newspaper-article-transliterated>
         <path>mods:relatedItem</path>
         <path>mods:language</path>
         <path>mods:extension</path>
@@ -78,22 +91,31 @@
         <article-in-periodical-latin>Contents of Article</article-in-periodical-latin>
         <article-in-periodical-transliterated>Contents of
             Article</article-in-periodical-transliterated>
-        <related-article-in-periodical>Contents of Article</related-article-in-periodical>
-        <related-contribution-to-edited-volume>Contents of
-            Contribution</related-contribution-to-edited-volume>
+        <related-article-in-periodical-latin>Contents of Article</related-article-in-periodical-latin>
+        <related-article-in-periodical-transliterated>Contents of Article</related-article-in-periodical-transliterated>
+        <related-contribution-to-edited-volume-latin>Contents of
+            Contribution</related-contribution-to-edited-volume-latin>
+        <related-contribution-to-edited-volume-transliterated>Contents of
+            Contribution</related-contribution-to-edited-volume-transliterated>
         <book-review-latin>Contents of Book Review</book-review-latin>
         <book-review-transliterated>Contents of Article With Book
             Review</book-review-transliterated>
-        <related-book-review-in-periodical>Contents of Book
-            Review</related-book-review-in-periodical>
+        <related-book-review-in-periodical-latin>Contents of Book
+            Review</related-book-review-in-periodical-latin>
+        <related-book-review-in-periodical-transliterated>Contents of Book
+            Review</related-book-review-in-periodical-transliterated>
         <contribution-to-edited-volume-latin>Contents of
             Contribution</contribution-to-edited-volume-latin>
         <contribution-to-edited-volume-transliterated>Contents of
             Contribution</contribution-to-edited-volume-transliterated>
         <suebs-tibetan>Contents of Main Publication</suebs-tibetan>
         <suebs-chinese>Contents of Main Publication</suebs-chinese>
+        <newspaper-latin>Contents of Newspaper</newspaper-latin>
+        <newspaper-transliterated>Contents of Newspaper</newspaper-transliterated>
         <newspaper-article-latin>Contents of Newspaper Article</newspaper-article-latin>
         <newspaper-article-transliterated>Contents of Newspaper Article</newspaper-article-transliterated>
+        <related-newspaper-article-latin>Contents of Newspaper Article</related-newspaper-article-latin>
+        <related-newspaper-article-transliterated>Contents of Newspaper Article</related-newspaper-article-transliterated>
         <path>mods:subject</path>
         <path>mods:note</path>
         <path>mods:abstract</path>
