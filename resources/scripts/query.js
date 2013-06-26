@@ -237,16 +237,20 @@ function initCollectionTree() {
             this.reactivate();
         },
         clickFolderMode: 1,
-        minExpandLevel:2,
+        //minExpandLevel:2,
         onDblClick: function (node) {
+            
             $('#simple-search-form input[name=input1]').val('');
             $('#simple-search-form').submit();
+            /**
             refreshCurrentTreeNode();
             refreshParentTreeNode();
             var name = $('#rename-collection-form input[name = name]').val();
             var currentKey = $("#collection-tree-tree").dynatree("getActiveNode").data.key;
-            var newKey = currentKey.replace(/(.*)\/.*/, "$1/" + name);
-            refreshParentTreeNodeAndFocusOnChild(newKey);
+            **/
+            //var newKey = currentKey.replace(/(.*)\/.*/, "$1/" + name);
+            //refreshParentTreeNodeAndFocusOnChild(newKey);
+            
             return false;
         }
     });
