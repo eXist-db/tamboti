@@ -245,7 +245,7 @@ declare function local:empty() {
 <json:value>
     {
     if(request:get-parameter("collection",())) then (
-        local:get-sharing(uu:escape-collection-path(request:get-parameter("collection",())))
+        local:get-sharing(uu:unescape-collection-path(request:get-parameter("collection",())))
     )
     else if(request:get-parameter("file",())) then (
         local:get-attached-files(request:get-parameter("file",()))
