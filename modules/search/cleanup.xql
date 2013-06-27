@@ -30,14 +30,17 @@ return
     else $child }
 };
 
-(: Removes an element if it is empty or contains whitespace only. A relatedItem should be allowed to be empty if it has an @xlink:href. :)
+(: Removes an element if it is empty or contains whitespace only. 
+A mods:relatedItem should be allowed to be empty if it has an @xlink:href.
+A vra:relationSet should be allowed to be empty if its vra:relation has an idrefs.
+:)
 (: Derived from functx:remove-elements-deep. :)
 (: Contains functx:all-whitespace. :)
 declare function clean:remove-empty-elements($nodes as node()*)  as node()* {
    for $node in $nodes
    return
      if ($node instance of element())
-     then if ((normalize-space($node) = '') and (not($node/@xlink:href)))
+     then if ((normalize-space($node) = '') and (not($node/@xlink:href or $node//@relids)))
           then ()
           else element { node-name($node)}
                 { $node/@*,

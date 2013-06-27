@@ -9,6 +9,7 @@ declare namespace hra="http://cluster-schemas.uni-hd.de";
 
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
 import module namespace vra-common="http://exist-db.org/vra/common" at "../../../modules/vra-common.xql";
+import module namespace mods-common="http://exist-db.org/mods/common" at "../../../modules/mods-common.xql";
 
 (:The $retrieve-vra:primary-roles values are lower-cased when compared.:)
 declare variable $retrieve-vra:primary-roles := ('aut', 'author', 'cre', 'creator', 'composer', 'cmp', 'artist', 'art', 'director', 'drt');
@@ -102,6 +103,7 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
     for $agent in $entry//vra:agentSet/vra:agent
         let $name := $agent/vra:name
         let $role := $agent/vra:role
+        let $role := mods-common:get-role-term-label-for-detail-view($role)
         let $role := 
             if ($role) 
             then $role
@@ -120,44 +122,48 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
             </tr>
     ,
     (: description :)
-    for $description in $entry//vra:descriptionSet/vra:description
+    for $description in $entry//vra:descriptionSet/vra:description[not(vra:text)]
         return
             <tr>
                 <td class="collection-label">Description</td>
-                <td>{$description/text()}</td>
+                <td>{$description}</td>
+            </tr>
+    ,
+    (: description with text and author :)
+    (: NB: do author :)
+    for $description in $entry//vra:descriptionSet/vra:description[vra:text]
+        return
+            <tr>
+                <td class="collection-label">Description</td>
+                <td>{$description/vra:text}</td>
             </tr>
     ,
     (: relation :)
-    (:let $log := util:log("DEBUG", ("##$entry): ", $entry)):)
-    (:return:)
-    (:Do not display image links until they lead somewhere.:)
-    for $relation in $entry//vra:relationSet/vra:relation[@type ne 'imageIs']
-    (:let $log := util:log("DEBUG", ("##$relation): ", $relation)):)
-    let $type := $relation/@type
-    (:let $log := util:log("DEBUG", ("##$type): ", $type)):)
-
-    let $type := functx:capitalize-first(functx:camel-case-to-words($type, ' '))
-    let $relids := $relation/@relids
-    let $relids := tokenize($relids, ' ')
-        return
-            <tr>
-                <td class="collection-label">{$type}</td>
-                <td>{
-                    for $relid in $relids
-                        let $type := substring($relid, 1, 1)
-                        let $type := 
-                            if ($type eq 'i')
-                            then 'Image'
-                            else
-                                if ($type eq 'w')
-                                then 'Work'
-                                else 'Collection'
-                        let $relid := concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $relid)
-                        return
-                            <a href="{$relid}">{$type}</a>
-                    }
-                </td>
-            </tr>
+    let $relations := $entry//vra:relationSet/vra:relation
+    for $relation in $relations
+        let $type := $relation/@type
+        let $type := functx:capitalize-first(functx:camel-case-to-words($type, ' '))
+        let $relids := $relation/@relids
+        let $relids := tokenize($relids, ' ')
+            return
+                <tr>
+                    <td class="collection-label">Link to</td>
+                    <td>{
+                        for $relid in $relids
+                            let $type := substring($relid, 1, 1)
+                            let $type := 
+                                if ($type eq 'i')
+                                then 'Image Record'
+                                else
+                                    if ($type eq 'w')
+                                    then 'Work Record'
+                                    else 'Collection Record'
+                            let $relid := concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $relid)
+                            return
+                                <a href="{$relid}">{$type}</a>
+                        }
+                    </td>
+                </tr>
     ,
     (: subjects :)
     
@@ -202,13 +208,26 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
             </tr>
     ,
     (: measurements :)
-    for $measurements in $entry//vra:measurementsSet/vra:measurements
+        let $measurements := $entry//vra:measurementsSet/vra:measurements  
+        let $measurements := 
+            for $measurement in $measurements
+                let $type := $measurement/@type/string()
+                let $unit := $measurement/@unit/string()
+                let $measurement := $measurement/text()
+                let $display := concat(functx:capitalize-first($type), ': ', $measurement, ' ' , $unit)
+                return 
+                    $display
         return
-            <tr>
-                <td class="collection-label">{functx:capitalize-first($measurements/@type/string())}</td><td>{concat($measurements, ' ', $measurements/@unit/string())}</td>
-            </tr>    
-    
-    }
+            if (count($measurements) gt 0) 
+            then
+                let $measurements := string-join($measurements, '; ')
+                    return
+                        <tr>
+                            <td class="collection-label">Measuremenets</td><td>{$measurements}</td>
+                        </tr>
+            else ()
+,
+    mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $entry/vra:work/@id), 'Stable Link to This Record')}
     </table>
 };
 
@@ -222,5 +241,31 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
 : @return an XHTML span.
 :)
 declare function retrieve-vra:format-list-view($position as xs:string, $entry as element(vra:vra), $collection-short as xs:string) as element(span) {
-    <span>{$entry//vra:titleSet/vra:title/text()}</span>
+    <span>
+    <span class="agent">
+    {
+    let $agents := $entry//vra:agentSet/vra:agent
+    let $agents := 
+    for $agent in $agents[not(vra:role = ('col', 'digitizing', 'Metadata contact'))]
+        let $name := $agent/vra:name
+        let $role := $agent/vra:role
+        let $role := mods-common:get-role-term-label-for-detail-view($role)
+        return <span>{concat($name, ' (', $role, ')')}</span>
+            return
+                if (count($agents) gt 0)
+                then concat(string-join($agents, '; '), ': ')
+                else ()
+    }</span>
+    
+    <span class="title">{$entry//vra:titleSet/vra:title/text()}</span>
+    
+    {let $earliestDate := $entry//vra:dateSet/vra:date[@type eq 'creation']/vra:earliestDate
+    return
+    if ($earliestDate) then
+    <span class="date"> ({functx:substring-before-last-match($earliestDate, 'T')})</span>
+    else ()}
+    
+    </span>
+    
+    
 };
