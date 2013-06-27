@@ -137,10 +137,16 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
             $public-json :=
                 for $child in xmldb:get-child-collections($config:mods-commons)
                 let $collection-path := fn:concat($config:mods-commons, "/", $child)
+               
                 order by upper-case($child)
-                return
-                    <node>{col:get-collection($collection-path)/child::node()}</node>
-            return
+               return 
+                     if (exists(col:get-collection($collection-path)/child::node()))
+                    then  let $child :=  <node>{col:get-collection($collection-path)/child::node()
+                    }</node>
+                    return $child
+                    else ()
+               
+               return
             
                 (: root collection, containing home and group collection as children :)
                 col:create-tree-node(fn:replace($root-collection-path, ".*/", ""), $root-collection-path, true(), (), (), $can-write, (), false(), false(), ($home-json, $group-json, $public-json))
