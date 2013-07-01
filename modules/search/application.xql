@@ -908,7 +908,7 @@ declare function biblio:resource-types($node as node(), $params as element(param
                 </ul>
                 
                 <div class="language-label">
-                    <label for="languageOfResource">Resource Language: </label>
+                    <label for="languageOfResource">Language: </label>
                 <span class="language-list">
                 <select name="languageOfResource">
                     {$language-options}
@@ -917,7 +917,7 @@ declare function biblio:resource-types($node as node(), $params as element(param
                 </div>
                 
                 <div class="language-label">
-                    <label for="scriptOfResource">Resource Script: </label>
+                    <label for="scriptOfResource">Script: </label>
                 <span class="language-list">
                 <select name="scriptOfResource">
                     {$script-options}
@@ -930,24 +930,6 @@ declare function biblio:resource-types($node as node(), $params as element(param
                 <span class="language-list">
                 <select name="transliterationOfResource">
                     {$transliteration-options}
-                    </select>
-                </span>
-                </div>
-                
-                <div class="language-label">
-                    <label for="languageOfCataloging">Cataloging Language: </label>
-                <span class="language-list">
-                <select name="languageOfCataloging">
-                    {$language-options}
-                    </select>
-                </span>
-                </div>
-                
-                <div class="language-label">
-                    <label for="scriptOfCataloging">Cataloging Script: </label>
-                <span class="language-list">
-                <select name="scriptOfCataloging">
-                    {$script-options}
                     </select>
                 </span>
                 </div>

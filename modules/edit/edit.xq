@@ -107,6 +107,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
           update insert $language-insert into $doc/mods:mods
           ,
           (:Save the library reference, the creation date, and the language and script of cataloguing:)
+          (:To simplify input, resource language and language of cataloging are treated as the same.:) 
           let $recordInfo-insert :=
               <mods:recordInfo lang="eng" script="Latn">
                   <mods:recordContentSource authority="marcorg">DE-16-158</mods:recordContentSource>
@@ -116,10 +117,10 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
                   <mods:recordChangeDate encoding="w3cdtf"/>
                   <mods:languageOfCataloging>
                       <mods:languageTerm authority="iso639-2b" type="code">
-                          {$languageOfCataloging}
+                          {$languageOfResource}
                       </mods:languageTerm>
                       <mods:scriptTerm authority="iso15924" type="code">
-                          {$scriptOfCataloging}
+                          {$scriptOfResource}
                   </mods:scriptTerm>
                   </mods:languageOfCataloging>
               </mods:recordInfo>            

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <code-table xml:id="role-code">
     <code-table-name>role-code</code-table-name>
     <notes>Has legend</notes>
@@ -11,6 +10,11 @@
         <item>
             <label>(none selected)</label>
             <value/>
+        </item>
+        <item type="added">
+            <label>abridger</label>
+            <value>abr</value>
+            <labelSecondary>abridged by</labelSecondary>
         </item>
         <item>
             <label>artist</label>
@@ -153,6 +157,7 @@
         <item>
             <label>author of introduction, etc.</label>
             <value>aui</value>
+            <labelSecondary>with an introduction by</labelSecondary>
         </item>
         <item>
             <label>author of screenplay, etc.</label>
@@ -218,6 +223,7 @@
         <item>
             <label>collaborator</label>
             <value>clb</value>
+            <labelSecondary>with the collaboration of</labelSecondary>
         </item>
         <item>
             <label>collector</label>
@@ -884,11 +890,6 @@
         <item>
             <label>vocalist</label>
             <value>voc</value>
-        </item>
-        <item type="added">
-            <label>with</label>
-            <labelSecondary>with the collaboration of</labelSecondary>
-            <value>wth</value>
         </item>
         <item>
             <label>witness</label>

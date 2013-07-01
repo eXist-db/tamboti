@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <code-table xml:id="role-short-code">
     <code-table-name>role-short-code</code-table-name>
     <tab-id>compact-a</tab-id>
@@ -16,6 +15,16 @@
         <item>
             <label>author</label>
             <value>aut</value>
+        </item>
+        <item>
+            <label>author of introduction, etc.</label>
+            <value>aui</value>
+            <labelSecondary>with an introduction by</labelSecondary>
+        </item>
+        <item>
+            <label>collaborator</label>
+            <value>clb</value>
+            <labelSecondary>with the collaboration of</labelSecondary>
         </item>
         <item>
             <label>commentator for written text</label>
