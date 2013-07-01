@@ -55,7 +55,7 @@ let $json-true := attribute json:array { true() }
  return
     <aaData json:array="true">
         {system:as-user($config:dba-credentials[1],$config:dba-credentials[2],file:directory-list($upload-folder,'*.xml'))}
-        </aaData>    
+       </aaData>    
 };
 
 
@@ -202,7 +202,7 @@ let $mods-entry :=
                 )
                 else()
         
-  let $vra-results :=  collection($config:mods-root)//vra:work[@id=$file]/vra:relationset/vra:relation
+  let $vra-results :=  collection($config:mods-root)//vra:work[@id=$file]/vra:relationSet/vra:relation
   let $vra-entry :=
             if (exists($vra-results)) then
             (
@@ -231,7 +231,7 @@ let $mods-entry :=
              <aaData json:array="true"><items>{$vra-entry}</items></aaData>
   else  if (exists($mods-results)) then
          <aaData json:array="true"><items>{$mods-entry}</items></aaData>
-  else ()      
+  else (<aaData json:array="true"><items>{ $vra-results }</items></aaData>)      
         
              
 };
