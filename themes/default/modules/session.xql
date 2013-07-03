@@ -667,30 +667,30 @@ declare function bs:retrieve($start as xs:int, $count as xs:int) {
     (:let $log := util:log("DEBUG", ("##$start): ", $start)):)
     let $cached := session:get-attribute("mods:cached")
     (:let $log := util:log("DEBUG", ("##$cached): ", $cached)):)
-    let $log := util:log("DEBUG", ("##$cached-count): ", count($cached)))
+    (:let $log := util:log("DEBUG", ("##$cached-count): ", count($cached))):)
     let $stored := session:get-attribute("personal-list")
     (:let $log := util:log("DEBUG", ("##$stored): ", $stored)):)
     (:let $log := util:log("DEBUG", ("##$stored-count): ", count($stored))):)
     
     let $cached-vra-work := $cached[vra:work]
-    let $log := util:log("DEBUG", ("##$cached-vra-work-count): ", count($cached-vra-work)))
+    (:let $log := util:log("DEBUG", ("##$cached-vra-work-count): ", count($cached-vra-work))):)
     let $cached-vra-image := $cached[vra:image]
-    let $log := util:log("DEBUG", ("##$cached-vra-image-count): ", count($cached-vra-image)))
+    (:let $log := util:log("DEBUG", ("##$cached-vra-image-count): ", count($cached-vra-image))):)
     let $cached-vra-image-work := $cached-vra-image/vra:image/vra:relationSet/vra:relation[@type eq "imageOf"]/@relids
     (:let $log := util:log("DEBUG", ("##$cached-vra-image-work-ids): ", string-join($cached-vra-image-work, '|||'))):)
     (:let $log := util:log("DEBUG", ("##$cached-vra-image-work-ids-count): ", count($cached-vra-image-work))):)
     let $cached-vra-image-work := collection($config:mods-root)//vra:work[@id = $cached-vra-image-work]/..
-    let $log := util:log("DEBUG", ("##$cached-vra-image-work): ", $cached-vra-image-work))
-    let $log := util:log("DEBUG", ("##$cached-vra-image-work-count): ", count($cached-vra-image-work)))
+    (:let $log := util:log("DEBUG", ("##$cached-vra-image-work): ", $cached-vra-image-work)):)
+    (:let $log := util:log("DEBUG", ("##$cached-vra-image-work-count): ", count($cached-vra-image-work))):)
     let $cached-vra := ($cached-vra-work union $cached-vra-image-work)
-    let $log := util:log("DEBUG", ("##$cached-vra-count): ", count($cached-vra)))
+    (:let $log := util:log("DEBUG", ("##$cached-vra-count): ", count($cached-vra))):)
     let $cached-mods := $cached[mods:titleInfo]
-    let $log := util:log("DEBUG", ("##$cached-mods-count): ", count($cached-mods)))
-    let $cached-tei := (($cached except $cached-mods) except $cached-vra)  
-    let $log := util:log("DEBUG", ("##$cached-tei-count): ", count($cached-tei)))
+    (:let $log := util:log("DEBUG", ("##$cached-mods-count): ", count($cached-mods))):)
+    let $cached-tei := $cached[tei:teiHeader]  
+    (:let $log := util:log("DEBUG", ("##$cached-tei-count): ", count($cached-tei))):)
     let $cached := ($cached-vra, $cached-mods, $cached-tei)   
     let $total := count($cached)
-    let $log := util:log("DEBUG", ("##$total): ", $total))
+    (:let $log := util:log("DEBUG", ("##$total): ", $total)):)
     
     let $available :=
         if ($start + $count gt $total) then
