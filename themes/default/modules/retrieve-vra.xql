@@ -16,6 +16,20 @@ declare variable $retrieve-vra:primary-roles := ('aut', 'author', 'cre', 'creato
 
 declare option exist:serialize "media-type=text/xml";
 
+declare function local:return-thumbnail($image){
+(:
+let $image-name := $image/@href
+let $image-suffix := fn:tokenize($image-name,'.')[2]
+let $image-url := <img src="{
+                        concat('data:image/',$image-suffix,';base64,',local:basic-get-http(concat(request:get-scheme(),'://',request:get-server-name(),':',request:get-server-port(),request:get-context-path(),'/rest', util:collection-name($image),"/" ,$image-name),$bs:USER,$bs:USERPASS)
+                        )
+                        }"  width="200px"/>
+:)
+let $image-url := <img src="http://kjc-ws2.kjc.uni-heidelberg.de/images/service/download_uuid/{$image/@id}?width=40&amp;height=40&amp;crop_type=middle" alt="" class="relatedImage"></img>
+
+return $image-url
+};
+
 (:~
 : The functx:substring-before-last-match function returns the part of $arg that appears before the last match of $regex. 
 : If $arg does not match $regex, the entire $arg is returned. 
@@ -114,8 +128,46 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
                 <td>{$name/text()}</td>
             </tr>
     ,
+    (: date :)
+    for $date in $entry//vra:dateSet/vra:date
+        return
+            let $date-type := functx:capitalize-first($date/@type) 
+            let $earliestDate := $date/vra:earliestDate
+            let $earliestDate := 
+                if (contains($earliestDate, 'T'))
+                then functx:substring-before-last-match($earliestDate, 'T')
+                else $earliestDate
+            let $earliestDate := 
+                if ($date/vra:earliestDate[@circa eq 'true'])
+                then concat('ca. ', $earliestDate)
+                else $earliestDate
+            (:let $log := util:log("DEBUG", ("##$earliestDate2): ", $earliestDate)):)
+            let $latestDate := $date/vra:latestDate
+            let $latestDate := 
+                if (contains($latestDate, 'T'))
+                then functx:substring-before-last-match($latestDate, 'T')
+                else $latestDate
+            let $latestDate := 
+                if ($date/vra:latestDate[@circa eq 'true'])
+                then concat('ca. ', $latestDate)
+                else $latestDate
+            let $date :=
+                if ($earliestDate eq $latestDate)
+                then $earliestDate
+                else 
+                    if (($earliestDate and $latestDate))
+                    then concat($earliestDate, ' - ', $latestDate)
+                    else ($earliestDate, $latestDate)
+            (:let $log := util:log("DEBUG", ("##$date): ", $date)):)
+            (:let $log := util:log("DEBUG", ("##$date-type): ", $date-type)):)
+            return 
+                <tr>
+                    <td class="collection-label">{$date-type}</td>
+                    <td>{$date}</td>
+                </tr>
+    ,
     (: location :)
-    for $location in $entry//vra:locationSet/vra:location[@source eq 'EXC']
+    for $location in $entry//vra:locationSet/vra:location[@source eq 'EXC']for $location in $entry//vra:locationSet/vra:location[@source eq 'EXC']
         return
             <tr>
                 <td class="collection-label">{functx:capitalize-first($location/@type/string())}</td><td>{$location/vra:name}</td>
@@ -149,6 +201,7 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
                 <tr>
                     <td class="collection-label">Link to</td>
                     <td>{
+                        (:NB: move up:)
                         for $relid in $relids
                             let $type := substring($relid, 1, 1)
                             let $type := 
@@ -241,7 +294,21 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
 : @return an XHTML span.
 :)
 declare function retrieve-vra:format-list-view($position as xs:string, $entry as element(vra:vra), $collection-short as xs:string) as element(span) {
-    <span>
+    
+    <span class="vra-record">
+     
+    { 
+    let $relids := $entry//vra:relation/@relids
+    (:NB: relids can hold multiple values; the image record with @pref on vra:relation is "true".
+    For now, we disregard this; otherwise we have to check after retriving the image records.:)
+    let $relids := tokenize($relids, ' ')[1]
+    (:let $log := util:log("DEBUG", ("##$relids): ", $relids)):)
+    let $image := collection($config:mods-root)//vra:image[@id = $relids]
+    (:let $log := util:log("DEBUG", ("##$image): ", $image)):)
+        return
+            <span class="list-image">{local:return-thumbnail($image)}</span>               
+    }
+    
     <span class="agent">
     {
     let $agents := $entry//vra:agentSet/vra:agent
@@ -257,12 +324,39 @@ declare function retrieve-vra:format-list-view($position as xs:string, $entry as
                 else ()
     }</span>
     
-    <span class="title">{$entry//vra:titleSet/vra:title/text()}</span>
+    <span class="title">{string-join($entry//vra:titleSet/vra:title/text(), ' ')}</span>
     
-    {let $earliestDate := $entry//vra:dateSet/vra:date[@type eq 'creation']/vra:earliestDate
+    {
+    let $earliestDate := $entry//vra:dateSet/vra:date[@type eq 'creation']/vra:earliestDate
+    let $earliestDate := 
+        if (contains($earliestDate, 'T'))
+        then functx:substring-before-last-match($earliestDate, 'T')
+        else $earliestDate
+    let $earliestDate := 
+        if ($entry//vra:dateSet/vra:date[@type eq 'creation']/vra:earliestDate[@circa eq 'true'])
+        then concat('ca. ', $earliestDate)
+        else $earliestDate
+    (:let $log := util:log("DEBUG", ("##$earliestDate1): ", $earliestDate)):)
+    let $latestDate := $entry//vra:dateSet/vra:date[@type eq 'creation']/vra:latestDate
+    let $latestDate := 
+        if (contains($latestDate, 'T'))
+        then functx:substring-before-last-match($latestDate, 'T')
+        else $latestDate
+    let $latestDate := 
+        if ($entry//vra:dateSet/vra:date[@type eq 'creation']/vra:latestDate[@circa eq 'true'])
+        then concat('ca. ', $latestDate)
+        else $latestDate
+    let $date :=
+        if ($earliestDate eq $latestDate)
+        then $earliestDate
+        else 
+            if (($earliestDate and $latestDate))
+            then concat($earliestDate, ' - ', $latestDate)
+            else ($earliestDate, $latestDate)
+    (:let $log := util:log("DEBUG", ("##$date): ", $date)):)
     return
-    if ($earliestDate) then
-    <span class="date"> ({functx:substring-before-last-match($earliestDate, 'T')})</span>
+    if ($date) then
+    <span class="date"> ({functx:substring-before-last-match($date, 'T')})</span>
     else ()}
     
     </span>

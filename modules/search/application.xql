@@ -824,7 +824,7 @@ declare function biblio:collection-path($node as node(), $params as element(para
 declare function biblio:result-count($node as node(), $params as element(parameters)?, $model as item()*) {
     let $hitCount := $model[2]
     return
-        if ($hitCount != 1)
+        if ($hitCount ne 1)
         then (<span class="hit-count">{$hitCount}</span>, ' records')
         else (<span class="hit-count">{$hitCount}</span>, ' record')
 };

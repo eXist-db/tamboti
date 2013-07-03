@@ -221,27 +221,27 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
                     <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
                 </a>
             </td>
+            <td class="list-type icon magnify">
+            { bs:get-icon($bs:THUMB_SIZE_FOR_GALLERY, $item, $currentPos)}
+            </td>
+
             <td style="vertical-align:top;">
                 <div id="image-cover-box"> 
                 { 
-                    if ($vra-work) then (
-                    for $entry in $vra-work
-                    (:return <img src="{$entry/@relids}"/>:)
-                    let $image := collection($config:mods-root)//vra:image[@id=$entry/@relids]
-                  return
-                    <p>{local:return-thumbnail($image)}</p>
-                        
-                    )
-                    else (
-                     let $image := collection($config:mods-root)//vra:image[@id=$id]
-                      return
-                    <p>{local:return-thumbnail($image)}</p>
+                    if ($vra-work)
+                    then
+                        for $entry in $vra-work
+                        (:return <img src="{$entry/@relids}"/>:)
+                        let $image := collection($config:mods-root)//vra:image[@id=$entry/@relids]
+                            return
+                                <p>{local:return-thumbnail($image)}</p>
+                    else 
+                        let $image := collection($config:mods-root)//vra:image[@id=$id]
+                            return
+                                <p>{local:return-thumbnail($image)}</p>
                      (: 
                      return <img src="{concat(request:get-scheme(),'://',request:get-server-name(),':',request:get-server-port(),request:get-context-path(),'/rest', util:collection-name($image),"/" ,$image-name)}"  width="200px"/>
-                     :)
-                    )
-                    
-                   
+                     :)               
                 }
                 </div>
             </td>
@@ -251,7 +251,7 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
             <td class="detail-xml" style="vertical-align:top;">
                 { bs:toolbar($item, $isWritable, $id) }
                 <!--NB: why is this phoney HTML tag used to anchor the Zotero unIPA?-->
-                <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>
+                <!--Zotero does not import vra records <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>-->
                 {
                     let $collection := util:collection-name($item)
                     let $collection-short := functx:replace-first($collection, '/db/', '')
@@ -286,7 +286,7 @@ declare function bs:tei-detail-view-table($item as element(), $currentPos as xs:
             <td class="detail-xml">
                 { bs:toolbar($item, $isWritable, $id) }
                 <!--NB: why is this phoney HTML tag used to anchor the Zotero unIPA?-->
-                <abbr class="unapi-id" title="{bs:get-item-uri($item)}"></abbr>
+                <!--Zotero does not import tei records <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>-->
                 {
                     let $collection := util:collection-name($item)
                     let $collection-short := functx:replace-first($collection, '/db/', '')
@@ -346,35 +346,35 @@ declare function bs:vra-list-view-table($item as node(), $currentPos as xs:int) 
             then '/vra:work/@id'
             else '/vra:image/@id'
     let $stored := session:get-attribute("personal-list")
-    let $saved := exists($stored//*[@id = $id])
-    return
-        <tr xmlns="http://www.w3.org/1999/xhtml" class="pagination-item list">
-            <td class="pagination-number">{$currentPos}</td>
-            {
-            <td class="actions-cell">
-                <a id="save_{$id}" href="#{$currentPos}" class="save">
-                    <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
-                </a>
-            </td>
-            }
-            <!--<td class="list-type icon magnify">
-            { bs:get-icon($bs:THUMB_SIZE_FOR_GALLERY, $item, $currentPos)}
-            </td>-->
-            {
-            <td class="pagination-toggle">
-                <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>
-                <a>
+    let $saved := exists($stored//*[@id eq $id])
+        return
+            <tr xmlns="http://www.w3.org/1999/xhtml" class="pagination-item list">
+                <td class="pagination-number" style="vertical-align:middle">{$currentPos}</td>
                 {
-                    let $collection := util:collection-name($item)
-                    let $collection-short := functx:replace-first($collection, '/db/', '')
-                    let $clean := clean:cleanup($item)
-                    return
-                        retrieve-vra:format-list-view(string($currentPos), $clean, $collection-short)
+                <td class="actions-cell" style="vertical-align:middle">
+                    <a id="save_{$id}" href="#{$currentPos}" class="save">
+                        <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+                    </a>
+                </td>
                 }
-                </a>
-            </td>
-            }
-        </tr>
+                <td class="list-type icon magnify" style="vertical-align:middle">
+                { bs:get-icon($bs:THUMB_SIZE_FOR_GALLERY, $item, $currentPos)}
+                </td>
+                {
+                <td class="pagination-toggle" style="vertical-align:middle">
+                    <!--Zotero does not import vra records <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>-->
+                    <a>
+                    {
+                        let $collection := util:collection-name($item)
+                        let $collection-short := functx:replace-first($collection, '/db/', '')
+                        let $clean := clean:cleanup($item)
+                        return
+                            retrieve-vra:format-list-view(string($currentPos), $clean, $collection-short)
+                    }
+                    </a>
+                </td>
+                }
+            </tr>
 };
 
 declare function bs:tei-list-view-table($item as node(), $currentPos as xs:int) {
@@ -401,7 +401,7 @@ declare function bs:tei-list-view-table($item as node(), $currentPos as xs:int) 
             </td>
             {
             <td class="pagination-toggle">
-                <abbr class="unapi-id" title="{bs:get-item-uri($item)}"></abbr>
+                <!--Zotero does not import tei records <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>-->
                 <a>
                 {
                     let $collection := util:collection-name($item)
@@ -469,6 +469,8 @@ declare function bs:list-view-table($item as node(), $currentPos as xs:int) {
         case element(tei:term) return
             bs:tei-list-view-table($item, $currentPos)
         case element(tei:head) return
+            bs:tei-list-view-table($item, $currentPos)
+        case element(tei:TEI) return
             bs:tei-list-view-table($item, $currentPos)
         case element(tei:bibl) return
             bs:tei-list-view-table($item, $currentPos)
@@ -660,18 +662,47 @@ declare function bs:view-gallery($mode as xs:string, $cached as item()*, $stored
  
 declare function bs:retrieve($start as xs:int, $count as xs:int) {
     let $mode := request:get-parameter("mode", "gallery")
+    (:let $log := util:log("DEBUG", ("##$mode): ", $mode)):)
+    (:let $log := util:log("DEBUG", ("##$count0): ", $count)):)
+    (:let $log := util:log("DEBUG", ("##$start): ", $start)):)
     let $cached := session:get-attribute("mods:cached")
+    (:let $log := util:log("DEBUG", ("##$cached): ", $cached)):)
+    let $log := util:log("DEBUG", ("##$cached-count): ", count($cached)))
     let $stored := session:get-attribute("personal-list")
+    (:let $log := util:log("DEBUG", ("##$stored): ", $stored)):)
+    (:let $log := util:log("DEBUG", ("##$stored-count): ", count($stored))):)
+    
+    let $cached-vra-work := $cached[vra:work]
+    let $log := util:log("DEBUG", ("##$cached-vra-work-count): ", count($cached-vra-work)))
+    let $cached-vra-image := $cached[vra:image]
+    let $log := util:log("DEBUG", ("##$cached-vra-image-count): ", count($cached-vra-image)))
+    let $cached-vra-image-work := $cached-vra-image/vra:image/vra:relationSet/vra:relation[@type eq "imageOf"]/@relids
+    (:let $log := util:log("DEBUG", ("##$cached-vra-image-work-ids): ", string-join($cached-vra-image-work, '|||'))):)
+    (:let $log := util:log("DEBUG", ("##$cached-vra-image-work-ids-count): ", count($cached-vra-image-work))):)
+    let $cached-vra-image-work := collection($config:mods-root)//vra:work[@id = $cached-vra-image-work]/..
+    let $log := util:log("DEBUG", ("##$cached-vra-image-work): ", $cached-vra-image-work))
+    let $log := util:log("DEBUG", ("##$cached-vra-image-work-count): ", count($cached-vra-image-work)))
+    let $cached-vra := ($cached-vra-work union $cached-vra-image-work)
+    let $log := util:log("DEBUG", ("##$cached-vra-count): ", count($cached-vra)))
+    let $cached-mods := $cached[mods:titleInfo]
+    let $log := util:log("DEBUG", ("##$cached-mods-count): ", count($cached-mods)))
+    let $cached-tei := (($cached except $cached-mods) except $cached-vra)  
+    let $log := util:log("DEBUG", ("##$cached-tei-count): ", count($cached-tei)))
+    let $cached := ($cached-vra, $cached-mods, $cached-tei)   
     let $total := count($cached)
+    let $log := util:log("DEBUG", ("##$total): ", $total))
+    
     let $available :=
         if ($start + $count gt $total) then
             $total - $start + 1
         else
             $count
+    (:let $log := util:log("DEBUG", ("##$available): ", $available)):)
+    (:let $log := util:log("DEBUG", ("##$count): ", $count)):)
     return
         (: A single entry is always shown in table view for now :)
-        if ($mode eq "ajax" and $count eq 1) then
-            bs:view-table($cached, $stored, $start, $count, $available)
+        if ($mode eq "ajax" and $count eq 1) 
+        then bs:view-table($cached, $stored, $start, $count, $available)
         else
             switch ($mode)
                 case "gallery" return
@@ -683,9 +714,9 @@ declare function bs:retrieve($start as xs:int, $count as xs:int) {
 };
 
 session:create(),
-let $start0 := request:get-parameter("start", ())
-let $start := xs:int(if ($start0) then $start0 else 1)
-let $count0 := request:get-parameter("count", ())
-let $count := xs:int(if ($count0) then $count0 else 10)
+let $start := request:get-parameter("start", ())
+let $start := xs:int(if ($start) then $start else 1)
+let $count := request:get-parameter("count", ())
+let $count := xs:int(if ($count) then $count else 10)
 return
     bs:retrieve($start, $count)

@@ -11,7 +11,16 @@ import module namespace uu="http://exist-db.org/mods/uri-util" at "../../../modu
 import module namespace mods-common="http://exist-db.org/mods/common" at "../../../modules/mods-common.xql";
 
 (:The $retrieve-mods:primary-roles values are lower-cased when compared.:)
-declare variable $retrieve-mods:primary-roles := ('artist', 'art', 'author', 'aut', 'composer', 'cmp', 'composer', 'cmp', 'correspondent', 'crp', 'creator', 'cre', 'director', 'drt', 'interviewee', 'ive', 'photographer', 'ive', 'reporter', 'rpt');
+declare variable $retrieve-mods:primary-roles := (
+    'artist', 'art', 
+    'author', 'aut', 
+    'composer', 'cmp', 
+    'correspondent', 'crp', 
+    'creator', 'cre', 
+    'director', 'drt', 
+    'photographer', 'pht', 
+    'reporter', 'rpt')
+;
 
 declare option exist:serialize "media-type=text/xml";
 
@@ -267,13 +276,14 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
         </tr>
     ,
     (: location :)
-    for $location in $entry/mods:location/(* except mods:url)
-    return
-        <tr xmlns="http://www.w3.org/1999/xhtml">
-            <td class="label">Location</td>
-            <td class="record">
-            {mods-common:format-location($location, $collection-short)}</td>
-        </tr>
+    let $locations := $entry/mods:location[(* except mods:url)]
+    for $location in $locations
+        return
+            <tr xmlns="http://www.w3.org/1999/xhtml">
+                <td class="label">Location</td>
+                <td class="record">
+                {mods-common:format-location($location, $collection-short)}</td>
+            </tr>
     ,
     (: relatedItem :)
     mods-common:get-related-items($entry, 'detail', $global-language, $collection-short)
