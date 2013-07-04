@@ -17,10 +17,10 @@
     border-image: initial;
 }
 .dropbox {
-    margin-top: 25px;
-    margin-left: 100px;
+    margin-top: 10px;
+    margin-left: 50px;
     width: 300px;
-    height: 50px;
+    height: 80px;
     border: 2px solid #DDD;
     border-radius: 8px;
     background-color: #FEFFEC;
@@ -28,6 +28,7 @@
     color: #BBB;
     font-size: 14px;
     font-family: Arial, sans-serif;
+    width: 700px;
 }
 .dropbox span {
     margin-top: 0.9em;
