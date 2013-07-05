@@ -535,8 +535,16 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
             then ($item/vra:work/@id)
             else ($item/vra:image/vra:relationSet/vra:relation/@relids)
          )
-     let $workdir := if(contains($collection, 'VRA_images')) then (  functx:substring-before-last($collection, "/")) else ($collection)
-     let $workdir := if(ends-with($workdir,'/')) then ($workdir) else ($workdir || '/')
+    let $imageId :=  if ( exists($item/vra:work) )
+                      then (
+                            if( exists($item/vra:work/vra:relationSet/vra:relation/@pref[.='true']) )
+                            then ( $item/vra:work/vra:relationSet/vra:relation[@pref='true']/@relids )
+                            else ( $item/vra:work/vra:relationSet/vra:relation[1]/@relids)
+                      ) else ($item/vra:image/@id)
+
+    let $workdir := if(contains($collection, 'VRA_images')) then (  functx:substring-before-last($collection, "/")) else ($collection)
+    let $workdir := if(ends-with($workdir,'/')) then ($workdir) else ($workdir || '/')
+    let $imagepath := $workdir || 'VRA_images/' || $imageId || ".xml"
     
      
      let $upload-button:=  
@@ -545,7 +553,7 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
         else ()
     return
         <div class="actions-toolbar">
-            <a target="_new" href="source.xql?id={$id}&amp;clean=yes">
+           <a target="_new" href="/exist/apps/ziziphus/record.html?id={$id}&amp;workdir={$workdir}&amp;imagepath={$imagepath}">
                 <img title="View XML Source of Record" src="theme/images/script_code.png"/>
             </a>
             {
