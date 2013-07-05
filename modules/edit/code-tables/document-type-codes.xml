@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <code-table xml:id="document-type-code">
     <code-table-name>document-type-code</code-table-name>
     <tab-id>extension</tab-id>
@@ -129,25 +130,25 @@
             <sort>1</sort>
         </item>
         <item>
-            <label>Book Review</label>
+            <label>Review of Book</label>
             <value>related-book-review-in-periodical</value>
             <classifier>related-item</classifier>
             <sort>1</sort>
         </item>
         <item>
-            <label>Newspaper Article (Related)</label>
+            <label>Article in Newspaper (Related)</label>
             <value>related-newspaper-article</value>
             <classifier>related</classifier>
             <sort>1</sort>
         </item>
         <item>
-            <label>Newspaper Article</label>
+            <label>Article in Newspaper</label>
             <value>related-newspaper-article-latin</value>
             <classifier>related-item</classifier>
             <sort>1</sort>
         </item>
         <item>
-            <label>Book Review (Related)</label>
+            <label>Review of Book (Related)</label>
             <value>related-book-review-in-periodical</value>
             <classifier>related</classifier>
         </item>
@@ -238,7 +239,7 @@
         </item>
         <item>
             <hint>
-                <p>For a <strong>Book Review</strong>, on the <strong>Book Review</strong> tab,
+                <p>For a <strong>Review of Book</strong>, on the <strong>Book Review</strong> tab,
                     input is the same as for an article in a periodical. Here, one would normally
                     input the following information:</p>
                 <p>Input the name(s) of the author(s) in <strong>Names and Roles</strong>, leaving
@@ -301,7 +302,7 @@
                 <p>Finally, in <strong>Identifier</strong> input the ISBN number of the book,
                     preferably a 13-digit ISBN, and a DOI, if available.</p>
             </hint>
-            <label>Book Review</label>
+            <label>Review of Book</label>
             <value>book-review</value>
             <classifier>stand-alone</classifier>
             <sort>1</sort>
@@ -313,18 +314,18 @@
             <sort>1</sort>
         </item>
         <item>
-            <label>Newspaper Article</label>
+            <label>Article in Newspaper</label>
             <value>newspaper-article</value>
             <classifier>stand-alone</classifier>
             <sort>1</sort>
         </item>
         <item>
-            <label>Book Review (in Latin Script)</label>
+            <label>Review of Book (in Latin Script)</label>
             <value>book-review-latin</value>
             <classifier>related</classifier>
         </item>
         <item>
-            <label>Book Review (with Transliteration)</label>
+            <label>Review of Book (with Transliteration)</label>
             <value>book-review-transliterated</value>
             <classifier>related</classifier>
         </item>
