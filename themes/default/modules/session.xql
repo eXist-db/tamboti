@@ -495,8 +495,16 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
             then ($item/vra:work/@id)
             else ($item/vra:image/vra:relationSet/vra:relation/@relids)
          )
-     let $workdir := if(contains($collection, 'VRA_images')) then (  functx:substring-before-last($collection, "/")) else ($collection)
-     let $workdir := if(ends-with($workdir,'/')) then ($workdir) else ($workdir || '/')
+    let $imageId :=  if ( exists($item/vra:work) )
+                      then (
+                            if( exists($item/vra:work/vra:relationSet/vra:relation/@pref[.='true']) )
+                            then ( $item/vra:work/vra:relationSet/vra:relation[@pref='true']/@relids )
+                            else ( $item/vra:work/vra:relationSet/vra:relation[1]/@relids)
+                      ) else ($item/vra:image/@id)
+
+    let $workdir := if(contains($collection, 'VRA_images')) then (  functx:substring-before-last($collection, "/")) else ($collection)
+    let $workdir := if(ends-with($workdir,'/')) then ($workdir) else ($workdir || '/')
+    let $imagepath := $workdir || 'VRA_images/' || $imageId || ".xml"
     
      
      let $upload-button:=  
@@ -514,7 +522,7 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
                 then (
                     if (xmldb:collection-available("/db/apps/ziziphus/") and name($item) eq 'vra')
                     then (
-                     <a target="_new" href="/exist/apps/ziziphus/record.html?id={$id}&amp;workdir={$workdir}">
+                     <a target="_new" href="/exist/apps/ziziphus/record.html?id={$id}&amp;workdir={$workdir}&amp;imagepath={$imagepath}">
                         <img title="Edit VRA Record" src="theme/images/page_edit.png"/>
                      </a>
                     ) else (),
