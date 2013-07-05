@@ -197,25 +197,21 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
         let $type := functx:capitalize-first(functx:camel-case-to-words($type, ' '))
         let $relids := $relation/@relids
         let $relids := tokenize($relids, ' ')
+        for $relid at $i in $relids
+            let $type := substring($relid, 1, 1)
+            let $type := 
+                if ($type eq 'i')
+                then 'Image Record'
+                else
+                    if ($type eq 'w')
+                    then 'Work Record'
+                    else 'Collection Record'
+            let $list-view := collection($config:mods-root)//vra:image[@id = $relid]/..
+            let $list-view := retrieve-vra:format-list-view('', $list-view, '')
             return
                 <tr>
-                    <td class="collection-label">Link to</td>
-                    <td>{
-                        (:NB: move up:)
-                        for $relid in $relids
-                            let $type := substring($relid, 1, 1)
-                            let $type := 
-                                if ($type eq 'i')
-                                then 'Image Record'
-                                else
-                                    if ($type eq 'w')
-                                    then 'Work Record'
-                                    else 'Collection Record'
-                            let $relid := concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $relid)
-                            return
-                                <a href="{$relid}">{$type}</a>
-                        }
-                    </td>
+                    <td class="collection-label">{$type}</td>
+                    <td>{$list-view}</td>
                 </tr>
     ,
     (: subjects :)

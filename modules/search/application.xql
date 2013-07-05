@@ -673,6 +673,19 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
         let $sort := if ($sort) then $sort else session:get-attribute("sort")
         let $results := biblio:evaluate-query($query, $sort)
         (:let $log := util:log("DEBUG", ("##$results): ", $results)):)
+        let $results-vra-work := $results[vra:work]
+        let $log := util:log("DEBUG", ("##$results-vra-work-count): ", count($results-vra-work)))
+        let $results-vra-image := $results[vra:image]
+        (:by not capturing vra:collection we filter away these records:)
+        let $results-vra-image-work := $results-vra-image/vra:image/vra:relationSet/vra:relation[@type eq "imageOf"]/@relids
+        let $results-vra-image-work := collection($config:mods-root)//vra:work[@id = $results-vra-image-work]/..
+        let $results-vra := ($results-vra-work union $results-vra-image-work)
+        (:we assume that all mods records will have a titleInfo element - otherwise we cannot process them:)
+        let $results-mods := $results[mods:titleInfo]
+        (:we will have tei objects returned that are not whole documents, so this has to be filtered by namespace, but using namespace-uri() is too expensive:)
+        let $results-tei := $results[self::tei:p | self::tei:bibl | self::tei:titleStmt | self::tei:person | self::tei:TEI | self::tei:title | self::tei:name | self::tei:persName | self::tei:term | self::tei:head]
+        (:using "let $results-tei := $results[self::tei:*]" should work, but gives error: context is missing for node 1 !:)
+        let $results := ($results-vra, $results-mods, $results-tei)
         let $processed :=
             for $item in $results
             return
@@ -1089,7 +1102,8 @@ declare function biblio:get-or-create-cached-results($mylist as xs:string?, $que
 };
 
 declare function biblio:query($node as node(), $params as element(parameters)?, $model as item()*) {
-    session:create(),
+    session:create()
+    ,
     (: We receive an HTML template as input :)
     let $filter := request:get-parameter("filter", ())
     let $history := request:get-parameter("history", ())

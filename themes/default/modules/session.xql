@@ -96,23 +96,71 @@ declare function bs:get-item-uri($item-id as xs:string) {
     )
 };
 
-declare function bs:view-gallery-item($mode as xs:string, $item as element(mods:mods), $currentPos as xs:int) {
-    let $thumbSize := if ($mode eq "gallery") then $bs:THUMB_SIZE_FOR_GALLERY else $bs:THUMB_SIZE_FOR_GRID
-    let $title := mods-common:get-short-title($item)
-    return
-        <li class="pagination-item {$mode}" xmlns="http://www.w3.org/1999/xhtml">
-            <span class="pagination-number">{ $currentPos }</span>
-            <div class="icon pagination-toggle" title="{$title}">
-                <img class="magnify icon-magnifier" src="theme/images/search.png" title="Click to view full screen image"/>
-                { bs:get-icon($thumbSize, $item, $currentPos) }
-            </div>
-            {
-                if ($mode eq "gallery") then
-                    <h4>{ $title }</h4>
-                else
-                    ()
-            }
-        </li>
+declare function bs:view-gallery-item($mode as xs:string, $item as element(), $currentPos as xs:int) {
+    let $thumbSize := 
+        if ($mode eq "gallery") 
+        then $bs:THUMB_SIZE_FOR_GALLERY 
+        else $bs:THUMB_SIZE_FOR_GRID
+    let $list-view := 
+        if (namespace-uri($item) eq 'http://www.loc.gov/mods/v3')
+        then retrieve-mods:format-list-view('', $item, '')
+        else
+            if (namespace-uri($item) eq 'http://www.vraweb.org/vracore4.htm')
+            then retrieve-vra:format-list-view('', $item, '')
+            else
+                if (namespace-uri($item) eq 'http://www.tei-c.org/ns/1.0')
+                then retrieve-tei:format-list-view('', $item, '', '', '')
+                else ()
+        return
+            if (namespace-uri($item) eq 'http://www.loc.gov/mods/v3')
+            then
+                <li class="pagination-item {$mode}" xmlns="http://www.w3.org/1999/xhtml">
+                    <span class="pagination-number">{ $currentPos }</span>
+                    <div class="icon pagination-toggle" title="{$list-view}">
+                        <img class="magnify icon-magnifier" src="theme/images/search.png" title="Click to view full screen image"/>
+                        { bs:get-icon($thumbSize, $item, $currentPos) }            
+                    </div>
+                    {
+                        if ($mode eq "gallery") then
+                            <span class="mods-gallery">{ $list-view }</span>
+                        else
+                            ()
+                    }
+                </li>
+            else
+                if (namespace-uri($item) eq 'http://www.vraweb.org/vracore4.htm')
+                then
+                <li class="pagination-item {$mode}" xmlns="http://www.w3.org/1999/xhtml">
+                    <span class="pagination-number">{ $currentPos }</span>
+                    <div class="icon pagination-toggle" title="{$list-view}">
+                        <img class="magnify icon-magnifier" src="theme/images/search.png" title="Click to view full screen image"/>
+                        { bs:get-icon($thumbSize, $item, $currentPos) }            
+                </div>
+                    {
+                        if ($mode eq "gallery") then
+                            <span class="vra-gallery">{ $list-view }</span>
+                        else
+                            ()
+                    }
+                </li>
+                else 
+                    if (namespace-uri($item) eq 'http://www.tei-c.org/ns/1.0')
+                    then
+                            <li class="pagination-item {$mode}" xmlns="http://www.w3.org/1999/xhtml">
+                        <span class="pagination-number">{ $currentPos }</span>
+                        <div class="icon pagination-toggle" title="{$list-view}">
+                            <img class="magnify icon-magnifier" src="theme/images/search.png" title="Click to view full screen image"/>
+                            { bs:get-icon($thumbSize, $item, $currentPos) }            
+                    </div>
+                        {
+                            if ($mode eq "gallery") then
+                                <span class="tei-gallery">{ $list-view }</span>
+                            else
+                                ()
+                        }
+                    </li>
+                    else ()
+
 };
 
 declare function bs:mods-detail-view-table($item as element(mods:mods), $currentPos as xs:int) {
@@ -221,10 +269,7 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
                     <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
                 </a>
             </td>
-            <td class="list-type icon magnify">
-            { bs:get-icon($bs:THUMB_SIZE_FOR_GALLERY, $item, $currentPos)}
-            </td>
-
+            <td class="detail-type" style="vertical-align:top"><img src="theme/images/image.png" title="Still Image"/></td>
             <td style="vertical-align:top;">
                 <div id="image-cover-box"> 
                 { 
@@ -244,10 +289,7 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
                      :)               
                 }
                 </div>
-            </td>
-            <!--<td class="magnify detail-type">
-            { bs:get-icon($bs:THUMB_SIZE_FOR_DETAIL_VIEW, $item, $currentPos)}
-            </td>-->
+            </td>            
             <td class="detail-xml" style="vertical-align:top;">
                 { bs:toolbar($item, $isWritable, $id) }
                 <!--NB: why is this phoney HTML tag used to anchor the Zotero unIPA?-->
@@ -357,9 +399,7 @@ declare function bs:vra-list-view-table($item as node(), $currentPos as xs:int) 
                     </a>
                 </td>
                 }
-                <td class="list-type icon magnify" style="vertical-align:middle">
-                { bs:get-icon($bs:THUMB_SIZE_FOR_GALLERY, $item, $currentPos)}
-                </td>
+                <td class="list-type" style="vertical-align:middle"><img src="theme/images/image.png" title="Still Image"/></td>
                 {
                 <td class="pagination-toggle" style="vertical-align:middle">
                     <!--Zotero does not import vra records <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>-->
@@ -495,16 +535,8 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
             then ($item/vra:work/@id)
             else ($item/vra:image/vra:relationSet/vra:relation/@relids)
          )
-    let $imageId :=  if ( exists($item/vra:work) )
-                      then (
-                            if( exists($item/vra:work/vra:relationSet/vra:relation/@pref[.='true']) )
-                            then ( $item/vra:work/vra:relationSet/vra:relation[@pref='true']/@relids )
-                            else ( $item/vra:work/vra:relationSet/vra:relation[1]/@relids)
-                      ) else ($item/vra:image/@id)
-
-    let $workdir := if(contains($collection, 'VRA_images')) then (  functx:substring-before-last($collection, "/")) else ($collection)
-    let $workdir := if(ends-with($workdir,'/')) then ($workdir) else ($workdir || '/')
-    let $imagepath := $workdir || 'VRA_images/' || $imageId || ".xml"
+     let $workdir := if(contains($collection, 'VRA_images')) then (  functx:substring-before-last($collection, "/")) else ($collection)
+     let $workdir := if(ends-with($workdir,'/')) then ($workdir) else ($workdir || '/')
     
      
      let $upload-button:=  
@@ -522,7 +554,7 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
                 then (
                     if (xmldb:collection-available("/db/apps/ziziphus/") and name($item) eq 'vra')
                     then (
-                     <a target="_new" href="/exist/apps/ziziphus/record.html?id={$id}&amp;workdir={$workdir}&amp;imagepath={$imagepath}">
+                     <a target="_new" href="/exist/apps/ziziphus/record.html?id={$id}&amp;workdir={$workdir}">
                         <img title="Edit VRA Record" src="theme/images/page_edit.png"/>
                      </a>
                     ) else (),
@@ -670,43 +702,14 @@ declare function bs:view-gallery($mode as xs:string, $cached as item()*, $stored
  
 declare function bs:retrieve($start as xs:int, $count as xs:int) {
     let $mode := request:get-parameter("mode", "gallery")
-    (:let $log := util:log("DEBUG", ("##$mode): ", $mode)):)
-    (:let $log := util:log("DEBUG", ("##$count0): ", $count)):)
-    (:let $log := util:log("DEBUG", ("##$start): ", $start)):)
     let $cached := session:get-attribute("mods:cached")
-    (:let $log := util:log("DEBUG", ("##$cached): ", $cached)):)
-    (:let $log := util:log("DEBUG", ("##$cached-count): ", count($cached))):)
-    let $stored := session:get-attribute("personal-list")
-    (:let $log := util:log("DEBUG", ("##$stored): ", $stored)):)
-    (:let $log := util:log("DEBUG", ("##$stored-count): ", count($stored))):)
-    
-    let $cached-vra-work := $cached[vra:work]
-    (:let $log := util:log("DEBUG", ("##$cached-vra-work-count): ", count($cached-vra-work))):)
-    let $cached-vra-image := $cached[vra:image]
-    (:let $log := util:log("DEBUG", ("##$cached-vra-image-count): ", count($cached-vra-image))):)
-    let $cached-vra-image-work := $cached-vra-image/vra:image/vra:relationSet/vra:relation[@type eq "imageOf"]/@relids
-    (:let $log := util:log("DEBUG", ("##$cached-vra-image-work-ids): ", string-join($cached-vra-image-work, '|||'))):)
-    (:let $log := util:log("DEBUG", ("##$cached-vra-image-work-ids-count): ", count($cached-vra-image-work))):)
-    let $cached-vra-image-work := collection($config:mods-root)//vra:work[@id = $cached-vra-image-work]/..
-    (:let $log := util:log("DEBUG", ("##$cached-vra-image-work): ", $cached-vra-image-work)):)
-    (:let $log := util:log("DEBUG", ("##$cached-vra-image-work-count): ", count($cached-vra-image-work))):)
-    let $cached-vra := ($cached-vra-work union $cached-vra-image-work)
-    (:let $log := util:log("DEBUG", ("##$cached-vra-count): ", count($cached-vra))):)
-    let $cached-mods := $cached[mods:titleInfo]
-    (:let $log := util:log("DEBUG", ("##$cached-mods-count): ", count($cached-mods))):)
-    let $cached-tei := $cached[tei:teiHeader]  
-    (:let $log := util:log("DEBUG", ("##$cached-tei-count): ", count($cached-tei))):)
-    let $cached := ($cached-vra, $cached-mods, $cached-tei)   
+    let $stored := session:get-attribute("personal-list")    
     let $total := count($cached)
-    (:let $log := util:log("DEBUG", ("##$total): ", $total)):)
-    
     let $available :=
         if ($start + $count gt $total) then
             $total - $start + 1
         else
             $count
-    (:let $log := util:log("DEBUG", ("##$available): ", $available)):)
-    (:let $log := util:log("DEBUG", ("##$count): ", $count)):)
     return
         (: A single entry is always shown in table view for now :)
         if ($mode eq "ajax" and $count eq 1) 
