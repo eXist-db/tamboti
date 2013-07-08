@@ -120,7 +120,7 @@ declare variable $biblio:FIELDS :=
         tei:TEI//tei:person[ft:query(.//tei:persName, '$q', $options)]
         )
     </field>
-    <field name="Language (MODS)">
+    <field name="Language Codes (MODS)">
         (
         mods:mods[ft:query(.//mods:language, '$q', $options)]
         )
@@ -176,7 +176,22 @@ declare variable $biblio:FIELDS :=
     <field name="XLink (MODS)">
         mods:mods[mods:relatedItem[ends-with(@xlink:href, '$q')]]
     </field>
-</fields>;
+</fields>
+;
+
+declare variable $biblio:FORMATS :=
+    <select name="format">
+        <option value="MODS-TEI-VRA">MODS &amp; TEI &amp; VRA</option>
+        <option value="MODS">MODS</option>
+        <option value="TEI">TEI</option>
+        <option value="VRA">VRA</option>
+        <option value="MODS-TEI">MODS &amp; TEI</option>
+        <option value="MODS-VRA">MODS &amp; VRA</option>
+        <option value="TEI-VRA">TEI &amp; VRA</option>
+    </select>
+;
+
+
 
 (:
     Default template to be used for form generation if no query is specified. 
@@ -214,6 +229,7 @@ declare variable $biblio:TEMPLATE_QUERY :=
 :)
 declare function biblio:form-from-query($node as node(), $params as element(parameters)?, $model as item()*) as element()+ {
     let $incoming-query := $model[1]
+    let $search-format := request:get-parameter("format", '')
     (:let $log := util:log("DEBUG", ("##$incoming-query): ", $incoming-query)):)
     (:let $log := util:log("DEBUG", ("##$model): ", $model)):)
     (:let $log := util:log("DEBUG", ("##$params): ", $params)):)
@@ -222,6 +238,20 @@ declare function biblio:form-from-query($node as node(), $params as element(para
         then $incoming-query 
         else $biblio:TEMPLATE_QUERY
     (:let $log := util:log("DEBUG", ("##$query): ", $query)):)
+    return
+    (<tr><td></td><td colspan="2">Search for records with
+                    <select name="format">
+                    {
+                        for $format in $biblio:FORMATS/option
+                        return
+                        <option>
+                            { if ($format eq $search-format) then attribute selected { "selected" } else () } 
+                            {$format/text()}
+                        </option>
+                    }
+                    </select>
+                format for</td></tr>
+                ,
     for $field at $pos in $query//field
     (:let $log := util:log("DEBUG", ("##$field): ", $field)):)
     return
@@ -269,13 +299,14 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                     return
                         <option>
                             { if ($f/@name eq $field/@name) then attribute selected { "selected" } else () } 
-                            <!--NB: tooltip to show which types of records are searched for-->
                             {$f/@name/string()}
                         </option>
                 }
                 </select>
+                
+
             </td>
-        </tr>
+        </tr>)
 };
 
 (:~
@@ -334,9 +365,12 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
             )
         (:Determine which field to search in: if a field has been specified, use it; otherwise default to "All Fields (MODS, TEI, VRA)".:)
         case element(field) return
+            (:let $log := util:log("DEBUG", ("##$biblio:FIELDS): ", $biblio:FIELDS)):)
             let $expr := $biblio:FIELDS/field[@name eq $query-as-xml/@name]
             (:let $log := util:log("DEBUG", ("##$query-as-xml-1): ", $query-as-xml)):)
             (:let $log := util:log("DEBUG", ("##$expr-1): ", $expr)):)
+            let $search-format := request:get-parameter("format", '')
+            (:let $log := util:log("DEBUG", ("##$search-format): ", $search-format)):)
             let $expr := 
                 if ($expr) 
                 then $expr
@@ -369,7 +403,7 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
             return
                 (:The search term held in $query-as-xml is substituted for the 'q' held in $expr.:)
                 ($collection, replace($expr, '\$q', biblio:normalize-search-string($query-as-xml/string())))
-        case element(collection) 
+        case element(collection)
             return
                 if (not($query-as-xml/..//field)(: and not($config:require-query):)) 
                 then 
@@ -672,8 +706,23 @@ declare function biblio:query-history($node as node(), $params as element(parame
 declare function biblio:eval-query($query-as-xml as element(query)?, $sort as item()?) as xs:int {
     if ($query-as-xml) 
     then
+        let $search-format := request:get-parameter("format", '')
+        (:let $log := util:log("DEBUG", ("##$search-format2): ", $search-format)):)            
         let $query := string-join(biblio:generate-query($query-as-xml), '')
-        (:let $log := util:log("DEBUG", ("##$query): ", $query)):)
+        (:let $log := util:log("DEBUG", ("##$query000): ", $query)):)
+        let $query :=
+            if (not(contains($search-format, 'MODS')))
+            then replace($query, 'mods:', '')
+            else $query
+        let $query :=
+            if (not(contains($search-format, 'VRA')))
+            then replace($query, 'vra:', '')
+            else $query
+        let $query :=
+            if (not(contains($search-format, 'TEI')))
+            then replace($query, 'tei:', '')
+            else $query
+        (:let $log := util:log("DEBUG", ("##$query!!!): ", $query)):)
         let $sort := if ($sort) then $sort else session:get-attribute("sort")
         let $results := biblio:evaluate-query($query, $sort)
         (:let $log := util:log("DEBUG", ("##$results): ", $results)):)

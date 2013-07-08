@@ -1599,7 +1599,7 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
 declare function mods-common:format-related-item($relatedItem as element(mods:relatedItem), $global-language as xs:string?, $collection-short as xs:string) as element()? {
 	(:Remove related items which have neither @xlink:href nor titleInfo/title :)
 	let $relatedItem := mods-common:remove-parent-with-missing-required-node($relatedItem)
-	let $log := util:log("DEBUG", ("##$relatedItem): ", $relatedItem))
+	(:let $log := util:log("DEBUG", ("##$relatedItem): ", $relatedItem)):)
 	(:Get the global transliteration:)
 	let $global-transliteration := $relatedItem/../mods:extension/ext:transliterationOfResource/text()
 	
