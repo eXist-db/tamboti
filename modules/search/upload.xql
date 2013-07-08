@@ -253,7 +253,7 @@ declare function upload:upload( $filetype , $filesize,  $filename, $data, $doc-t
  let $add :=
  if  ($parent_type eq 'vra')
     then (
-    let $vra_insert := <vra:relation type="imageIs" relids="{$myuuid}" source="Tamboti" refid="" >general view</vra:relation>
+    let $vra_insert := <vra:relation type="imageIs" relids="{$myuuid}" source="Tamboti" refid=""  pref="true">general view</vra:relation>
    
     let $relationTag := $parentdoc/vra:vra/vra:work/vra:relationSet
     return
