@@ -61,116 +61,122 @@ declare function functx:replace-first($arg as xs:string?, $pattern as xs:string,
     therefore any leading hash is first removed and then added, to prevent double hashes. 
 :)
 declare variable $biblio:FIELDS :=
-	<fields>
-		<field name="Title">
-		      (
-		      mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]
-		          union
-		      vra:vra[ft:query(.//vra:titleSet, '$q', $options)]
-		          union
-		      tei:TEI//tei:p[ft:query(tei:title, '$q', $options)]
-		          union
-		      tei:TEI//tei:bibl[ft:query(.//tei:title, '$q', $options)]
-		          union
-		      tei:TEI//tei:titleStmt[ft:query(./tei:title, '$q', $options)]
-		      )
-		</field>
-		<field name="Name">
-		      (
-		      mods:mods[ft:query(.//mods:name, '$q', $options)]
-		          union
-		      vra:vra[ft:query(.//vra:agentSet, '$q', $options)]
-		          union
-		      tei:TEI//tei:p[ft:query(tei:name, '$q', $options)]
-		          union
-		      tei:TEI//tei:bibl[ft:query(.//tei:name, '$q', $options)]
-		          union
-		      tei:TEI//tei:person[ft:query(.//tei:persName, '$q', $options)]
-		      )
-		      </field>
-		<field name="Origin">
-		      (
-		      mods:mods[ft:query(.//mods:placeTerm , '$q*', $options)]
-		          union
-		      mods:mods[ft:query(.//mods:publisher , '$q*', $options)]
-		      )
-		      </field>
-		<field name="Date">
-			(
-			mods:mods[ft:query(.//mods:dateCreated, '$q*', $options)]
-			      union
-			mods:mods[ft:query(.//mods:dateIssued, '$q*', $options)]
-			      union
-			mods:mods[ft:query(.//mods:dateCaptured, '$q*', $options)]
-			      union
-			mods:mods[ft:query(.//mods:copyrightDate, '$q*', $options)]
-			      union
-			mods:mods[ft:query(.//mods:date, '$q*', $options)]
-			)
-		</field>
-		<field name="Identifier">mods:mods[mods:identifier = '$q']</field>
-		<field name="Abstract/Description">
-		    (
-		    mods:mods[ft:query(mods:abstract, '$q', $options)]
-		      union
-            vra:vra[ft:query(.//vra:descriptionSet, '$q', $options)]
-            )
-		      </field>
-        <field name="Note">mods:mods[ft:query(mods:note, '$q', $options)]</field>
-        <field name="Subject">
-            (
-            mods:mods[ft:query(mods:subject, '$q', $options)]
-                union
-            vra:vra[ft:query(.//vra:subjectSet, '$q', $options)]
-                union
-            tei:TEI//tei:p[ft:query(.//tei:term, '$q', $options)]
-                union
-            tei:TEI//tei:head[ft:query(.//tei:term, '$q', $options)]
-            )
-        </field>
-        <field name="Genre">
-            (
-            mods:mods[ft:query(.//mods:genre, '$q', $options)]
-            )
-        </field>
-        <field name="Language">
-            (
-            mods:mods[ft:query(.//mods:language, '$q', $options)]
-            )
-        </field>
-       	<field name="Extracted Text">
-       	    (
-       	    ft:search('page:$q')
-       	    )
-       	</field>
-       	<field name="ID">
-       	    (
-       	    mods:mods[@ID eq '$q']
-       	        union
-       	    vra:vra[vra:collection/@id eq '$q']
-       	        union
-       	    vra:vra[vra:work/@id eq '$q']
-       	        union
-       	    vra:vra[vra:image/@id eq '$q']
-       	    )
-       	</field>
-       	<field name="XLink">mods:mods[mods:relatedItem[ends-with(@xlink:href, '$q')]]</field>
-        <field name="All">
-       		(
-       		mods:mods[ft:query(., '$q', $options)]
-       		   union
-       		vra:vra[ft:query(., '$q', $options)]
-       		union
-       		tei:TEI[ft:query(., '$q', $options)]
-       		   union
-       		ft:search('page:$q')
-	           union
-       		mods:mods[@ID eq '$q']
-       		   union
-       		mods:mods[mods:relatedItem/@xlink:href eq '$q']
-       		)
-       	</field>
-	</fields>;
+<fields>
+    <field name="All" display="All Fields (MODS, TEI, VRA)">
+        (
+        mods:mods[ft:query(., '$q', $options)]
+        union
+        vra:vra[ft:query(., '$q', $options)]
+        union
+        tei:TEI[ft:query(., '$q', $options)]
+        union
+        ft:search('page:$q')
+        union
+        mods:mods[@ID eq '$q']
+        union
+        mods:mods[mods:relatedItem/@xlink:href eq '$q']
+        )
+    </field>
+    <field name="Date" display="Date (MODS)">
+        (
+        mods:mods[ft:query(.//mods:dateCreated, '$q*', $options)]
+        union
+        mods:mods[ft:query(.//mods:dateIssued, '$q*', $options)]
+        union
+        mods:mods[ft:query(.//mods:dateCaptured, '$q*', $options)]
+        union
+        mods:mods[ft:query(.//mods:copyrightDate, '$q*', $options)]
+        union
+        mods:mods[ft:query(.//mods:date, '$q*', $options)]
+        )
+    </field>
+    <field name="Description/Abstract" display="Description/Abstract (MODS, VRA)">
+        (
+        mods:mods[ft:query(mods:abstract, '$q', $options)]
+        union
+        vra:vra[ft:query(.//vra:descriptionSet, '$q', $options)]
+        )
+    </field>
+    <field name="Extracted Text" display="Extracted Text (PDF)">
+        (
+        ft:search('page:$q')
+        )
+    </field>
+    <field name="Genre" display="Genre (MODS)">
+        (
+        mods:mods[ft:query(.//mods:genre, '$q', $options)]
+        )
+    </field>
+    <field name="Name" display="Name (MODS, TEI, VRA)">
+        (
+        mods:mods[ft:query(.//mods:name, '$q', $options)]
+        union
+        vra:vra[ft:query(.//vra:agentSet, '$q', $options)]
+        union
+        tei:TEI//tei:p[ft:query(tei:name, '$q', $options)]
+        union
+        tei:TEI//tei:bibl[ft:query(.//tei:name, '$q', $options)]
+        union
+        tei:TEI//tei:person[ft:query(.//tei:persName, '$q', $options)]
+        )
+    </field>
+    <field name="Language" display="Language (MODS)">
+        (
+        mods:mods[ft:query(.//mods:language, '$q', $options)]
+        )
+    </field>
+    <field name="Note" display="Note (MODS)">
+        mods:mods[ft:query(mods:note, '$q', $options)]
+    </field>
+    <field name="Origin" display="Origin (MODS)">
+        (
+        mods:mods[ft:query(.//mods:placeTerm , '$q*', $options)]
+        union
+        mods:mods[ft:query(.//mods:publisher , '$q*', $options)]
+        )
+    </field>
+    <field name="ID" display="Record ID (MODS, VRA)">
+        (
+        mods:mods[@ID eq '$q']
+        union
+        vra:vra[vra:collection/@id eq '$q']
+        union
+        vra:vra[vra:work/@id eq '$q']
+        union
+        vra:vra[vra:image/@id eq '$q']
+        )
+    </field>
+    <field name="Identifier" display="Resource Identifier (MODS)">
+        mods:mods[mods:identifier = '$q']
+    </field>
+    <field name="Subject" display="Subject (MODS, TEI, VRA)">
+        (
+        mods:mods[ft:query(mods:subject, '$q', $options)]
+        union
+        vra:vra[ft:query(.//vra:subjectSet, '$q', $options)]
+        union
+        tei:TEI//tei:p[ft:query(.//tei:term, '$q', $options)]
+        union
+        tei:TEI//tei:head[ft:query(.//tei:term, '$q', $options)]
+        )
+    </field>
+    <field name="Title" display="Title (MODS, TEI, VRA)">
+        (
+        mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]
+        union
+        vra:vra[ft:query(.//vra:titleSet, '$q', $options)]
+        union
+        tei:TEI//tei:p[ft:query(tei:title, '$q', $options)]
+        union
+        tei:TEI//tei:bibl[ft:query(.//tei:title, '$q', $options)]
+        union
+        tei:TEI//tei:titleStmt[ft:query(./tei:title, '$q', $options)]
+        )
+    </field>
+    <field name="XLink" display="XLink (MODS)">
+        mods:mods[mods:relatedItem[ends-with(@xlink:href, '$q')]]
+    </field>
+</fields>;
 
 (:
     Default template to be used for form generation if no query is specified. 
@@ -264,7 +270,7 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                         <option>
                             { if ($f/@name eq $field/@name) then attribute selected { "selected" } else () } 
                             <!--NB: tooltip to show which types of records are searched for-->
-                            {$f/@name/string()}
+                            {$f/@display/string()}
                         </option>
                 }
                 </select>
