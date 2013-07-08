@@ -62,7 +62,7 @@ declare function functx:replace-first($arg as xs:string?, $pattern as xs:string,
 :)
 declare variable $biblio:FIELDS :=
 <fields>
-    <field name="All" display="All Fields (MODS, TEI, VRA)">
+    <field name="All Fields (MODS, TEI, VRA)">
         (
         mods:mods[ft:query(., '$q', $options)]
         union
@@ -77,7 +77,7 @@ declare variable $biblio:FIELDS :=
         mods:mods[mods:relatedItem/@xlink:href eq '$q']
         )
     </field>
-    <field name="Date" display="Date (MODS)">
+    <field name="Date (MODS)">
         (
         mods:mods[ft:query(.//mods:dateCreated, '$q*', $options)]
         union
@@ -90,24 +90,24 @@ declare variable $biblio:FIELDS :=
         mods:mods[ft:query(.//mods:date, '$q*', $options)]
         )
     </field>
-    <field name="Description/Abstract" display="Description/Abstract (MODS, VRA)">
+    <field name="Description/Abstract (MODS, VRA)">
         (
         mods:mods[ft:query(mods:abstract, '$q', $options)]
         union
         vra:vra[ft:query(.//vra:descriptionSet, '$q', $options)]
         )
     </field>
-    <field name="Extracted Text" display="Extracted Text (PDF)">
+    <field name="Extracted Text (PDF)">
         (
         ft:search('page:$q')
         )
     </field>
-    <field name="Genre" display="Genre (MODS)">
+    <field name="Genre (MODS)">
         (
         mods:mods[ft:query(.//mods:genre, '$q', $options)]
         )
     </field>
-    <field name="Name" display="Name (MODS, TEI, VRA)">
+    <field name="Name (MODS, TEI, VRA)">
         (
         mods:mods[ft:query(.//mods:name, '$q', $options)]
         union
@@ -120,22 +120,22 @@ declare variable $biblio:FIELDS :=
         tei:TEI//tei:person[ft:query(.//tei:persName, '$q', $options)]
         )
     </field>
-    <field name="Language" display="Language (MODS)">
+    <field name="Language (MODS)">
         (
         mods:mods[ft:query(.//mods:language, '$q', $options)]
         )
     </field>
-    <field name="Note" display="Note (MODS)">
+    <field name="Note (MODS)">
         mods:mods[ft:query(mods:note, '$q', $options)]
     </field>
-    <field name="Origin" display="Origin (MODS)">
+    <field name="Origin (MODS)">
         (
         mods:mods[ft:query(.//mods:placeTerm , '$q*', $options)]
         union
         mods:mods[ft:query(.//mods:publisher , '$q*', $options)]
         )
     </field>
-    <field name="ID" display="Record ID (MODS, VRA)">
+    <field name="Record ID (MODS, VRA)">
         (
         mods:mods[@ID eq '$q']
         union
@@ -146,10 +146,10 @@ declare variable $biblio:FIELDS :=
         vra:vra[vra:image/@id eq '$q']
         )
     </field>
-    <field name="Identifier" display="Resource Identifier (MODS)">
+    <field name="Resource Identifier (MODS)">
         mods:mods[mods:identifier = '$q']
     </field>
-    <field name="Subject" display="Subject (MODS, TEI, VRA)">
+    <field name="Subject/Term (MODS, TEI, VRA)">
         (
         mods:mods[ft:query(mods:subject, '$q', $options)]
         union
@@ -160,7 +160,7 @@ declare variable $biblio:FIELDS :=
         tei:TEI//tei:head[ft:query(.//tei:term, '$q', $options)]
         )
     </field>
-    <field name="Title" display="Title (MODS, TEI, VRA)">
+    <field name="Title (MODS, TEI, VRA)">
         (
         mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]
         union
@@ -173,7 +173,7 @@ declare variable $biblio:FIELDS :=
         tei:TEI//tei:titleStmt[ft:query(./tei:title, '$q', $options)]
         )
     </field>
-    <field name="XLink" display="XLink (MODS)">
+    <field name="XLink (MODS)">
         mods:mods[mods:relatedItem[ends-with(@xlink:href, '$q')]]
     </field>
 </fields>;
@@ -186,7 +186,7 @@ declare variable $biblio:TEMPLATE_QUERY :=
     <query>
         <collection>{theme:get-root()}</collection>
         <and>
-            <field m="1" name="All"></field>
+            <field m="1" name="All Fields (MODS, TEI, VRA)"></field>
         </and>
     </query>;
 
@@ -198,10 +198,10 @@ declare variable $biblio:TEMPLATE_QUERY :=
         <not>
             <and>
                 <or>
-                    <field m="1" name="All">france</field>
-                    <field m="2" name="All">germany</field>
+                    <field m="1" name="All Fields (MODS, TEI, VRA)">france</field>
+                    <field m="2" name="All Fields (MODS, TEI, VRA)">germany</field>
                 </or>
-                <field m="3" name="All">identity</field>
+                <field m="3" name="All Fields (MODS, TEI, VRA)">identity</field>
             </and>
             <field m="4" name="Name">fuhr</field>
         </not>
@@ -270,7 +270,7 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                         <option>
                             { if ($f/@name eq $field/@name) then attribute selected { "selected" } else () } 
                             <!--NB: tooltip to show which types of records are searched for-->
-                            {$f/@display/string()}
+                            {$f/@name/string()}
                         </option>
                 }
                 </select>
@@ -332,17 +332,15 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 " except ", 
                 biblio:generate-query($query-as-xml/*[2])
             )
-        (:Determine which field to search in: if a field has been specified, use it; otherwise use "All".:)
+        (:Determine which field to search in: if a field has been specified, use it; otherwise default to "All Fields (MODS, TEI, VRA)".:)
         case element(field) return
             let $expr := $biblio:FIELDS/field[@name eq $query-as-xml/@name]
             (:let $log := util:log("DEBUG", ("##$query-as-xml-1): ", $query-as-xml)):)
             (:let $log := util:log("DEBUG", ("##$expr-1): ", $expr)):)
-            
-            (:Default to "All" if no operator is supplied.:)
             let $expr := 
                 if ($expr) 
                 then $expr
-                else $biblio:FIELDS/field[name eq 'All']
+                else $biblio:FIELDS/field[@name eq 'All Fields (MODS, TEI, VRA)']
             (:let $log := util:log("DEBUG", ("##$expr-2): ", $expr)):)
             (:This results in expressions like:
             <field name="Title">mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]</field>.
@@ -446,7 +444,7 @@ declare function biblio:process-form-parameters($params as xs:string*) as elemen
     let $search-number := substring-after($param, 'input')
     let $value := request:get-parameter($param, "")
     (:let $log := util:log("DEBUG", ("##$value): ", $value)):)
-    let $search-field := request:get-parameter(concat("field", $search-number), 'All')
+    let $search-field := request:get-parameter(concat("field", $search-number), 'All Fields (MODS, TEI, VRA)')
     (:let $log := util:log("DEBUG", ("##$search-field): ", $search-field)):)
     let $operator := request:get-parameter(concat("operator", $search-number), "and")
     return
@@ -680,7 +678,7 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
         let $results := biblio:evaluate-query($query, $sort)
         (:let $log := util:log("DEBUG", ("##$results): ", $results)):)
         let $results-vra-work := $results[vra:work]
-        let $log := util:log("DEBUG", ("##$results-vra-work-count): ", count($results-vra-work)))
+        (:let $log := util:log("DEBUG", ("##$results-vra-work-count): ", count($results-vra-work))):)
         let $results-vra-image := $results[vra:image]
         (:by not capturing vra:collection we filter away these records:)
         let $results-vra-image-work := $results-vra-image/vra:image/vra:relationSet/vra:relation[@type eq "imageOf"]/@relids
