@@ -62,7 +62,7 @@ declare function functx:replace-first($arg as xs:string?, $pattern as xs:string,
 :)
 declare variable $biblio:FIELDS :=
 <fields>
-    <field name="All Fields (MODS, TEI, VRA)">
+    <field name="any Field (MODS, TEI, VRA)">
         (
         mods:mods[ft:query(., '$q', $options)]
         union
@@ -77,7 +77,7 @@ declare variable $biblio:FIELDS :=
         mods:mods[mods:relatedItem/@xlink:href eq '$q']
         )
     </field>
-    <field name="Date (MODS)">
+    <field name="the Date Field (MODS)">
         (
         mods:mods[ft:query(.//mods:dateCreated, '$q*', $options)]
         union
@@ -90,24 +90,24 @@ declare variable $biblio:FIELDS :=
         mods:mods[ft:query(.//mods:date, '$q*', $options)]
         )
     </field>
-    <field name="Description/Abstract (MODS, VRA)">
+    <field name="the Description/Abstract Field (MODS, VRA)">
         (
         mods:mods[ft:query(mods:abstract, '$q', $options)]
         union
         vra:vra[ft:query(.//vra:descriptionSet, '$q', $options)]
         )
     </field>
-    <field name="Extracted Text (PDF)">
+    <field name="the Extracted Text Field (PDF)">
         (
         ft:search('page:$q')
         )
     </field>
-    <field name="Genre (MODS)">
+    <field name="the Genre Field (MODS)">
         (
         mods:mods[ft:query(.//mods:genre, '$q', $options)]
         )
     </field>
-    <field name="Name (MODS, TEI, VRA)">
+    <field name="the Name Field (MODS, TEI, VRA)">
         (
         mods:mods[ft:query(.//mods:name, '$q', $options)]
         union
@@ -120,22 +120,22 @@ declare variable $biblio:FIELDS :=
         tei:TEI//tei:person[ft:query(.//tei:persName, '$q', $options)]
         )
     </field>
-    <field name="Language Codes (MODS)">
+    <field name="the Language Codes Field (MODS)">
         (
         mods:mods[ft:query(.//mods:language, '$q', $options)]
         )
     </field>
-    <field name="Note (MODS)">
+    <field name="the Note Field (MODS)">
         mods:mods[ft:query(mods:note, '$q', $options)]
     </field>
-    <field name="Origin (MODS)">
+    <field name="the Origin Field (MODS)">
         (
         mods:mods[ft:query(.//mods:placeTerm , '$q*', $options)]
         union
         mods:mods[ft:query(.//mods:publisher , '$q*', $options)]
         )
     </field>
-    <field name="Record ID (MODS, VRA)">
+    <field name="the Record ID Field (MODS, VRA)">
         (
         mods:mods[@ID eq '$q']
         union
@@ -146,10 +146,10 @@ declare variable $biblio:FIELDS :=
         vra:vra[vra:image/@id eq '$q']
         )
     </field>
-    <field name="Resource Identifier (MODS)">
+    <field name="the Resource Identifier Field (MODS)">
         mods:mods[mods:identifier = '$q']
     </field>
-    <field name="Subject/Term (MODS, TEI, VRA)">
+    <field name="the Subject/Term Field (MODS, TEI, VRA)">
         (
         mods:mods[ft:query(mods:subject, '$q', $options)]
         union
@@ -160,7 +160,7 @@ declare variable $biblio:FIELDS :=
         tei:TEI//tei:head[ft:query(.//tei:term, '$q', $options)]
         )
     </field>
-    <field name="Title (MODS, TEI, VRA)">
+    <field name="the Title Field (MODS, TEI, VRA)">
         (
         mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]
         union
@@ -173,7 +173,7 @@ declare variable $biblio:FIELDS :=
         tei:TEI//tei:titleStmt[ft:query(./tei:title, '$q', $options)]
         )
     </field>
-    <field name="XLink (MODS)">
+    <field name="the XLink Field (MODS)">
         mods:mods[mods:relatedItem[ends-with(@xlink:href, '$q')]]
     </field>
 </fields>
@@ -181,13 +181,13 @@ declare variable $biblio:FIELDS :=
 
 declare variable $biblio:FORMATS :=
     <select name="format">
-        <option value="MODS-TEI-VRA">MODS &amp; TEI &amp; VRA</option>
+        <option value="MODS-TEI-VRA">MODS or TEI or VRA</option>
         <option value="MODS">MODS</option>
         <option value="TEI">TEI</option>
         <option value="VRA">VRA</option>
-        <option value="MODS-TEI">MODS &amp; TEI</option>
-        <option value="MODS-VRA">MODS &amp; VRA</option>
-        <option value="TEI-VRA">TEI &amp; VRA</option>
+        <option value="MODS-TEI">MODS or TEI</option>
+        <option value="MODS-VRA">MODS or VRA</option>
+        <option value="TEI-VRA">TEI or VRA</option>
     </select>
 ;
 
@@ -201,7 +201,7 @@ declare variable $biblio:TEMPLATE_QUERY :=
     <query>
         <collection>{theme:get-root()}</collection>
         <and>
-            <field m="1" name="All Fields (MODS, TEI, VRA)"></field>
+            <field m="1" name="any Field (MODS, TEI, VRA)"></field>
         </and>
     </query>;
 
@@ -213,10 +213,10 @@ declare variable $biblio:TEMPLATE_QUERY :=
         <not>
             <and>
                 <or>
-                    <field m="1" name="All Fields (MODS, TEI, VRA)">france</field>
-                    <field m="2" name="All Fields (MODS, TEI, VRA)">germany</field>
+                    <field m="1" name="any Field (MODS, TEI, VRA)">france</field>
+                    <field m="2" name="any Field (MODS, TEI, VRA)">germany</field>
                 </or>
-                <field m="3" name="All Fields (MODS, TEI, VRA)">identity</field>
+                <field m="3" name="any Field (MODS, TEI, VRA)">identity</field>
             </and>
             <field m="4" name="Name">fuhr</field>
         </not>
@@ -230,16 +230,12 @@ declare variable $biblio:TEMPLATE_QUERY :=
 declare function biblio:form-from-query($node as node(), $params as element(parameters)?, $model as item()*) as element()+ {
     let $incoming-query := $model[1]
     let $search-format := request:get-parameter("format", '')
-    (:let $log := util:log("DEBUG", ("##$incoming-query): ", $incoming-query)):)
-    (:let $log := util:log("DEBUG", ("##$model): ", $model)):)
-    (:let $log := util:log("DEBUG", ("##$params): ", $params)):)
     let $query := 
         if ($incoming-query//field) 
         then $incoming-query 
         else $biblio:TEMPLATE_QUERY
-    (:let $log := util:log("DEBUG", ("##$query): ", $query)):)
     return
-    (<tr><td></td><td colspan="2">Search for records with
+    (<tr><td colspan="3">Search for records in
                     <select name="format">
                     {
                         for $format in $biblio:FORMATS/option
@@ -250,10 +246,9 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                         </option>
                     }
                     </select>
-                format for</td></tr>
+                format with</td></tr>
                 ,
     for $field at $pos in $query//field
-    (:let $log := util:log("DEBUG", ("##$field): ", $field)):)
     return
         <tr class="repeat">
             <td class="operator">
@@ -263,7 +258,6 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                     then string($field/../local-name(.))
                     else ()
                 (:NB: This returns "query" if there is only one search field.:)
-                (:let $log := util:log("DEBUG", ("##$operator): ", $operator)):)
                 return
                     <select name="operator{$pos}">
                     { if (empty($operator)) then attribute style { "display: none;" } else () }
@@ -325,10 +319,6 @@ declare function biblio:form-from-query($node as node(), $params as element(para
     The function is called from the outside in biblio:eval-query().
 :)
 declare function biblio:generate-query($query-as-xml as element()) as xs:string* {
-    (:let $log := util:log("DEBUG", ("##$query-as-xml): ", $query-as-xml)):)
-    (:let $log := util:log("DEBUG", ("##$query-as-xml/*[1]): ", $query-as-xml/*[1])):)
-    (:let $log := util:log("DEBUG", ("##$query-as-xml/*[2]): ", $query-as-xml/*[2])):)
-    (:return:)
     typeswitch ($query-as-xml)
         case element(query) return
             for $child in $query-as-xml/*
@@ -363,19 +353,14 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 " except ", 
                 biblio:generate-query($query-as-xml/*[2])
             )
-        (:Determine which field to search in: if a field has been specified, use it; otherwise default to "All Fields (MODS, TEI, VRA)".:)
+        (:Determine which field to search in: if a field has been specified, use it; otherwise default to "any Field (MODS, TEI, VRA)".:)
         case element(field) return
-            (:let $log := util:log("DEBUG", ("##$biblio:FIELDS): ", $biblio:FIELDS)):)
             let $expr := $biblio:FIELDS/field[@name eq $query-as-xml/@name]
-            (:let $log := util:log("DEBUG", ("##$query-as-xml-1): ", $query-as-xml)):)
-            (:let $log := util:log("DEBUG", ("##$expr-1): ", $expr)):)
             let $search-format := request:get-parameter("format", '')
-            (:let $log := util:log("DEBUG", ("##$search-format): ", $search-format)):)
             let $expr := 
                 if ($expr) 
                 then $expr
-                else $biblio:FIELDS/field[@name eq 'All Fields (MODS, TEI, VRA)']
-            (:let $log := util:log("DEBUG", ("##$expr-2): ", $expr)):)
+                else $biblio:FIELDS/field[@name eq 'any Field (MODS, TEI, VRA)']
             (:This results in expressions like:
             <field name="Title">mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]</field>.
             The search term, to be substituted for 'q', is held in $query-as-xml. :)
@@ -385,7 +370,6 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 if ($expr/@name = ('ID', 'XLink')) 
                 then '/resources'
                 else $query-as-xml/ancestor::query/collection/string()
-            (:let $log := util:log("DEBUG", ("##$collection-path): ", $collection-path)):)
             let $collection :=
                 if ($collection-path eq $config:groups-collection)
                 then
@@ -399,7 +383,6 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                     (: search one of the user's own collections or a commons collection. :)
                     concat("collection('", $collection-path, "')//")
                 )
-            (:let $log := util:log("DEBUG", ("##$collection): ", $collection)):)
             return
                 (:The search term held in $query-as-xml is substituted for the 'q' held in $expr.:)
                 ($collection, replace($expr, '\$q', biblio:normalize-search-string($query-as-xml/string())))
@@ -473,13 +456,9 @@ declare function biblio:xml-query-to-string($query-as-xml as element()) as xs:st
 declare function biblio:process-form-parameters($params as xs:string*) as element() {
     (:Only take the new param.:)
     let $param := $params[1]
-    (:let $log := util:log("DEBUG", ("##$param): ", $param)):)
-    (:let $log := util:log("DEBUG", ("##$params): ", $params)):)
     let $search-number := substring-after($param, 'input')
     let $value := request:get-parameter($param, "")
-    (:let $log := util:log("DEBUG", ("##$value): ", $value)):)
-    let $search-field := request:get-parameter(concat("field", $search-number), 'All Fields (MODS, TEI, VRA)')
-    (:let $log := util:log("DEBUG", ("##$search-field): ", $search-field)):)
+    let $search-field := request:get-parameter(concat("field", $search-number), 'any Field (MODS, TEI, VRA)')
     let $operator := request:get-parameter(concat("operator", $search-number), "and")
     return
         if (count($params) eq 1)
@@ -630,7 +609,6 @@ declare function biblio:construct-order-by-expression($sort as xs:string?) as xs
     Evaluate the actual XPath query and order the results
 :)
 declare function biblio:evaluate-query($query-as-string as xs:string, $sort as xs:string?) {
-    (:let $log := util:log("DEBUG", ("##$query-as-string1): ", $query-as-string)):)
     (:If a search is made in /db/resources, we want /db/resources/temp to be excluded from the search, 
     since it may contain stray files left there if the user is logged out.
     Therefore a search is made in all other sub-collections of /db/resources.
@@ -638,16 +616,13 @@ declare function biblio:evaluate-query($query-as-string as xs:string, $sort as x
     let $query-as-string := replace($query-as-string, "'/resources'", "'/resources/commons','/resources/users', '/resources/groups'")
     (:NB: The following hack is required because some queries end up with "//" before "order by", raising the error that "by" is an unexpected expression.:)
     let $query-as-string := if (ends-with($query-as-string, "//")) then concat($query-as-string, "*") else $query-as-string
-    (:let $log := util:log("DEBUG", ("##$query-as-string2): ", $query-as-string)):)
     let $order-by-expression := biblio:construct-order-by-expression($sort)
-    (:let $log := util:log("DEBUG", ("##$order-by-expression): ", $order-by-expression)):)
     let $query-with-order-by-expression :=
         (:The condition should be added that there is a search term. This will address comment in biblio:construct-order-by-expression(). :)
         if ($order-by-expression) then
             concat("for $hit in ", $query-as-string, " order by ", $order-by-expression, " return $hit")
         else
             $query-as-string
-    (:let $log := util:log("DEBUG", ("##$query-with-order-by-expression): ", $query-with-order-by-expression)):)
     let $options :=
         <options>
             <default-operator>and</default-operator>
@@ -707,9 +682,13 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
     if ($query-as-xml) 
     then
         let $search-format := request:get-parameter("format", '')
-        (:let $log := util:log("DEBUG", ("##$search-format2): ", $search-format)):)            
         let $query := string-join(biblio:generate-query($query-as-xml), '')
-        (:let $log := util:log("DEBUG", ("##$query000): ", $query)):)
+        (:Simple search does not have this parameter, but should search in all formats.:)
+        let $search-format := 
+            if ($search-format)
+            then $search-format
+            else 'MODS-TEI-VRA'
+        (:This is perhaps  little crude: if the format parameter does not contain a certain string, the corresponding namepsace is stripped from the search expression, leading to a search for the element in question in the emprt namespace.:)
         let $query :=
             if (not(contains($search-format, 'MODS')))
             then replace($query, 'mods:', '')
@@ -722,12 +701,9 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
             if (not(contains($search-format, 'TEI')))
             then replace($query, 'tei:', '')
             else $query
-        (:let $log := util:log("DEBUG", ("##$query!!!): ", $query)):)
         let $sort := if ($sort) then $sort else session:get-attribute("sort")
         let $results := biblio:evaluate-query($query, $sort)
-        (:let $log := util:log("DEBUG", ("##$results): ", $results)):)
         let $results-vra-work := $results[vra:work]
-        (:let $log := util:log("DEBUG", ("##$results-vra-work-count): ", count($results-vra-work))):)
         let $results-vra-image := $results[vra:image]
         (:by not capturing vra:collection we filter away these records:)
         let $results-vra-image-work := $results-vra-image/vra:image/vra:relationSet/vra:relation[@type eq "imageOf"]/@relids
@@ -1091,14 +1067,6 @@ $param
 :
 :)
 declare function biblio:prepare-query($id as xs:string?, $collection as xs:string, $reload as xs:string?, $history as xs:string?, $clear as xs:string?, $filter as xs:string?, $mylist as xs:string?, $value as xs:string?) as element(query)? {
-    (:let $log := util:log("DEBUG", ("##$collection): ", $collection)):)
-    (:let $log := util:log("DEBUG", ("##$reload): ", $reload)):)
-    (:let $log := util:log("DEBUG", ("##$history): ", $history)):)
-    (:let $log := util:log("DEBUG", ("##$clear): ", $clear)):)
-    (:let $log := util:log("DEBUG", ("##$filter): ", $filter)):)
-    (:let $log := util:log("DEBUG", ("##$mylist): ", $mylist)):)
-    (:let $log := util:log("DEBUG", ("##$value): ", $value)):)
-    (:return:)
     if ($id)
     then
         <query>
@@ -1140,12 +1108,10 @@ declare function biblio:get-or-create-cached-results($mylist as xs:string?, $que
         else ()
         ,
         let $list := session:get-attribute("personal-list")
-        (:let $log := util:log("DEBUG", ("##$list): ", $list)):)
         let $items :=
             for $item in $list/listitem
             return
                 util:node-by-id(doc(substring-before($item/@id, '#')), substring-after($item/@id, '#'))
-        (:let $log := util:log("DEBUG", ("##$items): ", $items)):)
         let $null := session:set-attribute('mods:cached', $items)
         return
             count($items)
@@ -1163,7 +1129,6 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     let $reload := request:get-parameter("reload", ())
     let $clear := request:get-parameter("clear", ())
     let $mylist := request:get-parameter("mylist", ()) (:clear, display:)
-    (:let $log := util:log("DEBUG", ("##$mylist): ", $mylist)):)
     (:let $collection := xmldb:encode-uri(request:get-parameter("collection", $config:mods-root)):)
     let $collection := uu:escape-collection-path(request:get-parameter("collection", $config:mods-root))
     let $collection := if (starts-with($collection, "/db")) then $collection else concat("/db", $collection)
@@ -1174,7 +1139,6 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     
     (: Process request parameters and generate an XML representation of the query :)
     let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $mylist, $value)
-    (:let $log := util:log("DEBUG", ("##$query-as-xml): ", $query-as-xml)):)
     (: Get the results :)
     let $username := request:get-attribute("xquery.user")
     let $results := biblio:get-or-create-cached-results($mylist, $query-as-xml, $sort)

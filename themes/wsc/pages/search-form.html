@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:jquery="http://exist-db.org/xquery/jquery" id="query-panel">
     <jquery:tabset id="query-tabs" on-select="searchTabSelected">
         <jquery:tab id="simple" label="Simple Search">
@@ -33,9 +34,6 @@
             <jquery:form-repeat trigger="#add-field" delete="#remove-field" form=".search-form" on-ready="repeatCallback"/>
             <form class="search-form" action="?" name="advanced-search" method="POST">
                 <table>
-                    <tr>
-                        <td/>
-                    </tr>
                     <tr class="biblio:form-from-query"/>
                     <tr>
                         <td class="label"> Sort results by </td>
