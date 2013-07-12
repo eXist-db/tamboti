@@ -1550,10 +1550,10 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
         if (string($subject/@authority)) 
         then concat(' (', (upper-case(string($subject/@authority))), ')') 
         else ()
-    let $authority-uri := $subject/@authorityURI
+    let $value-uri := string($subject/@valueURI)
     return
         <tr>
-            <td class="label subject"><a href="{$authority-uri}" target="_blank">Subject</a> {$authority}</td>
+            <td class="label subject">{if (string($value-uri)) then <a href="{$value-uri}" target="_blank">Subject</a> else 'Subject'} {$authority}</td>
             <td class="record">    
             {
             let $items := $subject/mods:*
