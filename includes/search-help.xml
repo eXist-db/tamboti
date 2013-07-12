@@ -6,7 +6,7 @@
     <p>One can use <em>wildcards</em> to perform broader searches. "?" can be used for a single
         character and "*" for zero, one or more characters: "China" is thus found with "Ch?na" and
         "C*a", and "China" and "Chine" are found with "Chin?", just as "China", "Chine" and
-        "Chinese" are found with "Chin?". Note that "*" and "?" (unfortunately) cannot occur in the
+        "Chinese" are found with "Chin*". Note that "*" and "?" (unfortunately) cannot occur in the
         beginning of a word.</p>
     <p>
         <em>Fuzzy searches</em> can be performed by putting "~" at the end of a word, make it
@@ -19,7 +19,7 @@
         double quotation marks only, that is, not single quotations marks or double quotation marks
         that are curly.</p>
     <p>If one searches for ""Popular Propaganda"", putting the two words in quotation marks, one
-        will only find records in which the two words occurs in sequence, not if they occurs in the
+        will only find records in which the two words occur in sequence, not if they occur in the
         opposite sequence or at different points in the record.</p>
     <p>Note that Chinese, Japanese and Korean characters are indexed as separate words, so a search
         for "本日" (without quotation marks) will find records with the two characters in the opposite
