@@ -1548,14 +1548,25 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
     for $subject in $entry/mods:subject
     let $authority := 
         if (string($subject/@authority)) 
-        then concat('(', (string($subject/@authority)), ')') 
+        then concat(' (', (upper-case(string($subject/@authority))), ')') 
         else ()
+    let $authority-uri := $subject/@authorityURI
     return
         <tr>
-            <td class="label subject">Subject {$authority}</td>
+            <td class="label subject"><a href="{$authority-uri}" target="_blank">Subject</a> {$authority}</td>
             <td class="record">    
             {
-            for $item in $subject/mods:*[string(functx:trim(.))]
+            let $items := $subject/mods:*
+            (:"sort" according to canonical order by reconstituting $items that have contents into a new sequence:)
+            let $items := (
+                $items[local-name(.) eq 'topic'][string(.)], 
+                $items[local-name(.) eq 'geographic'][string(.)], 
+                $items[local-name(.) eq 'temporal'][string(.)],
+                $items[local-name(.) eq 'titleInfo'][string(.)],
+                $items[local-name(.) eq 'name'][string(.)]
+                ) 
+            return
+            for $item in $items
             let $authority := 
                 if (string($item/@authority)) 
                 then concat('(', (string($item/@authority)), ')') 
@@ -1571,8 +1582,7 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
             let $point := 
                 if (string($item/@point)) 
                 then concat('(', (string($item/@point)), ')') 
-                else ()
-            order by local-name($item)
+                else ()          
             return
                 <table class="subject">
                     <tr><td class="sublabel">
