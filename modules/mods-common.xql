@@ -454,44 +454,44 @@ declare function mods-common:get-short-title($entry as element()) {
     
     let $title-transliterated-formatted := 
         (
-        if ($nonSort-transliterated) 
+        if (string($nonSort-transliterated)) 
         then concat($nonSort-transliterated, ' ' , $title-transliterated)
         else $title-transliterated
         , 
-        if ($subTitle-transliterated) 
+        if (string($subTitle-transliterated)) 
         then concat(': ', $subTitle-transliterated)
         else ()
         ,
-        if ($partNumber-transliterated/text() or $partName-transliterated/text())
+        if (string($partNumber-transliterated) or string($partName-transliterated))
         then
-            if ($partNumber-transliterated/text() and $partName-transliterated/text()) 
-            then concat('. ', $partNumber-transliterated/text(), ': ', $partName-transliterated/text())
+            if (string($partNumber-transliterated) and string($partName-transliterated)) 
+            then concat('. ', $partNumber-transliterated, ': ', $partName-transliterated)
             else
-                if ($partNumber-transliterated/text())
-                then concat('. ', $partNumber-transliterated/text())
-                else concat('. ', $partName-transliterated/text())
+                if (string($partNumber-transliterated))
+                then concat('. ', $partNumber-transliterated)
+                else concat('. ', $partName-transliterated)
         else ()
-        )
-    let $title-transliterated-formatted := string-join($title-transliterated-formatted, '')    
+        )    
+    let $title-transliterated-formatted := string-join($title-transliterated-formatted, '')
     
     let $title-translated-formatted := 
         (
-        if ($nonSort-translated) 
+        if (string($nonSort-translated)) 
         then concat($nonSort-translated, ' ' , $title-translated)
         else $title-translated
         , 
-        if ($subTitle-translated) 
+        if (string($subTitle-translated)) 
         then concat(': ', $subTitle-translated)
         else ()
         ,
-        if ($partNumber-translated/text() or $partName-translated/text())
+        if (string($partNumber-translated) or string($partName-translated))
         then
-            if ($partNumber-translated/text() and $partName-translated/text()) 
-            then concat('. ', $partNumber-translated/text(), ': ', $partName-translated/text())
+            if (string($partNumber-translated) and string($partName-translated)) 
+            then concat('. ', $partNumber-translated, ': ', $partName-translated)
             else
-                if ($partNumber-translated/text())
-                then concat('. ', $partNumber-translated/text())
-                else concat('. ', $partName-translated/text())
+                if (string($partNumber-translated))
+                then concat('. ', $partNumber-translated)
+                else concat('. ', $partName-translated)
         else ()
         )
     let $title-translated-formatted := string-join($title-translated-formatted, '')
@@ -690,132 +690,185 @@ declare function mods-common:retrieve-names(
 :)
 declare function mods-common:format-name($name as element()?, $position as xs:integer, $destination as xs:string, $global-transliteration as xs:string?, $global-language as xs:string?) {	
     (: Get the type of the name, personal, corporate, conference, or family. :)
+    (:NB: why read @lang from name and not namePart?:)
     let $name-language := $name/@lang
     let $name-type := $name/@type
     return   
     (: If the name is of type conference, do nothing, since get-conference-detail-view and get-conference-hitlist take care of conference. 
         The name of a conference does not occur in the same positions as the other name types.:)
-        if ($name-type eq 'conference') 
+        if ($name-type eq 'conference')
         then ()
         else
             (: If the name is (erroneously) not typed, there is not anything to go by, 
-            so just string-join the transliterated name parts and string-join the untransliterated nameParts. :)
+            so just string-join the transliterated name parts and string-join the untransliterated name parts. :)
             (: NB: One could also decide to treat it as a personal name, since there are most of these. :)
             if (not($name-type))
             then
                 concat(
-                    string-join($name/*:namePart[exists(@transliteration)], ' ')
+                    string-join($name/*:namePart[string(@transliteration)], ' ')
                     , ' ', 
-                    string-join($name/*:namePart[not(@transliteration)], ' ')
+                    string-join($name/*:namePart[not(string(@transliteration))], ' ')
                 )
             else
-                (: If the name is of type corporate, i.e. if we are dealing with an institution, there is also not much we can do; 
-                we must assume that the sequence of name parts is meaningfully constructed, 
-                e.g. with the more general term first, and we just string-join the different parts, dividing them with a comma. :)
-                if ($name-type eq 'corporate') 
+                (: If the name is of type corporate, i.e. if we are dealing with an institution, there is also not much we can do, 
+                but we assume that the sequence of name parts is meaningfully constructed, that is, that the terms are ordered in a general to specific sequence,
+                and we just string-join the different parts, dividing them with a comma. :)
+                (: If a family as such is responsible for a publication, we must assume that all name parts will describe the family name.
+                so just string-join any name parts, dividing them with a comma. :)
+                (: NB: This is the same as type corporate, so the two are here merged. :)
+                if ($name-type = ('corporate', 'family')) 
                 then
                     concat(
                         string-join(
                         	for $item in $name/*:namePart 
-                        	where exists($item/@transliteration) 
+                        	where string($item/@transliteration) 
                         	return $item
                         , ', ')
                         
                         , ' ', 
                         string-join(
                         	for $item in $name/*:namePart 
-                        	where not($item/@transliteration) 
+                        	where not(string($item/@transliteration)) 
                         	return $item
                         , ', ')
                     )
                 else
-                    (: If a family as such is responsible for a publication, we must assume that all nameParts will describe the family name.
-                    so just string-join any nameParts, dividing them with a comma. :)
-                    (: NB: This is the same as type corporate, so the two could be merged. :)
-                    if ($name-type eq 'family') 
-                    then
-                        concat(
-                            string-join(
-                            	for $item in $name/*:namePart 
-                            	where exists($item/@transliteration) 
-                            	return $item
-                            , ', ')
-                            
-                            , ' ', 
-                            string-join(
-                            	for $item in $name/*:namePart 
-                            	where not($item/@transliteration) 
-                            	return $item
-                            , ', ')
-                        )
-                    (: If the name is type personal. This is the last option, the most common one, and also the most complicated. :)        
-                    else
                         (: Split up the name parts into three groups: 
-                        1. Basic: those that do not have a transliteration attribute and that do not have a script attribute (or have Latin script).
-                        2. Transliteration: those that have transliteration and do not have script (or have Latin script, which all transliterations have implicitly).
-                        3. Script: those that do not have transliteration, but have script (but not Latin script, which characterises transliterations). :)
+                        1. Basic: name parts which do not have a transliteration attribute and that do not have a script attribute 
+                        (or that are in Latin script).
+                        2. Transliteration: those name parts which have transliteration and do not have a script attribute (or that have Latin script, 
+                        which all transliterations implicitly have).
+                        3. Script: name parts which do not have a transliteration attribute, 
+                        but have a script attribute (but are not in Latin script, which characterises transliterations). :)
                         (: NB: The assumption is that transliteration is always into Latin script, but - obviously - it may e.g. be in Cyrillic script. :)
-                        (: If the above three name groups occur, they should be formatted in the sequence of 1, 2, and 3. 
-                        Only in rare cases will 1, 2, and 3 occur together (e.g. a Westerner with name form in Chinese characters or a Chinese with an established Western-style name form different from the transliterated name form. 
-                        In the case of persons using Latin script to render their name, only 1 will be used. Here we have typical Western names.
+                        (: If the above three name groups all occur, they should be formatted in the sequence of 1, 2, and 3. 
+                        Only in rare cases will 1, 2, and 3 occur all together,
+                        for instance a Westerner with a name form in Chinese characters or a Chinese 
+                        with an established Western-style name form different from the transliterated name form. 
+                        In the case of persons that use Latin script to render their name, only 1 will be used. Here we have typical Western names,
+                        but also the names of Chinese and Japanese, if the names occur in Westrn name order.
                         In the case of e.g. Chinese or Russian names, only 2 and 3 will be used. 
-                        Only 3 will be used if no transliteration is given.
+                        Only 3 will be used if no transliteration is given, but only the name in non-Western script.
                         Only 2 will be used if only a transliteration is given. :)
-                        (: When formatting a name, $position is relevant to the formatting of Base, i.e. to Western names, and to Russian names in Script and Transliteration. 
+                        (: When formatting a name, $position in a sequence of names is relevant to the formatting of Basic, 
+                        i.e. to Western names, and to Russian names in Script and Transliteration. 
                         Hungarian is special, in that it uses Latin script, but has the name order family-given. :)
-                        (: When formatting a name, the first question to ask is whether the name parts are typed, i.e. are divded into given and family name parts (plus date and terms of address). 
-                        If they are not, there is really not much one can do, besides concatenating the name parts and trusting that their sequence is meaningful. :)
-                        (: NB: If the name is translated from one language to another (e.g. William the Conqueror, Guillaume le Conquérant), there will be two $name-basic, one for each language. This is not handled. :)
-                        (: NB: If the name is transliterated in two ways, there will be two $name-in-transliteration, one for each transliteration scheme. This is not handled. :)
-                        (: NB: If the name is rendered in two scripts, there will be two $name-in-non-latin-script, one for each script. This is not handled. :)
-        				let $name-contains-transliteration :=         					
-        					(:We allow the transliteration attribute to be on name itself. 
-        					We allow it to be empty, because we use it with $global-transliteration to signal that a name or namePart is transliterated or contains transliteration.:)
-        					if ($name[*:namePart[@transliteration]] or $name[@transliteration])
-        					then 1
+                        
+                        (: When formatting a name, the first question to ask is whether the name parts are typed, 
+                        i.e. whether they are divded into given and family name parts (plus date and terms of address). 
+                        If they are not, there is really not much one can do, 
+                        besides concatenating the name parts and trusting that their sequence is meaningful. :)
+                        (: NB: If the name is translated from one language to another (e.g. William the Conqueror, 
+                        Guillaume le Conquérant), there will be two $name-basic, one for each language. This is not handled. :)
+                        (: NB: If the name is transliterated in two ways, there will be two $name-in-transliteration, 
+                        one for each transliteration scheme. This is not handled. :)
+                        (: NB: If the name is rendered in two scripts, there will be two $name-in-non-latin-script, 
+                        one for each script. This is not handled. :)
+        				
+                        let $name-contains-transliteration :=         					
+        					(: We allow the transliteration attribute to be on name itself. 
+        					We allow it to be empty, because we use it with $global-transliteration to signal 
+                            that a name or namePart is transliterated or contains transliteration.:)
+                            if (($name[*:namePart[@transliteration]] or $name[@transliteration]))
+        					then true()
         					else
-        						(: If the record as a whole is marked as having transliteration, use this instead.:)
+        						(: If the record as a whole is marked as having transliteration, we use this instead, 
+                                even though no transliteration attribute is present on any name or name part.:)
+                                (:NB: this does ot seem t be needed.:)
         						if ($global-transliteration)
-        						then 1
-        						else 0
-                        (:let $log := util:log("DEBUG", ("##$name-contains-transliteration): ", $name-contains-transliteration)):)
-                        (: If the name does not contain a namePart with transliteration, it is a basic name, 
-                        i.e. a name where the distinction between the name in native script and in transliteration does not arise. 
-                        Typical examples are Western names, but this also includes Eastern names where no effort has been taken to distinguish between native script and transliteration. 
-                        Filtering like this would leave out names where Westerners have Chinese names, and in order to catch these, 
-                        we require that they have language set to one of the common European languages. :)
+        						then true()
+        						else false()
+                        let $log := util:log("DEBUG", ("##$name-contains-transliteration): ", $name-contains-transliteration))
+                        
+                        (: If the name does not contain a name part with a transliteration attribute, then it is a basic name, 
+                        i.e. a name where a distinction between the name in a native script and in a transliteration does not arise. 
+                        Typical examples are Western names, but this also includes Eastern names where no effort has been taken to 
+                        distinguish between native script and transliteration and which observe Western name order even though their
+                        names are transcribed. Since many chose to do this, we should treat such names as Basic, even though they are
+                        in fact transliterated (though often not according to standard transliteraiton schemes).
+                        This mean that Transliteration cannot occur without Script (whereas Script can occur with Transliteration).
+                        In order to catch cases  where Westerners have a Chinese name, possibly also transliterated,
+                        we require that they have their original (Western) name set to one of the common European languages. :)
                         (: NB: The whole notion of names being in different languages is problematic. :)
                         (: NB: Only coded language terms are treated here. :)
+                        (: Name parts of type date are excluded since they typically do not have language attributes; 
+                        they are treated separately.:)
+                        
                         let $name-basic :=
     	                    if (not($name-contains-transliteration))
-    	                    (:If we know for sure that no transliteration is used anywhere in the name, then grab the parts in which Western script is used or in which no script is set.:) 
-    	                    then <name>{$name/*:namePart[not(@transliteration)][(not(@script) or @script = ('Latn', 'latn', 'Latin'))]}</name>
-                        	(:If we know for sure that transliteration is used somewhere in the name, then grab the untransliterated parts.:)
-                        	else <name>{$name/*:namePart[(not(@lang = $mods-common:given-name-last-languages) or not(@lang)) and not(@transliteration)]}</name>
-                        	(:else <name>{$name/*:namePart[not(@transliteration)]}</name>:)
-                        (:let $log := util:log("DEBUG", ("##$name-basic): ", $name-basic)):)
-                        (: If there is transliteration, there are nameParts with transliteration. 
-                        To filter these, we seek nameParts which contain the transliteration attribute, 
+    	                    
+                            (:If no transliteration is used anywhere in the name, 
+                            then we grab the name parts in which Western script is used or in which no script is set and in which
+                            there is no transliteration attribute.
+                            We do not want to have any non-Westerns names here: they will be picked up in $name-in-non-latin-script:) 
+                            
+    	                    then
+                                <name>
+                                    {
+                                        $name/*:namePart
+                                            [not(@type eq 'date')]
+                                            [not(@transliteration)]
+                                            [(not(string(@script)) or @script = ('Latn', 'latn', 'Latin'))]
+                                    }
+                                </name>
+                        	
+                            (:If transliteration is used somewhere in the name, then grab the parts that are untransliterated and that do not.:)
+                            (:NB: Is $global-language relevant here?:)
+                            else
+                                <name>
+                                    {
+                                        $name/*:namePart
+                                            [not(@type eq 'date')]
+                                            [not(@lang = $mods-common:given-name-last-languages)]
+                                            (:NB: more language than English:)
+                                            [not(string(@lang)) or @lang = 'eng']
+                                            [not(@transliteration)]
+                                    }
+                                </name>
+                                
+                            let $log := util:log("DEBUG", ("##$name-basic): ", $name-basic))
+                        
+                        (: If there is transliteration, there should be name parts with transliteration. 
+                        To filter these, we seek name parts which contain the transliteration attribute, 
                         even though this may be empty 
                         (this is special to the templates, since they allow the user to set a global transliteration value, 
-                        to be applied whereever an empty transliteration attribute occurs) 
-                        and which do not contain the script attribute or which have the script attribute set to Latin (defining of transliterations here). :)
+                        to be applied whereever an empty transliteration attribute occurs).:)
                         (: NB: Should English names be filtered away?:)
+                        
                         let $name-in-transliteration := 
                         	if ($name-contains-transliteration)
-                        	then <name>{$name/*:namePart[@transliteration][(not(@script) or (@script = ('Latn', 'latn', 'Latin')))]}</name>
+                        	then 
+                                <name>
+                                    {
+                                        $name/*:namePart
+                                            [@transliteration]
+                                    }
+                                </name>
                         	else ()
-                        (:let $log := util:log("DEBUG", ("##$name-in-transliteration): ", $name-in-transliteration)):)
-                        (: If there is transliteration, the presumption must be that all nameParts which are not transliterations (and which do not have the language set to a European language) are names in non-Latin script. 
-                        We filter for nameParts which do no have the transliteration attribute or have one with no contents, 
+                        let $log := util:log("DEBUG", ("##$name-in-transliteration): ", $name-in-transliteration))
+                        
+                        (: If there is transliteration, the presumption must be that all name parts which are not transliterations 
+                        (and which do not have the language set to a European language) are names in a non-Latin script. 
+                        We filter for name parts which do no have the transliteration attribute or which have one with no contents, 
                         and which do not have script set to Latin, and which do not have English as their language. :)
+                        
                         let $name-in-non-latin-script := 
     	                    if ($name-contains-transliteration)
-    	                    then <name>{$name/*:namePart[(not(@transliteration) or not(string(@transliteration)))][(@script)][not(@script = ('Latn', 'latn', 'Latin'))][@lang = $mods-common:given-name-last-languages]}</name>
+    	                    then 
+                                <name>
+                                    {
+                                        $name/*:namePart
+                                            [not(@transliteration)]
+                                            [(@script) and not(@script = ('Latn', 'latn', 'Latin'))]
+                                            [@lang = $mods-common:given-name-last-languages]
+                                    }
+                                </name>
     	                    else ()
-                        (:let $log := util:log("DEBUG", ("##$name-in-non-latin-script): ", $name-in-non-latin-script)):)
+                        let $log := util:log("DEBUG", ("##$name-in-non-latin-script): ", $name-in-non-latin-script))
+                        
                         (:Switch around $name-in-non-latin-script and $name-basic if there is $name-in-transliteration. 
                         This is necessary because $name-in-non-latin-script looks like $name-basic in a record using global language.:) 
+                        
                         let $name-in-non-latin-script1 := 
                             if (string($name-basic) and string($name-in-transliteration) and not(string($name-in-non-latin-script))) 
                         	then $name-basic
@@ -825,8 +878,8 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                         	then ()
                         	else $name-basic
                         let $name-in-non-latin-script := $name-in-non-latin-script1
-                        (:let $log := util:log("DEBUG", ("##$name-basic1): ", $name-basic)):)
-                        (:let $log := util:log("DEBUG", ("##$name-in-non-latin-script1): ", string($name-in-non-latin-script))):)
+let $log := util:log("DEBUG", ("##$name-basic2): ", $name-basic))
+let $log := util:log("DEBUG", ("##$name-in-non-latin-script1): ", string($name-in-non-latin-script)))
                         (: We assume that there is only one date name part in $name-basic. 
                         Date name parts with transliteration and script are rather theoretical. 
                         This date is attached at the end of the name, to distinguish between identical names. That is why it is set here, not below. :)
@@ -841,6 +894,8 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                                 let $family-name-basic := <name>{$name-basic/*:namePart[@type eq 'family']}</name>
                                 let $given-name-basic := <name>{$name-basic/*:namePart[@type eq 'given']}</name>
                                 let $termsOfAddress-basic := <name>{$name-basic/*:namePart[@type eq 'termsOfAddress']}</name>
+                                let $log := util:log("DEBUG", ("##$termsOfAddress-basic): ", $termsOfAddress-basic))
+
                                 let $untyped-name-basic := <name>{$name-basic/*:namePart[not(@type)]}</name>
                                 (: $date-basic already has the date. :)
                                 (: To get the name order, get the language of the namePart and send it to mods-common:get-name-order(), along with higher-level language values. :)
@@ -895,8 +950,12 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                                                 string-join($given-name-basic/*:namePart, ' ') 
                                                 ,
                                                 if (string($termsOfAddress-basic))
-                                                (: If there are several terms of address, join them with a comma in between ("Dr., Prof."). :)
-                                                then concat(', ', string-join($termsOfAddress-basic/*:namePart, ', ')) 
+                                                then 
+                                                    if ($termsOfAddress-basic = ('Jr.', 'Sr.') or contains($termsOfAddress-basic, 'I'))
+                                                    (:"I" is for generation, I, II, III:)
+                                                    (: If there are several terms of address, join them with a comma in between ("Dr., Prof."). :)
+                                                    then ()
+                                                else concat(', ', string-join($termsOfAddress-basic/*:namePart, ', ')) 
                                                 else ()
                                             )
                                         else
@@ -1513,6 +1572,7 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
                 if (string($item/@point)) 
                 then concat('(', (string($item/@point)), ')') 
                 else ()
+            order by local-name($item)
             return
                 <table class="subject">
                     <tr><td class="sublabel">
@@ -1556,6 +1616,7 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
                                         if (string($subitem/@point)) 
                                         then concat('(', (string($subitem/@point)), ')') 
                                         else ()
+                                    order by local-name($subitem)
                                     return
                                         <table>
                                             <tr>
@@ -1849,28 +1910,28 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
 					then concat(' ', $datePart)
 					else ()
 			,
-			if ($section)
+			if (string($section))
 			then concat(' (', $section, ')')
 			else ()	
 			,
 			(: NB: We assume that there will not be both $page and $extent.:)
-			if ($extent) 
+			if (string($extent))
 			then concat(': ', mods-common:get-extent($extent), if ($i eq count($parts)) then '.' else '; ')
 			else
-				if ($page) 
+				if (string($page))
 				then concat(': ', $page, '.')
 				else '.'
             )
         else
             (: If there is no issue, but a dateOriginInfo (loaded in $datePart) and a place or a publisher, i.e. if the publication is an an edited volume. :)
-            if ($datePart and ($place or $publisher) and not($issue)) 
+            if (string($datePart) and (string($place) or string($publisher)) and not(string($issue))) 
             then
                 (
-                if ($volume) 
+                if (string($volume))
                 then concat(', Vol. ', $volume)
                 else ()
                 ,
-                if ($extent or $page)
+                if (string($extent) or string($page))
                 then
                 	if ($volume and $extent)
                 	then concat(': ', mods-common:get-extent($extent))
@@ -1885,19 +1946,19 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
 	                			then concat(': ', $page)
 					            else ()
 	            else 
-	            	if ($volume)
+	            	if (string($volume))
 	            	then ', '
 	            	else ()
                 ,
-                if ($place)
+                if (string($place))
                 then concat('. ', mods-common:get-place($place))
                 else ()
                 ,
-                if ($place and $publisher)
+                if (string($place) and string($publisher))
                 then (': ', mods-common:get-publisher($publisher))
                 else ()
                 ,
-                if ($datePart)
+                if (string($datePart))
                 then
 	                (', ',
 	                for $date in $datePart
@@ -1911,13 +1972,13 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
             (: If not a periodical and not an edited volume, we don't really know what it is and just try to extract whatever information there is. :)
             else
                 (
-                if ($place)
+                if (string($place))
                 then mods-common:get-place($place)
                 else ()
                 ,
-                if ($publisher)
+                if (string($publisher))
                 then (
-	                	if ($place)
+	                	if (string($place))
 	                	then ': '
 	                	else ()
                 	, normalize-space(mods-common:add-part(mods-common:get-publisher($publisher), ', '))
@@ -1939,11 +2000,11 @@ declare function mods-common:get-part-and-origin($entry as element()) as xs:stri
                 ,
                 (: If it is a series:)
                 (: NB: elaborate! :)
-                if ($volume)
+                if (string($volume))
 	            then concat(', Vol. ', $volume)
 	            else ()
                 ,
-                if ($text)
+                if (string($text))
                 then concat(' ', $text)
                 else ()
                 )
@@ -2094,21 +2155,21 @@ let $qualifier := $date/@qualifier/string()
 
 return
     concat(
-    if ($start and $end) 
+    if (string($start) and string($end)) 
     then 
         if ($start ne $end)
         then concat($start, '-', $end)
         else $start        
     else 
-        if ($start or $end) 
+        if (string($start) or string($end)) 
         then 
             if ($start)
             then concat($start, '-?')
             else concat('?-', $end)
         (: if neither $start nor $end. :)
-        else $date/string()
+        else string($date)
     ,
-    if ($qualifier) 
+    if (string($qualifier))
     then concat(' (', $qualifier, ')')
     else ()
     )
