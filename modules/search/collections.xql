@@ -68,7 +68,7 @@ declare variable $commons-folder-icon := "../skin/ltFld.png";
 :)
 declare function col:create-tree-node($title as xs:string, $collection-path as xs:string, $is-folder as xs:boolean, $icon-path as xs:string?, $tooltip as xs:string?, $writeable as xs:boolean, $additonal-classes as xs:string*, $expand as xs:boolean, $has-lazy-children as xs:boolean, $explicit-children as element(node)*) as element(node) {
     <node>
-        <title>{uu:unescape-collection-path($title)}</title>
+        <title>{translate(uu:unescape-collection-path($title), '_', ' ')}</title>
         <key>{uu:unescape-collection-path($collection-path)}</key>
         <isFolder>{$is-folder}</isFolder>
         <writeable>{$writeable}</writeable>

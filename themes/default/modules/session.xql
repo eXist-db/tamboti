@@ -211,10 +211,10 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
                 <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
                 {
                     let $collection := util:collection-name($item)
-                    let $collection-short := functx:replace-first($collection, '/db/', '')
+                    let $collection := translate(functx:replace-first($collection, '/db/', ''), '_', ' ')
                     let $clean := clean:cleanup($item)
                     return
-                        retrieve-mods:format-detail-view(string($currentPos), $clean, $collection-short)
+                        retrieve-mods:format-detail-view(string($currentPos), $clean, $collection)
                         (: What is $currentPos used for? :)
                 }
             </td>
@@ -292,14 +292,13 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
             </td>            
             <td class="detail-xml" style="vertical-align:top;">
                 { bs:toolbar($item, $isWritable, $id) }
-                <!--NB: why is this phoney HTML tag used to anchor the Zotero unIPA?-->
                 <!--Zotero does not import vra records <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>-->
                 {
                     let $collection := util:collection-name($item)
-                    let $collection-short := functx:replace-first($collection, '/db/', '')
+                    let $collection := translate(functx:replace-first($collection, '/db/', ''), '_', ' ')
                     let $clean := clean:cleanup($item)
                     return
-                        retrieve-vra:format-detail-view(string($currentPos), $clean, $collection-short, $type, $id)
+                        retrieve-vra:format-detail-view(string($currentPos), $clean, $collection, $type, $id)
                 }
             </td>
         </tr>
@@ -331,10 +330,10 @@ declare function bs:tei-detail-view-table($item as element(), $currentPos as xs:
                 <!--Zotero does not import tei records <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>-->
                 {
                     let $collection := util:collection-name($item)
-                    let $collection-short := functx:replace-first($collection, '/db/', '')
+                    let $collection := translate(functx:replace-first($collection, '/db/', ''), '_', ' ')
                     let $clean := clean:cleanup($item)
                     return
-                        retrieve-tei:format-detail-view(string($currentPos), $clean, $collection-short, $document-uri, $node-id)
+                        retrieve-tei:format-detail-view(string($currentPos), $clean, $collection, $document-uri, $node-id)
                 }
             </td>
         </tr>
@@ -363,10 +362,10 @@ declare function bs:mods-list-view-table($item as node(), $currentPos as xs:int)
                 <a>
                 {
                     let $collection := util:collection-name($item)
-                    let $collection-short := functx:replace-first($collection, '/db/', '')
+                    let $collection := translate(functx:replace-first($collection, '/db/', ''), '_', ' ')
                     let $clean := clean:cleanup($item)
                     return
-                        retrieve-mods:format-list-view(string($currentPos), $clean, $collection-short)
+                        retrieve-mods:format-list-view(string($currentPos), $clean, $collection)
                         (: Originally $item was passed to retrieve-mods:format-list-view() - was there a reason for that? Performance? :)
                 }
                 </a>
@@ -406,10 +405,10 @@ declare function bs:vra-list-view-table($item as node(), $currentPos as xs:int) 
                     <a>
                     {
                         let $collection := util:collection-name($item)
-                        let $collection-short := functx:replace-first($collection, '/db/', '')
+                        let $collection := translate(functx:replace-first($collection, '/db/', ''), '_', ' ')
                         let $clean := clean:cleanup($item)
                         return
-                            retrieve-vra:format-list-view(string($currentPos), $clean, $collection-short)
+                            retrieve-vra:format-list-view(string($currentPos), $clean, $collection)
                     }
                     </a>
                 </td>
@@ -445,10 +444,10 @@ declare function bs:tei-list-view-table($item as node(), $currentPos as xs:int) 
                 <a>
                 {
                     let $collection := util:collection-name($item)
-                    let $collection-short := functx:replace-first($collection, '/db/', '')
+                    let $collection := translate(functx:replace-first($collection, '/db/', ''), '_', ' ')
                     (:let $clean := clean:cleanup($item):)
                     return
-                        retrieve-tei:format-list-view(string($currentPos), $item, $collection-short, $document-uri, $node-id)
+                        retrieve-tei:format-list-view(string($currentPos), $item, $collection, $document-uri, $node-id)
                 }
                 </a>
             </td>
@@ -553,30 +552,32 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
         else ()
     return
         <div class="actions-toolbar">
-            <a target="_new" href="source.xql?id={$id}&amp;clean=yes">
+           <a target="_new" href="source.xql?id={$id}&amp;clean=yes">
                 <img title="View XML Source of Record" src="theme/images/script_code.png"/>
             </a>
             {
                 (: if the item's collection is writable, display edit/delete and move buttons :)
                 if ($isWritable) 
-                then (
-                    if (xmldb:collection-available("/db/apps/ziziphus/") and name($item) eq 'vra')
-                    then (
-                     <a target="_new" href="/exist/apps/ziziphus/record.html?id={$id}&amp;workdir={$workdir}&amp;imagepath={$imagepath}">
-                        <img title="Edit VRA Record" src="theme/images/page_edit.png"/>
-                     </a>
-                    ) else (),
-                    if (name($item) eq 'mods')
-                    then
-                    <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}&amp;type={$item/mods:extension/*:template}">
-                        <img title="Edit MODS Record" src="theme/images/page_edit.png"/>
-                    </a>
-                    else ()
-                    ,
-                    <a class="remove-resource" href="#{$id}"><img title="Delete Record" src="theme/images/delete.png"/></a>,
-                    <a class="move-resource" href="#{$id}"><img title="Move Record" src="theme/images/shape_move_front.png"/></a>,
-                    $upload-button
-                        
+                then
+                    (
+                        if (xmldb:collection-available("/db/apps/ziziphus/") and name($item) eq 'vra')
+                        then
+                            <a target="_new" href="/exist/apps/ziziphus/record.html?id={$id}&amp;workdir={$workdir}&amp;imagepath={$imagepath}">
+                                <img title="Edit VRA Record" src="theme/images/page_edit.png"/>
+                            </a>
+                        else 
+                            if (name($item) eq 'mods')
+                            then
+                                <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}&amp;type={$item/mods:extension/*:template}">
+                                    <img title="Edit MODS Record" src="theme/images/page_edit.png"/>
+                                </a>
+                            else ()
+                        ,
+                        <a class="remove-resource" href="#{$id}"><img title="Delete Record" src="theme/images/delete.png"/></a>
+                        ,
+                        <a class="move-resource" href="#{$id}"><img title="Move Record" src="theme/images/shape_move_front.png"/></a>
+                        ,
+                        $upload-button                        
                     )
                 else ()
             }
