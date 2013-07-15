@@ -69,6 +69,38 @@ declare function functx:capitalize-first($arg as xs:string?) as xs:string? {
              substring($arg,2))
 };
  
+(:~
+: The retrieve-mods:highlight-matches function higlights the search result in detail view with the search string, including 
+: searches made with wildcards. Slightly adapted from Joe Wicentowski's function in order to dealt with Lucene casing.
+: @author Joe Wicentowski
+: @param $nodes the search result to apply highlighting to
+: @param $patterns the regex used for applying highlighting
+: @param $highlight the highlight function
+: @return one or more items
+: @see https://gist.github.com/joewiz/5937897
+:)
+declare function retrieve-mods:highlight-matches($nodes as node()*, $patterns, $highlight as function(xs:string) as item()* ) { 
+    for $node in $nodes
+    for $pattern in $patterns
+    return
+        typeswitch ( $node )
+            case element() return
+                element { name($node) } { $node/@*, retrieve-mods:highlight-matches($node/node(), $pattern, $highlight) }
+            case text() return
+                (:add space in end to highlight word in final position:)
+                let $normalized := concat(replace($node, '\s+', ' '), ' ')
+                (:apply case-insensitive search for use with Lucene:)
+                for $segment in analyze-string($normalized, $pattern, 'i')/node()
+                return
+                    if ($segment instance of element(fn:match)) then 
+                        $highlight($segment/string())
+                    else 
+                        $segment/string()
+            case document-node() return
+                document { retrieve-mods:highlight-matches($node/node(), $pattern, $highlight) }
+            default return
+                $node
+};
 
 (:~
 : The <b>retrieve-mods:format-detail-view</b> function returns the detail view of a MODS record.
@@ -82,7 +114,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
 	let $entry := mods-common:remove-parent-with-missing-required-node($entry)
 	let $global-transliteration := $entry/mods:extension/ext:transliterationOfResource/text()
 	let $global-language := $entry/mods:language[1]/mods:languageTerm[1]/text()
-	return
+	let $result :=
     <table xmlns="http://www.w3.org/1999/xhtml" class="biblio-full">
     {
     <tr>
@@ -589,6 +621,15 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     else ()
     }
     </table>
+    
+    let $query := session:get-attribute("query")
+    let $query := $query//field/text()
+    let $query := string-join($query, '|')
+    let $query := replace(replace(replace($query, '\*', '\\w*?'), '\?', '.'), '~', '')
+    let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
+    let $result := 
+        retrieve-mods:highlight-matches($result, $query, $highlight)
+    return $result
 };
 
 (:~
