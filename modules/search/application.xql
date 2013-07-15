@@ -50,7 +50,7 @@ declare function functx:substring-before-if-contains($arg as xs:string?, $delim 
 declare function functx:replace-first($arg as xs:string?, $pattern as xs:string, $replacement as xs:string ) as xs:string {       
    replace($arg, concat('(^.*?)', $pattern),
              concat('$1',$replacement))
- } ;
+};
 
 (:~
     Mapping field names to XPath expressions.
@@ -356,7 +356,6 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
         (:Determine which field to search in: if a field has been specified, use it; otherwise default to "any Field (MODS, TEI, VRA)".:)
         case element(field) return
             let $expr := $biblio:FIELDS/field[@name eq $query-as-xml/@name]
-            let $search-format := request:get-parameter("format", '')
             let $expr := 
                 if ($expr) 
                 then $expr
@@ -667,7 +666,7 @@ declare function biblio:query-history($node as node(), $params as element(parame
     <ul>
     {
         let $history := session:get-attribute('history')
-        for $query-as-string at $pos in $history/query
+        for $query-as-string in $history/query
         return
             <li><a href="?history={$query-as-string/@id}&amp;query-tabs=advanced-search-form">{biblio:xml-query-to-string($query-as-string)}</a></li>
     }
@@ -683,7 +682,8 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
     then
         let $search-format := request:get-parameter("format", '')
         let $query := string-join(biblio:generate-query($query-as-xml), '')
-        (:Simple search does not have this parameter, but should search in all formats.:)
+        
+        (:Simple search does not have the parameter format, but should search in all formats.:)
         let $search-format := 
             if ($search-format)
             then $search-format
@@ -929,7 +929,6 @@ declare function biblio:resource-types($node as node(), $params as element(param
     let $transliteration-code-table := doc($transliteration-codes-path)/code-table
     let $transliteration-options :=
                     for $item in $transliteration-code-table//item
-                        let $label := $item/label/text()
                         let $labelValue := $item/value/text()
                         return
                             <option value="{$labelValue}">{$item/label/text()}</option>
@@ -1099,7 +1098,7 @@ declare function biblio:prepare-query($id as xs:string?, $collection as xs:strin
 :
 : @return a count of the results available
 :)
-declare function biblio:get-or-create-cached-results($mylist as xs:string?, $query as element(query)?, $sort as item()?) as xs:int {
+declare function biblio:get-or-create-cached-results($mylist as xs:string?, $query-as-xml as element(query)?, $sort as item()?) as xs:int {
     if ($mylist) 
     then 
     (
@@ -1117,7 +1116,7 @@ declare function biblio:get-or-create-cached-results($mylist as xs:string?, $que
             count($items)
     )
     else
-        biblio:eval-query($query, $sort)
+        biblio:eval-query($query-as-xml, $sort)
 };
 
 declare function biblio:query($node as node(), $params as element(parameters)?, $model as item()*) {
@@ -1136,11 +1135,11 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     (:the search term passed in the url:)
     let $value := request:get-parameter("value",())
     let $sort := request:get-parameter("sort", ())
-    
+
     (: Process request parameters and generate an XML representation of the query :)
     let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $mylist, $value)
+    let $log := util:log("DEBUG", ("##$query-as-xml): ", $query-as-xml))
     (: Get the results :)
-    let $username := request:get-attribute("xquery.user")
     let $results := biblio:get-or-create-cached-results($mylist, $query-as-xml, $sort)
     return
         templates:process($node/node(), ($query-as-xml, $results))
