@@ -1,54 +1,66 @@
-  table { border-collapse: collapse; }
+﻿
+table {
+    border-collapse: collapse;
+}
 .percent {
-    position: absolute; width: 300px; height: 14px; z-index: 1; text-align: center; font-size: 0.8em; color: white;
+    color: white;
+    font-size: 0.8em;
+    height: 14px;
+    position: absolute;
+    text-align: center;
+    width: 300px;
+    z-index: 1;
 }
 .progress-bar {
-    width: 300px; height: 14px;
-    border-radius: 10px;
-    border: 1px solid #CCC;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#6666cc), to(#4b4b95));
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #CCCCCC;
     border-image: initial;
+    border-radius: 10px 10px 10px 10px;
+    border-style: solid;
+    border-width: 1px;
+    height: 14px;
+    width: 300px;
 }
 .uploaded {
-    padding: 0;
-    height: 14px;
-    border-radius: 10px;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#66cc00), to(#4b9500));
     border-image: initial;
+    border-radius: 10px 10px 10px 10px;
+    height: 14px;
+    padding: 0;
 }
 .dropbox {
-    margin-top: 10px;
-    margin-left: 50px;
-    width: 300px;
-    height: 80px;
-    border: 2px solid #DDD;
-    border-radius: 8px;
     background-color: #FEFFEC;
+	border: 2px solid #DDDDDD;
+    border-radius: 8px 8px 8px 8px;
+    color: #BBBBBB;
+    font-family: Arial,sans-serif;
+    font-size: 35px;
+    height: 100%;
+   /* margin-left: 50px;
+    margin-top: 10px;*/
     text-align: center;
-    color: #BBB;
-    font-size: 14px;
-    font-family: Arial, sans-serif;
-    width: 700px;
+    width: 100%;
 }
 .dropbox span {
-    margin-top: 0.9em;
     display: block;
+    margin-top: 0.9em;
 }
 .dropbox.not-available {
-    background-color: #F88;
+    background-color: #FF8888;
 }
 .dropbox.over {
-    background-color: #bfb;
+    background-color: #BBFFBB;
 }
-
 .dropbox-wrapper {
     background-color: #FFFFFF;
-    border: 2px solid #DDDDDD;
+   /* border: 2px solid #DDDDDD;*/
     border-radius: 8px 8px 8px 8px;
     color: #BBBBBB;
     font-family: Arial,sans-serif;
     font-size: 2em;
-    height: 100px;
+    height: 50%;
     text-align: center;
-    width: 800px;
+    width: 100%;
 }
