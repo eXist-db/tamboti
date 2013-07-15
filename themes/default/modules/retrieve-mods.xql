@@ -625,7 +625,8 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     let $query := session:get-attribute("query")
     let $query := $query//field/text()
     let $query := string-join($query, '|')
-    let $query := replace(replace(replace($query, '\*', '\\w*?'), '\?', '.'), '~', '')
+    (:replace Lucene wildcards with regex wildcards and search only for words beginning with search term:)
+    let $query := concat('\b', replace(replace(replace($query, '\*', '\\w*?'), '\?', '.'), '~', ''))
     let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
     let $result := 
         retrieve-mods:highlight-matches($result, $query, $highlight)
