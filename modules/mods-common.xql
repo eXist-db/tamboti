@@ -72,7 +72,7 @@ declare function mods-common:get-query-as-regex() {
     let $query := 
         if (starts-with($query, '"') and ends-with($query, '"')) 
         then translate($query, '"', '')
-        else concat('\b', replace(replace(replace(string-join($query, '|'), '\*', '\\w*?'), '\?', '\\w'), '~', ''), '\b')
+        else concat('\b', replace(replace(replace(translate(string-join($query, '|'), ' ', '|'), '\*', '\\w*?'), '\?', '\\w'), '~', ''), '\b')
 return $query
 };
 
