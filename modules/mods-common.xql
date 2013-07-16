@@ -13,6 +13,8 @@ declare variable $mods-common:given-name-last-languages := ('chi', 'jpn', 'kor',
 declare variable $mods-common:no-word-space-languages := ('chi', 'jpn', 'kor');
 
 (:
+mods-common:get-query-as-regex
+
 Formatting functions:
 mods-common:clean-up-punctuation()
 mods-common:simple-row()
@@ -22,6 +24,7 @@ mods-common:remove-parent-with-missing-required-node()
 functx:capitalize-first()
 functx:camel-case-to-words()
 functx:trim()
+mods-common:highlight-matches()
 
 Name-related functions:
 mods-common:retrieve-names()
@@ -59,6 +62,50 @@ mods-common:get-date()
 mods-common:get-extent()
 
 :)
+(:~
+: The mods-common:get-query-as-regex function gets the query ($query-as-xml) from the session
+: and reformats the Lucene search expressions into regex expressions, for use in mods-common:highlight-matches().
+:)
+declare function mods-common:get-query-as-regex() { 
+    let $query := session:get-attribute("query")
+    let $query := $query//field/text()
+    let $query := 
+        if (starts-with($query, '"') and ends-with($query, '"')) 
+        then translate($query, '"', '')
+        else concat('\b', replace(replace(replace(string-join($query, '|'), '\*', '\\w*?'), '\?', '\\w'), '~', ''), '\b')
+return $query
+};
+
+(:~
+: The mods-common:highlight-matches function highlights the search result in detail view with the search string, including 
+: searches made with wildcards. Slightly adapted from Joe Wicentowski's function in order to dealt with Lucene casing.
+: @author Joe Wicentowski
+: @param $nodes the search result to apply highlighting to
+: @param $patterns the regex used for applying highlighting
+: @param $highlight the highlight function
+: @return one or more items
+: @see https://gist.github.com/joewiz/5937897
+:)
+declare function mods-common:highlight-matches($nodes as node()*, $patterns as xs:string, $highlight as function(xs:string) as item()* ) { 
+    for $node in $nodes
+    return
+        typeswitch ( $node )
+            case element() return
+                element { name($node) } { $node/@*, mods-common:highlight-matches($node/node(), $patterns, $highlight) }
+            case text() return
+                let $normalized := replace($node, '\s+', ' ')
+                (:apply case-insensitive search for use with Lucene:)
+                for $segment in analyze-string($normalized, $patterns, 'i')/node()
+                return
+                    if ($segment instance of element(fn:match)) then 
+                        $highlight($segment/string())
+                    else 
+                        $segment/string()
+            case document-node() return
+                document { mods-common:highlight-matches($node/node(), $patterns, $highlight) }
+            default return
+                $node
+};
 
 
 (:~
@@ -74,7 +121,7 @@ declare function mods-common:clean-up-punctuation($element as node()) as node() 
 			return
 				if ($child instance of text())
 				then 
-					replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
+					replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
 						($child)
 					(:, '\s*\)', ')'):) (:, '\s*;', ';'):) (:, ',,', ','):) (:, '”\.', '.”'):) (:, '\. ,', ','):) (:, ',\s*\.', ''):) (:,'\.\.', '.'):) (:,'\.”,', ',”'):)
 					, '\s*\.', '.')
@@ -90,7 +137,7 @@ declare function mods-common:clean-up-punctuation($element as node()) as node() 
 					,'\( ', '(')
 					, '\.,', ',')
 					, '\?:', '?')
-					, '\?', '?')
+
 				else mods-common:clean-up-punctuation($child)
       }
 };
@@ -778,6 +825,7 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
         						if ($global-transliteration)
         						then true()
         						else false()
+                        (:let $log := util:log("DEBUG", ("##$name-contains-transliteration): ", $name-contains-transliteration)):)
                         
                         (: If the name does not contain a name part with a transliteration attribute, then it is a basic name, 
                         i.e. a name where a distinction between the name in a native script and in a transliteration does not arise. 
@@ -825,6 +873,8 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                                     }
                                 </name>
                                 
+                            (:let $log := util:log("DEBUG", ("##$name-basic): ", $name-basic)):)
+                        
                         (: If there is transliteration, there should be name parts with transliteration. 
                         To filter these, we seek name parts which contain the transliteration attribute, 
                         even though this may be empty 
@@ -842,6 +892,7 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                                     }
                                 </name>
                         	else ()
+                        (:let $log := util:log("DEBUG", ("##$name-in-transliteration): ", $name-in-transliteration)):)
                         
                         (: If there is transliteration, the presumption must be that all name parts which are not transliterations 
                         (and which do not have the language set to a European language) are names in a non-Latin script. 
@@ -860,6 +911,7 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                                     }
                                 </name>
     	                    else ()
+                        (:let $log := util:log("DEBUG", ("##$name-in-non-latin-script): ", $name-in-non-latin-script)):)
                         
                         (:Switch around $name-in-non-latin-script and $name-basic if there is $name-in-transliteration. 
                         This is necessary because $name-in-non-latin-script looks like $name-basic in a record using global language.:) 
@@ -873,6 +925,8 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                         	then ()
                         	else $name-basic
                         let $name-in-non-latin-script := $name-in-non-latin-script1
+                        (:let $log := util:log("DEBUG", ("##$name-basic2): ", $name-basic)):)
+                        (:let $log := util:log("DEBUG", ("##$name-in-non-latin-script1): ", string($name-in-non-latin-script))):)
                         (: We assume that there is only one date name part in $name-basic. 
                         Date name parts with transliteration and script are rather theoretical. 
                         This date is attached at the end of the name, to distinguish between identical names. That is why it is set here, not below. :)
@@ -887,6 +941,7 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                                 let $family-name-basic := <name>{$name-basic/*:namePart[@type eq 'family']}</name>
                                 let $given-name-basic := <name>{$name-basic/*:namePart[@type eq 'given']}</name>
                                 let $termsOfAddress-basic := <name>{$name-basic/*:namePart[@type eq 'termsOfAddress']}</name>
+                                (:let $log := util:log("DEBUG", ("##$termsOfAddress-basic): ", $termsOfAddress-basic)):)
 
                                 let $untyped-name-basic := <name>{$name-basic/*:namePart[not(@type)]}</name>
                                 (: $date-basic already has the date. :)
@@ -1678,7 +1733,7 @@ declare function mods-common:format-related-item($relatedItem as element(mods:re
 	return
         mods-common:clean-up-punctuation
         (
-            <result>{(
+            <span>{(
                 (:Display author roles:)
                 if ($relatedItem-role-terms = $retrieve-mods:primary-roles or not($relatedItem-role-terms))
                 then mods-common:format-multiple-names($relatedItem, 'list-first', $global-transliteration, $global-language)
@@ -1752,7 +1807,7 @@ declare function mods-common:format-related-item($relatedItem as element(mods:re
                         ('(Topics: ', for $subject in $subjects return $subjects, ')')
                         else ()
                 else ()
-        	)}</result>
+        	)}</span>
         )
 };
 
