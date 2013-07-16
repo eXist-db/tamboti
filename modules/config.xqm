@@ -76,7 +76,7 @@ declare function config:rewrite-username($username as xs:string) as xs:string {
         $username
     return
     
-        if(fn:ends-with(fn:lower-case($username), fn:concat("@", $config:enforced-realm-id)) or fn:lower-case($username) = ("admin", "editor", "guest")) then
+        if(fn:ends-with(fn:lower-case($username), fn:concat("@", $config:enforced-realm-id)) or fn:lower-case($username) = ("admin", "editor", "guest","testuser1","testuser2","testuser3")) then
             $username
         else
             fn:concat($username, "@", $config:enforced-realm-id)
