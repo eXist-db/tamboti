@@ -8,6 +8,7 @@ declare namespace ext="http://exist-db.org/mods/extension";
 
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
 import module namespace uu="http://exist-db.org/mods/uri-util" at "../../../modules/search/uri-util.xqm";
+import module namespace tamboti-common="http://exist-db.org/tamboti/common" at "../../../modules/tamboti-common.xql";
 import module namespace mods-common="http://exist-db.org/mods/common" at "../../../modules/mods-common.xql";
 
 (:The $retrieve-mods:primary-roles values are lower-cased when compared.:)
@@ -591,7 +592,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     
     let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
     let $result := 
-        mods-common:highlight-matches($result, mods-common:get-query-as-regex(), $highlight)
+        tamboti-common:highlight-matches($result, tamboti-common:get-query-as-regex(), $highlight)
         return $result
 };
 
@@ -686,7 +687,7 @@ declare function retrieve-mods:format-list-view($position as xs:string, $entry a
     
     let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
     let $result := <span xmlns="http://www.w3.org/1999/xhtml" class="record">{$result}</span>
-    let $result := mods-common:highlight-matches($result, mods-common:get-query-as-regex(), $highlight)
+    let $result := tamboti-common:highlight-matches($result, tamboti-common:get-query-as-regex(), $highlight)
     let $result := mods-common:clean-up-punctuation($result)
         return
             $result

@@ -13,19 +13,6 @@ declare variable $mods-common:given-name-last-languages := ('chi', 'jpn', 'kor',
 declare variable $mods-common:no-word-space-languages := ('chi', 'jpn', 'kor');
 
 (:
-mods-common:get-query-as-regex
-
-Formatting functions:
-mods-common:clean-up-punctuation()
-mods-common:simple-row()
-mods-common:add-part()
-mods-common:serialize-list()
-mods-common:remove-parent-with-missing-required-node()
-functx:capitalize-first()
-functx:camel-case-to-words()
-functx:trim()
-mods-common:highlight-matches()
-
 Name-related functions:
 mods-common:retrieve-names()
 mods-common:format-name()
@@ -62,50 +49,6 @@ mods-common:get-date()
 mods-common:get-extent()
 
 :)
-(:~
-: The mods-common:get-query-as-regex function gets the query ($query-as-xml) from the session
-: and reformats the Lucene search expressions into regex expressions, for use in mods-common:highlight-matches().
-:)
-declare function mods-common:get-query-as-regex() { 
-    let $query := session:get-attribute("query")
-    let $query := $query//field/text()
-    let $query := 
-        if (starts-with($query, '"') and ends-with($query, '"')) 
-        then translate($query, '"', '')
-        else concat('\b', replace(replace(replace(translate(string-join($query, '|'), ' ', '|'), '\*', '\\w*?'), '\?', '\\w'), '~', ''), '\b')
-return $query
-};
-
-(:~
-: The mods-common:highlight-matches function highlights the search result in detail view with the search string, including 
-: searches made with wildcards. Slightly adapted from Joe Wicentowski's function in order to dealt with Lucene casing.
-: @author Joe Wicentowski
-: @param $nodes the search result to apply highlighting to
-: @param $patterns the regex used for applying highlighting
-: @param $highlight the highlight function
-: @return one or more items
-: @see https://gist.github.com/joewiz/5937897
-:)
-declare function mods-common:highlight-matches($nodes as node()*, $patterns as xs:string, $highlight as function(xs:string) as item()* ) { 
-    for $node in $nodes
-    return
-        typeswitch ( $node )
-            case element() return
-                element { name($node) } { $node/@*, mods-common:highlight-matches($node/node(), $patterns, $highlight) }
-            case text() return
-                let $normalized := replace($node, '\s+', ' ')
-                (:apply case-insensitive search for use with Lucene:)
-                for $segment in analyze-string($normalized, $patterns, 'i')/node()
-                return
-                    if ($segment instance of element(fn:match)) then 
-                        $highlight($segment/string())
-                    else 
-                        $segment/string()
-            case document-node() return
-                document { mods-common:highlight-matches($node/node(), $patterns, $highlight) }
-            default return
-                $node
-};
 
 
 (:~

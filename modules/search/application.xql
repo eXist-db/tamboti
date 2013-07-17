@@ -407,7 +407,7 @@ This means that phrase searches can only be performed with double quotation mark
 (: ":" and "&" are replaced with empty spaces.:)
 (:NB: In case of an unequal number of double quotation marks, all double quotation marks should be removed.:)
 declare function biblio:normalize-search-string($search-string as xs:string?) as xs:string? {
-	let $search-string := replace($search-string, '^[?*]?(.*)$', '$1')
+    let $search-string := replace($search-string, '^[?*]?(.*)$', '$1')
 	let $search-string := replace($search-string, "'", "''")
 	let $search-string := translate($search-string, ":", " ")
 	let $search-string := translate($search-string, "&amp;", " ")
@@ -1138,7 +1138,7 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
 
     (: Process request parameters and generate an XML representation of the query :)
     let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $mylist, $value)
-    let $log := util:log("DEBUG", ("##$query-as-xml): ", $query-as-xml))
+    (:let $log := util:log("DEBUG", ("##$query-as-xml): ", $query-as-xml)):)
     (: Get the results :)
     let $results := biblio:get-or-create-cached-results($mylist, $query-as-xml, $sort)
     return

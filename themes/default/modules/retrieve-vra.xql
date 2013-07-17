@@ -1,14 +1,10 @@
 module namespace retrieve-vra="http://exist-db.org/vra/retrieve";
 
 declare namespace vra="http://www.vraweb.org/vracore4.htm";
-declare namespace mads="http://www.loc.gov/mads/v2";
-declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace functx = "http://www.functx.com";
-declare namespace ext="http://exist-db.org/mods/extension";
-declare namespace hra="http://cluster-schemas.uni-hd.de";
 
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
-import module namespace vra-common="http://exist-db.org/vra/common" at "../../../modules/vra-common.xql";
+import module namespace tamboti-common="http://exist-db.org/tamboti/common" at "../../../modules/tamboti-common.xql";
 import module namespace mods-common="http://exist-db.org/mods/common" at "../../../modules/mods-common.xql";
 
 (:The $retrieve-vra:primary-roles values are lower-cased when compared.:)
@@ -82,6 +78,7 @@ declare function functx:capitalize-first($arg as xs:string?) as xs:string? {
 : @return an XHTML table.
 :)
 declare function retrieve-vra:format-detail-view($position as xs:string, $entry as element(vra:vra), $collection-short as xs:string, $type as xs:string, $id as xs:string) as element(table) {
+    let $result :=
     <table xmlns="http://www.w3.org/1999/xhtml" class="biblio-full">
     {
     <tr>
@@ -191,6 +188,7 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
             </tr>
     ,
     (: relation :)
+    (:
     let $relations := $entry//vra:relationSet/vra:relation
     for $relation in $relations
         let $type := $relation/@type
@@ -214,6 +212,7 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
                     <td>{$list-view}</td>
                 </tr>
     ,
+    :)
     (: subjects :)
     
     (:for $subject in $entry//vra:subjectSet/vra:subject
@@ -278,6 +277,12 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
 ,
     mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $entry/vra:work/@id), 'Stable Link to This Record')}
     </table>
+    let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
+    let $result := <span xmlns="http://www.w3.org/1999/xhtml" class="record">{$result}</span>
+    let $result := tamboti-common:highlight-matches($result, tamboti-common:get-query-as-regex(), $highlight)
+    let $result := mods-common:clean-up-punctuation($result)
+    return
+        $result
 };
 
 (:~
@@ -290,13 +295,13 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
 : @return an XHTML span.
 :)
 declare function retrieve-vra:format-list-view($position as xs:string, $entry as element(vra:vra), $collection-short as xs:string) as element(span) {
-    
+    let $result :=
     <span class="vra-record">
      
     { 
     let $relids := $entry//vra:relation/@relids
     (:NB: relids can hold multiple values; the image record with @pref on vra:relation is "true".
-    For now, we disregard this; otherwise we have to check after retriving the image records.:)
+    For now, we disregard this; otherwise we have to check after retrieving the image records.:)
     let $relids := tokenize($relids, ' ')[1]
     (:let $log := util:log("DEBUG", ("##$relids): ", $relids)):)
     let $image := collection($config:mods-root)//vra:image[@id = $relids]
@@ -318,10 +323,10 @@ declare function retrieve-vra:format-list-view($position as xs:string, $entry as
                 if (count($agents) gt 0)
                 then concat(string-join($agents, '; '), ': ')
                 else ()
-    }</span>
+    }   
+    </span>
     
-    <span class="title">{string-join($entry//vra:titleSet/vra:title/text(), ' ')}</span>
-    
+    <span class="title">{string-join($entry//vra:titleSet/vra:title/text(), ' ')}</span> 
     {
     let $earliestDate := $entry//vra:dateSet/vra:date[@type eq 'creation']/vra:earliestDate
     let $earliestDate := 
@@ -353,9 +358,13 @@ declare function retrieve-vra:format-list-view($position as xs:string, $entry as
     return
     if ($date) then
     <span class="date"> ({functx:substring-before-last-match($date, 'T')})</span>
-    else ()}
-    
+    else ()
+    }
     </span>
-    
-    
+    let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
+    let $result := <span xmlns="http://www.w3.org/1999/xhtml" class="record">{$result}</span>
+    let $result := tamboti-common:highlight-matches($result, tamboti-common:get-query-as-regex(), $highlight)
+    let $result := mods-common:clean-up-punctuation($result)
+    return
+        $result    
 };
