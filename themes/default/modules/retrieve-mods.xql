@@ -592,7 +592,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     
     let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
     let $result := 
-        tamboti-common:highlight-matches($result, tamboti-common:get-query-as-regex(), $highlight)
+        tamboti-common:highlight-matches($result, session:get-attribute('regex'), $highlight)
         return $result
 };
 
@@ -687,7 +687,7 @@ declare function retrieve-mods:format-list-view($position as xs:string, $entry a
     
     let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
     let $result := <span xmlns="http://www.w3.org/1999/xhtml" class="record">{$result}</span>
-    let $result := tamboti-common:highlight-matches($result, tamboti-common:get-query-as-regex(), $highlight)
+    let $result := tamboti-common:highlight-matches($result, session:get-attribute('regex'), $highlight)
     let $result := mods-common:clean-up-punctuation($result)
         return
             $result

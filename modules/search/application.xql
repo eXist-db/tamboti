@@ -1119,6 +1119,62 @@ declare function biblio:get-or-create-cached-results($mylist as xs:string?, $que
         biblio:eval-query($query-as-xml, $sort)
 };
 
+(:~
+: The biblio:get-query-as-regex function gets the query ($query-as-xml) from the session
+: and reformats the Lucene search expressions into regex expressions, for use in tamboti-common:highlight-matches().
+:)
+declare function biblio:get-query-as-regex($query-as-xml as element()) as xs:string { 
+    let $query := $query-as-xml//field/text()
+    (:we prepare for later tokenization of expressions in boolean searches:)
+    let $query := 
+        for $expression in $query
+        return 
+            replace(replace(replace($expression, '\sAND\s', ' '), '\sOR\s', ' '), '\sNOT\s', ' ')
+    (:we assume that '+' and '-' are only used for prefixing, so we strip them:)
+    let $query := 
+        for $expression in $query
+        return 
+            replace(replace($expression, '\+', ' '), '\-', ' ')
+    (:we strip the parentheses, since they are not used in highlighting:)
+    let $query := 
+        for $expression in $query
+        return 
+            translate(translate($expression, '(', ''), ')', '')
+    (:here we have first to go through the outer expression, to see if there are any phrase searches:)
+    let $query := 
+        for $expression in $query
+        return 
+            (:if the expression is a phrase search, do not change it:)
+            if (starts-with($expression, '"') and ends-with($expression, '"')) 
+            then translate($expression, '"', '')
+            else 
+                (:first tokenize the expressions created by replacement by space above:)
+                let $query := tokenize(normalize-space($expression), ' ')
+                    return
+                        (:then for each of these, replace the lucene wildcards with the corresponding regex wildcard 
+                        and wrap up in word boundaries:)
+                        for $expression in $query
+                            return
+                                concat(
+                                    '\b'
+                                    , 
+                                    replace(
+                                        replace(
+                                            replace(
+                                                translate(
+                                                    $expression
+                                                , ' ', '|')
+                                            , '\?', '\\w')
+                                        , '\*', '\\w*?')
+                                    (:strip the fuzzy search postfix, since there is nothing we can do with it:)
+                                    , '~', '')
+                                    ,
+                                    '\b')
+        let $query := string-join($query, '|')
+            return $query
+};
+
+
 declare function biblio:query($node as node(), $params as element(parameters)?, $model as item()*) {
     session:create()
     ,
@@ -1140,6 +1196,8 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $mylist, $value)
     (:let $log := util:log("DEBUG", ("##$query-as-xml): ", $query-as-xml)):)
     (: Get the results :)
+    let $query-as-regex := biblio:get-query-as-regex($query-as-xml)
+    let $null := session:set-attribute('regex', $query-as-regex)
     let $results := biblio:get-or-create-cached-results($mylist, $query-as-xml, $sort)
     return
         templates:process($node/node(), ($query-as-xml, $results))
