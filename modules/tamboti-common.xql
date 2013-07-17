@@ -25,30 +25,53 @@ functx:trim()
 declare function tamboti-common:get-query-as-regex() as xs:string { 
     let $query := session:get-attribute("query")
     let $query := $query//field/text()
-    let $query := replace(replace(replace($query, '\sAND\s', ' ', 'i'), '\sOR\s', ' ', 'i'), '\sNOT\s', ' ', 'i')
+    (:let $log := util:log("DEBUG", ("##$query1): ", $query)):)
+    let $query := 
+        for $expression in $query
+        return 
+            replace(replace(replace($expression, '\sAND\s', ' '), '\sOR\s', ' '), '\sNOT\s', ' ')
+    (:let $log := util:log("DEBUG", ("##$query2): ", $query)):)
     (:we assume that '+' and '-' are only used for prefixing:)
     (:NB: why can one not use '\b'?:)
-    let $query := replace(replace($query, '\+', ' '), '\-', ' ')
-    let $query := translate(translate($query, '(', ''), ')', '')
-    let $query := normalize-space($query)
     let $query := 
-        if (starts-with($query, '"') and ends-with($query, '"')) 
-        then translate($query, '"', '')
-        else concat(
-            '\b'
-            , 
-            replace(
-                replace(
-                    replace(
-                        translate(
-                            string-join($query, '|')
-                        , ' ', '|')
-                    , '\?', '\\w')
-                , '\*', '\\w*?')
-            , '~', '') (:we can do nothing with fuzzy searches:)
-            ,
-            '\b')
-        let $log := util:log("DEBUG", ("##$query): ", $query))
+        for $expression in $query
+        return 
+            replace(replace($expression, '\+', ' '), '\-', ' ')
+    (:let $log := util:log("DEBUG", ("##$query3): ", $query)):)
+    let $query := 
+        for $expression in $query
+        return 
+            translate(translate($expression, '(', ''), ')', '')
+    (:let $log := util:log("DEBUG", ("##$query4): ", $query)):)
+    let $query := 
+        for $expression in $query
+        (:let $log := util:log("DEBUG", ("##$expression): ", $expression)):)
+        return 
+            if (starts-with($expression, '"') and ends-with($expression, '"')) 
+            then translate($expression, '"', '')
+            else 
+                let $query := tokenize(normalize-space($expression), ' ')
+                (:let $log := util:log("DEBUG", ("##$query4.5): ", $query)):)
+                    return
+                        for $expression in $query
+                            return
+                                concat(
+                                    '\b'
+                                    , 
+                                    replace(
+                                        replace(
+                                            replace(
+                                                translate(
+                                                    $expression
+                                                , ' ', '|')
+                                            , '\?', '\\w')
+                                        , '\*', '\\w*?')
+                                    , '~', '')
+                                    ,
+                                    '\b')
+        (:let $log := util:log("DEBUG", ("##$query5): ", $query)):)
+        let $query := string-join($query, '|')
+        (:let $log := util:log("DEBUG", ("##$query6): ", $query)):)
         return $query
 };
 
