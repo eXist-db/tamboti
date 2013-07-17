@@ -405,8 +405,10 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
 This means that phrase searches can only be performed with double quotation marks.:)
 (: If the search string starts with a "*" or a "?" (illegal in Lucene search syntax), it is removed.:)
 (: ":" and "&" are replaced with empty spaces.:)
+(:For some reason, a Lucene fuzziness value of "1.0" is illegal. Only one decimal is used:)
 (:NB: In case of an unequal number of double quotation marks, all double quotation marks should be removed.:)
 declare function biblio:normalize-search-string($search-string as xs:string?) as xs:string? {
+    let $search-string := translate($search-string, "~1.0", "~0.9")
     let $search-string := replace($search-string, '^[?*]?(.*)$', '$1')
 	let $search-string := replace($search-string, "'", "''")
 	let $search-string := translate($search-string, ":", " ")
