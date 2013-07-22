@@ -48,7 +48,7 @@ declare function functx:substring-before-last
             concat('^(.*)', functx:escape-for-regex($delim),'.*'),
             '$1')
    else ''
- } ;
+ };
  
  declare function functx:escape-for-regex 
   ( $arg as xs:string? )  as xs:string {
@@ -239,7 +239,7 @@ let $image-url := <img src="{
                         )
                         }"  width="200px"/>
 :)
-let $image-url := <img src="http://kjc-ws2.kjc.uni-heidelberg.de/images/service/download_uuid/{$image/@id}?width=150" alt="" class="relatedImage"/>
+let $image-url := <img src="{concat($config:image-service-url, $image/@id)}?width=150" alt="" class="relatedImage"/>
 
 return $image-url
 };

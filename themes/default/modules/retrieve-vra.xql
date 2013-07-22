@@ -21,7 +21,7 @@ let $image-url := <img src="{
                         )
                         }"  width="200px"/>
 :)
-let $image-url := <img src="http://kjc-ws2.kjc.uni-heidelberg.de/images/service/download_uuid/{$image/@id}?width=40&amp;height=40&amp;crop_type=middle" alt="" class="relatedImage"></img>
+let $image-url := <img src="{concat($config:image-service-url,$image/@id)}?width=40&amp;height=40&amp;crop_type=middle" alt="" class="relatedImage"></img>
 
 return $image-url
 };
