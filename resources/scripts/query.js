@@ -826,7 +826,7 @@ function prepareCollectionSharingDetails() {
         "bFilter": false
         
     });
-};
+}
 
 function prepareAttachmentSharingDetails() {
     //add reloadAjax function
@@ -843,7 +843,7 @@ function prepareAttachmentSharingDetails() {
         "bFilter": false
         
     });
-};
+}
 
 
 function attachedDetailsRowCallback(nRow, aData, iDisplayIndex) {
@@ -899,7 +899,7 @@ function updateAttachmentDialog() {
 
 //custom fnReloadAjax for sharing dataTable
 function dataTableReloadAjax(oSettings, sNewSource, fnCallback, bStandingRedraw) {
-    if(typeof sNewSource != 'undefined' && sNewSource != null) {
+    if(typeof sNewSource != 'undefined' && sNewSource !== null) {
         oSettings.sAjaxSource = sNewSource;
     }
     this.oApi._fnProcessingDisplay(oSettings, true);
@@ -921,14 +921,14 @@ function dataTableReloadAjax(oSettings, sNewSource, fnCallback, bStandingRedraw)
      }
      that.oApi._fnProcessingDisplay(oSettings, false);
       /* Callback user function - for event handlers etc */
-     if(typeof fnCallback == 'function' && fnCallback != null){
+     if(typeof fnCallback == 'function' && fnCallback !== null){
             fnCallback(oSettings);
       }
     }, oSettings);
 }
 
 function attachedDataTableReloadAjax(oSettings, sNewSource, fnCallback, bStandingRedraw) {
-    if(typeof sNewSource != 'undefined' && sNewSource != null) {
+    if(typeof sNewSource != 'undefined' && sNewSource !== null) {
         oSettings.sAjaxSource = sNewSource;
     }
 
@@ -947,7 +947,7 @@ function attachedDataTableReloadAjax(oSettings, sNewSource, fnCallback, bStandin
         if (json){
             for(var i = 0 ; i < json.aaData.length; i++) {
                 var t = json.aaData[i].items;
-                if (t != null){
+                if (t !== null){
                     for(var j = 0 ; j < t.length; j++) {
                         //if (t[j].name.indexOf(".xml") == -1){ // check if the file is binary
                             var values = [t[j].collection, t[j].name, t[j].lastmodified];
@@ -976,7 +976,7 @@ function attachedDataTableReloadAjax(oSettings, sNewSource, fnCallback, bStandin
         that.oApi._fnProcessingDisplay(oSettings, false);
 
         /* Callback user function - for event handlers etc */
-        if(typeof fnCallback == 'function' && fnCallback != null){
+        if(typeof fnCallback == 'function' && fnCallback !== null){
             fnCallback(oSettings);
         }
     }, oSettings);
@@ -1020,7 +1020,7 @@ function setAceWriteable(checkbox, collection, aceId, isWriteable) {
             checkbox.checked = !isWriteable;
         }
     });
-};
+}
 
 //removes an ACE from a share
 function removeAce(collection, aceId) {
@@ -1039,7 +1039,7 @@ function removeAce(collection, aceId) {
             }
         });
     }
-};
+}
 
 //adds a user to a share
 function addUserToShare() {
@@ -1078,7 +1078,7 @@ function addUserToShare() {
                 alert("The user '" + $('#user-auto-list').val() + "' does not exist!");
             }
         });
-};
+}
 
 //adds a group to a share
 function addProjectToShare() {
@@ -1117,4 +1117,4 @@ function addProjectToShare() {
                 alert("The project '" + $('#project-auto-list').val() + "' does not exist!");
             }
         });
-};
+}
