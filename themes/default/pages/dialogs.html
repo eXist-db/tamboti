@@ -98,7 +98,7 @@ function FileUploadCtrl(scope) {
         
           scope.files.push(element.files[i])
         }
-      scope.progressVisible = false
+      scope.progressVisible = true
       });
     };
     
@@ -148,9 +148,9 @@ function FileUploadCtrl(scope) {
     
     function uploadComplete(evt) {
         /* This event is raised when the server send back a response */
-        $('#upload-file-dialog').dialog('close');
-         //$('#file-list').text();
-        alert(evt.target.responseText)
+        //$('#upload-file-dialog').dialog('close');
+         $('#simple-search-form').submit();
+        //alert(evt.target.responseText)
     }
     
     function uploadFailed(evt) {
