@@ -72,7 +72,7 @@ $(document).ready(function(){
     
     hideCollectionActionButtons();
     
-    prepareAttachmentSharingDetails();
+    //prepareAttachmentSharingDetails();
     
     prepareCollectionSharingDetails();
     //attachment
@@ -878,8 +878,10 @@ function updateSharingDialog() {
 
 
 function updateAttachmentDialog() {
+    /**
     var oTable = $('#attachedFilesDetails').dataTable();
     oTable.fnClearTable();
+    */
     var uuid = $('#upload-resource-id').html();
     if (uuid.length>0) {
         $('#attachedFilesDetails').dataTable().fnReloadAjax("sharing.xql?file=" + uuid);
@@ -888,7 +890,7 @@ function updateAttachmentDialog() {
     {
      var collection = getCurrentCollection();
      $('#file-upload-folder').text(collection);
-     $('#attachedFilesDetails').dataTable().fnReloadAjax("sharing.xql?upload-folder="+escape(collection));
+     //$('#attachedFilesDetails').dataTable().fnReloadAjax("sharing.xql?upload-folder="+escape(collection));
     }
 }
 
