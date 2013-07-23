@@ -136,7 +136,8 @@ declare function local:resources($collection as xs:string, $user as xs:string) {
                      return if (exists($image_vra))
                         then ( 
                         <json:value json:array="true">
-                            <collection>{concat('../../../../rest/',util:collection-name($image_vra),'/', $image_vra/@href)}</collection>
+                            <!--collection>{concat('../../../../rest/',util:collection-name($image_vra),'/', $image_vra/@href)}</collection-->
+                            <collection>{$image_vra/@href}</collection>
                             <name>{
                             
                                 if ($isCollection) then substring-after($resource, "/") 
@@ -185,7 +186,8 @@ let $mods-entry :=
                      let $modified := xmldb:last-modified(util:collection-name($image_vra), $image_vra/@href)
                      return
                  <json:value json:array="true">     
-                <collection>{concat('../../../../rest',util:collection-name($image_vra),'/', $image_vra/@href)}</collection>
+                <!--collection>{concat('../../../../rest',util:collection-name($image_vra),'/', $image_vra/@href)}</collection-->
+                <collection>{$image_vra/@href}</collection>
                 <name>{xmldb:decode(($image_vra//vra:title/text()))}</name>
                 <lastmodified>{
                 if (xs:date($modified) = current-date()) then
@@ -211,7 +213,8 @@ let $mods-entry :=
                 let $modified := xmldb:last-modified(util:collection-name($image_vra), $image_vra/@href)
                      return
                 <json:value json:array="true">     
-                <collection>{concat('../../../../rest',util:collection-name($image_vra),'/', $image_vra/@href)}</collection>
+                <!--collection>{concat('../../../../rest',util:collection-name($image_vra),'/', $image_vra/@href)}</collection-->
+                  <collection>{$image_vra/@href}</collection>
                 <name>{xmldb:decode(($image_vra//vra:title/text()))}</name>
                 <lastmodified>{
                 if (xs:date($modified) = current-date()) then

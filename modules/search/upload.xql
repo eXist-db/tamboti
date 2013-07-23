@@ -19,10 +19,10 @@ declare variable $userpass := $config:dba-credentials[2];
 (:
 declare variable $user := xmldb:get-current-user();
 declare variable $userpass := security:get-user-credential-from-session()[1];
-
 declare variable $user :='admin';
 declare variable $userpass :='';
 :)
+
 declare variable $logged-user := xmldb:get-current-user();
 
 declare variable $rootdatacollection:='/db/resources/';

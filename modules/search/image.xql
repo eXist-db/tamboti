@@ -11,8 +11,8 @@ declare option exist:serialize "method=json media-type=text/javascript";
 import module namespace json="http://www.json.org";
 
 declare variable $col := $config:mods-root;
-declare variable $user := 'admin';
-declare variable $userpass := '';
+declare variable $user := $config:dba-credentials[1];
+declare variable $userpass := $config:dba-credentials[2];
 declare variable $rootdatacollection:='/db/resources/';
 
 
