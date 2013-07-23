@@ -72,10 +72,10 @@ $(document).ready(function(){
     
     hideCollectionActionButtons();
     
-    prepareCollectionSharingDetails();
-    //attachment
     prepareAttachmentSharingDetails();
     
+    prepareCollectionSharingDetails();
+    //attachment
     
     
     
@@ -135,7 +135,7 @@ function bindAdditionalDialogTriggers() {
      
     $("#collection-rename-folder").click(function(){
         var node = $("#collection-tree-tree").dynatree("getActiveNode");
-        if(node != null){
+        if(node !== null){
             $("#rename-new-name").val(node.data.title);
         }
      });
@@ -145,7 +145,7 @@ function bindKeyPressActions() {
     
     //login username, when enter is pressed, move to password
     $('#loginUsername').keyup(function(e) {
-        if($('#loginUsername').val() != null && $('#loginUsername').val() != "") {
+        if($('#loginUsername').val() !== null && $('#loginUsername').val() !== "") {
             if(e.keyCode == 13) {
                 $('#loginPassword').focus();
             }
@@ -154,7 +154,7 @@ function bindKeyPressActions() {
     
     //login password, when enter is pressed, login
     $('#loginPassword').keyup(function(e) {
-        if($('#loginPassword').val() != null && $('#loginPassword').val() != "") {
+        if($('#loginPassword').val() !== null && $('#loginPassword').val() !== "") {
             if(e.keyCode == 13) {
                 login();
             }
@@ -163,7 +163,7 @@ function bindKeyPressActions() {
     
     //new collection name, when enter is pressed, dont submit
     $('#create-collection-form').submit(function() {
-        if($('#new-collection-name').val() != null && $('#new-collection-name').val() != "") {
+        if($('#new-collection-name').val() !== null && $('#new-collection-name').val() !== "") {
             createCollection($('#new-collection-dialog'));
         }
         return false;
@@ -171,7 +171,7 @@ function bindKeyPressActions() {
     
     //rename collection name, when enter is pressed, dont submit
     $('#rename-collection-form').submit(function() {
-        if($('#rename-new-name').val() != null && $('#rename-new-name').val() != "") {
+        if($('#rename-new-name').val() !== null && $('#rename-new-name').val() !== "") {
             renameCollection($('#rename-collection-dialog'));
         }
         return false;
@@ -906,24 +906,31 @@ function dataTableReloadAjax(oSettings, sNewSource, fnCallback, bStandingRedraw)
     var that = this;
     var iStart = oSettings._iDisplayStart;
     oSettings.fnServerData(oSettings.sAjaxSource, [], function(json) {
-    /* Clear the old information from the table */
-    that.oApi._fnClearTable(oSettings);
-    /* Got the data - add it to the table */
-     for(var i = 0 ; i < json.aaData.length; i++) {
-            that.oApi._fnAddData(oSettings, json.aaData[i]);
-      }
-     oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
-     that.fnDraw();
+
+        /* Clear the old information from the table */
+        that.oApi._fnClearTable(oSettings);
         
-     if(typeof bStandingRedraw != 'undefined' && bStandingRedraw === true) {
-			oSettings._iDisplayStart = iStart;
+        if (json){
+            for(var i = 0 ; i < json.aaData.length; i++) {
+                that.oApi._fnAddData(oSettings,json.aaData[i]);
+            }
+        }
+        
+        //that.oApi._fnAddData(oSettings, ('"USER", "dulip.withanage@ad.uni-heidelberg.de", "ALLOWED", "r--", "removeMe"'));
+        oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+        that.fnDraw();
+        
+        if(typeof bStandingRedraw != 'undefined' && bStandingRedraw === true) {
+            oSettings._iDisplayStart = iStart;
 			that.fnDraw(false);
-     }
-     that.oApi._fnProcessingDisplay(oSettings, false);
-      /* Callback user function - for event handlers etc */
-     if(typeof fnCallback == 'function' && fnCallback !== null){
+		}
+        
+        that.oApi._fnProcessingDisplay(oSettings, false);
+
+        /* Callback user function - for event handlers etc */
+        if(typeof fnCallback == 'function' && fnCallback !== null){
             fnCallback(oSettings);
-      }
+        }
     }, oSettings);
 }
 

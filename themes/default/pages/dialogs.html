@@ -1,25 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Provides various dialogs used by tamboti
--->
 <div xmlns:jquery="http://exist-db.org/xquery/jquery">
-    <!--<jquery:dialog id="optimize-dialog" modal="true" title="Create Indexes" trigger="#optimize-trigger" width="450">
-        <jquery:button label="Start" function="createIndexes"/>
-        <p>Use this dialog to trigger an optimization run on your data
-            set. This will create custom indexes to speed up sorting and other
-            functions.</p>
-        <p>The process may take some time, depending on the size of the
-            data set. To start, please enter the admin password for your db below:</p>
-        <form action="optimize.xql">
-            <ul>
-                <li>
-                    <label for="password">Admin password: </label>
-                    <input type="password" size="30" name="password"/>
-                </li>
-                <li id="optimize-message"/>
-            </ul>
-        </form>
-    </jquery:dialog>-->
     <jquery:dialog id="login-dialog" modal="true" title="Login" trigger="#login-link" width="450">
         <jquery:button label="Login" function="login"/>
         <form id="login-form" action="#" method="POST">
@@ -42,7 +22,6 @@
             </table>
         </form>
     </jquery:dialog>
-    <!-- collection writeable -->
     <jquery:dialog id="new-collection-dialog" modal="true" title="Create Folder" trigger="#collection-create-folder" width="450">
         <jquery:button label="Create" function="createCollection"/>
         <jquery:button id="cancel" label="Cancel"/>
@@ -57,13 +36,13 @@
         </form>
     </jquery:dialog>
     <jquery:dialog id="upload-file-dialog" class="upload-file-style" modal="true" title="File attachments" trigger="#upload-file-to-resource" width="900" onOpen="updateAttachmentDialog">
-        <script type="text/javascript">//<![CDATA[ 
+        <script type="text/javascript">// 
             
 angular.module('app', [], function() {})
 FileUploadCtrl.$inject = ['$scope']
 function FileUploadCtrl(scope) {
-    //============== DRAG & DROP =============
-    // source for drag&drop: http://www.webappers.com/2011/09/28/drag-drop-file-upload-with-html5-javascript/
+    //============== DRAG &amp; DROP =============
+    // source for drag&amp;drop: http://www.webappers.com/2011/09/28/drag-drop-file-upload-with-html5-javascript/
     var dropbox = document.getElementById("dropbox")
     scope.dropText = 'Drop files here...'
     
@@ -82,7 +61,7 @@ function FileUploadCtrl(scope) {
         evt.stopPropagation()
         evt.preventDefault()
         var clazz = 'not-available'
-        //var ok = evt.dataTransfer && evt.dataTransfer.types && evt.dataTransfer.types.indexOf('Files') >= 0
+        //var ok = evt.dataTransfer &amp;&amp; evt.dataTransfer.types &amp;&amp; evt.dataTransfer.types.indexOf('Files') &gt;= 0
         scope.$apply(function(){
           //  scope.dropText = ok ? 'Drop files here...' : 'Only files are allowed!'
           //  scope.dropClass = ok ? 'over' : 'not-available'
@@ -99,23 +78,23 @@ function FileUploadCtrl(scope) {
             scope.dropClass = ''
         })
         var files = evt.dataTransfer.files
-        if (files.length > 0) {
+        if (files.length &gt; 0) {
             scope.$apply(function(){
                 scope.files = []
-                for (var i = 0; i < files.length; i++) {
+                for (var i = 0; i &lt; files.length; i++) {
                     scope.files.push(files[i])
                 }
             })
         }
     }, false)
-    //============== DRAG & DROP =============
+    //============== DRAG &amp; DROP =============
     
     scope.setFiles = function(element) {
     scope.$apply(function(scope) {
       //console.log('files:', element.files);
       // Turn the FileList object into an Array
         scope.files = []
-        for (var i = 0; i < element.files.length; i++) {
+        for (var i = 0; i &lt; element.files.length; i++) {
         
           scope.files.push(element.files[i])
         }
@@ -187,13 +166,10 @@ function FileUploadCtrl(scope) {
 }
 
 
-//]]></script>
+//</script>
         <html ng-app="app">
             <body ng-controller="FileUploadCtrl">
-                <div class="row"> 
-                    <!--label for="fileToUpload">Select a File to Upload</label><br /-->
-                    <!--input type="file"  id="fileToUpload" onchange="angular.element(this).scope().setFiles(this)" /-->
-                </div>
+                <div class="row"/>
                 <div class="dropbox-wrapper">
                     <div id="dropbox" class="dropbox" ng-class="dropClass">
                         <span>{{dropText}}</span>
@@ -229,33 +205,7 @@ function FileUploadCtrl(scope) {
                 </td>
             </tr>
         </table>
-        <table id="attachedFilesDetails" width="800px">
-            <thead>
-                <tr align="left">
-                    <th/>
-                    <th>Name</th>
-                    <th>LastModified</th>
-                </tr>
-            </thead>
-        </table>
     </jquery:dialog>
-    <!--
-    <script type="text/javascript" src="resources/scripts/multi-upload.js"/>
-    -->
-    
-    <!--jquery:dialog id="upload-file-dialog" modal="true" title="Upload File" trigger="#upload-file" width="450">
-        <jquery:button id="cancel" label="Cancel"/>
-        
-        <form target="iframe-post-form" action="upload.xql" enctype="multipart/form-data" method="post">
-            <input id="rename-collection-path_" type="hidden" name="collection"/>
-            <div> upload: </div>
-            <div>
-                <input type="file" name="files[]" multiple="multiple" id="inputTypeFile"/>
-                <button type="submit">Submit</button>
-                <jquery:button label="Submit" function="uploadFile" id="Submit"/>             
-            </div>
-        </form>
-    </jquery:dialog-->
     <jquery:dialog id="rename-collection-dialog" modal="true" title="Rename Folder" trigger="#collection-rename-folder" width="450">
         <jquery:button label="Rename" function="renameCollection"/>
         <jquery:button id="cancel" label="Cancel"/>
@@ -296,8 +246,6 @@ function FileUploadCtrl(scope) {
             <div>NB: If you remove the folder, the folder and its contents will be deleted and cannot be restored.</div>
         </form>
     </jquery:dialog>
-    <!-- end collection writeable -->
-    <!-- collection owner -->
     <jquery:dialog id="sharing-collection-dialog" modal="true" title="Folder Sharing" trigger="#collection-sharing" width="625" onOpen="updateSharingDialog">
         <jquery:button id="cancel" label="Close"/>
         <div>Folder <strong>
@@ -337,7 +285,6 @@ function FileUploadCtrl(scope) {
         </div>
         <input id="add-project-to-share-button" type="button" value="Add"/>
     </jquery:dialog>
-    <!-- end collection owner -->
     <jquery:dialog id="remove-resource-dialog" modal="true" title="Remove Record" width="450">
         <jquery:button label="Remove" function="removeResource"/>
         <jquery:button id="cancel" label="Cancel"/>
@@ -359,13 +306,11 @@ function FileUploadCtrl(scope) {
             <input id="move-resource-id" name="resource" type="hidden" value=""/>
         </form>
     </jquery:dialog>
-    <!-- Dialog is created in application.xql, biblio:resource-types(). -->
     <jquery:dialog id="new-resource-dialog" modal="true" title="Create Stand-Alone MODS Record" trigger="#collection-create-resource" width="550">
         <jquery:button id="create" label="Create" function="newResource"/>
         <jquery:button id="cancel" label="Cancel"/>
         <div class="biblio:resource-types stand-alone"/>
     </jquery:dialog>
-    <!-- Dialog is created in application.xql, biblio:resource-types(). -->
     <jquery:dialog id="add-related-dialog" modal="true" title="Create Related MODS Record" width="550">
         <jquery:button id="create" label="Create" function="newRelatedResource"/>
         <jquery:button id="cancel" label="Cancel"/>
@@ -399,12 +344,10 @@ function FileUploadCtrl(scope) {
         <div class="filmstripPageButtonContainer">
             <span class="filmstripPageButton" id="film-up">˄</span>
         </div>
-        <!-- div id="film-up">˄</div -->
         <ul id="filmstrip-items"/>
         <div class="filmstripPageButtonContainer">
             <span class="filmstripPageButton" id="film-down">˅</span>
         </div>
-        <!-- div id="film-down">˅</div -->
         <span class="clear"/>
     </div>
 </div>
