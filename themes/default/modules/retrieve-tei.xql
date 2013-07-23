@@ -28,7 +28,7 @@ declare function retrieve-tei:format-detail-view($position as xs:string, $entry 
     <table xmlns="http://www.w3.org/1999/xhtml" class="biblio-full">
     {
     let $collection := replace(replace(xmldb:decode-uri($collection-short), '^resources/commons/', 'resources/'),'^resources/users/', 'resources/')
-    let $log := util:log("DEBUG", ("##$collection): ", $collection))
+    (:let $log := util:log("DEBUG", ("##$collection): ", $collection)):)
     return
     <tr>
         <td class="collection-label">Record Location</td>
@@ -49,7 +49,7 @@ declare function retrieve-tei:format-detail-view($position as xs:string, $entry 
         if ($entry instance of element(tei:TEI) or $entry instance of element(tei:head) or $entry instance of element(tei:div)) 
         then <p>The document is too large to be retrieved. Please access the document in <a href="{$matumi-link}" target="_blank">Matumi</a> or make a search targeting a specific field in Tamboti.</p> 
     else $entry
-    let $log := util:log("DEBUG", ("##$entry): ", $entry))
+    (:let $log := util:log("DEBUG", ("##$entry): ", $entry)):)
     return
         <tr>
             <td class="collection-label">Title</td>

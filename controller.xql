@@ -122,7 +122,7 @@ return
     
     else if (starts-with($exist:path, "/item/images")) then
         let $real-resources-path := fn:concat("/", substring-after($exist:path, "/item/images"))
-        let $log := util:log("ERROR", ("IMAGE: ", $real-resources-path))
+        (:let $log := util:log("ERROR", ("IMAGE: ", $real-resources-path)):)
         return
             <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
                 <forward url="{$real-resources-path}">

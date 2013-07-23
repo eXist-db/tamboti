@@ -304,11 +304,11 @@ declare function op:get-move-folder-list($chosen-collection as xs:anyURI) as ele
             return (op:get-child-collection-paths($available-collection-path),
             sharing:get-shared-collection-roots(true()))
             for $path in distinct-values($move-folder-list)
-            (:let $log := util:log("DEBUG", ("##$path): ", $path))
-            let $log := util:log("DEBUG", ("##$chosen-collection): ", $chosen-collection))
-            let $log := util:log("DEBUG", ("##$starts-with): ", starts-with($path, $chosen-collection)))
-            let $log := util:log("DEBUG", ("##$home): ", security:get-home-collection-uri(security:get-user-credential-from-session()[1])))
-            let $log := util:log("DEBUG", ("##$shared): ", sharing:get-shared-collection-roots(true()))):)
+            (:let $log := util:log("DEBUG", ("##$path): ", $path)):)
+            (:let $log := util:log("DEBUG", ("##$chosen-collection): ", $chosen-collection)):)
+            (:let $log := util:log("DEBUG", ("##$starts-with): ", starts-with($path, $chosen-collection))):)
+            (:let $log := util:log("DEBUG", ("##$home): ", security:get-home-collection-uri(security:get-user-credential-from-session()[1]))):)
+            (:let $log := util:log("DEBUG", ("##$shared): ", sharing:get-shared-collection-roots(true()))):)
 
                 let $display-path := substring-after($path, '/db/')
                 let $user := xmldb:get-current-user()
@@ -374,7 +374,7 @@ declare function op:upload-file($name, $data ,$collection) {
 $collection := uu:escape-collection-path(request:get-parameter("collection", ())):)
 let $action := request:get-parameter("action", ())
 let $collection := request:get-parameter("collection", ())
-let $collection := if($collection)then xmldb:decode-uri($collection) else ()
+let $collection := if($collection)then xmldb:encode-uri($collection) else ()
 
 return
     if($action eq "create-collection")then

@@ -374,7 +374,7 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
 : If there is no key we deliver the tree root
 :)
 if(request:get-parameter("key",()))then
-    let $collection-path := uu:unescape-collection-path(request:get-parameter("key",())) return
+    let $collection-path := uu:escape-collection-path(request:get-parameter("key",())) return
         if($collection-path eq $config:groups-collection) then
             (: start of groups collection - the groups collection is virtual and so receives special treatment :)
             col:get-groups-virtual-root()

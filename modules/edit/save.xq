@@ -322,7 +322,7 @@ return
         let $file-to-update := concat($incoming-id, '.xml')
         (:let $temp-file-path := concat($config:mods-temp-collection, '/', $file-to-update):)
         let $temp-file-path := concat(xmldb:encode-uri($config:mods-temp-collection), '/', $file-to-update)
-        let $log := util:log("DEBUG", ("##$temp-file-path): ", $temp-file-path))
+        (:let $log := util:log("DEBUG", ("##$temp-file-path): ", $temp-file-path)):)
         (:This is the document in temp to be updated during saves and the document to be saved in the target collection when the user has finished editing.:)
         let $doc := doc($temp-file-path)/mods:mods
         let $updates := 

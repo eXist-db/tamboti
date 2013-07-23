@@ -182,7 +182,7 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
            
            <xf:submission id="save-and-close-submission" method="post"
               ref="instance('save-data')"
-              action="save.xq?collection={xmldb:decode-uri($target-collection)}&amp;action=close" replace="instance"
+              action="save.xq?collection={$target-collection}&amp;action=close" replace="instance"
               instance="save-results">
            </xf:submission>
            
@@ -390,8 +390,8 @@ the only filtering that is performed is for transliteration.:)
 declare function local:get-tab-id($tab-id as xs:string, $type-request as xs:string) {
     (:Remove any 'latin' and 'transliterated' appended the original type request. :)
     (:Also remove "-compact" suffix used previously.:)
-    let $log := util:log("DEBUG", ("##$tab-id): ", $tab-id))
-    let $log := util:log("DEBUG", ("##$type-request): ", $type-request))
+    (:let $log := util:log("DEBUG", ("##$tab-id): ", $tab-id)):)
+    (:let $log := util:log("DEBUG", ("##$type-request): ", $type-request)):)
     let $type-request := replace(replace(replace($type-request, '-latin', ''), '-transliterated', ''), '-compact', '')
         return
             if ($tab-id ne 'compact-b')

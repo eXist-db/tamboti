@@ -54,8 +54,8 @@ declare function functx:replace-first($arg as xs:string?, $pattern as xs:string,
 
 (:~
     Mapping field names to XPath expressions.
-    NB: Changes in field names should be reflected in autocomplete.xql, biblio:construct-order-by-expression() and biblio:get-year().
-    Fields used should be reflected in the collection.xconf in /db/system/config/db/resources/.
+    NB: Changes in field names must be reflected in autocomplete.xql.
+    NB: Fields used must be indexed in the collection.xconf in /db/system/config/db/resources/.
     'q' is expanded in biblio:generate-query().
     An XLink may be passed through retrieve-mods:format-detail-view() without a hash or or it may be passed with a hash through the search interface; 
     therefore any leading hash is first removed and then added, to prevent double hashes. 
@@ -626,7 +626,7 @@ declare function biblio:evaluate-query($query-as-string as xs:string, $sort as x
             $query-as-string
     let $options :=
         <options>
-            <default-operator>and</default-operator>
+            <default-operator>or</default-operator>
         </options>
     return
         util:eval($query-with-order-by-expression)
@@ -684,7 +684,8 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
     then
         let $search-format := request:get-parameter("format", '')
         let $query := string-join(biblio:generate-query($query-as-xml), '')
-        
+        (:let $log := util:log("DEBUG", ("##$query): ", $query)):)
+
         (:Simple search does not have the parameter format, but should search in all formats.:)
         let $search-format := 
             if ($search-format)
@@ -1133,16 +1134,29 @@ declare function biblio:get-query-as-regex($query-as-xml as element()) as xs:str
         return 
             replace(replace(replace($expression, '\sAND\s', ' '), '\sOR\s', ' '), '\sNOT\s', ' ')
     (:we assume that '+' and '-' are only used for prefixing, so we strip them:)
-    let $query := 
-        for $expression in $query
-        return 
-            replace(replace($expression, '\+', ' '), '\-', ' ')
+    (:actually, '-' may well be used within phrases, so these are not highlighted.:)
+    (:'[' and ']' are used in text range searches; we strip them as well:)
+    (:'{' and '}' are used in text range searches; we strip them as well:)
+    (:'^' is used for boosting; we strip it as well:)
     (:we strip the parentheses, since they are not used in highlighting:)
+    (:we strip the fuzzy search postfix, since there is nothing we can do with it - leave a space after it to isolate any number following it.:)
+    (:ideally speaking, it should be checked if the characters in question occur in word-initial or word-final position, 
+    but any of them occurring elsewhere will make the query invalid.:)
     let $query := 
         for $expression in $query
         return 
-            translate(translate($expression, '(', ''), ')', '')
-    (:here we have first to go through the outer expression, to see if there are any phrase searches:)
+            translate(translate(translate(translate(translate(translate(translate(translate(translate(translate($expression
+                , '\+', ' ')
+                , '\-', ' ')
+                , '\{', ' ')
+                , '\}', ' ')
+                , '\[', ' ')
+                , '\]', ' ')
+                , '\^', ' ')
+                , '(', ' ')
+                , ')', ' ')
+                , '\~', ' ')
+    (:we first go through the outer expression, to see if there are any phrase searches, then tokenize on spaces:)
     let $query := 
         for $expression in $query
         return 
@@ -1154,22 +1168,19 @@ declare function biblio:get-query-as-regex($query-as-xml as element()) as xs:str
                 let $query := tokenize(normalize-space($expression), ' ')
                     return
                         (:then for each of these, replace the lucene wildcards with the corresponding regex wildcard 
-                        and wrap up in word boundaries:)
+                        and wrap the resulatnt expression in regex word boundaries:)
                         for $expression in $query
                             return
                                 concat(
                                     '\b'
-                                    , 
+                                    ,
                                     replace(
                                         replace(
-                                            replace(
-                                                translate(
-                                                    $expression
-                                                , ' ', '|')
-                                            , '\?', '\\w')
-                                        , '\*', '\\w*?')
-                                    (:strip the fuzzy search postfix, since there is nothing we can do with it:)
-                                    , '~', '')
+                                            translate(
+                                                $expression
+                                            , ' ', '|')
+                                        , '\?', '\\w')
+                                    , '\*', '\\w*?')
                                     ,
                                     '\b')
         let $query := string-join($query, '|')
@@ -1196,7 +1207,7 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
 
     (: Process request parameters and generate an XML representation of the query :)
     let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $mylist, $value)
-    (:let $log := util:log("DEBUG", ("##$query-as-xml): ", $query-as-xml)):)
+let $log := util:log("DEBUG", ("##$query-as-xml): ", $query-as-xml))
     (: Get the results :)
     let $query-as-regex := biblio:get-query-as-regex($query-as-xml)
     let $null := session:set-attribute('regex', $query-as-regex)
