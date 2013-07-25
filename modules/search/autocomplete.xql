@@ -53,9 +53,9 @@ declare function local:key($key, $options) {
 
 let $collection := xmldb:encode(request:get-parameter("collection", $local:COLLECTION))
 let $term := request:get-parameter("term", ())
-let $field := request:get-parameter("field", "All")
+let $field := request:get-parameter("field", "any Field (MODS, TEI, VRA)")
 let $qnames :=
-    if ($field eq "All") 
+    if ($field eq "any Field (MODS, TEI, VRA)") 
     then 
         for $field in $local:FIELDS/field 
             return xs:QName($field/string())
@@ -63,6 +63,9 @@ let $qnames :=
         for $field in $local:FIELDS/field[@name eq $field]
             return xs:QName($field/string())
 let $callback := util:function(xs:QName("local:key"), 2)
-let $autocompletes := string-join(collection($collection)/util:index-keys-by-qname($qnames, $term, $callback, 20, "lucene-index"),', ')
+let $autocompletes := 
+    if (contains($term, ' ')) 
+    then () 
+    else string-join(collection($collection)/util:index-keys-by-qname($qnames, $term, $callback, 20, "lucene-index"),', ')
 return
     concat("[", $autocompletes, "]")
