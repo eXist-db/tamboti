@@ -54,8 +54,8 @@ declare function functx:replace-first($arg as xs:string?, $pattern as xs:string,
 
 (:~
     Mapping field names to XPath expressions.
-    NB: Changes in field names must be reflected in autocomplete.xql.
-    NB: Fields used must be indexed in the collection.xconf in /db/system/config/db/resources/.
+    NB: Changes in field names should be reflected in autocomplete.xql, biblio:construct-order-by-expression() and biblio:get-year().
+    Fields used should be reflected in the collection.xconf in /db/system/config/db/resources/.
     'q' is expanded in biblio:generate-query().
     An XLink may be passed through retrieve-mods:format-detail-view() without a hash or or it may be passed with a hash through the search interface; 
     therefore any leading hash is first removed and then added, to prevent double hashes. 
@@ -330,7 +330,7 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 - requesting the editor (this ends in a search for an ID)
                 - when clicking links to searches for ID (links marked "In:", "Catalogued content").
             :)
-            if ($query-as-xml/field[@name = ('ID', 'XLink')]) 
+            if ($query-as-xml/field[@name = ('the Record ID Field (MODS, VRA)', 'the XLink Field (MODS)')]) 
             then biblio:generate-query($query-as-xml/*[2])
             else
                 (
@@ -366,7 +366,7 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
             
             (: When searching for ID and xlink:href, do not use the chosen collection-path, but search throughout all of /resources. :)
             let $collection-path := 
-                if ($expr/@name = ('ID', 'XLink')) 
+                if ($expr/@name = ('the Record ID Field (MODS, VRA)', 'the XLink Field (MODS)')) 
                 then '/resources'
                 else $query-as-xml/ancestor::query/collection/string()
             let $collection :=
@@ -405,10 +405,8 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
 This means that phrase searches can only be performed with double quotation marks.:)
 (: If the search string starts with a "*" or a "?" (illegal in Lucene search syntax), it is removed.:)
 (: ":" and "&" are replaced with empty spaces.:)
-(:For some reason, a Lucene fuzziness value of "1.0" is illegal. Only one decimal is used:)
 (:NB: In case of an unequal number of double quotation marks, all double quotation marks should be removed.:)
 declare function biblio:normalize-search-string($search-string as xs:string?) as xs:string? {
-    let $search-string := translate($search-string, "~1.0", "~0.9")
     let $search-string := replace($search-string, '^[?*]?(.*)$', '$1')
 	let $search-string := replace($search-string, "'", "''")
 	let $search-string := translate($search-string, ":", " ")
@@ -626,7 +624,7 @@ declare function biblio:evaluate-query($query-as-string as xs:string, $sort as x
             $query-as-string
     let $options :=
         <options>
-            <default-operator>or</default-operator>
+            <default-operator>and</default-operator>
         </options>
     return
         util:eval($query-with-order-by-expression)
@@ -684,8 +682,7 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
     then
         let $search-format := request:get-parameter("format", '')
         let $query := string-join(biblio:generate-query($query-as-xml), '')
-        (:let $log := util:log("DEBUG", ("##$query): ", $query)):)
-
+        
         (:Simple search does not have the parameter format, but should search in all formats.:)
         let $search-format := 
             if ($search-format)
@@ -1122,11 +1119,7 @@ declare function biblio:get-or-create-cached-results($mylist as xs:string?, $que
         biblio:eval-query($query-as-xml, $sort)
 };
 
-(:~
-: The biblio:get-query-as-regex function gets the query ($query-as-xml) from the session
-: and reformats the Lucene search expressions into regex expressions, for use in tamboti-common:highlight-matches().
-:)
-declare function biblio:get-query-as-regex($query-as-xml as element()) as xs:string { 
+declare function biblio:get-query-as-regex($query-as-xml) as xs:string { 
     let $query := $query-as-xml//field/text()
     (:we prepare for later tokenization of expressions in boolean searches:)
     let $query := 
@@ -1207,7 +1200,6 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
 
     (: Process request parameters and generate an XML representation of the query :)
     let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $mylist, $value)
-let $log := util:log("DEBUG", ("##$query-as-xml): ", $query-as-xml))
     (: Get the results :)
     let $query-as-regex := biblio:get-query-as-regex($query-as-xml)
     let $null := session:set-attribute('regex', $query-as-regex)

@@ -270,7 +270,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
             else 
             if (count($related-item-xlink) eq 1)
             then
-            (<span class="intro">The publication is included in </span>, <a href="../../modules/search/index.html?filter=ID&amp;value={$related-publication-id}" target="_blank">{$related-publication-title}</a>,<span class="intro">.</span>)
+            (<span class="intro">The publication is included in </span>, <a href="../../modules/search/index.html?filter=the%20Record%20ID%20Field%20(MODS,%20VRA)&amp;value={$related-publication-id}" target="_blank">{$related-publication-title}</a>,<span class="intro">.</span>)
             else 
                 if (count($related-item-xlink) gt 1) 
                 then (<span class="intro">The publication is included in more than one publication.</span>)
@@ -333,7 +333,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     </xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:send submission="save-and-close-submission"/>
-                            <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={replace($target-collection, '/db', '')}" show="replace"/>
+                            <xf:load resource="../../modules/search/index.html?filter=the%20Record%20ID%20Field%20(MODS,%20VRA)&amp;value={$id}&amp;collection={replace($target-collection, '/db', '')}" show="replace"/>
                         </xf:action>
                 </xf:trigger>
                 <span class="xforms-hint">
@@ -360,7 +360,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="cancel-submission"/>
                         <!--TODO: If the creation of a related record is cancelled, the record related to should be retrieved, not the cancelled record.-->
-                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>
+                        <xf:load resource="../../modules/search/index.html?filter=the%20Record%20ID%20Field%20(MODS,%20VRA)&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>
                     </xf:action>
                  </xf:trigger>
                  <xf:trigger>
@@ -368,7 +368,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     </xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="save-and-close-submission"/>
-                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>
+                        <xf:load resource="../../modules/search/index.html?filter=the%20Record%20ID%20Field%20(MODS,%20VRA)&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>
                     </xf:action>
                 </xf:trigger>
                 <span class="xforms-hint">

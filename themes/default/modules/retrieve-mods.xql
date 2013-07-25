@@ -690,8 +690,8 @@ declare function retrieve-mods:format-list-view($position as xs:string, $entry a
         	else '.'
         )
     
-    let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
     let $result := <span xmlns="http://www.w3.org/1999/xhtml" class="record">{$result}</span>
+    let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
     let $regex := session:get-attribute('regex')
     let $result := 
         if ($regex) 

@@ -8,7 +8,9 @@ declare namespace ext="http://exist-db.org/mods/extension";
 declare namespace hra="http://cluster-schemas.uni-hd.de";
 
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
+import module namespace tamboti-common="http://exist-db.org/tamboti/common" at "../../../modules/tamboti-common.xql";
 import module namespace tei-common="http://exist-db.org/tei/common" at "../../../modules/tei-common.xql";
+import module namespace mods-common="http://exist-db.org/mods/common" at "../../../modules/mods-common.xql";
 
 (:The $retrieve-tei:primary-roles values are lower-cased when compared.:)
 declare variable $retrieve-tei:primary-roles := ('aut', 'author', 'cre', 'creator', 'composer', 'cmp', 'artist', 'art', 'director', 'drt');
@@ -25,6 +27,7 @@ declare option exist:serialize "media-type=text/xml";
 : @return an XHTML table element.
 :)
 declare function retrieve-tei:format-detail-view($position as xs:string, $entry as element(), $collection-short as xs:string, $document-uri as xs:string, $node-id as xs:string) as element(table) {
+    let $result :=
     <table xmlns="http://www.w3.org/1999/xhtml" class="biblio-full">
     {
     let $collection := replace(replace(xmldb:decode-uri($collection-short), '^resources/commons/', 'resources/'),'^resources/users/', 'resources/')
@@ -76,6 +79,15 @@ declare function retrieve-tei:format-detail-view($position as xs:string, $entry 
         
     }
     </table>
+    let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
+    let $regex := session:get-attribute('regex')
+    let $result := 
+        if ($regex) 
+        then tamboti-common:highlight-matches($result, $regex, $highlight) 
+        else $result
+    let $result := mods-common:clean-up-punctuation($result)
+    return
+        $result
 };
 
 (:~
@@ -90,16 +102,25 @@ declare function retrieve-tei:format-detail-view($position as xs:string, $entry 
 declare function retrieve-tei:format-list-view($position as xs:string, $entry as element(), $collection-short as xs:string, $document-uri as xs:string, $node-id as xs:string) as element(span) {
     (:<span>{$entry/tei:teiHeader[1]/tei:fileDesc[1]/tei:titleStmt[1]/tei:title[1]/text()}</span>:)
     (:<span>{$entry/ancestor-or-self::tei:TEI/tei:teiHeader[1]/tei:fileDesc[1]/tei:titleStmt[1]/tei:title[1]/text()}</span>:)
-        let $title := doc($document-uri)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]
-        let $entry := 
-            if ($entry instance of element(tei:TEI)) 
-            then <p>The whole document is being retrieved. Please perform your search inside Matumi or make a search targeting a specific field in Tamboti.</p> else $entry
-        (:let $log := util:log("DEBUG", ("##$document-uri): ", $document-uri)):)
-        (:let $log := util:log("DEBUG", ("##$node-id): ", $node-id)):)
-    
-return
-        <div>
-        <span>{$title/string()}</span>
-        <span>{tei-common:render($entry)}</span>
-        </div>
+    let $title := doc($document-uri)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]
+    let $entry := 
+        if ($entry instance of element(tei:TEI)) 
+        then <p>The whole document is being retrieved. Please perform your search inside Matumi or make a search targeting a specific field in Tamboti.</p> else $entry
+    (:let $log := util:log("DEBUG", ("##$document-uri): ", $document-uri)):)
+    (:let $log := util:log("DEBUG", ("##$node-id): ", $node-id)):)
+
+    let $result :=
+    <div>
+    <span>{$title/string()}</span>
+    <span>{tei-common:render($entry)}</span>
+    </div>
+    let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
+    let $regex := session:get-attribute('regex')
+    let $result := 
+        if ($regex) 
+        then tamboti-common:highlight-matches($result, $regex, $highlight) 
+        else $result
+    let $result := mods-common:clean-up-punctuation($result)
+    return
+        $result
 };
