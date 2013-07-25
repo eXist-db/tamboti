@@ -63,118 +63,191 @@ declare function functx:replace-first($arg as xs:string?, $pattern as xs:string,
 declare variable $biblio:FIELDS :=
 <fields>
     <field name="any Field (MODS, TEI, VRA)">
-        (
-        mods:mods[ft:query(., '$q', $options)]
-        union
-        vra:vra[ft:query(., '$q', $options)]
-        union
-        tei:TEI[ft:query(., '$q', $options)]
-        union
-        ft:search('page:$q')
-        union
-        mods:mods[@ID eq '$q']
-        union
-        mods:mods[mods:relatedItem/@xlink:href eq '$q']
-        )
+        <search-expression>
+            (
+            mods:mods[ft:query(., '$q', $options)]
+            union
+            vra:vra[ft:query(., '$q', $options)]
+            union
+            tei:TEI[ft:query(., '$q', $options)]
+            union
+            ft:search('page:$q')
+            union
+            mods:mods[@ID eq '$q']
+            union
+            mods:mods[mods:relatedItem/@xlink:href eq '$q']
+            )
+        </search-expression>
+        <targets>
+            <target>mods:mods</target>
+            <target>vra:vra</target>
+            <target>tei:TEI</target>
+        </targets>
     </field>
     <field name="the Date Field (MODS)">
-        (
-        mods:mods[ft:query(.//mods:dateCreated, '$q*', $options)]
-        union
-        mods:mods[ft:query(.//mods:dateIssued, '$q*', $options)]
-        union
-        mods:mods[ft:query(.//mods:dateCaptured, '$q*', $options)]
-        union
-        mods:mods[ft:query(.//mods:copyrightDate, '$q*', $options)]
-        union
-        mods:mods[ft:query(.//mods:date, '$q*', $options)]
-        )
+        <search-expression>
+            (
+            mods:mods[ft:query(.//mods:dateCreated, '$q*', $options)]
+            union
+            mods:mods[ft:query(.//mods:dateIssued, '$q*', $options)]
+            union
+            mods:mods[ft:query(.//mods:dateCaptured, '$q*', $options)]
+            union
+            mods:mods[ft:query(.//mods:copyrightDate, '$q*', $options)]
+            union
+            mods:mods[ft:query(.//mods:date, '$q*', $options)]
+            )
+        </search-expression>
+        <targets>
+            <target>mods:dateCreated</target>
+            <target>mods:dateIssued</target>
+            <target>mods:dateCaptured</target>
+            <target>mods:copyrightDate</target>
+            <target>mods:date</target>
+        </targets>
     </field>
     <field name="the Description/Abstract Field (MODS, VRA)">
-        (
-        mods:mods[ft:query(mods:abstract, '$q', $options)]
-        union
-        vra:vra[ft:query(.//vra:descriptionSet, '$q', $options)]
-        )
+        <search-expression>
+            (
+            mods:mods[ft:query(mods:abstract, '$q', $options)]
+            union
+            vra:vra[ft:query(.//vra:descriptionSet, '$q', $options)]
+            )
+        </search-expression>
+        <targets>
+            <target>mods:abstract</target>
+            <target>vra:descriptionSet</target>
+        </targets>
     </field>
     <field name="the Extracted Text Field (PDF)">
-        (
-        ft:search('page:$q')
-        )
+        <search-expression>
+            ft:search('page:$q')
+        </search-expression>
+        <targets/>
     </field>
     <field name="the Genre Field (MODS)">
-        (
-        mods:mods[ft:query(.//mods:genre, '$q', $options)]
-        )
+        <search-expression>
+            mods:mods[ft:query(.//mods:genre, '$q', $options)]
+        </search-expression>
+        <targets>
+            <target>mods:genre</target>
+        </targets>
     </field>
     <field name="the Name Field (MODS, TEI, VRA)">
-        (
-        mods:mods[ft:query(.//mods:name, '$q', $options)]
-        union
-        vra:vra[ft:query(.//vra:agentSet, '$q', $options)]
-        union
-        tei:TEI//tei:p[ft:query(tei:name, '$q', $options)]
-        union
-        tei:TEI//tei:bibl[ft:query(.//tei:name, '$q', $options)]
-        union
-        tei:TEI//tei:person[ft:query(.//tei:persName, '$q', $options)]
-        )
+        <search-expression>
+            (
+            mods:mods[ft:query(.//mods:name, '$q', $options)]
+            union
+            vra:vra[ft:query(.//vra:agentSet, '$q', $options)]
+            union
+            tei:TEI//tei:p[ft:query(tei:name, '$q', $options)]
+            union
+            tei:TEI//tei:bibl[ft:query(.//tei:name, '$q', $options)]
+            union
+            tei:TEI//tei:person[ft:query(.//tei:persName, '$q', $options)]
+            )
+        </search-expression>
+        <targets>
+            <target>mods:name</target>
+            <target>vra:agentSet</target>
+            <target>tei:name</target>
+            <target>tei:persName</target>
+        </targets>
     </field>
     <field name="the Language Codes Field (MODS)">
-        (
-        mods:mods[ft:query(.//mods:language, '$q', $options)]
-        )
+        <search-expression>
+            mods:mods[ft:query(.//mods:language, '$q', $options)]
+        </search-expression>
+        <targets>
+            <target>mods:language</target>
+        </targets>
     </field>
     <field name="the Note Field (MODS)">
-        mods:mods[ft:query(mods:note, '$q', $options)]
+        <search-expression>
+            mods:mods[ft:query(mods:note, '$q', $options)]
+        </search-expression>
+        <targets>
+            <target>mods:note</target>
+        </targets>
     </field>
     <field name="the Origin Field (MODS)">
-        (
-        mods:mods[ft:query(.//mods:placeTerm , '$q*', $options)]
-        union
-        mods:mods[ft:query(.//mods:publisher , '$q*', $options)]
-        )
+        <search-expression>
+            (
+            mods:mods[ft:query(.//mods:placeTerm , '$q*', $options)]
+            union
+            mods:mods[ft:query(.//mods:publisher , '$q*', $options)]
+            )
+        </search-expression>
+        <targets>
+            <target>mods:placeTerm</target>
+            <target>mods:publisher</target>
+        </targets>
     </field>
     <field name="the Record ID Field (MODS, VRA)">
-        (
-        mods:mods[@ID eq '$q']
-        union
-        vra:vra[vra:collection/@id eq '$q']
-        union
-        vra:vra[vra:work/@id eq '$q']
-        union
-        vra:vra[vra:image/@id eq '$q']
-        )
+        <search-expression>
+            (
+            mods:mods[@ID eq '$q']
+            union
+            vra:vra[vra:collection/@id eq '$q']
+            union
+            vra:vra[vra:work/@id eq '$q']
+            union
+            vra:vra[vra:image/@id eq '$q']
+            )
+        </search-expression>
+        <targets/>
     </field>
     <field name="the Resource Identifier Field (MODS)">
-        mods:mods[mods:identifier = '$q']
+        <search-expression>
+            mods:mods[mods:identifier = '$q']
+        </search-expression>
+        <targets>
+            <target>mods:identifier</target>
+        </targets>
     </field>
     <field name="the Subject/Term Field (MODS, TEI, VRA)">
-        (
-        mods:mods[ft:query(mods:subject, '$q', $options)]
-        union
-        vra:vra[ft:query(.//vra:subjectSet, '$q', $options)]
-        union
-        tei:TEI//tei:p[ft:query(.//tei:term, '$q', $options)]
-        union
-        tei:TEI//tei:head[ft:query(.//tei:term, '$q', $options)]
-        )
+        <search-expression>
+            (
+            mods:mods[ft:query(mods:subject, '$q', $options)]
+            union
+            vra:vra[ft:query(.//vra:subjectSet, '$q', $options)]
+            union
+            tei:TEI//tei:p[ft:query(.//tei:term, '$q', $options)]
+            union
+            tei:TEI//tei:head[ft:query(.//tei:term, '$q', $options)]
+            )
+        </search-expression>
+        <targets>
+            <target>mods:subject</target>
+            <target>vra:subjectSet</target>
+            <target>tei:term</target>
+        </targets>
     </field>
     <field name="the Title Field (MODS, TEI, VRA)">
-        (
-        mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]
-        union
-        vra:vra[ft:query(.//vra:titleSet, '$q', $options)]
-        union
-        tei:TEI//tei:p[ft:query(tei:title, '$q', $options)]
-        union
-        tei:TEI//tei:bibl[ft:query(.//tei:title, '$q', $options)]
-        union
-        tei:TEI//tei:titleStmt[ft:query(./tei:title, '$q', $options)]
-        )
+        <search-expression>
+            (
+            mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]
+            union
+            vra:vra[ft:query(.//vra:titleSet, '$q', $options)]
+            union
+            tei:TEI//tei:p[ft:query(tei:title, '$q', $options)]
+            union
+            tei:TEI//tei:bibl[ft:query(.//tei:title, '$q', $options)]
+            union
+            tei:TEI//tei:titleStmt[ft:query(./tei:title, '$q', $options)]
+            )
+        </search-expression>
+        <targets>
+            <target>mods:titleInfo</target>
+            <target>vra:titleSet</target>
+            <target>tei:title</target>
+        </targets>
     </field>
     <field name="the XLink Field (MODS)">
-        mods:mods[mods:relatedItem[ends-with(@xlink:href, '$q')]]
+        <search-expression>
+            mods:mods[mods:relatedItem[ends-with(@xlink:href, '$q')]]
+        </search-expression>
+        <targets/>
     </field>
 </fields>
 ;
@@ -355,11 +428,11 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
             )
         (:Determine which field to search in: if a field has been specified, use it; otherwise default to "any Field (MODS, TEI, VRA)".:)
         case element(field) return
-            let $expr := $biblio:FIELDS/field[@name eq $query-as-xml/@name]
+            let $expr := $biblio:FIELDS/field[@name eq $query-as-xml/@name]/search-expression
             let $expr := 
                 if ($expr) 
                 then $expr
-                else $biblio:FIELDS/field[@name eq 'any Field (MODS, TEI, VRA)']
+                else $biblio:FIELDS/field[@name eq $biblio:FIELDS/field[1]/@name]/search-expression
             (:This results in expressions like:
             <field name="Title">mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]</field>.
             The search term, to be substituted for 'q', is held in $query-as-xml. :)
@@ -1200,6 +1273,7 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
 
     (: Process request parameters and generate an XML representation of the query :)
     let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $mylist, $value)
+    (:let $log := util:log("DEBUG", ("##$query-as-xml): ", $query-as-xml)):)
     (: Get the results :)
     let $query-as-regex := biblio:get-query-as-regex($query-as-xml)
     let $null := session:set-attribute('regex', $query-as-regex)

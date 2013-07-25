@@ -455,6 +455,8 @@ declare function bs:tei-list-view-table($item as node(), $currentPos as xs:int) 
         </tr>
 };
 
+(:This is the default which gets called if bs:list-view-table() does not know how to handle what is passed to it.:)
+(:It is not used at the moment.:)
 declare function bs:plain-list-view-table($item as node(), $currentPos as xs:int) {
     let $kwic := kwic:summarize($item, <config xmlns="" width="40"/>)
     let $id := concat(document-uri(root($item)), '#', util:node-id($item))
