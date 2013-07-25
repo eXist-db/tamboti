@@ -13,17 +13,8 @@ declare variable $retrieve-vra:primary-roles := ('aut', 'author', 'cre', 'creato
 declare option exist:serialize "media-type=text/xml";
 
 declare function local:return-thumbnail($image){
-(:
-let $image-name := $image/@href
-let $image-suffix := fn:tokenize($image-name,'.')[2]
-let $image-url := <img src="{
-                        concat('data:image/',$image-suffix,';base64,',local:basic-get-http(concat(request:get-scheme(),'://',request:get-server-name(),':',request:get-server-port(),request:get-context-path(),'/rest', util:collection-name($image),"/" ,$image-name),$bs:USER,$bs:USERPASS)
-                        )
-                        }"  width="200px"/>
-:)
-let $image-url := <img src="http://kjc-ws2.kjc.uni-heidelberg.de/images/service/download_uuid/{$image/@id}?width=40&amp;height=40&amp;crop_type=middle" alt="" class="relatedImage"></img>
-
-return $image-url
+    let $image-url := <img src="{concat($config:image-service-url,$image/@id)}?width=40&amp;height=40&amp;crop_type=middle" alt="" class="relatedImage"/>
+        return $image-url
 };
 
 (:~

@@ -64,7 +64,7 @@ let $qnames :=
             return xs:QName($field/string())
 let $callback := util:function(xs:QName("local:key"), 2)
 let $autocompletes := 
-    if (contains($term, ' ')) 
+    if (contains($term, (' ', '*', '@')) 
     then () 
     else string-join(collection($collection)/util:index-keys-by-qname($qnames, $term, $callback, 20, "lucene-index"),', ')
 return
