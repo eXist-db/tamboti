@@ -323,11 +323,11 @@ declare function security:remove-ace($resource as xs:anyURI, $id as xs:int) as x
         sm:get-permissions($resource),
         $ace := $permissions/sm:permission/sm:acl/sm:ace[xs:int(@index) eq $id] 
             return
-                if (empty($ace)) then (
-                    ()
-                ) else (
-                    let $null := sm:remove-ace($resource, $id) return
+                if (exists($ace)) then (
+                  let $null := sm:remove-ace($resource, $id) return
                         ($ace/@target, $ace/@who)
+                ) else (
+                    ()
                 )
 };
 

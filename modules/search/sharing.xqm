@@ -25,13 +25,13 @@ declare function sharing:set-collection-ace-writeable($collection as xs:anyURI, 
 };
 
 (: removes an ace on a collection and all the documents in that collection :)
-declare function sharing:remove-collection-ace($collection as xs:anyURI, $id as xs:int) as xs:boolean {
+declare function sharing:remove-collection-ace($collection as xs:anyURI, $id as xs:int)  {
     
     let $removed := security:remove-ace($collection, $id) return
-        if(fn:not(fn:empty($removed)))then(
+        if(exists(fn:not(fn:empty($removed))))then(
             for $resource in xmldb:get-child-resources($collection)
             let $resource-path := fn:concat($collection, "/", $resource) return
-                if(security:remove-ace($resource-path, $id))then
+                if(exists(security:remove-ace($resource-path, $id)))then
                 ()
                 else
                     fn:error(xs:QName("sharing:remove-collection-ace"), fn:concat("Could not remove ace at index '", $id, "' for '", $resource-path, "'"))
@@ -45,7 +45,7 @@ declare function sharing:remove-collection-ace($collection as xs:anyURI, $id as 
             true()
         )
         else
-            false()
+           false()
 };
 
 (: adds a user ace on a collection, and also to all the documents in that collection (at the same acl index) :)

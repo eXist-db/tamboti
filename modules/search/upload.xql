@@ -15,144 +15,143 @@ declare namespace mods="http://www.loc.gov/mods/v3";
 
 declare variable $user := $config:dba-credentials[1];
 declare variable $userpass := $config:dba-credentials[2];
-
-(:
-declare variable $user := xmldb:get-current-user();
-declare variable $userpass := security:get-user-credential-from-session()[1];
-declare variable $user :='admin';
-declare variable $userpass :='';
-:)
-
 declare variable $logged-user := xmldb:get-current-user();
-
 declare variable $rootdatacollection:='/db/resources/';
 declare variable $message := 'uploaded';
 declare variable $image_col := 'VRA_images';
 
-(:
-declare variable $myuuid := concat('i_',util:uuid());
-:)
-declare function local:string-exists($input as xs:string) {
-let $uout := if (contains($input, ()))
-then $input
-else  ''
-
-return $uout
+declare function local:string-exists($input as xs:string)
+{
+    let $uout :=
+        if (contains($input, ())) then
+            $input
+        else
+            ''
+    return $uout
 };
 
 
 
 
-
-declare function functx:substring-before-last 
-  ( $arg as xs:string? ,
-    $delim as xs:string )  as xs:string {
-       
-   if (matches($arg, functx:escape-for-regex($delim)))
-   then replace($arg,
-            concat('^(.*)', functx:escape-for-regex($delim),'.*'),
-            '$1')
-   else ''
- } ;
- 
-
-declare function upload:list-data(){
-(:let $directory-list :=    system:as-user('admin', '', xmldb:get-child-collections()($newcol)):)
-let $directory-list :=     system:as-user($user,$userpass,file:directory-list($newcol,'*.*'))
-return  $directory-list
+declare function functx:substring-before-last($arg as xs:string?, $delim as xs:string)
+as xs:string
+{
+    if (matches($arg, functx:escape-for-regex($delim))) then
+        replace($arg, concat('^(.*)', functx:escape-for-regex($delim), '.*'), '$1')
+    else
+        ''
 };
 
- declare function functx:escape-for-regex 
-  ( $arg as xs:string? )  as xs:string {
-       
-   replace($arg,
-           '(\.|\[|\]|\\|\||\-|\^|\$|\?|\*|\+|\{|\}|\(|\))','\\$1')
- } ;
- 
 
- declare function functx:substring-after-last 
-  ( $arg as xs:string? ,
-    $delim as xs:string )  as xs:string {
-       
-   replace ($arg,concat('^.*',functx:escape-for-regex($delim)),'')
- } ;
+
+declare function upload:list-data()
+{
+    let $directory-list := system:as-user($user, $userpass, file:directory-list($newcol, '*.*'))
+    return $directory-list
+};
+
+
+ declare function functx:escape-for-regex($arg as xs:string?)
+ as xs:string
+ {
+     replace($arg, '(\.|\[|\]|\\|\||\-|\^|\$|\?|\*|\+|\{|\}|\(|\))', '\\$1')
+ };
  
-declare function local:generate-vra-image($uuid, $file-uuid, $title, $workrecord){
-let $vra-content := <vra xmlns="http://www.vraweb.org/vracore4.htm" xmlns:ext="http://exist-db.org/vra/extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://www.vraweb.org/vracore4.htm http://cluster-schemas.uni-hd.de/vra-strictCluster.xsd">
-                 <image id="{$uuid}" source="Tamboti" refid="" href="{$file-uuid}">
+ 
+declare function functx:substring-after-last($arg as xs:string?, $delim as xs:string)
+as xs:string
+{
+    replace($arg, concat('^.*', functx:escape-for-regex($delim)), '')
+};
+
+
+ 
+declare function local:generate-vra-image($uuid, $file-uuid, $title, $workrecord)
+{
+    let $vra-content :=
+                    <vra xmlns="http://www.vraweb.org/vracore4.htm" xmlns:ext="http://exist-db.org/vra/extension"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://www.vraweb.org/vracore4.htm
+    http://cluster-schemas.uni-hd.de/vra-strictCluster.xsd">
+                 <image id="{ $uuid }" source="Tamboti" refid="" href="{ $file-uuid }">
                      <titleSet><display/><title type="generalView">
-                     {xmldb:decode(concat('Image record ',$title))}</title></titleSet>  
-                     <relationSet>
-             <relation type="imageOf" relids="{$workrecord}" refid="" source="Tamboti">attachment</relation>
+        { xmldb:decode(concat('Image record ', $title)) }</title></titleSet>
+                 <relationSet>
+                    <relation type="imageOf" relids="{ $workrecord }" refid="" source="Tamboti">attachment</relation>
                 </relationSet>
              </image> </vra>
-return $vra-content
+    return $vra-content
 };
 
-declare function upload:generate-object($size,  $mimetype,$uuid, $title, $file-uuid,$doc-type,$workrecord)
+
+
+declare function upload:generate-object($size, $mimetype, $uuid, $title, $file-uuid, $doc-type, $workrecord)
 {
-let $vra-content := local:generate-vra-image($uuid, $file-uuid, $title, $workrecord)
+    let $vra-content := local:generate-vra-image($uuid, $file-uuid, $title, $workrecord)
+    let $out-put :=
+        if ($doc-type eq 'image') then
+            $vra-content
+        else
+            ()
+    return $out-put
+};
 
- let $out-put:= if ($doc-type eq 'image') then
-        $vra-content 
-    else()
-  return $out-put
- };  
 
 
-declare function upload:mkcol-recursive($collection, $components) {
+
+
+declare function upload:mkcol-recursive($collection, $components)
+{
     if (exists($components)) then
         let $newColl := concat($collection, "/", $components[1])
-        return (
-            xmldb:create-collection($collection, $components[1]),
-            upload:mkcol-recursive($newColl, subsequence($components, 2))
-        )
+        return
+            (xmldb:create-collection($collection, $components[1]),
+            upload:mkcol-recursive($newColl, subsequence($components, 2)))
     else
         ()
 };
 
+
+
+
 (: Helper function to recursively create a collection hierarchy. :)
-declare function upload:mkcol($collection, $path) {
+declare function upload:mkcol($collection, $path)
+{
     upload:mkcol-recursive($collection, tokenize($path, "/"))[last()]
 };
 
-declare function local:recurse-items($collection-path as xs:string, $username as xs:string, $mode as xs:string) {
-   local:apply-perms($collection-path, $username, $mode),
-   for $child in xmldb:get-child-resources($collection-path)
-
-   let $resource-path := fn:concat($collection-path, "/", $child) return
-
-       local:apply-perms($resource-path, $username, $mode)
-   ,
-
-
-   for $child in xmldb:get-child-collections($collection-path)
-   let $child-collection-path := fn:concat($collection-path, "/", $child) return
-      local:recurse-items($child-collection-path, $username, $mode)
+declare function local:recurse-items($collection-path as xs:string, $username as xs:string, $mode as xs:string)
+{
+    local:apply-perms($collection-path, $username, $mode),
+    for $child in xmldb:get-child-resources($collection-path)
+    let $resource-path := fn:concat($collection-path, "/", $child)
+    return
+        local:apply-perms($resource-path, $username, $mode),
+    for $child in xmldb:get-child-collections($collection-path)
+    let $child-collection-path := fn:concat($collection-path, "/", $child)
+    return
+        local:recurse-items($child-collection-path, $username, $mode)
 };
 
-declare function local:apply-perms($path as xs:string, $username as xs:string, $mode as xs:string) {
-
-   sm:add-user-ace(xs:anyURI($path), $username,true(), $mode)    
-
+declare function local:apply-perms($path as xs:string, $username as xs:string, $mode as xs:string)
+{
+    sm:add-user-ace(xs:anyURI($path), $username, true(), $mode)
 };
 
 
-
-
-
-declare function local:recurse-items($collection-path as xs:string, $username as xs:string, $mode as xs:string) {
-   local:apply-perms($collection-path, $username, $mode),
-
-   for $child in xmldb:get-child-resources($collection-path)
-   let $resource-path := fn:concat($collection-path, "/", $child) return
-       local:apply-perms($resource-path, $username, $mode)
-   ,
-   for $child in xmldb:get-child-collections($collection-path)
-    let $child-collection-path := fn:concat($collection-path, "/", $child) return
-    local:recurse-items($child-collection-path, $username, $mode)
-
+declare function local:recurse-items($collection-path as xs:string, $username as xs:string, $mode as xs:string)
+{
+    local:apply-perms($collection-path, $username, $mode),
+    for $child in xmldb:get-child-resources($collection-path)
+    let $resource-path := fn:concat($collection-path, "/", $child)
+    return
+        local:apply-perms($resource-path, $username, $mode),
+    for $child in xmldb:get-child-collections($collection-path)
+    let $child-collection-path := fn:concat($collection-path, "/", $child)
+    return
+        local:recurse-items($child-collection-path, $username, $mode)
 };
+
+
 
 declare function local:apply-perms($path as xs:string, $username as xs:string, $mode as xs:string) {
     sm:add-user-ace(xs:anyURI($path), $username,true(), $mode)    
@@ -295,21 +294,25 @@ return $add
 };
 
  
- declare function upload:determine-type($workrecord){
-    
-    let $vra_image := collection($rootdatacollection)//vra:work[@id=$workrecord]/@id
-    let $type := if (exists($vra_image))
-    then 
-    ('vra')
-    else(
-    let $mods := collection($rootdatacollection)//mods:mods[@ID=$workrecord]/@ID
-    let $mods_type := if (exists($mods))
-    then ('mods')
-    else ()
-    return $mods_type
-    )
-    return  $type
-};  
+ declare function upload:determine-type($workrecord)
+ {
+     let $vra_image := collection($rootdatacollection)//vra:work[@id = $workrecord]/@id
+     let $type :=
+         if (exists($vra_image)) then
+             ('vra')
+         else
+             (let $mods := collection($rootdatacollection)//mods:mods[@ID = $workrecord]/@ID
+             let $mods_type :=
+                 if (exists($mods)) then
+                     ('mods')
+                 else
+                     ()
+             return $mods_type)
+     return $type
+ };
+ 
+ 
+ 
 
 let $types := ('png', 'jpg', 'gif', 'tiff', 'PNG', 'JPG', 'jpeg', 'tif', 'TIF')
 let $uploadedFile := 'uploadedFile'

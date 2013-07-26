@@ -241,7 +241,7 @@ declare function op:move-resource($resource-id as xs:string, $destination-collec
 
 declare function op:set-ace-writeable($collection as xs:anyURI, $id as xs:int, $is-writeable as xs:boolean) as element(status) {
   
-    if(sharing:set-collection-ace-writeable($collection, $id, $is-writeable))then  
+    if(exists(sharing:set-collection-ace-writeable($collection, $id, $is-writeable)))then  
         <status id="ace">updated</status>
     else(
         response:set-status-code($HTTP-FORBIDDEN),
@@ -250,13 +250,14 @@ declare function op:set-ace-writeable($collection as xs:anyURI, $id as xs:int, $
 };
 
 declare function op:remove-ace($collection as xs:anyURI, $id as xs:int) as element(status) {
-    
-    if(sharing:remove-collection-ace($collection, $id))then
+  
+    if(exists(sharing:remove-collection-ace($collection, $id)))then
         <status id="ace">removed</status>
     else(
         response:set-status-code($HTTP-FORBIDDEN),
         <status id="ace">Permission Denied</status>
     )
+  
 };
 
 declare function op:add-user-ace($collection as xs:anyURI, $username as xs:string) as element(status) {
@@ -374,7 +375,7 @@ declare function op:upload-file($name, $data ,$collection) {
 $collection := uu:escape-collection-path(request:get-parameter("collection", ())):)
 let $action := request:get-parameter("action", ())
 let $collection := request:get-parameter("collection", ())
-let $collection := if($collection)then xmldb:encode-uri($collection) else ()
+let $collection := if($collection)then xmldb:decode(xmldb:encode-uri($collection)) else ()
 
 return
     if($action eq "create-collection")then
