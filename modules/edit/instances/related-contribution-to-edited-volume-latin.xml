@@ -57,7 +57,14 @@
         </part>
     </relatedItem>
     <identifier displayLabel="" type="local"/>
-    <location dateLastAccessed="" displayLabel="" note="" access="" usage=""/>
+    <location>
+        <url dateLastAccessed=""/>
+        <holdingSimple>
+            <copyInformation>
+                <shelfLocator/>
+            </copyInformation>
+        </holdingSimple>
+    </location>
     <accessCondition/>
     <note/>
 </mods>
