@@ -523,11 +523,11 @@ declare function mods-common:get-short-title($entry as element()) {
 : @return The location as XHTML a element.
 :)
 declare function mods-common:format-location($location as element(mods:location), $collection-short as xs:string) as xs:string {
-    let $location := $location[not(url)][mods:physicalLocation]
+    let $location := $location[not(url)]
     let $physical-location := $location/mods:physicalLocation
     let $shelf-locator := $location/mods:holdingSimple/mods:copyInformation/mods:shelfLocator
     return 
-        concat($physical-location, if ($shelf-locator) then ': ' else (), $shelf-locator)
+        concat($physical-location, if ($physical-location and $shelf-locator) then ': ' else (), $shelf-locator)
 };
 
 
