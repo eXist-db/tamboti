@@ -844,6 +844,13 @@
             <local-name>extension</local-name>
             <tab-id>extension</tab-id>
         </item>
+        <item xml:id="hint-code_cataloging-stage">
+            <help>
+                <p>Use a number from 1 to 5 to indicate how complete the record is.</p>
+            </help>
+            <local-name>catalogingStage</local-name>
+            <tab-id>extension</tab-id>
+        </item>
         <item xml:id="hint-code_extent">
             <help>
                 <p> A statement of the number and specific material of the units of the resource
