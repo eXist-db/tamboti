@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <mods xmlns="http://www.loc.gov/mods/v3" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
     <titleInfo>
         <nonSort/>
@@ -116,6 +115,7 @@
     <identifier type="doi"/>
     <location>
         <url dateLastAccessed=""/>
+        <holdingSimple><copyInformation><shelfLocator/></copyInformation></holdingSimple>
     </location>
     <accessCondition/>
 </mods>

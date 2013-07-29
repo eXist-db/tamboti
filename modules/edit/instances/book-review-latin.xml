@@ -117,6 +117,11 @@
         <identifier type="doi"/>
         <location>
             <url dateLastAccessed=""/>
+            <holdingSimple>
+                <copyInformation>
+                    <shelfLocator/>
+                </copyInformation>
+            </holdingSimple>
         </location>
         <classification authority="lcc"/>
         <abstract lang="eng"/>
@@ -126,6 +131,11 @@
     <identifier type="doi"/>
     <location>
         <url dateLastAccessed=""/>
+        <holdingSimple>
+            <copyInformation>
+                <shelfLocator/>
+            </copyInformation>
+        </holdingSimple>
     </location>
     <accessCondition/>
 </mods>
