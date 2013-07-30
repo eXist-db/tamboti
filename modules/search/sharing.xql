@@ -37,7 +37,7 @@ declare function local:get-sharing($collection-path as xs:string) as element(aaD
                             attribute json:array { true() }
                         else(),
                         <json:value>{text{$ace/@target}}</json:value>,
-                        <json:value>{text{$ace/@who}}</json:value>,
+                        <json:value>{text{system:as-user($config:dba-credentials[1],$config:dba-credentials[2], security:get-human-name-for-user($ace/@who))}}</json:value>,
                         <json:value>{text{$ace/@access_type}}</json:value>,
                         <json:value>{text{$ace/@mode}}</json:value>,
                         <json:value>removeMe</json:value>
