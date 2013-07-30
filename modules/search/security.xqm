@@ -102,10 +102,17 @@ declare function security:get-email-address-for-user($username as xs:string) as 
     sm:get-account-metadata($username, xs:anyURI("http://axschema.org/contact/email"))
 };
 
-declare function security:get-human-name-for-user($username as xs:string) as xs:string?
+declare function security:get-human-name-for-user($username as xs:string)
+as xs:string?
 {
-    sm:get-account-metadata($username, xs:anyURI("http://axschema.org/namePerson"))
+    if (exists(xs:anyURI("http://axschema.org/namePerson/first"))) then
+        (concat(sm:get-account-metadata($username, xs:anyURI("http://axschema.org/namePerson/first")), " ",
+                sm:get-account-metadata($username, xs:anyURI("http://axschema.org/namePerson/last"))))
+    else
+        (xs:anyURI("http://axschema.org/namePerson"))
 };
+
+
 
 (:~
 : Checks whether a user's tamboti home collection exists
