@@ -109,7 +109,7 @@ as xs:string?
         (concat(sm:get-account-metadata($username, xs:anyURI("http://axschema.org/namePerson/first")), " ",
                 sm:get-account-metadata($username, xs:anyURI("http://axschema.org/namePerson/last"))))
     else
-        (xs:anyURI("http://axschema.org/namePerson/first"))
+        (xs:anyURI("http://axschema.org/namePerson"))
 };
 
 
