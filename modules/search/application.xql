@@ -697,7 +697,7 @@ declare function biblio:evaluate-query($query-as-string as xs:string, $sort as x
             $query-as-string
     let $options :=
         <options>
-            <default-operator>and</default-operator>
+            <default-operator>or</default-operator>
         </options>
     return
         util:eval($query-with-order-by-expression)

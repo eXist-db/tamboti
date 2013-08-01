@@ -127,11 +127,12 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
           return
           update insert $recordInfo-insert into $doc/mods:mods
           ,
-          (:Save the name of the template used and transliteration scheme used into mods:extension.:)  
+          (:Save the name of the template used, transliteration scheme used, and an empty catalogingStage into mods:extension.:)  
           update insert
               <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://exist-db.org/mods/extension">
                   <ext:template>{$template-request}</ext:template>
-                  <ext:transliterationOfResource>{$transliterationOfResource}</ext:transliterationOfResource>                    
+                  <ext:transliterationOfResource>{$transliterationOfResource}</ext:transliterationOfResource>
+                  <ext:catalogingStage/>
               </extension>
           into $doc/mods:mods
           ,

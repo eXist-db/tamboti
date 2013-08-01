@@ -32,7 +32,7 @@ declare namespace tei="http://www.tei-c.org/ns/1.0";
 
 (: A helper function in case no options are passed to the function :)
 declare function tei-common:render($content as node()*) as element() {
-    tei-common:render($content, ())
+    tei-common:render($content, $destination)
 };
 
 (: The main function for the tei-to-html module: Takes TEI content, turns it into HTML, and wraps the result in a div element :)
@@ -162,10 +162,18 @@ declare function tei-common:xmlid($node as element(), $options) as element() {
 declare function tei-common:ref($node as element(tei:ref), $options) {
     let $target := $node/@target
     return
-        element a { 
-            attribute href { $target },
-            attribute title { $target },
-            tei-common:recurse($node, $options) 
+        if ($options/destination eq 'detail-view' and string($target))
+        then
+            element a { 
+                attribute href { $target },
+                attribute title { $target },
+                tei-common:recurse($node, $options) 
+                }
+        (:Do not generate links on hitlist, since each <td> there is a link:)
+        else
+            element span { 
+                attribute title { $target },
+                tei-common:recurse($node, $options) 
             }
 };
 
@@ -228,10 +236,18 @@ declare function tei-common:name($node as element(tei:name), $options) {
     let $rend := $node/@rend
     let $key := $node/@key
     return
-        if ($rend eq 'sc') then 
-            <a href="{$key}" target="_blank"><span class="name" style="font-variant: small-caps;">{tei-common:recurse($node, $options)}</span></a>
-        else 
-            <a href="{$key}" target="_blank"><span class="name">{tei-common:recurse($node, $options)}</span></a>
+        if ($options/destination eq 'detail-view') 
+        then
+            if ($rend eq 'sc') then 
+                <a href="{$key}" target="_blank"><span class="name" style="font-variant: small-caps;">{tei-common:recurse($node, $options)}</span></a>
+            else 
+                <a href="{$key}" target="_blank"><span class="name">{tei-common:recurse($node, $options)}</span></a>
+        else
+        (:Do not generate links on hitlist, since each <td> there is a link:)
+            if ($rend eq 'sc') then 
+                <span class="name" style="font-variant: small-caps;">{tei-common:recurse($node, $options)}</span>
+            else 
+                <span class="name">{tei-common:recurse($node, $options)}</span>
 };
 
 declare function tei-common:milestone($node as element(tei:milestone), $options) {
