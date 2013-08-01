@@ -62,7 +62,7 @@ declare function retrieve-tei:format-detail-view($position as xs:string, $entry 
         <tr>
             <td class="collection-label">Text</td>
             <td>
-                <span>{tei-common:render($entry)}</span>
+                <span>{tei-common:render($entry, <parameters xmlns=""><destination>detail-view</destination></parameters>)}</span>
                 </td>
         </tr>
         ,
@@ -112,7 +112,7 @@ declare function retrieve-tei:format-list-view($position as xs:string, $entry as
     let $result :=
     <div>
     <span>{$title/string()}</span>
-    <span>{tei-common:render($entry)}</span>
+    <span>{tei-common:render($entry, <parameters xmlns=""><destination>hitlist</destination></parameters>)}</span>
     </div>
     let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
     let $regex := session:get-attribute('regex')

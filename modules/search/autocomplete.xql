@@ -4,7 +4,7 @@ declare namespace mods="http://www.loc.gov/mods/v3";
 declare namespace vra = "http://www.vraweb.org/vracore4.htm";
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 
-import module namespace biblio="http://exist-db.org/xquery/biblio" at "../application.xql";
+import module namespace biblio="http://exist-db.org/xquery/biblio" at "application.xql";
 
 declare option exist:serialize "media-type=text/json";
 
@@ -18,16 +18,11 @@ let $collection := xmldb:encode(request:get-parameter("collection", $local:COLLE
 let $term := request:get-parameter("term", ())
 let $field := request:get-parameter("field", "any Field (MODS, TEI, VRA)")
 let $qnames :=
-    if ($field eq "any Field (MODS, TEI, VRA)") 
-    then 
-        for $field in $local:FIELDS/target 
-            return xs:QName($field/string())
-    else 
-        for $field in $local:FIELDS/target[@name eq $field]
-            return xs:QName($field/string())
+    for $target in $biblio:FIELDS/field[@name eq $field]//target
+            return xs:QName($target/string())
 let $callback := util:function(xs:QName("local:key"), 2)
 let $autocompletes := 
-    if (contains($term, (' ', '*', '?', '-')) 
+    if (contains($term, (' ', '*', '?', '-'))) 
     then () 
     else string-join(collection($collection)/util:index-keys-by-qname($qnames, $term, $callback, 20, "lucene-index"),', ')
 return
