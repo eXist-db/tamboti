@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
-    <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="">
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.5" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
+    <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="" altFormat="" contentType="" otherType="">
         <nonSort lang="" xml:lang="" script="" transliteration=""/>
         <title lang="" xml:lang="" script="" transliteration=""/>
         <subTitle lang="" xml:lang="" script="" transliteration=""/>
@@ -9,6 +9,7 @@
     </titleInfo>
     <name altRepGroup="" authorityURI="" nameTitleGroup="" usage="" valueURI="" type="" authority="" lang="" script="" transliteration="" xlink:href="" displayLabel="" ID="" xml:lang="">
         <namePart type="" lang="" xml:lang="" script="" transliteration=""/>
+        <etal/>
         <displayForm lang="" xml:lang="" script="" transliteration=""/>
         <affiliation lang="" xml:lang="" script="" transliteration=""/>
         <role>
@@ -16,7 +17,7 @@
         </role>
         <description lang="" xml:lang="" script="" transliteration=""/>
     </name>
-    <originInfo lang="" xml:lang="" script="" transliteration="" displayLabel="" altRepGroup="">
+    <originInfo lang="" xml:lang="" script="" transliteration="" displayLabel="" altRepGroup="" eventType="">
         <place supplied="">
             <placeTerm type="" authority="marccountry" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
         </place>
@@ -53,7 +54,7 @@
         <internetMediaType lang="" xml:lang="" script="" transliteration=""/>
         <extent supplied="" lang="" xml:lang="" script="" transliteration=""/>
         <digitalOrigin/>
-        <note xml:lang="" lang="eng" type="" displayLabel="" script="" transliteration="" xlink:href="" ID=""/>
+        <note xml:lang="" lang="eng" type="" displayLabel="" script="" transliteration="" xlink:href="" ID="" typeURI=""/>
     </physicalDescription>
     <targetAudience authority="marctarget" authorityURI="" valueURI="" displayLabel="" altRepGroup="" lang="" xml:lang="" script="" transliteration=""/>
     <typeOfResource collection="" manuscript="" displayLabel="" usage="" altRepGroup=""/>
@@ -71,6 +72,7 @@
         </titleInfo>
         <name altRepGroup="" authorityURI="" nameTitleGroup="" usage="" valueURI="" type="" authority="" lang="" script="" transliteration="" xlink:href="" displayLabel="" ID="" xml:lang="">
             <namePart type="" lang="" xml:lang="" script="" transliteration=""/>
+            <etal/>
             <displayForm lang="" xml:lang="" script="" transliteration=""/>
             <affiliation lang="" xml:lang="" script="" transliteration=""/>
             <role>
@@ -101,10 +103,10 @@
         <geographicCode authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
         <occupation authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
     </subject>
-    <classification authority="" edition="" displayLabel="" xml:lang="" lang="" altRepGroup="" authorityURI="" script="" transliteration="" valueURI="" usage=""/>
-    <abstract xml:lang="" lang="" script="" transliteration="" type="" displayLabel="" altRepGroup="" shareable="" xlink:href=""/>
-    <tableOfContents type="" displayLabel="" xml:lang="" lang="" script="" transliteration="" xlink:href="" shareable="" altRepGroup=""/>
-    <note xml:lang="" lang="eng" type="" displayLabel="" script="" transliteration="" xlink:href="" ID="" altRepGroup=""/>
+    <classification authority="" edition="" displayLabel="" xml:lang="" lang="" altRepGroup="" authorityURI="" script="" transliteration="" valueURI="" usage="" generator=""/>
+    <abstract xml:lang="" lang="" script="" transliteration="" type="" displayLabel="" altRepGroup="" shareable="" xlink:href="" altFormat="" contentType=""/>
+    <tableOfContents type="" displayLabel="" xml:lang="" lang="" script="" transliteration="" xlink:href="" shareable="" altRepGroup="" altFormat="" contentType=""/>
+    <note xml:lang="" lang="eng" type="" displayLabel="" script="" transliteration="" xlink:href="" ID="" altRepGroup="" typeURI=""/>
     <relatedItem type="" xlink:href="" ID="" displayLabel="">
         <relatedItem type="" xlink:href="" ID="" displayLabel=""/>
         <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="">
@@ -116,6 +118,7 @@
         </titleInfo>
         <name altRepGroup="" authorityURI="" nameTitleGroup="" usage="" valueURI="" type="" authority="" lang="" script="" transliteration="" xlink:href="" displayLabel="" ID="" xml:lang="">
             <namePart type="" lang="" xml:lang="" script="" transliteration=""/>
+            <etal/>
             <displayForm lang="" xml:lang="" script="" transliteration=""/>
             <affiliation lang="" xml:lang="" script="" transliteration=""/>
             <role>
@@ -160,7 +163,7 @@
             <internetMediaType lang="" xml:lang="" script="" transliteration=""/>
             <extent supplied="" lang="" xml:lang="" script="" transliteration=""/>
             <digitalOrigin/>
-            <note xml:lang="" lang="eng" type="" displayLabel="" script="" transliteration="" xlink:href="" ID=""/>
+            <note xml:lang="" lang="eng" type="" displayLabel="" script="" transliteration="" xlink:href="" ID="" typeURI=""/>
         </physicalDescription>
         <targetAudience authority="marctarget" authorityURI="" valueURI="" displayLabel="" altRepGroup="" lang="" xml:lang="" script="" transliteration=""/>
         <typeOfResource collection="" manuscript="" displayLabel="" usage="" altRepGroup=""/>
@@ -178,6 +181,7 @@
             </titleInfo>
             <name altRepGroup="" authorityURI="" nameTitleGroup="" usage="" valueURI="" type="" authority="" lang="" script="" transliteration="" xlink:href="" displayLabel="" ID="" xml:lang="">
                 <namePart type="" lang="" xml:lang="" script="" transliteration=""/>
+                <etal/>
                 <displayForm lang="" xml:lang="" script="" transliteration=""/>
                 <affiliation lang="" xml:lang="" script="" transliteration=""/>
                 <role>
@@ -211,8 +215,8 @@
         <classification authority="" edition="" displayLabel="" xml:lang="" lang="" altRepGroup="" authorityURI="" script="" transliteration="" valueURI="" usage=""/>
         <abstract xml:lang="" lang="" script="" transliteration="" type="" displayLabel="" altRepGroup="" shareable="" xlink:href=""/>
         <tableOfContents type="" displayLabel="" xml:lang="" lang="" script="" transliteration="" xlink:href="" shareable="" altRepGroup=""/>
-        <note xml:lang="" lang="eng" type="" displayLabel="" script="" transliteration="" xlink:href="" ID="" altRepGroup=""/>
-        <identifier displayLabel="" type="" invalid="" altRepGroup="" lang="" script="" transliteration="" xml:lang=""/>
+        <note xml:lang="" lang="eng" type="" displayLabel="" script="" transliteration="" xlink:href="" ID="" altRepGroup="" typeURI=""/>
+        <identifier displayLabel="" type="" invalid="" altRepGroup="" lang="" script="" transliteration="" xml:lang="" typeURI=""/>
         <location lang="" xml:lang="" script="" transliteration="" displayLabel="" altRepGroup="">
             <physicalLocation authority="" authorityURI="" valueURI="" displayLabel="" type="" lang="" xml:lang="" script="" transliteration="" xlink:href=""/>
             <shelfLocator lang="" xml:lang="" script="" transliteration=""/>
@@ -223,13 +227,13 @@
                     <subLocation lang="" xml:lang="" script="" transliteration=""/>
                     <shelfLocator lang="" xml:lang="" script="" transliteration=""/>
                     <electronicLocator/>
-                    <note ID="" xlink:href="" lang="" xml:lang="" script="" transliteration="" displayLabel="" type=""/>
+                    <note ID="" xlink:href="" lang="" xml:lang="" script="" transliteration="" displayLabel="" type="" typeURI=""/>
                     <enumerationAndChronology unitType="" lang="" xml:lang="" script="" transliteration=""/>
                 </copyInformation>
             </holdingSimple>
             <holdingExternal/>
         </location>
-        <accessCondition xlink:href="" lang="" type="" displayLabel="" altRepGroup="" xml:lang="" script="" transliteration=""/>
+        <accessCondition xlink:href="" lang="" type="" displayLabel="" altRepGroup="" xml:lang="" script="" transliteration="" altFormat="" contentType=""/>
         <language objectPart="" lang="" xml:lang="" script="" transliteration="" displayLabel="" usage="" altRepGroup="">
             <languageTerm authority="iso639-2b" type="code" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
             <scriptTerm type="" authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
@@ -261,7 +265,7 @@
                 <subLocation lang="" xml:lang="" script="" transliteration=""/>
                 <shelfLocator lang="" xml:lang="" script="" transliteration=""/>
                 <electronicLocator/>
-                <note ID="" xlink:href="" lang="" xml:lang="" script="" transliteration="" displayLabel="" type=""/>
+                <note ID="" xlink:href="" lang="" xml:lang="" script="" transliteration="" displayLabel="" type="" typeURI=""/>
                 <enumerationAndChronology unitType="" lang="" xml:lang="" script="" transliteration=""/>
             </copyInformation>
         </holdingSimple>

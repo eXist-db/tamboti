@@ -53,7 +53,7 @@ declare function unapi:get-object($id as xs:string, $format as xs:string, $resou
     if($format eq "mods")then
     (
         response:set-header("Content-Type", "application/xml"),
-        <modsCollection version="3.4" xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/standards/mods/mods.xsd">
+        <modsCollection version="3.5" xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd">
         {
             clean:cleanup($resource)
         }
