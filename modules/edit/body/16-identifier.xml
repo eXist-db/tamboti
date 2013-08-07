@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ext="http://exist-db.org/mods/extension" class="identifier block-form" tab-id="identifier" ext:dummy="dummy" xlink:dummy="dummy">
     <xf:group appearance="full">
         <fieldset class="level-1">
@@ -115,7 +116,7 @@
                         </xf:case>
                     </xf:switch>
                 </xf:group>
-                <xf:group class="schema_3.4" ref=".[@altRepGroup]">
+                <xf:group class="schema_3.4 schema_3.5" ref=".[@altRepGroup]">
                     <xf:select1 ref="./@altRepGroup">
                         <xf:label>Alt. Representation Group<span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
@@ -130,7 +131,7 @@
                         </xf:itemset>
                     </xf:select1>
                 </xf:group>
-                <xf:group class="schema_3.3 schema_3.4" appearance="full" ref=".[@displayLabel]">
+                <xf:group class="schema_3.3 schema_3.4 schema_3.5" appearance="full" ref=".[@displayLabel]">
                     <xf:input ref="./@displayLabel" class="text_50">
                         <xf:label>Display Label<span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>

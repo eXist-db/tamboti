@@ -153,8 +153,8 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
         <xf:model>
            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="{$instance-src}" id="save-data"/>
            
-           <!--The instance insert-templates contain an almost full embodiment of the MODS schema, version 3.4; 
-           the full 3.4 schema is reflected in full-3.4-instance.xml. It is used mainly to insert missing elements and attributes.-->
+           <!--The instance insert-templates contain an almost full embodiment of the MODS schema, version 3.5; 
+           It is used mainly to insert missing elements and attributes.-->
            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="instances/insert-templates.xml" id='insert-templates' readonly="true"/>
            
            <!--A fairly full selection of elements and attributes from the MODS schema used for default records not using the templates.-->

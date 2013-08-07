@@ -96,7 +96,7 @@
                 </span>
             </div>
             <xf:repeat nodeset="instance('save-data')/mods:subject" id="subject-repeat">
-                <xf:group class="schema_3.4 margin-plus" appearance="full" ref=".[@valueURI]">
+                <xf:group class="schema_3.4 schema_3.5 margin-plus" appearance="full" ref=".[@valueURI]">
                     <xf:input ref="./@valueURI" class="text_50">
                         <xf:label>Value URI<span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
