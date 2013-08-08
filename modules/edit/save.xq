@@ -13,12 +13,14 @@ declare namespace ext="http://exist-db.org/mods/extension";
 
 declare function local:do-updates($item, $doc) {
     (: This first checks to see if we have a titleInfo in the saved document.  
-    If we do then it first deletes the titleInfo in the saved document.
-    Then it goes through each titleInfo in the incoming record and inserts it in the saved document. 
-    If name (the "next" element in the "canonical" order of MODS elements) occurs in the saved document, titleInfo is inserted before name, maintaining order.
-    If name does not occur, titleInfo is inserted at the default position, i.e. at the end of the saved document.
+    If we do, then it first deletes any titleInfo in the saved document.
+    Then it inserts all titleInfo in the incoming record in the saved document. 
+    If name (the "next" element in the "canonical" order of MODS elements) occurs in the saved document, 
+    titleInfo is inserted before name, maintaining order.
+    If name does not occur, titleInfo is inserted at the default position, 
+    i.e. at the end of the saved document.
     The (locally defined) canonical order is: titleInfo, name, originInfo, part, physicalDescription, targetAudience, typeOfResource, genre, subject, classification, abstract, tableOfContents, note, relatedItem, identifier, location, accessCondition, language, recordInfo, extension. 
-    This is then repeated for the remaining elements, in the canonical order.:)
+    The same process is then repeated for the remaining elements, in the canonical order.:)
     
     if ($item/mods:titleInfo)
     then
@@ -267,6 +269,13 @@ declare function local:do-updates($item, $doc) {
             update insert <ext:template/>
             into $doc/mods:extension
         ,
+        (:If there is no ext:catalogingStage in $doc/extension, insert one.:)
+        if ($doc/mods:extension/ext:catalogingStage)
+        then ()
+        else
+            update insert <ext:catalogingStage/>
+            into $doc/mods:extension
+        ,
         (:If there is no ext:transliterationOfResource in $doc/extension, insert one.:)
         if ($doc/mods:extension/ext:transliterationOfResource)
         then ()
@@ -274,12 +283,13 @@ declare function local:do-updates($item, $doc) {
             update insert <ext:transliterationOfResource/>                    
             into $doc/mods:extension
         )
-    (:If there is no extension in $doc, insert one with the required children.:)
+    (:If there is no extension at all in $doc, insert one with the required children.:)
     else
         update insert
             <extension xmlns="http://www.loc.gov/mods/v3" xmlns:ext="http://exist-db.org/mods/extension">
                 <ext:template/>
                 <ext:transliterationOfResource/>
+                <ext:catalogingStage/>
             </extension>        
         into $doc
     
