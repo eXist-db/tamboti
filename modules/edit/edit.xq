@@ -66,23 +66,23 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
             else concat($type-request, '-latin') 
     let $template := doc(concat($config:edit-app-root, '/instances/', $template-request, '.xml'))
     
-    (:Then give it a name based on a uuid, store it in the temp collection and set the restrictive permissions on it.:)
+    (:Then give it a name based on a uuid, store it in the temp collection and set restrictive permissions on it.:)
     let $doc-name := concat($id, '.xml')
     let $stored := xmldb:store($config:mods-temp-collection, $doc-name, $template)   
-    (:Make the record accessible to the user alone, as default.:)
+    (:Make the record accessible to the user alone in the temp collection.:)
     let $null := sm:chmod(xs:anyURI($stored), "rwx------")
     (:If the record is created in a collection inside commons, it should be visible to all.:)
-    let $null := 
+    (:let $null := 
         if (contains($target-collection, "/commons/")) 
         then xmldb:set-resource-permissions($config:mods-temp-collection, $doc-name, "editor", "biblio.users", xmldb:string-to-permissions("rwxrwxr-x"))
-        else ()
+        else ():)
     
     (:Get the remaining parameters that are to be stored, in addition to transliterationOfResource (which was fetched above).:)
     let $scriptOfResource := request:get-parameter("scriptOfResource", '')
     let $languageOfResource := request:get-parameter("languageOfResource", '')
     let $languageOfCataloging := request:get-parameter("languageOfCataloging", '')
     let $scriptOfCataloging := request:get-parameter("scriptOfCataloging", '')           
-    (:Parameter 'host' is used when related records are created.:)
+    (:Parameter 'host' is used when related records with type "host" are created.:)
     let $host := request:get-parameter('host', '')
     
     let $doc := doc($stored)
@@ -107,7 +107,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
           update insert $language-insert into $doc/mods:mods
           ,
           (:Save the library reference, the creation date, and the language and script of cataloguing:)
-          (:To simplify input, resource language and language of cataloging are treated as the same.:) 
+          (:To simplify input, resource language and language of cataloging are identical be default.:) 
           let $recordInfo-insert :=
               <mods:recordInfo lang="eng" script="Latn">
                   <mods:recordContentSource authority="marcorg">DE-16-158</mods:recordContentSource>
@@ -127,7 +127,8 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
           return
           update insert $recordInfo-insert into $doc/mods:mods
           ,
-          (:Save the name of the template used, transliteration scheme used, and an empty catalogingStage into mods:extension.:)  
+          (:Save the name of the template used, transliteration scheme used, 
+          and an empty catalogingStage into mods:extension.:)  
           update insert
               <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://exist-db.org/mods/extension">
                   <ext:template>{$template-request}</ext:template>
@@ -136,12 +137,14 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
               </extension>
           into $doc/mods:mods
           ,
-          (:If the user requests to create a related record, a record which refers to the record being browsed, insert the ID into @xlink:href on <relatedItem> in the new record.:)
+          (:If the user requests to create a related record, 
+          a record which refers to the record being browsed, 
+          insert the ID into @xlink:href on the first empty <relatedItem> in the new record.:)
           if ($host)
           then
             (
-                update value doc($stored)/mods:mods/mods:relatedItem[string-length(@type) eq 0]/@type with "host",
-                update value doc($stored)/mods:mods/mods:relatedItem[@type eq 'host']/@xlink:href with concat('#', $host)
+                update value doc($stored)/mods:mods/mods:relatedItem[string-length(@type) eq 0][1]/@type with "host",
+                update value doc($stored)/mods:mods/mods:relatedItem[@type eq 'host'][1]/@xlink:href with concat('#', $host)
             )
           else ()
       )
@@ -154,57 +157,74 @@ declare function local:create-xf-model($id as xs:string, $tab-id as xs:string, $
            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="{$instance-src}" id="save-data"/>
            
            <!--The instance insert-templates contain an almost full embodiment of the MODS schema, version 3.5; 
-           It is used mainly to insert missing elements and attributes.-->
+           It is used mainly to insert attributes and uncommon elements, 
+           but it can also be chosen as a template.-->
            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="instances/insert-templates.xml" id='insert-templates' readonly="true"/>
            
-           <!--A fairly full selection of elements and attributes from the MODS schema used for default records not using the templates.-->
+           <!--A basic selection of elements and attributes from the MODS schema, 
+           used inserting basic elements, but it can also be chosen as a template.-->
            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="instances/new-instance.xml" id='new-instance' readonly="true"/>
            
            <!--A selection of elements and attributes from the MADS schema used for default records.-->
+           <!--not used at present-->
            <!--<xf:instance xmlns="http://www.loc.gov/mads/" src="instances/mads.xml" id='mads' readonly="true"/>-->
     
-           <!--Elements and attributes for insertion into the compact forms.-->
-           <!--NB: These will all be in insert-templates.xml and are not needed.-->
+           <!--Elements and attributes for insertion of special configurations of elements into the compact forms.-->
            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="instances/compact-template.xml" id='compact-template' readonly="true"/> 
            
            <!--Only load the code-tables that are used by the active tab.-->
+           <!--Every code table must have a tab-id to ensure that it is collected into the model.-->
            <xf:instance id="code-tables" src="codes-for-tab.xq?tab-id={$instance-id}" readonly="true"/>
            
-           <!--Having binds would prevent a tab from being saved when clicking on another tab, so binds are not used.--> 
+           <!--Having binds would prevent a tab from being saved when clicking on another tab, 
+           so binds are not used.--> 
            <!--
            <xf:bind nodeset="instance('save-data')/mods:titleInfo/mods:title" required="true()"/>       
            -->
            
-           <xf:submission id="save-submission" method="post"
-              ref="instance('save-data')"
-              action="save.xq?collection={$config:mods-temp-collection}&amp;action=save" replace="instance"
-              instance="save-results">
+           <!--The different submission types, called by their id.-->
+           <!--Save in temp-->
+           <xf:submission
+                id="save-submission" 
+                method="post"
+                ref="instance('save-data')"
+                action="save.xq?collection={$config:mods-temp-collection}&amp;action=save" replace="instance"
+                instance="save-results">
            </xf:submission>
            
-           <xf:submission id="save-and-close-submission" method="post"
-              ref="instance('save-data')"
-              action="save.xq?collection={$target-collection}&amp;action=close" replace="instance"
-              instance="save-results">
+           <!--Save in target collection-->
+           <xf:submission 
+                id="save-and-close-submission" 
+                method="post"
+                ref="instance('save-data')"
+                action="save.xq?collection={$target-collection}&amp;action=close" replace="instance"
+                instance="save-results">
            </xf:submission>
            
-           <xf:submission id="cancel-submission" method="post"
-              ref="instance('save-data')"
-              action="save.xq?collection={$config:mods-temp-collection}&amp;action=cancel" replace="instance"
-              instance="save-results">
+           <!--Delete from temp-->
+           <xf:submission 
+                id="cancel-submission" 
+                method="post"
+                ref="instance('save-data')"
+                action="save.xq?collection={$config:mods-temp-collection}&amp;action=cancel" replace="instance"
+                instance="save-results">
            </xf:submission>
         </xf:model>
 };
 
 declare function local:assemble-form($dummy-attributes as attribute()*, $style as node()*, $model as node(), $content as node()+, $debug as xs:boolean) as node()+ 
 {
+    (:Set serialization options.:)
     util:declare-option('exist:serialize', 'method=xhtml media-type=text/xml indent=yes process-xsl-pi=no')
     ,
+    (:Reference the stylesheet.:)
     processing-instruction xml-stylesheet {concat('type="text/xsl" href="', '/exist/rest/db/apps/xsltforms/xsltforms.xsl"')}
     ,
     if ($debug) then 
         processing-instruction xsltforms-options {'debug="yes"'}
     else ()
     ,
+    (:Construct the editor page.:)
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:mods="http://www.loc.gov/mods/v3">{$dummy-attributes}
         <head>
             <title>
@@ -244,8 +264,10 @@ declare function local:assemble-form($dummy-attributes as attribute()*, $style a
 declare function local:create-page-content($id as xs:string, $tab-id as xs:string, $type-request as xs:string, $target-collection as xs:string, $instance-id as xs:string, $record-data as xs:string, $type-data as xs:string) as element(div) {
     (:Get the part of the form that belongs to the active tab.:)
     let $form-body := collection(concat($config:edit-app-root, '/body'))/div[@tab-id eq $instance-id]
-    (:Get the relevant information to display in the info-line, the label for the template chosen (if any) and the hint belonging to it (if any). :)
+    (:Get the relevant information to display in the info-line, 
+    the label for the template chosen (if any) and the hint belonging to it (if any). :)
     let $hint-data := concat($config:edit-app-root, '/code-tables/hint-codes.xml')
+    (:Get the hint text about saving.:)
     let $save-hint := doc($hint-data)/id('hint-code_save')/help
     
     (:Get the time of the last save to the temp collection and parse it.:)
@@ -254,8 +276,10 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
     let $last-modified-minute := minutes-from-dateTime($last-modified)
     let $last-modified-minute := functx:pad-integer-to-length($last-modified-minute, 2)
     
-    (:If the record is hosted by a record linked to through an xlink, display the title of this record. 
-    Only the xlink on the first relatedItem with type host is treated.:)
+    (:If the record is hosted by a record linked to through an xlink:href, 
+    display the title of this record. 
+    Only the xlink on the first relatedItem with type host is processed.:)
+    let $host := request:get-parameter('host', '')
     let $related-item-xlink := doc($record-data)/mods:mods/mods:relatedItem[@type eq 'host']/@xlink:href
     let $related-publication-id := 
         if ($related-item-xlink) 
@@ -266,13 +290,15 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
         then mods-common:get-short-title(collection($config:mods-root)//mods:mods[@ID eq $related-publication-id][1])
         else ()
     let $related-publication-title :=
+        (:Check for no string contents - the count may still be 1.:)
         if ($related-item-xlink eq '')
         then ()
             else 
             if (count($related-item-xlink) eq 1)
             then
             (<span class="intro">The publication is included in </span>, <a href="../../modules/search/index.html?filter=the%20Record%20ID%20Field%20(MODS,%20VRA)&amp;value={$related-publication-id}" target="_blank">{$related-publication-title}</a>,<span class="intro">.</span>)
-            else 
+            else
+                (:Can the following occur, given that only one xlink is retrieved?:)
                 if (count($related-item-xlink) gt 1) 
                 then (<span class="intro">The publication is included in more than one publication.</span>)
                 else ()
@@ -283,9 +309,10 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
             {
                 if ($type-request)
                 then
-                    (:Remove any 'latin' and 'transliterated' appended the original type request. :)
+                    (:Remove any '-latin' and '-transliterated' appended the original type request. :)
                     let $type-request := replace(replace($type-request, '-latin', ''), '-transliterated', '')
                     let $type-label := doc($type-data)/code-table/items/item[value eq $type-request][classifier = ('stand-alone', 'related')]/label
+                    (:This is the hint text informing the user aboiut the specific document type and its options.:)
                     let $type-hint := doc($type-data)/code-table/items/item[value eq $type-request]/hint
                         return
                         (
@@ -304,6 +331,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                 ,
                 let $publication-title := concat(doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) eq 0][1]/mods:nonSort, ' ', doc($record-data)/mods:mods/mods:titleInfo[string-length(@type) eq 0][1]/mods:title)
                 return
+                    (:Why the space here?:)
                     if ($publication-title ne ' ') 
                     then (' with the title ', <strong>{$publication-title}</strong>) 
                     else ()
@@ -319,16 +347,11 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
             {mods:tabs($tab-id, $id, $target-collection)}
         
             <div class="save-buttons">    
+                <!--No save button is displayed, since saves are made every time a tab is clicked,
+                but sometimes users require a save button.-->
                 <!--<xf:submit submission="save-submission">
                     <xf:label class="xforms-group-label-centered-general">Save</xf:label>
                 </xf:submit>-->
-                <!--<xf:trigger>
-                    <xf:label class="xforms-group-label-centered-general">Cancel Editing</xf:label>
-                    <xf:action ev:event="DOMActivate">
-                        <xf:send submission="cancel-submission"/>
-                        <xf:load resource="../../?reload=true" show="replace"/>
-                    </xf:action>
-                 </xf:trigger>-->
                  <xf:trigger>
                     <xf:label class="xforms-group-label-centered-general">Finish Editing
                     </xf:label>
@@ -360,8 +383,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     <xf:label class="xforms-group-label-centered-general">Cancel Editing</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="cancel-submission"/>
-                        <!--TODO: If the creation of a related record is cancelled, the record related to should be retrieved, not the cancelled record.-->
-                        <xf:load resource="../../modules/search/index.html?filter=the%20Record%20ID%20Field%20(MODS,%20VRA)&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>
+                        <xf:load resource="../../modules/search/index.html?filter=the%20Record%20ID%20Field%20(MODS,%20VRA)&amp;value={if ($host) then $host else $id}&amp;collection={$target-collection}" show="replace"/>
                     </xf:action>
                  </xf:trigger>
                  <xf:trigger>
@@ -389,11 +411,8 @@ the only filtering that is performed is for transliteration.
 The compact-c temples (in 00-compact-contents) is the same for all resource types; 
 the only filtering that is performed is for transliteration.:)
 declare function local:get-tab-id($tab-id as xs:string, $type-request as xs:string) {
-    (:Remove any 'latin' and 'transliterated' appended the original type request. :)
-    (:Also remove "-compact" suffix used previously.:)
-    (:let $log := util:log("DEBUG", ("##$tab-id): ", $tab-id)):)
-    (:let $log := util:log("DEBUG", ("##$type-request): ", $type-request)):)
-    let $type-request := replace(replace(replace($type-request, '-latin', ''), '-transliterated', ''), '-compact', '')
+    (:Remove any '-latin' and '-transliterated' appended the original type request. :)
+    let $type-request := replace(replace($type-request, '-latin', ''), '-transliterated', '')
         return
             if ($tab-id ne 'compact-b')
             (:Only treat compact-b types.:)
