@@ -740,7 +740,7 @@ function resultsLoaded(options) {
     $('#filters .expand').removeClass('expanded');
  
     // trigger image viewer when user clicks on thumbnail
-    $("#results .magnify").click(function (ev) {
+    $("#results .detail-xml .magnify").click(function (ev) {
         ev.stopPropagation();
         var num = $(this).closest(".pagination-item").find(".pagination-number").text();
         if (num) {
