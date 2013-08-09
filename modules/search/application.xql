@@ -62,7 +62,7 @@ declare function functx:replace-first($arg as xs:string?, $pattern as xs:string,
 :)
 declare variable $biblio:FIELDS :=
 <fields>
-    <field name="any Field (MODS, TEI, VRA)">
+    <field name="any Field (MODS, TEI, VRA)" short-name="All">
         <search-expression>
             (
             mods:mods[ft:query(., '$q', $options)]
@@ -84,7 +84,7 @@ declare variable $biblio:FIELDS :=
             <target>tei:TEI</target>
         </targets>
     </field>
-    <field name="the Date Field (MODS)">
+    <field name="the Date Field (MODS)" short-name="Date">
         <search-expression>
             (
             mods:mods[ft:query(.//mods:dateCreated, '$q*', $options)]
@@ -106,7 +106,7 @@ declare variable $biblio:FIELDS :=
             <target>mods:date</target>
         </targets>
     </field>
-    <field name="the Description/Abstract Field (MODS, VRA)">
+    <field name="the Description/Abstract Field (MODS, VRA)" short-name="Description">
         <search-expression>
             (
             mods:mods[ft:query(mods:abstract, '$q', $options)]
@@ -125,7 +125,7 @@ declare variable $biblio:FIELDS :=
         </search-expression>
         <targets/>
     </field>
-    <field name="the Genre Field (MODS)">
+    <field name="the Genre Field (MODS)" short-name="Genre">
         <search-expression>
             mods:mods[ft:query(.//mods:genre, '$q', $options)]
         </search-expression>
@@ -133,7 +133,7 @@ declare variable $biblio:FIELDS :=
             <target>mods:genre</target>
         </targets>
     </field>
-    <field name="the Name Field (MODS, TEI, VRA)">
+    <field name="the Name Field (MODS, TEI, VRA)" short-name="Name">
         <search-expression>
             (
             mods:mods[ft:query(.//mods:name, '$q', $options)]
@@ -154,7 +154,7 @@ declare variable $biblio:FIELDS :=
             <target>tei:persName</target>
         </targets>
     </field>
-    <field name="the Language Codes Field (MODS)">
+    <field name="the Language Codes Field (MODS)" short-name="Language">
         <search-expression>
             mods:mods[ft:query(.//mods:language, '$q', $options)]
         </search-expression>
@@ -162,7 +162,7 @@ declare variable $biblio:FIELDS :=
             <target>mods:language</target>
         </targets>
     </field>
-    <field name="the Note Field (MODS)">
+    <field name="the Note Field (MODS)" short-name="Note">
         <search-expression>
             mods:mods[ft:query(mods:note, '$q', $options)]
         </search-expression>
@@ -170,7 +170,7 @@ declare variable $biblio:FIELDS :=
             <target>mods:note</target>
         </targets>
     </field>
-    <field name="the Origin Field (MODS)">
+    <field name="the Origin Field (MODS)" short-name="Origin">
         <search-expression>
             (
             mods:mods[ft:query(.//mods:placeTerm , '$q*', $options)]
@@ -183,7 +183,7 @@ declare variable $biblio:FIELDS :=
             <target>mods:publisher</target>
         </targets>
     </field>
-    <field name="the Record ID Field (MODS, VRA)">
+    <field name="the Record ID Field (MODS, VRA)" short-name="ID">
         <search-expression>
             (
             mods:mods[@ID eq '$q']
@@ -197,22 +197,7 @@ declare variable $biblio:FIELDS :=
         </search-expression>
         <targets/>
     </field>
-    <!--allow the short form of the field label to be used in stable links-->
-    <field name="ID">
-        <search-expression>
-            (
-            mods:mods[@ID eq '$q']
-            union
-            vra:vra[vra:collection/@id eq '$q']
-            union
-            vra:vra[vra:work/@id eq '$q']
-            union
-            vra:vra[vra:image/@id eq '$q']
-            )
-        </search-expression>
-        <targets/>
-    </field>
-    <field name="the Resource Identifier Field (MODS)">
+    <field name="the Resource Identifier Field (MODS)" short-name="Identifier">
         <search-expression>
             mods:mods[mods:identifier = '$q']
         </search-expression>
@@ -220,7 +205,7 @@ declare variable $biblio:FIELDS :=
             <target>mods:identifier</target>
         </targets>
     </field>
-    <field name="the Subject/Term Field (MODS, TEI, VRA)">
+    <field name="the Subject/Term Field (MODS, TEI, VRA)" short-name="Subject">
         <search-expression>
             (
             mods:mods[ft:query(mods:subject, '$q', $options)]
@@ -238,7 +223,7 @@ declare variable $biblio:FIELDS :=
             <target>tei:term</target>
         </targets>
     </field>
-    <field name="the Title Field (MODS, TEI, VRA)">
+    <field name="the Title Field (MODS, TEI, VRA)" short-name="Title">
         <search-expression>
             (
             mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]
@@ -258,7 +243,7 @@ declare variable $biblio:FIELDS :=
             <target>tei:title</target>
         </targets>
     </field>
-    <field name="the XLink Field (MODS)">
+    <field name="the XLink Field (MODS)" short-name="XLink">
         <search-expression>
             mods:mods[mods:relatedItem[ends-with(@xlink:href, '$q')]]
         </search-expression>
@@ -267,6 +252,9 @@ declare variable $biblio:FIELDS :=
 </fields>
 ;
 
+(:
+    The different record formats and their combinations are listed. 
+:)
 declare variable $biblio:FORMATS :=
     <select name="format">
         <option value="MODS-TEI-VRA">MODS or TEI or VRA</option>
@@ -282,10 +270,10 @@ declare variable $biblio:FORMATS :=
 
 
 (:
-    Default template to be used for form generation if no query is specified. 
-    This sets a search for all records in the theme default collection.
+    Default query to be used if no query is specified. 
+    This sets a search for all records in the theme's default collection.
 :)
-declare variable $biblio:TEMPLATE_QUERY :=
+declare variable $biblio:DEFAULT_QUERY :=
     <query>
         <collection>{theme:get-root()}</collection>
         <and>
@@ -321,10 +309,12 @@ declare function biblio:form-from-query($node as node(), $params as element(para
     let $query := 
         if ($incoming-query//field) 
         then $incoming-query 
-        else $biblio:TEMPLATE_QUERY
+        else $biblio:DEFAULT_QUERY
     return
-    (<tr><td colspan="3">Search for records in
-                    <select name="format">
+    (
+        <tr>
+            <td colspan="3">Search for records in
+                <select name="format">
                     {
                         for $format in $biblio:FORMATS/option
                         return
@@ -333,67 +323,65 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                             {$format/text()}
                         </option>
                     }
-                    </select>
-                format with</td></tr>
-                ,
-    for $field at $pos in $query//field
-    return
-        <tr class="repeat">
-            <td class="operator">
-            {
-                let $operator := 
-                    if ($field/preceding-sibling::*)
-                    then string($field/../local-name(.))
-                    else ()
-                (:NB: This returns "query" if there is only one search field.:)
-                return
-                    <select name="operator{$pos}">
-                    { if (empty($operator)) then attribute style { "display: none;" } else () }
-                    {
-                        for $opt in ("and", "or", "not")
-                        return
-                            <option>
-                            {
-                                if ($opt eq $operator)
-                                then attribute selected { "selected" }
-                                else ()
-                            }
-                            { $opt }
-                            </option>
-                    }
-                    </select>
-            } 
-            </td>
-            <td class="search-term"> 
-                <jquery:input name="input{$pos}" value="{$field/string()}">
-                    <jquery:autocomplete url="autocomplete.xql"
-                        width="300" multiple="false"
-                        matchContains="false"
-                        paramsCallback="autocompleteCallback">
-                    </jquery:autocomplete>
-                </jquery:input>
-            </td>
-            <td class="search-field">
-                in 
-                <select name="field{$pos}">
-                {
-                    for $f in $biblio:FIELDS/field[@name ne 'ID']
-                    return
-                        <option>
-                            { if ($f/@name eq $field/@name) then attribute selected { "selected" } else () } 
-                            {$f/@name/string()}
-                        </option>
-                }
                 </select>
-                
-
-            </td>
-        </tr>)
+                format with</td></tr>
+    ,
+        for $field-chosen at $pos in $query//field
+            return
+                <tr class="repeat">
+                    <td class="operator">
+                    {
+                        let $operator := 
+                            if ($field-chosen/preceding-sibling::*)
+                            then string($field-chosen/../local-name(.))
+                            else ()
+                        (:NB: This returns "query" if there is only one search field.:)
+                        return
+                            <select name="operator{$pos}">
+                            { if (empty($operator)) then attribute style { "display: none;" } else () }
+                            {
+                                for $opt in ("and", "or", "not")
+                                return
+                                    <option>
+                                    {
+                                        if ($opt eq $operator)
+                                        then attribute selected { "selected" }
+                                        else ()
+                                    }
+                                    { $opt }
+                                    </option>
+                            }
+                            </select>
+                    } 
+                    </td>
+                    <td class="search-term"> 
+                        <jquery:input name="input{$pos}" value="{$field-chosen/string()}">
+                            <jquery:autocomplete url="autocomplete.xql"
+                                width="300" multiple="false"
+                                matchContains="false"
+                                paramsCallback="autocompleteCallback">
+                            </jquery:autocomplete>
+                        </jquery:input>
+                    </td>
+                    <td class="search-field">
+                        in 
+                        <select name="field{$pos}">
+                        {
+                            for $field-available in $biblio:FIELDS/field
+                                return
+                                    <option>
+                                        { if (($field-available/@name/string() eq $field-chosen/@name/string()) or ($field-available/@short-name/string() eq $field-chosen/@short-name/string())) then attribute selected { "selected" } else () } 
+                                        {$field-available/@name/string()}
+                                    </option>
+                        }
+                        </select>
+                    </td>
+                </tr>
+    )
 };
 
 (:~
-    Generate an XPath query string from the given XML representation
-    of the query.
+    Generate an XPath query expression from the XML representation of the query, $query-as-xml.
     $query-as-xml has the form:
     <query>
         <collection>/resources/commons/EAST</collection>
@@ -402,7 +390,11 @@ declare function biblio:form-from-query($node as node(), $params as element(para
             <field m="2" name="Title">buddhist</field>
         </and>
     </query>
-    The query is decomposed from the outside in, first treating the operators, and then the fields and the collection.
+    $query-as-xml is composed by biblio:prepare-query($id, $collection, 
+    $reload, $history, $clear, $filter, $mylist, $value) in biblio:query().
+    $query-as-xml gets stored in the session-attribute 'query'.
+    $query-as-xml is decomposed from the outside in, first treating the operators, 
+    then the fields and last the collection.
     An operator gathers together two fields or one field and one operator.
     The function is called from the outside in biblio:eval-query().
 :)
@@ -415,10 +407,10 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
             (:Search only for one ID at a time.:)
             (:NB: Hack to get around the piling up of search requests for IDs - only take the new request, $query-as-xml/*[2].
             The best solution would be to remove existing search fields when 
-                - requesting the editor (this ends in a search for an ID)
+                - requesting the editor (editing a records ends in a search for its ID)
                 - when clicking links to searches for ID (links marked "In:", "Catalogued content").
             :)
-            if ($query-as-xml/field[@name = ('the Record ID Field (MODS, VRA)', 'ID', 'the XLink Field (MODS)')]) 
+            if ($query-as-xml/field[@name = ('the Record ID Field (MODS, VRA)', 'the XLink Field (MODS)') or @short-name = ('ID', 'XLink')]) 
             then biblio:generate-query($query-as-xml/*[2])
             else
                 (
@@ -443,10 +435,11 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
             )
         (:Determine which field to search in: if a field has been specified, use it; otherwise default to "any Field (MODS, TEI, VRA)".:)
         case element(field) return
-            let $expr := $biblio:FIELDS/field[@name eq $query-as-xml/@name]/search-expression
+            let $expr := $biblio:FIELDS/field[@name eq $query-as-xml/@name or @short-name eq $query-as-xml/@short-name]/search-expression
             let $expr := 
                 if ($expr) 
                 then $expr
+                (:Default to a search in All if no search field is chosen, i.e. when Simple Search is used.:)
                 else $biblio:FIELDS/field[@name eq $biblio:FIELDS/field[1]/@name]/search-expression
             (:This results in expressions like:
             <field name="Title">mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]</field>.
@@ -541,19 +534,20 @@ declare function biblio:xml-query-to-string($query-as-xml as element()) as xs:st
     Process single form parameter. Called from biblio:process-form().
 :)
 declare function biblio:process-form-parameters($params as xs:string*) as element() {
-    (:Only take the new param.:)
+    (:Only take the new param. The form of params is "input1".:)
     let $param := $params[1]
     let $search-number := substring-after($param, 'input')
-    let $value := request:get-parameter($param, "")
+    (:This "param" is the search term, so get the search term for the param in question.:)
+    let $search-term := request:get-parameter($param, "")
     let $search-field := request:get-parameter(concat("field", $search-number), 'any Field (MODS, TEI, VRA)')
-    let $operator := request:get-parameter(concat("operator", $search-number), "and")
-    return
-        if (count($params) eq 1)
-        then <field m="{$search-number}" name="{$search-field}">{$value}</field>
-        else element { xs:QName($operator) } {
-                biblio:process-form-parameters(subsequence($params, 2)),
-                <field m="{$search-number}" name="{$search-field}">{$value}</field>
-            }
+    let $search-operator := request:get-parameter(concat("operator", $search-number), "and")
+        return
+            if (count($params) eq 1)
+            then <field m="{$search-number}" name="{$search-field}">{$search-term}</field>
+            else element { xs:QName($search-operator) } {
+                    biblio:process-form-parameters(subsequence($params, 2)),
+                    <field m="{$search-number}" name="{$search-field}" short-name="{$biblio:FIELDS/field[@name eq $search-field]/@short-name}">{$search-term}</field>
+                }
 };
 
 (:~
@@ -776,7 +770,9 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
             if ($search-format)
             then $search-format
             else 'MODS-TEI-VRA'
-        (:This is perhaps  little crude: if the format parameter does not contain a certain string, the corresponding namepsace is stripped from the search expression, leading to a search for the element in question in the emprt namespace.:)
+        (:If the format parameter does not contain a certain string, 
+        the corresponding namepsace is stripped from the search expression, 
+        leading to a search for the element in question in no namespace.:)
         let $query :=
             if (not(contains($search-format, 'MODS')))
             then replace($query, 'mods:', '')
@@ -789,6 +785,7 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
             if (not(contains($search-format, 'TEI')))
             then replace($query, 'tei:', '')
             else $query
+        
         let $sort := if ($sort) then $sort else session:get-attribute("sort")
         let $results := biblio:evaluate-query($query, $sort)
         let $results-vra-work := $results[vra:work]
@@ -1109,14 +1106,14 @@ declare function biblio:apply-filter($filter as xs:string, $value as xs:string) 
         then
             <query>
                 { $prevQuery/collection }
-                <field name="{$filter}">{$value}</field>
+                <field name="{$biblio:FIELDS/field[(@name, @short-name) = $filter]/@name}">{$value}</field>
             </query>
         else
             <query>
                 { $prevQuery/collection }
                 <and>
                 { $prevQuery/*[not(self::collection)] }
-                <field name="{$filter}">{$value}</field>
+                <field name="{$biblio:FIELDS/field[(@name, @short-name) = $filter]/@name}">{$value}</field>
                 </and>
             </query>
 };
@@ -1153,16 +1150,18 @@ query-tabs
 $param
 :
 :)
-declare function biblio:prepare-query($id as xs:string?, $collection as xs:string, $reload as xs:string?, $history as xs:string?, $clear as xs:string?, $filter as xs:string?, $mylist as xs:string?, $value as xs:string?) as element(query)? {
+declare function biblio:prepare-query($id as xs:string?, $collection as xs:string?, $reload as xs:string?, 
+    $history as xs:string?, $clear as xs:string?, $filter as xs:string?, $mylist as xs:string?, 
+    $value as xs:string?) as element(query)? {
     if ($id)
     then
         <query>
             <collection>{$config:mods-root}</collection>
-            <field m="1" name="Id">{$id}</field>
+            <field m="1" name="the Record ID Field (MODS, VRA)">{$id}</field>
         </query>
     else 
         if (empty($collection)) 
-        then () (: no parameters sent :)
+        then ()
         else 
             if ($reload) 
             then session:get-attribute('query')
@@ -1209,34 +1208,12 @@ declare function biblio:get-or-create-cached-results($mylist as xs:string?, $que
 
 declare function biblio:get-query-as-regex($query-as-xml) as xs:string { 
     let $query := $query-as-xml//field/text()
-    (:we prepare for later tokenization of expressions in boolean searches:)
+    (:We prepare for later tokenization of expressions in boolean searches 
+    by substituting spaces for the operators.:)
     let $query := 
         for $expression in $query
-        return 
-            replace(replace(replace($expression, '\sAND\s', ' '), '\sOR\s', ' '), '\sNOT\s', ' ')
-    (:we assume that '+' and '-' are only used for prefixing, so we strip them:)
-    (:actually, '-' may well be used within phrases, so these are not highlighted.:)
-    (:'[' and ']' are used in text range searches; we strip them as well:)
-    (:'{' and '}' are used in text range searches; we strip them as well:)
-    (:'^' is used for boosting; we strip it as well:)
-    (:we strip the parentheses, since they are not used in highlighting:)
-    (:we strip the fuzzy search postfix, since there is nothing we can do with it - leave a space after it to isolate any number following it.:)
-    (:ideally speaking, it should be checked if the characters in question occur in word-initial or word-final position, 
-    but any of them occurring elsewhere will make the query invalid.:)
-    let $query := 
-        for $expression in $query
-        return 
-            translate(translate(translate(translate(translate(translate(translate(translate(translate(translate($expression
-                , '\+', ' ')
-                , '\-', ' ')
-                , '\{', ' ')
-                , '\}', ' ')
-                , '\[', ' ')
-                , '\]', ' ')
-                , '\^', ' ')
-                , '(', ' ')
-                , ')', ' ')
-                , '\~', ' ')
+            return 
+                replace(replace(replace($expression, '\sAND\s', ' '), '\sOR\s', ' '), '\sNOT\s', ' ')
     (:we first go through the outer expression, to see if there are any phrase searches, then tokenize on spaces:)
     let $query := 
         for $expression in $query
@@ -1245,11 +1222,36 @@ declare function biblio:get-query-as-regex($query-as-xml) as xs:string {
             if (starts-with($expression, '"') and ends-with($expression, '"')) 
             then translate($expression, '"', '')
             else 
-                (:first tokenize the expressions created by replacement by space above:)
+                (:We assume that '+' and '-' are only used for prefixing, so we strip them:)
+                (:'[' and ']' are used in text range searches; we strip them as well:)
+                (:'{' and '}' are used in text range searches; we strip them as well:)
+                (:'^' is used for boosting; we strip it as well:)
+                (:We strip the parentheses, since they are not used in highlighting:)
+                (:We strip the fuzzy search postfix, since there is nothing we can do with it.
+                We leave a space after it to isolate any number following it.:)
+                (:Ideally speaking, it should be checked if the characters in question occur 
+                in word-initial or word-final position, but if any of them occur elsewhere, 
+                they will make the query invalid anyway, so there is actually no need to do this.:)
+                let $query := 
+                    for $expression in $query
+                    return 
+                        translate(translate(translate(translate(translate(translate(translate(translate(translate(translate($expression
+                            , '\+', ' ')
+                            , '\-', ' ')
+                            , '\{', ' ')
+                            , '\}', ' ')
+                            , '\[', ' ')
+                            , '\]', ' ')
+                            , '\^', ' ')
+                            , '(', ' ')
+                            , ')', ' ')
+                            , '\~', ' ')
+                (:First tokenize the expressions created by replacement by space above:)
                 let $query := tokenize(normalize-space($expression), ' ')
                     return
-                        (:then for each of these, replace the lucene wildcards with the corresponding regex wildcard 
-                        and wrap the resulatnt expression in regex word boundaries:)
+                        (:For each of the tokenized expression, 
+                        replace the lucene wildcards with the corresponding regex wildcard 
+                        and wrap the resultant expression in regex word boundaries:)
                         for $expression in $query
                             return
                                 concat(
@@ -1264,8 +1266,9 @@ declare function biblio:get-query-as-regex($query-as-xml) as xs:string {
                                     , '\*', '\\w*?')
                                     ,
                                     '\b')
-        let $query := string-join($query, '|')
-            return $query
+                (:Join all regex expressions with the or operator.:)
+                let $query := string-join($query, '|')
+                    return $query
 };
 
 
@@ -1273,7 +1276,10 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     session:create()
     ,
     (: We receive an HTML template as input :)
+    (:the search field passed in the url:)
     let $filter := request:get-parameter("filter", ())
+    (:the search term passed in the url:)
+    let $value := request:get-parameter("value", ())
     let $history := request:get-parameter("history", ())
     let $reload := request:get-parameter("reload", ())
     let $clear := request:get-parameter("clear", ())
@@ -1282,8 +1288,6 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     let $collection := uu:escape-collection-path(request:get-parameter("collection", $config:mods-root))
     let $collection := if (starts-with($collection, "/db")) then $collection else concat("/db", $collection)
     let $id := request:get-parameter("id", ())
-    (:the search term passed in the url:)
-    let $value := request:get-parameter("value",())
     let $sort := request:get-parameter("sort", ())
 
     (: Process request parameters and generate an XML representation of the query :)
