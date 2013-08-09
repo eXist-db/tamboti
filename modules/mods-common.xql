@@ -69,10 +69,10 @@ declare function mods-common:clean-up-punctuation($element as node()) as node() 
 					(:, '\s*\)', ')'):) (:, '\s*;', ';'):) (:, ',,', ','):) (:, '”\.', '.”'):) (:, '\. ,', ','):) (:, ',\s*\.', ''):) (:,'\.\.', '.'):) (:,'\.”,', ',”'):)
 					, '\s*\.', '.')
 					, '\s*,', ',')
-					, ' :', ':')
-					, ' ”', '”')
+					, '\s*:', ':')
+					, '\s*”', '”')
 					, '\.\.', '.')
-					, '“ ', '“')
+					, '“\s*', '“')
 					, '\?\.', '?')
 					, '!\.', '!')
 					,'\.”\.', '.”')
@@ -351,9 +351,10 @@ let $type :=
     	        	)
             else $title
         let $title := mods-common:clean-up-punctuation(<span xmlns="http://www.w3.org/1999/xhtml" class="title">{$title}</span>)
-        let $title := util:parse-html(concat('&lt;span>', $title, '</span>'))
-        return
-            $title
+        let $title := concat('&lt;span>', $title, '</span>')
+        let $title := string(util:parse-html($title))
+            return
+                $title
             }
         
         </td>
@@ -440,8 +441,8 @@ declare function mods-common:get-short-title($entry as element()) {
         else ()
         )
     let $title-formatted := string-join($title-formatted, '')
-    let $title-formatted := concat('&lt;span>', $title-formatted, '</span>')
-    let $title-formatted := util:parse-html($title-formatted)
+    (:let $title-formatted := concat('&lt;span>', $title-formatted, '</span>'):)
+    let $title-formatted := string(util:parse-html($title-formatted))
     
     let $title-transliterated-formatted := 
         (

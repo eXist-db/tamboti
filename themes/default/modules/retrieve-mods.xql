@@ -415,7 +415,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     (: abstract :)
     for $abstract in ($entry/mods:abstract)
         let $abstract := concat('&lt;span>', $abstract, '</span>')
-        let $abstract := util:parse-html($abstract)    
+        let $abstract := string(util:parse-html($abstract))    
             return
                 mods-common:simple-row($abstract, 'Abstract')
     ,
@@ -428,9 +428,10 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     (: The following serves to render html markup in Zotero exports. Stylesheet should be changed to accommodate standard markup. :)
     (:NB: Do $double-escapes occur?:)
     (:let $text := replace(replace(replace($text, '&amp;nbsp;', '&#160;'), '&amp;gt;', '&gt;'), '&amp;lt;', '&lt;'):)
-    let $text := concat('&lt;span>', $text, '</span>')    
+    let $text := concat('&lt;span>', $text, '</span>')
+    let $text := util:parse-html($text)    
     return        
-        mods-common:simple-row(util:parse-html($text)
+        mods-common:simple-row($text
 	    , 
 	    concat('Note', 
 	        concat(
@@ -613,7 +614,6 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
 :)
 declare function retrieve-mods:format-list-view($position as xs:string, $entry as element(mods:mods), $collection-short as xs:string) as element(span) {
 	let $entry := mods-common:remove-parent-with-missing-required-node($entry)
-	let $log := util:log("DEBUG", ("##$entry): ", $entry))
 	(:let $log := util:log("DEBUG", ("##$ID): ", $entry/@ID/string())):)
 	let $global-transliteration := $entry/mods:extension/ext:transliterationOfResource/text()
 	let $global-language := $entry/mods:language[1]/mods:languageTerm[1]/text()
