@@ -197,6 +197,21 @@ declare variable $biblio:FIELDS :=
         </search-expression>
         <targets/>
     </field>
+    <!--allow the short form of the field label to be used in stable links-->
+    <field name="ID">
+        <search-expression>
+            (
+            mods:mods[@ID eq '$q']
+            union
+            vra:vra[vra:collection/@id eq '$q']
+            union
+            vra:vra[vra:work/@id eq '$q']
+            union
+            vra:vra[vra:image/@id eq '$q']
+            )
+        </search-expression>
+        <targets/>
+    </field>
     <field name="the Resource Identifier Field (MODS)">
         <search-expression>
             mods:mods[mods:identifier = '$q']
@@ -362,7 +377,7 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                 in 
                 <select name="field{$pos}">
                 {
-                    for $f in $biblio:FIELDS/field
+                    for $f in $biblio:FIELDS/field[@name ne 'ID']
                     return
                         <option>
                             { if ($f/@name eq $field/@name) then attribute selected { "selected" } else () } 
@@ -403,7 +418,7 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 - requesting the editor (this ends in a search for an ID)
                 - when clicking links to searches for ID (links marked "In:", "Catalogued content").
             :)
-            if ($query-as-xml/field[@name = ('the Record ID Field (MODS, VRA)', 'the XLink Field (MODS)')]) 
+            if ($query-as-xml/field[@name = ('the Record ID Field (MODS, VRA)', 'ID', 'the XLink Field (MODS)')]) 
             then biblio:generate-query($query-as-xml/*[2])
             else
                 (
@@ -439,7 +454,7 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
             
             (: When searching for ID and xlink:href, do not use the chosen collection-path, but search throughout all of /resources. :)
             let $collection-path := 
-                if ($expr/@name = ('the Record ID Field (MODS, VRA)', 'the XLink Field (MODS)')) 
+                if ($expr/@name = ('the Record ID Field (MODS, VRA)', 'ID', 'the XLink Field (MODS)')) 
                 then '/resources'
                 else $query-as-xml/ancestor::query/collection/string()
             let $collection :=
