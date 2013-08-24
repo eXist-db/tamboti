@@ -197,6 +197,21 @@ declare variable $biblio:FIELDS :=
         </search-expression>
         <targets/>
     </field>
+    <!--allow the short form of the field label to be used in stable links-->
+    <!--<field name="ID">
+        <search-expression>
+            (
+            mods:mods[@ID eq '$q']
+            union
+            vra:vra[vra:collection/@id eq '$q']
+            union
+            vra:vra[vra:work/@id eq '$q']
+            union
+            vra:vra[vra:image/@id eq '$q']
+            )
+        </search-expression>
+        <targets/>
+    </field>-->
     <field name="the Resource Identifier Field (MODS)" short-name="Identifier">
         <search-expression>
             mods:mods[mods:identifier = '$q']
@@ -764,7 +779,7 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
     then
         let $search-format := request:get-parameter("format", '')
         let $query := string-join(biblio:generate-query($query-as-xml), '')
-        
+
         (:Simple search does not have the parameter format, but should search in all formats.:)
         let $search-format := 
             if ($search-format)
@@ -789,11 +804,23 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
         let $sort := if ($sort) then $sort else session:get-attribute("sort")
         let $results := biblio:evaluate-query($query, $sort)
         let $results-vra-work := $results[vra:work]
-        let $results-vra-image := $results[vra:image]
-        (:by not capturing vra:collection we filter away these records:)
-        let $results-vra-image-work := $results-vra-image/vra:image/vra:relationSet/vra:relation[@type eq "imageOf"]/@relids
-        let $results-vra-image-work := collection($config:mods-root)//vra:work[@id = $results-vra-image-work]/..
-        let $results-vra := ($results-vra-work union $results-vra-image-work)
+        let $results-vra-image := 
+            (:treat vra:image records only if there is a search term in the query; 
+            otherwise empty searches will be slowed down by finding all work records for all image records:)
+            (:NB: searches exclusively in extracted text from vra:image records are omitted, since these proceed through "ft:search('page:$q')", i.e. do not contain a "[":)
+            if (contains($query, '['))
+            then $results[vra:image]
+            else ()
+        (:since vra:collection are not captured, these are in effect filtered away:)
+        let $results-vra-image := 
+            if ($results-vra-image)
+            then $results-vra-image/vra:image/vra:relationSet/vra:relation[@type eq "imageOf"]/@relids
+            else ()
+        let $results-vra-image := 
+            if ($results-vra-image)
+            then collection($config:mods-root)//vra:work[@id = $results-vra-image]/..
+            else ()
+        let $results-vra := ($results-vra-work union $results-vra-image)
         (:we assume that all mods records will have a titleInfo element - otherwise we cannot process them:)
         let $results-mods := $results[mods:titleInfo]
         (:we will have tei objects returned that are not whole documents, so this has to be filtered by namespace, but using namespace-uri() is too expensive:)
