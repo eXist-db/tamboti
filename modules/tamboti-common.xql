@@ -2,6 +2,8 @@ xquery version "3.0";
 
 module namespace tamboti-common="http://exist-db.org/tamboti/common";
 
+declare namespace mods="http://www.loc.gov/mods/v3";
+
 (:
 tamboti-common:get-query-as-regex
 tamboti-common:highlight-matches()
@@ -20,7 +22,7 @@ functx:trim()
 
 (:~
 : The tamboti-common:highlight-matches function highlights the search result in detail view with the search string, including 
-: searches made with wildcards. Slightly adapted from Joe Wicentowski's function in order to dealt with Lucene casing.
+: searches made with wildcards. Slightly adapted from Joe Wicentowski's function in order to deal with Lucene casing.
 : @author Joe Wicentowski
 : @param $nodes the search result to apply highlighting to
 : @param $pattern the regex used for applying highlighting
