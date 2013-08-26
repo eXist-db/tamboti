@@ -192,7 +192,7 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
                             (
                                 let $image := collection($config:mods-root)//vra:image[@id=data($entry//mods:url)]
                                 return 
-                                   <p>{local:return-thumbnail($image)}</p>
+                                   <p>{local:return-thumbnail-detail-view($image)}</p>
                   
                             )
                             else()
@@ -230,18 +230,14 @@ declare function local:basic-get-http($uri,$username,$password) {
     </headers>
   return httpclient:get(xs:anyURI($uri),false(), $headers)
 };
-declare function local:return-thumbnail($image){
-(:
-let $image-name := $image/@href
-let $image-suffix := fn:tokenize($image-name,'.')[2]
-let $image-url := <img src="{
-                        concat('data:image/',$image-suffix,';base64,',local:basic-get-http(concat(request:get-scheme(),'://',request:get-server-name(),':',request:get-server-port(),request:get-context-path(),'/rest', util:collection-name($image),"/" ,$image-name),$bs:USER,$bs:USERPASS)
-                        )
-                        }"  width="200px"/>
-:)
-let $image-url := <img src="{concat($config:image-service-url, $image/@id)}?width=150" alt="" class="relatedImage"/>
+declare function local:return-thumbnail-detail-view($image){
+    let $image-url := <img src="{concat($config:image-service-url, $image/@id)}?width=150" alt="" class="relatedImage"/>
+        return $image-url
+};
 
-return $image-url
+declare function local:return-thumbnail-list-view($image){
+    let $image-url := <img src="{concat($config:image-service-url,$image/@id)}?width=40&amp;height=40&amp;crop_type=middle" alt="" class="relatedImage"/>
+        return $image-url
 };
 
 declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos as xs:int) {
@@ -279,11 +275,11 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
                         (:return <img src="{$entry/@relids}"/>:)
                         let $image := collection($config:mods-root)//vra:image[@id=$entry/@relids]
                             return
-                                <p>{local:return-thumbnail($image)}</p>
+                                <p>{local:return-thumbnail-detail-view($image)}</p>
                     else 
                         let $image := collection($config:mods-root)//vra:image[@id=$id]
                             return
-                                <p>{local:return-thumbnail($image)}</p>
+                                <p>{local:return-thumbnail-detail-view($image)}</p>
                      (: 
                      return <img src="{concat(request:get-scheme(),'://',request:get-server-name(),':',request:get-server-port(),request:get-context-path(),'/rest', util:collection-name($image),"/" ,$image-name)}"  width="200px"/>
                      :)               
@@ -356,6 +352,7 @@ declare function bs:mods-list-view-table($item as node(), $currentPos as xs:int)
             <td class="list-type icon magnify">
             { bs:get-icon($bs:THUMB_SIZE_FOR_GALLERY, $item, $currentPos)}
             </td>
+            <td/>
             {
             <td class="pagination-toggle">
                 <abbr class="unapi-id" title="{bs:get-item-uri($item/@ID)}"></abbr>
@@ -399,6 +396,15 @@ declare function bs:vra-list-view-table($item as node(), $currentPos as xs:int) 
                 </td>
                 }
                 <td class="list-type" style="vertical-align:middle"><img src="theme/images/image.png" title="Still Image"/></td>
+                { 
+                let $relids := $item//vra:relation/@relids
+                (:NB: relids can hold multiple values; the image record with @pref on vra:relation is "true".
+                For now, we disregard this; otherwise we have to check after retrieving the image records.:)
+                let $relids := tokenize($relids, ' ')[1]
+                let $image := collection($config:mods-root)//vra:image[@id = $relids]
+                    return
+                        <td class="list-image">{local:return-thumbnail-list-view($image)}</td>               
+    }
                 {
                 <td class="pagination-toggle" style="vertical-align:middle">
                     <!--Zotero does not import vra records <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>-->
@@ -438,6 +444,7 @@ declare function bs:tei-list-view-table($item as node(), $currentPos as xs:int) 
             <td class="list-type icon magnify">
             { bs:get-icon($bs:THUMB_SIZE_FOR_GALLERY, $item, $currentPos)}
             </td>
+            <td/>
             {
             <td class="pagination-toggle">
                 <!--Zotero does not import tei records <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>-->
