@@ -197,21 +197,6 @@ declare variable $biblio:FIELDS :=
         </search-expression>
         <targets/>
     </field>
-    <!--allow the short form of the field label to be used in stable links-->
-    <!--<field name="ID">
-        <search-expression>
-            (
-            mods:mods[@ID eq '$q']
-            union
-            vra:vra[vra:collection/@id eq '$q']
-            union
-            vra:vra[vra:work/@id eq '$q']
-            union
-            vra:vra[vra:image/@id eq '$q']
-            )
-        </search-expression>
-        <targets/>
-    </field>-->
     <field name="the Resource Identifier Field (MODS)" short-name="Identifier">
         <search-expression>
             mods:mods[mods:identifier = '$q']
