@@ -121,7 +121,7 @@ for $mods-record in $input/mods:modsCollection/*
     let $template := 
         if ($mods-record/mods:genre[@authority eq 'local'] eq 'book')
         then 
-            <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://exist-db.org/mods/extension">
+            <extension xmlns="http://www.loc.gov/mods/v3">
                 <ext:template>monograph-latin</ext:template>
                 <ext:transliterationOfResource/>
                 <ext:catalogingStage/>
@@ -129,7 +129,7 @@ for $mods-record in $input/mods:modsCollection/*
         else
             if ($mods-record/mods:genre[@authority eq 'local'] eq 'journalArticle')
             then 
-                <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://exist-db.org/mods/extension">
+                <extension xmlns="http://www.loc.gov/mods/v3">
                     <ext:template>article-in-periodical-latin</ext:template>
                     <ext:transliterationOfResource/>
                     <ext:catalogingStage/>
@@ -137,7 +137,7 @@ for $mods-record in $input/mods:modsCollection/*
             else
                 if ($mods-record/mods:genre[@authority eq 'local'] eq 'bookSection')
                 then 
-                    <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://exist-db.org/mods/extension">
+                    <extension xmlns="http://www.loc.gov/mods/v3">
                         <ext:template>contribution-to-edited-volume-latin</ext:template>
                         <ext:transliterationOfResource/>
                         <ext:catalogingStage/>
@@ -146,13 +146,13 @@ for $mods-record in $input/mods:modsCollection/*
                 else 
                     if ($mods-record/mods:genre[@authority eq 'local'] eq 'conferencePaper')
                     then 
-                        <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://exist-db.org/mods/extension">
+                        <extension xmlns="http://www.loc.gov/mods/v3">
                             <ext:template>contribution-to-edited-volume-latin</ext:template>
                             <ext:transliterationOfResource/>
                             <ext:catalogingStage/>
                         </extension>
                     else
-                        <extension xmlns="http://www.loc.gov/mods/v3" xmlns:e="http://exist-db.org/mods/extension">
+                        <extension xmlns="http://www.loc.gov/mods/v3">
                             <ext:template/>
                             <ext:transliterationOfResource/>
                             <ext:catalogingStage/>
