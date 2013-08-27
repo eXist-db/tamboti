@@ -385,8 +385,6 @@ End list of "top level" MODS elements
                             <xs:attribute name="type" type="xs:string"/>
                             <xs:attributeGroup ref="xlink:simpleLink"/>
                             <xs:attribute name="ID" type="xs:ID"/>
-                            <!-- the following added to Cluster schema -->
-                            <xs:attribute name="resp" type="xs:string"/>
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
@@ -592,6 +590,8 @@ The presence of <etal> Indicates that there are names that cannot be explicitily
                 <xs:attributeGroup ref="xlink:simpleLink"/>
                 <xs:attribute name="ID" type="xs:ID"/>
                 <xs:attribute name="altRepGroup" type="xs:string"/>
+                <!-- the following added to Cluster schema -->
+                <xs:attribute name="resp" type="xs:string"/>
             </xs:extension>
 			<!-- -->
 			<!-- typeURI attribute added in version 3.5 -->
