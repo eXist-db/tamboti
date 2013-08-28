@@ -40,6 +40,7 @@ declare variable $not-writeable-folder-icon := "../skin/ltFld.locked.png";
 declare variable $writeable-and-shared-folder-icon := "../skin/ltFld.page.link.png";
 declare variable $not-writeable-and-shared-folder-icon := "../skin/ltFld.locked.link.png";
 declare variable $commons-folder-icon := "../skin/ltFld.png";
+declare variable $collections-to-skip := ('VRA_images');
 
 (:~
 : Outputs details about a collection as a tree-node
@@ -209,7 +210,8 @@ declare function col:get-collection($collection-path as xs:string) as element(js
                 else ()
             else()
         return
-            (: output the collection :)
+        if ($name = $collections-to-skip) then () else
+        (: output the collection :)
             <json:value>
             {
                 col:create-tree-node($name, $collection-path, true(), (), $tooltip, $can-write, (), false(), $has-children, ())/child::node()
