@@ -185,7 +185,7 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
                 {
                    let $image-return :=
                    for $entry in $results
-                         let $image-is-preview := $entry//mods:typeOfResource eq 'still image' and  $entry//mods:url[@access='preview']
+                         let $image-is-preview := $entry//mods:typeOfResource eq 'still image' and  $entry//mods:url[@access eq 'preview']
                             let $print-image :=
                             if ($image-is-preview)
                             then 

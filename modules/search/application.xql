@@ -492,6 +492,7 @@ declare function biblio:normalize-search-string($search-string as xs:string?) as
 	let $search-string := replace($search-string, "'", "''")
 	let $search-string := translate($search-string, ":", " ")
 	let $search-string := translate($search-string, "&amp;", " ")
+	let $search-string := translate($search-string, "＋", "+")
     	return $search-string
 };
 
@@ -1234,32 +1235,45 @@ declare function biblio:get-query-as-regex($query-as-xml) as xs:string {
             if (starts-with($expression, '"') and ends-with($expression, '"')) 
             then translate($expression, '"', '')
             else 
-                (:We assume that '+' and '-' are only used for prefixing, so we strip them:)
+                (:We assume that '+' is only used for prefixing, so we strip it:)
+                (:We assume that initial '-' is only used for prefixing, so we strip it:)
+                (:NB: the (Chinese) character "＋" is stripped as well. It has the same semantics in Lucene searches as "+". 
+                It is used to pass "+" into the URL - otherwise, "+" is converted into a space in the browser:)
                 (:'[' and ']' are used in text range searches; we strip them as well:)
                 (:'{' and '}' are used in text range searches; we strip them as well:)
                 (:'^' is used for boosting; we strip it as well:)
+                (:Punctuation used in the formatting of names is deleted.:) 
                 (:We strip the parentheses, since they are not used in highlighting:)
                 (:We strip the fuzzy search postfix, since there is nothing we can do with it.
                 We leave a space after it to isolate any number following it.:)
                 (:Ideally speaking, it should be checked if the characters in question occur 
                 in word-initial or word-final position, but if any of them occur elsewhere, 
                 they will make the query invalid anyway, so there is actually no need to do this.:)
+                (:Since a final period is itself treated as whitespace, it is removed, since otherwise it would reseult in expressions
+                sunce as "\bW.\b" which do not highlight.:)
+                (:let $log := util:log("DEBUG", ("##$query1): ", $query)):)
                 let $query := 
                     for $expression in $query
-                    return 
-                        translate(translate(translate(translate(translate(translate(translate(translate(translate(translate($expression
-                            , '\+', ' ')
-                            , '\-', ' ')
-                            , '\{', ' ')
-                            , '\}', ' ')
-                            , '\[', ' ')
-                            , '\]', ' ')
-                            , '\^', ' ')
-                            , '(', ' ')
-                            , ')', ' ')
-                            , '\~', ' ')
+                        return 
+                            normalize-space(
+                            translate(translate(translate(translate(translate(translate(translate(translate(translate(translate(translate(translate(translate($expression
+                                , '\+', ' ')
+                                , '＋', ' ')
+                                , '^\-', ' ') (:appears to strip all hyphens:)
+                                , '\{', ' ')
+                                , '\}', ' ')
+                                , '\[', ' ')
+                                , '\]', ' ')
+                                , '\^', ' ')
+                                , '(', ' ')
+                                , ')', ' ')
+                                , '\~', ' ')
+                                , ',', ' ')
+                                , '\.^', ' ') (:appears to strip all periods:)
+                            )
                 (:First tokenize the expressions created by replacement by space above:)
-                let $query := tokenize(normalize-space($expression), ' ')
+                (:let $log := util:log("DEBUG", ("##$query2): ", $query)):)
+                let $query := tokenize($query, ' ') 
                     return
                         (:For each of the tokenized expression, 
                         replace the lucene wildcards with the corresponding regex wildcard 
@@ -1280,6 +1294,7 @@ declare function biblio:get-query-as-regex($query-as-xml) as xs:string {
                                     '\b')
                 (:Join all regex expressions with the or operator.:)
                 let $query := string-join($query, '|')
+                (:let $log := util:log("DEBUG", ("##$query3): ", $query)):)
                     return $query
 };
 
