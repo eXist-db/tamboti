@@ -3,6 +3,7 @@ declare namespace util="http://exist-db.org/xquery/util";
 declare namespace xmldb="http://exist-db.org/xquery/xmldb";
 declare namespace functx = "http:/www.functx.com";
 declare namespace mods="http://www.loc.gov/mods/v3";
+declare namespace ext="http://exist-db.org/mods/extension";
 
 
 declare option exist:serialize "method=xml media-type=text/xml omit-xml-declaration=yes indent=yes";
@@ -92,7 +93,7 @@ declare function local:remove-elements($nodes as node()*, $remove as xs:anyAtomi
  } ;
 
 
-let $input := doc('/db/test/in/PPColl.jens.xml')
+let $input := doc('/db/test/in/modsCollection.xml')
   
 for $mods-record in $input/mods:modsCollection/*
     let $seed1 := $mods-record/mods:location/mods:url[@usage eq "primary display"]/string()
@@ -121,5 +122,45 @@ for $mods-record in $input/mods:modsCollection/*
               	</languageOfCataloging>
           	</recordInfo>
     let $mods-record := local:insert-element($mods-record, $record-info, 'mods', 'last-child')
+        let $template := 
+        if ($mods-record/mods:genre[@authority eq 'local'] eq 'book')
+        then 
+            <extension xmlns="http://www.loc.gov/mods/v3">
+                <ext:template>monograph-latin</ext:template>
+                <ext:transliterationOfResource/>
+                <ext:catalogingStage/>
+            </extension>
+        else
+            if ($mods-record/mods:genre[@authority eq 'local'] eq 'journalArticle')
+            then 
+                <extension xmlns="http://www.loc.gov/mods/v3">
+                    <ext:template>article-in-periodical-latin</ext:template>
+                    <ext:transliterationOfResource/>
+                    <ext:catalogingStage/>
+                </extension>
+            else
+                if ($mods-record/mods:genre[@authority eq 'local'] eq 'bookSection')
+                then 
+                    <extension xmlns="http://www.loc.gov/mods/v3">
+                        <ext:template>contribution-to-edited-volume-latin</ext:template>
+                        <ext:transliterationOfResource/>
+                        <ext:catalogingStage/>
+                    </extension>
+
+                else 
+                    if ($mods-record/mods:genre[@authority eq 'local'] eq 'conferencePaper')
+                    then 
+                        <extension xmlns="http://www.loc.gov/mods/v3">
+                            <ext:template>contribution-to-edited-volume-latin</ext:template>
+                            <ext:transliterationOfResource/>
+                            <ext:catalogingStage/>
+                        </extension>
+                    else
+                        <extension xmlns="http://www.loc.gov/mods/v3">
+                            <ext:template/>
+                            <ext:transliterationOfResource/>
+                            <ext:catalogingStage/>
+                        </extension>
+    let $mods-record := local:insert-element($mods-record, $template, 'mods', 'last-child')
         return
             xmldb:store($out-collection,  concat($myuid, ".xml"), $mods-record)
