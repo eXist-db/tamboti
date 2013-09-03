@@ -55,7 +55,7 @@ declare function op:create-collection($parent as xs:string, $name as xs:string) 
         (:escaped:)
 
         (: just the owner has full access - to start with :)
-        let $null := sm:chmod(xs:anyURI($collection), "rwx--x---")
+        let $null := sm:chmod(xs:anyURI($collection), "rwxr-xr-x")
         
         (:
         if this collection was created
