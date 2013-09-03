@@ -351,8 +351,8 @@ let $type :=
     	        	)
             else $title
         let $title := mods-common:clean-up-punctuation(<span xmlns="http://www.w3.org/1999/xhtml" class="title">{$title}</span>)
-        let $title := concat('&lt;span>', $title, '</span>')
-        let $title := string(util:parse-html($title))
+        let $title := concat('<span>', $title, '</span>')
+        let $title := util:parse($title)
             return
                 $title
             }
@@ -419,7 +419,7 @@ declare function mods-common:get-short-title($entry as element()) {
         
     (: Format each of the three kinds of titleInfo. :)
     let $title-formatted := 
-        (
+        concat(
         if (string($nonSort))
         (: NB: This assumes that nonSort is not used in Asian scripts; otherwise we would have to avoid the space by checking the language. :)
         then concat($nonSort, ' ' , $title)
@@ -440,10 +440,8 @@ declare function mods-common:get-short-title($entry as element()) {
             		
         else ()
         )
-    let $title-formatted := string-join($title-formatted, '')
-    (:let $title-formatted := concat('&lt;span>', $title-formatted, '</span>'):)
-    let $title-formatted := string(util:parse-html($title-formatted))
-    
+    let $title-formatted := concat('<span>', $title-formatted, '</span>')
+    let $title-formatted := util:parse($title-formatted)
     let $title-transliterated-formatted := 
         (
         if (string($nonSort-transliterated)) 
@@ -489,7 +487,7 @@ declare function mods-common:get-short-title($entry as element()) {
     let $title-translated-formatted := string-join($title-translated-formatted, '')
     
     (: Assemble the full short title to display. :)
-    return
+    let $title :=
         ( 
 		if ($title-transliterated)
 		(: It is standard (at least in Sinology and Japanology) to first render the transliterated title, then the title in native script. :)
@@ -505,7 +503,7 @@ declare function mods-common:get-short-title($entry as element()) {
         	   or exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part[1]/mods:detail[1]/mods:number[1]) 
         	   (: NB: Faulty Zotero export has mods:text here; delete when Zotero has corrected this. :)
         	   or exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part[1]/mods:detail[1]/mods:text[1]))
-    	   then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">“{$title-formatted}”</span>
+    	   then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">{$title-formatted}</span>
     	   else <span xmlns="http://www.w3.org/1999/xhtml" class="title">{$title-formatted}</span>
         ,
         if ($title-translated)
@@ -514,6 +512,8 @@ declare function mods-common:get-short-title($entry as element()) {
         then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics"> ({$title-translated-formatted})</span>
         else ()
         )
+        return 
+            $title
 };
 
 (:~
@@ -702,11 +702,7 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
             if ($name-type = ('corporate', 'family', '')) 
             then
                 let $name-link := string-join($name/mods:namePart, ' ')
-                let $name-link := tokenize($name-link, ' ')
-		        let $name-link := 
-                    string-join(for $name-link-part in $name-link
-		                 return concat('＋', $name-link-part, ' '), '')
-                let $name-link := concat(replace(request:get-url(), '/retrieve', '/index.html') ,"?filter=Name&amp;value=", $name-link)
+                let $name-link := concat(replace(request:get-url(), '/retrieve', '/index.html') ,"?collection=/resources/&amp;default-operator=and&amp;filter=Name&amp;value=", $name-link)
                 return
                 <span>
                     <span class="name">{
@@ -725,8 +721,8 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                         , ', ')
                         )
                     }</span>
-                    <a class="name-link" href="{$name-link}" title="Search for more records with the same person or institution">
-                        (more …)
+                    <a class="name-link" href="{$name-link}" title="Search for all records with the same person or institution">
+                        (find all records)
                     </a>
                 </span>
             else
@@ -880,13 +876,7 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                     let $name-in-non-latin-script-link := string-join($name-in-non-latin-script/mods:namePart, ' ')
                     let $name-link := concat($name-basic-link, ' ' , $name-in-non-latin-script-link, ' ', $name-in-transliteration-link)  
                     let $name-link := normalize-space($name-link)
-                    let $name-link := tokenize($name-link, ' ') 
-                    let $name-link := 
-                        string-join(
-                            for $name-part in $name-link
-                                return concat('＋', $name-part, ' ')
-                                , '')
-                    let $name-link := concat(replace(request:get-url(), '/retrieve', '/index.html') ,"?filter=Name&amp;value=", $name-link) 
+                    let $name-link := concat(replace(request:get-url(), '/retrieve', '/index.html') ,"?collection=/resources/&amp;default-operator=and&amp;filter=Name&amp;value=", $name-link) 
                     
                     (: We assume that there is only one date name part in $name-basic. 
                     Date name parts with transliteration and script are rather theoretical. 
@@ -1211,8 +1201,8 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                                 $name-date
                                 )
                                 }</span>
-                                <a class="name-link" href="{$name-link}" title="Search for more records with the same person or institution">
-                                    (more …)
+                                <a class="name-link" href="{$name-link}" title="Search for all records with the same person or institution">
+                                    (find all records)
                                 </a>
                             </span>
 
