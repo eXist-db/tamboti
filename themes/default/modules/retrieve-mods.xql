@@ -35,7 +35,7 @@ declare option exist:serialize "media-type=text/xml";
 : @param $arg the string to substring
 : @param $regex the regular expression (string)
 : @return xs:string?
-: @see http://www.xqueryfunctions.com/xq/functx_substring-before-last-match.html 
+: @see http://www.xqueryfunctions.com/xq/functx:substring-before-last-match.html 
 :)
 declare function functx:substring-before-last-match($arg as xs:string, $regex as xs:string) as xs:string? {       
    replace($arg,concat('^(.*)',$regex,'.*'),'$1')

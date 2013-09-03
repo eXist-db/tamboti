@@ -12,11 +12,6 @@ declare variable $retrieve-vra:primary-roles := ('aut', 'author', 'cre', 'creato
 
 declare option exist:serialize "media-type=text/xml";
 
-declare function local:return-thumbnail($image){
-    let $image-url := <img src="{concat($config:image-service-url,$image/@id)}?width=40&amp;height=40&amp;crop_type=middle" alt="" class="relatedImage"/>
-        return $image-url
-};
-
 (:~
 : The functx:substring-before-last-match function returns the part of $arg that appears before the last match of $regex. 
 : If $arg does not match $regex, the entire $arg is returned. 
@@ -291,19 +286,7 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
 :)
 declare function retrieve-vra:format-list-view($position as xs:string, $entry as element(vra:vra), $collection-short as xs:string) as element(span) {
     let $result :=
-    <span class="vra-record">
-     
-    { 
-    let $relids := $entry//vra:relation/@relids
-    (:NB: relids can hold multiple values; the image record with @pref on vra:relation is "true".
-    For now, we disregard this; otherwise we have to check after retrieving the image records.:)
-    let $relids := tokenize($relids, ' ')[1]
-    (:let $log := util:log("DEBUG", ("##$relids): ", $relids)):)
-    let $image := collection($config:mods-root)//vra:image[@id = $relids]
-    (:let $log := util:log("DEBUG", ("##$image): ", $image)):)
-        return
-            <span class="list-image">{local:return-thumbnail($image)}</span>               
-    }
+    <div class="vra-record">
     
     <span class="agent">
     {
@@ -321,7 +304,11 @@ declare function retrieve-vra:format-list-view($position as xs:string, $entry as
     }   
     </span>
     
-    <span class="title">{string-join($entry//vra:titleSet/vra:title/text(), ' ')}</span> 
+    <span class="title">
+        {string-join($entry//vra:titleSet/vra:title/text(), ' ')}
+    </span> 
+    
+    <span class="date">
     {
     let $earliestDate := $entry//vra:dateSet/vra:date[@type eq 'creation']/vra:earliestDate
     let $earliestDate := 
@@ -351,12 +338,13 @@ declare function retrieve-vra:format-list-view($position as xs:string, $entry as
             else ($earliestDate, $latestDate)
     (:let $log := util:log("DEBUG", ("##$date): ", $date)):)
     return
-    if ($date) then
-    <span class="date"> ({functx:substring-before-last-match($date, 'T')})</span>
-    else ()
+        if ($date) 
+        then functx:substring-before-last-match($date, 'T')
+        else ()
     }
     </span>
-    let $result := <span xmlns="http://www.w3.org/1999/xhtml" class="record">{$result}</span>
+    </div>
+    
     let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
     let $regex := session:get-attribute('regex')
     let $result := 
