@@ -306,6 +306,7 @@ declare variable $biblio:DEFAULT_QUERY :=
 declare function biblio:form-from-query($node as node(), $params as element(parameters)?, $model as item()*) as element()+ {
     let $incoming-query := $model[1]
     let $search-format := request:get-parameter("format", '')
+    let $default-operator := request:get-parameter("default-operator", '')
     let $query := 
         if ($incoming-query//field) 
         then $incoming-query 
@@ -326,10 +327,15 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                 </select>
                 format, using the
                 <select name="default-operator">
-                        <option>or</option>
-                        <option>and</option>
+                { for $operator in ('or', 'and')
+                    return
+                        <option>
+                            { if ($operator eq $default-operator) then attribute selected { "selected" } else () } 
+                            {$operator}
+                        </option>
+                }        
                 </select>
-                search operator, with
+                search operator, searching for
             </td>
             
         </tr>
@@ -1256,7 +1262,7 @@ declare function biblio:get-or-create-cached-results($mylist as xs:string?, $que
 };
 
 declare function biblio:get-query-as-regex($query-as-xml) as xs:string { 
-    let $query := $query-as-xml//field/text()
+    let $query := string-join($query-as-xml//field, ' ')
     (:We prepare for later tokenization of expressions in boolean searches 
     by substituting spaces for the operators.:)
     let $query := 
