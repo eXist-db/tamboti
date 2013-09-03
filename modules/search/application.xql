@@ -324,7 +324,15 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                         </option>
                     }
                 </select>
-                format with</td></tr>
+                format, using the
+                <select name="default-operator">
+                        <option>or</option>
+                        <option>and</option>
+                </select>
+                search operator, with
+            </td>
+            
+        </tr>
     ,
         for $field-chosen at $pos in $query//field
             return
@@ -705,10 +713,17 @@ declare function biblio:evaluate-query($query-as-string as xs:string, $sort as x
             concat("for $hit in ", $query-as-string, " order by ", $order-by-expression, " return $hit")
         else
             $query-as-string
+    let $options := request:get-parameter("default-operator", '')
     let $options :=
-        <options>
-            <default-operator>or</default-operator>
-        </options>
+        if ($options eq 'and')
+        then
+            <options>
+                <default-operator>and</default-operator>
+            </options>
+        else
+            <options>
+                <default-operator>or</default-operator>
+            </options>
     return
         util:eval($query-with-order-by-expression)
 };
@@ -1112,23 +1127,44 @@ declare function biblio:get-writeable-subcollection-paths($path as xs:string) {
     Filter an existing result set by applying an additional
     clause with "and".
 :)
-declare function biblio:apply-filter($filter as xs:string, $value as xs:string) {
+declare function biblio:apply-filter($collection as xs:string?, $filter as xs:string, $value as xs:string) {
     let $prevQuery := session:get-attribute("query")
     return
-        if (empty($prevQuery//field))
+        (:If there is no collection parameter, then fill in the collection from the previous query:)
+        if (empty($collection))
         then
-            <query>
-                { $prevQuery/collection }
-                <field name="{$biblio:FIELDS/field[(@name, @short-name) = $filter]/@name}">{$value}</field>
-            </query>
+            if (empty($prevQuery//field))
+            then
+                <query>
+                    { $prevQuery/collection }
+                    <field name="{$biblio:FIELDS/field[(@name, @short-name) = $filter]/@name}">{$value}</field>
+                </query>
+            else
+            (:NB: what about the default operator?:)
+                <query>
+                    { $prevQuery/collection }
+                    <and>
+                    { $prevQuery/*[not(self::collection)] }
+                    <field name="{$biblio:FIELDS/field[(@name, @short-name) = $filter]/@name}">{$value}</field>
+                    </and>
+                </query>
         else
-            <query>
-                { $prevQuery/collection }
-                <and>
-                { $prevQuery/*[not(self::collection)] }
-                <field name="{$biblio:FIELDS/field[(@name, @short-name) = $filter]/@name}">{$value}</field>
-                </and>
-            </query>
+        (:If there is a collection parameter, then use it:)
+            if (empty($prevQuery//field))
+            then
+                <query>
+                    { $collection }
+                    <field name="{$biblio:FIELDS/field[(@name, @short-name) = $filter]/@name}">{$value}</field>
+                </query>
+            else
+                <query>
+                    { $collection }
+                    <and>
+                    { $prevQuery/*[not(self::collection)] }
+                    <field name="{$biblio:FIELDS/field[(@name, @short-name) = $filter]/@name}">{$value}</field>
+                    </and>
+                </query>
+
 };
 
 (:~
@@ -1186,7 +1222,7 @@ declare function biblio:prepare-query($id as xs:string?, $collection as xs:strin
                     then biblio:clear-search-terms($collection)
                     else 
                         if ($filter) 
-                        then biblio:apply-filter($filter, $value)
+                        then biblio:apply-filter($collection, $filter, $value)
                         (:"else" includes "if ($mylist eq 'display')", the search made when displaying items in My List.:)
                         else biblio:process-form()
 };
@@ -1237,8 +1273,6 @@ declare function biblio:get-query-as-regex($query-as-xml) as xs:string {
             else 
                 (:We assume that '+' is only used for prefixing, so we strip it:)
                 (:We assume that initial '-' is only used for prefixing, so we strip it:)
-                (:NB: the (Chinese) character "＋" is stripped as well. It has the same semantics in Lucene searches as "+". 
-                It is used to pass "+" into the URL - otherwise, "+" is converted into a space in the browser:)
                 (:'[' and ']' are used in text range searches; we strip them as well:)
                 (:'{' and '}' are used in text range searches; we strip them as well:)
                 (:'^' is used for boosting; we strip it as well:)
@@ -1256,8 +1290,7 @@ declare function biblio:get-query-as-regex($query-as-xml) as xs:string {
                     for $expression in $query
                         return 
                             normalize-space(
-                            translate(translate(translate(translate(translate(translate(translate(translate(translate(translate(translate(translate(translate($expression
-                                , '\+', ' ')
+                            translate(translate(translate(translate(translate(translate(translate(translate(translate(translate(translate(translate($expression
                                 , '＋', ' ')
                                 , '^\-', ' ') (:appears to strip all hyphens:)
                                 , '\{', ' ')
@@ -1319,7 +1352,6 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
 
     (: Process request parameters and generate an XML representation of the query :)
     let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $mylist, $value)
-    (:let $log := util:log("DEBUG", ("##$query-as-xml): ", $query-as-xml)):)
     (: Get the results :)
     let $query-as-regex := biblio:get-query-as-regex($query-as-xml)
     let $null := session:set-attribute('regex', $query-as-regex)
