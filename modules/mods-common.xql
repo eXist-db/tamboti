@@ -58,7 +58,7 @@ mods-common:get-extent()
 :)
 (: Function to clean up unintended punctuation. These should ideally be removed at the source. :)
 declare function mods-common:clean-up-punctuation($element as node()) as node() {
-	element {node-name($element)}
+    element {node-name($element)}
 		{$element/@*,
 			for $child in $element/node()
 			return
@@ -352,7 +352,7 @@ let $type :=
             else $title
         let $title := mods-common:clean-up-punctuation(<span xmlns="http://www.w3.org/1999/xhtml" class="title">{$title}</span>)
         let $title := concat('<span>', $title, '</span>')
-        let $title := util:parse($title)
+        let $title := util:parse-html($title)
             return
                 $title
             }
@@ -441,7 +441,7 @@ declare function mods-common:get-short-title($entry as element()) {
         else ()
         )
     let $title-formatted := concat('<span>', $title-formatted, '</span>')
-    let $title-formatted := util:parse($title-formatted)
+    let $title-formatted := util:parse-html($title-formatted)
     let $title-transliterated-formatted := 
         (
         if (string($nonSort-transliterated)) 
