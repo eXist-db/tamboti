@@ -88,4 +88,9 @@
         <create qname="@lang" type="xs:string"/>
         <create qname="@xlink:href" type="xs:string"/>
     </index>
+    <triggers>
+        <trigger event="create,delete,update" class="org.exist.versioning.VersioningTrigger">
+            <parameter name="overwrite" value="yes"/>
+        </trigger>
+    </triggers>
 </collection>
