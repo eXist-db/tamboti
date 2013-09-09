@@ -212,31 +212,17 @@ declare function upload:upload( $filetype , $filesize,  $filename, $data, $doc-t
                 let $upload := xmldb:store($newcol, $file-uuid,$data)
                 
                 (::let $none := security:apply-parent-collection-permissions(xs:anyURI($newcol)):)
-                let $none := sm:chown(xs:anyURI(concat($newcol,'/', $file-uuid)),'editor')
-                let $none := sm:chmod(xs:anyURI(concat($newcol,'/', $file-uuid)),'rwxrwxr-x')
-                let $none := sm:chgrp(xs:anyURI(concat($newcol,'/', $file-uuid)),'biblio.users')
-                
-                
-                let $none := sm:chown(xs:anyURI(concat($newcol,'/', $xml-uuid)),'editor' )
-                let $none := sm:chmod(xs:anyURI(concat($newcol,'/', $xml-uuid)),'rwxrwxr-x')
-                let $none := sm:chgrp(xs:anyURI(concat($newcol,'/', $xml-uuid)),'biblio.users')
-                
-                let $none := security:apply-parent-collection-permissions(xs:anyURI(concat($newcol,'/', $file-uuid)))
-                let $none := security:apply-parent-collection-permissions(xs:anyURI(concat($newcol,'/', $xml-uuid)))
-                (:
-                let $none := sm:chmod(xs:anyURI($newcol),'rwxr-xr-x')
-                let $none := sm:chgrp(xs:anyURI($newcol),'biblio.users')
-                let $none := sm:chown(xs:anyURI($newcol),'editor')
-                
-                let $none := sm:chown(xs:anyURI(concat($newcol,'/', $file-uuid)),'editor')
+                let $none := sm:chown(xs:anyURI(concat($newcol,'/', $file-uuid)),security:get-user-credential-from-session()[1])
                 let $none := sm:chmod(xs:anyURI(concat($newcol,'/', $file-uuid)),'rwxr-xr-x')
                 let $none := sm:chgrp(xs:anyURI(concat($newcol,'/', $file-uuid)),'biblio.users')
                 
                 
-                let $none := sm:chown(xs:anyURI(concat($newcol,'/', $xml-uuid)),'editor' )
+                let $none := sm:chown(xs:anyURI(concat($newcol,'/', $xml-uuid)),security:get-user-credential-from-session()[1])
                 let $none := sm:chmod(xs:anyURI(concat($newcol,'/', $xml-uuid)),'rwxr-xr-x')
                 let $none := sm:chgrp(xs:anyURI(concat($newcol,'/', $xml-uuid)),'biblio.users')
-                :)
+                
+                let $none := security:apply-parent-collection-permissions(xs:anyURI(concat($newcol,'/', $file-uuid)))
+                let $none := security:apply-parent-collection-permissions(xs:anyURI(concat($newcol,'/', $xml-uuid)))
                                 
                 return concat(xmldb:decode($filename),' ' ,$message)
             )
@@ -375,7 +361,11 @@ let $result := for $x in (1 to count($data))
                                     
                                 </work></vra>
                                 let $store :=  system:as-user($user, $userpass,xmldb:store($collection-folder,concat($work_uuid,'.xml') , $vra-work-xml))
-                                let $none := system:as-user($user, $userpass,security:apply-parent-collection-permissions(xs:anyURI(concat($collection-folder,'/', $work_uuid,'.xml'))))
+                                (: let $none := system:as-user($user, $userpass,security:apply-parent-collection-permissions(xs:anyURI(concat($collection-folder,'/', $work_uuid,'.xml')))) :)
+                                 let $none := system:as-user($user, $userpass,sm:chown(xs:anyURI(concat($collection-folder,'/', $work_uuid,'.xml')),security:get-user-credential-from-session()[1]))
+                                let $none := system:as-user($user, $userpass,sm:chmod(xs:anyURI(concat($collection-folder,'/', $work_uuid,'.xml')),'rwxr-xr-x'))
+                                let $none := system:as-user($user, $userpass,sm:chgrp(xs:anyURI(concat($collection-folder,'/', $work_uuid,'.xml')),'biblio.users'))
+                                
                                 (:store the binary file and generate the  image vra file:)
                                 let $store := upload:upload( $filetype , $filesize[$x],$filename[$x], $data[$x], $doc-type, $work_uuid)
                                 
