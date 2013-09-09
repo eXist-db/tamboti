@@ -41,6 +41,13 @@ import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm"
 
 declare option exist:serialize "method=xhtml media-type=application/xhtml+xml omit-xml-declaration=no enforce-xhtml=yes";
 
+declare function functx:number-of-matches 
+  ( $arg as xs:string? ,
+    $pattern as xs:string )  as xs:integer {
+       
+   count(tokenize($arg,$pattern)) - 1
+ } ;
+
 declare function functx:substring-before-if-contains($arg as xs:string?, $delim as xs:string)  as xs:string? {       
    if (contains($arg,$delim))
    then substring-before($arg,$delim)
@@ -413,6 +420,7 @@ declare function biblio:form-from-query($node as node(), $params as element(para
     The function is called from the outside in biblio:eval-query().
 :)
 declare function biblio:generate-query($query-as-xml as element()) as xs:string* {
+    let $query :=
     typeswitch ($query-as-xml)
         case element(query) return
             for $child in $query-as-xml/*
@@ -457,7 +465,7 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 else $biblio:FIELDS/field[@name eq $biblio:FIELDS/field[1]/@name]/search-expression
             (:This results in expressions like:
             <field name="Title">mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]</field>.
-            The search term, to be substituted for 'q', is held in $query-as-xml. :)
+            The search term, to be substituted for '$q', is held in $query-as-xml. :)
             
             (: When searching for ID and xlink:href, do not use the chosen collection-path, but search throughout all of /resources. :)
             let $collection-path := 
@@ -478,7 +486,7 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                     concat("collection('", $collection-path, "')//")
                 )
             return
-                (:The search term held in $query-as-xml is substituted for the 'q' held in $expr.:)
+                (:The search term held in $query-as-xml is substituted for the '$q' held in $expr.:)
                 ($collection, replace($expr, '\$q', biblio:normalize-search-string($query-as-xml/string())))
         case element(collection)
             return
@@ -494,19 +502,25 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 else ()
             default 
                 return ()
+         (:Leading wildcards cannot appear in searches within extracted text. :) 
+         let $query := 
+            for $q in $query
+                return replace(replace($q, ':[?*]', ':'), '\s[?*]', ' ')
+         return
+            $query
 };
 
 (: If an apostrophe occurs in the search string (as in "China's"), it is escaped. 
 This means that phrase searches can only be performed with double quotation marks.:)
-(: If the search string starts with a "*" or a "?" (illegal in Lucene search syntax), it is removed.:)
-(: ":" and "&" are replaced with empty spaces.:)
-(:NB: In case of an unequal number of double quotation marks, all double quotation marks should be removed.:)
+(: ":" and "&" are replaced with spaces.:)
+(: In the case of an unequal number of double quotation marks, all double quotation marks are removed.:)
 declare function biblio:normalize-search-string($search-string as xs:string?) as xs:string? {
-    let $search-string := replace($search-string, '^[?*]?(.*)$', '$1')
+	let $search-string := 
+	   if (functx:number-of-matches($search-string, '"') mod 2) 
+	   then replace($search-string, '"', '') 
+	   else $search-string 
 	let $search-string := replace($search-string, "'", "''")
-	let $search-string := translate($search-string, ":", " ")
-	let $search-string := translate($search-string, "&amp;", " ")
-	let $search-string := translate($search-string, "＋", "+")
+	let $search-string := translate($search-string, "[:&amp;]", " ")
     	return $search-string
 };
 
@@ -725,10 +739,14 @@ declare function biblio:evaluate-query($query-as-string as xs:string, $sort as x
         then
             <options>
                 <default-operator>and</default-operator>
+                <leading-wildcard>yes</leading-wildcard>
+                <filter-rewrite>yes</filter-rewrite>
             </options>
         else
             <options>
                 <default-operator>or</default-operator>
+                <leading-wildcard>yes</leading-wildcard>
+                <filter-rewrite>yes</filter-rewrite>
             </options>
     return
         util:eval($query-with-order-by-expression)
@@ -1296,8 +1314,7 @@ declare function biblio:get-query-as-regex($query-as-xml) as xs:string {
                     for $expression in $query
                         return 
                             normalize-space(
-                            translate(translate(translate(translate(translate(translate(translate(translate(translate(translate(translate(translate($expression
-                                , '＋', ' ')
+                            translate(translate(translate(translate(translate(translate(translate(translate(translate(translate(translate($expression
                                 , '^\-', ' ') (:appears to strip all hyphens:)
                                 , '\{', ' ')
                                 , '\}', ' ')
