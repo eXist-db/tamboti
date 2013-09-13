@@ -346,14 +346,14 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
             <!--Here values are passed to the URL.-->
             {mods:tabs($tab-id, $id, $target-collection)}
         
-            <div class="save-buttons">    
+            <div class="save-buttons-top">    
                 <!--No save button is displayed, since saves are made every time a tab is clicked,
                 but sometimes users require a save button.-->
                 <!--<xf:submit submission="save-submission">
-                    <xf:label class="xforms-group-label-centered-general">Save</xf:label>
+                    <xf:label>Save</xf:label>
                 </xf:submit>-->
                  <xf:trigger>
-                    <xf:label class="xforms-group-label-centered-general">Finish Editing
+                    <xf:label>Finish Editing
                     </xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:send submission="save-and-close-submission"/>
@@ -375,12 +375,12 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
             {$form-body}
             
             <!--Displays buttons below as well.-->
-            <div class="save-buttons">    
+            <div class="save-buttons-bottom">    
                 <!--<xf:submit submission="save-submission">
-                    <xf:label class="xforms-group-label-centered-general">Save</xf:label>
+                    <xf:label>Save</xf:label>
                 </xf:submit>-->
                 <xf:trigger>
-                    <xf:label class="xforms-group-label-centered-general">Cancel Editing</xf:label>
+                    <xf:label>Cancel Editing</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="cancel-submission"/>
                         <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={if ($host) then $host else $id}&amp;collection={$target-collection}" show="replace"/>
