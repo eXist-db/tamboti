@@ -350,9 +350,10 @@ let $type :=
     	        	string-join(($partNumber, $partName), ': ')
     	        	)
             else $title
-        let $title := mods-common:clean-up-punctuation(<span xmlns="http://www.w3.org/1999/xhtml" class="title">{$title}</span>)
-        let $title := concat('<span>', $title, '</span>')
+        let $title := mods-common:clean-up-punctuation(<span>{$title}</span>)
+        let $title := concat('&lt;span>', $title, '&lt;/span>')
         let $title := util:parse-html($title)
+        let $title := $title//*:span
             return
                 $title
             }
@@ -429,19 +430,21 @@ declare function mods-common:get-short-title($entry as element()) {
         then concat(': ', $subTitle)
         else ()
         ,
-        if ($partNumber/text() or $partName/text())
+        if (string($partNumber) or string($partName))
         then
-            if ($partNumber/text() and $partName/text()) 
-            then concat('. ', $partNumber/text(), ': ', $partName/text())
+            if (string($partNumber) and string($partName)) 
+            then concat('. ', $partNumber, ': ', $partName)
             else
-                if ($partNumber/text())
-                then concat('. ', $partNumber/text())
-                else concat('. ', $partName/text())
+                if (string($partNumber))
+                then concat('. ', $partNumber)
+                else concat('. ', $partName)
             		
         else ()
         )
-    let $title-formatted := concat('<span>', $title-formatted, '</span>')
+    let $title-formatted := concat('&lt;span>', $title-formatted, '&lt;/span>')
     let $title-formatted := util:parse-html($title-formatted)
+    let $title-formatted := $title-formatted//*:span
+    
     let $title-transliterated-formatted := 
         (
         if (string($nonSort-transliterated)) 
