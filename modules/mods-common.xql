@@ -420,7 +420,7 @@ declare function mods-common:get-short-title($entry as element()) {
         
     (: Format each of the three kinds of titleInfo. :)
     let $title-formatted := 
-        concat(
+        (
         if (string($nonSort))
         (: NB: This assumes that nonSort is not used in Asian scripts; otherwise we would have to avoid the space by checking the language. :)
         then concat($nonSort, ' ' , $title)
