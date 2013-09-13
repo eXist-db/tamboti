@@ -420,7 +420,7 @@ declare function mods-common:get-short-title($entry as element()) {
         
     (: Format each of the three kinds of titleInfo. :)
     let $title-formatted := 
-        concat(
+        (
         if (string($nonSort))
         (: NB: This assumes that nonSort is not used in Asian scripts; otherwise we would have to avoid the space by checking the language. :)
         then concat($nonSort, ' ' , $title)
@@ -502,16 +502,14 @@ declare function mods-common:get-short-title($entry as element()) {
         then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">{$title-formatted}</span>
         else
         (: If there is no transliterated title, the standard for Western literature. :)
-        	if (exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part/mods:extent[1]) 
-        	   or exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part[1]/mods:detail[1]/mods:number[1]) 
-        	   (: NB: Faulty Zotero export has mods:text here; delete when Zotero has corrected this. :)
-        	   or exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part[1]/mods:detail[1]/mods:text[1]))
-    	   then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">{$title-formatted}</span>
+        	if (exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part/mods:extent) 
+        	   or exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part/mods:detail/mods:number))
+    	   then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">“{$title-formatted}”</span>
     	   else <span xmlns="http://www.w3.org/1999/xhtml" class="title">{$title-formatted}</span>
         ,
         if ($title-translated)
         (: Enclose the translated title in parentheses. Titles of @type "translated" are always made by the cataloguer. 
-        If a title is translated on the title page, this is recorded as a titleInfo of @type "alternative". :)
+        If a title is translated on the title page, it is recorded in a titleInfo of @type "alternative". :)
         then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics"> ({$title-translated-formatted})</span>
         else ()
         )
