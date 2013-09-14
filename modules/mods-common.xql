@@ -1718,7 +1718,7 @@ declare function mods-common:format-related-item($relatedItem as element(mods:re
                 ,
                 (:Display secondary roles.:)
                 (:Do not display these (editors) for periodicals, here interpreted as publications with issuance "continuing".:)
-                let $issuance := $relatedItem/mods:originInfo/mods:issuance
+                let $issuance := $relatedItem/mods:originInfo[1]/mods:issuance
                 return
                     if ($issuance eq "continuing")
                     then ()
@@ -2266,7 +2266,7 @@ declare function mods-common:get-related-items($entry as element(mods:mods), $de
                 then
                     <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
         				<td class="url label relatedItem-label">
-                            <a href="?filter=ID&amp;value={$xlinked-ID}">{concat('&lt;&lt; ', $label)}</a>
+                            <a href="?search-field=ID&amp;value={$xlinked-ID}&amp;query-tabs=advanced-search-form&amp;default-operator=and">{concat('&lt;&lt; ', $label)}</a>
                         </td>
                         <td class="relatedItem-record">
         					<span class="relatedItem-span">{mods-common:format-related-item($related-item, $global-language, $collection-short)}</span>
