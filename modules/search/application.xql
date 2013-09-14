@@ -426,21 +426,12 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
             for $child in $query-as-xml/*
                 return biblio:generate-query($child)
         case element(and) return
-            (:Search only for one ID at a time.:)
-            (:NB: Hack to get around the piling up of search requests for IDs - only take the new request, $query-as-xml/*[2].
-            The best solution would be to remove existing search fields when 
-                - requesting the editor (editing a records ends in a search for its ID)
-                - when clicking links to searches for ID (links marked "In:", "Catalogued content").
-            :)
-            if ($query-as-xml/field[@name = ('the Record ID Field (MODS, VRA)', 'the XLink Field (MODS)') or @short-name = ('ID', 'XLink')]) 
-            then biblio:generate-query($query-as-xml/*[2])
-            else
-                (
-                    (:get the fields under "and":)
-                    biblio:generate-query($query-as-xml/*[1]), 
-                    " intersect ", 
-                    biblio:generate-query($query-as-xml/*[2])
-                )
+            (
+                (:get the fields under "and":)
+                biblio:generate-query($query-as-xml/*[1]), 
+                " intersect ", 
+                biblio:generate-query($query-as-xml/*[2])
+            )
         case element(or) return
             (
                 (:get the fields under "or":)
@@ -1148,6 +1139,19 @@ declare function biblio:get-writeable-subcollection-paths($path as xs:string) {
 };
 
 (:~
+    Perform a search from scratch
+:)
+declare function biblio:apply-search($collection as xs:string?, $search-field as xs:string, $value as xs:string) {
+    let $collection := if ($collection) then $collection else '/db/resources/'
+    return
+        <query>
+            { $collection }
+            <field name="{$biblio:FIELDS/field[(@name, @short-name) = $search-field]/@name}">{$value}</field>
+        </query>
+    
+};
+
+(:~
     Filter an existing result set by applying an additional
     clause with "and".
 :)
@@ -1224,7 +1228,7 @@ $param
 :
 :)
 declare function biblio:prepare-query($id as xs:string?, $collection as xs:string?, $reload as xs:string?, 
-    $history as xs:string?, $clear as xs:string?, $filter as xs:string?, $mylist as xs:string?, 
+    $history as xs:string?, $clear as xs:string?, $filter as xs:string?, $search-field as xs:string?, $mylist as xs:string?, 
     $value as xs:string?) as element(query)? {
     if ($id)
     then
@@ -1247,8 +1251,11 @@ declare function biblio:prepare-query($id as xs:string?, $collection as xs:strin
                     else 
                         if ($filter) 
                         then biblio:apply-filter($collection, $filter, $value)
-                        (:"else" includes "if ($mylist eq 'display')", the search made when displaying items in My List.:)
-                        else biblio:process-form()
+                        else 
+                            if ($search-field) 
+                            then biblio:apply-search($collection, $search-field, $value)
+                            else biblio:process-form()
+                            (:"else" includes "if ($mylist eq 'display')", the search made when displaying items in My List.:)
 };
 
 (:~
@@ -1361,7 +1368,9 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     (: We receive an HTML template as input :)
     (:the search field passed in the url:)
     let $filter := request:get-parameter("filter", ())
-    (:the search term passed in the url:)
+    (:the search term for added filters passed in the url:)
+    let $search-field := request:get-parameter("search-field", ())
+    (:the search term for new sarches passed in the url:)
     let $value := request:get-parameter("value", ())
     let $history := request:get-parameter("history", ())
     let $reload := request:get-parameter("reload", ())
@@ -1374,7 +1383,7 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     let $sort := request:get-parameter("sort", ())
 
     (: Process request parameters and generate an XML representation of the query :)
-    let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $mylist, $value)
+    let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $search-field, $mylist, $value)
     (: Get the results :)
     let $query-as-regex := biblio:get-query-as-regex($query-as-xml)
     let $null := session:set-attribute('regex', $query-as-regex)

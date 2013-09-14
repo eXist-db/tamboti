@@ -296,7 +296,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
             else 
             if (count($related-item-xlink) eq 1)
             then
-            (<span class="intro">The publication is included in </span>, <a href="../../modules/search/index.html?filter=ID&amp;value={$related-publication-id}" target="_blank">{$related-publication-title}</a>,<span class="intro">.</span>)
+            (<span class="intro">The publication is included in </span>, <a href="../../modules/search/index.html?search-field=ID&amp;value={$related-publication-id}&amp;query-tabs=advanced-search-form&amp;default-operator=and" target="_blank">{$related-publication-title}</a>,<span class="intro">.</span>)
             else
                 (:Can the following occur, given that only one xlink is retrieved?:)
                 if (count($related-item-xlink) gt 1) 
@@ -357,7 +357,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     </xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:send submission="save-and-close-submission"/>
-                            <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={replace($target-collection, '/db', '')}" show="replace"/>
+                            <xf:load resource="../../modules/search/index.html?search-field=ID&amp;value={$id}&amp;collection={replace($target-collection, '/db', '')}&amp;query-tabs=advanced-search-form&amp;default-operator=and" show="replace"/>
                         </xf:action>
                 </xf:trigger>
                 <span class="xforms-hint">
@@ -383,7 +383,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     <xf:label>Cancel Editing</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="cancel-submission"/>
-                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={if ($host) then $host else $id}&amp;collection={$target-collection}" show="replace"/>
+                        <xf:load resource="../../modules/search/index.html?search-field=ID&amp;value={if ($host) then $host else $id}&amp;collection={$target-collection}&amp;query-tabs=advanced-search-form&amp;default-operator=and" show="replace"/>
                     </xf:action>
                  </xf:trigger>
                  <xf:trigger>
@@ -391,7 +391,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     </xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="save-and-close-submission"/>
-                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>
+                        <xf:load resource="../../modules/search/index.html?search-field=ID&amp;value={$id}&amp;collection={$target-collection}&amp;query-tabs=advanced-search-form&amp;default-operator=and" show="replace"/>
                     </xf:action>
                 </xf:trigger>
                 <span class="xforms-hint">
