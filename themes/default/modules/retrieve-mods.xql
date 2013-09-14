@@ -349,7 +349,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
             then
                 <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
                     <td class="url label relatedItem-label"> 
-                        <a href="?action=&amp;filter=XLink&amp;value={$ID}&amp;query-tabs=simple">&lt;&lt; Catalogued Contents</a>
+                        <a href="?action=&amp;search-field=XLink&amp;value={$ID}&amp;query-tabs=advanced-search-form">&lt;&lt; Catalogued Contents</a>
                     </td>
                     <td class="relatedItem-record">
                         <span class="relatedItem-span">{$linked-records-count} records</span>
@@ -365,7 +365,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
                 return
                 <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
                     <td class="url label relatedItem-label">
-                        <a href="?filter=ID&amp;value={$link-ID}">&lt;&lt; Catalogued Contents</a>
+                        <a href="?search-field=ID&amp;value={$link-ID}&amp;query-tabs=advanced-search-form">&lt;&lt; Catalogued Contents</a>
                     </td>
                     <td class="relatedItem-record">
                         <span class="relatedItem-span">{$link-contents}</span>
@@ -574,11 +574,11 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
             mods-common:simple-row(functx:substring-before-last-match($last-modified[count(.)], 'T'), 'Record Last Modified')
         else ()
     ,
-    mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $ID), 'Stable Link to This Record')
+    mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $ID, '&amp;query-tabs=advanced-search-form'), 'Stable Link to This Record')
     ,
     if (contains($collection-short, 'Priya Paul Collection')) 
     then 
-    let $link := concat('http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/ppcoll/modules/search/index.html', '?filter=ID&amp;value=', $ID)
+    let $link := concat('http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/ppcoll/modules/search/index.html', '?search-field=ID&amp;value=', $ID, '&amp;query-tabs=advanced-search-form')
     return
     mods-common:simple-row(
         <a target="_blank" href="{$link}">{$link}</a>, 'View Full Record with Image in The Priya Paul Collection') 
@@ -586,7 +586,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     ,
     if (contains($collection-short, 'Naddara')) 
     then 
-    let $link := concat('http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/naddara/modules/search/index.html', '?filter=ID&amp;value=', $ID)
+    let $link := concat('http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/naddara/modules/search/index.html', '?search-field=ID&amp;value=', $ID, '&amp;query-tabs=advanced-search-form')
     return
     mods-common:simple-row(
         <a target="_blank" href="{$link}">{$link}</a>, 'View Full Record with Image in The Abou Naddara Collection') 
