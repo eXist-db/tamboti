@@ -275,6 +275,14 @@ declare variable $biblio:FORMATS :=
 ;
 
 
+declare variable $biblio:HIT-NUMBER :=
+    <select name="hit-number">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+    </select>
+;
 
 (:
     Default query to be used if no query is specified. 
@@ -611,7 +619,7 @@ declare variable $biblio:author-roles := ('aut', 'author', 'cre', 'creator', 'co
 (: This function is adapted in nameutil:format-name() in names.xql. Any changes should be coordinated. :)
 declare function biblio:order-by-author($hit as element()) as xs:string?
 {
-    (: Pick the first name of an author/creator. :)
+    (: Pick the first occurring name element of an author/creator. :)
     let $names := $hit/mods:name[mods:role/mods:roleTerm = $biblio:author-roles or not(mods:role/mods:roleTerm)][1] 
     (: Iterate through the single name in order to be able to order it in a return statement. :)
     for $name in $names
@@ -655,8 +663,10 @@ declare function biblio:order-by-author($hit as element()) as xs:string?
 			    	if ($name/mods:namePart[@script eq 'Latn']/text() or $name/mods:namePart[not(@script)]/text())
 		    		then $name/mods:namePart[@type eq 'given'][not(@script) or @script eq 'Latn'][1]/text()
 		    		else $name/mods:namePart[@type eq 'given'][1]/text()
-    let $sort := upper-case(concat($sortFirst, ' ', $sortLast))
-    order by upper-case($sort) ascending empty greatest
+    let $sort :=
+        if (concat($sortFirst, $sortLast)) 
+        then upper-case(concat($sortFirst, ' ', $sortLast)) 
+        else ()
     return
         $sort
 };
@@ -694,17 +704,21 @@ declare function biblio:get-year($hit as element()) as xs:string? {
 (: NB: It does not make sense to use Score if there is no search term to score on. :)
 declare function biblio:construct-order-by-expression($sort as xs:string?) as xs:string?
 {
-    if ($sort eq "Score") 
-    then "ft:score($hit) descending"
-    else 
-        if ($sort eq "Author") 
-        then "biblio:order-by-author($hit)"
-        else 
-            if ($sort eq "Title") 
-            then "$hit/(mods:titleInfo[not(@type)][1]/mods:title[1] | vra:work/vra:titleSet[1]/vra:title[1] | tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]) ascending empty greatest"
-            (:Default: if ($sort eq "Year"):)
-            else "biblio:get-year($hit) descending empty least"
-};
+    let $sort-direction := request:get-parameter("sort-direction", '')
+        return
+            if ($sort eq "Score") 
+            then concat("ft:score($hit) ", if ($sort-direction) then $sort-direction else 'ascending') 
+            else 
+                if ($sort eq "Author") 
+                then concat("biblio:order-by-author($hit) ", if ($sort-direction) then $sort-direction else 'ascending', " ", if ($sort-direction eq 'descending') then "empty least" else "empty greatest")
+                else 
+                    if ($sort eq "Title") 
+                    then concat("$hit/(mods:titleInfo[not(@type)][1]/mods:title[1] | vra:work/vra:titleSet[1]/vra:title[1] | tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]) ", if ($sort-direction) then $sort-direction else 'ascending', " ", if ($sort-direction eq 'descending') then "empty least" else "empty greatest")
+                    else 
+                        if ($sort eq "Year") 
+                        then concat("biblio:get-year($hit) ", if ($sort-direction) then $sort-direction else 'descending', " ", if ($sort-direction eq 'descending') then "empty least" else "empty greatest")
+                        else ()
+        };
 
 (:~
     Evaluate the actual XPath query and order the results
