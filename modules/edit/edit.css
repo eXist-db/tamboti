@@ -525,6 +525,10 @@ div.xforms-help-value {
 	z-index:1;
 }
 
+.save-buttons-bottom .xforms-help-value {
+    margin-top:-23em; /*to move up the bottom save button help box*/
+}
+
 div.xforms-help-value p, 
 div.xforms-help-value li
     { 

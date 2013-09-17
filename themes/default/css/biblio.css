@@ -13,6 +13,9 @@ color scheme ends*/
 /*variables begin*/
 /*variables end*/
 /*new or temporary stuff begins*/
+.title em {
+  font-style: normal;
+}
 .highlight {
   color: #5db0e6;
   font-weight: 700;
@@ -37,15 +40,6 @@ ul li {
   margin-bottom: .5em;
   margin-top: .5em;
   line-height: 1.5em;
-}
-#query-tabs ul li:nth-of-type(5) {
-  float: right;
-}
-#query-tabs ul li:nth-of-type(6) {
-  float: right;
-}
-#query-tabs ul li:nth-of-type(7) {
-  float: right;
 }
 #keyword-form input {
   margin-right: 1em;

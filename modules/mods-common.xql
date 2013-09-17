@@ -58,7 +58,7 @@ mods-common:get-extent()
 :)
 (: Function to clean up unintended punctuation. These should ideally be removed at the source. :)
 declare function mods-common:clean-up-punctuation($element as node()) as node() {
-	element {node-name($element)}
+    element {node-name($element)}
 		{$element/@*,
 			for $child in $element/node()
 			return
@@ -350,9 +350,10 @@ let $type :=
     	        	string-join(($partNumber, $partName), ': ')
     	        	)
             else $title
-        let $title := mods-common:clean-up-punctuation(<span xmlns="http://www.w3.org/1999/xhtml" class="title">{$title}</span>)
-        let $title := concat('<span>', $title, '</span>')
-        let $title := util:parse($title)
+        let $title := mods-common:clean-up-punctuation(<span>{$title}</span>)
+        let $title := concat('&lt;span>', $title, '&lt;/span>')
+        let $title := util:parse-html($title)
+        let $title := $title//*:span
             return
                 $title
             }
@@ -429,19 +430,21 @@ declare function mods-common:get-short-title($entry as element()) {
         then concat(': ', $subTitle)
         else ()
         ,
-        if ($partNumber/text() or $partName/text())
+        if (string($partNumber) or string($partName))
         then
-            if ($partNumber/text() and $partName/text()) 
-            then concat('. ', $partNumber/text(), ': ', $partName/text())
+            if (string($partNumber) and string($partName)) 
+            then concat('. ', $partNumber, ': ', $partName)
             else
-                if ($partNumber/text())
-                then concat('. ', $partNumber/text())
-                else concat('. ', $partName/text())
+                if (string($partNumber))
+                then concat('. ', $partNumber)
+                else concat('. ', $partName)
             		
         else ()
         )
-    let $title-formatted := concat('<span>', $title-formatted, '</span>')
-    let $title-formatted := util:parse($title-formatted)
+    let $title-formatted := concat('&lt;span>', $title-formatted, '&lt;/span>')
+    let $title-formatted := util:parse-html($title-formatted)
+    let $title-formatted := $title-formatted//*:span
+    
     let $title-transliterated-formatted := 
         (
         if (string($nonSort-transliterated)) 
@@ -499,16 +502,14 @@ declare function mods-common:get-short-title($entry as element()) {
         then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">{$title-formatted}</span>
         else
         (: If there is no transliterated title, the standard for Western literature. :)
-        	if (exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part/mods:extent[1]) 
-        	   or exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part[1]/mods:detail[1]/mods:number[1]) 
-        	   (: NB: Faulty Zotero export has mods:text here; delete when Zotero has corrected this. :)
-        	   or exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part[1]/mods:detail[1]/mods:text[1]))
-    	   then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">{$title-formatted}</span>
+        	if (exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part/mods:extent) 
+        	   or exists($entry/mods:relatedItem[@type eq 'host'][1]/mods:part/mods:detail/mods:number))
+    	   then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics">“{$title-formatted}”</span>
     	   else <span xmlns="http://www.w3.org/1999/xhtml" class="title">{$title-formatted}</span>
         ,
         if ($title-translated)
         (: Enclose the translated title in parentheses. Titles of @type "translated" are always made by the cataloguer. 
-        If a title is translated on the title page, this is recorded as a titleInfo of @type "alternative". :)
+        If a title is translated on the title page, it is recorded in a titleInfo of @type "alternative". :)
         then <span xmlns="http://www.w3.org/1999/xhtml" class="title-no-italics"> ({$title-translated-formatted})</span>
         else ()
         )
@@ -702,7 +703,7 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
             if ($name-type = ('corporate', 'family', '')) 
             then
                 let $name-link := string-join($name/mods:namePart, ' ')
-                let $name-link := concat(replace(request:get-url(), '/retrieve', '/index.html') ,"?collection=/resources/&amp;default-operator=and&amp;filter=Name&amp;value=", $name-link)
+                let $name-link := concat(replace(request:get-url(), '/retrieve', '/index.html') ,"?collection=/resources/&amp;field1=Name&amp;input1=", $name-link, "&amp;query-tabs=advanced-search-form&amp;default-operator=and")
                 return
                 <span>
                     <span class="name">{
@@ -876,7 +877,7 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                     let $name-in-non-latin-script-link := string-join($name-in-non-latin-script/mods:namePart, ' ')
                     let $name-link := concat($name-basic-link, ' ' , $name-in-non-latin-script-link, ' ', $name-in-transliteration-link)  
                     let $name-link := normalize-space($name-link)
-                    let $name-link := concat(replace(request:get-url(), '/retrieve', '/index.html') ,"?collection=/resources/&amp;default-operator=and&amp;filter=Name&amp;value=", $name-link) 
+                    let $name-link := concat(replace(request:get-url(), '/retrieve', '/index.html') ,"?collection=/resources/&amp;field1=Name&amp;input1=", $name-link, "&amp;query-tabs=advanced-search-form&amp;default-operator=and") 
                     
                     (: We assume that there is only one date name part in $name-basic. 
                     Date name parts with transliteration and script are rather theoretical. 
@@ -1717,7 +1718,7 @@ declare function mods-common:format-related-item($relatedItem as element(mods:re
                 ,
                 (:Display secondary roles.:)
                 (:Do not display these (editors) for periodicals, here interpreted as publications with issuance "continuing".:)
-                let $issuance := $relatedItem/mods:originInfo/mods:issuance
+                let $issuance := $relatedItem/mods:originInfo[1]/mods:issuance
                 return
                     if ($issuance eq "continuing")
                     then ()
@@ -2265,7 +2266,7 @@ declare function mods-common:get-related-items($entry as element(mods:mods), $de
                 then
                     <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
         				<td class="url label relatedItem-label">
-                            <a href="?filter=ID&amp;value={$xlinked-ID}">{concat('&lt;&lt; ', $label)}</a>
+                            <a href="?search-field=ID&amp;value={$xlinked-ID}&amp;query-tabs=advanced-search-form&amp;default-operator=and">{concat('&lt;&lt; ', $label)}</a>
                         </td>
                         <td class="relatedItem-record">
         					<span class="relatedItem-span">{mods-common:format-related-item($related-item, $global-language, $collection-short)}</span>

@@ -25,7 +25,7 @@ declare variable $local:MAX_RESULTS_NAMES := 1500;
 declare variable $local:MAX_RESULTS_SUBJECTS := 750;
 
 declare function local:key($key, $options) {
-    <li><a href="?filter=Title&amp;value={$key}&amp;query-tabs=advanced-search-form">{$key} ({$options[1]})</a></li>
+    <li><a href="?filter=Title&amp;value={$key}&amp;query-tabs=advanced-search-form&amp;default-operator=and">{$key} ({$options[1]})</a></li>
 };
 
 declare function local:keywords($results as element()*, $record-count as xs:integer) {
@@ -82,7 +82,7 @@ return
                                     for $name in $distinct
                                     order by upper-case($name) empty greatest
                                     return
-                                        <li><a href="?filter=Name&amp;value={$name}&amp;query-tabs=advanced-search-form">{$name}</a></li>
+                                        <li><a href="?filter=Name&amp;value={$name}&amp;query-tabs=advanced-search-form&amp;default-operator=and">{$name}</a></li>
             }
             </ul>
     else
@@ -114,7 +114,7 @@ return
                             for $date in $dates
                             order by $date descending
                             return
-                                <li><a href="?filter=Date&amp;value={$date}&amp;query-tabs=advanced-search-form">{$date}</a></li>
+                                <li><a href="?filter=Date&amp;value={$date}&amp;query-tabs=advanced-search-form&amp;default-operator=and">{$date}</a></li>
              }
              </ul>
         else
@@ -138,7 +138,7 @@ return
                                 order by upper-case($subject) ascending
                                 return
                                     (:LCSH have '--', so they have to be replaced.:)
-                                    <li><a href="?filter=Subject&amp;value={replace($subject, '-', '')}&amp;query-tabs=advanced-search-form">{$subject}</a></li>
+                                    <li><a href="?filter=Subject&amp;value={replace($subject, '-', '')}&amp;query-tabs=advanced-search-form&amp;default-operator=and">{$subject}</a></li>
                  }
                  </ul>
              else
@@ -168,7 +168,7 @@ return
                                                 else ()
                                         order by upper-case($language) ascending
                                         return
-                                            <li><a href="?filter=Language&amp;value={replace($language, '-', '')}&amp;query-tabs=advanced-search-form">{$language}{$label}</a></li>
+                                            <li><a href="?filter=Language&amp;value={replace($language, '-', '')}&amp;query-tabs=advanced-search-form&amp;default-operator=and">{$language}{$label}</a></li>
                      }
                      </ul>
                  else
@@ -206,7 +206,7 @@ return
                                                     else ()
                                             order by upper-case($genre) ascending
                                             return
-                                                <li><a href="?filter=Genre&amp;value={$genre}&amp;query-tabs=advanced-search-form">{$genre}{$label}</a></li>
+                                                <li><a href="?filter=Genre&amp;value={$genre}&amp;query-tabs=advanced-search-form&amp;default-operator=and">{$genre}{$label}</a></li>
                          }
                          </ul>
                  else

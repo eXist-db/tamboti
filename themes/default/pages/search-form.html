@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:jquery="http://exist-db.org/xquery/jquery" id="query-panel">
     <jquery:tabset id="query-tabs" on-select="searchTabSelected">
         <jquery:tab id="simple" label="Simple Search">
@@ -24,7 +23,7 @@
                         <td class="dropdown">
                             <jquery:select name="sort">
                                 <jquery:option value="Score"/>
-                                <jquery:option value="Name"/>
+                                <jquery:option value="Author"/>
                                 <jquery:option value="Title"/>
                                 <jquery:option value="Year"/>
                             </jquery:select>
@@ -56,6 +55,10 @@
                                 <jquery:option value="Author"/>
                                 <jquery:option value="Title"/>
                                 <jquery:option value="Year"/>
+                            </jquery:select>&#160;
+                            <jquery:select name="sort-direction">
+                                <jquery:option value="descending"/>
+                                <jquery:option value="ascending"/>
                             </jquery:select>
                         </td>
                         <td/>
