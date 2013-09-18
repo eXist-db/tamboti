@@ -1,6 +1,6 @@
 <collection xmlns="http://exist-db.org/collection-config/1.0">
     <!--from Tamboti-->
-    <index xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:vra="http://www.vraweb.org/vracore4.htm" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mods="http://www.loc.gov/mods/v3">
+    <index xmlns:atom="http://www.w3.org/2005/Atom" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:vra="http://www.vraweb.org/vracore4.htm" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mods="http://www.loc.gov/mods/v3">
         <fulltext default="none" attributes="no"/>
         <lucene>
             <analyzer class="org.apache.lucene.analysis.standard.StandardAnalyzer">
@@ -11,13 +11,13 @@
             <text qname="mods:mods"/>
             
             <!--top level elements-->
-            <text qname="mods:titleInfo"/>
+            <text qname="mods:titleInfo" boost="2.0"/>
             <text qname="mods:language"/>
             <text qname="mods:note"/>
             <!--<text qname="mods:location"/>-->
-            <text qname="mods:name"/>
+            <text qname="mods:name" boost="2.0"/>
             <!--<text qname="mods:physicalDescription"/>-->
-            <text qname="mods:subject"/>
+            <text qname="mods:subject" boost="2.0"/>
             <!--<text qname="mods:accessCondition"/>-->
             <!--<text qname="mods:typeOfResource"/>-->
             <text qname="mods:abstract"/>
@@ -25,7 +25,7 @@
             <!--<text qname="mods:part"/>-->
             <text qname="mods:genre"/>
             <!--<text qname="mods:tableOfContents"/>-->
-            <text qname="mods:relatedItem"/>
+            <!--<text qname="mods:relatedItem"/>-->
             <!--<text qname="mods:extension"/>-->
             <!--<text qname="mods:originInfo"/>-->
             <!--<text qname="mods:targetAudience"/>-->
@@ -45,23 +45,23 @@
             <text qname="vra:vra"/>
             <text qname="vra:work"/>
             <text qname="vra:image"/>
-            <text qname="vra:titleSet"/>
-            <text qname="vra:subjectSet"/>
-            <text qname="vra:agentSet"/>
+            <text qname="vra:titleSet" boost="2.0"/>
+            <text qname="vra:subjectSet" boost="2.0"/>
+            <text qname="vra:agentSet" boost="2.0"/>
             <text qname="vra:inscriptionSet"/>
             <text qname="vra:descriptionSet"/>
             
             <!--TEI-->
             <text qname="tei:TEI"/>
             <text qname="tei:orth"/>
-            <text qname="tei:name"/>
+            <text qname="tei:name" boost="2.0"/>
             <text qname="tei:bibl"/>
-            <text qname="tei:term"/>
+            <text qname="tei:term" boost="2.0"/>
             <text qname="tei:div"/>
             <text qname="tei:head"/>
             <text qname="tei:p"/>
             <text qname="tei:author"/>
-            <text qname="tei:title"/>
+            <text qname="tei:title" boost="2.0"/>
             <text qname="tei:date"/>
             <text qname="tei:person"/>
             <text qname="tei:persName"/>
@@ -72,7 +72,7 @@
             <text qname="html:article"/>
             <text qname="html:p"/>
             <text qname="atom:entry"/>
-            <text qname="atom:title"/>
+            <text qname="atom:title" boost="2.0"/>
         </lucene>
         
         <!--TEI, MODS and MODS-->
