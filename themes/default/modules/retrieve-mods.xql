@@ -5,6 +5,7 @@ declare namespace mads="http://www.loc.gov/mads/v2";
 declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace functx = "http://www.functx.com";
 declare namespace ext="http://exist-db.org/mods/extension";
+declare namespace html="http://www.w3.org/1999/xhtml";
 
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
 import module namespace uu="http://exist-db.org/mods/uri-util" at "../../../modules/search/uri-util.xqm";
@@ -348,7 +349,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
             then
                 <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
                     <td class="url label relatedItem-label"> 
-                        <a href="?action=&amp;filter=XLink&amp;value={$ID}&amp;query-tabs=simple">&lt;&lt; Catalogued Contents</a>
+                        <a href="?action=&amp;search-field=XLink&amp;value={$ID}&amp;query-tabs=advanced-search-form">&lt;&lt; Catalogued Contents</a>
                     </td>
                     <td class="relatedItem-record">
                         <span class="relatedItem-span">{$linked-records-count} records</span>
@@ -364,7 +365,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
                 return
                 <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
                     <td class="url label relatedItem-label">
-                        <a href="?filter=ID&amp;value={$link-ID}">&lt;&lt; Catalogued Contents</a>
+                        <a href="?search-field=ID&amp;value={$link-ID}&amp;query-tabs=advanced-search-form">&lt;&lt; Catalogued Contents</a>
                     </td>
                     <td class="relatedItem-record">
                         <span class="relatedItem-span">{$link-contents}</span>
@@ -414,37 +415,36 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     
     (: abstract :)
     for $abstract in ($entry/mods:abstract)
-        let $abstract := concat('&lt;span>', $abstract, '</span>')
-        let $abstract := string(util:parse-html($abstract))    
+        let $abstract := concat('&lt;span>', $abstract, '&lt;/span>')
+        let $abstract := util:parse-html($abstract)
+        let $abstract := $abstract//*:span
             return
                 mods-common:simple-row($abstract, 'Abstract')
     ,
     
     (: note :)
     for $note in $entry/mods:note
-    let $displayLabel := string($note/@displayLabel)
-    let $type := string($note/@type)
-    let $text := $note/text()
-    (: The following serves to render html markup in Zotero exports. Stylesheet should be changed to accommodate standard markup. :)
-    (:NB: Do $double-escapes occur?:)
-    (:let $text := replace(replace(replace($text, '&amp;nbsp;', '&#160;'), '&amp;gt;', '&gt;'), '&amp;lt;', '&lt;'):)
-    let $text := concat('&lt;span>', $text, '</span>')
-    let $text := util:parse-html($text)    
-    return        
-        mods-common:simple-row($text
-	    , 
-	    concat('Note', 
-	        concat(
-	        if ($displayLabel)
-	        then concat(' (', $displayLabel, ')')            
-	        else ()
-	        ,
-	        if ($type)
-	        then concat(' (', $type, ')')            
-	        else ()
-	        )
-	        )
-	    )
+        let $displayLabel := string($note/@displayLabel)
+        let $type := string($note/@type)
+        (:NB: The following serves to render html markup in Zotero exports. Stylesheet should be changed to accommodate standard markup. :)
+        let $text := concat('&lt;span>', $note, '&lt;/span>')
+        let $text := util:parse-html($text)    
+        let $text := $text//*:span
+            return        
+                mods-common:simple-row($text
+    	    , 
+    	    concat('Note', 
+    	        concat(
+    	        if ($displayLabel)
+    	        then concat(' (', $displayLabel, ')')            
+    	        else ()
+    	        ,
+    	        if ($type)
+    	        then concat(' (', $type, ')')            
+    	        else ()
+    	        )
+    	        )
+    	    )
     
     ,
 
@@ -574,11 +574,11 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
             mods-common:simple-row(functx:substring-before-last-match($last-modified[count(.)], 'T'), 'Record Last Modified')
         else ()
     ,
-    mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?filter=ID&amp;value=', $ID), 'Stable Link to This Record')
+    mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $ID, '&amp;query-tabs=advanced-search-form'), 'Stable Link to This Record')
     ,
     if (contains($collection-short, 'Priya Paul Collection')) 
     then 
-    let $link := concat('http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/ppcoll/modules/search/index.html', '?filter=ID&amp;value=', $ID)
+    let $link := concat('http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/ppcoll/modules/search/index.html', '?search-field=ID&amp;value=', $ID, '&amp;query-tabs=advanced-search-form')
     return
     mods-common:simple-row(
         <a target="_blank" href="{$link}">{$link}</a>, 'View Full Record with Image in The Priya Paul Collection') 
@@ -586,7 +586,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     ,
     if (contains($collection-short, 'Naddara')) 
     then 
-    let $link := concat('http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/naddara/modules/search/index.html', '?filter=ID&amp;value=', $ID)
+    let $link := concat('http://kjc-fs1.kjc.uni-heidelberg.de:8080/exist/apps/naddara/modules/search/index.html', '?search-field=ID&amp;value=', $ID, '&amp;query-tabs=advanced-search-form')
     return
     mods-common:simple-row(
         <a target="_blank" href="{$link}">{$link}</a>, 'View Full Record with Image in The Abou Naddara Collection') 

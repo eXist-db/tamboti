@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <themes>
     <map path="/apps/library" theme="library" root="/db/resources/commons/samples"/>
     <map path="/apps/tamboti" theme="tamboti" root="/db/resources/commons/Cluster Publications"/>
@@ -9,7 +8,7 @@
     Dynamically resolve all resources depending on the current theme. 
     A theme is selected by looking at the URL prefix (as defined in controller-config.xml) and themes/configuration.xml. 
     To add a theme, just map an arbitrary prefix in controller-config.xml 
-    to xmldb:exist:///db/apps//tamboti and change themes/configuration.xml 
+    to xmldb:exist:///db/apps/tamboti and change themes/configuration.xml 
     to map the prefix to a theme name. 
     Create a collection with the same name below themes/.
     For the above, controller-config.xml reads:

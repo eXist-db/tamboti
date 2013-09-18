@@ -296,7 +296,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
             else 
             if (count($related-item-xlink) eq 1)
             then
-            (<span class="intro">The publication is included in </span>, <a href="../../modules/search/index.html?filter=ID&amp;value={$related-publication-id}" target="_blank">{$related-publication-title}</a>,<span class="intro">.</span>)
+            (<span class="intro">The publication is included in </span>, <a href="../../modules/search/index.html?search-field=ID&amp;value={$related-publication-id}&amp;query-tabs=advanced-search-form&amp;default-operator=and" target="_blank">{$related-publication-title}</a>,<span class="intro">.</span>)
             else
                 (:Can the following occur, given that only one xlink is retrieved?:)
                 if (count($related-item-xlink) gt 1) 
@@ -346,18 +346,18 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
             <!--Here values are passed to the URL.-->
             {mods:tabs($tab-id, $id, $target-collection)}
         
-            <div class="save-buttons">    
+            <div class="save-buttons-top">    
                 <!--No save button is displayed, since saves are made every time a tab is clicked,
                 but sometimes users require a save button.-->
                 <!--<xf:submit submission="save-submission">
-                    <xf:label class="xforms-group-label-centered-general">Save</xf:label>
+                    <xf:label>Save</xf:label>
                 </xf:submit>-->
                  <xf:trigger>
-                    <xf:label class="xforms-group-label-centered-general">Finish Editing
+                    <xf:label>Finish Editing
                     </xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:send submission="save-and-close-submission"/>
-                            <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={replace($target-collection, '/db', '')}" show="replace"/>
+                            <xf:load resource="../../modules/search/index.html?search-field=ID&amp;value={$id}&amp;collection={replace($target-collection, '/db', '')}&amp;query-tabs=advanced-search-form&amp;default-operator=and" show="replace"/>
                         </xf:action>
                 </xf:trigger>
                 <span class="xforms-hint">
@@ -375,15 +375,15 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
             {$form-body}
             
             <!--Displays buttons below as well.-->
-            <div class="save-buttons">    
+            <div class="save-buttons-bottom">    
                 <!--<xf:submit submission="save-submission">
-                    <xf:label class="xforms-group-label-centered-general">Save</xf:label>
+                    <xf:label>Save</xf:label>
                 </xf:submit>-->
                 <xf:trigger>
-                    <xf:label class="xforms-group-label-centered-general">Cancel Editing</xf:label>
+                    <xf:label>Cancel Editing</xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="cancel-submission"/>
-                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={if ($host) then $host else $id}&amp;collection={$target-collection}" show="replace"/>
+                        <xf:load resource="../../modules/search/index.html?search-field=ID&amp;value={if ($host) then $host else $id}&amp;collection={$target-collection}&amp;query-tabs=advanced-search-form&amp;default-operator=and" show="replace"/>
                     </xf:action>
                  </xf:trigger>
                  <xf:trigger>
@@ -391,7 +391,7 @@ declare function local:create-page-content($id as xs:string, $tab-id as xs:strin
                     </xf:label>
                     <xf:action ev:event="DOMActivate">
                         <xf:send submission="save-and-close-submission"/>
-                        <xf:load resource="../../modules/search/index.html?filter=ID&amp;value={$id}&amp;collection={$target-collection}" show="replace"/>
+                        <xf:load resource="../../modules/search/index.html?search-field=ID&amp;value={$id}&amp;collection={$target-collection}&amp;query-tabs=advanced-search-form&amp;default-operator=and" show="replace"/>
                     </xf:action>
                 </xf:trigger>
                 <span class="xforms-hint">

@@ -41,6 +41,13 @@ import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm"
 
 declare option exist:serialize "method=xhtml media-type=application/xhtml+xml omit-xml-declaration=no enforce-xhtml=yes";
 
+declare function functx:number-of-matches 
+  ( $arg as xs:string? ,
+    $pattern as xs:string )  as xs:integer {
+       
+   count(tokenize($arg,$pattern)) - 1
+ } ;
+
 declare function functx:substring-before-if-contains($arg as xs:string?, $delim as xs:string)  as xs:string? {       
    if (contains($arg,$delim))
    then substring-before($arg,$delim)
@@ -268,6 +275,14 @@ declare variable $biblio:FORMATS :=
 ;
 
 
+declare variable $biblio:HIT-NUMBER :=
+    <select name="hit-number">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+    </select>
+;
 
 (:
     Default query to be used if no query is specified. 
@@ -306,6 +321,7 @@ declare variable $biblio:DEFAULT_QUERY :=
 declare function biblio:form-from-query($node as node(), $params as element(parameters)?, $model as item()*) as element()+ {
     let $incoming-query := $model[1]
     let $search-format := request:get-parameter("format", '')
+    let $default-operator := request:get-parameter("default-operator", '')
     let $query := 
         if ($incoming-query//field) 
         then $incoming-query 
@@ -326,10 +342,15 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                 </select>
                 format, using the
                 <select name="default-operator">
-                        <option>or</option>
-                        <option>and</option>
+                { for $operator in ('or', 'and')
+                    return
+                        <option>
+                            { if ($operator eq $default-operator) then attribute selected { "selected" } else () } 
+                            {$operator}
+                        </option>
+                }        
                 </select>
-                search operator, with
+                search operator, searching for
             </td>
             
         </tr>
@@ -407,26 +428,18 @@ declare function biblio:form-from-query($node as node(), $params as element(para
     The function is called from the outside in biblio:eval-query().
 :)
 declare function biblio:generate-query($query-as-xml as element()) as xs:string* {
+    let $query :=
     typeswitch ($query-as-xml)
         case element(query) return
             for $child in $query-as-xml/*
                 return biblio:generate-query($child)
         case element(and) return
-            (:Search only for one ID at a time.:)
-            (:NB: Hack to get around the piling up of search requests for IDs - only take the new request, $query-as-xml/*[2].
-            The best solution would be to remove existing search fields when 
-                - requesting the editor (editing a records ends in a search for its ID)
-                - when clicking links to searches for ID (links marked "In:", "Catalogued content").
-            :)
-            if ($query-as-xml/field[@name = ('the Record ID Field (MODS, VRA)', 'the XLink Field (MODS)') or @short-name = ('ID', 'XLink')]) 
-            then biblio:generate-query($query-as-xml/*[2])
-            else
-                (
-                    (:get the fields under "and":)
-                    biblio:generate-query($query-as-xml/*[1]), 
-                    " intersect ", 
-                    biblio:generate-query($query-as-xml/*[2])
-                )
+            (
+                (:get the fields under "and":)
+                biblio:generate-query($query-as-xml/*[1]), 
+                " intersect ", 
+                biblio:generate-query($query-as-xml/*[2])
+            )
         case element(or) return
             (
                 (:get the fields under "or":)
@@ -451,7 +464,7 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 else $biblio:FIELDS/field[@name eq $biblio:FIELDS/field[1]/@name]/search-expression
             (:This results in expressions like:
             <field name="Title">mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]</field>.
-            The search term, to be substituted for 'q', is held in $query-as-xml. :)
+            The search term, to be substituted for '$q', is held in $query-as-xml. :)
             
             (: When searching for ID and xlink:href, do not use the chosen collection-path, but search throughout all of /resources. :)
             let $collection-path := 
@@ -472,7 +485,7 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                     concat("collection('", $collection-path, "')//")
                 )
             return
-                (:The search term held in $query-as-xml is substituted for the 'q' held in $expr.:)
+                (:The search term held in $query-as-xml is substituted for the '$q' held in $expr.:)
                 ($collection, replace($expr, '\$q', biblio:normalize-search-string($query-as-xml/string())))
         case element(collection)
             return
@@ -488,19 +501,25 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 else ()
             default 
                 return ()
+         (:Leading wildcards cannot appear in searches within extracted text. :) 
+         let $query := 
+            for $q in $query
+                return replace(replace($q, ':[?*]', ':'), '\s[?*]', ' ')
+         return
+            $query
 };
 
 (: If an apostrophe occurs in the search string (as in "China's"), it is escaped. 
 This means that phrase searches can only be performed with double quotation marks.:)
-(: If the search string starts with a "*" or a "?" (illegal in Lucene search syntax), it is removed.:)
-(: ":" and "&" are replaced with empty spaces.:)
-(:NB: In case of an unequal number of double quotation marks, all double quotation marks should be removed.:)
+(: ":" and "&" are replaced with spaces.:)
+(: In the case of an unequal number of double quotation marks, all double quotation marks are removed.:)
 declare function biblio:normalize-search-string($search-string as xs:string?) as xs:string? {
-    let $search-string := replace($search-string, '^[?*]?(.*)$', '$1')
+	let $search-string := 
+	   if (functx:number-of-matches($search-string, '"') mod 2) 
+	   then replace($search-string, '"', '') 
+	   else $search-string 
 	let $search-string := replace($search-string, "'", "''")
-	let $search-string := translate($search-string, ":", " ")
-	let $search-string := translate($search-string, "&amp;", " ")
-	let $search-string := translate($search-string, "＋", "+")
+	let $search-string := translate($search-string, "[:&amp;]", " ")
     	return $search-string
 };
 
@@ -600,7 +619,7 @@ declare variable $biblio:author-roles := ('aut', 'author', 'cre', 'creator', 'co
 (: This function is adapted in nameutil:format-name() in names.xql. Any changes should be coordinated. :)
 declare function biblio:order-by-author($hit as element()) as xs:string?
 {
-    (: Pick the first name of an author/creator. :)
+    (: Pick the first occurring name element of an author/creator. :)
     let $names := $hit/mods:name[mods:role/mods:roleTerm = $biblio:author-roles or not(mods:role/mods:roleTerm)][1] 
     (: Iterate through the single name in order to be able to order it in a return statement. :)
     for $name in $names
@@ -644,8 +663,10 @@ declare function biblio:order-by-author($hit as element()) as xs:string?
 			    	if ($name/mods:namePart[@script eq 'Latn']/text() or $name/mods:namePart[not(@script)]/text())
 		    		then $name/mods:namePart[@type eq 'given'][not(@script) or @script eq 'Latn'][1]/text()
 		    		else $name/mods:namePart[@type eq 'given'][1]/text()
-    let $sort := upper-case(concat($sortFirst, ' ', $sortLast))
-    order by upper-case($sort) ascending empty greatest
+    let $sort :=
+        if (concat($sortFirst, $sortLast)) 
+        then upper-case(concat($sortFirst, ' ', $sortLast)) 
+        else ()
     return
         $sort
 };
@@ -683,17 +704,21 @@ declare function biblio:get-year($hit as element()) as xs:string? {
 (: NB: It does not make sense to use Score if there is no search term to score on. :)
 declare function biblio:construct-order-by-expression($sort as xs:string?) as xs:string?
 {
-    if ($sort eq "Score") 
-    then "ft:score($hit) descending"
-    else 
-        if ($sort eq "Author") 
-        then "biblio:order-by-author($hit)"
-        else 
-            if ($sort eq "Title") 
-            then "$hit/(mods:titleInfo[not(@type)][1]/mods:title[1] | vra:work/vra:titleSet[1]/vra:title[1] | tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]) ascending empty greatest"
-            (:Default: if ($sort eq "Year"):)
-            else "biblio:get-year($hit) descending empty least"
-};
+    let $sort-direction := request:get-parameter("sort-direction", '')
+        return
+            if ($sort eq "Score") 
+            then concat("ft:score($hit) ", if ($sort-direction) then $sort-direction else 'ascending') 
+            else 
+                if ($sort eq "Author") 
+                then concat("biblio:order-by-author($hit) ", if ($sort-direction) then $sort-direction else 'ascending', " ", if ($sort-direction eq 'descending') then "empty least" else "empty greatest")
+                else 
+                    if ($sort eq "Title") 
+                    then concat("$hit/(mods:titleInfo[not(@type)][1]/mods:title[1] | vra:work/vra:titleSet[1]/vra:title[1] | tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]) ", if ($sort-direction) then $sort-direction else 'ascending', " ", if ($sort-direction eq 'descending') then "empty least" else "empty greatest")
+                    else 
+                        if ($sort eq "Year") 
+                        then concat("biblio:get-year($hit) ", if ($sort-direction) then $sort-direction else 'descending', " ", if ($sort-direction eq 'descending') then "empty least" else "empty greatest")
+                        else ()
+        };
 
 (:~
     Evaluate the actual XPath query and order the results
@@ -719,10 +744,14 @@ declare function biblio:evaluate-query($query-as-string as xs:string, $sort as x
         then
             <options>
                 <default-operator>and</default-operator>
+                <leading-wildcard>yes</leading-wildcard>
+                <filter-rewrite>yes</filter-rewrite>
             </options>
         else
             <options>
                 <default-operator>or</default-operator>
+                <leading-wildcard>yes</leading-wildcard>
+                <filter-rewrite>yes</filter-rewrite>
             </options>
     return
         util:eval($query-with-order-by-expression)
@@ -1124,6 +1153,19 @@ declare function biblio:get-writeable-subcollection-paths($path as xs:string) {
 };
 
 (:~
+    Perform a search from scratch
+:)
+declare function biblio:apply-search($collection as xs:string?, $search-field as xs:string, $value as xs:string) {
+    let $collection := if ($collection) then $collection else '/db/resources/'
+    return
+        <query>
+            { $collection }
+            <field name="{$biblio:FIELDS/field[(@name, @short-name) = $search-field]/@name}">{$value}</field>
+        </query>
+    
+};
+
+(:~
     Filter an existing result set by applying an additional
     clause with "and".
 :)
@@ -1200,7 +1242,7 @@ $param
 :
 :)
 declare function biblio:prepare-query($id as xs:string?, $collection as xs:string?, $reload as xs:string?, 
-    $history as xs:string?, $clear as xs:string?, $filter as xs:string?, $mylist as xs:string?, 
+    $history as xs:string?, $clear as xs:string?, $filter as xs:string?, $search-field as xs:string?, $mylist as xs:string?, 
     $value as xs:string?) as element(query)? {
     if ($id)
     then
@@ -1223,8 +1265,11 @@ declare function biblio:prepare-query($id as xs:string?, $collection as xs:strin
                     else 
                         if ($filter) 
                         then biblio:apply-filter($collection, $filter, $value)
-                        (:"else" includes "if ($mylist eq 'display')", the search made when displaying items in My List.:)
-                        else biblio:process-form()
+                        else 
+                            if ($search-field) 
+                            then biblio:apply-search($collection, $search-field, $value)
+                            else biblio:process-form()
+                            (:"else" includes "if ($mylist eq 'display')", the search made when displaying items in My List.:)
 };
 
 (:~
@@ -1256,7 +1301,7 @@ declare function biblio:get-or-create-cached-results($mylist as xs:string?, $que
 };
 
 declare function biblio:get-query-as-regex($query-as-xml) as xs:string { 
-    let $query := $query-as-xml//field/text()
+    let $query := string-join($query-as-xml//field, ' ')
     (:We prepare for later tokenization of expressions in boolean searches 
     by substituting spaces for the operators.:)
     let $query := 
@@ -1290,8 +1335,7 @@ declare function biblio:get-query-as-regex($query-as-xml) as xs:string {
                     for $expression in $query
                         return 
                             normalize-space(
-                            translate(translate(translate(translate(translate(translate(translate(translate(translate(translate(translate(translate($expression
-                                , '＋', ' ')
+                            translate(translate(translate(translate(translate(translate(translate(translate(translate(translate(translate($expression
                                 , '^\-', ' ') (:appears to strip all hyphens:)
                                 , '\{', ' ')
                                 , '\}', ' ')
@@ -1338,7 +1382,9 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     (: We receive an HTML template as input :)
     (:the search field passed in the url:)
     let $filter := request:get-parameter("filter", ())
-    (:the search term passed in the url:)
+    (:the search term for added filters passed in the url:)
+    let $search-field := request:get-parameter("search-field", ())
+    (:the search term for new sarches passed in the url:)
     let $value := request:get-parameter("value", ())
     let $history := request:get-parameter("history", ())
     let $reload := request:get-parameter("reload", ())
@@ -1351,7 +1397,7 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     let $sort := request:get-parameter("sort", ())
 
     (: Process request parameters and generate an XML representation of the query :)
-    let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $mylist, $value)
+    let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $search-field, $mylist, $value)
     (: Get the results :)
     let $query-as-regex := biblio:get-query-as-regex($query-as-xml)
     let $null := session:set-attribute('regex', $query-as-regex)
