@@ -643,7 +643,7 @@ declare function retrieve-mods:format-list-view($position as xs:string, $entry a
             return
                 for $role-term-secondary in distinct-values($role-terms-secondary) 
                     return
-                        let $names-secondary := <entry>{$entry/mods:name[mods:role/lower-case(mods:roleTerm) eq $role-term-secondary]}</entry>
+                        let $names-secondary := <entry>{$entry/mods:name[mods:role/lower-case(mods:roleTerm) = $role-term-secondary]}</entry>
                             return                            (
                                 (: Introduce secondary role label with comma. :)
                                 (: NB: What if there are multiple secondary roles? :)
