@@ -15,6 +15,7 @@ import module namespace config="http://exist-db.org/mods/config" at "../../../mo
 import module namespace retrieve-mods="http://exist-db.org/mods/retrieve" at "retrieve-mods.xql";
 import module namespace retrieve-vra="http://exist-db.org/vra/retrieve" at "retrieve-vra.xql";
 import module namespace retrieve-tei="http://exist-db.org/tei/retrieve" at "retrieve-tei.xql";
+import module namespace retrieve-wiki="http://exist-db.org/wiki/retrieve" at "retrieve-wiki.xql";
 import module namespace jquery="http://exist-db.org/xquery/jquery" at "resource:org/exist/xquery/lib/jquery.xql";
 import module namespace security="http://exist-db.org/mods/security" at "../../../modules/search/security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "../../../modules/search/sharing.xqm";
@@ -25,6 +26,8 @@ import module namespace mods-common="http://exist-db.org/mods/common" at "mods-c
 declare namespace mods="http://www.loc.gov/mods/v3";
 declare namespace vra = "http://www.vraweb.org/vracore4.htm";
 declare namespace tei="http://www.tei-c.org/ns/1.0";
+declare namespace atom="http://www.w3.org/2005/Atom";
+declare namespace html="http://www.w3.org/1999/xhtml";
 
 declare namespace bs="http://exist-db.org/xquery/biblio/session";
 declare namespace functx = "http://www.functx.com";
@@ -110,7 +113,11 @@ declare function bs:view-gallery-item($mode as xs:string, $item as element(), $c
             else
                 if (namespace-uri($item) eq 'http://www.tei-c.org/ns/1.0')
                 then retrieve-tei:format-list-view('', $item, '', '', '')
-                else ()
+                else
+                    if (namespace-uri($item) eq 'http://www.w3.org/2005/Atom')
+                    then retrieve-wiki:format-list-view('', $item, '', '', '')
+                    else ()
+                
         return
             if (namespace-uri($item) eq 'http://www.loc.gov/mods/v3')
             then
@@ -300,6 +307,63 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
         </tr>
 };
 
+declare function bs:wiki-detail-view-table($item as element(), $currentPos as xs:int) {
+    let $isWritable := bs:collection-is-writable(util:collection-name($item))
+    let $id := concat(document-uri(root($item)), '#', util:node-id($item))
+    let $id := functx:substring-after-last($id, '/')
+    let $id := functx:substring-before-last($id, '.')
+    let $type := substring($id, 1, 1)
+    let $id-position :=
+        if ($type eq 'c')
+        then '/vra:collection/@id'
+        else 
+            if ($type eq 'w')
+            then '/vra:work/@id'
+            else '/vra:image/@id'
+    let $stored := session:get-attribute("personal-list")
+    let $saved := exists($stored//*[@id = $id])
+    let $vra-work :=  collection($config:mods-root)//vra:work[@id=$id]/vra:relationSet/vra:relation
+    
+    return
+        <tr class="pagination-item detail" xmlns="http://www.w3.org/1999/xhtml">
+            <td class="pagination-number">{$currentPos}</td>
+            <td class="actions-cell">
+                <a id="save_{$id}" href="#{$currentPos}" class="save">
+                    <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+                </a>
+            </td>
+            <td class="detail-type" style="vertical-align:top"><img src="theme/images/image.png" title="Still Image"/></td>
+            <td style="vertical-align:top;">
+                <div id="image-cover-box"> 
+                { 
+                    if ($vra-work)
+                    then
+                        for $entry in $vra-work
+                        (:return <img src="{$entry/@relids}"/>:)
+                        let $image := collection($config:mods-root)//vra:image[@id=$entry/@relids]
+                            return
+                                <p>{local:return-thumbnail-detail-view($image)}</p>
+                    else 
+                        let $image := collection($config:mods-root)//vra:image[@id=$id]
+                            return
+                                <p>{local:return-thumbnail-detail-view($image)}</p>
+                     (: 
+                     return <img src="{concat(request:get-scheme(),'://',request:get-server-name(),':',request:get-server-port(),request:get-context-path(),'/rest', util:collection-name($image),"/" ,$image-name)}"  width="200px"/>
+                     :)               
+                }
+                </div>
+            </td>            
+            <td class="detail-xml" style="vertical-align:top;">
+                { bs:toolbar($item, $isWritable, $id) }
+                <!--Zotero does not import vra records <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>-->
+                {
+                    let $collection := util:collection-name($item)
+                    return
+                        retrieve-wiki:format-detail-view(string($currentPos), $item, $collection, $type, $id)
+                }
+            </td>
+        </tr>
+};
 
 declare function bs:tei-detail-view-table($item as element(), $currentPos as xs:int) {
     let $isWritable := bs:collection-is-writable(util:collection-name($item))
@@ -462,6 +526,46 @@ declare function bs:tei-list-view-table($item as node(), $currentPos as xs:int) 
         </tr>
 };
 
+declare function bs:wiki-list-view-table($item as node(), $currentPos as xs:int) {
+    let $document-uri  := document-uri(root($item))
+    let $node-id := util:node-id($item)
+    let $id := concat($document-uri, '#', $node-id)
+    let $id := functx:substring-after-last($id, '/')
+    let $id := functx:substring-before-last($id, '.')
+    let $type := substring($id, 1, 1)
+    let $stored := session:get-attribute("personal-list")
+    let $saved := exists($stored//*[@id = $id])
+    return
+        <tr xmlns="http://www.w3.org/1999/xhtml" class="pagination-item list">
+            <td class="pagination-number">{$currentPos}</td>
+            {
+            <td class="actions-cell">
+                <a id="save_{$id}" href="#{$currentPos}" class="save">
+                    <img title="{if ($saved) then 'Remove Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+                </a>
+            </td>
+            }
+            <td class="list-type icon magnify">
+            { bs:get-icon($bs:THUMB_SIZE_FOR_GALLERY, $item, $currentPos)}
+            </td>
+            <td/>
+            {
+            <td class="pagination-toggle">
+                <!--Zotero does not import tei records <abbr class="unapi-id" title="{bs:get-item-uri(concat($item, $id-position))}"></abbr>-->
+                <a>
+                {
+                    let $collection := util:collection-name($item)
+                    let $collection := translate(functx:replace-first($collection, '/db/', ''), '_', ' ')
+                    (:let $clean := clean:cleanup($item):)
+                    return
+                        retrieve-wiki:format-list-view(string($currentPos), $item, $collection, $document-uri, $node-id)
+                }
+                </a>
+            </td>
+            }
+        </tr>
+};
+
 (:This is the default which gets called if bs:list-view-table() does not know how to handle what is passed to it.:)
 (:It is not used at the moment.:)
 declare function bs:plain-list-view-table($item as node(), $currentPos as xs:int) {
@@ -522,6 +626,8 @@ declare function bs:list-view-table($item as node(), $currentPos as xs:int) {
             bs:tei-list-view-table($item, $currentPos)
         case element(tei:bibl) return
             bs:tei-list-view-table($item, $currentPos)
+        case element(atom:entry) return
+            bs:wiki-list-view-table($item, $currentPos)
         default return
             bs:plain-list-view-table($item, $currentPos)
 };
@@ -687,7 +793,10 @@ declare function bs:view-table($cached as item()*, $stored as item()*, $start as
                                     else
                                         if ($count eq 1 and $item instance of element(tei:bibl)) 
                                         then bs:tei-detail-view-table($item, $currentPos)
-                                        else bs:list-view-table($item, $currentPos)
+                                        else
+                                            if ($count eq 1 and $item instance of element(atom:entry)) 
+                                            then bs:wiki-detail-view-table($item, $currentPos)
+                                            else bs:list-view-table($item, $currentPos)
     }
     </table>
 };

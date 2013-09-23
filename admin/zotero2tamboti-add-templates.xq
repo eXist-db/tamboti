@@ -1,8 +1,11 @@
 xquery version "3.0";
+
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace xmldb="http://exist-db.org/xquery/xmldb";
 declare namespace functx = "http:/www.functx.com";
 declare namespace mods="http://www.loc.gov/mods/v3";
+declare namespace ext="http://exist-db.org/mods/extension";
+declare namespace xlink="http://www.w3.org/1999/xlink";
 
 
 declare option exist:serialize "method=xml media-type=text/xml omit-xml-declaration=yes indent=yes";
@@ -14,12 +17,23 @@ declare variable $out-collection := 'xmldb:exist:///db/test/out';
 
 
 declare function local:add-ns-node(
-    $elem   as element(),
-    $prefix as xs:string,
-    $ns-uri as xs:string
-  ) as element()
-{
-  element { QName($ns-uri, concat($prefix, ":x")) }{ $elem }/*
+ $elem as element(),
+ $prefix as xs:string,
+ $ns-uri as xs:string
+) as element() {
+   element { node-name($elem) } {
+       for $prefix in in-scope-prefixes($elem)
+       return
+           try {
+               namespace { $prefix } { namespace-uri-for-prefix($prefix, $elem) }
+           } catch * {
+               ()
+           },
+       namespace { $prefix } { $ns-uri },
+       for $attribute in $elem/@*
+              return attribute {name($attribute)} {$attribute},
+       $elem/node()
+   }
 };
 
 
@@ -96,12 +110,6 @@ let $input := doc('/db/test/in/modsCollection.xml')
   
 for $mods-record in $input/mods:modsCollection/*
     let $myuid := concat("uuid-",util:uuid())
-    let $mods-record := functx:add-attribute($mods-record, "ID", $myuid)
-    let $mods-record := functx:add-attribute($mods-record, "version", "3.5")
-    let $mods-record := local:add-ns-node($mods-record, "xlink", "http://www.w3.org/1999/xlink")
-    let $mods-record := local:add-ns-node($mods-record, "ext", "http://exist-db.org/mods/extension")
-    let $mods-record := local:add-ns-node($mods-record, "xsi", "http://www.w3.org/2001/XMLSchema-instance")
-    let $mods-record := local:add-ns-node($mods-record, "schemaLocation", "http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd")
     let $language := $mods-record/mods:language/mods:languageTerm/string()
     let $language := if ($language) then $language else 'eng'
     let $record-content-source := $mods-record/mods:recordInfo/mods:recordContentSource/string()
@@ -113,8 +121,8 @@ for $mods-record in $input/mods:modsCollection/*
                   <recordCreationDate encoding="w3cdtf">{current-date()}</recordCreationDate>
                   <recordChangeDate encoding="w3cdtf"/>
                   <languageOfCataloging>
-                  	<languageTerm authority="iso639-2b" type="code">{$language}</languageTerm>
-                  	<scriptTerm authority="iso15924" type="code">Latn</scriptTerm>
+                      <languageTerm authority="iso639-2b" type="code">{$language}</languageTerm>
+                      <scriptTerm authority="iso15924" type="code">Latn</scriptTerm>
               	</languageOfCataloging>
           	</recordInfo>
     let $mods-record := local:insert-element($mods-record, $record-info, 'mods', 'last-child')
@@ -158,5 +166,13 @@ for $mods-record in $input/mods:modsCollection/*
                             <ext:catalogingStage/>
                         </extension>
     let $mods-record := local:insert-element($mods-record, $template, 'mods', 'last-child')
+        let $mods-record := functx:add-attribute($mods-record, "ID", $myuid)
+    let $mods-record := functx:add-attribute($mods-record, "version", "3.5")
+    (:local:add-ns-node() maintains both namespaces and attributes, therefore it must come last. functx:add-attribute() maintains attributes, but not namespaces, so it cannot come last.:)
+    let $mods-record := local:add-ns-node($mods-record, "xlink", "http://www.w3.org/1999/xlink")
+    let $mods-record := local:add-ns-node($mods-record, "ext", "http://exist-db.org/mods/extension")
+    let $mods-record := local:add-ns-node($mods-record, "xsi", "http://www.w3.org/2001/XMLSchema-instance")
+    let $mods-record := local:add-ns-node($mods-record, "schemaLocation", "http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd")
+
         return
             xmldb:store($out-collection,  concat($myuid, ".xml"), $mods-record)

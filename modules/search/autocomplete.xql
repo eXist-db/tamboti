@@ -3,6 +3,8 @@ xquery version "1.0";
 declare namespace mods="http://www.loc.gov/mods/v3";
 declare namespace vra = "http://www.vraweb.org/vracore4.htm";
 declare namespace tei="http://www.tei-c.org/ns/1.0";
+declare namespace atom="http://www.w3.org/2005/Atom";
+declare namespace html="http://www.w3.org/1999/xhtml";
 
 import module namespace biblio="http://exist-db.org/xquery/biblio" at "application.xql";
 
@@ -16,7 +18,7 @@ declare function local:key($key, $options) {
 
 let $collection := xmldb:encode(request:get-parameter("collection", $local:COLLECTION))
 let $term := request:get-parameter("term", ())
-let $field := request:get-parameter("field", "any Field (MODS, TEI, VRA)")
+let $field := request:get-parameter("field", "any Field (MODS, TEI, VRA, Wiki)")
 let $qnames :=
     for $target in $biblio:FIELDS/field[@name eq $field]//target
             return xs:QName($target/string())

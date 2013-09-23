@@ -574,7 +574,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
             mods-common:simple-row(functx:substring-before-last-match($last-modified[count(.)], 'T'), 'Record Last Modified')
         else ()
     ,
-    mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $ID, '&amp;query-tabs=advanced-search-form'), 'Stable Link to This Record')
+    mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $ID), 'Stable Link to This Record')
     ,
     if (contains($collection-short, 'Priya Paul Collection')) 
     then 
@@ -643,7 +643,7 @@ declare function retrieve-mods:format-list-view($position as xs:string, $entry a
             return
                 for $role-term-secondary in distinct-values($role-terms-secondary) 
                     return
-                        let $names-secondary := <entry>{$entry/mods:name[mods:role/lower-case(mods:roleTerm) eq $role-term-secondary]}</entry>
+                        let $names-secondary := <entry>{$entry/mods:name[mods:role/lower-case(mods:roleTerm) = $role-term-secondary]}</entry>
                             return                            (
                                 (: Introduce secondary role label with comma. :)
                                 (: NB: What if there are multiple secondary roles? :)
