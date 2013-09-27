@@ -72,10 +72,9 @@
         <para>
             <graphic fileref="images/editor_top_basic.png" align="center" valign="middle" width="1000px"/>
         </para>
-        <para>Every time you click one of the lower tabs, what you have input is saved. This also applies if you click the current tab. For this reason, there is actually no need for a separate "Save" button, but it is supplied nonetheless, for psychological reasons.</para>
-        <para>When you have finished editing, click the "Save and Close" button. The record is then saved inside the folder you marked before opening the editor and you will leave the editor, returning to see the record you have just added in the search function (not implemented yet).</para>
-        <para>After you have closed the editor, you can at any time reopen the record inside the editor by finding it and clicking the "Edit Record" button &#160;<graphic fileref="../../../resources/images/page_edit.png" align="center" valign="middle"/>&#160; inside the record's detail view.</para>
-        <para>If you wish to discard whatever you have input (or have not input anything yet) and want to return to the search function, click "Cancel Editing".</para>
-        <para>The upper tab, here reading "Basic Input Forms," only serves to inform about the location of the tab below in the input forms as a whole. Clicking the upper tab has no effect.</para>
+        <para>Every time you click one of the lower tabs, your input is saved, but you can also click <guibutton>Save</guibutton> to save the record.</para>
+        <para>When you have finished editing, click the <guibutton>Save and Close</guibutton> button. The record is saved inside the folder you marked before opening the editor and the record you have just added is displayed in the search interface.</para>
+        <para>After you have closed the editor, you can at any time reopen the record inside the editor by clicking the <guibutton>Edit Record</guibutton> button &#160;<graphic fileref="../../../resources/images/page_edit.png" align="center" valign="middle"/>&#160; inside the detail view of the record.</para>
+        <para>If you wish to discard whatever you have input and want to return to the search function, click <guibutton>Cancel Editing</guibutton>.</para>
     </chapter>
 </book>

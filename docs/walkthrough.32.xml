@@ -72,9 +72,8 @@
         <para>
             <graphic fileref="images/time_out.png" align="center" valign="middle" width="1000px"/>
         </para>
-        <para>While we are looking at the URL, we might as well notice the strange string of characters that serves as the ID of the record you are making, a string like "id=uuid-7b734a76-107d-4c65-8701-968b5e95945b."</para>
-        <para>This is what is called a UUID, a universally unique identifier. UUIDs are used throughout Tamboti to identify resources.</para>
-        <para>A UUID is actually a random number, so we are keeping track of your valuable resources by flipping coins!</para>
-        <para>Is there not a danger that two IDs will be the same? Hardly, since if one were to generate 1 billion UUIDs every second for 100 years, the probability of creating just a single duplicate would be about 50% (<ulink href="http://en.wikipedia.org/wiki/Universally_unique_identifier">Wikipedia</ulink>). If we were to keep track of the ID ourselves, we would make many more mistakes than this.</para>
+        <para>To find the ID of the record you are making, look for a data string like "id=uuid-7b734a76-107d-4c65-8701-968b5e95945b."</para>
+        <para>It is called a UUID, a universally unique identifier. UUIDs are used throughout Tamboti to identify resources.</para>
+        
     </chapter>
 </book>

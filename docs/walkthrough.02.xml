@@ -46,25 +46,21 @@
         </table>
         <para>The Tamboti metadata records follow the <ulink url="http://www.loc.gov/standards/mods/" target="_blank">MODS</ulink> standard for bibliographical
             description curated by the US Library of Congress. "MODS" is short for "Metadata Object Description Schema." </para>
-        <para>This standard allows one to catalogue many different kinds of material, not just
-            books and articles, but also web sites, photos, videos, maps, computer files and so on.
-            It allows one to catalogue in great detail, but also to catalogue in a simple manner. It
-            allows one to relate one record (say, an entry for a book) to another entry (say an
-            entry for a movie) and it allows one to make notes that one can "type" freely. </para>
-        <para>You don't have to make acquaintance with this format in order to use Tamboti, but basically all it does is to surround each type of information with a set of tags,
-            like &lt;title&gt;A Midsummer Night's Dream&lt;/title&gt;. 
-            The tags tell, more or less clearly, what is inside them, in this case a title. 
-            The complications come from the fact that tags can "nest" inside other tags, creating hierachies of content.
-        </para>
-        <para>The MODS format is a "sister" of the MARC format used by most larger libraries, national as well as university. 
-            MODS is widely used as an exchange format and when resources from different libraries are
-            aggregated. An good example of a large-scale aggregation project using MODS is <ulink url="http://www.americanhistoryonline.org/" target="_blank">American History
+        <para>The MODS standard allows you to catalogue source material such as
+            books, articles, web sites, photos, videos, maps, computer files etc.. 
+            You can make simple lists or stock your entries with details. You can relate entries, for example, link an entry for a book to that of a movie.
+            There is also an annotate function, which enables you to insert comments about a record. </para>
+        
+        <para>The MODS format is related to the MARC format, which is used by most larger libraries, for example, national libraries or university libraries. 
+            MODS is widely used as an exchange format, and when resources from different libraries are
+            aggregated. An example of a large-scale aggregation project using MODS is <ulink url="http://www.americanhistoryonline.org/" target="_blank">American History
                 Online</ulink>. MODS-using sites similar to Tamboti are 
             <ulink url="http://academiccommons.columbia.edu/" target="_blank">Columbia University Academic Commons</ulink>
             and
             <ulink url="http://cdi.uvm.edu/" target="_blank">The University of Vermont Libraries' Center for Digital Initiatives</ulink>.</para>
-        <para>MODS is presently used as a cataloguing format primarily for "untraditional" library resources, 
+        <para>MODS is presently used as a cataloguing format primarily for "untraditional" library resources 
             such as images and web pages, but is slowly gaining ground as a format for traditional library resources as well. 
-            MARC records can be converted, almost losslessly, to and from MODS records.</para>
+            MARC records can be converted to and from MODS records with little or no data loss.</para>
     </chapter>
 </book>
+
