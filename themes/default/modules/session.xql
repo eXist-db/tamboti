@@ -700,10 +700,13 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
                 (: button to add a related item :)
                 if ($bs:USER ne "guest") 
                 then
-                    <a class="add-related" href="#{if ($isWritable) then $collection else $home}#{$item/@ID}">
-                        <img title="Create Related MODS Record" src="theme/images/page_add.png"/>
-                    </a>
+                    if (name($item) eq 'mods')
+                    then
+                        <a class="add-related" href="#{if ($isWritable) then $collection else $home}#{$item/@ID}">
+                            <img title="Create Related MODS Record" src="theme/images/page_add.png"/>
+                        </a>
                     else ()
+                else ()
             }
         </div>
 };
