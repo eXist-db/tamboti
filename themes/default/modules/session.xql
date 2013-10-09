@@ -637,27 +637,23 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
     (:determine for image record:)
    
 
-    (:If there is a MODS @ID, use it; otherwise take a VRA @id.:)
     let $collection := util:collection-name($item)
-    let $id := $item/@ID
     let $id := 
-        if ($id) 
-        then $id 
-        else (
-            (: Handle id from vra:work and vra:image for ziziphus :)
+        if (name($item) eq 'mods') 
+        then $item/@ID 
+        else
             if (exists($item/vra:work))
-            then ($item/vra:work/@id)
-            else ($item/vra:image/vra:relationSet/vra:relation/@relids)
-         )
-    let $imageId :=  if ( exists($item/vra:work) )
-                      then (
-                            if( exists($item/vra:work/vra:relationSet/vra:relation/@pref[.='true']) )
-                            then ( $item/vra:work/vra:relationSet/vra:relation[@pref='true']/@relids )
-                            else ( $item/vra:work/vra:relationSet/vra:relation[1]/@relids)
-                      ) else ($item/vra:image/@id)
+            then $item/vra:work/@id
+            else ()
+    let $imageId :=  if (exists($item/vra:work))
+                      then
+                            if (exists($item/vra:work/vra:relationSet/vra:relation/@pref[.='true']))
+                            then $item/vra:work/vra:relationSet/vra:relation[@pref='true']/@relids
+                            else $item/vra:work/vra:relationSet/vra:relation[1]/@relids
+                      else $item/vra:image/@id
 
-    let $workdir := if(contains($collection, 'VRA_images')) then (  functx:substring-before-last($collection, "/")) else ($collection)
-    let $workdir := if(ends-with($workdir,'/')) then ($workdir) else ($workdir || '/')
+    let $workdir := if (contains($collection, 'VRA_images')) then (  functx:substring-before-last($collection, "/")) else ($collection)
+    let $workdir := if (ends-with($workdir,'/')) then ($workdir) else ($workdir || '/')
     let $imagepath := $workdir || 'VRA_images/' || $imageId || ".xml"
     
      
@@ -666,10 +662,14 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
             then <a class="upload-file-style"  directory="false" href="#{$id}" onclick="updateAttachmentDialog"><img title="Upload Attachment" src="theme/images/database_add.png" /> </a>
         else ()
     return
-        <div class="actions-toolbar">
-           <a target="_new" href="source.xql?id={$id}&amp;clean=yes">
-                <img title="View XML Source of Record" src="theme/images/script_code.png"/>
-            </a>
+        <div class="actions-toolbar">{
+            if (name($item) = ('mods', 'vra'))
+            then
+               <a target="_new" href="source.xql?id={$id}&amp;clean=yes">
+                    <img title="View XML Source of Record" src="theme/images/script_code.png"/>
+                </a>
+            else ()
+            }
             {
                 (: if the item's collection is writable, display edit/delete and move buttons :)
                 if ($isWritable) 
