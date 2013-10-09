@@ -35,8 +35,8 @@ declare variable $users-collection-name := "users";
 declare variable $groups-collection-name := "groups";
 declare variable $temp-collection-name := "temp";
 declare variable $commons-collection-name := "commons";
-declare variable $samples-collection-name := "samples";
-declare variable $sociology-collection-name := "sociology";
+declare variable $samples-collection-name := "Samples";
+declare variable $sociology-collection-name := "Sociology";
 declare variable $exist-db-collection-name := "eXist-db";
 (:declare variable $mads-collection-name := "mads";:)
 
