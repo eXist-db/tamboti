@@ -30,7 +30,7 @@
             </affiliation>
         </author>
     </bookinfo>
-    <xi:include href="sidebar.xml"/>
+    <!--<xi:include href="sidebar.xml"/>-->
     <chapter>
         <title>What is Tamboti?</title>
         <para> Tamboti is the Cluster's framework for cataloguing bibliographical material and other resource types such as web sites, images and videos. </para>
@@ -58,8 +58,7 @@
         </para>
         <para> To get familiar with the main functions of Tamboti, follow this <ulink href="walkthrough.xml">walkthrough</ulink>.  
         </para>
-        <para>You can read more about how to share records with others <ulink href="security-manager.xml">here</ulink>.</para>
-        
+        <!--<para>You can read more about how to share records with others <ulink href="security-manager.xml">here</ulink>.</para>-->
         <note>
             <para>Why "Tamboti"? </para>
             <para> <!--Is that info necessary for the user?-->For naming their metadata framework, the Heidelberg Research Architecture has decided to adopt the names of exotic trees.

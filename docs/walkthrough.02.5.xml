@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <book xmlns:xi="http://www.w3.org/2001/XInclude">
     <bookinfo>
         <graphic fileref="theme/images/tamboti.png"/>
@@ -6,7 +5,7 @@
         <productname>Tamboti</productname>
         <title>Tamboti Walkthrough</title>
     </bookinfo>
-    <xi:include href="sidebar.xml"/>
+    <!--<xi:include href="sidebar.xml"/>-->
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
     <chapter>
         <title>Web Browsers</title>
@@ -22,27 +21,27 @@
                         <entry>
                             <ulink href="walkthrough.02.xml">
                                 <div>
-                                    <graphic fileref="images/resultset_previous.png" align="left" href="walkthough.01.xml" alt="Go To Previous"/>&#160; </div>
+                                    <graphic fileref="images/resultset_previous.png" align="left" href="walkthough.01.xml" alt="Go To Previous" width="25px"/>&#160; </div>
                             </ulink>
                         </entry>
                         <entry>
                             <ulink href="walkthrough.toc.xml">
                                 <div class="toc">
-                                    <graphic fileref="images/text_list_bullets.png" align="center" alt="Table of Contents"/>&#160; </div>
+                                    <graphic fileref="images/text_list_bullets.png" align="center" alt="Table of Contents" width="25px"/>&#160; </div>
                             </ulink>
                         </entry>
                         <entry>
                             <ulink href="walkthrough.03.xml">
                                 <div>
-                                    <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next"/>&#160; </div>
+                                    <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next" width="25px"/>&#160; </div>
                             </ulink>
                         </entry>
                     </row>
                 </tbody>
             </tgroup>
         </table>
-        <para>Tamboti runs with recent versions of all major browsers. Firefox is strongly recommended! </para>
-        <itemizedlist><!--Are these links still up to date?-->
+        <para>Tamboti runs with recent versions of all major browsers. </para>
+        <itemizedlist>
             <ulink href="http://www.mozilla.org/en-US/firefox/new/">
                 <listitem>Firefox</listitem>
             </ulink>
@@ -53,7 +52,7 @@
                 <listitem>Chrome</listitem>
             </ulink>
             <ulink href="http://www.microsoft.com/en-us/download/internet-explorer-9-details.aspx">
-                <listitem>Internet Explorer 9</listitem>
+                <listitem>Internet Explorer 9 and 10</listitem>
             </ulink>
             <ulink href="http://www.opera.com/browser/download/">
                 <listitem>Opera</listitem>

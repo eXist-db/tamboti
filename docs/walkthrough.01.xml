@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <book xmlns:xi="http://www.w3.org/2001/XInclude">
     <bookinfo>
         <graphic fileref="theme/images/tamboti.png"/>
@@ -31,7 +30,7 @@
             </affiliation>
         </author>
     </bookinfo>
-    <xi:include href="sidebar.xml"/>
+    <!--<xi:include href="sidebar.xml"/>-->
     <link rel="stylesheet" href="docbook.css" type="text/css"/>
     <chapter>
         <title>Flexibility</title>
@@ -47,21 +46,21 @@
                         <entry>
                             <ulink href="walkthrough.xml">
                                 <div>
-                                    <graphic fileref="images/resultset_previous.png" align="left" alt="Go To Previous"/>&#160;
+                                    <graphic fileref="images/resultset_previous.png" align="left" alt="Go To Previous" width="25px"/>&#160;
                                 </div>
                             </ulink>
                         </entry>
                         <entry>
                             <ulink href="walkthrough.toc.xml">
                                 <div class="toc">
-                                    <graphic fileref="images/text_list_bullets.png" align="center" alt="Table of Contents"/>&#160;
+                                    <graphic fileref="images/text_list_bullets.png" align="center" alt="Table of Contents" width="25px"/>&#160;
                                 </div>
                             </ulink>
                         </entry>
                         <entry>
                             <ulink href="walkthrough.02.xml">
                                 <div>
-                                    <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next"/>&#160;
+                                    <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next" width="25px"/>&#160;
                                 </div>
                             </ulink>
                         </entry>
@@ -69,9 +68,11 @@
                 </tbody>
             </tgroup>
         </table>
-        <para> Tamboti is a flexible metadata framework that allows you to upload and describe records as well as share them. </para>
-        <para> You can grant access to your records to other people, for example display or editing access, or restrict any use of your document to just you. </para>
-        <para> For entering either standard or complex records, templates have been made with instructions on best practices. You can ask the HRA to create templates adapted to project-specific needs.
+        <para> Tamboti is a flexible metadata framework that allows you to search for existing records and enter new ones. </para>
+        <para> You can grant access to your records to other people, for example display or editing access, 
+            or restrict any use of your records to just you. </para>
+        <para> For entering new records, templates have been made with instructions on best practices. 
+            You can ask the HRA to create templates adapted to project-specific needs.
         </para>
         <para> Note that the interface is constantly updated and may change in structure or appearance. </para>
     </chapter>
