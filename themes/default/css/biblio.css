@@ -89,6 +89,22 @@ a:link,
 a:visited {
   color: #5db0e6;
 }
+.biblio-full a {
+  color: #4d4d4d;
+  text-decoration: none;
+  font-weight: 400;
+  border-bottom: 1px dotted;
+}
+.biblio-full a:hover {
+  text-decoration: none;
+  color: #5db0e6;
+  border-bottom: 0;
+  border-bottom: 2px dotted;
+}
+.biblio-full a:link,
+.biblio-full a:visited {
+  color: #5db0e6;
+}
 img {
   border: 0;
 }
