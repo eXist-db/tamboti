@@ -22,6 +22,12 @@ color scheme ends*/
 /*variables end*/
 
 /*new or temporary stuff begins*/
+
+code {/*used in url generated for embedding images*/
+    font-size: 75%;
+}
+
+  
 .title em {
     font-style:normal;
 }
@@ -91,6 +97,10 @@ td
 
 }
 
+p {
+  text-indent: 1.5em;
+}
+
 a {
     color:@dark-gray;
     text-decoration:none;
@@ -105,6 +115,26 @@ a:hover {
 
 a:link, 
 a:visited 
+    {
+    color:@theme-color; 
+    }
+
+.biblio-full a {
+    color:@dark-gray;
+    text-decoration:none;
+    font-weight:400;
+    border-bottom:1px dotted;
+}
+
+.biblio-full a:hover {
+    text-decoration:none;
+    color:@theme-color;
+    border-bottom:0;
+    border-bottom:2px dotted;
+}
+
+.biblio-full a:link, 
+.biblio-full a:visited 
     {
     color:@theme-color; 
     }

@@ -72,9 +72,9 @@
         <para>
             <graphic fileref="images/time_out.png" align="center" valign="middle" width="1000px"/>
         </para>
-        <para>If you are have logged in, but not made any changes for 30 minutes, you will be automatically logged out. This means that your work has been lost, so please take care to "Save and Close" your work if you are interupted.</para>
-        <para>When you are logged out from the editor you should be returned to the search function, but for the time being you are instead shown the rather cryptic message displayed above.</para>
-        <para>(When you are logged out, you revert to the status of 'guest' and '/db/org/library/apps/mods/temp' is where you record is stored until you press "Save and Close" and a guest cannot store records here.)</para>
-        <para>For the time being, in order to get out of this fix you have to delete everything that follows "/exist/library/" in the URL and press the Enter key. This returns you to the search function where you have to log in again in order to continue using the editor.</para>
+        <para>If you are logged in but have not made any changes for 30 minutes, you will be logged out. Unsaved changes will be lost.</para>
+        <para>When you are logged out from the editor you should be redirected to the search function, but instead a message (displayed above) pops up.</para>
+        <para>(When you are logged out, you revert to the status of 'guest'. Logged in,'/db/org/library/apps/mods/temp' is where you record is stored until you press <guibutton>Save and Close</guibutton>. However, a guest cannot store records here.)</para>
+        <para>To work around this issue, delete everything that follows "/exist/library/" in the URL and press <guibutton>Enter</guibutton>. This returns you to the search function where you have to log in again in to continue using the editor.</para>
     </chapter>
 </book>

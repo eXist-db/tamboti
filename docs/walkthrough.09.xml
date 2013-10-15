@@ -45,26 +45,23 @@
             </tgroup>
         </table>
         <para>
-            When you log in, changes occur both in the buttons shown in Folder View and in the folders below.
+            Options after login:
         </para>
         <para>
-            In order to log in to the Tamboti framework, use the username and password you use to access the Cluster IT resources. 
+            To log in to the Tamboti framework, click <guibutton>Login</guibutton> and enter the username and password you use to access the Cluster IT resources. 
         </para>
-        <para>
-            When you click on the "Login" sign in the upper right corner, a pop-up window will appear. Enter the part of your username before "@ad.uni-heidelberg.de".
-        </para>
-        <para>As password, enter the password you use to access IT Cluster resources. Your password is not stored in the database, but sent to the Heidelberg University Active Directory to be authenticated.
+        <para>Your password is not stored in the database, but sent to the Heidelberg University Active Directory to be authenticated.
         </para>
         <para>
             <graphic fileref="images/walk-through.09.1.png" align="center" valign="middle"/>
         </para>
         <para>
-            After logging in, you will see that the username you are logged in under in the upper right corner, with an option to log out again. </para>
+            After logging in, you see the username you are logged in under in the upper right corner, with an option to log out again. For safety reasons, always log out when you wish to terminate your session. </para>
         <para>
             <graphic fileref="images/walk-through.09.2.png" align="center" valign="middle"/>
         </para>
-        <para>Your session lasts 30 minutes. After 25 minutes of inactivity you are presented with a warning that your sessionis about to expire. If you do not respond to this within five minutes, your will be logged out. This means that whatever you have not finished in the editor will be lost. It also means that your list in My List and your search history will be lost.
+        <para>Your session lasts 30 minutes. After 25 minutes of inactivity you are presented with a warning that your session is about to expire. If you do not respond to this within five minutes, you will be logged out. Unsaved changes will be lost. Your list in My List and your search history will be lost.
         </para>
-        <para>Sessions are expired because the database maintains a lot of information about your search results in order to make browsing faster, and it can become a strain on the database server if too many sessions are logged.</para>
+        <para>Sessions are expired because the database maintains a lot of information about your search results in order to make browsing faster, and it can become a strain on the database server if too many sessions are running.</para>
     </chapter>
 </book>

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--let $code-table :=
 -->
 <code-table xml:id="hint-code">
@@ -2670,7 +2669,7 @@
                     particular to the contribution itself. If you are only cataloguing one
                     contribution, you can also follow this way - others may then use your record (if
                     you make it available to them) and catalogue other contributions in the same
-                    edited volume, by finding it and clicking "Create Related Record". </p>
+                    edited volume, by finding it and clicking "Create Related MODS Record". </p>
                 <p> If you choose to enter the information concerning the edited volume inside the
                     record for the contribution, that is, not to use XLink, this is also fine. If
                     you later decide to use the ID of the record for the edited volume, you may
@@ -2708,13 +2707,13 @@
                 <p> If you are cataloguing several books from the same series, it is a good idea
                     first to catalogue the series. This will save you time and produce a more
                     ordered bibliography. When you have finished with cataloguing the series, you
-                    can choose "Create Related Record" in the detail view for the record in
+                    can choose "Create Related MODS Record" in the detail view for the record in
                     question. The ID number for the series will then automatically be inserted and
                     you only have to fill out the information particular to the book itself (its
                     place within the series and so on). If you are only cataloguing one book, you
                     can also follow this way - others may then use your record (if you make it
                     available to them) and catalogue other books in the same series, by finding it
-                    and likewise clicking "Create Related Record". </p>
+                    and likewise clicking "Create Related MODS Record". </p>
             </help>
             <value>series-compact</value>
             <local-name>relatedItem</local-name>

@@ -67,11 +67,11 @@ declare function retrieve-tei:format-detail-view($position as xs:string, $entry 
         </tr>
         ,
         let $document-uri := replace($document-uri, '/db/resources/commons/encyclopedia/', '/db/matumi/data/')
-        let $matumi-link := concat('/exist/apps/matumi/entry.html?doc=', $document-uri, '&amp;node=', $node-id)
+        let $matumi-link := concat('/exist/apps/matumi/entry.html?doc=', $document-uri, '&amp;node=', $node-id, '#', $node-id)
         (:let $log := util:log("DEBUG", ("##$matumi-link): ", $matumi-link)):)
         return
         <tr>
-            <td class="collection-label">Link to Whole Text</td>
+            <td class="collection-label">Link to Whole Text in</td>
             <td>
                 <span><a href="{$matumi-link}" target="_blank">Matumi</a></span>
                 </td>

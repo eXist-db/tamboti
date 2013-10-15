@@ -34,7 +34,7 @@
                             </ulink>
                         </entry>
                         <entry>
-                            <ulink href="walkthrough.12.3.xml">
+                            <ulink href="walkthrough.13.xml">
                                 <div>
                                     <graphic fileref="images/resultset_next.png" align="right" alt="Go To Next"/>
                                     &#160;</div>
@@ -44,26 +44,27 @@
                 </tbody>
             </tgroup>
         </table>
-        <para>If you now open up your Home folder, by clicking on the plus sign, and select your newly created folder inside the Home folder,
-            you will see a button which allows you to rename the folder, should you wish to <graphic fileref="images/folder_edit.png" align="center" valign="middle"/>&#160;. 
-        Clicking this will bring up a dialogue window similar to the one for creating new folders.</para>
-        <para>Another button allows you to move a folder to someplace else "within your command" 
+        <para>After creating a new subfolder to your "Home" folder, access the new folder by clicking the plus sign in front of your "Home" folder and then select your new folder.
+            You can rename the folder: <graphic fileref="images/folder_edit.png" align="center" valign="middle"/>&#160;. Enter the new name in the pop-up window.
+        .</para>
+        <para>To move a folder to another location, click
                 <graphic fileref="images/folder_go.png" align="center" valign="middle"/>&#160;.
-            More on this in the next section.</para>
-        <para> Yet another button allows you to delete a folder that belongs to you, 
+            More on the above actions in the next section.</para>
+        <para> You can also delete a folder that belongs to you, 
             in this case the folder you have just created <graphic fileref="images/folder_delete.png" align="center" valign="middle"/>&#160;.
             This brings up a dialogue warning that after deleting the folder, the folder and its contents cannot be restored. 
         </para>
-        <para> More complicated options are presented by the new button: 
-            Manage Folder Sharing <graphic fileref="images/user_edit.png" align="center" valign="middle"/>&#160;. 
-            The options afforded by this button are discussed separately, 
+        <para> More options are available with 
+            <guibutton>Manage Folder Sharing</guibutton> <graphic fileref="images/user_edit.png" align="center" valign="middle"/>&#160;. 
+            These options are discussed 
             in the section on <ulink href="security-manager.xml">Sharing</ulink>. </para>
         <para>
             <graphic fileref="images/walk-through.12.1.png" align="center" valign="middle"/>
         </para>
-        <para> The last button&#160;<graphic fileref="images/page_add.png" align="center" valign="middle"/>&#160;is in many ways the most important one: Create Stand-Alone Record (more about what "Stand-Alone" means below). 
-            If you click this button, you will leave the Tamboti search interface and be taken to the Tamboti editor in which you can create a new record. 
-            You will first be presented with a dialogue in which are are asked to choose which kind of record you wish to enter. More about the editor below.</para>
-        <para>If you are in the editor or the dialogue box, you can click Cancel Editing or Cancel to return to the search interface.</para>
-    </chapter>
+        <para> The last button&#160;<graphic fileref="images/page_add.png" align="center" valign="middle"/>&#160;is to <guibutton>Create Stand-Alone Record</guibutton>. 
+            By clicking this button you leave the Tamboti search interface and you are taken to the Tamboti editor, in which you can create a new record. 
+            A dialogue window pops up asking you to choose which kind of record you wish to enter.</para>
+        <para>If you are in the editor or the dialogue box, you can click <guibutton>Cancel Editing</guibutton> or <guibutton>Cancel</guibutton> to return to the search interface.</para>
+    </chapter> <!--Check this walkthrough step (12.xml) "Home Folder Funcionalities 2" against 12.3. xml "Home Folder Functionalities 3" and 12.6.xml "Home Folder Functionalities 3. I believe it is the same content.-->
 </book>
+

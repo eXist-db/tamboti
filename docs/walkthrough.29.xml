@@ -72,9 +72,9 @@
         <para>
             <graphic fileref="images/fieldset.1.png" align="center" valign="middle" width="1000px"/>
         </para>
-        <para>You will see that there is no specific field for inputting an author or editor name. Names and Roles are a more flexible way of approaching the problem of describing the relationship between "named entities" and publications than having fixed fields like that.</para>
-        <para>The flexibility is in several dimensions.</para>
-        <para>Names may be of differen types: we have personal names, corporate names and "names" of conferences. Chosing a different type for the name allows you to record many different situations using different combinations of the same fields.</para>
-        <para>Names are also analysed into name parts. With persons, this means that, if it is possible, one should dissect the name into given and family name. In the case of corporations and conference, there are name parts as well, but these do not have specific types, so instead of "Given Name", etc. you enter "(none selected)", to record that the value is blank. The name should still be dissected, if possible, into e.g. "United Nations" and "World Health Organization," the first more general than the next.</para>
+        <para>There is no specific field for inputting an author or editor name. Names and Roles are a more flexible way of describing the relationship between "named entities" and publications than having fixed fields.</para>
+        
+        <para>Names may be of different types: There are personal names, corporate names and names of conferences. Choosing a different type for the name allows you to record many different situations. You can use different combinations of the same fields.</para>
+        <para>Names are split into name parts. With persons, you dissect the name into given and family name. This does not apply for corporations and conferences. There are name parts, but these do not have specific types. Instead of "Given Name", enter "(none selected)". For example, dissect the name into "United Nations" (general) and "World Health Organization" (specific).</para>
     </chapter>
 </book>
