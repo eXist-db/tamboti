@@ -30,10 +30,10 @@
             </affiliation>
         </author>
     </bookinfo>
-    <xi:include href="sidebar.xml"/>
+    <!--<xi:include href="sidebar.xml"/>-->
     <chapter>
         <title>What is Tamboti?</title>
-        <para> Tamboti is the Cluster's new framework for cataloguing bibliographical material and other resource types, such as web sites, images and videos. </para>
+        <para> Tamboti is the Cluster's framework for cataloguing bibliographical material and other resource types such as web sites, images and videos. </para>
         <para> Tamboti has been created by the 
             <a href="http://www.asia-europe.uni-heidelberg.de/en/research/heidelberg-research-architecture.html" target="_blank">HRA</a> 
             (Heidelberg Research Architecture) at the 
@@ -42,30 +42,29 @@
             in close cooperation with 
             <a href="http://www.existsolutions.com/" target="_blank">eXist Solutions GmbH</a>. </para>
         <para>Tamboti is an application that can be installed in <a href="http://exist-db.org/" target="_blank">eXist-db</a>, an Open Source XML database.</para>
-        <para>Tamboti has three main functions. 
+        <para>Tamboti has three main functions: 
             <itemizedlist>
                 <listitem>
-                    <para>to make it possible to <emphasis>search</emphasis> for existing metadata records </para>
+                    <para>You can <emphasis>search</emphasis> for existing metadata records </para>
                 </listitem>
                 <listitem>
-                    <para>to make it possible to <emphasis>create</emphasis> new metadata records and <emphasis>edit</emphasis>
+                    <para>You can <emphasis>create</emphasis> new metadata records and <emphasis>edit</emphasis>
                     existing ones. </para>
                 </listitem>
                 <listitem>
-                    <para>to make it possible to <emphasis>annotate</emphasis> metadata entries in a manner that facilitates cross-cultural and cross-lingual research, by means of <emphasis>comments</emphasis> and <emphasis>classifications</emphasis> (to be implemented in 2012).</para>
+                    <para>You can <emphasis>annotate</emphasis> metadata entries in a manner that facilitates cross-cultural and cross-lingual research. You can add <emphasis>comments</emphasis> and do <emphasis>classifications</emphasis>.</para>
                 </listitem>
             </itemizedlist>
         </para>
-        <para> If you follow <ulink href="walkthrough.xml">this walkthrough</ulink>, you will be introduced to the main functionalities of Tamboti, step by step.  
+        <para> To get familiar with the main functions of Tamboti, follow this <ulink href="walkthrough.xml">walkthrough</ulink>.  
         </para>
-        <para>You can read more about how to share records with others <ulink href="security-manager.xml">here</ulink>.</para>
-        <para>More introductions will follow. </para>
+        <!--<para>You can read more about how to share records with others <ulink href="security-manager.xml">here</ulink>.</para>-->
         <note>
             <para>Why "Tamboti"? </para>
-            <para> In the past, there has been some discussion about what to call the HRA resources. We have decided to adopt the names of exotic trees for
-                these resources. Trees have been chosen primarily because the resources employ a database which builds on a markup language called "<ulink href="http://en.wikipedia.org/wiki/XML">XML</ulink>", 
-                and XML orders data in a tree-like structure. 
-                (A tree-like structure is a hierarchcy which starts with one element, the root, and then divides into ever finer distinctions, branches and twigs). Another reason for choosing tree names is that they are fairly neutral - most people would even agree that "trees are nice." </para>
+            <para> <!--Is that info necessary for the user?-->For naming their metadata framework, the Heidelberg Research Architecture has decided to adopt the names of exotic trees.
+                Trees have been chosen primarily because the resources employ a database which builds on a markup language called "<ulink href="http://en.wikipedia.org/wiki/XML">XML</ulink>", 
+                and XML orders data in a tree structure. 
+                (A tree structure is a hierarchy which starts with one element, the root, and then divides into ever finer distinctions, branches and twigs.</para>
             <para>The Tamboti tree is a tree native to Africa, also known as the African Sandalwood tree. You can find descriptions of the Tamboti tree by
                 following the links below. <itemizedlist>
                     <listitem>

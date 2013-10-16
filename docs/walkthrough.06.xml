@@ -47,19 +47,18 @@
         <para>
             If you click on the first button at the top 
             &#160;<graphic fileref="../themes/default/images/arrow_out.png" align="center" valign="middle"/>&#160;, 
-            all folders are opened fully, whereas all folders close if you click the second button
+            all folders are opened, whereas all folders close if you click the second button
             &#160;<graphic fileref="../themes/default/images/arrow_in.png" align="center" valign="middle"/>&#160;. 
             The third button
-            &#160;<graphic fileref="../themes/default/images/arrow_refresh.png" align="center" valign="middle"/>&#160;, 
-            the one for reloading the folder view, is only needed if you work for a long time on the database and new folders 
-            that you can see have been created (or deleted) by others since you logged in - 
-            these you will only be able to see if you reload the Folder View.
+            &#160;<graphic fileref="../themes/default/images/arrow_refresh.png" align="center" valign="middle"/>&#160; 
+            for reloading the folder view is only needed if you work in the database for a long time and new folders 
+            have been created (or deleted) by others since you logged in.
         </para>
         <note>
             <para>Known Bug:</para>
-            <para>When you make a search in a folder, the other folders contained in the same folder disappear.</para>
-            <para>Until this bug is fixed, get around this by closing down all folders by clicking the second button, 
-                then updating by clicking the third button, and lastly accessing the same level in the folder hierarchy again.</para>
+            <para>When you perform a search in a folder, the other folders contained in this folder disappear.</para>
+            <para>Workaround: Close down all folders by clicking the second button, 
+                then update by clicking the third button, then access the same level in the folder hierarchy again.</para>
         </note>
     </chapter>
 </book>

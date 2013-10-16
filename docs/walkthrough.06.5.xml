@@ -44,19 +44,16 @@
                 </tbody>
             </tgroup>
         </table>
-        <para>When you click on a folder or a folder name and thereby select it, 
-            you will see that the "path" leading to the folder in the search panel. 
-            Here the path leads from the base folder, "resources", to the folder "commons" and then to the folder "Cluster Publications", 
-            each step separated by slashes.</para>
-        <para>The folder called "commons" is used for all resources that are not particular to specific users or groups, 
-            but are meant to be general Cluster resources.</para>
-        <para>
-            Clicking on a folder in this way is how you determine where to perform a search.  
-            If you search for something, it will be searched for inside the path you have chosen.
-            Selecting a folder in this way performs a search also in the folders inside the selected folder, and so on.
+        <para>By clicking on a folder, you produce the path leading to the folder in the search panel (visible in the "inside" field). 
+            To search inside this path, enter a search term in the "Search for" field. The system then shows all search hits found inside this path. To show all records inside a folder, leave the "Search for" field empty. Double-clicking on a folder has the same effect.
+            In the below example, you have chosen the folder "Cluster Publications", so the path leads from the base folder, "resources", to the folder "commons" and then to the folder "Cluster Publications". 
             </para>
-        <para>Note that, at the present time, you can only search in one folder (and its subfolders) at a time - 
-            it is not possible to select multiple folders yet.  
+        <para>The folder called "commons" is used for all Cluster resources that are not assigned to specific users or groups. 
+        </para>
+        <para>
+            When you have selected a folder, the search is performed in this folder and its subfolders. <!--I honestly do not understand the difference between a path to choose in and a folder to choose in, seems to be the same to me. Could be confusing...-->
+            </para>
+        <para>You can only search in one folder (and its subfolders) at a time.         
         </para>
         <para>
             <graphic fileref="images/walk-through.06.png" align="center" valign="middle"/>
