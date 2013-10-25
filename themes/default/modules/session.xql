@@ -626,6 +626,8 @@ declare function bs:list-view-table($item as node(), $currentPos as xs:int) {
             bs:tei-list-view-table($item, $currentPos)
         case element(tei:bibl) return
             bs:tei-list-view-table($item, $currentPos)
+        case element(tei:titleStmt) return
+            bs:tei-list-view-table($item, $currentPos)
         case element(atom:entry) return
             bs:wiki-list-view-table($item, $currentPos)
         default return

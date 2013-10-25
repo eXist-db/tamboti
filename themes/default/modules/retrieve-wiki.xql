@@ -55,15 +55,15 @@ declare function functx:capitalize-first($arg as xs:string?) as xs:string? {
              substring($arg,2))
 };
  
-declare function wiki:find-paths-below-path-step($path as xs:string, $divisor as xs:string, $path-step as xs:string) as item()* {
+declare function wiki:make-paths-above-collection($path as xs:string, $divisor as xs:string, $last-path-step as xs:string) as item()* {
     let $steps := tokenize($path, $divisor)
     let $count := count($steps)
     let $number-of-steps := 1 to $count
-    for $number in $number-of-steps
-    let $paths := string-join(subsequence($steps, 1, $number), $divisor)
-    for $path in $paths 
-        where contains($path, $path-step)
-            return $path
+    for $step-number in $number-of-steps
+        let $paths := string-join(subsequence($steps, 1, $step-number), $divisor)
+            for $path in $paths 
+                where contains($path, $last-path-step)
+                    return $path
         
 };
 
@@ -75,6 +75,7 @@ declare function wiki:find-paths-below-path-step($path as xs:string, $divisor as
 : @return an XHTML table.
 :)
 declare function retrieve-wiki:format-detail-view($position as xs:string, $entry as element(), $collection as xs:string, $type as xs:string, $id as xs:string) as element(table) {
+    (:let $log := util:log("DEBUG", ("##$entry11): ", $entry)):)
     let $result :=
     <table xmlns="http://www.w3.org/1999/xhtml" class="biblio-full">
     {
@@ -88,30 +89,55 @@ declare function retrieve-wiki:format-detail-view($position as xs:string, $entry
             <td>Wiki Record</td>
         </tr>
     ,
-    let $feed-path := concat($collection, "/", 'feed.atom')
-    let $feed := doc($feed-path)
-    let $feed := 
-        if ($feed) 
-        then $feed 
+    let $current-feed-path := concat($collection, "/", 'feed.atom')
+    let $current-feed := doc($current-feed-path)
+    let $current-feed := 
+        if ($current-feed) 
+        then $current-feed 
             else doc(concat(functx:substring-before-last-match($collection, '/'), "/", 'feed.atom'))
     return
         <tr>
-            <td class="collection-label">Feed Title</td>
-            <td>{$feed//atom:title}</td>
+            <td class="collection-label">Current Feed Title</td>
+            <td>{$current-feed//atom:title}</td>
         </tr>
     ,
-    let $feed-paths :=  wiki:find-paths-below-path-step($collection, '/', '/Wiki/')
-    for $feed-path in $feed-paths
-    let $feed-path := concat($feed-path, '/feed.atom')
-    let $feed := doc($feed-path)
-    let $feed-title := $feed//atom:title
-    let $feed-id := $feed//atom:id
-    let $url := concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $feed-id) 
+    let $child-resources := xmldb:get-child-resources($collection)
+    for $child-resource in $child-resources
+    where ends-with($child-resource, '.atom') and $child-resource ne concat($collection, '.feed.atom')
     return
-            <tr>
-                <td class="collection-label">Feed Titles</td>
-                <td><a href="{$url}">{$feed-title}</a></td>
-            </tr>
+    let $feed := doc(concat($collection, "/", $child-resource))
+    let $feed-title := $feed//atom:title
+    let $feed-subtitle := $feed//atom:subtitle
+    let $feed-id := $feed//atom:id
+    let $url := concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $feed-id)
+    return
+        if ($feed-title eq $entry//atom:title)
+        then ()
+        else
+        <tr>
+            <td class="collection-label">Sibling Feed Title</td>
+            <td><a href="{$url}">{concat($feed-title, if ($feed-subtitle) then concat(': ', $feed-subtitle) else ())}</a></td>
+        </tr>
+    ,
+    let $upper-feed-paths := wiki:make-paths-above-collection($collection, '/', '/Wiki/')
+    for $feed-path in $upper-feed-paths[. ne $collection]
+        let $feed-path := concat($feed-path, '/feed.atom')
+        let $log := util:log("DEBUG", ("##$feed-path): ", $feed-path))
+        let $feed := doc($feed-path)
+        let $feed-title := $feed//atom:title
+        let $feed-subtitle := $feed//atom:subtitle
+        let $feed-id := $feed//atom:id/string()
+        let $log := util:log("DEBUG", ("##$feed-id): ", $feed-id))
+        let $url := concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $feed-id)
+        let $log := util:log("DEBUG", ("##$url): ", $url))
+            return
+                if ($feed-title eq $entry//atom:title)
+                then ()
+                else
+                    <tr>
+                        <td class="collection-label">Upper Feed Titles</td>
+                        <td><a href="{$url}">{concat($feed-title, if ($feed-subtitle) then concat(': ', $feed-subtitle) else ())}</a></td>
+                    </tr>
     ,
     (: titles :)
     
@@ -302,6 +328,7 @@ declare function retrieve-wiki:format-list-view($position as xs:string, $entry a
         if ($entry//vra:dateSet/vra:date[@type eq 'creation']/vra:earliestDate[@circa eq 'true'])
         then concat('ca. ', $earliestDate)
         else $earliestDate
+    (:let $log := util:log("DEBUG", ("##$earliestDate1): ", $earliestDate)):)
     let $latestDate := $entry//vra:dateSet/vra:date[@type eq 'creation']/vra:latestDate
     let $latestDate := 
         if (contains($latestDate, 'T'))
@@ -318,6 +345,7 @@ declare function retrieve-wiki:format-list-view($position as xs:string, $entry a
             if (($earliestDate and $latestDate))
             then concat($earliestDate, ' - ', $latestDate)
             else ($earliestDate, $latestDate)
+    (:let $log := util:log("DEBUG", ("##$date): ", $date)):)
     return
         if ($date) 
         then functx:substring-before-last-match($date, 'T')

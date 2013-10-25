@@ -525,12 +525,13 @@ declare function mods-common:get-short-title($entry as element()) {
 : @param $location The MODS location element minus the url child
 : @return The location as XHTML a element.
 :)
-declare function mods-common:format-location($location as element(mods:location), $collection-short as xs:string) as xs:string {
+declare function mods-common:format-location($location as element(mods:location), $collection-short as xs:string) as xs:string+ {
     let $location := $location[not(url)]
     let $physical-location := $location/mods:physicalLocation
     let $shelf-locator := $location/mods:holdingSimple/mods:copyInformation/mods:shelfLocator
-    return 
-        concat($physical-location, if ($physical-location and $shelf-locator) then ': ' else (), $shelf-locator)
+    for $shelf-locator in $shelf-locator
+        return 
+            concat($physical-location, if ($physical-location and $shelf-locator) then ': ' else (), $shelf-locator)
 };
 
 
@@ -686,6 +687,7 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
     (:NB: why read @lang from name and not namePart?:)
     let $name-language := $name/@lang
     let $name-type := $name/@type
+    let $description := $name//mods:description
     return   
     (: If the name is of type conference, do nothing, since get-conference-detail-view and get-conference-hitlist take care of conference. 
         The name of a conference does not occur in the same positions as the other name types.:)
@@ -1200,6 +1202,10 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                                 else ()
                                 ,
                                 $name-date
+                                ,
+                                if ($description) 
+                                then concat(' (as ', $description, ')')
+                                else ()
                                 )
                                 }</span>
                                 <a class="name-link" href="{$name-link}" title="Search for all records with the same person or institution">
