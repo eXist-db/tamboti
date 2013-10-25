@@ -72,6 +72,7 @@ declare function tei-common:dispatch($node as node()*, $options) as item()* {
         case element(tei:lg) return tei-common:lg($node, $options)
         case element(tei:l) return tei-common:l($node, $options)
         case element(tei:name) return tei-common:name($node, $options)
+        case element(persName) return tei-common:name($node, $options) (:where is the namespace:)
         case element(tei:milestone) return tei-common:milestone($node, $options)
         case element(tei:quote) return tei-common:quote($node, $options)
         case element(tei:said) return tei-common:said($node, $options)
@@ -86,7 +87,10 @@ declare function tei-common:recurse($node as node()?, $options) as item()* {
 };
 
 declare function tei-common:div($node as element(tei:div), $options) {
-    if ($node/@xml:id) then tei-common:xmlid($node, $options) else (),
+    if ($node/@xml:id) 
+    then tei-common:xmlid($node, $options) 
+    else ()
+    ,
     tei-common:recurse($node, $options)
 };
 
@@ -94,7 +98,7 @@ declare function tei-common:div($node as element(tei:div), $options) {
 declare function tei-common:head($node as element(tei:head), $options) as item() {
     (: div heads :)
     if ($node/parent::tei:div) then
-        let $type := $node/parent::tei:div/@type
+        let $type := $node/parent::tei:div/@type/string()
         let $div-level := count($node/ancestor::div)
         return
         (:Do not augment header level:)
@@ -117,15 +121,17 @@ declare function tei-common:head($node as element(tei:head), $options) as item()
 };
 
 declare function tei-common:p($node as element(tei:p), $options) as element() {
-    let $rend := $node/@rend
+    let $rend := $node/@rend/string()
     return 
-        if ($rend = ('right', 'center') ) then
+        if ($rend = ('right', 'center') ) 
+        then
             <p>{ attribute class {data($rend)} }{ tei-common:recurse($node, $options) }</p>
-        else <p>{tei-common:recurse($node, $options)}</p>
+        else 
+            <p>{tei-common:recurse($node, $options)}</p>
 };
 
 declare function tei-common:hi($node as element(tei:hi), $options) as element()* {
-    let $rend := $node/@rend
+    let $rend := $node/@rend/string()
     return
         if ($rend = ('it', 'italic')) then
             <em>{tei-common:recurse($node, $options)}</em>
@@ -142,7 +148,10 @@ declare function tei-common:list($node as element(tei:list), $options) as elemen
 };
 
 declare function tei-common:item($node as element(tei:item), $options) as element()+ {
-    if ($node/@xml:id) then tei-common:xmlid($node, $options) else (),
+    if ($node/@xml:id) 
+    then tei-common:xmlid($node, $options) 
+    else ()
+    ,
     <li>{tei-common:recurse($node, $options)}</li>
 };
 
@@ -156,24 +165,17 @@ declare function tei-common:label($node as element(tei:label), $options) as elem
 };
 
 declare function tei-common:xmlid($node as element(), $options) as element() {
-    <a name="{$node/@xml:id}"/>
+    <a name="{$node/@xml:id/string()}"/>
 };
 
 declare function tei-common:ref($node as element(tei:ref), $options) {
-    let $target := $node/@target
+    let $target := $node/@target/string()
     return
-        if ($options/destination eq 'detail-view' and string($target))
-        then
-            element a { 
-                attribute href { $target },
-                attribute title { $target },
-                tei-common:recurse($node, $options) 
-                }
-        (:Do not generate links on hitlist, since each <td> there is a link:)
-        else
-            element span { 
-                attribute title { $target },
-                tei-common:recurse($node, $options) 
+        element a { 
+            attribute href {$target},
+            attribute title {$target},
+            $target,
+            tei-common:recurse($node, $options) 
             }
 };
 
@@ -186,10 +188,10 @@ declare function tei-common:figure($node as element(tei:figure), $options) {
 };
 
 declare function tei-common:graphic($node as element(tei:graphic), $options) {
-    let $url := $node/@url
+    let $url := $node/@url/string()
     let $head := $node/following-sibling::tei:head
-    let $width := if ($node/@width) then $node/@width else '800px'
-    let $relative-image-path := $options/*:param[@name='relative-image-path']/@value
+    let $width := if ($node/@width) then $node/@width/string() else '800px'
+    let $relative-image-path := $options/*:param[@name='relative-image-path']/@value/string()
     return
         <img src="{if (starts-with($url, '/')) then $url else concat($relative-image-path, $url)}" alt="{normalize-space($head[1])}" width="{$width}"/>
 };
@@ -199,20 +201,24 @@ declare function tei-common:table($node as element(tei:table), $options) as elem
 };
 
 declare function tei-common:row($node as element(tei:row), $options) as element() {
-    let $label := $node/@role[. = 'label']
+    let $label := $node/@role[. = 'label']/string()
     return
         <tr>{if ($label) then attribute class {'label'} else ()}{tei-common:recurse($node, $options)}</tr>
 };
 
 declare function tei-common:cell($node as element(tei:cell), $options) as element() {
-    let $label := $node/@role[. = 'label']
+    let $label := $node/@role[. = 'label']/string()
     return
         <td>{if ($label) then attribute class {'label'} else ()}{tei-common:recurse($node, $options)}</td>
 };
 
 declare function tei-common:pb($node as element(tei:pb), $options) {
-    if ($node/@xml:id) then tei-common:xmlid($node, $options) else (),
-    if ($options/*:param[@name='show-page-breaks']/@value = 'true') then
+    if ($node/@xml:id) 
+    then tei-common:xmlid($node, $options) 
+    else ()
+    ,
+    if ($options/*:param[@name='show-page-breaks']/@value = 'true') 
+    then
         <span class="pagenumber">{
             concat('Page ', $node/@n/string())
         }</span>
@@ -224,7 +230,7 @@ declare function tei-common:lg($node as element(tei:lg), $options) {
 };
 
 declare function tei-common:l($node as element(tei:l), $options) {
-    let $rend := $node/@rend
+    let $rend := $node/@rend/string()
     return
         if ($node/@rend eq 'i2') then 
             <div class="l" style="padding-left: 2em;">{tei-common:recurse($node, $options)}</div>
@@ -233,31 +239,37 @@ declare function tei-common:l($node as element(tei:l), $options) {
 };
 
 declare function tei-common:name($node as element(tei:name), $options) {
-    let $rend := $node/@rend
-    let $key := $node/@key
+    let $rend := $node/@rend/string()
+    let $key := $node/@key/string()
     return
-        if ($options/destination eq 'detail-view') 
+        if ($options/destination eq 'detail-view' and $key) 
         then
-            if ($rend eq 'sc') then 
+            if ($rend eq 'sc') 
+            then 
                 <a href="{$key}" target="_blank"><span class="name" style="font-variant: small-caps;">{tei-common:recurse($node, $options)}</span></a>
-            else 
+            else
                 <a href="{$key}" target="_blank"><span class="name">{tei-common:recurse($node, $options)}</span></a>
         else
         (:Do not generate links on hitlist, since each <td> there is a link:)
-            if ($rend eq 'sc') then 
+            if ($rend eq 'sc') 
+            then 
                 <span class="name" style="font-variant: small-caps;">{tei-common:recurse($node, $options)}</span>
             else 
                 <span class="name">{tei-common:recurse($node, $options)}</span>
 };
 
 declare function tei-common:milestone($node as element(tei:milestone), $options) {
-    if ($node/@unit eq 'rule') then
-        if ($node/@rend eq 'stars') then 
+    if ($node/@unit/string() eq 'rule') 
+    then
+        if ($node/@rend/string() eq 'stars') 
+        then 
             <div style="text-align: center">* * *</div>
-        else if ($node/@rend eq 'hr') then
-            <hr style="margin: 7px;"/>
-        else
-            <hr/>
+        else 
+            if ($node/@rend/string() eq 'hr') 
+            then
+                <hr style="margin: 7px;"/>
+            else
+                <hr/>
     else 
         <hr/>
 };

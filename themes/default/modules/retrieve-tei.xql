@@ -27,6 +27,8 @@ declare option exist:serialize "media-type=text/xml";
 : @return an XHTML table element.
 :)
 declare function retrieve-tei:format-detail-view($position as xs:string, $entry as element(), $collection-short as xs:string, $document-uri as xs:string, $node-id as xs:string) as element(table) {
+    let $matumi-link := concat('/exist/apps/matumi/entry.html?doc=', $document-uri, '&amp;node=', $node-id, '#', $node-id)
+        (:let $log := util:log("DEBUG", ("##$matumi-link): ", $matumi-link)):)
     let $result :=
     <table xmlns="http://www.w3.org/1999/xhtml" class="biblio-full">
     {
@@ -46,8 +48,6 @@ declare function retrieve-tei:format-detail-view($position as xs:string, $entry 
         </tr>
     ,
     let $title := doc($document-uri)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]
-    let $document-uri := replace($document-uri, '/db/resources/commons/encyclopedia/', '/db/matumi/data/')
-    let $matumi-link := concat('http://kjc-sv006.kjc.uni-heidelberg.de:8080/exist/apps/matumi/entry.html?doc=', $document-uri, '&amp;node=', $node-id)
     let $entry := 
         if ($entry instance of element(tei:TEI) or $entry instance of element(tei:head) or $entry instance of element(tei:div)) 
         then <p>The document is too large to be retrieved. Please access the document in <a href="{$matumi-link}" target="_blank">Matumi</a> or make a search targeting a specific field in Tamboti.</p> 
@@ -66,10 +66,6 @@ declare function retrieve-tei:format-detail-view($position as xs:string, $entry 
                 </td>
         </tr>
         ,
-        let $document-uri := replace($document-uri, '/db/resources/commons/encyclopedia/', '/db/matumi/data/')
-        let $matumi-link := concat('/exist/apps/matumi/entry.html?doc=', $document-uri, '&amp;node=', $node-id, '#', $node-id)
-        (:let $log := util:log("DEBUG", ("##$matumi-link): ", $matumi-link)):)
-        return
         <tr>
             <td class="collection-label">Link to Whole Text in</td>
             <td>
@@ -91,28 +87,23 @@ declare function retrieve-tei:format-detail-view($position as xs:string, $entry 
 };
 
 (:~
-: The <b>retrieve-tei:format-list-view</b> function returns the list view of a sequence of VRA records.
-: @param $entry a VRA record, processed by clean:cleanup().
-: @param $collection-short the location of the VRA record, with '/db/' removed
+: The <b>retrieve-tei:format-list-view</b> function returns the list view of a sequence of TEI records.
+: @param $entry a TEI record or a fragment of a TEI record.
+: @param $collection-short the location of the TEI record, with '/db/' removed
 : @param $position the position of the record displayed with the search results (this parameter is not used)
-: @param $type the type of the record, 'c', 'w', 'i', for colleciton, work, image.
-: @param $id the id of the record.
+: @param $node-id the node id of the record.
 : @return an XHTML span.
 :)
 declare function retrieve-tei:format-list-view($position as xs:string, $entry as element(), $collection-short as xs:string, $document-uri as xs:string, $node-id as xs:string) as element(span) {
-    (:<span>{$entry/tei:teiHeader[1]/tei:fileDesc[1]/tei:titleStmt[1]/tei:title[1]/text()}</span>:)
-    (:<span>{$entry/ancestor-or-self::tei:TEI/tei:teiHeader[1]/tei:fileDesc[1]/tei:titleStmt[1]/tei:title[1]/text()}</span>:)
     let $title := doc($document-uri)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]
     let $entry := 
         if ($entry instance of element(tei:TEI)) 
-        then <p>The whole document is being retrieved. Please perform your search inside Matumi or make a search targeting a specific field in Tamboti.</p> else $entry
-    (:let $log := util:log("DEBUG", ("##$document-uri): ", $document-uri)):)
-    (:let $log := util:log("DEBUG", ("##$node-id): ", $node-id)):)
-
+        then () 
+        else $entry
     let $result :=
     <div>
     <span>{$title/string()}</span>
-    <span>{tei-common:render($entry, <parameters xmlns=""><destination>hitlist</destination></parameters>)}</span>
+    <span>{tei-common:render($entry, <parameters xmlns=""><destination>detail-view</destination></parameters>)}</span>
     </div>
     let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
     let $regex := session:get-attribute('regex')

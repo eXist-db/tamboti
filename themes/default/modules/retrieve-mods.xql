@@ -244,14 +244,17 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     let $extent := $entry/mods:physicalDescription/mods:extent
     return
         if ($extent) 
-        then mods-common:simple-row(
-            mods-common:get-extent($extent), 
-            concat('Extent', 
-                if ($extent/@unit) 
-                then concat(' (', functx:capitalize-first($extent/@unit), ')') 
-                else ()
-                )
-            )    
+        then 
+            for $extent in $extent
+                return
+                    mods-common:simple-row(
+                    mods-common:get-extent($extent), 
+                    concat('Extent', 
+                        if ($extent/@unit) 
+                        then concat(' (', functx:capitalize-first($extent/@unit), ')') 
+                        else ()
+                        )
+                    )    
         else ()
     ,
     (: URL :)
@@ -426,26 +429,25 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     for $note in $entry/mods:note
         let $displayLabel := string($note/@displayLabel)
         let $type := string($note/@type)
-        (:NB: The following serves to render html markup in Zotero exports. Stylesheet should be changed to accommodate standard markup. :)
         let $text := concat('&lt;span>', $note, '&lt;/span>')
         let $text := util:parse-html($text)    
         let $text := $text//*:span
+        for $text in $text
             return        
                 mods-common:simple-row($text
-    	    , 
-    	    concat('Note', 
-    	        concat(
-    	        if ($displayLabel)
-    	        then concat(' (', $displayLabel, ')')            
-    	        else ()
-    	        ,
-    	        if ($type)
-    	        then concat(' (', $type, ')')            
-    	        else ()
-    	        )
-    	        )
-    	    )
-    
+        	    , 
+        	    concat('Note', 
+        	        concat(
+        	        if ($displayLabel)
+        	        then concat(' (', $displayLabel, ')')            
+        	        else ()
+        	        ,
+        	        if ($type)
+        	        then concat(' (', $type, ')')            
+        	        else ()
+        	        )
+        	        )
+        	    )
     ,
 
     (: language of resource :)
