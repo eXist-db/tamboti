@@ -199,10 +199,15 @@ img {
   margin-top: .8em;
 }
 #collection-tree .collection-tree-head {
-  background-color: #f5f5f5;
+  background-color: #ededed;
   margin-bottom: -8px;
+  margin-top: -6px;
   border-radius: 5px;
-  height: 40px;
+  height: 36px;
+}
+#collection-tree .collection-tree-head img {
+  width: 28px;
+  padding-left: 3px;
 }
 #collection-tree .collection-tree-toolbar {
   margin: 10px 5px 5px;
@@ -401,11 +406,14 @@ span.readable .dynatree-title {
   padding-top: .25em;
 }
 .actions-cell a img {
-  width: 23px;
+  width: 22px;
+  margin-top: -3px;
 }
 .list-type img,
 .detail-type img {
   width: 20px;
+  /*margin-top:-3px;*/
+
 }
 .detail-type {
   margin: 10px 0 0;
@@ -501,7 +509,7 @@ li .pagination-number {
   display: none;
 }
 table .biblio-full {
-  margin-top: -0.75em;
+  margin-top: -2px;
 }
 table .pagination-toggle {
   cursor: pointer;
@@ -590,6 +598,7 @@ td .title {
 /*results-view styling ends*/
 .actions-toolbar {
   float: right;
+  margin-top: 4px;
 }
 .save {
   vertical-align: top;
