@@ -219,6 +219,9 @@ img {
 }
 #collection-tree .collection-tree-toolbar img {
   border: 0;
+  /*margin: -3px 0 0 7px;*/
+
+  width: 20px;
 }
 #collection-tree .dynatree-container {
   border: 0;
@@ -397,6 +400,13 @@ span.readable .dynatree-title {
 .actions-cell {
   padding-top: .25em;
 }
+.actions-cell a img {
+  width: 23px;
+}
+.list-type img,
+.detail-type img {
+  width: 20px;
+}
 .detail-type {
   margin: 10px 0 0;
   padding-left: 10px;
@@ -511,7 +521,7 @@ table .pagination-number {
   border-bottom-left-radius: 5px;
 }
 table .biblio-full .collection {
-  width: 30em;
+  width: 20em;
   /*to keep the collection path from overlapping the actions toolbar*/
 
 }
@@ -587,7 +597,8 @@ td .title {
 .save img,
 .actions-toolbar img {
   border: 0;
-  margin: 0;
+  margin: -3px 0 0 7px;
+  width: 20px;
 }
 .ui-widget {
   font-size: 1em;

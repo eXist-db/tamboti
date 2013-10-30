@@ -181,7 +181,7 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
             <td class="pagination-number">{$currentPos}</td>
             <td class="actions-cell">
                 <a id="save_{$id}" href="#{$currentPos}" class="save">
-                    <img title="{if ($saved) then 'Removes Record from My List' else 'Saves Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
+                    <img title="{if ($saved) then 'Removes Record from My List' else 'Save Record to My List'}" src="theme/images/{if ($saved) then 'disk_gew.gif' else 'disk.gif'}" class="{if ($saved) then 'stored' else ''}"/>
                 </a>
             </td>
             <td class="magnify detail-type">
