@@ -199,10 +199,15 @@ img {
   margin-top: .8em;
 }
 #collection-tree .collection-tree-head {
-  background-color: #f5f5f5;
+  background-color: #ededed;
   margin-bottom: -8px;
+  margin-top: -6px;
   border-radius: 5px;
-  height: 40px;
+  height: 36px;
+}
+#collection-tree .collection-tree-head img {
+  width: 28px;
+  padding-left: 3px;
 }
 #collection-tree .collection-tree-toolbar {
   margin: 10px 5px 5px;
@@ -219,6 +224,9 @@ img {
 }
 #collection-tree .collection-tree-toolbar img {
   border: 0;
+  /*margin: -3px 0 0 7px;*/
+
+  width: 20px;
 }
 #collection-tree .dynatree-container {
   border: 0;
@@ -397,6 +405,16 @@ span.readable .dynatree-title {
 .actions-cell {
   padding-top: .25em;
 }
+.actions-cell a img {
+  width: 22px;
+  margin-top: -3px;
+}
+.list-type img,
+.detail-type img {
+  width: 20px;
+  /*margin-top:-3px;*/
+
+}
 .detail-type {
   margin: 10px 0 0;
   padding-left: 10px;
@@ -491,7 +509,7 @@ li .pagination-number {
   display: none;
 }
 table .biblio-full {
-  margin-top: -0.75em;
+  margin-top: -2px;
 }
 table .pagination-toggle {
   cursor: pointer;
@@ -511,7 +529,7 @@ table .pagination-number {
   border-bottom-left-radius: 5px;
 }
 table .biblio-full .collection {
-  width: 30em;
+  width: 20em;
   /*to keep the collection path from overlapping the actions toolbar*/
 
 }
@@ -580,6 +598,7 @@ td .title {
 /*results-view styling ends*/
 .actions-toolbar {
   float: right;
+  margin-top: 4px;
 }
 .save {
   vertical-align: top;
@@ -587,7 +606,8 @@ td .title {
 .save img,
 .actions-toolbar img {
   border: 0;
-  margin: 0;
+  margin: -3px 0 0 7px;
+  width: 20px;
 }
 .ui-widget {
   font-size: 1em;
