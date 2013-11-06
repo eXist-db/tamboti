@@ -242,7 +242,7 @@ declare function local:assemble-form($dummy-attributes as attribute()*, $style a
             <a href="../.." style="text-decoration: none">
                 <img src="{$img-left-src}" title="{$img-left-title}" alt="{$img-left-title}" style="border-style: none;" width="250px"/>
             </a>
-            <div class="documentation-link"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
+            <div class="documentation-link"><a href="../../docs/" style="text-decoration: none" target="_blank">Help</a></div>
         </div>
         <div id="page-head-right">
             <a href="{$img-right-href}" target="_blank">
@@ -421,6 +421,7 @@ declare function local:get-tab-id($tab-id as xs:string, $type-request as xs:stri
                 switch ($type-request) 
                     case "article-in-periodical" return "compact-b-article"
                     case "newspaper-article" return "compact-b-newspaper-article"
+                    case "moving-images" return "compact-b-moving-images"
                     case "contribution-to-edited-volume" return "compact-b-edited-volume"
                     case "monograph" return "compact-b-monograph"
                     case "edited-volume" return "compact-b-monograph"
