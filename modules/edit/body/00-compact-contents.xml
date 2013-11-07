@@ -382,6 +382,34 @@
                         </fieldset>
                     </fieldset>
                 </xf:group>
+                <xf:group ref=".[mods:genre]">
+                    <fieldset class="level-2">
+                        <div class="label-box">
+                            <span class="legend">Genre</span>
+                            <span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_genre',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                            <span class="add-delete-button">
+                                <xf:trigger>
+                                    <xf:label>+</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:insert nodeset="instance('save-data')/mods:genre" at="index('genre-repeat')" position="before" origin="instance('insert-templates')/mods:genre"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </span>
+                        </div>
+                        <xf:repeat nodeset="./mods:genre" id="genre-repeat">
+                            <xf:group ref="." class="hide-label margin-plus">
+                                <xf:input ref="." class="text_100">
+                                    <xf:label>Genre</xf:label>
+                                </xf:input>
+                            </xf:group>
+                        </xf:repeat>
+                    </fieldset>
+                </xf:group>
             </xf:repeat>
         </fieldset>
     </xf:group>

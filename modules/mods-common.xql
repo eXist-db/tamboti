@@ -1569,7 +1569,7 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
     for $subject in $entry/mods:subject
     let $authority := 
         if (string($subject/@authority)) 
-        then concat(' (', (upper-case(string($subject/@authority))), ')') 
+        then concat(' (', ($subject/@authority), ')') 
         else ()
     let $value-uri := string($subject/@valueURI)
     return
@@ -1584,25 +1584,26 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
                 $items[local-name(.) eq 'geographic'][string(.)], 
                 $items[local-name(.) eq 'temporal'][string(.)],
                 $items[local-name(.) eq 'titleInfo'][string(.)],
-                $items[local-name(.) eq 'name'][string(.)]
+                $items[local-name(.) eq 'name'][string(.)],
+                $items[local-name(.) eq 'genre'][string(.)]
                 ) 
             return
             for $item in $items
             let $authority := 
                 if (string($item/@authority)) 
-                then concat('(', (string($item/@authority)), ')') 
+                then concat('(', ($item/@authority), ')') 
                 else ()
             let $encoding := 
                 if (string($item/@encoding)) 
-                then concat('(', (string($item/@encoding)), ')') 
+                then concat('(', ($item/@encoding), ')') 
                 else ()
             let $type := 
                 if (string($item/@type)) 
-                then concat('(', (string($item/@type)), ')') 
+                then concat('(', ($item/@type), ')') 
                 else ()        
             let $point := 
                 if (string($item/@point)) 
-                then concat('(', (string($item/@point)), ')') 
+                then concat('(', ($item/@point), ')') 
                 else ()          
             return
                 <table class="subject">
@@ -1633,19 +1634,19 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
                                     for $subitem in ($item/mods:*)
                                     let $authority := 
                                         if (string($subitem/@authority)) 
-                                        then concat('(', (string($subitem/@authority)), ')') 
+                                        then concat('(', ($subitem/@authority), ')') 
                                         else ()
                                     let $encoding := 
                                         if (string($subitem/@encoding)) 
-                                        then concat('(', (string($subitem/@encoding)), ')') 
+                                        then concat('(', ($subitem/@encoding), ')') 
                                         else ()
                                     let $type := 
                                         if (string($subitem/@type)) 
-                                        then concat('(', (string($subitem/@type)), ')') 
+                                        then concat('(', ($subitem/@type), ')') 
                                         else ()
                                     let $point := 
                                         if (string($subitem/@point)) 
-                                        then concat('(', (string($subitem/@point)), ')') 
+                                        then concat('(', ($subitem/@point), ')') 
                                         else ()
                                     order by local-name($subitem)
                                     return
@@ -2216,7 +2217,8 @@ return
 :)
 declare function mods-common:get-related-items($entry as element(mods:mods), $destination as xs:string, $global-language as xs:string?, $collection-short as xs:string) as element()* {
     for $item in $entry/mods:relatedItem
-        let $type := string($item/@type) 
+        let $type := string($item/@type)
+        let $type-label := doc(concat($config:edit-app-root, '/code-tables/related-item-type-codes.xml'))/*:code-table/*:items/*:item[*:value eq $type]/*:label
         let $titleInfo := $item/mods:titleInfo
         let $displayLabel := string($item/@displayLabel)
         let $label :=
@@ -2281,7 +2283,7 @@ declare function mods-common:get-related-items($entry as element(mods:mods), $de
                 else
                     (:If the related item is in the record itself, format it without a link.:)	                
                     <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
-        				<td class="url label relatedItem-label">In</td>
+        				<td class="url label relatedItem-label">{$type-label}</td>
                         <td class="relatedItem-record">
         					<span class="relatedItem-span">{mods-common:format-related-item($related-item, $global-language, $collection-short)}</span>
                         </td>
