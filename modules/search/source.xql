@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.0";
 
 (:~ Retrieve the XML source of a MODS record :)
 

@@ -1,3 +1,5 @@
+xquery version "3.0";
+
 module namespace retrieve-tei="http://exist-db.org/tei/retrieve";
 
 declare namespace tei="http://www.tei-c.org/ns/1.0";

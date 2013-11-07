@@ -1,3 +1,5 @@
+xquery version "3.0";
+
 module namespace vra-common="http://exist-db.org/vra/common";
 
 declare namespace vra="http://www.vraweb.org/vracore4.htm";

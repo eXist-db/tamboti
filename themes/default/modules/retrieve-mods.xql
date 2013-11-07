@@ -1,3 +1,5 @@
+xquery version "3.0";
+
 module namespace retrieve-mods="http://exist-db.org/mods/retrieve";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
