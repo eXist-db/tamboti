@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-newspaper-article" ext:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="compact block-form" tab-id="compact-b-moving-images" ext:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
             <div class="label-box">
                 <span class="legend">
-                    <span class="legend">Newspaper</span>
+                    <span class="legend">Moving Images Series</span>
                 </span>
                 <span class="xforms-help">
                     <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                     <div class="xforms-help-value">
-                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_relatedItem-periodical-compact',instance('code-tables'))/help"/>
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_relatedItem-moving-images-compact',instance('code-tables'))/help"/>
                         <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_more-related-item',instance('code-tables'))/help"/>
                     </div>
                 </span>
             </div>
-            <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-periodical-repeat">
+            <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-moving-images-repeat">
                 <xf:group>
                     <fieldset class="level-2">
                         <div class="label-box">
-                            <span class="legend">Newspaper Title</span>
+                            <span class="legend">Moving Images Series Title</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_relatedItem-periodical-titleInfo-compact',instance('code-tables'))/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_relatedItem-moving-images-titleInfo-compact',instance('code-tables'))/help"/>
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_more-related-item',instance('code-tables'))/help"/>
                                 </div>
                             </span>
                         </div>
-                        <xf:repeat nodeset="./mods:titleInfo" id="relatedItem-titleInfo-periodical-repeat">
+                        <xf:repeat nodeset="./mods:titleInfo" id="relatedItem-titleInfo-moving-images-repeat">
                             <xf:group ref=".[(@transliteration) or string-length(@lang) &gt; 0]">
                                 <br/>
                             </xf:group>
@@ -118,11 +118,11 @@
                 <xf:group>
                     <fieldset class="level-2">
                         <div class="label-box extra-wide">
-                            <span class="legend">Institutional Editor(s) of Newspaper</span>
+                            <span class="legend">Institutional Editor(s) of Moving Images Series</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-relatedItem-periodical-editor-compact',instance('code-tables'))/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_name-relatedItem-moving-images-editor-compact',instance('code-tables'))/help"/>
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_more-related-item',instance('code-tables'))/help"/>
                                 </div>
                             </span>
@@ -130,18 +130,18 @@
                                 <xf:trigger ref=".[string-length(./../mods:extension/ext:transliterationOfResource) &gt; 0]">
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-repeat-periodical')" position="before" origin="instance('compact-template')/mods:name[6]"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-repeat-moving-images')" position="before" origin="instance('compact-template')/mods:name[6]"/>
                                     </xf:action>
                                 </xf:trigger>
                                 <xf:trigger ref=".[string-length(./../mods:extension/ext:transliterationOfResource) = 0]">
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-repeat-periodical')" position="before" origin="instance('compact-template')/mods:name[5]"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:name" at="index('relatedItem-name-repeat-moving-images')" position="before" origin="instance('compact-template')/mods:name[5]"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
                         </div>
-                        <xf:repeat nodeset="./mods:name" id="relatedItem-name-repeat-periodical">
+                        <xf:repeat nodeset="./mods:name" id="relatedItem-name-repeat-moving-images">
                             <xf:group ref="preceding-sibling::*[1][self::mods:name]" class="up-down-pointer">
                                 <xf:trigger>
                                     <xf:label>∧</xf:label>
@@ -173,7 +173,7 @@
                                         </span>
                                     </div>
                                     <xf:group> </xf:group>
-                                    <xf:repeat nodeset="./mods:namePart" id="relatedItem-namePart-periodical-repeat">
+                                    <xf:repeat nodeset="./mods:namePart" id="relatedItem-namePart-moving-images-repeat">
                                         <xf:group>
                                             <xf:input ref="." class="text_100 margin-plus">
                                                 <xf:label>
@@ -190,15 +190,15 @@
                 <xf:group>
                     <fieldset class="level-2">
                         <div class="label-box">
-                            <span class="legend">Location of Article in Newspaper</span>
+                            <span class="legend">Location of Moving Images in Moving Images Series</span>
                             <span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
-                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-relatedItem-periodical-compact',instance('code-tables'))/help"/>
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-relatedItem-moving-images-compact',instance('code-tables'))/help"/>
                                 </div>
                             </span>
                         </div>
-                        <xf:repeat nodeset="./mods:part" id="related-item-part-periodical-repeat">
+                        <xf:repeat nodeset="./mods:part" id="related-item-part-moving-images-repeat">
                             <xf:group ref=".[mods:date]">
                                 <fieldset class="level-3">
                                     <div class="label-box">
@@ -206,7 +206,7 @@
                                             <span class="legend">Date of Publication</span>
                                         </span>
                                     </div>
-                                    <xf:repeat nodeset="./mods:date" id="related-item-part-date-periodical-repeat">
+                                    <xf:repeat nodeset="./mods:date" id="related-item-part-date-moving-images-repeat">
                                         <div class="block-form">
                                             <xf:group ref="." class="hide-label margin-plus">
                                                 <xf:input ref="." class="text_10">
@@ -222,7 +222,7 @@
                                     <div class="label-box">
                                         <span class="legend">Section</span>
                                     </div>
-                                    <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-periodical-repeat">
+                                    <xf:repeat nodeset="./mods:detail" id="related-item-part-detail-moving-images-repeat">
                                         <xf:group ref=".[mods:number]" class="margin-plus">
                                             <xf:input ref="./mods:number" class="text_10">
                                                 <xf:label>
@@ -238,7 +238,7 @@
                                     <div class="label-box">
                                         <span class="legend">Page Extent</span>
                                     </div>
-                                    <xf:repeat nodeset="./mods:extent" id="related-item-extent-periodical-repeat">
+                                    <xf:repeat nodeset="./mods:extent" id="related-item-extent-moving-images-repeat">
                                         <xf:group ref=".[mods:start]" class="margin-plus">
                                             <xf:input ref="./mods:start" class="text_10">
                                                 <xf:label>Start</xf:label>
@@ -269,12 +269,12 @@
                                 <xf:trigger ref=".[mods:identifier]">
                                     <xf:label>+</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:insert nodeset="instance('save-data')/mods:identifier" at="index('identifier-periodical-repeat')" position="before" origin="instance('compact-template')/mods:identifier"/>
+                                        <xf:insert nodeset="instance('save-data')/mods:identifier" at="index('identifier-moving-images-repeat')" position="before" origin="instance('compact-template')/mods:identifier"/>
                                     </xf:action>
                                 </xf:trigger>
                             </span>
                         </div>
-                        <xf:repeat nodeset="./mods:identifier" id="identifier-periodical-repeat">
+                        <xf:repeat nodeset="./mods:identifier" id="identifier-moving-images-repeat">
                             <xf:group class="hide-label margin-plus">
                                 <xf:select1 ref="./@type">
                                     <xf:label>Type</xf:label>

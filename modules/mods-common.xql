@@ -724,7 +724,7 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                         , ', ')
                         )
                     }</span>
-                    <a class="name-link" href="{$name-link}" title="Search for all records with the same person or institution">
+                    <a class="name-link" href="{$name-link}" title="Find all records with the same name">
                         (find all records)
                     </a>
                 </span>
@@ -1208,7 +1208,7 @@ declare function mods-common:format-name($name as element()?, $position as xs:in
                                 else ()
                                 )
                                 }</span>
-                                <a class="name-link" href="{$name-link}" title="Search for all records with the same person or institution">
+                                <a class="name-link" href="{$name-link}" title="Find all records with the same name">
                                     (find all records)
                                 </a>
                             </span>

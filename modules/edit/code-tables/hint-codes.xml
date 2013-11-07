@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--let $code-table :=
 -->
 <code-table xml:id="hint-code">
@@ -777,6 +778,13 @@
             <tab-id>related</tab-id>
             <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
+        </item>
+        <item xml:id="hint-code_eventType">
+            <help>
+                <p>eventType</p>
+            </help>
+            <local-name>eventType</local-name>
+            <tab-id>origin</tab-id>
         </item>
         <item xml:id="hint-code_edition">
             <help>

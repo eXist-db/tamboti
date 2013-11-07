@@ -1,12 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <code-table xml:id="role-short-code">
     <code-table-name>role-short-code</code-table-name>
     <tab-id>compact-a</tab-id>
     <tab-id>compact-b-review</tab-id>
     <tab-id>compact-b-xlink</tab-id>
+    <tab-id>compact-b-moving-images</tab-id>
     <items>
         <item>
             <label>(none selected)</label>
             <value/>
+        </item>
+        <item>
+            <label>actor</label>
+            <value>act</value>
+            <labelSecondary>performed by</labelSecondary>
         </item>
         <item>
             <label>artist</label>
@@ -49,6 +56,11 @@
             <value>cre</value>
         </item>
         <item>
+            <label>director</label>
+            <value>drt</value>
+            <labelSecondary>directed by</labelSecondary>
+        </item>
+        <item>
             <label>editor</label>
             <value>edt</value>
             <labelSecondary>edited by</labelSecondary>
@@ -80,6 +92,10 @@
             <label>reviewer</label>
             <value>rev</value>
             <labelSecondary>reviewed by</labelSecondary>
+        </item>
+        <item type="added">
+            <label>series director</label>
+            <value>sdr</value>
         </item>
         <item>
             <label>thesis advisor</label>

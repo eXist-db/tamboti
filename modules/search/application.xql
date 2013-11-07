@@ -405,7 +405,7 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                             for $field-available in $biblio:FIELDS/field
                                 return
                                     <option>
-                                        { if (($field-available/@name/string() eq $field-chosen/@name/string()) or ($field-available/@short-name/string() eq $field-chosen/@short-name/string())) then attribute selected { "selected" } else () } 
+                                        { if (($field-available/@name/string() eq $field-chosen/@name/string()) or ($field-available/@short-name/string() eq $field-chosen/@name/string())) then attribute selected { "selected" } else () } 
                                         {$field-available/@name/string()}
                                     </option>
                         }
@@ -713,7 +713,8 @@ declare function biblio:construct-order-by-expression($sort as xs:string?) as xs
     let $sort-direction := request:get-parameter("sort-direction", '')
         return
             if ($sort eq "Score") 
-            then concat("ft:score($hit) ", if ($sort-direction) then $sort-direction else 'ascending') 
+            (:If no sort direction has been chosen, the search comes from simple search and the highest scores should be first.:)
+            then concat("ft:score($hit) ", if ($sort-direction) then $sort-direction else 'descending') 
             else 
                 if ($sort eq "Author") 
                 then concat("biblio:order-by-author($hit) ", if ($sort-direction) then $sort-direction else 'ascending', " ", if ($sort-direction eq 'descending') then "empty least" else "empty greatest")
@@ -983,7 +984,7 @@ declare function biblio:login($node as node(), $params as element(parameters)?, 
         if ($user eq 'guest')
         then
         (
-            <div class="help"><a href="../../docs/index.xml" target="_blank">Help</a></div>
+            <div class="help"><a href="../../docs/" target="_blank">Help</a></div>
             ,
             <div class="login"><a href="#" id="login-link">Login</a></div>
         )
@@ -991,7 +992,7 @@ declare function biblio:login($node as node(), $params as element(parameters)?, 
             if ($user eq 'admin')
             then 
                 (
-                    <div class="help"><a href="../../docs/index.xml">Help</a></div>
+                    <div class="help"><a href="../../docs/">Help</a></div>
                     ,   
                     <div class="help"><a id="optimize-trigger" href="#">Create custom indexes for sorting</a></div>
                     ,
@@ -999,7 +1000,7 @@ declare function biblio:login($node as node(), $params as element(parameters)?, 
                 )
             else
             (
-                <div class="help"><a href="../../docs/index.xml">Help</a></div>
+                <div class="help"><a href="../../docs/">Help</a></div>
                 ,
                 <div class="login">Logged in as <span class="username">{let $human-name := security:get-human-name-for-user($user) return if (not(empty($human-name))) then $human-name else $user}</span>. <a href="?logout=1">Logout</a></div>
             )

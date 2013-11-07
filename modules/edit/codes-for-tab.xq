@@ -54,6 +54,7 @@ declare function local:create-etag($last-modified as xs:dateTime) as xs:string {
 
 
 let $tab-id := request:get-parameter('tab-id', '')
+let $log := util:log("DEBUG", ("##$tab-id): ", $tab-id))
 let $debug := xs:boolean(request:get-parameter('debug', 'false'))
 
 (: TODO check for required tab-id parameter and make sure that the tab is a valid tab ID
@@ -67,6 +68,7 @@ else
 
 let $code-table-collection := concat($config:edit-app-root, '/code-tables/')
 let $code-table-names := collection($code-table-collection)/code-table[tab-id = $tab-id]/code-table-name/text()
+let $log := util:log("DEBUG", ("##$code-table-names): ", $code-table-names))
 
 (: generate etag :)
 let $last-modified := local:get-last-modified($code-table-collection,

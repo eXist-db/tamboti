@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ext="http://exist-db.org/mods/extension" class="origin block-form" tab-id="origin" ext:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="origin block-form" tab-id="origin" ext:dummy="dummy" xlink:dummy="dummy">
     <xf:group class="schema_3.3 schema_3.4 schema_3.5" appearance="full">
         <fieldset class="level-1">
             <div class="label-box">
@@ -66,6 +66,16 @@
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/@displayLabel"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <xf:group appearance="full" ref=".[not(@displayLabel)]">
+                                        <xf:trigger>
+                                            <xf:label class="xforms-group-label-centered">Add Event
+                                                Type</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="originInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:originInfo/@eventType"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
@@ -254,6 +264,17 @@
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
                                 <div class="xforms-help-value">
                                     <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_displayLabel',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                    </xf:input>
+                </xf:group>
+                <xf:group class="schema_3.4 schema_3.5" appearance="full" ref=".[@eventType]">
+                    <xf:input ref="./@eventType" class="text_50">
+                        <xf:label>Event Type<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_eventType',instance('code-tables'))/help"/>
                                 </div>
                             </span>
                         </xf:label>
