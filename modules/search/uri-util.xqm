@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.0";
 
 (: How much of this is really needed? Isn't it enough to xmldb:decode-uri() and xmldb:encode-uri()? :)
 

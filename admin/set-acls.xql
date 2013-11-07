@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.0";
 declare option exist:serialize "method=xhtml media-type=text/html";
 
 declare function local:recurse-items($collection-path as xs:string, $username as xs:string, $mode as xs:string, $admin-password as xs:string) {
