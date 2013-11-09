@@ -328,6 +328,7 @@ declare function biblio:form-from-query($node as node(), $params as element(para
     let $incoming-query := $model[1]
     let $search-format := request:get-parameter("format", '')
     let $default-operator := request:get-parameter("default-operator", '')
+    let $field1 := request:get-parameter("field1", '')
     let $query := 
         if ($incoming-query//field) 
         then $incoming-query 
@@ -805,6 +806,13 @@ declare function biblio:query-history($node as node(), $params as element(parame
             <li><a href="?history={$query-as-string/@id}&amp;query-tabs=advanced-search-form">{biblio:xml-query-to-string($query-as-string)}</a></li>
     }
     </ul>
+};
+
+declare function biblio:last-collection-queried($node as node(), $params as element(parameters)?, $model as item()*) {
+        let $last-collection := $model[1]//collection
+        let $last-collection := replace(xmldb:decode-uri($last-collection), '/resources/', '') 
+        return
+            $last-collection
 };
 
 (:~
