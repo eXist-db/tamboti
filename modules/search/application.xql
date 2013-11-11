@@ -809,10 +809,9 @@ declare function biblio:query-history($node as node(), $params as element(parame
 };
 
 declare function biblio:last-collection-queried($node as node(), $params as element(parameters)?, $model as item()*) {
-        let $last-collection := $model[1]//collection
-        let $last-collection := replace(xmldb:decode-uri($last-collection), '/resources/', '') 
+        let $search-collection := replace(replace(xmldb:decode-uri($model[1]//collection), '/resources/commons', 'resources'), '/resources/users', 'resources') 
         return
-            $last-collection
+            $search-collection
 };
 
 (:~

@@ -20,7 +20,7 @@ declare variable $config:app-root :=
         substring-before($modulePath, "/modules")
 ;
 
-declare variable $config:mods-root := "/db/resources";
+declare variable $config:mods-root := "/resources";
 declare variable $config:mods-root-minus-temp := ("/resources/commons","/resources/users", "/resources/groups");
 declare variable $config:mods-commons := fn:concat($config:mods-root, "/commons");
 declare variable $config:content-root := fn:concat($config:mods-root, "/commons");
@@ -35,7 +35,7 @@ declare variable $config:enforced-realm-id := "ad.uni-heidelberg.de";
 declare variable $config:users-collection := fn:concat($config:mods-root, "/users");
 declare variable $config:groups-collection := fn:concat($config:mods-root, "/groups");
 
-declare variable $config:mods-temp-collection := "/db/resources/temp";
+declare variable $config:mods-temp-collection := "/resources/temp";
 declare variable $config:mads-collection := "/db/resources/mads";
 
 declare variable $config:themes := concat($config:app-root, "/themes");
