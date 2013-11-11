@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.0";
 
 (: XQuery script to save a new MODS record from an incoming HTTP POST :)
 

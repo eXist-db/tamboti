@@ -1,3 +1,5 @@
+xquery version "3.0";
+
 module namespace retrieve-wiki="http://exist-db.org/wiki/retrieve";
 
 declare namespace atom="http://www.w3.org/2005/Atom";
