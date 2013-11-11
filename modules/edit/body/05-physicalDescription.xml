@@ -707,10 +707,10 @@
                                 </div>
                             </span>
                         </div>
-                <!--Attributes: supplied; lang; xml:lang; script; transliteration.-->
+                <!--Attributes: supplied; unit, lang; xml:lang; script; transliteration.-->
                 <!--Subelements: None.-->
                         <xf:repeat nodeset="./mods:extent" id="extent-repeat">
-                            <xf:group class="show-hide" ref=".[count(@*) &lt; 5]">
+                            <xf:group class="show-hide" ref=".[count(@*) &lt; 6]">
                                 <xf:switch>
                                     <xf:case id="extent-add-node-hide">
                                         <div class="open-close-button">
@@ -760,6 +760,14 @@
                                                     <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:extent/@script"/>
                                                 </xf:action>
                                             </xf:trigger>
+                                            <xf:trigger ref=".[not(@unit)]">
+                                                <xf:label class="xforms-group-label-centered">Add
+                                                    Unit</xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xf:toggle case="extent-add-node-hide" ev:event="DOMActivate"/>
+                                                    <xf:insert context="." origin="instance('insert-templates')/mods:physicalDescription/mods:extent/@unit"/>
+                                                </xf:action>
+                                            </xf:trigger>
                                             <xf:trigger ref=".[not(@xml:lang)]">
                                                 <xf:label class="xforms-group-label-centered">Add
                                             xml:lang</xf:label>
@@ -786,6 +794,32 @@
                                         <xf:value ref="value"/>
                                     </xf:itemset>
                                 </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.5" ref=".[@unit]">
+                                <xf:select1 ref="./@unit" selection="open">
+                                    <xf:label>Unit (list)<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-extent-unit',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='part-extent-unit-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group class="schema_3.5" ref=".[@unit]">
+                                <xf:input ref="./@unit" class="text_50">
+                                    <xf:label>Unit (text)<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_extent-unit',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                </xf:input>
                             </xf:group>
                             <xf:group class="schema_3.4 schema_3.5" ref=".[@lang]">
                                 <xf:select1 ref="./@lang">

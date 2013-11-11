@@ -495,6 +495,21 @@
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:extent" id="extent-repeat">
+                            <xf:group class="schema_3.5" ref=".[@unit]">
+                                <xf:select1 ref="./@unit" selection="open">
+                                    <xf:label>Unit <span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_part-extent-unit',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='part-extent-unit-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
                             <xf:group class="hide-label margin-plus text_10">
                                 <xf:input ref=".">
                                     <xf:label>Extent</xf:label>

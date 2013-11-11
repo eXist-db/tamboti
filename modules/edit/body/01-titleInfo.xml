@@ -30,7 +30,7 @@
         <!-- attributes: ID; xlink; lang; xml:lang; script; transliteration; type; authority; authorityURI; valueURI; displayLabel; supplied; usage; altRepGroup; nameTitleGroup. -->
         <!-- subelements: nonSort, title, subTitle, partNumber, partName. -->
             <xf:repeat nodeset="instance('save-data')/mods:titleInfo" id="titleInfo-repeat">
-                <xf:group class="show-hide" ref=".[count(@*) &lt; 15 or count(*) &lt; 5]">
+                <xf:group class="show-hide" ref=".[count(@*) &lt; 18 or count(*) &lt; 5]">
                     <xf:switch>
                         <xf:case id="titleInfo-add-node-hide">
                             <div class="open-close-button">
@@ -49,6 +49,15 @@
                             </div>
                             <div class="node-adds">
                                 <xf:group class="add-buttons">
+                                    <xf:group ref=".[not(@altFormat)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Alternate Format</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@altFormat"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
                                     <xf:group ref=".[not(@altRepGroup)]">
                                         <xf:trigger>
                                             <xf:label>Add Alternate Representation
@@ -74,6 +83,15 @@
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@authorityURI"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <xf:group ref=".[not(@contentType)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Content Type</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@contentType"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
@@ -110,6 +128,15 @@
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@nameTitleGroup"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </xf:group>
+                                    <xf:group ref=".[not(@otherType)]">
+                                        <xf:trigger>
+                                            <xf:label>Add Name-Title Group</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="titleInfo-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert context="." origin="instance('insert-templates')/mods:titleInfo/@otherType"/>
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
