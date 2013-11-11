@@ -28,8 +28,11 @@
                 </span>
             </div>
             <!--Attributes: ID; xlink; displayLabel; type.-->
-            <!--Subelements: all MODS top level elements. NB: It is difficult to see how recordInfo fits in.-->
             <xf:repeat nodeset="instance('save-data')/mods:relatedItem" id="relatedItem-repeat">
+                <xf:group ref=".[not(@xlink:href)]"> This Related Item does not use an XLink. Please
+                    use one of the other two subtabs to edit it. <br/>The subtab "Related Items with Full Record Data" takes a long time to load, 
+                    so you might want to see whether the subtab "Related Items with Abbreviated Record Data" does not contain all the fields you need.<br/>
+                </xf:group>
                 <xf:group appearance="full" ref=".[count(@*) &lt; 4 or .[not(mods:part)] or .[not(mods:relatedItem)]]">
                     <xf:switch>
                         <xf:case id="relatedItem-add-node-hide">
@@ -52,7 +55,7 @@
                                     <xf:group class="add-buttons">
                                         <xf:trigger ref=".[not(@displayLabel)]" class="add-button">
                                             <xf:label class="xforms-group-label-centered">Add
-                                                Display Label</xf:label>
+                                                  Display Label</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="relatedItem-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:relatedItem/@displayLabel"/>
@@ -60,7 +63,7 @@
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@ID)]" class="add-button">
                                             <xf:label class="xforms-group-label-centered">Add
-                                                ID</xf:label>
+                                                  ID</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="relatedItem-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:relatedItem/@ID"/>
@@ -68,7 +71,7 @@
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@type)]" class="add-button">
                                             <xf:label class="xforms-group-label-centered">Add
-                                                Type</xf:label>
+                                                  Type</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="relatedItem-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:relatedItem/@type"/>
@@ -76,15 +79,23 @@
                                         </xf:trigger>
                                         <xf:trigger ref=".[not(@xlink:href)]" class="add-button">
                                             <xf:label class="xforms-group-label-centered">Add
-                                                xlink:href</xf:label>
+                                                  xlink:href</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="relatedItem-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert context="." origin="instance('insert-templates')/mods:relatedItem/@xlink:href"/>
                                             </xf:action>
                                         </xf:trigger>
+                                        <xf:trigger ref=".[not(mods:part)]" class="add-button">
+                                            <xf:label class="xforms-group-label-centered">Add
+                                                    Part</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="relatedItem-add-node-hide" ev:event="DOMActivate"/>
+                                                <xf:insert nodeset="mods:part" at="index('relatedItem-repeat')" position="before" origin="instance('new-instance')/mods:relatedItem/mods:part"/>
+                                            </xf:action>
+                                        </xf:trigger>
                                         <xf:trigger ref=".[not(mods:relatedItem)]" class="add-button">
                                             <xf:label class="xforms-group-label-centered">Add
-                                                Related Item</xf:label>
+                                                  Related Item</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xf:toggle case="relatedItem-add-node-hide" ev:event="DOMActivate"/>
                                                 <xf:insert nodeset="mods:relatedItem" at="index('relatedItem-repeat')" position="before" origin="instance('new-instance')/mods:relatedItem/mods:relatedItem"/>
@@ -173,8 +184,8 @@
                             </span>
                         </div>
                         <xf:repeat nodeset="./mods:part" id="part-repeat">
-                            <!--Attributes: ID; type; order; lang; xml:lang; script; transliteration; displayLabel; altRepGroup.-->
-                            <!--Subelements: detail; extent; date; text.-->
+                                <!--Attributes: ID; type; order; lang; xml:lang; script; transliteration; displayLabel; altRepGroup.-->
+                                <!--Subelements: detail; extent; date; text.-->
                             <xf:group appearance="full" ref=".[count(@*) &lt; 9 or .[not(mods:detail)] or .[not(mods:extent)] or .[not(mods:date)] or .[not(mods:text)]]">
                                 <xf:switch>
                                     <xf:case id="part-add-node-hide">
@@ -453,8 +464,8 @@
                                             </xf:trigger>
                                         </span>
                                     </div>
-                                    <!--Attributes: type; level; lang; xml:lang; script; transliteration.-->
-                                    <!--Subelements: number; caption; title.-->
+                                        <!--Attributes: type; level; lang; xml:lang; script; transliteration.-->
+                                        <!--Subelements: number; caption; title.-->
                                     <xf:repeat nodeset="./mods:detail" id="part-detail-repeat">
                                         <xf:group appearance="full" ref=".[count(@*) &lt; 6 or .[not(mods:number)] or .[not(mods:caption)] or .[not(mods:title)]]">
                                             <xf:switch>
@@ -659,8 +670,8 @@
                                                         </div>
                                                     </span>
                                                 </div>
-                                                <!--Attributes: lang; xml:lang; script; transliteration.-->
-                                                <!--Subelements: None.-->
+                                                  <!--Attributes: lang; xml:lang; script; transliteration.-->
+                                                  <!--Subelements: None.-->
                                                 <xf:repeat nodeset="./mods:number" id="part-detail-number-repeat">
                                                     <xf:group appearance="full" ref=".[count(@*) &lt; 4]">
                                                         <xf:switch>
@@ -804,8 +815,8 @@
                                                         </div>
                                                     </span>
                                                 </div>
-                                                <!--Attributes: lang; xml:lang; script; transliteration.-->
-                                                <!--Subelements: None.-->
+                                                  <!--Attributes: lang; xml:lang; script; transliteration.-->
+                                                  <!--Subelements: None.-->
                                                 <xf:repeat nodeset="./mods:caption" id="part-detail-caption-repeat">
                                                     <xf:group appearance="full" ref=".[count(@*) &lt; 4]">
                                                         <xf:switch>
@@ -949,8 +960,8 @@
                                                         </div>
                                                     </span>
                                                 </div>
-                                                <!--Attributes: None.-->
-                                                <!--Subelements: None.-->
+                                                  <!--Attributes: None.-->
+                                                  <!--Subelements: None.-->
                                                 <xf:repeat nodeset="./mods:title" id="part-detail-title-repeat">
                                                     <xf:group appearance="full" ref=".">
                                                         <xf:input ref="." class="text_50">
@@ -996,8 +1007,8 @@
                                             </xf:trigger>
                                         </span>
                                     </div>
-                                    <!--Attributes: unit.-->
-                                    <!--Subelements: start; end; total; list.-->
+                                        <!--Attributes: unit.-->
+                                        <!--Subelements: start; end; total; list.-->
                                     <xf:repeat nodeset="./mods:extent" id="extent-repeat">
                                         <xf:group appearance="full" ref=".[count(@unit) &gt; 0]">
                                             <xf:select1 ref="./@unit" selection="open">
@@ -1025,8 +1036,8 @@
                                                         </div>
                                                     </span>
                                                 </div>
-                                                <!--Attributes: lang; xml:lang; script; transliteration.-->
-                                                <!--Subelements: None.-->
+                                                  <!--Attributes: lang; xml:lang; script; transliteration.-->
+                                                  <!--Subelements: None.-->
                                                 <xf:repeat nodeset="./mods:start" id="part-extent-start-repeat">
                                                     <xf:group appearance="full" ref=".[count(@*) &lt; 4]">
                                                         <xf:switch>
@@ -1170,8 +1181,8 @@
                                                         </div>
                                                     </span>
                                                 </div>
-                                                <!--Attributes: lang; xml:lang; script; transliteration.-->
-                                                <!--Subelements: None.-->
+                                                  <!--Attributes: lang; xml:lang; script; transliteration.-->
+                                                  <!--Subelements: None.-->
                                                 <xf:repeat nodeset="./mods:end" id="part-extent-end-repeat">
                                                     <xf:group appearance="full" ref=".[count(@*) &lt; 4]">
                                                         <xf:switch>
@@ -1315,8 +1326,8 @@
                                                         </div>
                                                     </span>
                                                 </div>
-                                                <!--Attributes: None.-->
-                                                <!--Subelements: None.-->
+                                                  <!--Attributes: None.-->
+                                                  <!--Subelements: None.-->
                                                 <xf:repeat nodeset="./mods:total" id="part-extent-total-repeat">
                                                     <xf:group appearance="full" ref=".">
                                                         <xf:input ref="." class="text_50">
@@ -1343,8 +1354,8 @@
                                                         </div>
                                                     </span>
                                                 </div>
-                                                <!--Attributes: None.-->
-                                                <!--Subelements: None.-->
+                                                  <!--Attributes: None.-->
+                                                  <!--Subelements: None.-->
                                                 <xf:repeat nodeset="./mods:list" id="part-extent-list-repeat">
                                                     <xf:group appearance="full" ref=".">
                                                         <xf:group appearance="full" ref=".[count(@*) &lt; 4]">
@@ -1509,8 +1520,8 @@
                                             </span>
                                         </span>
                                     </div>
-                                    <!--Attributes: encoding; point; qualifier; lang; xml:lang; script; transliteration.-->
-                                    <!--Subelements: None.-->
+                                        <!--Attributes: encoding; point; qualifier; lang; xml:lang; script; transliteration.-->
+                                        <!--Subelements: None.-->
                                     <xf:repeat nodeset="./mods:date" id="part-date-repeat">
                                         <xf:group appearance="full" ref=".[count(@*) &lt; 7]">
                                             <xf:switch>
@@ -1741,8 +1752,8 @@
                                             </span>
                                         </span>
                                     </div>
-                                    <!--Attributes: xlink; lang; xml:lang; transliteration; script; displayLabel; type.-->
-                                    <!--Subelements: None.-->
+                                        <!--Attributes: xlink; lang; xml:lang; transliteration; script; displayLabel; type.-->
+                                        <!--Subelements: None.-->
                                     <xf:repeat nodeset="./mods:text" id="part-text-repeat">
                                         <xf:group appearance="full" ref=".[count(@*) &lt; 7]">
                                             <xf:switch>
@@ -1960,8 +1971,8 @@
                                 </xf:trigger>
                             </span>
                         </div>
-            <!--Attributes: ID; xlink; displayLabel; type.-->
-            <!--Subelements: all MODS top level elements. NB: It is difficult to see how recordInfo fits in.-->
+                            <!--Attributes: ID; xlink; displayLabel; type.-->
+                            <!--Subelements: all MODS top level elements. NB: It is difficult to see how recordInfo fits in.-->
                         <xf:repeat nodeset="./mods:relatedItem" id="secondary-relatedItem-repeat">
                             <xf:group appearance="full" ref=".[count(@*) &lt; 4 or .[not(mods:part)]]">
                                 <xf:switch>
@@ -1985,7 +1996,7 @@
                                                 <xf:group class="add-buttons">
                                                     <xf:trigger ref=".[not(@displayLabel)]" class="add-button">
                                                         <xf:label class="xforms-group-label-centered">Add
-                                                Display Label</xf:label>
+                                                  Display Label</xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xf:toggle case="secondary-relatedItem-add-node-hide" ev:event="DOMActivate"/>
                                                             <xf:insert context="." origin="instance('insert-templates')/mods:relatedItem/@displayLabel"/>
@@ -1993,7 +2004,7 @@
                                                     </xf:trigger>
                                                     <xf:trigger ref=".[not(@ID)]" class="add-button">
                                                         <xf:label class="xforms-group-label-centered">Add
-                                                ID</xf:label>
+                                                  ID</xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xf:toggle case="secondary-relatedItem-add-node-hide" ev:event="DOMActivate"/>
                                                             <xf:insert context="." origin="instance('insert-templates')/mods:relatedItem/@ID"/>
@@ -2001,7 +2012,7 @@
                                                     </xf:trigger>
                                                     <xf:trigger ref=".[not(@type)]" class="add-button">
                                                         <xf:label class="xforms-group-label-centered">Add
-                                                Type</xf:label>
+                                                  Type</xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xf:toggle case="secondary-relatedItem-add-node-hide" ev:event="DOMActivate"/>
                                                             <xf:insert context="." origin="instance('insert-templates')/mods:relatedItem/@type"/>
@@ -2009,7 +2020,7 @@
                                                     </xf:trigger>
                                                     <xf:trigger ref=".[not(@xlink:href)]" class="add-button">
                                                         <xf:label class="xforms-group-label-centered">Add
-                                                xlink:href</xf:label>
+                                                  xlink:href</xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xf:toggle case="secondary-relatedItem-add-node-hide" ev:event="DOMActivate"/>
                                                             <xf:insert context="." origin="instance('insert-templates')/mods:relatedItem/@xlink:href"/>
@@ -2098,8 +2109,8 @@
                                         </span>
                                     </div>
                                     <xf:repeat nodeset="./mods:part" id="secondary-part-repeat">
-                            <!--Attributes: ID; type; order; lang; xml:lang; script; transliteration; displayLabel; altRepGroup.-->
-                            <!--Subelements: detail; extent; date; text.-->
+                                            <!--Attributes: ID; type; order; lang; xml:lang; script; transliteration; displayLabel; altRepGroup.-->
+                                            <!--Subelements: detail; extent; date; text.-->
                                         <xf:group appearance="full" ref=".[count(@*) &lt; 9 or .[not(mods:detail)] or .[not(mods:extent)] or .[not(mods:date)] or .[not(mods:text)]]">
                                             <xf:switch>
                                                 <xf:case id="secondary-part-add-node-hide">
@@ -2378,8 +2389,8 @@
                                                         </xf:trigger>
                                                     </span>
                                                 </div>
-                                    <!--Attributes: type; level; lang; xml:lang; script; transliteration.-->
-                                    <!--Subelements: number; caption; title.-->
+                                                  <!--Attributes: type; level; lang; xml:lang; script; transliteration.-->
+                                                  <!--Subelements: number; caption; title.-->
                                                 <xf:repeat nodeset="./mods:detail" id="secondary-part-detail-repeat">
                                                     <xf:group appearance="full" ref=".[count(@*) &lt; 6 or .[not(mods:number)] or .[not(mods:caption)] or .[not(mods:title)]]">
                                                         <xf:switch>
@@ -2585,8 +2596,8 @@
                                                                     </div>
                                                                 </span>
                                                             </div>
-                                                <!--Attributes: lang; xml:lang; script; transliteration.-->
-                                                <!--Subelements: None.-->
+                                                  <!--Attributes: lang; xml:lang; script; transliteration.-->
+                                                  <!--Subelements: None.-->
                                                             <xf:repeat nodeset="./mods:number" id="secondary-part-detail-number-repeat">
                                                                 <xf:group appearance="full" ref=".[count(@*) &lt; 4]">
                                                                     <xf:switch>
@@ -2730,8 +2741,8 @@
                                                                     </div>
                                                                 </span>
                                                             </div>
-                                                <!--Attributes: lang; xml:lang; script; transliteration.-->
-                                                <!--Subelements: None.-->
+                                                  <!--Attributes: lang; xml:lang; script; transliteration.-->
+                                                  <!--Subelements: None.-->
                                                             <xf:repeat nodeset="./mods:caption" id="secondary-part-detail-caption-repeat">
                                                                 <xf:group appearance="full" ref=".[count(@*) &lt; 4]">
                                                                     <xf:switch>
@@ -2875,8 +2886,8 @@
                                                                     </div>
                                                                 </span>
                                                             </div>
-                                                <!--Attributes: None.-->
-                                                <!--Subelements: None.-->
+                                                  <!--Attributes: None.-->
+                                                  <!--Subelements: None.-->
                                                             <xf:repeat nodeset="./mods:title" id="secondary-part-detail-title-repeat">
                                                                 <xf:group appearance="full" ref=".">
                                                                     <xf:input ref="." class="text_50">
@@ -2922,8 +2933,8 @@
                                                         </xf:trigger>
                                                     </span>
                                                 </div>
-                                    <!--Attributes: unit.-->
-                                    <!--Subelements: start; end; total; list.-->
+                                                  <!--Attributes: unit.-->
+                                                  <!--Subelements: start; end; total; list.-->
                                                 <xf:repeat nodeset="./mods:extent" id="secondary-extent-repeat">
                                                     <xf:group appearance="full" ref=".[count(@unit) &gt; 0]">
                                                         <xf:select1 ref="./@unit" selection="open">
@@ -2951,8 +2962,8 @@
                                                                     </div>
                                                                 </span>
                                                             </div>
-                                                <!--Attributes: lang; xml:lang; script; transliteration.-->
-                                                <!--Subelements: None.-->
+                                                  <!--Attributes: lang; xml:lang; script; transliteration.-->
+                                                  <!--Subelements: None.-->
                                                             <xf:repeat nodeset="./mods:start" id="secondary-part-extent-start-repeat">
                                                                 <xf:group appearance="full" ref=".[count(@*) &lt; 4]">
                                                                     <xf:switch>
@@ -3096,8 +3107,8 @@
                                                                     </div>
                                                                 </span>
                                                             </div>
-                                                <!--Attributes: lang; xml:lang; script; transliteration.-->
-                                                <!--Subelements: None.-->
+                                                  <!--Attributes: lang; xml:lang; script; transliteration.-->
+                                                  <!--Subelements: None.-->
                                                             <xf:repeat nodeset="./mods:end" id="secondary-part-extent-end-repeat">
                                                                 <xf:group appearance="full" ref=".[count(@*) &lt; 4]">
                                                                     <xf:switch>
@@ -3241,8 +3252,8 @@
                                                                     </div>
                                                                 </span>
                                                             </div>
-                                                <!--Attributes: None.-->
-                                                <!--Subelements: None.-->
+                                                  <!--Attributes: None.-->
+                                                  <!--Subelements: None.-->
                                                             <xf:repeat nodeset="./mods:total" id="secondary-part-extent-total-repeat">
                                                                 <xf:group appearance="full" ref=".">
                                                                     <xf:input ref="." class="text_50">
@@ -3269,8 +3280,8 @@
                                                                     </div>
                                                                 </span>
                                                             </div>
-                                                <!--Attributes: None.-->
-                                                <!--Subelements: None.-->
+                                                  <!--Attributes: None.-->
+                                                  <!--Subelements: None.-->
                                                             <xf:repeat nodeset="./mods:list" id="secondary-part-extent-list-repeat">
                                                                 <xf:group appearance="full" ref=".">
                                                                     <xf:group appearance="full" ref=".[count(@*) &lt; 4]">
@@ -3435,8 +3446,8 @@
                                                         </span>
                                                     </span>
                                                 </div>
-                                    <!--Attributes: encoding; point; qualifier; lang; xml:lang; script; transliteration.-->
-                                    <!--Subelements: None.-->
+                                                  <!--Attributes: encoding; point; qualifier; lang; xml:lang; script; transliteration.-->
+                                                  <!--Subelements: None.-->
                                                 <xf:repeat nodeset="./mods:date" id="secondary-part-date-repeat">
                                                     <xf:group appearance="full" ref=".[count(@*) &lt; 7]">
                                                         <xf:switch>
@@ -3667,8 +3678,8 @@
                                                         </span>
                                                     </span>
                                                 </div>
-                                    <!--Attributes: xlink; lang; xml:lang; transliteration; script; displayLabel; type.-->
-                                    <!--Subelements: None.-->
+                                                  <!--Attributes: xlink; lang; xml:lang; transliteration; script; displayLabel; type.-->
+                                                  <!--Subelements: None.-->
                                                 <xf:repeat nodeset="./mods:text" id="secondary-part-text-repeat">
                                                     <xf:group appearance="full" ref=".[count(@*) &lt; 7]">
                                                         <xf:switch>

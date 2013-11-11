@@ -399,7 +399,7 @@
                                                 Caption</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="part-detail-add-node-hide" ev:event="DOMActivate"/>
-                                                        <xf:insert nodeset="mods:detail" at="index('part-detail-repeat')" position="before" origin="instance('new-instance')/mods:part/mods:detail/mods:caption"/>
+                                                        <xf:insert nodeset="mods:caption" at="index('part-detail-repeat')" position="before" origin="instance('new-instance')/mods:part/mods:detail/mods:caption"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:number)]" class="add-button">
@@ -407,7 +407,7 @@
                                                 Number</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="part-detail-add-node-hide" ev:event="DOMActivate"/>
-                                                        <xf:insert nodeset="mods:extent" at="index('part-detail-repeat')" position="before" origin="instance('new-instance')/mods:part/mods:detail/mods:number"/>
+                                                        <xf:insert nodeset="mods:number" at="index('part-detail-repeat')" position="before" origin="instance('new-instance')/mods:part/mods:detail/mods:number"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger ref=".[not(mods:title)]" class="add-button">
@@ -415,7 +415,7 @@
                                                 Title</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:toggle case="part-detail-add-node-hide" ev:event="DOMActivate"/>
-                                                        <xf:insert nodeset="mods:text" at="index('part-detail-repeat')" position="before" origin="instance('new-instance')/mods:part/mods:detail/mods:title"/>
+                                                        <xf:insert nodeset="mods:title" at="index('part-detail-repeat')" position="before" origin="instance('new-instance')/mods:part/mods:detail/mods:title"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                             </xf:group>
@@ -925,7 +925,7 @@
                 <!--Attributes: unit.-->
                 <!--Subelements: start; end; total; list.-->
                         <xf:repeat nodeset="./mods:extent" id="extent-repeat">
-                            <xf:group appearance="full" ref=".[count(@unit) &gt; 0]">
+                            <xf:group class="schema_3.5" ref=".[@unit]">
                                 <xf:select1 ref="./@unit" selection="open">
                                     <xf:label>Unit <span class="xforms-help">
                                             <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>

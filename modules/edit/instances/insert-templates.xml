@@ -52,7 +52,7 @@
         <form type="material" authority="marcform" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
         <reformattingQuality/>
         <internetMediaType lang="" xml:lang="" script="" transliteration=""/>
-        <extent supplied="" lang="" xml:lang="" script="" transliteration=""/>
+        <extent supplied="" lang="" xml:lang="" script="" transliteration="" unit=""/>
         <digitalOrigin/>
         <note xml:lang="" lang="eng" type="" displayLabel="" script="" transliteration="" xlink:href="" ID="" typeURI=""/>
     </physicalDescription>
@@ -63,7 +63,7 @@
         <topic authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
         <geographic authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
         <temporal encoding="w3cdtf" point="" keyDate="" authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration="" qualifier=""/>
-        <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="">
+        <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="" altFormat="" contentType="" otherType="">
             <nonSort lang="" xml:lang="" script="" transliteration=""/>
             <title lang="" xml:lang="" script="" transliteration=""/>
             <subTitle lang="" xml:lang="" script="" transliteration=""/>
@@ -109,7 +109,7 @@
     <note xml:lang="" lang="eng" type="" displayLabel="" script="" transliteration="" xlink:href="" ID="" altRepGroup="" typeURI=""/>
     <relatedItem type="" xlink:href="" ID="" displayLabel="">
         <relatedItem type="" xlink:href="" ID="" displayLabel=""/>
-        <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="">
+        <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="" altFormat="" contentType="" otherType="">
             <nonSort lang="" xml:lang="" script="" transliteration=""/>
             <title lang="" xml:lang="" script="" transliteration=""/>
             <subTitle lang="" xml:lang="" script="" transliteration=""/>
@@ -161,7 +161,7 @@
             <form type="material" authority="marcform" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
             <reformattingQuality/>
             <internetMediaType lang="" xml:lang="" script="" transliteration=""/>
-            <extent supplied="" lang="" xml:lang="" script="" transliteration=""/>
+            <extent supplied="" lang="" xml:lang="" script="" transliteration="" unit=""/>
             <digitalOrigin/>
             <note xml:lang="" lang="eng" type="" displayLabel="" script="" transliteration="" xlink:href="" ID="" typeURI=""/>
         </physicalDescription>
@@ -172,7 +172,7 @@
             <topic authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
             <geographic authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
             <temporal encoding="w3cdtf" point="" keyDate="" authority="" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration="" qualifier=""/>
-            <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="">
+            <titleInfo lang="" script="" transliteration="" type="" authority="" displayLabel="" ID="" xlink:href="" xml:lang="" nameTitleGroup="" usage="" authorityURI="" valueURI="" supplied="" altRepGroup="" altFormat="" contentType="" otherType="">
                 <nonSort lang="" xml:lang="" script="" transliteration=""/>
                 <title lang="" xml:lang="" script="" transliteration=""/>
                 <subTitle lang="" xml:lang="" script="" transliteration=""/>
@@ -254,7 +254,7 @@
             </part>
         </relatedItem>
     </relatedItem>
-    <identifier displayLabel="" type="" invalid="" altRepGroup="" lang="" script="" transliteration="" xml:lang=""/>
+    <identifier displayLabel="" type="" invalid="" altRepGroup="" lang="" script="" transliteration="" xml:lang="" typeURI=""/>
     <location lang="" xml:lang="" script="" transliteration="" displayLabel="" altRepGroup="">
         <physicalLocation authority="" authorityURI="" valueURI="" displayLabel="" type="" lang="" xml:lang="" script="" transliteration="" xlink:href=""/>
         <shelfLocator lang="" xml:lang="" script="" transliteration=""/>
@@ -271,15 +271,17 @@
         </holdingSimple>
         <holdingExternal/>
     </location>
-    <accessCondition xlink:href="" lang="" type="" displayLabel="" altRepGroup="" xml:lang="" script="" transliteration=""/>
+    <accessCondition xlink:href="" lang="" type="" displayLabel="" altRepGroup="" xml:lang="" script="" transliteration="" altFormat="" contentType=""/>
     <recordInfo lang="" xml:lang="" script="" transliteration="" displayLabel="" altRepGroup="">
         <recordContentSource authority="" authorityURI="" lang="" script="" transliteration="" valueURI="" xml:lang=""/>
         <recordCreationDate encoding="w3cdtf" point="" keyDate="" qualifier="" lang="" script="" transliteration="" xml:lang=""/>
         <recordChangeDate encoding="w3cdtf" point="" keyDate="" qualifier="" lang="" script="" transliteration="" xml:lang=""/>
         <recordIdentifier source="" lang="" xml:lang="" script="" transliteration=""/>
-        <recordOrigin lang="" xml:lang="" script="" transliteration=""/>/&gt; <languageOfCataloging objectPart="" displayLabel="" usage="" altRepGroup="">
+        <recordOrigin lang="" xml:lang="" script="" transliteration=""/>
+        <languageOfCataloging objectPart="" displayLabel="" usage="" altRepGroup="">
             <languageTerm authority="iso639-2b" type="code" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
-            <languageTerm type="text" authority="iso639-2b" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>/&gt; <scriptTerm type="code" authority="iso15924" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
+            <languageTerm type="text" authority="iso639-2b" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
+            <scriptTerm type="code" authority="iso15924" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
             <scriptTerm authority="" type="text" authorityURI="" valueURI="" lang="" xml:lang="" script="" transliteration=""/>
         </languageOfCataloging>
         <descriptionStandard authority="" authorityURI="" lang="" script="" transliteration="" valueURI="" xml:lang=""/>

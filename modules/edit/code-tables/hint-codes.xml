@@ -31,8 +31,8 @@
         </item>
         <item xml:id="hint-code_relatedItem">
             <help>
-                <p> Information that identifies other resources related to the one being
-                    described. </p>
+                <p> Information that identifies other resources related to the one being described.
+                </p>
             </help>
             <local-name>type</local-name>
             <tab-id>related</tab-id>
@@ -41,20 +41,16 @@
         </item>
         <item xml:id="hint-code_relatedItem-type">
             <help>
-                <p> The type field describes the relationship between the resource in
-                    Related Item and the resource in the parent record.</p>
+                <p> The type field describes the relationship between the resource in Related Item
+                    and the resource in the parent record.</p>
                 <p> Use one of the following values: Host, Constituent, Series, Other Version.</p>
-                <p>  
-                    "Host" is used to describe a host or parent resource, for example a book or
+                <p> "Host" is used to describe a host or parent resource, for example a book or
                     periodical in which an article appears or a collection in which an item belongs. </p>
-                <p> 
-                    "Constituent" is used to describe parts of the resource, except information that falls within the scope of the
-                    Table Of Contents element. </p>
-                <p> 
-                    "Series" is used to describe a named series of which the resource is a part. 
-                </p>
-                <p> 
-                    "Other Version" is used to describe other versions of the work contained in the resource. </p>
+                <p> "Constituent" is used to describe parts of the resource, except information that
+                    falls within the scope of the Table Of Contents element. </p>
+                <p> "Series" is used to describe a named series of which the resource is a part. </p>
+                <p> "Other Version" is used to describe other versions of the work contained in the
+                    resource. </p>
             </help>
             <local-name>type</local-name>
             <tab-id>related</tab-id>
@@ -63,20 +59,16 @@
         </item>
         <item xml:id="hint-code_relatedItem-xlink_href">
             <help>
-                <p> The type field describes the relationship between the resource in
-                    Related Item and the resource in the parent record.</p>
+                <p> The type field describes the relationship between the resource in Related Item
+                    and the resource in the parent record.</p>
                 <p> Use one of the following values: Host, Constituent, Series, Other Version.</p>
-                <p>  
-                    "Host" is used to describe a host or parent resource, for example a book or
+                <p> "Host" is used to describe a host or parent resource, for example a book or
                     periodical in which an article appears or a collection in which an item belongs. </p>
-                <p> 
-                    "Constituent" is used to describe parts of the resource, except information that falls within the scope of the
-                    Table Of Contents element. </p>
-                <p> 
-                    "Series" is used to describe a named series of which the resource is a part. 
-                </p>
-                <p> 
-                    "Other Version" is used to describe other versions of the work contained in the resource. </p>
+                <p> "Constituent" is used to describe parts of the resource, except information that
+                    falls within the scope of the Table Of Contents element. </p>
+                <p> "Series" is used to describe a named series of which the resource is a part. </p>
+                <p> "Other Version" is used to describe other versions of the work contained in the
+                    resource. </p>
             </help>
             <local-name>type</local-name>
             <tab-id>related</tab-id>
@@ -781,7 +773,8 @@
         </item>
         <item xml:id="hint-code_eventType">
             <help>
-                <p>eventType</p>
+                <p>Information regarding whether the Origin Information relates to the production,
+                    publication, distribution, manufacture, etc. of the resource.</p>
             </help>
             <local-name>eventType</local-name>
             <tab-id>origin</tab-id>
@@ -898,7 +891,7 @@
                 <p> Use this subfield to record information in textual form. Use this subfield when
                     other subfields will not capture the appropriate information. </p>
             </help>
-            <local-name>unit</local-name>
+            <local-name>text</local-name>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
             <tab-id>related-abbreviated</tab-id>
@@ -909,7 +902,7 @@
                 <p>Identifies the type of part.</p>
                 <p>There is no controlled list of part types.</p>
             </help>
-            <local-name>unit</local-name>
+            <local-name>type</local-name>
             <tab-id>part</tab-id>
             <tab-id>related</tab-id>
             <tab-id>related-abbreviated</tab-id>
@@ -973,6 +966,13 @@
             <tab-id>related</tab-id>
             <tab-id>related-abbreviated</tab-id>
             <tab-id>related-xlink</tab-id>
+            <tab-id>physical-description</tab-id>
+            <tab-id>compact-b-article</tab-id>
+            <tab-id>compact-a</tab-id>
+            <tab-id>compact-b-edited-volume</tab-id>
+            <tab-id>compact-b-newspaper-article</tab-id>
+            <tab-id>compact-b-xlink</tab-id>
+            <tab-id>compact-b-review</tab-id>
         </item>
         <item xml:id="hint-code_part-extent-start">
             <help>
@@ -1131,11 +1131,11 @@
         </item>
         <item xml:id="hint-code_part-type">
             <help>
-                <p> A designation of a document segment type. Suggested values include series (of a periodical), volume,
-                    issue, chapter, section, paragraph, and track. Other values may be used as
-                    needed. </p>
-                <p> Since there is not a controlled set of terms for type, if used, the
-                    value should be expressed clearly and be generally understandable. </p>
+                <p> A designation of a document segment type. Suggested values include series (of a
+                    periodical), volume, issue, chapter, section, paragraph, and track. Other values
+                    may be used as needed. </p>
+                <p> Since there is not a controlled set of terms for type, if used, the value should
+                    be expressed clearly and be generally understandable. </p>
             </help>
             <local-name>type</local-name>
             <parent>part</parent>
@@ -3145,6 +3145,7 @@
             <parent>titleInfo</parent>
             <tab-id>subject</tab-id>
             <tab-id>origin</tab-id>
+            <tab-id>compact-b-moving-images</tab-id>
         </item>
         <item xml:id="hint-code_digitalOrigin">
             <help>

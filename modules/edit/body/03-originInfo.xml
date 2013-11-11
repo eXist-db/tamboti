@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" class="origin block-form" tab-id="origin" ext:dummy="dummy" xlink:dummy="dummy">
+<div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ext="http://exist-db.org/mods/extension" class="origin block-form" tab-id="origin" ext:dummy="dummy" xlink:dummy="dummy">
     <xf:group class="schema_3.3 schema_3.4 schema_3.5" appearance="full">
         <fieldset class="level-1">
             <div class="label-box">
@@ -27,10 +27,10 @@
                     </xf:trigger>
                 </span>
             </div>
-        <!--Attributes: altRepGroup, displayLabel, lang, script, transliteration, xml:lang. -->
+            <!--Attributes: altRepGroup, displayLabel, eventType, lang, script, transliteration, xml:lang. -->
         <!--Subelements: copyrightDate, dateCaptured, dateCreated, dateIssued, dateModified, dateOther, dateValid, edition, frequency, issuance, place, publisher. -->
             <xf:repeat nodeset="instance('save-data')/mods:originInfo" id="origininfo-repeat">
-                <xf:group class="show-hide" ref=".[count(@*) &lt; 6  or .[not(mods:copyrightDate)] or .[not(mods:dateCaptured)] or .[not(mods:dateCreated)] or .[not(mods:dateIssued)] or .[not(mods:dateModified)] or .[not(mods:dateOther)] or .[not(mods:dateValid)] or .[not(mods:edition)] or .[not(mods:frequency)] or .[not(mods:issuance)] or .[not(mods:place)] or .[not(mods:publisher)]]">
+                <xf:group class="show-hide" ref=".[count(@*) &lt; 7  or .[not(mods:copyrightDate)] or .[not(mods:dateCaptured)] or .[not(mods:dateCreated)] or .[not(mods:dateIssued)] or .[not(mods:dateModified)] or .[not(mods:dateOther)] or .[not(mods:dateValid)] or .[not(mods:edition)] or .[not(mods:frequency)] or .[not(mods:issuance)] or .[not(mods:place)] or .[not(mods:publisher)]]">
                     <xf:switch>
                         <xf:case id="originInfo-add-node-hide">
                             <div class="open-close-button">
@@ -69,7 +69,7 @@
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
-                                    <xf:group appearance="full" ref=".[not(@displayLabel)]">
+                                    <xf:group appearance="full" ref=".[not(@eventType)]">
                                         <xf:trigger>
                                             <xf:label class="xforms-group-label-centered">Add Event
                                                 Type</xf:label>
@@ -119,7 +119,7 @@
                                             </xf:action>
                                         </xf:trigger>
                                     </xf:group>
-                                    <xf:group class="show-hide" ref=".[count(@*) &lt; 6  and (.[not(mods:copyrightDate)] or .[not(mods:dateCaptured)] or .[not(mods:dateCreated)] or .[not(mods:dateIssued)] or .[not(mods:dateModified)] or .[not(mods:dateOther)] or .[not(mods:dateValid)] or .[not(mods:edition)] or .[not(mods:frequency)] or .[not(mods:issuance)] or .[not(mods:place)] or .[not(mods:publisher)])]">
+                                    <xf:group class="show-hide" ref=".[count(@*) &lt; 7  and (.[not(mods:copyrightDate)] or .[not(mods:dateCaptured)] or .[not(mods:dateCreated)] or .[not(mods:dateIssued)] or .[not(mods:dateModified)] or .[not(mods:dateOther)] or .[not(mods:dateValid)] or .[not(mods:edition)] or .[not(mods:frequency)] or .[not(mods:issuance)] or .[not(mods:place)] or .[not(mods:publisher)])]">
                                         <hr/>
                                     </xf:group>
                                     <xf:group appearance="full" ref=".[not(mods:copyrightDate)]">
@@ -269,7 +269,7 @@
                         </xf:label>
                     </xf:input>
                 </xf:group>
-                <xf:group class="schema_3.4 schema_3.5" appearance="full" ref=".[@eventType]">
+                <xf:group class="schema_3.5" appearance="full" ref=".[@eventType]">
                     <xf:input ref="./@eventType" class="text_50">
                         <xf:label>Event Type<span class="xforms-help">
                                 <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
