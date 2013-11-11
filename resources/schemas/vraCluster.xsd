@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- VRA (Visual Resources Association) Core 4 XML Schema, version 0.42
      This schema implements the final VRA Core 4.0 guidelines, 2007-04-09.
 
@@ -171,16 +172,18 @@
         <xsd:attributeGroup ref="vraAttributes"/>
         <xsd:attribute name="id" type="xsd:ID"/>
         <xsd:attribute name="catalogingLanguage">
-            <xsd:simpleType >
-                <xsd:restriction  base="xsd:string">
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
                     <xsd:pattern value="[a-z]{3}"/>
-                </xsd:restriction></xsd:simpleType>
+                </xsd:restriction>
+            </xsd:simpleType>
         </xsd:attribute>
-        <xsd:attribute name="catalogingScript"  >
-            <xsd:simpleType >
-                <xsd:restriction  base="xsd:string">
-                <xsd:pattern value="[a-z]{4}"/>
-            </xsd:restriction></xsd:simpleType>
+        <xsd:attribute name="catalogingScript">
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="[a-z]{4}"/>
+                </xsd:restriction>
+            </xsd:simpleType>
         </xsd:attribute>
     </xsd:complexType>
     <xsd:complexType name="setType">
@@ -368,10 +371,10 @@
         <xsd:simpleContent>
             <xsd:extension base="xsd:string">
                 <xsd:attribute name="type">
-                    <xsd:simpleType >
-                        <xsd:restriction  base="xsd:string">
-                            <xsd:enumeration value="code"></xsd:enumeration>
-                            <xsd:enumeration value="term"></xsd:enumeration>
+                    <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                            <xsd:enumeration value="code"/>
+                            <xsd:enumeration value="term"/>
                         </xsd:restriction>
                     </xsd:simpleType>
                 </xsd:attribute>
@@ -399,10 +402,9 @@
         </xsd:annotation>
         <xsd:simpleContent>
             <xsd:extension base="xsd:string">
-                <xsd:attribute type="xsd:string" name="stateOfPreservation"></xsd:attribute>
+                <xsd:attribute type="xsd:string" name="stateOfPreservation"/>
                 <xsd:attributeGroup ref="vraAttributes"/>
             </xsd:extension>
-            
         </xsd:simpleContent>
     </xsd:complexType>
     <xsd:simpleType name="dateValueType">
@@ -450,8 +452,6 @@
         <xsd:attribute name="transliteration" type="xsd:string"/>
         <xsd:attribute name="script" type="xsd:string"/>
         <xsd:attribute name="lastAccessed" type="xsd:date"/>
-      
-        
     </xsd:attributeGroup>
 
 
@@ -470,9 +470,7 @@
             <xsd:element name="culture" type="basicString" minOccurs="0"/>
             <xsd:element name="dates" type="agentDateType" minOccurs="0"/>
             <xsd:element name="name" type="agentNameType" minOccurs="0"/>
-            <xsd:element name="role" type="roleType" minOccurs="0" />
-                
-            
+            <xsd:element name="role" type="roleType" minOccurs="0"/>
         </xsd:sequence>
         <xsd:attributeGroup ref="vraAttributes"/>
     </xsd:complexType>
@@ -527,24 +525,21 @@
     <xsd:simpleType name="dateTypeType">
         <xsd:restriction base="xsd:string"/>
     </xsd:simpleType>
-
     <xsd:complexType name="alternativeNotationDateType">
         <xsd:simpleContent>
             <xsd:extension base="basicString">
-             <xsd:attribute name="type"  use="required">
-                    <xsd:simpleType >
-                        <xsd:restriction  base="xsd:string">
-                            <xsd:enumeration value="before"></xsd:enumeration>
-                            <xsd:enumeration value="after"></xsd:enumeration>
-                            <xsd:enumeration value="about"></xsd:enumeration>
-                            <xsd:enumeration value="probably"></xsd:enumeration>
+                <xsd:attribute name="type" use="required">
+                    <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                            <xsd:enumeration value="before"/>
+                            <xsd:enumeration value="after"/>
+                            <xsd:enumeration value="about"/>
+                            <xsd:enumeration value="probably"/>
                         </xsd:restriction>
                     </xsd:simpleType>
                 </xsd:attribute>
             </xsd:extension>
         </xsd:simpleContent>
-        
-        
     </xsd:complexType>
   <!-- Element: Description (See basicString) -->
 
@@ -597,7 +592,6 @@
             <xsd:element name="name" type="locationNameType" minOccurs="0"/>
             <xsd:element name="point" type="geoType" minOccurs="0"/>
         </xsd:sequence>
-        
         <xsd:attributeGroup ref="vraAttributes"/>
         <xsd:attribute name="type" type="locationTypeType"/>
     </xsd:complexType>
@@ -606,16 +600,14 @@
             <xsd:documentation> 
                 Element containing a latitude and a logitude
             </xsd:documentation>
-            
-         </xsd:annotation>
+        </xsd:annotation>
         <xsd:all minOccurs="0">
             <xsd:element name="lat" type="xsd:string" maxOccurs="1" minOccurs="1"/>
             <xsd:element name="long" type="xsd:string" maxOccurs="1" minOccurs="1"/>
         </xsd:all>
-        <xsd:attribute name="epsg" type="xsd:string"></xsd:attribute>
-        <xsd:attribute name="url" type="xsd:string"></xsd:attribute>
+        <xsd:attribute name="epsg" type="xsd:string"/>
+        <xsd:attribute name="url" type="xsd:string"/>
     </xsd:complexType>
-        
     <xsd:simpleType name="locationTypeType">
         <xsd:restriction base="xsd:string"/>
     </xsd:simpleType>
@@ -683,19 +675,19 @@
                 <xsd:attribute name="type" type="measurementsTypeType"/>
                 <xsd:attribute name="unit" type="measurementsUnitType"/>
                 <xsd:attribute name="shape">
-                    <xsd:simpleType >
-                        <xsd:restriction  base="xsd:string">
-                            <xsd:enumeration value="oval"></xsd:enumeration>
-                            <xsd:enumeration value="cube"></xsd:enumeration>
-                            <xsd:enumeration value="sphere"></xsd:enumeration>
-                            <xsd:enumeration value="rectangle"></xsd:enumeration>
-                            <xsd:enumeration value="circle"></xsd:enumeration>
-                            <xsd:enumeration value="irregular"></xsd:enumeration>
-                            <xsd:enumeration value="landscape"></xsd:enumeration>
-                            <xsd:enumeration value="portrait"></xsd:enumeration>
+                    <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                            <xsd:enumeration value="oval"/>
+                            <xsd:enumeration value="cube"/>
+                            <xsd:enumeration value="sphere"/>
+                            <xsd:enumeration value="rectangle"/>
+                            <xsd:enumeration value="circle"/>
+                            <xsd:enumeration value="irregular"/>
+                            <xsd:enumeration value="landscape"/>
+                            <xsd:enumeration value="portrait"/>
                         </xsd:restriction>
                     </xsd:simpleType>
-                </xsd:attribute> 
+                </xsd:attribute>
             </xsd:extension>
         </xsd:simpleContent>
     </xsd:complexType>
