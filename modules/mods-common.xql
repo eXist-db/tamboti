@@ -1691,6 +1691,7 @@ declare function mods-common:format-subjects($entry as element(), $global-transl
 :)
 declare function mods-common:format-related-item($relatedItem as element(mods:relatedItem), $global-language as xs:string?, $collection-short as xs:string) as element()? {
 	(:Remove related items which have neither @xlink:href nor titleInfo/title :)
+	let $relatedItem-type := $relatedItem/@type/string()
 	let $relatedItem := mods-common:remove-parent-with-missing-required-node($relatedItem)
 	(:let $log := util:log("DEBUG", ("##$relatedItem): ", $relatedItem)):)
 	(:Get the global transliteration:)
@@ -1755,7 +1756,9 @@ declare function mods-common:format-related-item($relatedItem as element(mods:re
                     then
                         for $url in $urls
                             return
-                                concat(' <', $url, '>')
+                                if ($relatedItem-type = ('isReferencedBy'))
+                                then <a href="{$url}" target="_blank">{$url}</a>
+                                else $url
                     else ()
                 ,
                 if (contains($collection-short, 'Annotated%20Videos')) 
