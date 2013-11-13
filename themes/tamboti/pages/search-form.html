@@ -37,7 +37,7 @@
             </form>
         </jquery:tab>
         <jquery:tab id="advanced-search-form" label="Advanced Search">
-            <jquery:form-repeat trigger="#add-field" delete="#remove-field" form=".search-form" on-ready="repeatCallback"/>
+            <jquery:form-repeat trigger="#add-field" delete="" form=".search-form" on-ready="repeatCallback"/>
             <form id="advanced-search" class="search-form" action="?" name="advanced-search" method="POST">
                 <table>
                     <tr class="biblio:form-from-query"/>
@@ -68,8 +68,6 @@
                         <td class="add-field" align="center" colspan="2">
                             <button class="button" id="add-field">
                                 <span>+</span> Add search field</button>
-                            <button class="button" id="remove-field">
-                                <span>-</span> Remove selected search field</button>
                         </td>
                     </tr>
                     <tr>

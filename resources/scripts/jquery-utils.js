@@ -252,36 +252,47 @@
             addEvent($(this));
         });
         $('.ui-autocomplete-input', $('#advanced-search')).bind("keyup keypress", function(e) {
-            var code = e.keyCode || e.which; 
-      	  if (code  == 13) {
-              e.preventDefault();                  
-              $('#advanced-search').submit();
-      	    return false;
-      	  }
-        });        
+              var code = e.keyCode || e.which; 
+        	  if (code  == 13) {
+                e.preventDefault();                  
+                $('#advanced-search').submit();
+        	    return false;
+        	  }
+        });
         $(trigger).click(function(ev) {
         	ev.preventDefault();
             var last = $('.repeat:last', container);
-            var newNode = last.clone();
+            var newNode = last.clone();         
             last.after(newNode);
             newNode.each(function () {
                 $(':input', this).each(function() {
-                    var name = $(this).attr('name');
+                    var $input = $(this);
+                    var name = $input.attr('name');
                     var n = /(.*)(\d+)$/.exec(name);
-                    $(this).attr('name', n[1] + (Number(n[2]) + 1));
-                    if (this.value != '')
+                    $input.attr('name', n[1] + (Number(n[2]) + 1));
+                    if (this.value != '') {
                         this.value = '';
-                });
+                    }
+                    if ($input.attr('class') == "delete-search-field-button") {
+                        $input.click(function(ev) {
+                            ev.preventDefault();
+                            $(this).parent().parent().remove();
+                            return false;
+                        });                         
+                    }
+                    
+                });                
             });
             addEvent(newNode);
             $('.repeat', container).removeClass('repeat-selected');
             options.onReady.call(newNode);
         });
-        if (options.deleteTrigger != null)
+        if (options.deleteTrigger != null) {
             $(options.deleteTrigger).click(function(ev) {
                 deleteCurrent();
                 ev.preventDefault();
-            });
+            });            
+        }
         function addEvent(repeat) {
             repeat.click(function() {
                 selected = repeat;
