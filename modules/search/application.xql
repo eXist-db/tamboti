@@ -814,6 +814,10 @@ declare function biblio:last-collection-queried($node as node(), $params as elem
             if ($search-collection) 
             then replace(replace(xmldb:decode-uri($search-collection), '/resources/commons', 'resources'), '/resources/users', 'resources') 
             else 'resources' 
+        let $search-collection := 
+            if (starts-with($search-collection, '/db'))
+            then replace($search-collection, '/db', '')
+            else $search-collection
         let $search-collection := concat(' found in ', $search-collection)
             return
                 $search-collection
@@ -891,6 +895,7 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
         let $null := session:set-attribute('mods:cached', $processed)
         let $null := session:set-attribute('query', $query-as-xml)
         let $null := session:set-attribute('sort', $query-as-xml)
+        let $null := session:set-attribute('collection', $query-as-xml)
         let $null := biblio:add-to-history($query-as-xml)
         return
             count($processed)
@@ -1020,11 +1025,10 @@ declare function biblio:login($node as node(), $params as element(parameters)?, 
 
 declare function biblio:collection-path($node as node(), $params as element(parameters)?, $model as item()*) {
     (:let $collection := functx:replace-first(xmldb:encode-uri(request:get-parameter("collection", theme:get-root())), "/db/", ""):)
-    let $collection := functx:replace-first(uu:escape-collection-path(request:get-parameter("collection", theme:get-root())), "/db/", "")
-    
-    return
-        (:templates:copy-set-attribute($node, "value", uu:unescape-collection-path($collection), $model):)
-        templates:copy-set-attribute($node, "value", xmldb:decode-uri($collection), $model)
+    let $collection := functx:replace-first(uu:escape-collection-path(request:get-parameter("collection", theme:get-root())), "/db/", "")    
+        return
+            (:templates:copy-set-attribute($node, "value", uu:unescape-collection-path($collection), $model):)
+            templates:copy-set-attribute($node, "value", xmldb:decode-uri($collection), $model)
 };
 
 declare function biblio:result-count($node as node(), $params as element(parameters)?, $model as item()*) {
@@ -1217,18 +1221,17 @@ declare function biblio:apply-filter($collection as xs:string?, $filter as xs:st
             if (empty($prevQuery//field))
             then
                 <query>
-                    { $collection }
+                    <collection>{ $collection }</collection>
                     <field name="{$biblio:FIELDS/field[(@name, @short-name) = $filter]/@name}">{$value}</field>
                 </query>
             else
                 <query>
-                    { $collection }
+                    <collection>{ $collection }</collection>
                     <and>
                     { $prevQuery/*[not(self::collection)] }
                     <field name="{$biblio:FIELDS/field[(@name, @short-name) = $filter]/@name}">{$value}</field>
                     </and>
                 </query>
-
 };
 
 (:~
