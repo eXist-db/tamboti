@@ -1,6 +1,4 @@
-xquery version "3.0";
-
-module namespace templates="http://exist-db.org/xquery/templates";
+ module namespace templates="http://exist-db.org/xquery/templates";
 
 (:~
  : HTML templating module

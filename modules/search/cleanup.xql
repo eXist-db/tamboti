@@ -1,5 +1,3 @@
-xquery version "3.0";
-
 (:~
     Module to clean up a MODS record. Removes empty elements, empty attributes and elements without required subelements.
 :)

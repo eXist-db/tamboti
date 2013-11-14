@@ -1,4 +1,4 @@
-xquery version "3.0";
+xquery version "1.0";
 
 module namespace sharing = "http://exist-db.org/mods/sharing";
 
