@@ -30,6 +30,8 @@ declare namespace xlink="http://www.w3.org/1999/xlink";
 declare namespace mods="http://www.loc.gov/mods/v3";
 declare namespace vra = "http://www.vraweb.org/vracore4.htm";
 declare namespace tei="http://www.tei-c.org/ns/1.0";
+declare namespace atom="http://www.w3.org/2005/Atom";
+declare namespace html="http://www.w3.org/1999/xhtml";
 
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace theme="http://exist-db.org/xquery/biblio/theme" at "../theme.xqm";
@@ -69,7 +71,7 @@ declare function functx:replace-first($arg as xs:string?, $pattern as xs:string,
 :)
 declare variable $biblio:FIELDS :=
 <fields>
-    <field name="any Field (MODS, TEI, VRA)" short-name="All">
+    <field name="any Field (MODS, TEI, VRA, Wiki)" short-name="All">
         <search-expression>
             (
             mods:mods[ft:query(., '$q', $options)]
@@ -78,17 +80,22 @@ declare variable $biblio:FIELDS :=
             union
             tei:TEI[ft:query(., '$q', $options)]
             union
+            atom:entry[ft:query(., '$q', $options)]
+            union
             ft:search('page:$q')
             union
             mods:mods[@ID eq '$q']
             union
             mods:mods[mods:relatedItem/@xlink:href eq '$q']
+            union
+            atom:entry[atom:id eq '$q']
             )
         </search-expression>
         <targets>
             <target>mods:mods</target>
             <target>vra:vra</target>
             <target>tei:TEI</target>
+            <target>atom:entry</target>
         </targets>
     </field>
     <field name="the Date Field (MODS)" short-name="Date">
@@ -152,6 +159,8 @@ declare variable $biblio:FIELDS :=
             tei:TEI//tei:bibl[ft:query(.//tei:name, '$q', $options)]
             union
             tei:TEI//tei:person[ft:query(.//tei:persName, '$q', $options)]
+            union
+            atom:entry[ft:query(.//atom:name, '$q', $options)]
             )
         </search-expression>
         <targets>
@@ -159,6 +168,7 @@ declare variable $biblio:FIELDS :=
             <target>vra:agentSet</target>
             <target>tei:name</target>
             <target>tei:persName</target>
+            <target>atom:name</target>
         </targets>
     </field>
     <field name="the Language Codes Field (MODS)" short-name="Language">
@@ -190,7 +200,7 @@ declare variable $biblio:FIELDS :=
             <target>mods:publisher</target>
         </targets>
     </field>
-    <field name="the Record ID Field (MODS, VRA)" short-name="ID">
+    <field name="the Record ID Field (MODS, VRA, Wiki)" short-name="ID">
         <search-expression>
             (
             mods:mods[@ID eq '$q']
@@ -200,6 +210,8 @@ declare variable $biblio:FIELDS :=
             vra:vra[vra:work/@id eq '$q']
             union
             vra:vra[vra:image/@id eq '$q']
+            union
+            atom:entry[atom:id eq '$q']
             )
         </search-expression>
         <targets/>
@@ -230,7 +242,7 @@ declare variable $biblio:FIELDS :=
             <target>tei:term</target>
         </targets>
     </field>
-    <field name="the Title Field (MODS, TEI, VRA)" short-name="Title">
+    <field name="the Title Field (MODS, TEI, VRA, Wiki)" short-name="Title">
         <search-expression>
             (
             mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]
@@ -242,12 +254,15 @@ declare variable $biblio:FIELDS :=
             tei:TEI//tei:bibl[ft:query(.//tei:title, '$q', $options)]
             union
             tei:TEI//tei:titleStmt[ft:query(./tei:title, '$q', $options)]
+            union
+            atom:entry[ft:query(.//atom:title, '$q', $options)]
             )
         </search-expression>
         <targets>
             <target>mods:titleInfo</target>
             <target>vra:titleSet</target>
             <target>tei:title</target>
+            <target>atom:title</target>
         </targets>
     </field>
     <field name="the XLink Field (MODS)" short-name="XLink">
@@ -264,23 +279,14 @@ declare variable $biblio:FIELDS :=
 :)
 declare variable $biblio:FORMATS :=
     <select name="format">
-        <option value="MODS-TEI-VRA">MODS or TEI or VRA</option>
+        <option value="MODS-TEI-VRA-WIKI">MODS or TEI or VRA or Wiki</option>
         <option value="MODS">MODS</option>
         <option value="TEI">TEI</option>
         <option value="VRA">VRA</option>
+        <option value="WIKI">Wiki</option>
         <option value="MODS-TEI">MODS or TEI</option>
         <option value="MODS-VRA">MODS or VRA</option>
         <option value="TEI-VRA">TEI or VRA</option>
-    </select>
-;
-
-
-declare variable $biblio:HIT-NUMBER :=
-    <select name="hit-number">
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
     </select>
 ;
 
@@ -292,7 +298,7 @@ declare variable $biblio:DEFAULT_QUERY :=
     <query>
         <collection>{theme:get-root()}</collection>
         <and>
-            <field m="1" name="any Field (MODS, TEI, VRA)"></field>
+            <field m="1" name="any Field (MODS, TEI, VRA, Wiki)"></field>
         </and>
     </query>;
 
@@ -405,9 +411,6 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                         }
                         </select>
                     </td>
-                    <td class="delete-search-field-button-container">
-                        <input class="delete-search-field-button" title="Delete search field" type="image" name="deleteSearchFieldButton{$pos}" src="theme/images/delete.png" height="22" width="22" />                        
-                    </td>
                 </tr>
     )
 };
@@ -499,8 +502,8 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                     Therefore a search is made in all other sub-collections of /db/resources.
                     Both this and the identical replacement in biblio:evaluate-query() are necessary.:)
                     if ($query-as-xml/string() eq '/resources')
-                    then ('(collection("/resources/commons","/resources/users", "/resources/groups"))//(mods:mods | vra:vra | tei:TEI)')
-                    else ('collection("', $query-as-xml, '")//(mods:mods | vra:vra | tei:TEI)')
+                    then ('(collection("/resources/commons","/resources/users", "/resources/groups"))//(mods:mods | vra:vra | tei:TEI | atom:entry)')
+                    else ('collection("', $query-as-xml, '")//(mods:mods | vra:vra | tei:TEI | atom:entry)')
                 else ()
             default 
                 return ()
@@ -716,7 +719,7 @@ declare function biblio:construct-order-by-expression($sort as xs:string?) as xs
                 then concat("biblio:order-by-author($hit) ", if ($sort-direction) then $sort-direction else 'ascending', " ", if ($sort-direction eq 'descending') then "empty least" else "empty greatest")
                 else 
                     if ($sort eq "Title") 
-                    then concat("$hit/(mods:titleInfo[not(@type)][1]/mods:title[1] | vra:work/vra:titleSet[1]/vra:title[1] | tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]) ", if ($sort-direction) then $sort-direction else 'ascending', " ", if ($sort-direction eq 'descending') then "empty least" else "empty greatest")
+                    then concat("$hit/(mods:titleInfo[not(@type)][1]/mods:title[1] | vra:work/vra:titleSet[1]/vra:title[1] | tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1] | atom:entry/atom:title)", " ", if ($sort-direction) then $sort-direction else 'ascending', " ", if ($sort-direction eq 'descending') then "empty least" else "empty greatest")
                     else 
                         if ($sort eq "Year") 
                         then concat("biblio:get-year($hit) ", if ($sort-direction) then $sort-direction else 'descending', " ", if ($sort-direction eq 'descending') then "empty least" else "empty greatest")
@@ -812,12 +815,11 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
     then
         let $search-format := request:get-parameter("format", '')
         let $query := string-join(biblio:generate-query($query-as-xml), '')
-
         (:Simple search does not have the parameter format, but should search in all formats.:)
         let $search-format := 
             if ($search-format)
             then $search-format
-            else 'MODS-TEI-VRA'
+            else 'MODS-TEI-VRA-WIKI'
         (:If the format parameter does not contain a certain string, 
         the corresponding namepsace is stripped from the search expression, 
         leading to a search for the element in question in no namespace.:)
@@ -833,7 +835,10 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
             if (not(contains($search-format, 'TEI')))
             then replace($query, 'tei:', '')
             else $query
-        
+        let $query :=
+            if (not(contains($search-format, 'Wiki') or contains($search-format, 'WIKI')))
+            then replace($query, 'atom:', '')
+            else $query
         let $sort := if ($sort) then $sort else session:get-attribute("sort")
         let $results := biblio:evaluate-query($query, $sort)
         let $results-vra-work := $results[vra:work]
@@ -859,7 +864,8 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
         (:we will have tei objects returned that are not whole documents, so this has to be filtered by namespace, but using namespace-uri() is too expensive:)
         let $results-tei := $results[self::tei:p | self::tei:bibl | self::tei:titleStmt | self::tei:person | self::tei:TEI | self::tei:title | self::tei:name | self::tei:persName | self::tei:term | self::tei:head]
         (:using "let $results-tei := $results[self::tei:*]" should work, but gives error: context is missing for node 1 !:)
-        let $results := ($results-vra, $results-mods, $results-tei)
+        let $results-atom := $results[atom:title]
+        let $results := ($results-vra, $results-mods, $results-tei, $results-atom)
         let $processed :=
             for $item in $results
             return
@@ -1333,7 +1339,6 @@ declare function biblio:get-query-as-regex($query-as-xml) as xs:string {
                 they will make the query invalid anyway, so there is actually no need to do this.:)
                 (:Since a final period is itself treated as whitespace, it is removed, since otherwise it would reseult in expressions
                 sunce as "\bW.\b" which do not highlight.:)
-                (:let $log := util:log("DEBUG", ("##$query1): ", $query)):)
                 let $query := 
                     for $expression in $query
                         return 
@@ -1352,7 +1357,6 @@ declare function biblio:get-query-as-regex($query-as-xml) as xs:string {
                                 , '\.^', ' ') (:appears to strip all periods:)
                             )
                 (:First tokenize the expressions created by replacement by space above:)
-                (:let $log := util:log("DEBUG", ("##$query2): ", $query)):)
                 let $query := tokenize($query, ' ') 
                     return
                         (:For each of the tokenized expression, 
@@ -1374,7 +1378,6 @@ declare function biblio:get-query-as-regex($query-as-xml) as xs:string {
                                     '\b')
                 (:Join all regex expressions with the or operator.:)
                 let $query := string-join($query, '|')
-                (:let $log := util:log("DEBUG", ("##$query3): ", $query)):)
                     return $query
 };
 
