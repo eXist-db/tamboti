@@ -1,5 +1,3 @@
-xquery version "3.0";
-
 module namespace retrieve-vra="http://exist-db.org/vra/retrieve";
 
 declare namespace vra="http://www.vraweb.org/vracore4.htm";

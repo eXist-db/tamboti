@@ -1,5 +1,3 @@
-xquery version "3.0";
-
 module namespace mods-common="http://exist-db.org/mods/common";
 
 declare namespace mods="http://www.loc.gov/mods/v3";
