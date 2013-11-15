@@ -1,4 +1,4 @@
-<html xmlns:jquery="http://exist-db.org/xquery/jquery">
+<html xmlns:jquery="http://exist-db.org/xquery/jquery" ng-app="app">
     <head>
         <title>Digital Research Archive of Dungan Studies</title>
         <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"/>-->
@@ -25,7 +25,7 @@
         <script type="text/javascript" src="resources/scripts/angular.min.js"/>
         <link rel="stylesheet" type="text/css" href="../../themes/default/css/upload_angular.css"/>
     </head>
-    <body>
+    <body ng-controller="FileUploadCtrl">
         <div class="templates:include?path=pages/dialogs.html"/>
         <div id="page-head">
             <a name="top"/>
