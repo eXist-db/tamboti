@@ -286,6 +286,10 @@
             addEvent(newNode);
             $('.repeat', container).removeClass('repeat-selected');
             options.onReady.call(newNode);
+            
+            last = $('.repeat:last', container);
+            $("td.operator select option:first-child", last).prop("selected", "selected");
+            $("td.search-field select option:first-child", last).prop("selected", "selected");
         });
         if (options.deleteTrigger != null) {
             $(options.deleteTrigger).click(function(ev) {
