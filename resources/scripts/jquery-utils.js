@@ -266,13 +266,22 @@
             last.after(newNode);
             newNode.each(function () {
                 $(':input', this).each(function() {
-                    var name = $(this).attr('name');
+                    var $input = $(this);
+                    var name = $input.attr('name');
                     var n = /(.*)(\d+)$/.exec(name);
-                    $(this).attr('name', n[1] + (Number(n[2]) + 1));
-                    if (this.value != '')
+                    $input.attr('name', n[1] + (Number(n[2]) + 1));
+                    if (this.value != '') {
                         this.value = '';
+                    }
+                    if ($input.attr('class') == "delete-search-field-button") {
+                        $input.click(function(ev) {
+                            ev.preventDefault();
+                            $(this).parent().parent().remove();
+                            return false;
+                        });                         
+                    }
+                    
                 });
-            });
             addEvent(newNode);
             $('.repeat', container).removeClass('repeat-selected');
             options.onReady.call(newNode);
