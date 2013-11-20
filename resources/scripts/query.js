@@ -34,11 +34,6 @@ $(function() {
         $("#results").pagination("option", "params", { mode: "list" });
         $("#results").pagination("option", "itemsPerPage", 10);
         $("#results").pagination("refresh");
-    });
-    $(".delete-search-field-button").click(function(ev) {
-        ev.preventDefault();
-        $(this).parent().parent().remove();
-        return false;
     });    
     pingSession();
     
@@ -72,6 +67,25 @@ $(document).ready(function(){
             }
         });
     });
+
+    $('#clear-search-fields').click(function(){
+        var form = $('#advanced-search-form > form');
+        $("td.operator select option:first-child", form).each(function() {
+            $(this).prop("selected", "selected");
+        });        
+        $("td.search-term input.ui-autocomplete-input", form).each(function() {
+            $(this).val('');
+        });
+        $("td.search-field select option:first-child", form).each(function() {
+            $(this).prop("selected", "selected");
+        });        
+    });
+    
+    $(".delete-search-field-button").click(function(ev) {
+        ev.preventDefault();
+        $(this).parent().parent().remove();
+        return false;
+    }); 
     
     bindAdditionalDialogTriggers();
     
