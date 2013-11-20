@@ -282,6 +282,7 @@
                     }
                     
                 });
+            });
             addEvent(newNode);
             $('.repeat', container).removeClass('repeat-selected');
             options.onReady.call(newNode);
