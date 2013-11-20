@@ -161,6 +161,9 @@ img {
 #query-panel .ui-autocomplete-input {
   width: 260px;
 }
+#advanced-search-form table tr:nth-child(2) td.delete-search-field-button-container input {
+    display: none;
+}
 #query-panel .search-form input {
   width: 800px;
 }
