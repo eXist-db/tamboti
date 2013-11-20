@@ -35,6 +35,11 @@ $(function() {
         $("#results").pagination("option", "itemsPerPage", 10);
         $("#results").pagination("refresh");
     });
+    $(".delete-search-field-button").click(function(ev) {
+        ev.preventDefault();
+        $(this).parent().parent().remove();
+        return false;
+    });    
     pingSession();
     
     $("#splash").fadeOut(1000);
