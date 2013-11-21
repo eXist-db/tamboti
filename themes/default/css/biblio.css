@@ -162,20 +162,17 @@ img {
   width: 260px;
 }
 #advanced-search-form table tr:nth-child(2) td.delete-search-field-button-container input {
-    display: none;
+  display: none;
+}
+#query-panel .search-form td input[type='image'] {
+  width: 22px;
+  margin-left: -12em;
 }
 #query-panel .search-form input {
   width: 800px;
 }
 #query-panel .search-form td input {
   width: 260px;
-}
-.delete-search-field-button-container {
-	width: 300px;
-    text-align: left;
-}
-#query-panel .search-form td input[type='image'] {
-  width: 22px;
 }
 #query-panel .advanced-search {
   display: inline;
@@ -308,18 +305,26 @@ span.readable .dynatree-title {
   /*KWIC in text extraction*/
 
 }
-.operator select,
-.search-field select {
+.search-form .search-field {
+  padding-left: .75em;
+}
+.search-form .search-field select {
   margin-left: .5em;
 }
-.operator select,
+.search-form .operator {
+  padding-right: .5em;
+}
+.search-form .operator select,
 .search-field select option {
   padding-left: .25em;
   /*needed in FF*/
 
 }
-.search-term {
+.search-form .search-term {
   width: 10em;
+}
+.search-form .label {
+  padding-right: .5em;
 }
 /*facets begin*/
 #filters {
