@@ -87,6 +87,15 @@ $(document).ready(function(){
         return false;
     }); 
     
+    $("td.search-term input").bind("keyup keypress", function(e) {
+        var code = e.keyCode || e.which; 
+        if (code  == 13) {
+            e.preventDefault();
+            $('#advanced-search').submit();
+            return false;
+        }
+    })
+    
     bindAdditionalDialogTriggers();
     
     hideCollectionActionButtons();
@@ -126,8 +135,6 @@ $(document).ready(function(){
   
     
 });
-
-
 
 
 function pingSession() {
