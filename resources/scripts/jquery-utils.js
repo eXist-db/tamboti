@@ -250,15 +250,7 @@
 
         $('.repeat', container).each(function() {
             addEvent($(this));
-        });
-        $('.ui-autocomplete-input', $('#advanced-search')).bind("keyup keypress", function(e) {
-            var code = e.keyCode || e.which; 
-      	  if (code  == 13) {
-              e.preventDefault();                  
-              $('#advanced-search').submit();
-      	    return false;
-      	  }
-        });        
+        });       
         $(trigger).click(function(ev) {
         	ev.preventDefault();
             var last = $('.repeat:last', container);
@@ -280,7 +272,16 @@
                             return false;
                         });                         
                     }
-                    
+                    if ($input.attr('class') == "ui-autocomplete-input") {
+                        $input.bind("keyup keypress", function(e) {
+                            var code = e.keyCode || e.which; 
+                            if (code  == 13) {
+                              e.preventDefault();                  
+                              $('#advanced-search').submit();
+                      	    return false;
+                      	  }
+                        });                        
+                    }                    
                 });
             });
             addEvent(newNode);
