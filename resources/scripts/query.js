@@ -94,7 +94,16 @@ $(document).ready(function(){
             $('#advanced-search').submit();
             return false;
         }
-    })
+    });
+    
+    $("#login-form input").bind("keyup keypress", function(e) {
+        var code = e.keyCode || e.which;
+        if (code  == 13) {
+            e.preventDefault();
+            $('#login-form').submit();
+            return false;
+        }
+    });    
     
     bindAdditionalDialogTriggers();
     
