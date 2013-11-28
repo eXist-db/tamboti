@@ -323,7 +323,10 @@ function toggleCollectionTree(show) {
 }
 
 function updateCollectionPaths(title, key) {
-    key = key.replace(/^\/db/, "");
+    key = key.replace(/^\//, "");
+    key = key.replace(/^db/, "");
+    key = key.replace(/\/commons\//, "/");
+    key = key.replace(/\/users\//, "/");
     
     //search forms
     var form = $('#simple-search-form');
