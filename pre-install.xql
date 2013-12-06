@@ -134,10 +134,10 @@ util:log($log-level, "Config: Done."),
 
 (: Create users and groups collections :)
 util:log($log-level, fn:concat("Config: Creating users '", $users-collection, "' and groups '", $groups-collection, "' collections")),
-    local:mkcol($db-root, $resources-collection-name, "rwxrwx--x"),
+    local:mkcol($db-root, $resources-collection-name, "rwxrwxr-x"),
     for $col in ($users-collection, $groups-collection) return
     (
-        local:mkcol($db-root, local:strip-prefix($col, fn:concat($db-root, "/")), "rwxrwx--x")
+        local:mkcol($db-root, local:strip-prefix($col, fn:concat($db-root, "/")), "rwxrwxr-x")
     ),
 util:log($log-level, "Config: Done."),
 
