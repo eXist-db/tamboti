@@ -55,25 +55,33 @@ declare variable $sociology-collection := fn:concat($commons-collection, "/", $s
 declare variable $exist-db-collection := fn:concat($commons-collection, "/", $samples-collection-name, "/", $exist-db-collection-name);
 (:declare variable $mads-collection := fn:concat($commons-collection, "/", $mads-collection-name);:)
 
-declare function local:mkcol-recursive($collection, $components) {
+declare function local:mkcol-recursive($collection, $components, $permissions as xs:string) {
     if (exists($components)) then
         let $newColl := concat($collection, "/", $components[1])
         return (
             xdb:create-collection($collection, $components[1]),
-            local:mkcol-recursive($newColl, subsequence($components, 2))
+            local:set-resource-properties(xs:anyURI($newColl), $permissions),
+            local:mkcol-recursive($newColl, subsequence($components, 2), $permissions)
         )
     else
         ()
 };
 
 (: Helper function to recursively create a collection hierarchy. :)
-declare function local:mkcol($collection, $path) {
-    local:mkcol-recursive($collection, tokenize($path, "/"))
+declare function local:mkcol($collection, $path, $permissions as xs:string) {
+    local:mkcol-recursive($collection, tokenize($path, "/"), $permissions)
 };
 
-declare function local:set-collection-resource-permissions($collection as xs:string, $owner as xs:string, $group as xs:string, $permissions as xs:int) {
-    for $resource in xdb:get-child-resources($collection) return
-        xdb:set-resource-permissions($collection, $resource, $owner, $group, $permissions)
+declare function local:set-resource-properties($resource-path as xs:anyURI, $permissions as xs:string) {
+    (
+        sm:chown($resource-path, $biblio-admin-user),
+        sm:chgrp($resource-path, $biblio-users-group),
+        sm:chmod($resource-path, $permissions)        
+    )
+};
+
+declare function local:set-resources-properties($collection-path as xs:anyURI, $permissions as xs:string) {
+    for $resource-name in xdb:get-child-resources($collection-path) return local:set-resource-properties(xs:anyURI(concat($collection-path, '/', $resource-name)), $permissions)
 };
 
 declare function local:strip-prefix($str as xs:string, $prefix as xs:string) as xs:string? {
@@ -95,9 +103,9 @@ util:log($log-level, "Security: Done."),
 
 (: Load collection.xconf documents :)
 util:log($log-level, "Config: Loading collection configuration ..."),
-    local:mkcol($config-collection, $editor-code-tables-collection),
+    local:mkcol($config-collection, $editor-code-tables-collection, "rwxr-xr-x"),
     xdb:store-files-from-pattern(fn:concat($config-collection, $editor-code-tables-collection), $dir, "data/xconf/code-tables/*.xconf"),
-    local:mkcol($config-collection, $resources-collection),
+    local:mkcol($config-collection, $resources-collection, "rwxr-xr-x"),
     xdb:store-files-from-pattern(fn:concat($config-collection, $resources-collection), $dir, "data/xconf/resources/*.xconf"),
     (:local:mkcol($config-collection, $mads-collection),:)
     (:xdb:store-files-from-pattern(fn:concat($config-collection, $mads-collection), $dir, "data/xconf/mads/*.xconf"),:) 
@@ -106,34 +114,30 @@ util:log($log-level, "Config: Done."),
 
 (: Create temp collection :)
 util:log($log-level, fn:concat("Config: Creating temp collection '", $temp-collection, "'...")),
-    local:mkcol($db-root, local:strip-prefix($temp-collection, fn:concat($db-root, "/"))),
-    xdb:set-collection-permissions($temp-collection, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0770, 8)),
+    local:mkcol($db-root, local:strip-prefix($temp-collection, fn:concat($db-root, "/")), "rwxrwx---"),
 util:log($log-level, "Config: Done."),
-
 
 (: Create resources/commons :)
 util:log($log-level, fn:concat("Config: Creating commons collection '", $commons-collection, "'...")),
     for $col in ($sociology-collection, $exist-db-collection(:, $mads-collection:)) return
     (
-        local:mkcol($db-root, local:strip-prefix($col, fn:concat($db-root, "/"))),
-        xdb:set-collection-permissions($col, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8))
+        local:mkcol($db-root, local:strip-prefix($col, fn:concat($db-root, "/")), "rwxrwxrwx")
     ),
     util:log($log-level, "...Config: Uploading samples data..."),
         xdb:store-files-from-pattern($sociology-collection, $dir, "data/sociology/*.xml"),
-        local:set-collection-resource-permissions($sociology-collection, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8)),
+        local:set-resources-properties($sociology-collection, "rwxrwxrwx"),
         xdb:store-files-from-pattern($exist-db-collection, $dir, "data/eXist/*.xml"),
-        local:set-collection-resource-permissions($exist-db-collection, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0755, 8)),
+        local:set-resources-properties($exist-db-collection, "rwxrwxrwx"),
     util:log($log-level, "...Config: Done Uploading samples data."),
 util:log($log-level, "Config: Done."), 
 
 
 (: Create users and groups collections :)
 util:log($log-level, fn:concat("Config: Creating users '", $users-collection, "' and groups '", $groups-collection, "' collections")),
-    local:mkcol($db-root, $resources-collection-name),
+    local:mkcol($db-root, $resources-collection-name, "rwxrwxr-x"),
     for $col in ($users-collection, $groups-collection) return
     (
-        local:mkcol($db-root, local:strip-prefix($col, fn:concat($db-root, "/"))),
-        xdb:set-collection-permissions($col, $biblio-admin-user, $biblio-users-group, util:base-to-integer(0771, 8))
+        local:mkcol($db-root, local:strip-prefix($col, fn:concat($db-root, "/")), "rwxrwxr-x")
     ),
 util:log($log-level, "Config: Done."),
 
