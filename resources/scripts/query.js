@@ -3,7 +3,7 @@ $(function() {
         loadIndexTerms();
         return false; 
     });
-    updateCollectionPathOutputs($("input[name = collection]", "#simple-search-form").val())
+    updateCollectionPathOutputs($("#simple-search-form input[name = 'render-collection-path']").val())
     initCollectionTree();
     
     galleries = new tamboti.galleries.Viewer($("#lightbox"));
@@ -139,7 +139,7 @@ $(document).ready(function(){
     $('a#upload-file-to-resource').click(function(){ 
     $('#upload-resource-id').empty();
     //$('#file-location-folder').empty();
-    //var collection = tamboti.currentCollection;
+    //var collection = getCurrentCollection();
     //$('#file-location-folder').val(collection);
     });
   
@@ -330,7 +330,9 @@ function toggleCollectionTree(show) {
 
 function updateCollectionPaths(title, key) {
     key = key.replace(/^\/db/, "");
-    tamboti.currentCollection = key;
+    
+    $("#simple-search-form input[name = collection]").val(key);
+    $("#advanced-search-form input[name = collection]").val(key);
     
     //search forms
     updateCollectionPathOutputs(key);
@@ -342,14 +344,18 @@ function updateCollectionPaths(title, key) {
     // $('#collection-create-resource').attr("href", "../edit/edit.xq?type=book-chapter&collection=" + key);
 }
 
+function getCurrentCollection() {
+    return "/db" + $("#simple-search-form input[name = collection]").val();
+}
+
 function updateCollectionPathOutputs(collectionPath) {
     collectionPath = collectionPath.replace(/^\//, "").replace(/\/commons\//, "/").replace(/\/users\//, "/");
-    $("input[name = collection]", "#simple-search-form").val(collectionPath);
-    $("input[name = collection]", "#advanced-search-form").val(collectionPath);
+    $("#simple-search-form input[name = 'render-collection-path']").val(collectionPath);
+    $("#advanced-search-form input[name = 'render-collection-path']").val(collectionPath);
 }
 
 function showHideCollectionControls() {
-    var collection = tamboti.currentCollection;
+    var collection = getCurrentCollection();
     
     var params = { action: "collection-relationship", collection: collection };
     $.post("checkuser.xql", params, function(data) {
@@ -438,13 +444,13 @@ function removeResource(dialog) {
     var params = { action: 'remove-resource', resource: resource };
     $.get("operations.xql", params, function (data) {
         dialog.dialog("close");
-        $(location).attr('href', 'index.html?reload=true&collection=' + tamboti.currentCollection);
+        $(location).attr('href', 'index.html?reload=true&collection=' + getCurrentCollection());
     });
 }
 
 function refreshResourceMoveList() { 
     
-    var collection = tamboti.currentCollection;
+    var collection = getCurrentCollection();
     
     //set the current collection on the form
     $("#move-resource-collection-path-label").html(collection);
@@ -491,7 +497,7 @@ function moveResource(dialog) {
  */
 function createCollection(dialog) {
     var name = $('#create-collection-form input[name = name]').val();
-    var collection = tamboti.currentCollection;
+    var collection = getCurrentCollection();
     var params = { action: 'create-collection', name: name, collection: collection };
     $.get("operations.xql", params, function (data) {
         
@@ -556,7 +562,7 @@ function refreshParentTreeNodeAndFocusOnChild(focusOnKey) {
 
 //called each time the collection/folder sharing dialog is opened
 function updateFileList() {
-   $('#uploadFileList').dataTable().fnReloadAjax("filelist.xql?collection=" + escape(tamboti.currentCollection));
+   $('#uploadFileList').dataTable().fnReloadAjax("filelist.xql?collection=" + escape(getCurrentCollection()));
 }
  
  /*
@@ -568,7 +574,7 @@ function updateFileList() {
 
 function renameCollection(dialog) {
     var name = $('#rename-collection-form input[name = name]').val();
-    var collection = tamboti.currentCollection;
+    var collection = getCurrentCollection();
     var params = { action: 'rename-collection', name: name, collection: collection };
     $.get("operations.xql", params, function (data) {
        
@@ -609,7 +615,7 @@ function refreshCollectionMoveList() {
  */
 function moveCollection(dialog) {
     var path = $('#move-collection-form select[name = path]').val();
-    var collection = tamboti.currentCollection;
+    var collection = getCurrentCollection();
     var params = { action: 'move-collection', path: path, collection: collection };
     $.get("operations.xql", params, function (data) {
         
@@ -637,7 +643,7 @@ function moveCollection(dialog) {
     Called when the user clicks on the "remove" button in the remove collection dialog.
  */
 function removeCollection(dialog) {
-    var collection = tamboti.currentCollection;
+    var collection = getCurrentCollection();
     var params = { action: 'remove-collection', collection: collection };
     $.get("operations.xql", params, function (data) {
         
@@ -671,13 +677,13 @@ function login() {
 }
 
 function newResource() {
-    var collection = tamboti.currentCollection;
+    var collection = getCurrentCollection();
     $("#new-resource-form input[name = collection]").val(collection);
     $("#new-resource-form").submit();
 }
 
 function newRelatedResource() {
-    var collection = tamboti.currentCollection;
+    var collection = getCurrentCollection();
     $("#add-related-form input[name = collection]").val(collection);
     $("#add-related-form").submit();
 }
@@ -706,7 +712,7 @@ function loadIndexTerms() {
 }
 
 function autocompleteCallback(node, params) {
-    params.collection = tamboti.currentCollection;
+    params.collection = getCurrentCollection();
     
     var name = node.attr('name');
     var select = node.parent().parent().find('select[name ^= field]');
@@ -823,7 +829,7 @@ function resultsLoaded(options) {
         ev.preventDefault();
         $('#upload-resource-id').html($(this).attr('href').substr(1));
         $('#file-upload-folder').empty();
-        var collection = tamboti.currentCollection;
+        var collection = getCurrentCollection();
         $('#upload-resource-folder').html(collection);
         //clean old  files
         emptyFileList();
@@ -895,11 +901,11 @@ function attachedDetailsRowCallback(nRow, aData, iDisplayIndex) {
     //var isWriteable = aData[3].indexOf("w") > -1;
     //add the checkbox, with action to perform an update on the server
     //var inpWriteableId = 'inpWriteable_' + iDisplayIndex;
-    //$('td:eq(3)', nRow).html('<input id="' + inpWriteableId + '" type="checkbox" value="true"' + (isWriteable ? ' checked="checked"' : '') + ' onclick="javascript: setAceWriteable(this,\'' + tamboti.currentCollection + '\',' + iDisplayIndex + ', this.checked);"/>');
+    //$('td:eq(3)', nRow).html('<input id="' + inpWriteableId + '" type="checkbox" value="true"' + (isWriteable ? ' checked="checked"' : '') + ' onclick="javascript: setAceWriteable(this,\'' + getCurrentCollection() + '\',' + iDisplayIndex + ', this.checked);"/>');
     
     //add a delete button, with action to perform an update on the server
     //var imgDeleteId = 'imgDelete_' + iDisplayIndex;
-    //$('td:eq(4)', nRow).html('<img id="' + imgDeleteId + '" alt="Delete Icon" src="theme/images/cross.png" onclick="javascript: removeAce(\'' + tamboti.currentCollection + '\',' + iDisplayIndex + ');"/>');
+    //$('td:eq(4)', nRow).html('<img id="' + imgDeleteId + '" alt="Delete Icon" src="theme/images/cross.png" onclick="javascript: removeAce(\'' + getCurrentCollection() + '\',' + iDisplayIndex + ');"/>');
     //add jQuery cick action to image to perform an update on the server
     
     return nRow;
@@ -907,7 +913,7 @@ function attachedDetailsRowCallback(nRow, aData, iDisplayIndex) {
 
 //called each time the collection/folder sharing dialog is opened
 function updateSharingDialog() {
-   $('#collectionSharingDetails').dataTable().fnReloadAjax("sharing.xql?collection=" + escape(tamboti.currentCollection));
+   $('#collectionSharingDetails').dataTable().fnReloadAjax("sharing.xql?collection=" + escape(getCurrentCollection()));
    
 }
 
@@ -923,7 +929,7 @@ function updateAttachmentDialog() {
     }
    else
     {
-     var collection = tamboti.currentCollection;
+     var collection = getCurrentCollection();
      $('#file-upload-folder').text(collection);
      //$('#attachedFilesDetails').dataTable().fnReloadAjax("sharing.xql?upload-folder="+escape(collection));
     }
@@ -1040,11 +1046,11 @@ function collectionSharingDetailsRowCallback(nRow, aData, iDisplayIndex) {
     var isWriteable = aData[3].indexOf("w") > -1;
     //add the checkbox, with action to perform an update on the server
     var inpWriteableId = 'inpWriteable_' + iDisplayIndex;
-    $('td:eq(3)', nRow).html('<input id="' + inpWriteableId + '" type="checkbox" value="true"' + (isWriteable ? ' checked="checked"' : '') + ' onclick="javascript: setAceWriteable(this,\'' + tamboti.currentCollection + '\',' + iDisplayIndex + ', this.checked);"/>');
+    $('td:eq(3)', nRow).html('<input id="' + inpWriteableId + '" type="checkbox" value="true"' + (isWriteable ? ' checked="checked"' : '') + ' onclick="javascript: setAceWriteable(this,\'' + getCurrentCollection() + '\',' + iDisplayIndex + ', this.checked);"/>');
     
     //add a delete button, with action to perform an update on the server
     var imgDeleteId = 'imgDelete_' + iDisplayIndex;
-    $('td:eq(4)', nRow).html('<img id="' + imgDeleteId + '" alt="Delete Icon" src="theme/images/cross.png" onclick="javascript: removeAce(\'' + tamboti.currentCollection + '\',' + iDisplayIndex + ');"/>');
+    $('td:eq(4)', nRow).html('<img id="' + imgDeleteId + '" alt="Delete Icon" src="theme/images/cross.png" onclick="javascript: removeAce(\'' + getCurrentCollection() + '\',' + iDisplayIndex + ');"/>');
     //add jQuery cick action to image to perform an update on the server
     
     return nRow;
@@ -1098,7 +1104,7 @@ function addUserToShare() {
                 $.ajax({
                     type: 'GET',
                     url: "operations.xql",
-                    data: "action=add-user-ace&collection=" + escape(tamboti.currentCollection) + "&username=" + escape($('#user-auto-list').val()),
+                    data: "action=add-user-ace&collection=" + escape(getCurrentCollection()) + "&username=" + escape($('#user-auto-list').val()),
                     success: function(data, status, xhr) {
                         
                         //3) add the row to the dataTable
@@ -1137,7 +1143,7 @@ function addProjectToShare() {
                 $.ajax({
                     type: 'GET',
                     url: "operations.xql",
-                    data: "action=add-group-ace&collection=" + escape(tamboti.currentCollection) + "&groupname=" + escape($('#project-auto-list').val()),
+                    data: "action=add-group-ace&collection=" + escape(getCurrentCollection()) + "&groupname=" + escape($('#project-auto-list').val()),
                     success: function(data, status, xhr) {
                         
                         //3) add the row to the dataTable
