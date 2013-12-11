@@ -14,7 +14,7 @@
                     <tr>
                         <td class="label">inside </td>
                         <td id="collection-path">
-                            <input class="biblio:collection-path collection-input" type="text" name="collection" readonly="true"/>
+                            <input class="biblio:collection-path collection-input" type="text" name="render-collection-path" readonly="true"/>
                         </td>
                         <td/>
                     </tr>
@@ -34,6 +34,7 @@
                 </table>
                 <input type="hidden" name="query-tabs" value="simple"/>
                 <input type="hidden" name="collection-tree" value="hidden"/>
+                <input type="hidden" name="collection" value=""/>
             </form>
         </jquery:tab>
         <jquery:tab id="advanced-search-form" label="Advanced Search">
@@ -48,7 +49,7 @@
                     <tr>
                         <td class="label">inside </td>
                         <td colspan="2">
-                            <input class="biblio:collection-path collection-input" type="text" name="collection" readonly="true"/>
+                            <input class="biblio:collection-path collection-input" type="text" name="render-collection-path" readonly="true"/>
                         </td>
                     </tr>
                     <tr>
@@ -88,6 +89,7 @@
                 </table>
                 <input type="hidden" name="query-tabs" value="advanced-search-form"/>
                 <input type="hidden" name="collection-tree" value="hidden"/>
+                <input type="hidden" name="collection" value=""/>
             </form>
         </jquery:tab>
         <jquery:tab id="query-history" label="Query History">
