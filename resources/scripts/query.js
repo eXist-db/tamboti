@@ -496,7 +496,7 @@ function moveResource(dialog) {
     Called when the user clicks on the "create" button in the create collection dialog.
  */
 function createCollection(dialog) {
-    var name = $('#create-collection-form input[name = name]').val();
+	var name = $("#new-collection-name").val();
     var collection = getCurrentCollection();
     var params = { action: 'create-collection', name: name, collection: collection };
     $.get("operations.xql", params, function (data) {
