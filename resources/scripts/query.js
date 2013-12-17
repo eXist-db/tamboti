@@ -119,6 +119,8 @@ $(document).ready(function(){
     
     //add new user to share event
     $('#add-new-user-to-share-button').click(function(){
+        //clear the textbox for user name
+        $('#user-auto-list').val("");    	
         $('#add-user-to-share-dialog').dialog('open');
     });
     
