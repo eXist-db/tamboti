@@ -164,15 +164,16 @@ img {
 #advanced-search-form table tr:nth-child(2) td.delete-search-field-button-container input {
   display: none;
 }
-#query-panel .search-form td input[type='image'] {
-  width: 22px;
-  margin-left: -12em;
-}
 #query-panel .search-form input {
   width: 800px;
 }
 #query-panel .search-form td input {
   width: 260px;
+}
+.delete-search-field-button {
+  height: 16px;    
+  width: 16px !important;
+  margin-left: -12em;
 }
 #query-panel .advanced-search {
   display: inline;
