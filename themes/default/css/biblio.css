@@ -488,7 +488,7 @@ span.readable .dynatree-title {
 #results li .icon:hover .icon-magnifier {
   display: block;
 }
-.detail-xml .magnify {
+.detail-xml .magnify, .paginate_button {
   cursor: pointer;
 }
 #results li.grid .icon {
