@@ -130,6 +130,8 @@ $(document).ready(function(){
     
     //add new project to share event
     $('#add-new-project-to-share-button').click(function(){
+        //clear the textbox for project name
+        $('#project-auto-list').val("");    	
         $('#add-project-to-share-dialog').dialog('open');
     });
     
