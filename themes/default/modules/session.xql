@@ -661,7 +661,7 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
      
      let $upload-button:=  
         if (not($item/vra:image/@id))
-            then <a class="upload-file-style"  directory="false" href="#{$id}" onclick="updateAttachmentDialog"><img title="Upload Attachment" src="theme/images/database_add.png" /> </a>
+            then <a class="upload-file-style"  directory="false" href="#{$id}" onclick="updateAttachmentDialog"><img title="Upload Image" src="theme/images/database_add.png" /> </a>
         else ()
     return
         <div class="actions-toolbar">{
