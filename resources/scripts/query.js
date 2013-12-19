@@ -1163,6 +1163,8 @@ function addProjectToShare() {
             
                         //4) close the dialog
                         $('#add-project-to-share-dialog').dialog('close');
+                        //(5) go to the last page
+                        $('#collectionSharingDetails').dataTable().fnPageChange("last");                        
                     },
                     error: function(xhr, status, error) {
                         alert("Could not create entry");
