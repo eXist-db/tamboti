@@ -147,7 +147,15 @@ $(document).ready(function(){
     //$('#file-location-folder').val(collection);
     });
   
-    
+    tamboti.checkDuplicateSharingUser = function(user) {
+        var users = $("#collectionSharingDetails tr td:nth-child(2)");
+        var userString = " ";
+        for (var i = 0, il = users.length; i < il; i++) {
+            userString += users[i].textContent + " ";
+        }
+        
+        return userString.indexOf(" " + user + " ") != -1;
+    };    
 });
 
 
@@ -1097,6 +1105,11 @@ function removeAce(collection, aceId) {
 
 //adds a user to a share
 function addUserToShare() {
+    //check if this is a duplicate user
+    if (tamboti.checkDuplicateSharingUser($('#user-auto-list').val())) {
+        alert("Duplicate entry!");
+        return;
+    }	
     //1) check this is a valid user otherwise show error
     $.ajax({
             type: 'GET',
