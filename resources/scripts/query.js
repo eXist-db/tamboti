@@ -147,15 +147,19 @@ $(document).ready(function(){
     //$('#file-location-folder').val(collection);
     });
   
-    tamboti.checkDuplicateSharingUser = function(user) {
-        var users = $("#collectionSharingDetails tr td:nth-child(2)");
-        var userString = " ";
-        for (var i = 0, il = users.length; i < il; i++) {
-            userString += users[i].textContent + " ";
+    tamboti.checkDuplicateSharingEntry = function(entryName, entryType) {
+        var entries = $("#collectionSharingDetails tr[data-entry-type = '" + entryType + "'] td:nth-child(2)");
+        var entriesString = " ";
+        for (var i = 0, il = entries.length; i < il; i++) {
+            entriesString += entries[i].textContent + " ";
+        }
+        if (entriesString.indexOf(" " + entryName + " ") != -1) {
+            alert("Duplicate entry!");
+            return true;
         }
         
-        return userString.indexOf(" " + user + " ") != -1;
-    };    
+        return false;
+    };
 });
 
 
@@ -1047,6 +1051,8 @@ function attachedDataTableReloadAjax(oSettings, sNewSource, fnCallback, bStandin
 
 //custom rendered for each row of the sharing dataTable
 function collectionSharingDetailsRowCallback(nRow, aData, iDisplayIndex) {
+    //add attribute defining the entry type
+    $(nRow).attr("data-entry-type", aData[0]);	
     //determine user or group icon for first column
     if(aData[0] == "USER") {
         $('td:eq(0)', nRow).html('<img alt="User Icon" src="theme/images/user.png"/>');
@@ -1106,8 +1112,7 @@ function removeAce(collection, aceId) {
 //adds a user to a share
 function addUserToShare() {
     //check if this is a duplicate user
-    if (tamboti.checkDuplicateSharingUser($('#user-auto-list').val())) {
-        alert("Duplicate entry!");
+    if (tamboti.checkDuplicateSharingEntry($("#user-auto-list").val(), "USER")) {
         return;
     }	
     //1) check this is a valid user otherwise show error
@@ -1151,6 +1156,9 @@ function addUserToShare() {
 
 //adds a group to a share
 function addProjectToShare() {
+    if (tamboti.checkDuplicateSharingEntry($("#project-auto-list").val(), "GROUP")) {
+        return;
+    }	
     //1) check this is a valid group otherwise show error
     $.ajax({
             type: 'GET',
