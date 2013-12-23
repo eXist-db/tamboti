@@ -155,7 +155,7 @@ declare function sharing:process-email-template($element as element(), $collecti
 };
 
 declare function sharing:get-shared-collection-roots($write-required as xs:boolean) as xs:string* {
-    if (fn:not((xmldb:get-current-user() eq 'guest'))) then
+    if (fn:not((security:get-user-credential-from-session()[1] eq 'guest'))) then
         for $child-collection in xmldb:get-child-collections($config:users-collection)
         let $child-collection-path := fn:concat($config:users-collection, "/", $child-collection) return
             for $user-subcollection in xmldb:get-child-collections($child-collection-path)

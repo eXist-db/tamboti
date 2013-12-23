@@ -15,7 +15,7 @@ declare namespace mods="http://www.loc.gov/mods/v3";
 
 declare variable $user := $config:dba-credentials[1];
 declare variable $userpass := $config:dba-credentials[2];
-declare variable $logged-user := xmldb:get-current-user();
+declare variable $logged-user := security:get-user-credential-from-session()[1];
 declare variable $rootdatacollection:='/db/resources/';
 declare variable $message := 'uploaded';
 declare variable $image_col := 'VRA_images';
@@ -385,4 +385,3 @@ let $result := for $x in (1 to count($data))
 :)
 return
  $result
-
