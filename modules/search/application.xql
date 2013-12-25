@@ -413,7 +413,7 @@ declare function biblio:form-from-query($node as node(), $params as element(para
                         </select>
                     </td>
                     <td class="delete-search-field-button-container">
-                        <input class="delete-search-field-button" title="Delete search field" type="image" name="deleteSearchFieldButton{$pos}" src="theme/images/delete.png" height="22" width="22" />                        
+                        <input class="delete-search-field-button" title="Delete search field" type="image" name="deleteSearchFieldButton{$pos}" src="theme/images/cross.png" />                        
                     </td>                    
                 </tr>
     )
