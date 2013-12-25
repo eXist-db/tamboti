@@ -119,6 +119,8 @@ $(document).ready(function(){
     
     //add new user to share event
     $('#add-new-user-to-share-button').click(function(){
+        //clear the textbox for user name
+        $('#user-auto-list').val("");    	
         $('#add-user-to-share-dialog').dialog('open');
     });
     
@@ -128,6 +130,8 @@ $(document).ready(function(){
     
     //add new project to share event
     $('#add-new-project-to-share-button').click(function(){
+        //clear the textbox for project name
+        $('#project-auto-list').val("");    	
         $('#add-project-to-share-dialog').dialog('open');
     });
     
@@ -143,7 +147,19 @@ $(document).ready(function(){
     //$('#file-location-folder').val(collection);
     });
   
-    
+    tamboti.checkDuplicateSharingEntry = function(entryName, entryType) {
+        var entries = $("#collectionSharingDetails tr[data-entry-type = '" + entryType + "'] td:nth-child(2)");
+        var entriesString = " ";
+        for (var i = 0, il = entries.length; i < il; i++) {
+            entriesString += entries[i].textContent + " ";
+        }
+        if (entriesString.indexOf(" " + entryName + " ") != -1) {
+            alert("Duplicate entry!");
+            return true;
+        }
+        
+        return false;
+    };
 });
 
 
@@ -1035,6 +1051,8 @@ function attachedDataTableReloadAjax(oSettings, sNewSource, fnCallback, bStandin
 
 //custom rendered for each row of the sharing dataTable
 function collectionSharingDetailsRowCallback(nRow, aData, iDisplayIndex) {
+    //add attribute defining the entry type
+    $(nRow).attr("data-entry-type", aData[0]);	
     //determine user or group icon for first column
     if(aData[0] == "USER") {
         $('td:eq(0)', nRow).html('<img alt="User Icon" src="theme/images/user.png"/>');
@@ -1093,6 +1111,10 @@ function removeAce(collection, aceId) {
 
 //adds a user to a share
 function addUserToShare() {
+    //check if this is a duplicate user
+    if (tamboti.checkDuplicateSharingEntry($("#user-auto-list").val(), "USER")) {
+        return;
+    }	
     //1) check this is a valid user otherwise show error
     $.ajax({
             type: 'GET',
@@ -1118,6 +1140,8 @@ function addUserToShare() {
             
                         //4) close the dialog
                         $('#add-user-to-share-dialog').dialog('close');
+                        //(5) go to the last page
+                        $('#collectionSharingDetails').dataTable().fnPageChange("last");                        
                     },
                     error: function(xhr, status, error) {
                         alert("Could not create entry");
@@ -1132,6 +1156,9 @@ function addUserToShare() {
 
 //adds a group to a share
 function addProjectToShare() {
+    if (tamboti.checkDuplicateSharingEntry($("#project-auto-list").val(), "GROUP")) {
+        return;
+    }	
     //1) check this is a valid group otherwise show error
     $.ajax({
             type: 'GET',
@@ -1157,6 +1184,8 @@ function addProjectToShare() {
             
                         //4) close the dialog
                         $('#add-project-to-share-dialog').dialog('close');
+                        //(5) go to the last page
+                        $('#collectionSharingDetails').dataTable().fnPageChange("last");                        
                     },
                     error: function(xhr, status, error) {
                         alert("Could not create entry");
