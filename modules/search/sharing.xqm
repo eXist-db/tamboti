@@ -2,7 +2,6 @@ xquery version "1.0";
 
 module namespace sharing = "http://exist-db.org/mods/sharing";
 
-import module namespace config = "http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace mail = "http://exist-db.org/xquery/mail";
 import module namespace security = "http://exist-db.org/mods/security" at "security.xqm";
 
@@ -198,5 +197,5 @@ declare function sharing:is-valid-user-for-share($username as xs:string) as xs:b
 
 declare function sharing:is-valid-group-for-share($groupname as xs:string) as xs:boolean
 {
-    $groupname != ("SYSTEM", "guest", $security:biblio-users-group)
+    $groupname != ("SYSTEM", "guest", $config:biblio-users-group)
 };

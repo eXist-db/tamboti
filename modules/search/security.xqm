@@ -12,7 +12,6 @@ declare variable $security:GUEST_CREDENTIALS := ("guest", "guest");
 declare variable $security:SESSION_USER_ATTRIBUTE := "biblio.user";
 declare variable $security:SESSION_PASSWORD_ATTRIBUTE := "biblio.password";
 
-declare variable $security:biblio-users-group := "biblio.users";
 declare variable $security:user-metadata-file := "security.metadata.xml";
 
 (:~
@@ -156,7 +155,7 @@ declare function security:create-home-collection($user as xs:string) as xs:strin
                     let $null := sm:chmod(xs:anyURI($collection-uri), "rwxr-xr-x"),
                     
                     (: set the group as biblio users group, so that other users can enumerate our sub-collections :)
-                    $null := sm:chgrp(xs:anyURI($collection-uri), $security:biblio-users-group),
+                    $null := sm:chgrp(xs:anyURI($collection-uri), $config:biblio-users-group),
                     
                     $null := security:create-user-metadata($collection-uri, $username) return
                         $collection-uri
@@ -438,7 +437,7 @@ declare function security:apply-parent-collection-permissions($resource as xs:an
 };
 
 declare function security:is-biblio-user($username as xs:string) as xs:boolean {
-    xmldb:get-user-groups($username) = $security:biblio-users-group
+    xmldb:get-user-groups($username) = $config:biblio-users-group
 };
 
 (:NB: below, commented out group-related functions, not used yet:)
@@ -543,7 +542,7 @@ declare function security:get-group-managers($group as xs:string) as xs:string*
 (:
 declare function security:get-other-biblio-users() as xs:string*
 {
-    security:get-group-members($security:biblio-users-group)[. ne security:get-user-credential-from-session()[1]]
+    security:get-group-members($config:biblio-users-group)[. ne security:get-user-credential-from-session()[1]]
 };
 
 declare function security:get-group($collection as xs:string) as xs:string?
