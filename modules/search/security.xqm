@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.0";
 
 module namespace security="http://exist-db.org/mods/security";
 
@@ -272,35 +272,7 @@ declare function security:get-group-members($group as xs:string) as xs:string*
     xmldb:get-users($group)
 };
 
-declare function security:set-resource-permissions($resource as xs:string, $owner as xs:string, $group as xs:string, $owner-read as xs:boolean, $owner-write as xs:boolean, $group-read as xs:boolean, $group-write as xs:boolean, $other-read as xs:boolean, $other-write as xs:boolean) as empty() {
-    
-    let $owner-username := if ($config:force-lower-case-usernames) then (fn:lower-case($owner)) else ($owner) 
-        return
-            let $permissions := fn:concat(
-                if ($owner-read) then ("r") else ("-"),
-                if ($owner-write) then ("w") else ("-"),
-                if ($owner-write) then ("x") else ("-"),
-                
-                if ($group-read) then ("r") else ("-"),
-                if ($group-write) then ("w") else ("-"),
-                if ($group-write) then ("x") else ("-"),
-                
-                if ($other-read) then ("r") else ("-"),
-                if ($other-write) then ("w") else ("-"),
-                if ($other-write) then ("x") else ("-")
-        ) return
-            let $collection-uri := fn:replace($resource, "(.*)/.*", "$1"),
-            $resource-uri := fn:replace($resource, ".*/", "") 
-                return
-                    xmldb:set-resource-permissions(
-                        $collection-uri, 
-                        $resource-uri, 
-                        $owner-username, 
-                        $group, 
-                        xmldb:string-to-permissions($permissions))
-};
-
-declare function security:set-resource-permissions-new($resource-path as xs:anyURI, $user-name as xs:string, $group-name as xs:string, $permissions as xs:string) as empty() {
+declare function security:set-resource-permissions($resource-path as xs:anyURI, $user-name as xs:string, $group-name as xs:string, $permissions as xs:string) as empty() {
     (
         sm:chown($resource-path, $user-name),
         sm:chgrp($resource-path, $group-name),
@@ -670,7 +642,7 @@ declare function security:set-group-can-read-resource($group-name as xs:string, 
            fn:replace($permissions, "(...)(.)(.....)", "$1-$3")
         )
         return
-            xmldb:set-resource-permissions($collection-uri, $resource-uri, xmldb:get-owner($collection-uri, $resource-uri), $group-name, xmldb:string-to-permissions($new-permissions)),
+            security:set-resource-permissions(xs:anyURI(concat($collection-uri, "/", $resource-uri)), xmldb:get-owner($collection-uri, $resource-uri), $group-name, $new-permissions),
             
             true()
 };

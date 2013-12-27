@@ -71,7 +71,7 @@ declare function local:mkcol($collection, $path, $permissions as xs:string) {
 
 declare function local:set-resource-properties($resource-path as xs:anyURI, $permissions as xs:string) {
     (
-        security:set-resource-permissions-new($resource-path, $config:biblio-admin-user, $config:biblio-users-group, $permissions)        
+        security:set-resource-permissions($resource-path, $config:biblio-admin-user, $config:biblio-users-group, $permissions)        
     )
 };
 
