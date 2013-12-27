@@ -536,7 +536,7 @@ declare function security:set-other-can-read-collection($collection, $read as xs
            fn:replace($permissions, "(......)(.)(..)", "$1-$3")
         )
         return
-            xmldb:set-collection-permissions($collection, xmldb:get-owner($collection), xmldb:get-group($collection), xmldb:string-to-permissions($new-permissions)),
+            security:set-resource-permissions(xs:anyURI($collection), xmldb:get-owner($collection), xmldb:get-group($collection), $new-permissions),
             
             true()
 };
@@ -550,7 +550,7 @@ declare function security:set-other-can-write-collection($collection, $write as 
            fn:replace($permissions, "(.......)(.)(.)", "$1-$3")
         )
         return        
-            xmldb:set-collection-permissions($collection, xmldb:get-owner($collection), xmldb:get-group($collection), xmldb:string-to-permissions($new-permissions)),
+            security:set-resource-permissions(xs:anyURI($collection), xmldb:get-owner($collection), xmldb:get-group($collection), $new-permissions),
             
             true()
 };
@@ -574,7 +574,7 @@ declare function security:set-group-can-read-collection($collection, $group as x
            fn:replace($permissions, "(...)(.)(.....)", "$1-$3")
         )
         return
-            xmldb:set-collection-permissions($collection, xmldb:get-owner($collection), $group, xmldb:string-to-permissions($new-permissions)),
+            security:set-resource-permissions(xs:anyURI($collection), xmldb:get-owner($collection), $group, $new-permissions),
             true()
 };
 
@@ -587,7 +587,7 @@ declare function security:set-group-can-write-collection($collection, $group as 
            fn:replace($permissions, "(....)(.)(....)", "$1-$3")
         )
         return
-            xmldb:set-collection-permissions($collection, xmldb:get-owner($collection), $group, xmldb:string-to-permissions($new-permissions)),
+            security:set-resource-permissions(xs:anyURI($collection), xmldb:get-owner($collection), $group, $new-permissions),
             true()
 };
 :)
