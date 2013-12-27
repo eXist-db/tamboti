@@ -20,6 +20,9 @@ declare variable $config:app-root :=
         substring-before($modulePath, "/modules")
 ;
 
+declare variable $config:commons-resources-permissions := "rwxrwxrwx";
+
+
 declare variable $config:mods-root := "/resources";
 declare variable $config:mods-root-minus-temp := ("/resources/commons","/resources/users", "/resources/groups");
 declare variable $config:mods-commons := fn:concat($config:mods-root, "/commons");

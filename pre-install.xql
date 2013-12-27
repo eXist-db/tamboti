@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.0";
 
 (:
     TODO KISS - This file should be removed in favour of a convention based approach + some small metadata for users/groups/permissions (added by AR)
@@ -6,6 +6,8 @@ xquery version "1.0";
 
 import module namespace util="http://exist-db.org/xquery/util";
 import module namespace xdb="http://exist-db.org/xquery/xmldb";
+import module namespace config="http://exist-db.org/mods/config" at "modules/config.xqm";
+import module namespace security="http://exist-db.org/mods/security" at "modules/search/security.xqm";
 
 (: The following external variables are set by the repo:deploy function :)
 
@@ -74,9 +76,7 @@ declare function local:mkcol($collection, $path, $permissions as xs:string) {
 
 declare function local:set-resource-properties($resource-path as xs:anyURI, $permissions as xs:string) {
     (
-        sm:chown($resource-path, $biblio-admin-user),
-        sm:chgrp($resource-path, $biblio-users-group),
-        sm:chmod($resource-path, $permissions)        
+        security:set-resource-permissions-new($resource-path, $biblio-admin-user, $biblio-users-group, $permissions)        
     )
 };
 
@@ -121,13 +121,13 @@ util:log($log-level, "Config: Done."),
 util:log($log-level, fn:concat("Config: Creating commons collection '", $commons-collection, "'...")),
     for $col in ($sociology-collection, $exist-db-collection(:, $mads-collection:)) return
     (
-        local:mkcol($db-root, local:strip-prefix($col, fn:concat($db-root, "/")), "rwxrwxrwx")
+        local:mkcol($db-root, local:strip-prefix($col, fn:concat($db-root, "/")), $config:commons-resources-permissions)
     ),
     util:log($log-level, "...Config: Uploading samples data..."),
         xdb:store-files-from-pattern($sociology-collection, $dir, "data/sociology/*.xml"),
-        local:set-resources-properties($sociology-collection, "rwxrwxrwx"),
+        local:set-resources-properties($sociology-collection, $config:commons-resources-permissions),
         xdb:store-files-from-pattern($exist-db-collection, $dir, "data/eXist/*.xml"),
-        local:set-resources-properties($exist-db-collection, "rwxrwxrwx"),
+        local:set-resources-properties($exist-db-collection, $config:commons-resources-permissions),
     util:log($log-level, "...Config: Done Uploading samples data."),
 util:log($log-level, "Config: Done."), 
 
