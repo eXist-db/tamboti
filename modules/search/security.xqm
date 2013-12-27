@@ -301,6 +301,14 @@ declare function security:set-resource-permissions($resource as xs:string, $owne
                         xmldb:string-to-permissions($permissions))
 };
 
+declare function security:set-resource-permissions-new($resource-path as xs:anyURI, $user-name as xs:string, $group-name as xs:string, $permissions as xs:string) as empty() {
+    (
+        sm:chown($resource-path, $user-name),
+        sm:chgrp($resource-path, $group-name),
+        sm:chmod($resource-path, $permissions)        
+    )
+};
+
 declare function security:set-ace-writeable($resource as xs:anyURI, $id as xs:int, $is-writeable as xs:boolean) as xs:boolean {
     let $permissions := sm:get-permissions($resource),
         $ace := $permissions/sm:permission/sm:acl/sm:ace[xs:int(@index) eq $id] return
