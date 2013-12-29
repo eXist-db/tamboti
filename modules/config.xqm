@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.0";
 
 module namespace config="http://exist-db.org/mods/config";
 
@@ -25,7 +25,7 @@ declare variable $config:biblio-admin-user := "editor";
 declare variable $config:biblio-users-group := "biblio.users";
 
 (:~ Various permissions :)
-declare variable $config:commons-resources-permissions := "rwxrwxrwx";
+declare variable $config:commons-resources-permissions := "rwxrwxr-x";
 
 declare variable $config:mods-root := "/resources";
 declare variable $config:mods-root-minus-temp := ("/resources/commons","/resources/users", "/resources/groups");
