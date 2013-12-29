@@ -254,7 +254,7 @@ declare function local:empty() {
         local:get-attached-files(request:get-parameter("file",()))
         )
     else if(request:get-parameter("upload-folder",())) then (
-        local:resources(request:get-parameter("upload-folder",()),xmldb:get-current-user())
+        local:resources(request:get-parameter("upload-folder",()),security:get-user-credential-from-session()[1])
         )
     else
         local:empty()

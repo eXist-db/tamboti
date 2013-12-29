@@ -132,7 +132,7 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
             
             (: group collection :)
             $has-group-children := not(empty(sharing:get-shared-collection-roots(false()))),
-            $group-json := if (fn:not((xmldb:get-current-user() eq 'guest'))) then col:create-tree-node("Groups", $config:groups-collection, true(), $groups-folder-icon, "Groups", false(), (), false(), $has-group-children, ()) else (),
+            $group-json := if (fn:not((security:get-user-credential-from-session()[1] eq 'guest'))) then col:create-tree-node("Groups", $config:groups-collection, true(), $groups-folder-icon, "Groups", false(), (), false(), $has-group-children, ()) else (),
             
             (: commons collections :)
             $public-json :=
@@ -205,7 +205,7 @@ declare function col:get-collection($collection-path as xs:string) as element(js
         
         $tooltip := 
             if($shared-with)then
-                if (fn:not((xmldb:get-current-user() eq 'guest'))) then 
+                if (fn:not((security:get-user-credential-from-session()[1] eq 'guest'))) then 
                 fn:concat("Shared With: ", $shared-with)
                 else ()
             else()
@@ -231,7 +231,7 @@ declare function col:get-collection($collection-path as xs:string, $explicit-chi
         
         $tooltip := 
             if($shared-with)then
-                if (fn:not((xmldb:get-current-user() eq 'guest'))) then
+                if (fn:not((security:get-user-credential-from-session()[1] eq 'guest'))) then
                 fn:concat("Shared With: ", $shared-with)
                 else()
             else()
