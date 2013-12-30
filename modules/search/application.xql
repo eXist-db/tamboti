@@ -1155,7 +1155,7 @@ declare function biblio:resource-types($node as node(), $params as element(param
 declare function biblio:optimize-trigger($node as node(), $params as element(parameters)?, $model as item()*) {
     let $user := request:get-attribute("xquery.user")
     return
-        if (xmldb:is-admin-user($user))
+        if (sm:is-dba($user))
         then <a id="optimize-trigger" href="#">Create custom indexes for sorting</a>
         else ()
 };

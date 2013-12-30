@@ -312,7 +312,7 @@ declare function op:get-move-folder-list($chosen-collection as xs:anyURI) as ele
             (:let $log := util:log("DEBUG", ("##$shared): ", sharing:get-shared-collection-roots(true()))):)
 
                 let $display-path := substring-after($path, '/db/')
-                let $user := xmldb:get-current-user()
+                let $user := security:get-user-credential-from-session()[1]
                 let $display-path := replace($path, concat('users/', $user), 'Home')
                 order by $display-path
             return

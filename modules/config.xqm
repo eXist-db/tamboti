@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.0";
 
 module namespace config="http://exist-db.org/mods/config";
 
@@ -19,6 +19,13 @@ declare variable $config:app-root :=
     return
         substring-before($modulePath, "/modules")
 ;
+
+(:~ Biblio security - admin user and users group :)
+declare variable $config:biblio-admin-user := "editor";
+declare variable $config:biblio-users-group := "biblio.users";
+
+(:~ Various permissions :)
+declare variable $config:commons-resources-permissions := "rwxrwxr-x";
 
 declare variable $config:mods-root := "/resources";
 declare variable $config:mods-root-minus-temp := ("/resources/commons","/resources/users", "/resources/groups");
@@ -77,7 +84,7 @@ declare function config:rewrite-username($username as xs:string) as xs:string {
         $username
     return
     
-        if(fn:ends-with(fn:lower-case($username), fn:concat("@", $config:enforced-realm-id)) or fn:lower-case($username) = ("admin", "editor", "guest","testuser1","testuser2","testuser3")) then
+        if(fn:ends-with(fn:lower-case($username), fn:concat("@", $config:enforced-realm-id)) or fn:lower-case($username) = ("admin", $config:biblio-admin-user, "guest","testuser1","testuser2","testuser3")) then
             $username
         else
             fn:concat($username, "@", $config:enforced-realm-id)

@@ -74,7 +74,7 @@ declare function local:create-new-record($id as xs:string, $type-request as xs:s
     (:If the record is created in a collection inside commons, it should be visible to all.:)
     (:let $null := 
         if (contains($target-collection, "/commons/")) 
-        then xmldb:set-resource-permissions($config:mods-temp-collection, $doc-name, "editor", "biblio.users", xmldb:string-to-permissions("rwxrwxr-x"))
+        then security:set-resource-permissions(xs:anyURI(concat($config:mods-temp-collection, "/", $doc-name)), $config:biblio-admin-user, $config:biblio-users-group, $config:commons-resources-permissions)
         else ():)
     
     (:Get the remaining parameters that are to be stored, in addition to transliterationOfResource (which was fetched above).:)
