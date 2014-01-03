@@ -40,7 +40,8 @@ declare variable $not-writeable-folder-icon := "../skin/ltFld.locked.png";
 declare variable $writeable-and-shared-folder-icon := "../skin/ltFld.page.link.png";
 declare variable $not-writeable-and-shared-folder-icon := "../skin/ltFld.locked.link.png";
 declare variable $commons-folder-icon := "../skin/ltFld.png";
-declare variable $collections-to-skip := ('VRA_images');
+declare variable $collections-to-skip-for-all := ('VRA_images');
+declare variable $collections-to-skip-for-guest := ('HERA_Single', 'Ethnografische_Fotografie', 'Popular_Culture', 'Urban_Anthropology');
 
 (:~
 : Outputs details about a collection as a tree-node
@@ -132,7 +133,10 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
             
             (: group collection :)
             $has-group-children := not(empty(sharing:get-shared-collection-roots(false()))),
-            $group-json := if (fn:not((security:get-user-credential-from-session()[1] eq 'guest'))) then col:create-tree-node("Groups", $config:groups-collection, true(), $groups-folder-icon, "Groups", false(), (), false(), $has-group-children, ()) else (),
+            $group-json := 
+                if (security:get-user-credential-from-session()[1] eq 'guest') 
+                then ()
+                else col:create-tree-node("Groups", $config:groups-collection, true(), $groups-folder-icon, "Groups", false(), (), false(), $has-group-children, ()),
             
             (: commons collections :)
             $public-json :=
@@ -202,21 +206,25 @@ declare function col:get-collection($collection-path as xs:string) as element(js
         $can-write := security:can-write-collection($collection-path),
         $has-children := not(empty(xmldb:get-child-collections($collection-path))),
         $shared-with := sharing:get-shared-with($collection-path),
-        
         $tooltip := 
             if($shared-with)then
-                if (fn:not((security:get-user-credential-from-session()[1] eq 'guest'))) then 
-                fn:concat("Shared With: ", $shared-with)
-                else ()
+                if (security:get-user-credential-from-session()[1] eq 'guest') 
+                then () 
+                else fn:concat("Shared With: ", $shared-with)
             else()
         return
-        if ($name = $collections-to-skip) then () else
-        (: output the collection :)
-            <json:value>
-            {
-                col:create-tree-node($name, $collection-path, true(), (), $tooltip, $can-write, (), false(), $has-children, ())/child::node()
-            }
-            </json:value>
+            if ($name = $collections-to-skip-for-guest and security:get-user-credential-from-session()[1] eq 'guest') 
+            then () 
+            else
+                if ($name = $collections-to-skip-for-all) 
+                then () 
+                else
+                    (: output the collection name :)
+                    <json:value>
+                    {
+                        col:create-tree-node($name, $collection-path, true(), (), $tooltip, $can-write, (), false(), $has-children, ())/child::node()
+                    }
+                    </json:value>
     else()
 };
 
@@ -231,9 +239,9 @@ declare function col:get-collection($collection-path as xs:string, $explicit-chi
         
         $tooltip := 
             if($shared-with)then
-                if (fn:not((security:get-user-credential-from-session()[1] eq 'guest'))) then
-                fn:concat("Shared With: ", $shared-with)
-                else()
+                if (security:get-user-credential-from-session()[1] eq 'guest') 
+                then ()
+                else fn:concat("Shared With: ", $shared-with)
             else()
         return
             (: output the collection :)
