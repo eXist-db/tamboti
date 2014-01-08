@@ -601,7 +601,7 @@ declare function security:set-group-can-write-collection($collection, $group as 
 declare function security:create-group($group-name as xs:string, $group-members as xs:string*) as xs:boolean
 {       
     (: create the group, currently logged in user will be the groups manager :)
-    if (xmldb:create-group($group-name, security:get-user-credential-from-session()[1])) then
+    if (sm:create-group($group-name, security:get-user-credential-from-session()[1], "")) then
     (
         (: add members to group :)
         let $add-results :=
