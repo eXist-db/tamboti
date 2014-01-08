@@ -2,6 +2,7 @@ xquery version "1.0";
 
 module namespace sharing = "http://exist-db.org/mods/sharing";
 
+import module namespace config = "http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace mail = "http://exist-db.org/xquery/mail";
 import module namespace security = "http://exist-db.org/mods/security" at "security.xqm";
 
@@ -154,22 +155,24 @@ declare function sharing:process-email-template($element as element(), $collecti
 };
 
 declare function sharing:get-shared-collection-roots($write-required as xs:boolean) as xs:string* {
-    if (fn:not((security:get-user-credential-from-session()[1] eq 'guest'))) then
-        for $child-collection in xmldb:get-child-collections($config:users-collection)
-        let $child-collection-path := fn:concat($config:users-collection, "/", $child-collection) return
-            for $user-subcollection in xmldb:get-child-collections($child-collection-path)
-            let $user-subcollection-path := fn:concat($child-collection-path, "/", $user-subcollection) return
-                
-                if($write-required)then
-                    if(security:can-write-collection($user-subcollection-path))then
-                        $user-subcollection-path
-                    else()
-                else
-                    if(security:can-read-collection($user-subcollection-path))then
-                        $user-subcollection-path
-                    else()
-    else()
-};
+        if (security:get-user-credential-from-session()[1] eq 'guest') 
+        then ()
+        else
+            for $child-collection in xmldb:get-child-collections($config:users-collection)
+            let $child-collection-path := fn:concat($config:users-collection, "/", $child-collection) return
+                for $user-subcollection in xmldb:get-child-collections($child-collection-path)
+                let $user-subcollection-path := fn:concat($child-collection-path, "/", $user-subcollection) return
+                    
+                    if($write-required)then
+                        if(security:can-write-collection($user-subcollection-path))then
+                            $user-subcollection-path
+                        else()
+                    else
+                        if(security:can-read-collection($user-subcollection-path))then
+                            $user-subcollection-path
+                        else()
+        
+    };
 
 declare function sharing:get-shared-with($collection-path as xs:string) as xs:string* {
     let $permissions := sm:get-permissions(xs:anyURI($collection-path))/sm:permission,
@@ -183,8 +186,7 @@ declare function sharing:get-shared-with($collection-path as xs:string) as xs:st
             "Anyone"
         else(),
         for $ace in $permissions/sm:acl/sm:ace[@access_type eq "ALLOWED"] return
-            (:sm:get-account-metadata($ace/@who, xs:anyURI("http://axschema.org/namePerson")):)
-            $ace/@who
+            sm:get-account-metadata($ace/@who, xs:anyURI("http://axschema.org/namePerson"))
         ),
         ", "
     )
@@ -197,5 +199,5 @@ declare function sharing:is-valid-user-for-share($username as xs:string) as xs:b
 
 declare function sharing:is-valid-group-for-share($groupname as xs:string) as xs:boolean
 {
-    $groupname != ("SYSTEM", "guest", $config:biblio-users-group)
+    $groupname != ("SYSTEM", "guest", $security:biblio-users-group)
 };
