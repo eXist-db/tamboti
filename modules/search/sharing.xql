@@ -116,9 +116,9 @@ declare function local:resources($collection as xs:string, $user as xs:string) {
                             xmldb:get-owner($collection, $resource)
                     let $group :=
                         if ($isCollection) then
-                            xmldb:get-group($path)
+                            security:get-group($path)
                         else
-                            xmldb:get-group($collection, $resource)
+                        	security:get-group(concat($collection, "/", $resource))
                     let $lastMod := 
                         let $date :=
                             if ($isCollection) then

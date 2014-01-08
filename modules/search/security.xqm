@@ -517,12 +517,9 @@ declare function security:get-other-biblio-users() as xs:string*
     security:get-group-members($config:biblio-users-group)[. ne security:get-user-credential-from-session()[1]]
 };
 
-declare function security:get-group($collection as xs:string) as xs:string?
+declare function security:get-group($path as xs:string) as xs:string
 {
-    if (xmldb:collection-available($collection)) then
-    (
-        xmldb:get-group($collection)
-    ) else ()
+	data(sm:get-permissions(xs:anyURI($path))/element()/@group)
 };
 :)
 
@@ -536,7 +533,7 @@ declare function security:set-other-can-read-collection($collection, $read as xs
            fn:replace($permissions, "(......)(.)(..)", "$1-$3")
         )
         return
-            security:set-resource-permissions(xs:anyURI($collection), xmldb:get-owner($collection), xmldb:get-group($collection), $new-permissions),
+            security:set-resource-permissions(xs:anyURI($collection), xmldb:get-owner($collection), security:get-group($collection), $new-permissions),
             
             true()
 };
@@ -550,19 +547,19 @@ declare function security:set-other-can-write-collection($collection, $write as 
            fn:replace($permissions, "(.......)(.)(.)", "$1-$3")
         )
         return        
-            security:set-resource-permissions(xs:anyURI($collection), xmldb:get-owner($collection), xmldb:get-group($collection), $new-permissions),
+            security:set-resource-permissions(xs:anyURI($collection), xmldb:get-owner($collection), security:get-group($collection), $new-permissions),
             
             true()
 };
 
 declare function security:set-group-can-read-collection($collection, $read as xs:boolean) as xs:boolean
 {
-    security:set-group-can-read-collection($collection, xmldb:get-group($collection), $read)
+    security:set-group-can-read-collection($collection, security:get-group($collection), $read)
 };
 
 declare function security:set-group-can-write-collection($collection, $write as xs:boolean) as xs:boolean
 {
-    security:set-group-can-write-collection($collection, xmldb:get-group($collection), $write)
+    security:set-group-can-write-collection($collection, security:get-group($collection), $write)
 };
 
 declare function security:set-group-can-read-collection($collection, $group as xs:string, $read as xs:boolean) as xs:boolean
@@ -667,7 +664,7 @@ declare function security:find-collections-with-group($collection-path as xs:str
 	for $child-collection in xmldb:get-child-collections($collection-path)
 	let $child-collection-path := fn:concat($collection-path, "/", $child-collection) return
 		(
-			if (xmldb:get-group($child-collection-path) eq $group) then (
+			if (security:get-group($child-collection-path) eq $group) then (
 				$child-collection-path
 			) else (),
 			security:find-collections-with-group($child-collection-path, $group)
