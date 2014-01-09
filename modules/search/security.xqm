@@ -630,7 +630,7 @@ declare function security:add-user-to-group($username as xs:string, $group-name 
 
 declare function security:remove-user-from-group($username as xs:string, $group-name as xs:string) as xs:boolean
 {
-    xmldb:remove-user-from-group($username, $group-name)
+    sm:remove-group-member($group-name, $username)
 };
 :)
 
