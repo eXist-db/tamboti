@@ -35,9 +35,7 @@ as xs:string
 declare function local:generate-vra-image($uuid, $file-uuid, $title, $workrecord)
 {
     let $vra-content :=
-                    <vra xmlns="http://www.vraweb.org/vracore4.htm" xmlns:ext="http://exist-db.org/vra/extension"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://www.vraweb.org/vracore4.htm
-    http://cluster-schemas.uni-hd.de/vra-strictCluster.xsd">
+                    <vra xmlns="http://www.vraweb.org/vracore4.htm" xmlns:ext="http://exist-db.org/vra/extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vraweb.org/vracore4.htm http://cluster-schemas.uni-hd.de/vra-strictCluster.xsd">
                  <image id="{ $uuid }" source="Tamboti" refid="" href="{ $file-uuid }">
                      <titleSet><display/><title type="generalView">
         { xmldb:decode(concat('Image record ', $title)) }</title></titleSet>
@@ -200,7 +198,7 @@ let $add :=
         if ($parent_type eq 'mods')
         then
             let $mods-insert := 
-                <mods:relatedItem  xmlns:mods="http://www.loc.gov/mods/v3" type="constituent">
+                <mods:relatedItem type="constituent">
                     <mods:typeOfResource>still image</mods:typeOfResource>
                     <mods:location>
                         <mods:url displayLabel="Illustration" access="preview">{$myuuid}</mods:url>
@@ -284,7 +282,7 @@ let $result := for $x in (1 to count($data))
                             then
                                 let $work_uuid := concat('w_', util:uuid())
                                 let $vra-work-xml := 
-                                    <vra xmlns="http://www.vraweb.org/vracore4.htm" xmlns:hra="http://cluster-schemas.uni-hd.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vraweb.org/vracore4.htm http://cluster-schemas.uni-hd.de/vra-strictCluster.xsd">
+                                    <vra xmlns="http://www.vraweb.org/vracore4.htm" xmlns:ext="http://exist-db.org/vra/extension" xmlns:hra="http://cluster-schemas.uni-hd.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.vraweb.org/vracore4.htm http://cluster-schemas.uni-hd.de/vra-strictCluster.xsd">
                                         <work id="{$work_uuid}" source="Kurs" refid="{$collection_uuid}">
                                         <titleSet>
                                             <display/>
