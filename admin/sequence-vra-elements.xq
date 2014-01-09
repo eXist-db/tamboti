@@ -1,9 +1,11 @@
 xquery version "3.0";
 
-(: This functions reorders VRA elements in the required sequence; http://www.loc.gov/standards/vracore/vra.xsd. :)
+(: This functions reorders VRA elements in the required order. :)
 
 declare namespace in-mem-ops = "http://exist-db.org/apps/mopane/in-mem-ops";
 declare namespace vra="http://www.vraweb.org/vracore4.htm";
+
+declare variable $out-collection := 'xmldb:exist:///db/test/out';
 
 declare function in-mem-ops:change-elements(
     $node as node(), 
@@ -96,11 +98,13 @@ declare function in-mem-ops:change-elements(
             else $node
 };
 
-let $doc := doc('/db/test/in/vra-record.xml')
 
-let $wrapper := in-mem-ops:change-elements($doc, (), 'remove', ('agentSet', 'culturalContextSet', 'dateSet', 'descriptionSet', 'inscriptionSet', 'locationSet', 'materialSet', 'measurementsSet', 'relationSet', 'rightsSet', 'sourceSet', 'stateEditionSet', 'stylePeriodSet', 'subjectSet', 'techniqueSet', 'textrefSet', 'titleSet', 'worktypeSet'))
+let $in-collection := collection('/db/test/in')
 
-let $contents :=
+return
+    for $doc in $in-collection/*
+    let $wrapper := in-mem-ops:change-elements($doc, (), 'remove', ('agentSet', 'culturalContextSet', 'dateSet', 'descriptionSet', 'inscriptionSet', 'locationSet', 'materialSet', 'measurementsSet', 'relationSet', 'rightsSet', 'sourceSet', 'stateEditionSet', 'stylePeriodSet', 'subjectSet', 'techniqueSet', 'textrefSet', 'titleSet', 'worktypeSet'))
+    let $contents :=
     (
     $doc//vra:agentSet,
     $doc//vra:culturalContextSet,
@@ -121,5 +125,7 @@ let $contents :=
     $doc//vra:titleSet,
     $doc//vra:worktypeSet
     )
-    
-return in-mem-ops:change-elements($wrapper, $contents, 'insert-as-first-child', 'work')
+
+let $vra-uuid := $doc/vra:image/@id/string()
+let $doc := in-mem-ops:change-elements($wrapper, $contents, 'insert-as-first-child', ('work', 'image'))
+    return xmldb:store($out-collection, concat($vra-uuid, ".xml"), $doc)
