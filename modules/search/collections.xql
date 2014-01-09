@@ -40,7 +40,7 @@ declare variable $not-writeable-folder-icon := "../skin/ltFld.locked.png";
 declare variable $writeable-and-shared-folder-icon := "../skin/ltFld.page.link.png";
 declare variable $not-writeable-and-shared-folder-icon := "../skin/ltFld.locked.link.png";
 declare variable $commons-folder-icon := "../skin/ltFld.png";
-declare variable $collections-to-skip-for-all := ('VRA_images');
+declare variable $collections-to-skip-for-all := ('VRA_images', 'VRA_', 'MODS_');
 declare variable $collections-to-skip-for-guest := ('HERA_Single', 'Ethnografische_Fotografie', 'Popular_Culture', 'Urban_Anthropology');
 
 (:~
