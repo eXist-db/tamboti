@@ -77,8 +77,7 @@ declare function security:store-user-credential-in-session($user as xs:string, $
 : @return The sequence (username as xs:string, password as xs:string)
 : If there is no entry in the session, then the guest account credentials are returned
 :)
-declare function security:get-user-credential-from-session() as xs:string+
-{
+declare function security:get-user-credential-from-session() as xs:string+ {
     let $user := session:get-attribute($security:SESSION_USER_ATTRIBUTE) 
         return
             if ($user) then
@@ -101,8 +100,7 @@ declare function security:get-email-address-for-user($username as xs:string) as 
     sm:get-account-metadata($username, xs:anyURI("http://axschema.org/contact/email"))
 };
 
-declare function security:get-human-name-for-user($username as xs:string)
-as xs:string?
+declare function security:get-human-name-for-user($username as xs:string) as xs:string?
 {
     let $first := sm:get-account-metadata($username, xs:anyURI("http://axschema.org/namePerson/first"))
         return
@@ -255,7 +253,7 @@ declare function security:is-collection-owner($user as xs:string, $collection as
     let $username := if ($config:force-lower-case-usernames) then (fn:lower-case($user)) else ($user) 
         return
             if (xmldb:collection-available($collection)) then
-                let $owner := xmldb:get-owner($collection) return
+                let $owner := security:get-owner($collection) return
                     $username eq $owner
             else
                 false()
@@ -412,6 +410,16 @@ declare function security:is-biblio-user($username as xs:string) as xs:boolean {
     xmldb:get-user-groups($username) = $config:biblio-users-group
 };
 
+declare function security:get-owner($path as xs:string) as xs:string
+{
+	data(sm:get-permissions(xs:anyURI($path))/sm:permission/@owner)
+};
+
+declare function security:get-group($path as xs:string) as xs:string
+{
+	data(sm:get-permissions(xs:anyURI($path))/sm:permission/@group)
+};
+
 (:NB: below, commented out group-related functions, not used yet:)
 
 (:~
@@ -516,11 +524,6 @@ declare function security:get-other-biblio-users() as xs:string*
 {
     security:get-group-members($config:biblio-users-group)[. ne security:get-user-credential-from-session()[1]]
 };
-
-declare function security:get-group($path as xs:string) as xs:string
-{
-	data(sm:get-permissions(xs:anyURI($path))/element()/@group)
-};
 :)
 
 (:
@@ -533,7 +536,7 @@ declare function security:set-other-can-read-collection($collection, $read as xs
            fn:replace($permissions, "(......)(.)(..)", "$1-$3")
         )
         return
-            security:set-resource-permissions(xs:anyURI($collection), xmldb:get-owner($collection), security:get-group($collection), $new-permissions),
+            security:set-resource-permissions(xs:anyURI($collection), security:get-owner($collection), security:get-group($collection), $new-permissions),
             
             true()
 };
@@ -547,7 +550,7 @@ declare function security:set-other-can-write-collection($collection, $write as 
            fn:replace($permissions, "(.......)(.)(.)", "$1-$3")
         )
         return        
-            security:set-resource-permissions(xs:anyURI($collection), xmldb:get-owner($collection), security:get-group($collection), $new-permissions),
+            security:set-resource-permissions(xs:anyURI($collection), security:get-owner($collection), security:get-group($collection), $new-permissions),
             
             true()
 };
@@ -571,7 +574,7 @@ declare function security:set-group-can-read-collection($collection, $group as x
            fn:replace($permissions, "(...)(.)(.....)", "$1-$3")
         )
         return
-            security:set-resource-permissions(xs:anyURI($collection), xmldb:get-owner($collection), $group, $new-permissions),
+            security:set-resource-permissions(xs:anyURI($collection), security:get-owner($collection), $group, $new-permissions),
             true()
 };
 
@@ -584,7 +587,7 @@ declare function security:set-group-can-write-collection($collection, $group as 
            fn:replace($permissions, "(....)(.)(....)", "$1-$3")
         )
         return
-            security:set-resource-permissions(xs:anyURI($collection), xmldb:get-owner($collection), $group, $new-permissions),
+            security:set-resource-permissions(xs:anyURI($collection), security:get-owner($collection), $group, $new-permissions),
             true()
 };
 :)
@@ -639,7 +642,7 @@ declare function security:set-group-can-read-resource($group-name as xs:string, 
            fn:replace($permissions, "(...)(.)(.....)", "$1-$3")
         )
         return
-            security:set-resource-permissions(xs:anyURI(concat($collection-uri, "/", $resource-uri)), xmldb:get-owner($collection-uri, $resource-uri), $group-name, $new-permissions),
+            security:set-resource-permissions(xs:anyURI(concat($collection-uri, "/", $resource-uri)), security:get-owner(concat($collection-uri, "/", $resource-uri)), $group-name, $new-permissions),
             
             true()
 };

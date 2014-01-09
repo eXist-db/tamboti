@@ -111,9 +111,9 @@ declare function local:resources($collection as xs:string, $user as xs:string) {
                             xmldb:permissions-to-string(xmldb:get-permissions($collection, $resource))
                     let $owner := 
                         if ($isCollection) then
-                            xmldb:get-owner($path)
+                            security:get-owner($path)
                         else
-                            xmldb:get-owner($collection, $resource)
+                            security:get-owner(concat($collection, "/", "$resource))
                     let $group :=
                         if ($isCollection) then
                             security:get-group($path)

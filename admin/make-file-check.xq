@@ -44,7 +44,7 @@ let $name := functx:substring-after-last($base-uri, '/')
 let $last-modified := xmldb:last-modified($location, $name)
 let $created := xmldb:created($location, $name)
 let $size := xmldb:size($location, $name)
-let $owner := xmldb:get-owner($location, $name)
+let $owner := security:get-owner(concat($location, "/", $name))
 let $group := security:get-group(concat($location, "/", $name))
 return
     
