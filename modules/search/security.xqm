@@ -267,7 +267,7 @@ declare function security:is-collection-owner($user as xs:string, $collection as
 :)
 declare function security:get-group-members($group as xs:string) as xs:string*
 {
-    xmldb:get-users($group)
+    sm:get-group-members($group)
 };
 
 declare function security:set-resource-permissions($resource-path as xs:anyURI, $user-name as xs:string, $group-name as xs:string, $permissions as xs:string) as empty() {
