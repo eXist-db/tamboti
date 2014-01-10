@@ -152,8 +152,8 @@ declare function op:remove-resource($resource-id as xs:string) as element(status
     let $last-modified := xmldb:last-modified($location, $name)
     let $created := xmldb:created($location, $name)
     let $size := xmldb:size($location, $name)
-    let $owner := xmldb:get-owner($location, $name)
-    let $group := xmldb:get-group($location, $name)
+    let $owner := security:get-owner(concat($location, "/", $name))
+    let $group := security:get-group(concat($location, "/", $name))
     let $time := current-dateTime()
     let $user := request:get-parameter("username",())
     let $record :=

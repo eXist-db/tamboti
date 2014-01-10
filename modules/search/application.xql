@@ -20,6 +20,8 @@ module namespace biblio="http://exist-db.org/xquery/biblio";
     of the query.
 :)
 
+import module namespace sm="http://exist-db.org/xquery/securitymanager";
+
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace session="http://exist-db.org/xquery/session";
 declare namespace util="http://exist-db.org/xquery/util";
@@ -1164,7 +1166,7 @@ declare function biblio:form-select-current-user-groups($select-name as xs:strin
     let $user := request:get-attribute("xquery.user") return
         <select name="{$select-name}">
         {
-            for $group in xmldb:get-user-groups($user) return
+            for $group in sm:get-user-groups($user) return
                 <option value="{$group}">{$group}</option>
         }
         </select>

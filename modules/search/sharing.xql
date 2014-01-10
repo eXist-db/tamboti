@@ -106,19 +106,19 @@ declare function local:resources($collection as xs:string, $user as xs:string) {
                 return
                     let $permissions := 
                         if ($isCollection) then
-                            xmldb:permissions-to-string(xmldb:get-permissions($path))
+                            security:get-resource-permissions($path)
                         else
-                            xmldb:permissions-to-string(xmldb:get-permissions($collection, $resource))
+                            security:get-resource-permissions(concat($collection, "/", "$resource))
                     let $owner := 
                         if ($isCollection) then
-                            xmldb:get-owner($path)
+                            security:get-owner($path)
                         else
-                            xmldb:get-owner($collection, $resource)
+                            security:get-owner(concat($collection, "/", "$resource))
                     let $group :=
                         if ($isCollection) then
-                            xmldb:get-group($path)
+                            security:get-group($path)
                         else
-                            xmldb:get-group($collection, $resource)
+                        	security:get-group(concat($collection, "/", $resource))
                     let $lastMod := 
                         let $date :=
                             if ($isCollection) then
