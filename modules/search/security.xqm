@@ -611,7 +611,7 @@ declare function security:create-group($group-name as xs:string, $group-members 
         let $add-results :=
             for $group-member in $group-members            
             let $group-member-username := if ($config:force-lower-case-usernames) then (fn:lower-case($group-member)) else ($group-member) return
-                xmldb:add-user-to-group($group-member-username, $group-name)
+                sm:add-group-member($group-name, $group-member-username)
         return
             fn:not(fn:contains($add-results, false()))
     )
@@ -625,7 +625,7 @@ declare function security:create-group($group-name as xs:string, $group-members 
 (:
 declare function security:add-user-to-group($username as xs:string, $group-name as xs:string) as xs:boolean
 {
-    xmldb:add-user-to-group($username, $group-name)
+    sm:add-group-member($group-name, $username)
 };
 
 declare function security:remove-user-from-group($username as xs:string, $group-name as xs:string) as xs:boolean
