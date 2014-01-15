@@ -2235,10 +2235,24 @@ declare function mods-common:get-related-items($entry as element(mods:mods), $de
             )
         let $part := $item/mods:part
         let $xlinked-ID := replace($item/@xlink:href, '^#?(.*)$', '$1')
+                let $xlinked-record-format-head := substring($xlinked-ID, 1, 2) 
+        let $xlinked-record-format := 
+            if ($xlinked-record-format-head eq 'uu') 
+            then 'MODS' 
+            else    
+                if ($xlinked-record-format-head eq 'i_') 
+                then 'VRA-image' 
+                else
+                    if ($xlinked-record-format-head eq 'w_') 
+                    then 'VRA-work' 
+                    else
+                        if ($xlinked-record-format-head eq 'c_') 
+                        then 'VRA-collection' 
+                        else ()
         let $xlinked-record :=
             (: Any MODS record in /db/resources is retrieved if there is a @xlink:href/@ID match and the relatedItem has no string value. If there should be duplicate IDs, only the first record is retrieved.:)
             (: The linked record is only retrieved if there is no title information inside the related item. :)
-            if (exists($xlinked-ID) and not($titleInfo))
+            if ($xlinked-record-format eq 'MODS' and exists($xlinked-ID) and not($titleInfo))
             then collection($config:mods-root-minus-temp)//mods:mods[@ID eq $xlinked-ID][1]
             else ()
         let $related-item :=
@@ -2257,6 +2271,7 @@ declare function mods-common:get-related-items($entry as element(mods:mods), $de
         		else ()
 
     return
+        (:Only MODS records have $related-item:)
         if ($related-item)
         then 
             (: Check for the most common types first. :)
@@ -2291,5 +2306,19 @@ declare function mods-common:get-related-items($entry as element(mods:mods), $de
         					<span class="relatedItem-span">{mods-common:format-related-item($related-item, $global-language, $collection-short)}</span>
                         </td>
                     </tr>
-        else ()
+        else
+            if ($destination eq 'detail')
+            then 
+                if ($xlinked-record-format eq 'VRA-work')
+                then
+                    <tr xmlns="http://www.w3.org/1999/xhtml" class="relatedItem-row">
+        				<td class="url label relatedItem-label">
+                            <a href="?search-field=ID&amp;value={$xlinked-ID}&amp;query-tabs=advanced-search-form&amp;default-operator=and">{concat('&lt;&lt; ', $type)}</a>
+                        </td>
+                        <td class="relatedItem-record">
+        					<span class="relatedItem-span">Ziziphus VRA Work Record</span>
+                        </td>
+                    </tr>
+                else ()
+            else ()
 };
