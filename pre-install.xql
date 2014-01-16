@@ -7,6 +7,7 @@ xquery version "3.0";
 import module namespace util="http://exist-db.org/xquery/util";
 import module namespace xdb="http://exist-db.org/xquery/xmldb";
 import module namespace security="http://exist-db.org/mods/security" at "modules/search/security.xqm";
+import module namespace config="http://exist-db.org/mods/config" at "modules/config.xqm";
 
 (: The following external variables are set by the repo:deploy function :)
 
