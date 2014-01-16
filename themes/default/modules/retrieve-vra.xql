@@ -174,9 +174,9 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
             </tr>
     ,
     (: relation :)
-    (:
+    
     let $relations := $entry//vra:relationSet/vra:relation
-    for $relation in $relations
+    for $relation in $relations[@relids]
         let $type := $relation/@type
         let $type := functx:capitalize-first(functx:camel-case-to-words($type, ' '))
         let $relids := $relation/@relids
@@ -197,8 +197,20 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
                     <td class="collection-label">{$type}</td>
                     <td>{$list-view}</td>
                 </tr>
+         ,
+       let $href-relation := $entry//vra:relationSet/vra:relation[@href]
+       return
+           if ($href-relation)
+           then
+               <tr>
+                   <td class="collection-label">
+                      <a href="?search-field=ID&amp;value={$href-relation/@href}&amp;query-tabs=advanced-search-form&amp;default-operator=and">{concat('&lt;&lt; ', $href-relation/@type)}</a>
+                   </td>
+                   <td>Tamboti MODS Record</td>
+               </tr>
+           else ()
     ,
-    :)
+    
     (: subjects :)
     
     (:for $subject in $entry//vra:subjectSet/vra:subject
