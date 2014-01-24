@@ -184,9 +184,10 @@ declare function sharing:get-shared-with($collection-path as xs:string) as xs:st
         else(),
         if(fn:matches($mode, "......r.."))then
             "Anyone"
-        else(),
+        else()
+        (:,
         for $ace in $permissions/sm:acl/sm:ace[@access_type eq "ALLOWED"] return
-            sm:get-account-metadata($ace/@who, xs:anyURI("http://axschema.org/namePerson"))
+            sm:get-account-metadata($ace/@who, xs:anyURI("http://axschema.org/namePerson")):)
         ),
         ", "
     )
