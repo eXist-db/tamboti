@@ -278,8 +278,8 @@ declare function security:set-resource-permissions($resource-path as xs:anyURI, 
     )
 };
 
-declare function security:get-resource-permissions($resource-path as xs:anyURI) as xs:string {
-    data(sm:get-permissions(xs:anyURI($path))/sm:permission/@mode)
+declare function security:get-resource-permissions($resource-path as xs:string) as xs:string {
+    data(sm:get-permissions(xs:anyURI($resource-path))/sm:permission/@mode)
 };
 
 declare function security:set-ace-writeable($resource as xs:anyURI, $id as xs:int, $is-writeable as xs:boolean) as xs:boolean {

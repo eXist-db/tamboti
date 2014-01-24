@@ -108,12 +108,12 @@ declare function local:resources($collection as xs:string, $user as xs:string) {
                         if ($isCollection) then
                             security:get-resource-permissions($path)
                         else
-                            security:get-resource-permissions(concat($collection, "/", "$resource))
+                            security:get-resource-permissions(concat($collection, "/", $resource))
                     let $owner := 
                         if ($isCollection) then
                             security:get-owner($path)
                         else
-                            security:get-owner(concat($collection, "/", "$resource))
+                            security:get-owner(concat($collection, "/", $resource))
                     let $group :=
                         if ($isCollection) then
                             security:get-group($path)
