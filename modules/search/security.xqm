@@ -11,6 +11,7 @@ import module namespace xmldb="http://exist-db.org/xquery/xmldb";
 declare variable $security:GUEST_CREDENTIALS := ("guest", "guest");
 declare variable $security:SESSION_USER_ATTRIBUTE := "biblio.user";
 declare variable $security:SESSION_PASSWORD_ATTRIBUTE := "biblio.password";
+declare variable $security:biblio-users-group := "biblio.users";
 
 declare variable $security:user-metadata-file := "security.metadata.xml";
 
