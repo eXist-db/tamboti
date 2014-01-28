@@ -40,7 +40,7 @@ declare variable $not-writeable-folder-icon := "../skin/ltFld.locked.png";
 declare variable $writeable-and-shared-folder-icon := "../skin/ltFld.page.link.png";
 declare variable $not-writeable-and-shared-folder-icon := "../skin/ltFld.locked.link.png";
 declare variable $commons-folder-icon := "../skin/ltFld.png";
-declare variable $collections-to-skip-for-all := ('VRA_images', 'VRA_', 'MODS_');
+declare variable $collections-to-skip-for-all := ('VRA_images', 'VRA_', 'MODS_', 'commons', 'services');
 declare variable $collections-to-skip-for-guest := ('HERA_Single', 'Ethnografische_Fotografie', 'Popular_Culture', 'Urban_Anthropology');
 
 (:~
@@ -132,7 +132,7 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
                 else(),
             
             (: group collection :)
-            $has-group-children := not(empty(sharing:get-shared-collection-roots(false()))),
+            $has-group-children := not(empty(system:as-user($config:dba-credentials[1],$config:dba-credentials[2],sharing:get-shared-collection-roots(false())))),
             $group-json := 
                 if (security:get-user-credential-from-session()[1] eq 'guest') 
                 then ()
@@ -258,7 +258,7 @@ declare function col:_get-shared-collection-roots-by-others() as xs:string* {
     
     let $my-home := security:get-home-collection-uri(security:get-user-credential-from-session()[1]) return
     
-    for $root in sharing:get-shared-collection-roots(false()) return
+    for $root in system:as-user($config:dba-credentials[1],$config:dba-credentials[2],sharing:get-shared-collection-roots(false())) return
         if(fn:starts-with($root, $my-home) eq false())then
             $root
         else()
@@ -351,7 +351,7 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
                     else(),
 
                 (: group collection :)
-                $has-group-children := not(empty(sharing:get-shared-collection-roots(false()))),
+                $has-group-children := not(empty(system:as-user($config:dba-credentials[1],$config:dba-credentials[2],sharing:get-shared-collection-roots(false())))),
                 $group-children := col:get-child-tree-nodes-recursive-for-group($distinct-collection-paths[fn:starts-with(., $config:users-collection)][fn:not(fn:starts-with(., security:get-home-collection-uri($user)))], $expanded-collections),
                 $group-json := col:create-tree-node("Groups", $config:groups-collection, true(), $groups-folder-icon, "Groups", false(), (), fn:contains($expanded-collections, $config:groups-collection), (empty($group-children) and $has-group-children), $group-children),
                 
