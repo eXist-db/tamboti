@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.0";
 
 (: XQuery script to save a new MODS record from an incoming HTTP POST :)
 
@@ -377,7 +377,7 @@ return
                         (:Only attempt to delete the original record if it exists; 
                         if an attempt is made to delete a file which does not exist, the script will terminate. 
                         This means that no attempt is made to delete newly created records.:)                        
-                        if (document(concat($target-collection, '/', $file-to-update))) 
+                        if (doc(concat($target-collection, '/', $file-to-update))) 
                         then xmldb:remove($target-collection, $file-to-update) 
                         else ()
                         ,
@@ -386,7 +386,7 @@ return
                         xmldb:store($target-collection, $file-to-update, $doc)
                         ,
                         (:Remove the $doc record from temp if store in target was successful.:)
-                        if (document(concat($target-collection, '/', $file-to-update))) 
+                        if (doc(concat($target-collection, '/', $file-to-update))) 
                         then xmldb:remove($config:mods-temp-collection, $file-to-update) 
                         else ()
                         ,
