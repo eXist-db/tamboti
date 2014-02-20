@@ -1,49 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- VRA (Visual Resources Association) Core 4 XML Schema, version 0.42
-     This schema implements the final VRA Core 4.0 guidelines, 2007-04-09.
-
-     This is the restricted version of the schema.  It extends the unrestricted
-     schema by limiting the values many attributes to enumerated lists, and
-     restricting dates to ISO 8601 format.
-
-     Developed by Esme Cowles (UC San Diego) with input from:
-
-       Howard Batchelor (UCLA)
-       Rick Beaubien (UC Berkeley)
-       Matt Benzing (RPI)
-       Karim Boughida (Getty Research Institute)
-       Sherman Clarke (NYU)
-       Jan Eklund (UC Berkeley)
-       Mary Elings (UC Berkeley)
-       Fae Hamilton (RLG)
-       Ben Kessler
-       Oleg Kreymer (Metropolitan Museum of Art)
-       Emerson Morgan (ARTStor)
-       Merrilee Proffitt (RLG)
-       Trish Rose (UC San Diego)
-       Eric Stedfeld (NYU)
-       Guenter Waibel (RLG)
-       Robin Wendler (Harvard)
-       Brad Westbrook (UC San Diego)
-       Ann Whiteside (Univ. of Virginia)
--->
 <xsd:schema xmlns="http://www.vraweb.org/vracore4.htm" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.vraweb.org/vracore4.htm" version="4.0.42" xml:lang="en" elementFormDefault="qualified" attributeFormDefault="unqualified">
     <xsd:annotation>
         <xsd:documentation>
-      This schema is an implementation of the VRA Core Categories, Version 4.0.
-      It defines a wrapper element (vra), which can hold any number of
-      record-level elements (collection, work, image).  These elements can be
-      nested to indicate collection-work-image hierarchies.
+            This schema is an extension (patched version) of the VRA Core Strict version 4.0 used at the University of Heidelberg for
+            the implementation of Ziziphus, an implementation of an VRA editor.
 
-      This schema extends the VRA 4.0 unrestricted schema to provide
-      restrictions to improve interoperability.
-    </xsd:documentation>
+            We use a patched version rather than a Schema overwrite or extension version for pragmatic reasons:
+            - handling of the schema is easier within common tools such as Oxygen
+            - some extensions are hard to do with pure extensions (not allowing overwrites) as known in XML Schema 1.0
+            and are either hard to do with pure 'overwride" mechanism of XML Schema 1.1. Further tool support
+            for XML Schema 1.1 is still incomplete and requires specific configuration.
+
+            Extensions (patches) in this schema are marked with "EXTENSION START" for the start and "EXTENSION END"
+            to simplify the manual merging process that will be needed when migrating to a newer VRA version.
+
+
+            Further documentation can be found as a Googledoc at https://docs.google.com/document/d/1ZXVCOuZLg6-FlYaQaBTVw2OsKNn4dr1KfqJgw25I0zA/edit#heading=h.vj515vkolvh7
+
+        </xsd:documentation>
     </xsd:annotation>
 
-  <!-- include the unrestricted schema -->
-  
-  <!-- NB! Cluster! -->
+
+    <!-- include the unrestricted schema -->
+    <!-- >>> EXTENSION START >>> -->
     <xsd:redefine schemaLocation="vraCluster.xsd">
+    <!-- <<< EXTENSION END <<< -->
+
+        <!-- >>> EXTENSION START >>> -->
+        <xsd:simpleType name="langType">
+            <xsd:annotation>
+                <xsd:documentation>
+                    three-character code according to ISO 639-2b (e.g. eng, ger, chi, hin)
+                </xsd:documentation>
+            </xsd:annotation>
+
+            <xsd:restriction base="langType">
+                <xsd:pattern value="[a-z][a-z][a-z]"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+
+        <xsd:simpleType name="scriptType">
+            <xsd:annotation>
+                <xsd:documentation>
+                    four-character code according to ISO 15924 (e.g. Latn, Arab, Hans, Deva)
+                </xsd:documentation>
+            </xsd:annotation>
+
+            <xsd:restriction base="scriptType">
+                <xsd:pattern value="[A-Z][a-z][a-z][a-z]"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+
+        <xsd:simpleType name="transliterationType">
+            <xsd:restriction base="transliterationType">
+                <xsd:pattern value="[a-z]{4}"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+
+        <xsd:simpleType name="uncertainDateType">
+            <xsd:restriction base="uncertainDateType">
+                <xsd:enumeration value="about"/>
+                <xsd:enumeration value="before"/>
+                <xsd:enumeration value="after"/>
+                <xsd:enumeration value="active"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+
+        <xsd:simpleType name="shapeType">
+            <xsd:restriction base="shapeType">
+                <xsd:enumeration value="oval"/>
+                <xsd:enumeration value="cube"/>
+                <xsd:enumeration value="sphere"/>
+                <xsd:enumeration value="rectangle"/>
+                <xsd:enumeration value="circle"/>
+                <xsd:enumeration value="irregular"/>
+                <xsd:enumeration value="landscape"/>
+                <xsd:enumeration value="portrait"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+        <!-- <<< EXTENSION END <<< -->
 
     <!--== Controlled Value Lists ==========================================-->
         <xsd:simpleType name="agentDateTypeType">
