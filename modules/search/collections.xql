@@ -4,7 +4,6 @@ import module namespace config="http://exist-db.org/mods/config" at "../config.x
 import module namespace json="http://www.json.org";
 import module namespace security="http://exist-db.org/mods/security" at "security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "sharing.xqm";
-import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
 
 import module namespace session = "http://exist-db.org/xquery/session";
 import module namespace request = "http://exist-db.org/xquery/request";
@@ -384,7 +383,7 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
 : If there is no key we deliver the tree root
 :)
 if(request:get-parameter("key",()))then
-    let $collection-path := uu:escape-collection-path(request:get-parameter("key",())) return
+    let $collection-path := xmldb:encode-uri(request:get-parameter("key",())) return
         if($collection-path eq $config:groups-collection) then
             (: start of groups collection - the groups collection is virtual and so receives special treatment :)
             col:get-groups-virtual-root()
@@ -398,10 +397,10 @@ else if(request:get-parameter("activeKey",()))then
     let $expanded-collections :=
         if(request:get-parameter("expandedKeyList", ()))then
             for $expanded-key in fn:tokenize(request:get-parameter("expandedKeyList", ()), ",") return
-                uu:escape-collection-path($expanded-key)
+                xmldb:encode-uri($expanded-key)
         else()
     return
-        col:get-from-root-for-prev-state($config:mods-root, uu:escape-collection-path(request:get-parameter("activeKey",())), uu:escape-collection-path(request:get-parameter("focusedKey",())), $expanded-collections)
+        col:get-from-root-for-prev-state($config:mods-root, xmldb:encode-uri(request:get-parameter("activeKey",())), xmldb:encode-uri(request:get-parameter("focusedKey",())), $expanded-collections)
 
 else
     (: no key, so its the root that we want :)

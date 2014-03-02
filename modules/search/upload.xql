@@ -1,6 +1,5 @@
 xquery version "3.0";
 (: author dulip withanage 
-import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
 :)
 
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";

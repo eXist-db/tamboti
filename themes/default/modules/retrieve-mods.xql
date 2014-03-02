@@ -8,7 +8,6 @@ declare namespace ext="http://exist-db.org/mods/extension";
 declare namespace html="http://www.w3.org/1999/xhtml";
 
 import module namespace config="http://exist-db.org/mods/config" at "../../../modules/config.xqm";
-import module namespace uu="http://exist-db.org/mods/uri-util" at "../../../modules/search/uri-util.xqm";
 import module namespace tamboti-common="http://exist-db.org/tamboti/common" at "../../../modules/tamboti-common.xql";
 import module namespace mods-common="http://exist-db.org/mods/common" at "../../../modules/mods-common.xql";
 
