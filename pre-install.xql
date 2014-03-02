@@ -18,7 +18,6 @@ declare variable $dir external;
 (: the target collection into which the app is deployed :)
 declare variable $target external;
 
-
 declare variable $log-level := "INFO";
 declare variable $db-root := "/db";
 declare variable $config-collection := fn:concat($db-root, "/system/config");
@@ -110,7 +109,7 @@ util:log($log-level, "Config: Done."),
 
 (: Create temp collection :)
 util:log($log-level, fn:concat("Config: Creating temp collection '", $temp-collection, "'...")),
-    local:mkcol($db-root, local:strip-prefix($temp-collection, fn:concat($db-root, "/")), "rwxrwx---"),
+    local:mkcol($db-root, local:strip-prefix($temp-collection, fn:concat($db-root, "/")), "rwxrws---"),
 util:log($log-level, "Config: Done."),
 
 (: Create resources/commons :)
