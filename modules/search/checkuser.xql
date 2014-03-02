@@ -3,7 +3,6 @@ xquery version "3.0";
 import module namespace security="http://exist-db.org/mods/security" at "security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "sharing.xqm";
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
-import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
 
 declare namespace request = "http://exist-db.org/xquery/request";
 declare namespace response = "http://exist-db.org/xquery/response";

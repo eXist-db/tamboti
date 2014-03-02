@@ -13,7 +13,6 @@ import module namespace mods="http://www.loc.gov/mods/v3" at "tabs.xqm";
 import module namespace mods-common="http://exist-db.org/mods/common" at "../mods-common.xql";
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace security="http://exist-db.org/mods/security" at "../search/security.xqm"; (:TODO move security module up one level:)
-import module namespace uu="http://exist-db.org/mods/uri-util" at "../search/uri-util.xqm";
 
 declare namespace xf="http://www.w3.org/2002/xforms";
 declare namespace ev="http://www.w3.org/2001/xml-events";
@@ -473,7 +472,7 @@ let $tab-id := request:get-parameter('tab-id', $tab-id)
 
 (:Get the chosen location for the record.:)
 (:let $target-collection := xmldb:encode-uri(request:get-parameter("collection", '')):)
-let $target-collection := uu:escape-collection-path(request:get-parameter("collection", ''))
+let $target-collection := xmldb:encode-uri(request:get-parameter("collection", ''))
 
 (:Get the id of the record, if it has one; otherwise mark it "new" in order to give it one.:)
 let $id-param := request:get-parameter('id', 'new')

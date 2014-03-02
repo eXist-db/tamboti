@@ -3,7 +3,6 @@ xquery version "1.0";
 import module namespace security="http://exist-db.org/mods/security" at "security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "sharing.xqm";
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
-import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
 
 declare namespace group = "http://commons/sharing/group";
 declare namespace op="http://exist-db.org/xquery/biblio/operations";
@@ -52,7 +51,7 @@ the buttons do not show up (except Delete Folder).:)
 (:TODO: notify user if the new name is already taken.:)
 declare function op:create-collection($parent-collection-uri as xs:string, $new-collection-name as xs:string) as element(status) {
 
-    let $new-collection := xmldb:create-collection(uu:escape-collection-path($parent-collection-uri), uu:escape-collection-path($new-collection-name))
+    let $new-collection := xmldb:create-collection(xmldb:encode-uri($parent-collection-uri), xmldb:encode-uri($new-collection-name))
     
     (:just the owner has write access to start with:)
     let $null := sm:chmod(xs:anyURI($new-collection), "rwxr-xr-x")
@@ -87,7 +86,7 @@ declare function op:move-collection($collection-to-move as xs:string, $new-paren
 (:TODO: notify user if the new name is already taken.:)
 declare function op:rename-collection($collection-uri as xs:string, $new-collection-name as xs:string) as element(status) {
 
-    let $null := xmldb:rename(uu:escape-collection-path($collection-uri), uu:escape-collection-path($new-collection-name)) 
+    let $null := xmldb:rename(xmldb:encode-uri($collection-uri), xmldb:encode-uri($new-collection-name)) 
     return
         <status id="renamed" from="{xmldb:decode-uri($collection-uri)}">{xmldb:decode-uri($new-collection-name)}</status>
 };
@@ -191,8 +190,8 @@ declare function op:move-resource($resource-id as xs:string, $destination-collec
     let $mods-record := collection($config:mods-root-minus-temp)//mods:mods[@ID eq $resource-id]
     let $mods-record-collection := base-uri($mods-record)
     let $mods-record-collection := functx:substring-before-last($mods-record-collection, '/')
-    let $mods-record-collection := uu:escape-collection-path($mods-record-collection)
-    let $destination-collection := uu:escape-collection-path($destination-collection) 
+    let $mods-record-collection := xmldb:encode-uri($mods-record-collection)
+    let $destination-collection := xmldb:encode-uri($destination-collection) 
     let $id := 
         if (contains($resource-id, "#"))
         then substring-after($resource-id, "#")

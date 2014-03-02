@@ -41,7 +41,6 @@ import module namespace templates="http://exist-db.org/xquery/templates" at "../
 import module namespace jquery="http://exist-db.org/xquery/jquery" at "resource:org/exist/xquery/lib/jquery.xql";
 import module namespace security="http://exist-db.org/mods/security" at "security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "sharing.xqm";
-import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
 
 declare option exist:serialize "method=xhtml media-type=application/xhtml+xml omit-xml-declaration=no enforce-xhtml=yes";
 
@@ -596,7 +595,7 @@ declare function biblio:process-form-parameters($params as xs:string*) as elemen
 :)
 declare function biblio:process-form() as element(query)? {
     (:let $collection := xmldb:encode-uri(request:get-parameter("collection", theme:get-root())):)
-    let $collection := uu:escape-collection-path(request:get-parameter("collection", theme:get-root()))
+    let $collection := xmldb:encode-uri(request:get-parameter("collection", theme:get-root()))
     let $fields :=
         (:  Get a list of all input parameters which are not empty,
             ordered by input name. :)
@@ -1030,9 +1029,8 @@ declare function biblio:login($node as node(), $params as element(parameters)?, 
 
 declare function biblio:collection-path($node as node(), $params as element(parameters)?, $model as item()*) {
     (:let $collection := functx:replace-first(xmldb:encode-uri(request:get-parameter("collection", theme:get-root())), "/db/", ""):)
-    let $collection := functx:replace-first(uu:escape-collection-path(request:get-parameter("collection", theme:get-root())), "/db/", "")    
+    let $collection := functx:replace-first(xmldb:encode-uri(request:get-parameter("collection", theme:get-root())), "/db/", "")    
         return
-            (:templates:copy-set-attribute($node, "value", uu:unescape-collection-path($collection), $model):)
             templates:copy-set-attribute($node, "value", xmldb:decode-uri($collection), $model)
 };
 
@@ -1418,7 +1416,7 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     let $clear := request:get-parameter("clear", ())
     let $mylist := request:get-parameter("mylist", ()) (:clear, display:)
     (:let $collection := xmldb:encode-uri(request:get-parameter("collection", $config:mods-root)):)
-    let $collection := uu:escape-collection-path(request:get-parameter("collection", $config:mods-root))
+    let $collection := xmldb:encode-uri(request:get-parameter("collection", $config:mods-root))
     let $collection := if (starts-with($collection, "/db")) then $collection else concat("/db", $collection)
     let $id := request:get-parameter("id", ())
     let $sort := request:get-parameter("sort", ())

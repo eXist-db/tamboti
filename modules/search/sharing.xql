@@ -10,8 +10,6 @@ import module namespace file="http://exist-db.org/xquery/file";
 import module namespace config="http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace security="http://exist-db.org/mods/security" at "security.xqm";
 import module namespace sharing="http://exist-db.org/mods/sharing" at "sharing.xqm";
-import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
-
 
 declare namespace vra="http://www.vraweb.org/vracore4.htm";
 declare namespace mods="http://www.loc.gov/mods/v3";
@@ -248,7 +246,7 @@ declare function local:empty() {
 <json:value>
     {
     if(request:get-parameter("collection",())) then (
-        local:get-sharing(uu:unescape-collection-path(request:get-parameter("collection",())))
+        local:get-sharing(xmldb:decode-uri(request:get-parameter("collection",())))
     )
     else if(request:get-parameter("file",())) then (
         local:get-attached-files(request:get-parameter("file",()))

@@ -6,7 +6,6 @@ import module namespace request = "http://exist-db.org/xquery/request";
 import module namespace xmldb = "http://exist-db.org/xquery/xmldb";
 import module namespace config = "http://exist-db.org/mods/config" at "../config.xqm";
 import module namespace security = "http://exist-db.org/mods/security" at "../search/security.xqm"; (: TODO move security module up one level :)
-import module namespace uu = "http://exist-db.org/mods/uri-util" at "../search/uri-util.xqm";
 
 declare namespace mods = "http://www.loc.gov/mods/v3";
 declare namespace ext="http://exist-db.org/mods/extension";
@@ -346,7 +345,7 @@ return
                     (:Get the target collection. If it's an edit to an existing document, we can find its location by means of its uuid.
                     If it is a new record, the target collection can be captured as the collection parameter passed in the URL. :)
                     let $target-collection := local:find-live-collection-containing-uuid($incoming-id)
-                    let $new-target-collection := uu:escape-collection-path(request:get-parameter("collection", ""))
+                    let $new-target-collection := xmldb:encode-uri(request:get-parameter("collection", ""))
                     let $target-collection :=
                         if ($target-collection)
                         then $target-collection
