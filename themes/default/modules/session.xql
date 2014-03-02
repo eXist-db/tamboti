@@ -405,7 +405,7 @@ declare function bs:mods-list-view-table($item as node(), $currentPos as xs:int)
     let $saved := exists($stored//*[@id = $id])
     return
         <tr xmlns="http://www.w3.org/1999/xhtml" class="pagination-item list">
-            <td><input type="checkbox" /></td>
+            <!--<td><input type="checkbox" /></td>-->
             <td class="pagination-number">{$currentPos}</td>
             {
             <td class="actions-cell">

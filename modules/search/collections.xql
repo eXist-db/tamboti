@@ -68,7 +68,7 @@ declare variable $collections-to-skip-for-guest := ('HERA_Single', 'Ethnografisc
 :   Any children that should be explicity displayed, ignored if has-lazy-children is true()
 :
 :)
-declare function col:create-tree-node($title as xs:string, $collection-path as xs:string, $is-folder as xs:boolean, $icon-path as xs:string?, $tooltip as xs:string?, $writeable as xs:boolean, $additonal-classes as xs:string*, $expand as xs:boolean, $has-lazy-children as xs:boolean, $explicit-children as element(node)*) as element(node) {
+declare function col:create-tree-node($title as xs:string, $collection-path as xs:string, $is-folder as xs:boolean, $icon-path as xs:string?, $tooltip as xs:string?, $writeable as xs:boolean, $additional-classes as xs:string*, $expand as xs:boolean, $has-lazy-children as xs:boolean, $explicit-children as element(node)*) as element(node) {
     <node>
         <title>{translate(uu:unescape-collection-path($title), '_', ' ')}</title>
         <key>{uu:unescape-collection-path($collection-path)}</key>
@@ -76,7 +76,7 @@ declare function col:create-tree-node($title as xs:string, $collection-path as x
         <writeable>{$writeable}</writeable>
         <addClass>{
             fn:string-join(
-                (if($writeable) then 'writable' else 'readable', $additonal-classes),
+                (if($writeable) then 'writable' else 'readable', $additional-classes),
                 ' '
             )
         }</addClass>

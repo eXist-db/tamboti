@@ -7,6 +7,7 @@ import module namespace session="http://exist-db.org/xquery/session";
 import module namespace sm="http://exist-db.org/xquery/securitymanager";
 import module namespace util="http://exist-db.org/xquery/util";
 import module namespace xmldb="http://exist-db.org/xquery/xmldb";
+import module namespace uu="http://exist-db.org/mods/uri-util" at "uri-util.xqm";
 
 declare variable $security:GUEST_CREDENTIALS := ("guest", "guest");
 declare variable $security:SESSION_USER_ATTRIBUTE := "biblio.user";
@@ -103,11 +104,11 @@ declare function security:get-email-address-for-user($username as xs:string) as 
 
 declare function security:get-human-name-for-user($username as xs:string) as xs:string?
 {
-    let $first := sm:get-account-metadata($username, xs:anyURI("http://axschema.org/namePerson/first"))
+    let $first := (system:as-user($config:dba-credentials[1],$config:dba-credentials[2], sm:get-account-metadata($username, xs:anyURI("http://axschema.org/namePerson/first"))))
         return
             if ($first) 
             then
-                concat($first, " ", sm:get-account-metadata($username, xs:anyURI("http://axschema.org/namePerson/last")))
+                concat($first, " ", (system:as-user($config:dba-credentials[1],$config:dba-credentials[2], sm:get-account-metadata($username, xs:anyURI("http://axschema.org/namePerson/last")))))
             else
                 $username
 };
@@ -218,7 +219,7 @@ declare function security:get-last-login-time($user as xs:string) as xs:dateTime
 :)
 declare function security:can-read-collection($collection as xs:string) as xs:boolean
 {
-    sm:has-access($collection, "r")
+    sm:has-access(xmldb:encode-uri(xmldb:decode($collection)), "r")
 };
 
 (:~
@@ -229,7 +230,14 @@ declare function security:can-read-collection($collection as xs:string) as xs:bo
 :)
 declare function security:can-write-collection($collection as xs:string) as xs:boolean
 {
-    sm:has-access($collection, "w")
+    let $log := util:log("DEBUG", ("##$collectionxx): ", $collection))
+    let $log := util:log("DEBUG", ("##$collectionyy): ", xmldb:decode-uri($collection)))
+    let $log := util:log("DEBUG", ("##$has-accessxx): ", sm:has-access($collection, "w")))
+    let $log := util:log("DEBUG", ("##$has-accessyy): ", sm:has-access($collection, "w")))
+    let $log := util:log("DEBUG", ("##$get-current-userxx): ", xmldb:get-current-user()))    (:NB: returns "guest"!:)
+    
+    return
+    sm:has-access(xmldb:encode-uri(xmldb:decode($collection)), "w")
 };
 
 (:~
@@ -240,7 +248,7 @@ declare function security:can-write-collection($collection as xs:string) as xs:b
 :)
 declare function security:can-execute-collection($collection as xs:string) as xs:boolean
 {
-    sm:has-access($collection, "x")
+    sm:has-access(xmldb:encode-uri(xmldb:decode($collection)), "x")
 };
 
 (:~
@@ -417,7 +425,8 @@ declare function security:is-biblio-user($username as xs:string) as xs:boolean {
 
 declare function security:get-owner($path as xs:string) as xs:string
 {
-	data(sm:get-permissions(xs:anyURI($path))/sm:permission/@owner)
+	let $response := data(sm:get-permissions(xs:anyURI($path))/sm:permission/@owner)
+	return $response
 };
 
 declare function security:get-group($path as xs:string) as xs:string
