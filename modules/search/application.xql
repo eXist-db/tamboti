@@ -1032,7 +1032,6 @@ declare function biblio:collection-path($node as node(), $params as element(para
     (:let $collection := functx:replace-first(xmldb:encode-uri(request:get-parameter("collection", theme:get-root())), "/db/", ""):)
     let $collection := functx:replace-first(uu:escape-collection-path(request:get-parameter("collection", theme:get-root())), "/db/", "")    
         return
-            (:templates:copy-set-attribute($node, "value", uu:unescape-collection-path($collection), $model):)
             templates:copy-set-attribute($node, "value", xmldb:decode-uri($collection), $model)
 };
 

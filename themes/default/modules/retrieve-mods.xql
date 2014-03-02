@@ -89,7 +89,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     {
     <tr>
         <td class="collection-label">Record Location</td>
-        <td><div class="collection" >{replace(replace(uu:unescape-collection-path($collection-short), '^resources/commons/', 'resources/'),'^resources/users/', 'resources/')}</div></td>
+        <td><div class="collection" >{replace(replace(xmldb:decode-uri($collection-short), '^resources/commons/', 'resources/'),'^resources/users/', 'resources/')}</div></td>
         <div id="file-location-folder" style="display: none;">{$collection-short}</div>
     </tr>
     ,

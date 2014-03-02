@@ -36,10 +36,6 @@ declare function uu:_escape($path as xs:string?, $i as xs:int) as xs:string? {
             $path
 };
 
-declare function uu:unescape-collection-path($path as xs:string?) as xs:string? {
-    xmldb:decode-uri($path)
-};
-
 declare function uu:_un-escape($path as xs:string?) {
     uu:_un-escape($path, 1)
 };
