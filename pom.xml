@@ -1,0 +1,180 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>tamboti</groupId>
+	<artifactId>tamboti</artifactId>
+	<version>1.1.5</version>
+	<packaging>pom</packaging>
+
+	<url>http://exist-db.org</url>
+
+	<prerequisites>
+		<maven>${mavenVersion}</maven>
+	</prerequisites>
+
+	<properties>
+		<mavenVersion>3.1.1</mavenVersion>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<package-name>http://exist-db.org/apps/tamboti</package-name>
+		<package-abbrev>tamboti</package-abbrev>
+		<package-title>Tamboti Metadata Framework</package-title>
+		<package-type>application</package-type>
+
+
+		<module-prefix>crypto</module-prefix>
+		<module-namespace>http://expath.org/ns/crypto</module-namespace>
+		<spec-title>EXPath Cryptographic Module</spec-title>
+	</properties>
+
+	<issueManagement>
+		<system>changes.xml</system>
+		<url />
+	</issueManagement>
+
+	<developers>
+		<developer>
+			<name>claudius</name>
+			<email>claudius.teodorescu@asia-europe.uni-heidelberg.de</email>
+		</developer>
+	</developers>
+
+	<profiles>
+		<profile>
+			<id>test-build</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.google.code.maven-replacer-plugin</groupId>
+						<artifactId>replacer</artifactId>
+						<version>1.5.2</version>
+						<executions>
+							<execution>
+								<id>filter-files</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>replace</goal>
+								</goals>
+								<configuration>
+									<file>${basedir}/themes/tamboti/pages/page.html</file>
+									<outputFile>${project.build.directory}/maven-replacer-plugin/page.html</outputFile>
+									<replacements>
+										<replacement>
+											<token>theme/images/tamboti.png</token>
+											<value>theme/images/tamboti-test.png</value>
+										</replacement>
+										<replacement>
+											<token>&lt;div id="page-head-right"&gt;</token>
+											<value>&lt;div&gt;Version ${project.version}, build ${maven.build.timestamp}&lt;/div&gt;&lt;div id="page-head-right"&gt;</value>
+										</replacement>										
+									</replacements>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>ro.kuberam.maven.plugins</groupId>
+						<artifactId>kuberam-expath-plugin</artifactId>
+						<version>0.3</version>
+						<executions>
+							<execution>
+								<id>create-test-build</id>
+								<phase>package</phase>
+								<goals>
+									<goal>make-xar</goal>
+								</goals>
+								<configuration>
+									<descriptor>build/test-assembly.xml</descriptor>
+									<finalName>${project.build.finalName}-test</finalName>
+								</configuration>
+							</execution>
+							<execution>
+								<id>create-production-build</id>
+								<phase>package</phase>
+								<goals>
+									<goal>make-xar</goal>
+								</goals>
+								<configuration>
+									<descriptor>build/production-assembly.xml</descriptor>
+									<finalName>${project.build.finalName}</finalName>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>production-build</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>ro.kuberam.maven.plugins</groupId>
+						<artifactId>kuberam-expath-plugin</artifactId>
+						<version>0.3</version>
+						<executions>
+							<execution>
+								<id>create-production-build</id>
+								<phase>package</phase>
+								<goals>
+									<goal>make-xar</goal>
+								</goals>
+								<configuration>
+									<descriptor>build/production-assembly.xml</descriptor>
+									<finalName>${project.build.finalName}</finalName>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>test-mail</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-changes-plugin</artifactId>
+						<version>2.9</version>
+						<executions>
+							<execution>
+								<id>generate-announcement-mail</id>
+								<phase>package</phase>
+								<goals>
+									<goal>announcement-generate</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>send-announcement-mail</id>
+								<phase>package</phase>
+								<goals>
+									<goal>announcement-mail</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+<!-- 							<smtpHost>extmail.urz.uni-heidelberg.de</smtpHost> -->
+<!-- 							<smtpPort implementation="java.lang.Integer">25</smtpPort> -->
+<!-- 							<username>claudius.teodorescu@asia-europe.uni-heidelberg.de</username> -->
+<!-- 							<password>iubitamea108.</password> -->
+							
+							<smtpHost>smtp.gmail.com</smtpHost>
+							<smtpPort implementation="java.lang.Integer">587</smtpPort>
+							<username>claudius.teodorescu@gmail.com</username>
+							<password>iubitamea</password>
+							
+							
+<!-- 							<sslMode>true</sslMode> -->
+							<toAddresses>
+								<toAddress implementation="java.lang.String">guth@asia-europe.uni-heidelberg.de</toAddress>
+							</toAddresses>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+</project>
