@@ -120,8 +120,8 @@ declare function security:get-human-name-for-user($username as xs:string) as xs:
 declare function security:home-collection-exists($user as xs:string) as xs:boolean
 {
     let $username := if ($config:force-lower-case-usernames) then (fn:lower-case($user)) else ($user) 
-        return
-            xmldb:collection-available(security:get-home-collection-uri($username))
+    return xmldb:collection-available(xmldb:encode(security:get-home-collection-uri($username)))
+(:            xmldb:collection-available(xmldb:decode-uri(xmldb:encode-uri(xs:anyURI(security:get-home-collection-uri($username))))):)
 };
 
 (:~
@@ -144,7 +144,7 @@ declare function security:create-home-collection($user as xs:string) as xs:strin
     let $username := if ($config:force-lower-case-usernames) then (fn:lower-case($user)) else ($user) return
         if (xmldb:collection-available($config:users-collection)) then
         (
-            let $collection-uri := xmldb:create-collection($config:users-collection, $username) return
+            let $collection-uri := xmldb:create-collection($config:users-collection, xmldb:encode-uri(xs:anyURI($username))) return
                 if ($collection-uri) then
                 (
                     (:
@@ -218,7 +218,7 @@ declare function security:get-last-login-time($user as xs:string) as xs:dateTime
 :)
 declare function security:can-read-collection($collection as xs:string) as xs:boolean
 {
-    sm:has-access(xmldb:encode-uri(xmldb:decode($collection)), "r")
+    starts-with(data(sm:get-permissions(xs:anyURI(xmldb:encode-uri($collection)))/sm:permission/@mode), 'r')
 };
 
 (:~
@@ -229,7 +229,7 @@ declare function security:can-read-collection($collection as xs:string) as xs:bo
 :)
 declare function security:can-write-collection($collection as xs:string) as xs:boolean
 {
-    sm:has-access(xmldb:encode-uri(xmldb:decode($collection)), "w")
+    starts-with(data(sm:get-permissions(xs:anyURI(xmldb:encode-uri($collection)))/sm:permission/@mode), 'rw')
 };
 
 (:~
@@ -240,7 +240,7 @@ declare function security:can-write-collection($collection as xs:string) as xs:b
 :)
 declare function security:can-execute-collection($collection as xs:string) as xs:boolean
 {
-    sm:has-access(xmldb:encode-uri(xmldb:decode($collection)), "x")
+    starts-with(data(sm:get-permissions(xs:anyURI(xmldb:encode-uri($collection)))/sm:permission/@mode), 'rwx')
 };
 
 (:~
@@ -252,9 +252,10 @@ declare function security:can-execute-collection($collection as xs:string) as xs
 declare function security:is-collection-owner($user as xs:string, $collection as xs:string) as xs:boolean
 {
     let $username := if ($config:force-lower-case-usernames) then (fn:lower-case($user)) else ($user) 
+    let $encoded-colection := xmldb:encode-uri($collection)
         return
-            if (xmldb:collection-available($collection)) then
-                let $owner := security:get-owner($collection) return
+            if (xmldb:collection-available($encoded-colection)) then
+                let $owner := security:get-owner($encoded-colection) return
                     $username eq $owner
             else
                 false()
