@@ -165,6 +165,7 @@ declare function col:get-root-collection($root-collection-path as xs:string) as 
 :   The parent collection path
 :)
 declare function col:get-child-collections($collection-path as xs:string) as element(json:value)? {
+    system:as-user(security:get-user-credential-from-session()[1], security:get-user-credential-from-session()[2], 
     
     if(security:can-read-collection($collection-path)) then
         
@@ -188,7 +189,8 @@ declare function col:get-child-collections($collection-path as xs:string) as ele
                     (: output the child :)
                     col:get-collection($child-collection-path)
             else()
-    else()           
+    else() 
+    )
 };
 
 (:~

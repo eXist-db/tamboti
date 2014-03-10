@@ -51,10 +51,10 @@ the buttons do not show up (except Delete Folder).:)
 (:TODO: notify user if the new name is already taken.:)
 declare function op:create-collection($parent-collection-uri as xs:string, $new-collection-name as xs:string) as element(status) {
 
-    let $new-collection := xmldb:create-collection($parent-collection-uri, xmldb:encode-uri($new-collection-name))
+    let $new-collection := system:as-user(security:get-user-credential-from-session()[1], security:get-user-credential-from-session()[2], xmldb:create-collection($parent-collection-uri, xmldb:encode-uri($new-collection-name)))
     
     (:just the owner has write access to start with:)
-    let $null := sm:chmod(xs:anyURI($new-collection), "rwxr-xr-x")
+    let $null := system:as-user(security:get-user-credential-from-session()[1], security:get-user-credential-from-session()[2], sm:chmod(xs:anyURI($new-collection), "rwxr-xr-x"))
     
     (:if this collection was created inside a different user's collection,
     allow the owner of the parent collection access:)
@@ -116,7 +116,7 @@ declare function op:remove-collection($collection as xs:string) as element(statu
         (:If $xlinked-rec-ids is not empty, do not delete.:)
         if ($xlinked-rec-ids)
         then ()
-        else xmldb:remove($collection) 
+        else system:as-user(security:get-user-credential-from-session()[1], security:get-user-credential-from-session()[2], xmldb:remove($collection))
     return
         if ($xlinked-rec-ids)
         then <status id="removed">{xmldb:decode-uri($collection)}</status>
@@ -331,17 +331,23 @@ declare function op:unknown-action($action as xs:string) {
         <p>Unknown action: {$action}.</p>
 };
 
+declare function op:process-key($key as xs:string) as xs:string {
+    replace(replace($key, "%2C", ","), "%2F", "/")
+};
+
 let $action := request:get-parameter("action", ())
-let $collection := xmldb:encode-uri(xs:anyURI(request:get-parameter("collection", ())))
+let $collection := xmldb:encode(op:process-key(request:get-parameter("collection", ())))
+let $name := request:get-parameter("name",())
+
 
 return
     if ($action eq "create-collection") then
-        op:create-collection($collection, request:get-parameter("name",()))
+        op:create-collection($collection, $name)
     else if ($action eq "move-collection") then
         (:op:move-collection($collection, request:get-parameter("path",())):)
         op:move-collection($collection, xmldb:encode-uri(xs:anyURI(request:get-parameter("path",()))))
     else if ($action eq "rename-collection") then
-        op:rename-collection($collection, request:get-parameter("name",()))
+        op:rename-collection($collection, $name)
     else if ($action eq "remove-collection") then
         op:remove-collection($collection)
     else if ($action eq "remove-resource") then
