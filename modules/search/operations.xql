@@ -51,7 +51,7 @@ the buttons do not show up (except Delete Folder).:)
 (:TODO: notify user if the new name is already taken.:)
 declare function op:create-collection($parent-collection-uri as xs:string, $new-collection-name as xs:string) as element(status) {
 
-    let $new-collection := xmldb:create-collection(xmldb:encode-uri($parent-collection-uri), xmldb:encode-uri($new-collection-name))
+    let $new-collection := xmldb:create-collection($parent-collection-uri, xmldb:encode-uri($new-collection-name))
     
     (:just the owner has write access to start with:)
     let $null := sm:chmod(xs:anyURI($new-collection), "rwxr-xr-x")
@@ -61,15 +61,15 @@ declare function op:create-collection($parent-collection-uri as xs:string, $new-
     let $null := security:grant-parent-owner-access-if-foreign-collection($new-collection)
     
     return
-		<status id="created">{xmldb:decode-uri($new-collection)}</status>
+        <status id="created">{xmldb:decode-uri($new-collection)}</status>
 };
 
 (:TODO: Perform search for contents of collection after it has been moved.:)
 (:TODO: List is wrong: a collection cannot be moved into itself, nor can it be moved into a subfolder.:)
 declare function op:move-collection($collection-to-move as xs:string, $new-parent-collection as xs:string) as element(status) {
     
-    let $collection-to-move := xmldb:encode-uri($collection-to-move)
-    let $new-parent-collection := xmldb:encode-uri($new-parent-collection)
+    let $collection-to-move := $collection-to-move
+    let $new-parent-collection := $new-parent-collection
 
     return
         let $null := xmldb:move($collection-to-move, $new-parent-collection) return
@@ -97,7 +97,7 @@ declare function op:remove-collection($collection as xs:string) as element(statu
 
     (:Only allow deletion of a collection if none of the MODS records in it are referred to in xlinks outside the collection itself.:)
     (:Get the ids of the records in the collection that the user wants to delete.:)
-    let $collection := xmldb:encode-uri($collection)
+    let $collection := $collection
     let $collection-ids := collection($collection)//@ID
     (:Get the ids of the records that are linked to the records in the collection that the user wants to delete.:)
     let $xlinked-rec-ids :=
@@ -283,7 +283,7 @@ declare function op:is-valid-user-for-share($username as xs:string) as element(s
 };
 
 declare function op:get-child-collection-paths($start-collection as xs:anyURI) {
-    for $child-collection in xmldb:get-child-collections($start-collection)
+    for $child-collection in xmldb:get-child-collections(xmldb:encode($start-collection))
         return
             (concat($start-collection, '/', $child-collection), 
             op:get-child-collection-paths(concat($start-collection, '/', $child-collection) cast as xs:anyURI))
@@ -332,14 +332,14 @@ declare function op:unknown-action($action as xs:string) {
 };
 
 let $action := request:get-parameter("action", ())
-let $collection := request:get-parameter("collection", ())
+let $collection := xmldb:encode-uri(xs:anyURI(request:get-parameter("collection", ())))
 
 return
     if ($action eq "create-collection") then
         op:create-collection($collection, request:get-parameter("name",()))
     else if ($action eq "move-collection") then
         (:op:move-collection($collection, request:get-parameter("path",())):)
-        op:move-collection($collection, request:get-parameter("path",()))
+        op:move-collection($collection, xmldb:encode-uri(xs:anyURI(request:get-parameter("path",()))))
     else if ($action eq "rename-collection") then
         op:rename-collection($collection, request:get-parameter("name",()))
     else if ($action eq "remove-collection") then

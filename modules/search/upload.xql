@@ -187,7 +187,7 @@ let $add :=
                 let $insert_or_updata := 
                     if (not($relationTag))
                     then 
-                        if (sm:has-access($parentdoc_path, 'w'))
+                        if (security:can-write-collection(security:can-write-collection($parentdoc_path))
                         then update insert  <vra:relationSet></vra:relationSet> into $vra-insert/vra:vra/vra:work
                         else util:log('error', 'no write access')
                     else ()
@@ -205,7 +205,7 @@ let $add :=
                 </mods:relatedItem>
         let $mods-insert-tag := $parentdoc
         let $mods-update :=
-            if (sm:has-access($parentdoc_path, 'w'))
+            if (security:can-write-collection($parentdoc_path))
             then update insert  $mods-insert into $mods-insert-tag/mods:mods
             else util:log('error', 'no write access')
                 return  $mods-update 

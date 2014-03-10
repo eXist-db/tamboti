@@ -38,7 +38,7 @@ declare function local:authenticate($user as xs:string, $password as xs:string?)
 :)
 declare function local:collection-relationship($collection as xs:string) as element(relationship)
 {
-    let $collection := xmldb:encode-uri(xmldb:decode($collection))
+    let $collection := $collection
     let $parent := replace(replace(replace($collection, "(.*)/.*", "$1"), '/resources/commons', '/resources'), '/db', '') 
     
     return
@@ -56,7 +56,7 @@ declare function local:collection-relationship($collection as xs:string) as elem
         </owner>
         <read>
         {
-            security:can-read-collection(replace($collection, '/db', ''))
+            security:can-read-collection($collection)
         }
         </read>
         <write>
@@ -98,10 +98,10 @@ then
         if ($action eq "is-collection-owner") 
         then
             security:is-collection-owner(
-                security:get-user-credential-from-session()[1], xmldb:encode-uri(xmldb:decode(request:get-parameter("collection",()))))
+                security:get-user-credential-from-session()[1], request:get-parameter("collection",()))
         else 
             if ($action eq "collection-relationship") 
-            then local:collection-relationship(xmldb:encode-uri(xmldb:decode(request:get-parameter("collection",()))))
+            then local:collection-relationship(request:get-parameter("collection",()))
             else
             (
                 response:set-status-code(403),
