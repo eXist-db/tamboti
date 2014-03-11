@@ -345,7 +345,7 @@ return
                     (:Get the target collection. If it's an edit to an existing document, we can find its location by means of its uuid.
                     If it is a new record, the target collection can be captured as the collection parameter passed in the URL. :)
                     let $target-collection := local:find-live-collection-containing-uuid($incoming-id)
-                    let $new-target-collection := xmldb:encode-uri(request:get-parameter("collection", ""))
+                    let $new-target-collection := request:get-parameter("collection", "")
                     let $target-collection :=
                         if ($target-collection)
                         then $target-collection
@@ -354,7 +354,7 @@ return
                     save the record in the user's home folder. The user can then move it elsewhere.
                     If the user does have write access, save it in the collection that the host occurs in.:)
                     let $target-collection := 
-                        if (security:can-write-collection($target-collection))
+                        if (security:can-write-collection(xmldb:decode($target-collection)))
                         then $target-collection
                         else security:get-home-collection-uri(security:get-user-credential-from-session()[1])
 
@@ -382,7 +382,10 @@ return
                         ,
                         (:Store $doc in the target collection, whether this is where the record originally was located or 
                         the collection chosen to store a new record.:)
-                        xmldb:store($target-collection, $file-to-update, $doc)
+(:                        xmldb:store(xmldb:encode($target-collection), $file-to-update, $doc):)
+                        if (contains($target-collection, "%40"))
+                            then xmldb:store($target-collection, $file-to-update, $doc)
+                            else xmldb:store(xmldb:encode($target-collection), $file-to-update, $doc)
                         ,
                         (:Remove the $doc record from temp if store in target was successful.:)
                         if (doc(concat($target-collection, '/', $file-to-update))) 
@@ -390,7 +393,7 @@ return
                         else ()
                         ,
                         (:Set the same permissions on the moved file that the parent collection has.:)
-                        security:apply-parent-collection-permissions(xs:anyURI(concat($target-collection, "/", $file-to-update)))
+                        security:apply-parent-collection-permissions(xs:anyURI(concat(xmldb:encode($target-collection), "/", $file-to-update)))
                     )
                 (:If action is 'save' (the default action):)
                 (:Update $doc (the document in temp) with $item (the new edits).:)

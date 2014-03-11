@@ -81,7 +81,7 @@ declare function bs:collection-is-writable($collection as xs:string) {
     if ($collection eq $config:groups-collection) then
         false()
     else
-        security:can-write-collection($collection)
+        security:can-write-collection(xmldb:decode($collection))
 };
 
 declare function bs:get-item-uri($item-id as xs:string) {

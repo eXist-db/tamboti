@@ -11,10 +11,8 @@ declare namespace functx = "http://www.functx.com";
 declare namespace vra="http://www.vraweb.org/vracore4.htm";
 declare namespace mods="http://www.loc.gov/mods/v3";
 
-
-declare variable $user := $config:dba-credentials[1];
-declare variable $userpass := $config:dba-credentials[2];
-declare variable $logged-user := xmldb:get-current-user();
+declare variable $user := security:get-user-credential-from-session()[1];
+declare variable $userpass := security:get-user-credential-from-session()[2];
 declare variable $root-data-collection :='/db/resources/';
 declare variable $message := 'uploaded';
 declare variable $image-collection-name := 'VRA_images';
@@ -111,8 +109,6 @@ declare function local:apply-perms($path as xs:string, $username as xs:string, $
 
 };
 
-
-
 declare function upload:upload( $filetype, $filesize, $filename, $data, $doc-type, $workrecord) {
     let $myuuid := concat('i_', util:uuid())
     let $parentcol :=
@@ -138,13 +134,13 @@ declare function upload:upload( $filetype, $filesize, $filename, $data, $doc-typ
                         let $null := upload:mkcol('/', $newcol)
                         let $null := security:apply-parent-collection-permissions(xs:anyURI($newcol))
                             return $null
-                let $create-image-folder := xmldb:create-collection($newcol, $image-collection-name)
+                let $create-image-folder := xmldb:create-collection($newcol, xmldb:encode($image-collection-name))
                 let $newcol := concat($newcol, '/', $image-collection-name)
                 (:creae image folder:)
                 let $null := 
                     if (not(xmldb:collection-available($newcol)))
                     then
-                        let $null := xmldb:create-collection($newcol, $image-collection-name)
+                        let $null := xmldb:create-collection($newcol, xmldb:encode($image-collection-name))
                         let $null := security:apply-parent-collection-permissions(xs:anyURI($newcol))
                             return $null                        
                     else()
@@ -167,8 +163,8 @@ declare function upload:upload( $filetype, $filesize, $filename, $data, $doc-typ
                 let $null := sm:chgrp(xs:anyURI(concat($newcol, '/', $xml-uuid)), 'biblio.users')
                 let $null := security:apply-parent-collection-permissions(xs:anyURI(concat($newcol, '/', $file-uuid)))
                 let $null := security:apply-parent-collection-permissions(xs:anyURI(concat($newcol, '/', $xml-uuid)))
-                    return concat(xmldb:decode($filename), ' ' ,$message)
-            
+                
+                return concat(xmldb:decode($filename), ' ' ,$message)
         )
        else ()
         return $upload
@@ -187,7 +183,7 @@ let $add :=
                 let $insert_or_updata := 
                     if (not($relationTag))
                     then 
-                        if (sm:has-access($parentdoc_path, 'w'))
+                        if (security:can-write-collection(xmldb:decode-uri($parentdoc_path)))
                         then update insert  <vra:relationSet></vra:relationSet> into $vra-insert/vra:vra/vra:work
                         else util:log('error', 'no write access')
                     else ()
@@ -205,7 +201,7 @@ let $add :=
                 </mods:relatedItem>
         let $mods-insert-tag := $parentdoc
         let $mods-update :=
-            if (sm:has-access($parentdoc_path, 'w'))
+            if (security:can-write-collection($parentdoc_path))
             then update insert  $mods-insert into $mods-insert-tag/mods:mods
             else util:log('error', 'no write access')
                 return  $mods-update 
@@ -231,7 +227,6 @@ let $type :=
      return $type
 };
 
-
 let $image-types := ('png', 'jpg', 'gif', 'tiff', 'jpeg', 'tif')
 let $uploadedFile := 'uploadedFile'
 let $data := request:get-uploaded-file-data($uploadedFile)
@@ -246,14 +241,14 @@ let $result := for $x in (1 to count($data))
             if ($doc-type eq 'image')
             then
                 let $workrecord := if (fn:string-length(request:get-header('X-File-Parent'))>0)
-                then xmldb:encode(request:get-header('X-File-Parent'))
-                else ()
+                    then xmldb:encode(config:process-request-parameter(request:get-header('X-File-Parent')))
+                    else ()
                 let $upload := 
                     if (exists($workrecord))
-                    then upload:upload($filetype, $filesize[$x], xmldb:encode-uri($filename[$x]), $data[$x], $doc-type, $workrecord)
+                    then upload:upload($filetype, $filesize[$x],$filename[$x], $data[$x], $doc-type, $workrecord)
                     else
                         (:record for the collection:)
-                        let $collection-folder :=  xmldb:decode(xmldb:encode(request:get-header('X-File-Folder')))
+                        let $collection-folder := config:process-request-parameter(request:get-header('X-File-Folder'))
                         (: if the collection file exists in the file folder:)
                         (:read the collection uuid:)
                         let $collection_vra := collection($config:mods-root)//vra:collection
@@ -289,19 +284,21 @@ let $result := for $x in (1 to count($data))
                                         </titleSet>  
                                         </work>
                                     </vra>
-                                let $store :=  system:as-user($user, $userpass, xmldb:store($collection-folder, concat($work_uuid, '.xml'), $vra-work-xml))
+                                let $store :=  system:as-user($user, $userpass, xmldb:store(xmldb:encode($collection-folder), concat($work_uuid, '.xml'), $vra-work-xml))
                                 (: let $null := system:as-user($user, $userpass, security:apply-parent-collection-permissions(xs:anyURI(concat($collection-folder, '/', $work_uuid, '.xml')))) :)
-                                let $null := system:as-user($user, $userpass, sm:chown(xs:anyURI(concat($collection-folder, '/', $work_uuid, '.xml')), security:get-user-credential-from-session()[1]))
-                                let $null := system:as-user($user, $userpass, sm:chmod(xs:anyURI(concat($collection-folder, '/', $work_uuid, '.xml')), 'rwxr-xr-x'))
-                                let $null := system:as-user($user, $userpass, sm:chgrp(xs:anyURI(concat($collection-folder, '/', $work_uuid, '.xml')), 'biblio.users'))
+                                let $null := system:as-user($user, $userpass, sm:chown(xs:anyURI(concat(xmldb:encode($collection-folder), '/', $work_uuid, '.xml')), security:get-user-credential-from-session()[1]))
+                                let $null := system:as-user($user, $userpass, sm:chmod(xs:anyURI(concat(xmldb:encode($collection-folder), '/', $work_uuid, '.xml')), 'rwxr-xr-x'))
+                                let $null := system:as-user($user, $userpass, sm:chgrp(xs:anyURI(concat(xmldb:encode($collection-folder), '/', $work_uuid, '.xml')), 'biblio.users'))
                                 (:store the binary file and generate the image vra file:)
                                 let $store := upload:upload( $filetype, $filesize[$x], $filename[$x], $data[$x], $doc-type, $work_uuid)
                                 
-                                    return $message
+                                return $message
                             else ()
                                 return concat($filename[$x], ' ', $message)
                     return $upload
         else 
             let $upload := 'unsupported file format'
                 return $upload
-    return $result
+
+
+return $result

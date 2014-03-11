@@ -51,10 +51,10 @@ the buttons do not show up (except Delete Folder).:)
 (:TODO: notify user if the new name is already taken.:)
 declare function op:create-collection($parent-collection-uri as xs:string, $new-collection-name as xs:string) as element(status) {
 
-    let $new-collection := xmldb:create-collection(xmldb:encode-uri($parent-collection-uri), xmldb:encode-uri($new-collection-name))
+    let $new-collection := system:as-user(security:get-user-credential-from-session()[1], security:get-user-credential-from-session()[2], xmldb:create-collection($parent-collection-uri, xmldb:encode-uri($new-collection-name)))
     
     (:just the owner has write access to start with:)
-    let $null := sm:chmod(xs:anyURI($new-collection), "rwxr-xr-x")
+    let $null := system:as-user(security:get-user-credential-from-session()[1], security:get-user-credential-from-session()[2], sm:chmod(xs:anyURI($new-collection), "rwxr-xr-x"))
     
     (:if this collection was created inside a different user's collection,
     allow the owner of the parent collection access:)
@@ -68,8 +68,8 @@ declare function op:create-collection($parent-collection-uri as xs:string, $new-
 (:TODO: List is wrong: a collection cannot be moved into itself, nor can it be moved into a subfolder.:)
 declare function op:move-collection($collection-to-move as xs:string, $new-parent-collection as xs:string) as element(status) {
     
-    let $collection-to-move := xmldb:encode-uri($collection-to-move)
-    let $new-parent-collection := xmldb:encode-uri($new-parent-collection)
+    let $collection-to-move := $collection-to-move
+    let $new-parent-collection := $new-parent-collection
 
     return
         let $null := xmldb:move($collection-to-move, $new-parent-collection) return
@@ -97,7 +97,7 @@ declare function op:remove-collection($collection as xs:string) as element(statu
 
     (:Only allow deletion of a collection if none of the MODS records in it are referred to in xlinks outside the collection itself.:)
     (:Get the ids of the records in the collection that the user wants to delete.:)
-    let $collection := xmldb:encode-uri($collection)
+    let $collection := $collection
     let $collection-ids := collection($collection)//@ID
     (:Get the ids of the records that are linked to the records in the collection that the user wants to delete.:)
     let $xlinked-rec-ids :=
@@ -116,7 +116,7 @@ declare function op:remove-collection($collection as xs:string) as element(statu
         (:If $xlinked-rec-ids is not empty, do not delete.:)
         if ($xlinked-rec-ids)
         then ()
-        else xmldb:remove($collection) 
+        else system:as-user(security:get-user-credential-from-session()[1], security:get-user-credential-from-session()[2], xmldb:remove($collection))
     return
         if ($xlinked-rec-ids)
         then <status id="removed">{xmldb:decode-uri($collection)}</status>
@@ -158,7 +158,7 @@ declare function op:remove-resource($resource-id as xs:string) as element(status
             (:do not remove a record which is xlinked to from one or more other records:)
             (:TODO: inform user that this is the case:)
             if (count($xlinked-mods-records) eq 0) 
-            then xmldb:remove(util:collection-name($record), util:document-name($record))
+            then system:as-user(security:get-user-credential-from-session()[1], security:get-user-credential-from-session()[2], xmldb:remove(util:collection-name($record), util:document-name($record)))
             else ()
         else ()
         ,
@@ -170,12 +170,12 @@ declare function op:remove-resource($resource-id as xs:string) as element(status
                 causing the script to halt. However, the existence of the file to be deleted should first be checked, 
                 in order to prevent the function from halting in case the file does not exist.:)
                 if (util:binary-doc-available(concat($vra-image-record-collection, '/', $vra-binary-name))) 
-                then xmldb:remove($vra-image-record-collection, $vra-binary-name)
+                then system:as-user(security:get-user-credential-from-session()[1], security:get-user-credential-from-session()[2], xmldb:remove($vra-image-record-collection, $vra-binary-name))
                 else ()
         else ()
-        ,
-        response:set-status-code($HTTP-FORBIDDEN),
-        <p>Unknown action: Movee.</p>
+(:        ,:)
+(:        response:set-status-code($HTTP-FORBIDDEN),:)
+(:        <p>Unknown action: Movee.</p>:)
     )
 };
 
@@ -283,7 +283,7 @@ declare function op:is-valid-user-for-share($username as xs:string) as element(s
 };
 
 declare function op:get-child-collection-paths($start-collection as xs:anyURI) {
-    for $child-collection in xmldb:get-child-collections($start-collection)
+    for $child-collection in xmldb:get-child-collections(xmldb:encode($start-collection))
         return
             (concat($start-collection, '/', $child-collection), 
             op:get-child-collection-paths(concat($start-collection, '/', $child-collection) cast as xs:anyURI))
@@ -332,16 +332,18 @@ declare function op:unknown-action($action as xs:string) {
 };
 
 let $action := request:get-parameter("action", ())
-let $collection := request:get-parameter("collection", ())
+let $collection := xmldb:encode(config:process-request-parameter(request:get-parameter("collection", ())))
+let $name := request:get-parameter("name",())
+
 
 return
     if ($action eq "create-collection") then
-        op:create-collection($collection, request:get-parameter("name",()))
+        op:create-collection($collection, $name)
     else if ($action eq "move-collection") then
         (:op:move-collection($collection, request:get-parameter("path",())):)
-        op:move-collection($collection, request:get-parameter("path",()))
+        op:move-collection($collection, xmldb:encode-uri(xs:anyURI(request:get-parameter("path",()))))
     else if ($action eq "rename-collection") then
-        op:rename-collection($collection, request:get-parameter("name",()))
+        op:rename-collection($collection, $name)
     else if ($action eq "remove-collection") then
         op:remove-collection($collection)
     else if ($action eq "remove-resource") then

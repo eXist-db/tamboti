@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.0";
 declare option exist:serialize "method=xhtml media-type=text/html";
 
 declare function local:recurse-items($collection-path as xs:string, $username as xs:string, $mode as xs:string, $admin-password as xs:string) {
@@ -17,11 +17,12 @@ declare function local:recurse-items($collection-path as xs:string, $username as
 
 declare function local:apply-perms($path as xs:string, $username as xs:string, $mode as xs:string) {
     sm:add-user-ace(xs:anyURI($path), $username,true(), $mode)    
+    
 };
 
 
-let $collection := "/db/resources/commons/JSIT"
-let $username := "max.mustermann@ad.uni-heidelberg.de"
+let $collection := "/db/resources/commons/Priya_Paul_Collection"
+let $username := "dulip.withanage@ad.uni-heidelberg.de"
 let $mode := "rwx"
 let $admin-password := "xyz"
     return

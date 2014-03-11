@@ -164,18 +164,18 @@ declare function sharing:get-shared-collection-roots($write-required as xs:boole
                 let $user-subcollection-path := fn:concat($child-collection-path, "/", $user-subcollection) return
                     
                     if($write-required)then
-                        if(security:can-write-collection($user-subcollection-path))then
+                        if (security:can-write-collection(xmldb:decode-uri($user-subcollection-path))) then
                             $user-subcollection-path
                         else()
                     else
-                        if(security:can-read-collection($user-subcollection-path))then
+                        if(security:can-read-collection(xmldb:decode-uri($user-subcollection-path)))then
                             $user-subcollection-path
                         else()
         
     };
 
 declare function sharing:get-shared-with($collection-path as xs:string) as xs:string* {
-    let $permissions := sm:get-permissions(xs:anyURI($collection-path))/sm:permission,
+    let $permissions := sm:get-permissions(xs:anyURI(xmldb:encode($collection-path)))/sm:permission,
     $mode := $permissions/@mode return
     fn:string-join(
         (
