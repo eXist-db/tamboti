@@ -525,13 +525,13 @@ This means that phrase searches can only be performed with double quotation mark
 (: ":" and "&" are replaced with spaces.:)
 (: In the case of an unequal number of double quotation marks, all double quotation marks are removed.:)
 declare function biblio:normalize-search-string($search-string as xs:string?) as xs:string? {
-    let $search-string := 
-       if (functx:number-of-matches($search-string, '"') mod 2) 
-       then replace($search-string, '"', '') 
-       else $search-string 
-    let $search-string := replace($search-string, "'", "''")
-    let $search-string := translate($search-string, "[:&amp;]", " ")
-        return $search-string
+	let $search-string := 
+	   if (functx:number-of-matches($search-string, '"') mod 2) 
+	   then replace($search-string, '"', '') 
+	   else $search-string 
+	let $search-string := replace($search-string, "'", "''")
+	let $search-string := translate($search-string, "[:&amp;]", " ")
+    	return $search-string
 };
 
 (:~
@@ -636,44 +636,44 @@ declare function biblio:order-by-author($hit as element()) as xs:string?
     for $name in $names
     (: Sort according to family and given names.:)
     let $sortFirst :=
-        (: If there is a namePart marked as being in a Western language, there could in addition be a transliterated and a Eastern-script "nick-name", but the Western namePart should have precedence over the nick-name, therefore pick out the Western-language nameParts first. :)
-        if ($name/mods:namePart[@lang != $biblio:eastern-languages]/text())
-        then
-            (: If it has a family type, take it; otherwise take whatever namePart there is (in case of a name which has not been analysed into given and family names. :)
-            if ($name/mods:namePart[@type eq 'family']/text())
-            then $name/mods:namePart[@lang != $biblio:eastern-languages][@type eq 'family'][1]/text()
-            else $name/mods:namePart[@lang != $biblio:eastern-languages][1]/text()
-        else
-            (: If there is not a Western-language namePart, check if there is a namePart with transliteration; if this is the case, take it. :)
-            if ($name/mods:namePart[@transliteration]/text())
-            then
-                (: If it has a family type, take it; otherwise take whatever transliterated namePart there is. :)
-                if ($name/mods:namePart[@type eq 'family']/text())
-                then $name/mods:namePart[@type eq 'family'][@transliteration][1]/text()
-                else $name/mods:namePart[@transliteration][1]/text()
-            else
-                (: If the name does not have a transliterated namePart, it is probably a "standard" (unmarked) Western name, if it does not have a script attribute or uses Latin script. :)
-                if ($name/mods:namePart[@script eq 'Latn']/text() or $name/mods:namePart[not(@script)]/text())
-                then
-                (: If it has a family type, take it; otherwise takes whatever untransliterated namePart there is.:) 
-                    if ($name/mods:namePart[@type eq 'family']/text())
-                    then $name/mods:namePart[not(@script) or @script eq 'Latn'][@type eq 'family'][1]/text()
-                    else $name/mods:namePart[not(@script) or @script eq 'Latn'][1]/text()
-                (: The last step should take care of Eastern names without transliteration. These will usually have a script attribute :)
-                else
-                    if ($name/mods:namePart[@type eq 'family']/text())
-                    then $name/mods:namePart[@type eq 'family'][1]/text()
-                    else $name/mods:namePart[1]/text()
-    let $sortLast :=
-            if ($name/mods:namePart[@lang != $biblio:eastern-languages]/text())
-            then $name/mods:namePart[@lang != $biblio:eastern-languages][@type eq 'given'][1]/text()
-            else
-                if ($name/mods:namePart[@transliteration]/text())
-                then $name/mods:namePart[@type eq 'given'][@transliteration][1]/text()
-                else
-                    if ($name/mods:namePart[@script eq 'Latn']/text() or $name/mods:namePart[not(@script)]/text())
-                    then $name/mods:namePart[@type eq 'given'][not(@script) or @script eq 'Latn'][1]/text()
-                    else $name/mods:namePart[@type eq 'given'][1]/text()
+    	(: If there is a namePart marked as being in a Western language, there could in addition be a transliterated and a Eastern-script "nick-name", but the Western namePart should have precedence over the nick-name, therefore pick out the Western-language nameParts first. :)
+    	if ($name/mods:namePart[@lang != $biblio:eastern-languages]/text())
+    	then
+    		(: If it has a family type, take it; otherwise take whatever namePart there is (in case of a name which has not been analysed into given and family names. :)
+    		if ($name/mods:namePart[@type eq 'family']/text())
+    		then $name/mods:namePart[@lang != $biblio:eastern-languages][@type eq 'family'][1]/text()
+    		else $name/mods:namePart[@lang != $biblio:eastern-languages][1]/text()
+    	else
+    		(: If there is not a Western-language namePart, check if there is a namePart with transliteration; if this is the case, take it. :)
+	    	if ($name/mods:namePart[@transliteration]/text())
+	    	then
+	    		(: If it has a family type, take it; otherwise take whatever transliterated namePart there is. :)
+	    		if ($name/mods:namePart[@type eq 'family']/text())
+	    		then $name/mods:namePart[@type eq 'family'][@transliteration][1]/text()
+		    	else $name/mods:namePart[@transliteration][1]/text()
+		    else
+		    	(: If the name does not have a transliterated namePart, it is probably a "standard" (unmarked) Western name, if it does not have a script attribute or uses Latin script. :)
+	    		if ($name/mods:namePart[@script eq 'Latn']/text() or $name/mods:namePart[not(@script)]/text())
+	    		then
+	    		(: If it has a family type, take it; otherwise takes whatever untransliterated namePart there is.:) 
+		    		if ($name/mods:namePart[@type eq 'family']/text())
+		    		then $name/mods:namePart[not(@script) or @script eq 'Latn'][@type eq 'family'][1]/text()
+	    			else $name/mods:namePart[not(@script) or @script eq 'Latn'][1]/text()
+	    		(: The last step should take care of Eastern names without transliteration. These will usually have a script attribute :)
+	    		else
+	    			if ($name/mods:namePart[@type eq 'family']/text())
+		    		then $name/mods:namePart[@type eq 'family'][1]/text()
+	    			else $name/mods:namePart[1]/text()
+	let $sortLast :=
+	    	if ($name/mods:namePart[@lang != $biblio:eastern-languages]/text())
+	    	then $name/mods:namePart[@lang != $biblio:eastern-languages][@type eq 'given'][1]/text()
+	    	else
+		    	if ($name/mods:namePart[@transliteration]/text())
+		    	then $name/mods:namePart[@type eq 'given'][@transliteration][1]/text()
+			    else
+			    	if ($name/mods:namePart[@script eq 'Latn']/text() or $name/mods:namePart[not(@script)]/text())
+		    		then $name/mods:namePart[@type eq 'given'][not(@script) or @script eq 'Latn'][1]/text()
+		    		else $name/mods:namePart[@type eq 'given'][1]/text()
     let $sort :=
         if (concat($sortFirst, $sortLast)) 
         then upper-case(concat($sortFirst, ' ', $sortLast)) 
@@ -952,26 +952,26 @@ declare function biblio:notice() as element(div)* {
 : Get the last-modified date of a collection
 :)
 declare function local:get-collection-last-modified($collection-path as xs:string) as xs:dateTime {
-    let $resources-last-modified := 
-        for $resource in xmldb:get-child-resources($collection-path) return
-            xmldb:last-modified($collection-path, $resource)
-    return
-        if (not(empty($resources-last-modified)))
-        then max($resources-last-modified)
-        else xmldb:created($collection-path)
+	let $resources-last-modified := 
+		for $resource in xmldb:get-child-resources($collection-path) return
+			xmldb:last-modified($collection-path, $resource)
+	return
+		if (not(empty($resources-last-modified)))
+		then max($resources-last-modified)
+		else xmldb:created($collection-path)
 };
 
 (:~
 : Find all sub-collections that have a group and are modified after a dateTime
 :)
 declare function local:find-collections-modified-after($collection-paths as xs:string*, $modified-after as xs:dateTime) as xs:string* {
-    
-    for $collection-path in $collection-paths 
-    return
-    (
-       if ($modified-after lt local:get-collection-last-modified($collection-path)) 
-       then $collection-path
-       else (),
+	
+	for $collection-path in $collection-paths 
+	return
+	(
+	   if ($modified-after lt local:get-collection-last-modified($collection-path)) 
+	   then $collection-path
+	   else (),
        local:find-collections-modified-after(xmldb:get-child-collections($collection-path), $modified-after)
    )
 };
@@ -1172,13 +1172,13 @@ declare function biblio:form-select-current-user-groups($select-name as xs:strin
 
 declare function biblio:get-writeable-subcollection-paths($path as xs:string) {
     
-    for $sub in xmldb:get-child-collections($path)
-    let $col := concat($path, "/", $sub) return
-        (
-            if (security:can-write-collection(xmldb:decode-uri($col)))
-            then $col
-            else (), biblio:get-writeable-subcollection-paths($col)
-        )
+	for $sub in xmldb:get-child-collections($path)
+	let $col := concat($path, "/", $sub) return
+		(
+			if (security:can-write-collection($col))
+			then $col
+			else (), biblio:get-writeable-subcollection-paths($col)
+		)
 };
 
 (:~

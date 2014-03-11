@@ -61,7 +61,7 @@ declare function op:create-collection($parent-collection-uri as xs:string, $new-
     let $null := security:grant-parent-owner-access-if-foreign-collection($new-collection)
     
     return
-        <status id="created">{xmldb:decode-uri($new-collection)}</status>
+		<status id="created">{xmldb:decode-uri($new-collection)}</status>
 };
 
 (:TODO: Perform search for contents of collection after it has been moved.:)
@@ -158,7 +158,7 @@ declare function op:remove-resource($resource-id as xs:string) as element(status
             (:do not remove a record which is xlinked to from one or more other records:)
             (:TODO: inform user that this is the case:)
             if (count($xlinked-mods-records) eq 0) 
-            then xmldb:remove(util:collection-name($record), util:document-name($record))
+            then system:as-user(security:get-user-credential-from-session()[1], security:get-user-credential-from-session()[2], xmldb:remove(util:collection-name($record), util:document-name($record)))
             else ()
         else ()
         ,
@@ -170,12 +170,12 @@ declare function op:remove-resource($resource-id as xs:string) as element(status
                 causing the script to halt. However, the existence of the file to be deleted should first be checked, 
                 in order to prevent the function from halting in case the file does not exist.:)
                 if (util:binary-doc-available(concat($vra-image-record-collection, '/', $vra-binary-name))) 
-                then xmldb:remove($vra-image-record-collection, $vra-binary-name)
+                then system:as-user(security:get-user-credential-from-session()[1], security:get-user-credential-from-session()[2], xmldb:remove($vra-image-record-collection, $vra-binary-name))
                 else ()
         else ()
-        ,
-        response:set-status-code($HTTP-FORBIDDEN),
-        <p>Unknown action: Movee.</p>
+(:        ,:)
+(:        response:set-status-code($HTTP-FORBIDDEN),:)
+(:        <p>Unknown action: Movee.</p>:)
     )
 };
 

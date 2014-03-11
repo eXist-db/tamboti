@@ -229,7 +229,7 @@ declare function local:assemble-form($dummy-attributes as attribute()*, $style a
             <title>
                 {$header-title}
             </title> 
-            <script type="text/javascript" src="../session.js.xql"></script>
+
             <link rel="stylesheet" type="text/css" href="edit.css"/>
             <link rel="stylesheet" type="text/css" href="{$tamboti-css}"/>        
             {$style}
@@ -472,7 +472,7 @@ let $tab-id := request:get-parameter('tab-id', $tab-id)
 
 (:Get the chosen location for the record.:)
 (:let $target-collection := xmldb:encode-uri(request:get-parameter("collection", '')):)
-let $target-collection := xmldb:encode-uri(request:get-parameter("collection", ''))
+let $target-collection := config:process-request-parameter(request:get-parameter("collection", ''))
 
 (:Get the id of the record, if it has one; otherwise mark it "new" in order to give it one.:)
 let $id-param := request:get-parameter('id', 'new')
