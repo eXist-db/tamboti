@@ -373,13 +373,6 @@ declare function col:get-from-root-for-prev-state($root-collection-path as xs:st
                 ()
 };
 
-declare function col:process-key($key as xs:string) as xs:string {
-    replace(replace($key, "%2C", ","), "%2F", "/")
-};
-
-
-
-
 (:~
 : Request routing
 :
@@ -388,7 +381,7 @@ declare function col:process-key($key as xs:string) as xs:string {
 : If there is no key we deliver the tree root
 :)
 if(request:get-parameter("key",()))then
-    let $collection-path := col:process-key(request:get-parameter("key",())) return
+    let $collection-path := config:process-request-parameter(request:get-parameter("key",())) return
         if($collection-path eq $config:groups-collection)
             then
                 (: start of groups collection - the groups collection is virtual and so receives special treatment :)
@@ -402,14 +395,14 @@ else if(request:get-parameter("activeKey",()))then
     
     let $expanded-collections :=
         if(request:get-parameter("expandedKeyList", ()))then
-            let $processedExpandedKeyList := col:process-key(request:get-parameter("expandedKeyList", ()))
+            let $processedExpandedKeyList := config:process-request-parameter(request:get-parameter("expandedKeyList", ()))
             return
                 for $expanded-key in fn:tokenize($processedExpandedKeyList, ",") return
                     $expanded-key
         else()
     return
 (:        xmldb:get-child-collections(xmldb:encode(security:get-home-collection-uri(security:get-user-credential-from-session()[1]))):)
-        col:get-from-root-for-prev-state($config:mods-root, col:process-key(request:get-parameter("activeKey",())), col:process-key(request:get-parameter("focusedKey",())), $expanded-collections)
+        col:get-from-root-for-prev-state($config:mods-root, config:process-request-parameter(request:get-parameter("activeKey",())), config:process-request-parameter(request:get-parameter("focusedKey",())), $expanded-collections)
 
 else
     (: no key, so its the root that we want :)

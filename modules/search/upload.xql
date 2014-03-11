@@ -227,10 +227,6 @@ let $type :=
      return $type
 };
 
-declare function upload:process-key($key as xs:string) as xs:string {
-    replace(replace($key, "%2C", ","), "%2F", "/")
-};
-
 let $image-types := ('png', 'jpg', 'gif', 'tiff', 'jpeg', 'tif')
 let $uploadedFile := 'uploadedFile'
 let $data := request:get-uploaded-file-data($uploadedFile)
@@ -245,14 +241,14 @@ let $result := for $x in (1 to count($data))
             if ($doc-type eq 'image')
             then
                 let $workrecord := if (fn:string-length(request:get-header('X-File-Parent'))>0)
-                    then xmldb:encode(upload:process-key(request:get-header('X-File-Parent')))
+                    then xmldb:encode(config:process-request-parameter(request:get-header('X-File-Parent')))
                     else ()
                 let $upload := 
                     if (exists($workrecord))
                     then upload:upload($filetype, $filesize[$x],$filename[$x], $data[$x], $doc-type, $workrecord)
                     else
                         (:record for the collection:)
-                        let $collection-folder := upload:process-key(request:get-header('X-File-Folder'))
+                        let $collection-folder := config:process-request-parameter(request:get-header('X-File-Folder'))
                         (: if the collection file exists in the file folder:)
                         (:read the collection uuid:)
                         let $collection_vra := collection($config:mods-root)//vra:collection

@@ -331,12 +331,8 @@ declare function op:unknown-action($action as xs:string) {
         <p>Unknown action: {$action}.</p>
 };
 
-declare function op:process-key($key as xs:string) as xs:string {
-    replace(replace($key, "%2C", ","), "%2F", "/")
-};
-
 let $action := request:get-parameter("action", ())
-let $collection := xmldb:encode(op:process-key(request:get-parameter("collection", ())))
+let $collection := xmldb:encode(config:process-request-parameter(request:get-parameter("collection", ())))
 let $name := request:get-parameter("name",())
 
 
