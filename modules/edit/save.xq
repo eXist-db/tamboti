@@ -384,16 +384,21 @@ return
                         the collection chosen to store a new record.:)
 (:                        xmldb:store(xmldb:encode($target-collection), $file-to-update, $doc):)
                         if (contains($target-collection, "%40"))
-                            then xmldb:store($target-collection, $file-to-update, $doc)
-                            else xmldb:store(xmldb:encode($target-collection), $file-to-update, $doc)
+                            then (
+                                xmldb:store($target-collection, $file-to-update, $doc),
+                                (:Set the same permissions on the moved file that the parent collection has.:)
+                                security:apply-parent-collection-permissions(xs:anyURI(concat($target-collection, "/", $file-to-update)))                                                    )
+                            else 
+                                (
+                                    xmldb:store(xmldb:encode($target-collection), $file-to-update, $doc),
+                                    (:Set the same permissions on the moved file that the parent collection has.:)
+                                    security:apply-parent-collection-permissions(xs:anyURI(concat(xmldb:encode($target-collection), "/", $file-to-update)))
+                                )
                         ,
                         (:Remove the $doc record from temp if store in target was successful.:)
                         if (doc(concat($target-collection, '/', $file-to-update))) 
                         then xmldb:remove($config:mods-temp-collection, $file-to-update) 
                         else ()
-                        ,
-                        (:Set the same permissions on the moved file that the parent collection has.:)
-                        security:apply-parent-collection-permissions(xs:anyURI(concat(xmldb:encode($target-collection), "/", $file-to-update)))
                     )
                 (:If action is 'save' (the default action):)
                 (:Update $doc (the document in temp) with $item (the new edits).:)
