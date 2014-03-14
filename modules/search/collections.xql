@@ -176,7 +176,7 @@ declare function col:get-child-collections($collection-path as xs:string) as ele
                 <json:value>
                 {
                     for $child in $children
-                    let $child-collection-path := fn:concat($collection-path, "/", $child)
+                    let $child-collection-path := fn:concat($collection-path, "/", xmldb:decode($child))
                     order by upper-case($child)
                     return
                     

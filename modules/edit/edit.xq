@@ -494,7 +494,7 @@ let $create-new-from-template :=
 	    (:If it is an old record and the document is not in temp already, copy it there.:)
    		if (not(doc-available(concat($config:mods-temp-collection, '/', $id, '.xml'))))
    		(:Otherwise copy the old record to temp.:)
-   		then xmldb:copy($target-collection, $config:mods-temp-collection, concat($id, '.xml'))
+   		then xmldb:copy(xmldb:encode($target-collection), $config:mods-temp-collection, concat($id, '.xml'))
    		else ()
 
 (:For a compact-b form, determine which subform to serve, based on the template.:)
