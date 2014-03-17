@@ -65,21 +65,16 @@ declare function op:create-collection($parent-collection-uri as xs:string, $new-
 };
 
 (:TODO: Perform search for contents of collection after it has been moved.:)
-(:TODO: List is wrong: a collection cannot be moved into itself, nor can it be moved into a subfolder.:)
 declare function op:move-collection($collection-to-move as xs:string, $new-parent-collection as xs:string) as element(status) {
     
-    let $collection-to-move := $collection-to-move
-    let $new-parent-collection := $new-parent-collection
-
-    return
-        let $null := xmldb:move($collection-to-move, $new-parent-collection) return
+    let $null := xmldb:move(xmldb:encode-uri($collection-to-move), $new-parent-collection) return
+    
+        (:if this collection was created inside a different user's collection,
+        allow the owner of the parent collection access:)
+        let $null := security:grant-parent-owner-access-if-foreign-collection($new-parent-collection) 
         
-            (:if this collection was created inside a different user's collection,
-            allow the owner of the parent collection access:)
-            let $null := security:grant-parent-owner-access-if-foreign-collection($new-parent-collection) 
-            
-            return
-                <status id="moved" from="{xmldb:decode-uri($collection-to-move)}">{xmldb:decode-uri($new-parent-collection)}</status>
+        return
+            <status id="moved" from="{xmldb:decode-uri($collection-to-move)}">{xmldb:decode-uri($new-parent-collection)}</status>
 };
 
 (:NB: name change does not take place if the new name is already taken.:)
@@ -97,7 +92,7 @@ declare function op:remove-collection($collection as xs:string) as element(statu
 
     (:Only allow deletion of a collection if none of the MODS records in it are referred to in xlinks outside the collection itself.:)
     (:Get the ids of the records in the collection that the user wants to delete.:)
-    let $collection := $collection
+    let $collection := xmldb:encode-uri($collection)
     let $collection-ids := collection($collection)//@ID
     (:Get the ids of the records that are linked to the records in the collection that the user wants to delete.:)
     let $xlinked-rec-ids :=
@@ -116,7 +111,7 @@ declare function op:remove-collection($collection as xs:string) as element(statu
         (:If $xlinked-rec-ids is not empty, do not delete.:)
         if ($xlinked-rec-ids)
         then ()
-        else system:as-user(security:get-user-credential-from-session()[1], security:get-user-credential-from-session()[2], xmldb:remove($collection))
+        else system:as-user(security:get-user-credential-from-session()[1], security:get-user-credential-from-session()[2], xmldb:remove($collection)) 
     return
         if ($xlinked-rec-ids)
         then <status id="removed">{xmldb:decode-uri($collection)}</status>
@@ -225,7 +220,7 @@ declare function op:move-resource($resource-id as xs:string, $destination-collec
                 <status id="moved" from="{$resource-id}">{$destination-path}</status>
             )
         else:)
-            let $moved := xmldb:move($mods-record-collection, $destination-collection, $destination-resource-name) 
+            let $moved := xmldb:move(xmldb:decode-uri($mods-record-collection), $destination-collection, $destination-resource-name) 
             return
                 let $null := security:apply-parent-collection-permissions($destination-path) 
                 return
@@ -283,38 +278,39 @@ declare function op:is-valid-user-for-share($username as xs:string) as element(s
 };
 
 declare function op:get-child-collection-paths($start-collection as xs:anyURI) {
-    for $child-collection in xmldb:get-child-collections(xmldb:encode($start-collection))
+    for $child-collection in xmldb:get-child-collections($start-collection)
         return
             (concat($start-collection, '/', $child-collection), 
             op:get-child-collection-paths(concat($start-collection, '/', $child-collection) cast as xs:anyURI))
 };
 
-(:TODO: A collection cannot be moved into itself, nor can it be moved into a subfolder, 
-so it is necessary to check against the path of collection that is to be moved.:)
-declare function op:get-move-folder-list($chosen-collection as xs:anyURI) as element(select) {
+(:A collection cannot be moved into itself or into its parent, nor can it be moved into a subcollection, 
+so it is necessary to check against the path of the collection that is to be moved.
+A file cannot, by stipulation, be moved into the top level of the home collection, nor can it be moved to its own parent collection.:)
+(:TODO: capture the collection that the resource to be moved belongs to.:)
+declare function op:get-move-list($chosen-collection as xs:anyURI, $type as xs:string) as element(select) {
     <select>{
-        (:the user can move records to their home folder and to folders that are shared with the user:)
         let $user := security:get-user-credential-from-session()[1]
-        let $available-collection-paths := security:get-home-collection-uri(security:get-user-credential-from-session()[1])
-        let $move-folder-list :=
-        (:TODO: leave out the folder that the user has marked, since you cannot move something to itself:)
-        (:TODO: leave out descendant folders, since you cannot move a folder into a descendant of itself:)
-        for $available-collection-path in $available-collection-paths 
-        (:NB: Adding the home folder and shared folder here is not ideal, since it gets repeated for each descendant.:)
-        return ($available-collection-paths, op:get-child-collection-paths($available-collection-path), sharing:get-shared-collection-roots(true()))
-            for $path in distinct-values($move-folder-list)
-            let $display-path := substring-after($path, '/db/')
-            let $display-path := replace($path, concat('users/', $user), 'Home')
-            order by $display-path
+        let $home-collection := security:get-home-collection-uri($user)
+        let $shared-collection-roots := sharing:get-shared-collection-roots(true())
+        let $resource-collection := '' (:NB: capture collection!:)
+        let $move-folder-list := (xmldb:encode-uri($home-collection), op:get-child-collection-paths($home-collection), $shared-collection-roots)
+        let $move-folder-list := distinct-values($move-folder-list)
+        let $chosen-collection-parent := functx:substring-before-last($chosen-collection, "/")
+        for $path in $move-folder-list
+            [
+                if ($type eq 'folder')
+                then not(. eq xmldb:encode-uri($chosen-collection-parent)) and not(starts-with(concat(., '/'), concat(xmldb:encode-uri($chosen-collection), '/')))
+                else not(. eq xmldb:encode-uri($resource-collection)) and not(. eq xmldb:encode-uri($home-collection)) 
+            ]
+        (:"/" is appended in order not to omit a collection called "new folder" when comparing with a collection called "new":)
+        (:"starts-with" also eliminates the chosen-folder itself from the list of targets.:)
+        let $display-path := substring-after($path, '/db/')
+        let $display-path := replace($path, concat('users/', $user), 'Home')
+        order by $display-path
             return
-                <option value="{xmldb:decode-uri($path)}">{xmldb:decode-uri($display-path)}</option>
+            <option value="{xmldb:decode-uri($path)}">{xmldb:decode-uri($display-path)}</option>
     }</select>
-};
-
-(:TODO: This builds on the idea that you can move a resource to anywhere you can move a collection,
-but this is wrong, since you can move a resource into a descendant collection, whereas this is not possible for a collection.:)
-declare function op:get-move-resource-list($collection as xs:anyURI) as element(select) {
-    op:get-move-folder-list($collection)
 };
 
 declare function op:is-valid-group-for-share($groupname as xs:string) as element(status) {
@@ -332,18 +328,16 @@ declare function op:unknown-action($action as xs:string) {
 };
 
 let $action := request:get-parameter("action", ())
-let $collection := xmldb:encode(config:process-request-parameter(request:get-parameter("collection", ())))
-let $name := request:get-parameter("name",())
-
+let $collection := request:get-parameter("collection", ())
 
 return
     if ($action eq "create-collection") then
-        op:create-collection($collection, $name)
+        op:create-collection($collection, request:get-parameter("name",()))
     else if ($action eq "move-collection") then
         (:op:move-collection($collection, request:get-parameter("path",())):)
         op:move-collection($collection, xmldb:encode-uri(xs:anyURI(request:get-parameter("path",()))))
     else if ($action eq "rename-collection") then
-        op:rename-collection($collection, $name)
+        op:rename-collection($collection, request:get-parameter("name",()))
     else if ($action eq "remove-collection") then
         op:remove-collection($collection)
     else if ($action eq "remove-resource") then
@@ -363,8 +357,8 @@ return
     else if ($action eq "is-valid-group-for-share") then
         op:is-valid-group-for-share(request:get-parameter("groupname",()))
     else if ($action eq "get-move-folder-list") then
-        op:get-move-folder-list($collection)
+        op:get-move-list($collection, 'folder')
      else if ($action eq "get-move-resource-list") then
-        op:get-move-resource-list($collection)
+        op:get-move-list($collection, 'resource')
      else
         op:unknown-action($action)
