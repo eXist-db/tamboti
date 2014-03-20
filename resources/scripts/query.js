@@ -36,6 +36,34 @@ $(function() {
         $("#results").pagination("option", "itemsPerPage", 10);
         $("#results").pagination("refresh");
     });
+    $("#simple-search-form-submit-button").click(function(){
+        $.ajax({
+            url: "index.html",
+            data: {
+                "input1": $("#simple-search-form input[name='input1']").val(),
+                "render-collection-path": $("#simple-search-form input[name='render-collection-path']").val(),
+                "sort": $("#simple-search-form select[name='sort']").val(),
+                "action": "",
+                "field1": $("#simple-search-form input[name='field1']").val(),
+                "query-tabs": $("#simple-search-form input[name='query-tabs']").val(),
+                "collection-tree": $("#simple-search-form input[name='collection-tree']").val(),
+                "collection": $("#simple-search-form input[name='collection']").val()
+            },
+            dataType: "html",
+            type: "POST",
+            success: function (data) {
+                $("#results-head .hit-count").text($(data).find("#results-head .hit-count").text());
+                $("#results").pagination({
+                    url: "retrieve",
+                    totalItems: $("#results-head .hit-count").text(),
+                    itemsPerPage: 10,
+                    navContainer: "#results-head .navbar",
+                    readyCallback: resultsLoaded,
+                    params: { mode: "list" }
+                });
+            }
+        });
+    });    
     pingSession();
     
     $("#splash").fadeOut(1000);
