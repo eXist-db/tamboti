@@ -53,6 +53,7 @@ $(function() {
             type: "POST",
             success: function (data) {
                 $("#results-head .hit-count").text($(data).find("#results-head .hit-count").text());
+                $("#last-collection-queried").text(" found in " + $("#simple-search-form input[name='render-collection-path']").val());
                 $("#results").pagination({
                     url: "retrieve",
                     totalItems: $("#results-head .hit-count").text(),
