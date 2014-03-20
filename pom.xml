@@ -21,11 +21,6 @@
 		<package-abbrev>tamboti</package-abbrev>
 		<package-title>Tamboti Metadata Framework</package-title>
 		<package-type>application</package-type>
-
-
-		<module-prefix>crypto</module-prefix>
-		<module-namespace>http://expath.org/ns/crypto</module-namespace>
-		<spec-title>EXPath Cryptographic Module</spec-title>
 	</properties>
 
 	<issueManagement>
@@ -66,7 +61,7 @@
 										</replacement>
 										<replacement>
 											<token>&lt;div id="page-head-right"&gt;</token>
-											<value>&lt;div&gt;Version ${project.version}, build ${maven.build.timestamp}&lt;/div&gt;&lt;div id="page-head-right"&gt;</value>
+											<value>&lt;div&gt;Version ${project.version}, build ${maven.build.timestamp}, ${user.name}&lt;/div&gt;&lt;div id="page-head-right"&gt;</value>
 										</replacement>										
 									</replacements>
 								</configuration>
