@@ -41,6 +41,10 @@ declare variable $bs:THUMB_SIZE_FOR_GRID := 64;
 declare variable $bs:THUMB_SIZE_FOR_GALLERY := 128;
 declare variable $bs:THUMB_SIZE_FOR_DETAIL_VIEW := 256;
 
+declare variable $session:error-message-before-link := "An error occurred when displaying this record. In order to have this error fixed, please send us an email identifying the record by clicking on the following link: ";
+declare variable $session:error-message-after-link := " Clicking on the link will open your default email client.";
+declare variable $session:error-message-href := " mailto:petersen@asia-europe.uni-heidelberg.de?Subject=Tamboti%20Display%20Problem&amp;body=Fix%20display%20of%20record%20";
+declare variable $session:error-message-link-text := "Send email.";
 
 declare function functx:substring-before-last 
   ( $arg as xs:string? ,
@@ -106,16 +110,52 @@ declare function bs:view-gallery-item($mode as xs:string, $item as element(), $c
         else $bs:THUMB_SIZE_FOR_GRID
     let $list-view := 
         if (namespace-uri($item) eq 'http://www.loc.gov/mods/v3')
-        then retrieve-mods:format-list-view('', $item, '')
+        then 
+            try {
+                retrieve-mods:format-list-view('', $item, '')
+            } catch * {
+            <error>
+            {$session:error-message-before-link} 
+            <a href="{$session:error-message-href}{$item/@ID/string()}.">{$session:error-message-link-text}</a>
+            {$session:error-message-after-link}
+            </error>
+            }    
         else
             if (namespace-uri($item) eq 'http://www.vraweb.org/vracore4.htm')
-            then retrieve-vra:format-list-view('', $item, '')
+            then 
+                try {
+                    retrieve-vra:format-list-view('', $item, '')
+                } catch * {
+                <error>
+                {$session:error-message-before-link} 
+                <a href="{$session:error-message-href}{$item/*/@id/string()}.">{$session:error-message-link-text}</a>
+                {$session:error-message-after-link}
+                </error>
+                }    
             else
                 if (namespace-uri($item) eq 'http://www.tei-c.org/ns/1.0')
-                then retrieve-tei:format-list-view('', $item, '', '', '')
+                then 
+                    try {
+                        retrieve-tei:format-list-view('', $item, '', '', '')
+                    } catch * {
+                    <error>
+                    {$session:error-message-before-link} 
+                    <a href="{$session:error-message-href}{$item/@xml:id/string()}.">{$session:error-message-link-text}</a>
+                    {$session:error-message-after-link}
+                    </error>
+                    }    
                 else
                     if (namespace-uri($item) eq 'http://www.w3.org/2005/Atom')
-                    then retrieve-wiki:format-list-view('', $item, '', '', '')
+                    then 
+                        try {
+                            retrieve-wiki:format-list-view('', $item, '', '', '')
+                        } catch * {
+                        <error>
+                        {$session:error-message-before-link} 
+                        <a href="{$session:error-message-href}{$item/@xml:id/string()}.">{$session:error-message-link-text}</a>
+                        {$session:error-message-after-link}
+                        </error>
+                        }
                     else ()
                 
         return
@@ -221,7 +261,16 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
                     let $collection := translate(functx:replace-first($collection, '/db/', ''), '_', ' ')
                     let $clean := clean:cleanup($item)
                     return
-                        retrieve-mods:format-detail-view(string($currentPos), $clean, $collection)
+                        try {
+                            retrieve-mods:format-detail-view(string($currentPos), $clean, $collection)
+                        } catch * {
+                        <error>
+                        {$session:error-message-before-link} 
+                        <a href="{$session:error-message-href}{$item/@ID/string()}.">{$session:error-message-link-text}</a>
+                        {$session:error-message-after-link}
+                        </error>
+                        }
+                
                         (: What is $currentPos used for? :)
                 }
             </td>
@@ -301,7 +350,15 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
                     let $collection := translate(functx:replace-first($collection, '/db/', ''), '_', ' ')
                     let $clean := clean:cleanup($item)
                     return
-                        retrieve-vra:format-detail-view(string($currentPos), $clean, $collection, $type, $id)
+                        try {
+                            retrieve-vra:format-detail-view(string($currentPos), $clean, $collection, $type, $id)
+                        } catch * {
+                        <error>
+                        {$session:error-message-before-link} 
+                        <a href="{$session:error-message-href}{$item/*/@id/string()}.">{$session:error-message-link-text}</a>
+                        {$session:error-message-after-link}
+                        </error>
+                        }                        
                 }
             </td>
         </tr>
@@ -359,7 +416,15 @@ declare function bs:wiki-detail-view-table($item as element(), $currentPos as xs
                 {
                     let $collection := util:collection-name($item)
                     return
-                        retrieve-wiki:format-detail-view(string($currentPos), $item, $collection, $type, $id)
+                        try {
+                            retrieve-wiki:format-detail-view(string($currentPos), $item, $collection, $type, $id)
+                        } catch * {
+                        <error>
+                        {$session:error-message-before-link} 
+                        <a href="{$session:error-message-href}{$item/@xml:id/string()}.">{$session:error-message-link-text}</a>
+                        {$session:error-message-after-link}
+                        </error>
+                        }
                 }
             </td>
         </tr>
@@ -393,7 +458,15 @@ declare function bs:tei-detail-view-table($item as element(), $currentPos as xs:
                     let $collection := translate(functx:replace-first($collection, '/db/', ''), '_', ' ')
                     let $clean := clean:cleanup($item)
                     return
-                        retrieve-tei:format-detail-view(string($currentPos), $clean, $collection, $document-uri, $node-id)
+                        try {
+                            retrieve-tei:format-detail-view(string($currentPos), $clean, $collection, $document-uri, $node-id)
+                        } catch * {
+                        <error>
+                        {$session:error-message-before-link} 
+                        <a href="{$session:error-message-href}{$item/@xml:id/string()}.">{$session:error-message-link-text}</a>
+                        {$session:error-message-after-link}
+                        </error>
+                        }
                 }
             </td>
         </tr>
@@ -427,7 +500,15 @@ declare function bs:mods-list-view-table($item as node(), $currentPos as xs:int)
                     let $collection := translate(functx:replace-first($collection, '/db/', ''), '_', ' ')
                     let $clean := clean:cleanup($item)
                     return
-                        retrieve-mods:format-list-view(string($currentPos), $clean, $collection)
+                        try {
+                            retrieve-mods:format-list-view(string($currentPos), $clean, $collection)
+                        } catch * {
+                        <error>
+                        {$session:error-message-before-link} 
+                        <a href="{$session:error-message-href}{$item/@ID/string()}.">{$session:error-message-link-text}</a>
+                        {$session:error-message-after-link}
+                        </error>
+                        }                        
                         (: Originally $item was passed to retrieve-mods:format-list-view() - was there a reason for that? Performance? :)
                 }
                 </a>
@@ -479,7 +560,15 @@ declare function bs:vra-list-view-table($item as node(), $currentPos as xs:int) 
                         let $collection := translate(functx:replace-first($collection, '/db/', ''), '_', ' ')
                         let $clean := clean:cleanup($item)
                         return
+                        try {
                             retrieve-vra:format-list-view(string($currentPos), $clean, $collection)
+                        } catch * {
+                        <error>
+                        {$session:error-message-before-link} 
+                        <a href="{$session:error-message-href}{$item/*/@id/string()}.">{$session:error-message-link-text}</a>
+                        {$session:error-message-after-link}
+                        </error>
+                        }
                     }
                     </a>
                 </td>
@@ -519,7 +608,15 @@ declare function bs:tei-list-view-table($item as node(), $currentPos as xs:int) 
                     let $collection := translate(functx:replace-first($collection, '/db/', ''), '_', ' ')
                     (:let $clean := clean:cleanup($item):)
                     return
-                        retrieve-tei:format-list-view(string($currentPos), $item, $collection, $document-uri, $node-id)
+                        try {
+                            retrieve-tei:format-list-view(string($currentPos), $item, $collection, $document-uri, $node-id)
+                        } catch * {
+                        <error>
+                        {$session:error-message-before-link} 
+                        <a href="{$session:error-message-href}{$item/@xml:id/string()}.">{$session:error-message-link-text}</a>
+                        {$session:error-message-after-link}
+                        </error>
+                        }
                 }
                 </a>
             </td>
@@ -559,7 +656,15 @@ declare function bs:wiki-list-view-table($item as node(), $currentPos as xs:int)
                     let $collection := translate(functx:replace-first($collection, '/db/', ''), '_', ' ')
                     (:let $clean := clean:cleanup($item):)
                     return
-                        retrieve-wiki:format-list-view(string($currentPos), $item, $collection, $document-uri, $node-id)
+                        try {
+                            retrieve-wiki:format-list-view(string($currentPos), $item, $collection, $document-uri, $node-id)
+                        } catch * {
+                        <error>
+                        {$session:error-message-before-link} 
+                        <a href="{$session:error-message-href}{$item/@xml:id/string()}.">{$session:error-message-link-text}</a>
+                        {$session:error-message-after-link}
+                        </error>
+                        }
                 }
                 </a>
             </td>
@@ -597,7 +702,17 @@ declare function bs:plain-list-view-table($item as node(), $currentPos as xs:int
             </td>
             {
             <td class="pagination-toggle">
-                <span>{retrieve-mods:format-list-view(string($currentPos), $clean, $collection-short)}</span>
+                <span>{
+                        try {
+                            retrieve-mods:format-list-view(string($currentPos), $clean, $collection-short)
+                        } catch * {
+                        <error>
+                        {$session:error-message-before-link} 
+                        <a href="{$session:error-message-href}{$item/@ID/string()}.">{$session:error-message-link-text}</a>
+                        {$session:error-message-after-link}
+                        </error>
+                        }
+                }</span>
                 <h4>{xmldb:decode-uri($title)}</h4>
                 { $kwic }
             </td>
