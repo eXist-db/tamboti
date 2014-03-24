@@ -683,28 +683,27 @@ declare function biblio:order-by-author($hit as element()) as xs:string?
 };
 
 declare function biblio:get-year($hit as element()) as xs:string? {
-(:number() is used to filter out string values like "unknown".:)
 (:NB: year is sorted as string.:)
-(:NB: TEI documents hard to fit in.:)
-    if ($hit/mods:originInfo[1]/mods:dateIssued[1]/number()) 
+(:NB: TEI documents are hard to fit in.:)
+    if ($hit/mods:originInfo[1]/mods:dateIssued[1]) 
     then functx:substring-before-if-contains($hit/mods:originInfo[1]/mods:dateIssued[1],'-') 
     else 
-        if ($hit/mods:originInfo[1]/mods:copyrightDate[1]/number()) 
+        if ($hit/mods:originInfo[1]/mods:copyrightDate[1]) 
         then functx:substring-before-if-contains($hit/mods:originInfo[1]/mods:copyrightDate[1],'-') 
         else
-            if ($hit/mods:originInfo[1]/mods:dateCreated[1]/number()) 
+            if ($hit/mods:originInfo[1]/mods:dateCreated[1]) 
             then functx:substring-before-if-contains($hit/mods:originInfo[1]/mods:dateCreated[1],'-') 
             else
-                if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateIssued[1]/number()) 
+                if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateIssued[1]) 
                 then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateIssued[1],'-') 
                 else
-                    if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:copyrightDate[1]/number()) 
+                    if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:copyrightDate[1]) 
                     then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:copyrightDate[1],'-') 
                     else
-                        if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateCreated[1]/number()) 
+                        if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateCreated[1]) 
                         then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateCreated[1],'-') 
                         else
-                            if ($hit/mods:relatedItem[1]/mods:part[1]/mods:date[1]/number()) 
+                            if ($hit/mods:relatedItem[1]/mods:part[1]/mods:date[1]) 
                             then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:part[1]/mods:date[1],'-') 
                             else ()
 };
@@ -895,6 +894,40 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
                         return $item/search
                     default 
                         return $item
+        (:~ Take the query results and store them into the HTTP session. :)
+        let $null := session:set-attribute('mods:cached', $processed)
+        let $null := session:set-attribute('query', $query-as-xml)
+        let $null := session:set-attribute('sort', $query-as-xml)
+        let $null := session:set-attribute('collection', $query-as-xml)
+        let $null := biblio:add-to-history($query-as-xml)
+        return
+            count($processed)
+    (:NB: When 0 is returned to a query, it is set here.:)
+    else 0 
+};
+
+declare function biblio:list-collection($query-as-xml as element(query)?, $sort as item()?) as xs:int {
+    if ($query-as-xml) 
+    then
+        let $collection := $query-as-xml/collection
+        let $sort := if ($sort) then $sort else session:get-attribute("sort")
+        let $processed :=
+            if ($sort eq "Author") 
+            then 
+                for $item in collection($collection)/*
+                order by biblio:order-by-author($item)
+                return $item
+            else 
+                if ($sort eq "Year")
+                then 
+                    for $item in collection($collection)/*
+                    order by biblio:get-year($item)
+                    return $item
+                else
+                    (:when listing collection, the Lucene-based Score has no meaning; therefore default to sorting by Title.:) 
+                    for $item in collection($collection)/*
+                    order by translate($item/(mods:titleInfo[not(@type)][1]/mods:title[1] | vra:work/vra:titleSet[1]/vra:title[1] | tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1] | atom:entry/atom:title), '“‘«「‹‚›‟‛([""''', '')
+                    return $item
         (:~ Take the query results and store them into the HTTP session. :)
         let $null := session:set-attribute('mods:cached', $processed)
         let $null := session:set-attribute('query', $query-as-xml)
@@ -1325,7 +1358,9 @@ declare function biblio:get-or-create-cached-results($mylist as xs:string?, $que
             count($items)
     )
     else
-        biblio:eval-query($query-as-xml, $sort)
+        if ($query-as-xml/field)
+        then biblio:eval-query($query-as-xml, $sort)
+        else biblio:list-collection($query-as-xml, $sort)
 };
 
 declare function biblio:get-query-as-regex($query-as-xml) as xs:string { 
