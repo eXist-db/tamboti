@@ -277,7 +277,7 @@
                             var code = e.keyCode || e.which; 
                             if (code  == 13) {
                               e.preventDefault();                  
-                              $('#advanced-search').submit();
+                              tamboti.apis.advancedSearch();
                       	    return false;
                       	  }
                         });                        
