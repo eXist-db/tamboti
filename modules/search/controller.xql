@@ -124,6 +124,13 @@ else if (starts-with($exist:path, "/resources")) then
             <forward url="{$real-resources-path}">
             </forward>
         </dispatch>
+        
+else if (starts-with($exist:path, "/core")) then
+    let $real-resources-path := fn:concat(substring-before($exist:controller, "/modules/"), $exist:path) return
+        <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+            <forward url="{$real-resources-path}">
+            </forward>
+        </dispatch>        
 
 else if (starts-with($exist:path, "/db")) then
     let $resource := concat("/rest", $exist:path)
