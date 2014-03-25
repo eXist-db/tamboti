@@ -114,11 +114,11 @@ declare function bs:view-gallery-item($mode as xs:string, $item as element(), $c
             try {
                 retrieve-mods:format-list-view('', $item, '')
             } catch * {
-            <error>
+            <td class="error" colspan="2">
             {$session:error-message-before-link} 
             <a href="{$session:error-message-href}{$item/@ID/string()}.">{$session:error-message-link-text}</a>
             {$session:error-message-after-link}
-            </error>
+            </td>
             }    
         else
             if (namespace-uri($item) eq 'http://www.vraweb.org/vracore4.htm')
@@ -126,11 +126,11 @@ declare function bs:view-gallery-item($mode as xs:string, $item as element(), $c
                 try {
                     retrieve-vra:format-list-view('', $item, '')
                 } catch * {
-                <error>
+                <td class="error" colspan="2">
                 {$session:error-message-before-link} 
                 <a href="{$session:error-message-href}{$item/*/@id/string()}.">{$session:error-message-link-text}</a>
                 {$session:error-message-after-link}
-                </error>
+                </td>
                 }    
             else
                 if (namespace-uri($item) eq 'http://www.tei-c.org/ns/1.0')
@@ -138,11 +138,11 @@ declare function bs:view-gallery-item($mode as xs:string, $item as element(), $c
                     try {
                         retrieve-tei:format-list-view('', $item, '', '', '')
                     } catch * {
-                    <error>
+                    <td class="error" colspan="2">
                     {$session:error-message-before-link} 
                     <a href="{$session:error-message-href}{$item/@xml:id/string()}.">{$session:error-message-link-text}</a>
                     {$session:error-message-after-link}
-                    </error>
+                    </td>
                     }    
                 else
                     if (namespace-uri($item) eq 'http://www.w3.org/2005/Atom')
@@ -150,11 +150,11 @@ declare function bs:view-gallery-item($mode as xs:string, $item as element(), $c
                         try {
                             retrieve-wiki:format-list-view('', $item, '', '', '')
                         } catch * {
-                        <error>
+                        <td class="error" colspan="2">
                         {$session:error-message-before-link} 
                         <a href="{$session:error-message-href}{$item/@xml:id/string()}.">{$session:error-message-link-text}</a>
                         {$session:error-message-after-link}
-                        </error>
+                        </td>
                         }
                     else ()
                 
@@ -264,11 +264,11 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
                         try {
                             retrieve-mods:format-detail-view(string($currentPos), $clean, $collection)
                         } catch * {
-                        <error>
+                        <td class="error" colspan="2">
                         {$session:error-message-before-link} 
                         <a href="{$session:error-message-href}{$item/@ID/string()}.">{$session:error-message-link-text}</a>
                         {$session:error-message-after-link}
-                        </error>
+                        </td>
                         }
                 
                         (: What is $currentPos used for? :)
@@ -353,11 +353,11 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
                         try {
                             retrieve-vra:format-detail-view(string($currentPos), $clean, $collection, $type, $id)
                         } catch * {
-                        <error>
+                        <td class="error" colspan="2">
                         {$session:error-message-before-link} 
                         <a href="{$session:error-message-href}{$item/*/@id/string()}.">{$session:error-message-link-text}</a>
                         {$session:error-message-after-link}
-                        </error>
+                        </td>
                         }                        
                 }
             </td>
@@ -419,11 +419,11 @@ declare function bs:wiki-detail-view-table($item as element(), $currentPos as xs
                         try {
                             retrieve-wiki:format-detail-view(string($currentPos), $item, $collection, $type, $id)
                         } catch * {
-                        <error>
+                        <td class="error" colspan="2">
                         {$session:error-message-before-link} 
                         <a href="{$session:error-message-href}{$item/@xml:id/string()}.">{$session:error-message-link-text}</a>
                         {$session:error-message-after-link}
-                        </error>
+                        </td>
                         }
                 }
             </td>
@@ -461,11 +461,11 @@ declare function bs:tei-detail-view-table($item as element(), $currentPos as xs:
                         try {
                             retrieve-tei:format-detail-view(string($currentPos), $clean, $collection, $document-uri, $node-id)
                         } catch * {
-                        <error>
+                        <td class="error" colspan="2">
                         {$session:error-message-before-link} 
                         <a href="{$session:error-message-href}{$item/@xml:id/string()}.">{$session:error-message-link-text}</a>
                         {$session:error-message-after-link}
-                        </error>
+                        </td>
                         }
                 }
             </td>
@@ -503,11 +503,11 @@ declare function bs:mods-list-view-table($item as node(), $currentPos as xs:int)
                         try {
                             retrieve-mods:format-list-view(string($currentPos), $clean, $collection)
                         } catch * {
-                        <error>
+                        <td class="error" colspan="2">
                         {$session:error-message-before-link} 
                         <a href="{$session:error-message-href}{$item/@ID/string()}.">{$session:error-message-link-text}</a>
                         {$session:error-message-after-link}
-                        </error>
+                        </td>
                         }                        
                         (: Originally $item was passed to retrieve-mods:format-list-view() - was there a reason for that? Performance? :)
                 }
@@ -563,11 +563,11 @@ declare function bs:vra-list-view-table($item as node(), $currentPos as xs:int) 
                         try {
                             retrieve-vra:format-list-view(string($currentPos), $clean, $collection)
                         } catch * {
-                        <error>
+                        <td class="error" colspan="2">
                         {$session:error-message-before-link} 
                         <a href="{$session:error-message-href}{$item/*/@id/string()}.">{$session:error-message-link-text}</a>
                         {$session:error-message-after-link}
-                        </error>
+                        </td>
                         }
                     }
                     </a>
@@ -611,11 +611,11 @@ declare function bs:tei-list-view-table($item as node(), $currentPos as xs:int) 
                         try {
                             retrieve-tei:format-list-view(string($currentPos), $item, $collection, $document-uri, $node-id)
                         } catch * {
-                        <error>
+                        <td class="error" colspan="2">
                         {$session:error-message-before-link} 
                         <a href="{$session:error-message-href}{$item/@xml:id/string()}.">{$session:error-message-link-text}</a>
                         {$session:error-message-after-link}
-                        </error>
+                        </td>
                         }
                 }
                 </a>
@@ -659,11 +659,11 @@ declare function bs:wiki-list-view-table($item as node(), $currentPos as xs:int)
                         try {
                             retrieve-wiki:format-list-view(string($currentPos), $item, $collection, $document-uri, $node-id)
                         } catch * {
-                        <error>
+                        <td class="error" colspan="2">
                         {$session:error-message-before-link} 
                         <a href="{$session:error-message-href}{$item/@xml:id/string()}.">{$session:error-message-link-text}</a>
                         {$session:error-message-after-link}
-                        </error>
+                        </td>
                         }
                 }
                 </a>
@@ -706,11 +706,11 @@ declare function bs:plain-list-view-table($item as node(), $currentPos as xs:int
                         try {
                             retrieve-mods:format-list-view(string($currentPos), $clean, $collection-short)
                         } catch * {
-                        <error>
+                        <td class="error" colspan="2">
                         {$session:error-message-before-link} 
                         <a href="{$session:error-message-href}{$item/@ID/string()}.">{$session:error-message-link-text}</a>
                         {$session:error-message-after-link}
-                        </error>
+                        </td>
                         }
                 }</span>
                 <h4>{xmldb:decode-uri($title)}</h4>
