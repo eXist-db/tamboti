@@ -23,6 +23,13 @@
 		<package-type>application</package-type>
 	</properties>
 
+	<distributionManagement>
+		<repository>
+			<id>sourceforge</id>
+			<url>sftp://${sourceforge-frs-host}${sourceforge-user-web-htdocs-path}/repos/maven</url>
+		</repository>
+	</distributionManagement>
+
 	<issueManagement>
 		<system>changes.xml</system>
 		<url />
@@ -61,8 +68,9 @@
 										</replacement>
 										<replacement>
 											<token>&lt;div id="page-head-right"&gt;</token>
-											<value>&lt;div&gt;Version ${project.version}, build ${maven.build.timestamp}, ${user.name}&lt;/div&gt;&lt;div id="page-head-right"&gt;</value>
-										</replacement>										
+											<value>&lt;div&gt;Version ${project.version}, build ${maven.build.timestamp}, ${user.name}&lt;/div&gt;&lt;div
+												id="page-head-right"&gt;</value>
+										</replacement>
 									</replacements>
 								</configuration>
 							</execution>
@@ -150,18 +158,18 @@
 							</execution>
 						</executions>
 						<configuration>
-<!-- 							<smtpHost>extmail.urz.uni-heidelberg.de</smtpHost> -->
-<!-- 							<smtpPort implementation="java.lang.Integer">25</smtpPort> -->
-<!-- 							<username>claudius.teodorescu@asia-europe.uni-heidelberg.de</username> -->
-<!-- 							<password>iubitamea108.</password> -->
-							
+							<!-- <smtpHost>extmail.urz.uni-heidelberg.de</smtpHost> -->
+							<!-- <smtpPort implementation="java.lang.Integer">25</smtpPort> -->
+							<!-- <username>claudius.teodorescu@asia-europe.uni-heidelberg.de</username> -->
+							<!-- <password>iubitamea108.</password> -->
+
 							<smtpHost>smtp.gmail.com</smtpHost>
 							<smtpPort implementation="java.lang.Integer">587</smtpPort>
 							<username>claudius.teodorescu@gmail.com</username>
 							<password>iubitamea</password>
-							
-							
-<!-- 							<sslMode>true</sslMode> -->
+
+
+							<!-- <sslMode>true</sslMode> -->
 							<toAddresses>
 								<toAddress implementation="java.lang.String">guth@asia-europe.uni-heidelberg.de</toAddress>
 							</toAddresses>
