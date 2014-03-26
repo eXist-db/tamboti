@@ -23,12 +23,15 @@
 		<package-type>application</package-type>
 	</properties>
 
-	<distributionManagement>
-		<repository>
-			<id>sourceforge</id>
-			<url>sftp://${sourceforge-frs-host}${sourceforge-user-web-htdocs-path}/repos/maven</url>
-		</repository>
-	</distributionManagement>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>kuberam</id>
+			<releases>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<url>http://claudius108.users.sourceforge.net/repos/maven/</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<issueManagement>
 		<system>changes.xml</system>
@@ -161,12 +164,12 @@
 							<!-- <smtpHost>extmail.urz.uni-heidelberg.de</smtpHost> -->
 							<!-- <smtpPort implementation="java.lang.Integer">25</smtpPort> -->
 							<!-- <username>claudius.teodorescu@asia-europe.uni-heidelberg.de</username> -->
-							<!-- <password>iubitamea108.</password> -->
+							<!-- <password></password> -->
 
 							<smtpHost>smtp.gmail.com</smtpHost>
 							<smtpPort implementation="java.lang.Integer">587</smtpPort>
 							<username>claudius.teodorescu@gmail.com</username>
-							<password>iubitamea</password>
+							<password></password>
 
 
 							<!-- <sslMode>true</sslMode> -->
