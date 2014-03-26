@@ -9,13 +9,13 @@
                 <tr>
                     <td>Username:</td>
                     <td>
-                        <input name="user" type="text"/>
+                        <input name="user" type="text" required="required"/>
                     </td>
                 </tr>
                 <tr>
                     <td>Password:</td>
                     <td>
-                        <input name="password" type="password"/>
+                        <input name="password" type="password" required="required"/>
                     </td>
                 </tr>
             </table>
@@ -30,7 +30,7 @@
                 <br/>
             </div>
             <div>
-                <input id="new-collection-name" type="text"/>
+                <input id="new-collection-name" type="text" required="required"/>
             </div>
         </form>
     </jquery:dialog>
@@ -211,7 +211,7 @@ function FileUploadCtrl(scope) {
                 <br/>
             </div>
             <div>
-                <input id="rename-new-name" name="name" type="text"/>
+                <input id="rename-new-name" name="name" type="text" required="required"/>
             </div>
         </form>
     </jquery:dialog>
