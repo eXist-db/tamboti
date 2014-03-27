@@ -562,10 +562,7 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
             mods-common:simple-row(functx:substring-before-last-match($last-modified[count(.)], 'T'), 'Record Last Modified')
         else ()
     ,
-    let $url := concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $ID)
-    let $url-for-display := replace(replace($url, '([%?])', concat('&#8203;', '$1')), '([\.=&amp;])', concat('$1', '&#8203;'))
-    return 
-        mods-common:simple-row($url-for-display, 'Stable Link to This Record')
+    mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $ID), 'Stable Link to This Record')
     ,
     if (contains($collection-short, 'Priya Paul Collection')) 
     then 

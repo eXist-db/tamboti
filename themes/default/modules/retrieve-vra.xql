@@ -273,10 +273,9 @@ declare function retrieve-vra:format-detail-view($position as xs:string, $entry 
                         </tr>
             else ()
 ,
-    let $url := concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $entry/vra:work/@id)
-    let $url-for-display := replace(replace($url, '([%?])', concat('&#8203;', '$1')), '([\.=&amp;])', concat('$1', '&#8203;')) 
-    return 
-        mods-common:simple-row($url-for-display, 'Stable Link to This Record')
+    mods-common:simple-row(
+        concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $entry/vra:work/@id), 
+        'Stable Link to This Record')
 ,
     let $title := $entry//vra:titleSet/vra:title[1]/text()
     let $image-id := $entry//vra:relationSet/vra:relation[1]/@relids/string()    

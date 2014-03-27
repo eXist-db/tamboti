@@ -278,10 +278,7 @@ declare function retrieve-wiki:format-detail-view($position as xs:string, $entry
                         </tr>
             else ()
 ,
-    let $url := concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $entry/atom:id)
-    let $url-for-display := replace(replace($url, '([%?])', concat('&#8203;', '$1')), '([\.=&amp;])', concat('$1', '&#8203;')) 
-    return 
-        mods-common:simple-row($url-for-display, 'Stable Link to This Record')}
+    mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $entry/atom:id), 'Stable Link to This Record')}
     </table>
     let $result := <span xmlns="http://www.w3.org/1999/xhtml" class="record">{$result}</span>
     let $highlight := function($string as xs:string) { <span class="highlight">{$string}</span> }
