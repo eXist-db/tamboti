@@ -486,41 +486,31 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
             else ()
     ,
     (: language of cataloging :)
-    let $distinct-language-labels := distinct-values(
-        for $language in $entry/mods:recordInfo/mods:languageOfCataloging
-        return mods-common:get-language-label($language/mods:languageTerm)
-        )
-    let $distinct-language-labels-count := count($distinct-language-labels)
-        return
-            if ($distinct-language-labels-count gt 0)
-            then
-                mods-common:simple-row(
-                    mods-common:serialize-list($distinct-language-labels, $distinct-language-labels-count)
-                ,
-                if ($distinct-language-labels-count gt 1) 
-                then 'Languages of Cataloging' 
-                else 'Language of Cataloging'
-                    )
-            else ()
+    (:Since there can only be one (default) language of cataloging, the assumption must be that multiple language terms refer to the same language, so just take the first one. 
+    Language and script of resource can be multiple.:) 
+    let $language-label := $entry/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm[1]
+    let $language-label := 
+        if ($language-label)
+        then mods-common:get-language-label($language-label)
+        else ()
+    return
+        if ($language-label)
+        then mods-common:simple-row($language-label, 'Language of Cataloging')
+        else ()
     ,
     
     (: script of cataloging :)
-    let $distinct-script-labels := distinct-values(
-        for $language in $entry/mods:recordInfo/mods:languageOfCataloging
-        return mods-common:get-script-label($language/mods:scriptTerm)
-        )
-    let $distinct-script-labels-count := count($distinct-script-labels)
-        return
-            if ($distinct-script-labels-count gt 0)
-            then
-                mods-common:simple-row(
-                    mods-common:serialize-list($distinct-script-labels, $distinct-script-labels-count)
-                ,
-                if ($distinct-script-labels-count gt 1) 
-                then 'Scripts of Cataloging' 
-                else 'Script of Cataloging'
-                    )
-            else ()
+    (:Since there can only be one (default) script of cataloging, the assumption must be that multiple script terms refer to the same script, so just take the first one. 
+    Language and script of resource can be multiple.:)
+    let $script-label := $entry/mods:recordInfo/mods:languageOfCataloging/mods:scriptTerm[1]
+    let $script-label := 
+        if ($script-label)
+        then mods-common:get-script-label($script-label)
+        else ()
+    return
+        if ($script-label)
+        then mods-common:simple-row($script-label, 'Script of Cataloging')
+        else ()
     ,
 
     (: identifier :)
