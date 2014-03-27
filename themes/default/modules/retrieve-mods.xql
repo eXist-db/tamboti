@@ -319,13 +319,10 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
                 else
                     if (string($table-of-contents/@xlink:href))
                     then
-                        <a href="{string($table-of-contents/@xlink:href)}" target="_blank">
-                        {
-                            if ((string-length(string($table-of-contents/@xlink:href)) le 70)) 
-                            then string($table-of-contents/@xlink:href)
-                            (:avoid too long urls that do not line-wrap:)
-                            else (substring(string($table-of-contents/@xlink:href), 1, 70), '...')}
-                        </a>
+                        let $url := $table-of-contents/@xlink:href
+                        let $url-for-display := replace(replace($url, '([%?])', concat('&#8203;', '$1')), '([\.=&amp;])', concat('$1', '&#8203;'))
+                        return
+                            <a href="{string($url)}" target="_blank">{$url-for-display}</a>
                     else ()
                 }
                 </td>
@@ -679,10 +676,10 @@ declare function retrieve-mods:format-list-view($position as xs:string, $entry a
         	then
             	for $url in $entry/mods:location/mods:url
 	                return
-                    (: NB: Too long URLs do not line-wrap, forcing the display of results down below the folder view, so do not display too long URLs. The link is anyway not clickable. :)
-	                if (string-length($url) le 80)
-	                then concat(' <', $url, '>', '.')
-    	            else ""
+                        let $url-for-display := replace(replace($url, '([%?])', concat('&#8203;', '$1')), '([\.=&amp;])', concat('$1', '&#8203;')) 
+                        return
+                            (: NB: The link is not clickable. :)
+                            concat(' <', $url-for-display, '>', '.')
         	else '.'
         )
     
