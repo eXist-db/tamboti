@@ -319,13 +319,10 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
                 else
                     if (string($table-of-contents/@xlink:href))
                     then
-                        <a href="{string($table-of-contents/@xlink:href)}" target="_blank">
-                        {
-                            if ((string-length(string($table-of-contents/@xlink:href)) le 70)) 
-                            then string($table-of-contents/@xlink:href)
-                            (:avoid too long urls that do not line-wrap:)
-                            else (substring(string($table-of-contents/@xlink:href), 1, 70), '...')}
-                        </a>
+                        let $url := $table-of-contents/@xlink:href
+                        let $url-for-display := replace(replace($url, '([%?])', concat('&#8203;', '$1')), '([\.=&amp;])', concat('$1', '&#8203;'))
+                        return
+                            <a href="{string($url)}" target="_blank">{$url-for-display}</a>
                     else ()
                 }
                 </td>
@@ -489,31 +486,41 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
             else ()
     ,
     (: language of cataloging :)
-    (:Since there can only be one (default) language of cataloging, the assumption must be that multiple language terms refer to the same language, so just take the first one. 
-    Language and script of resource can be multiple.:) 
-    let $language-label := $entry/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm[1]
-    let $language-label := 
-        if ($language-label)
-        then mods-common:get-language-label($language-label)
-        else ()
-    return
-        if ($language-label)
-        then mods-common:simple-row($language-label, 'Language of Cataloging')
-        else ()
+    let $distinct-language-labels := distinct-values(
+        for $language in $entry/mods:recordInfo/mods:languageOfCataloging
+        return mods-common:get-language-label($language/mods:languageTerm)
+        )
+    let $distinct-language-labels-count := count($distinct-language-labels)
+        return
+            if ($distinct-language-labels-count gt 0)
+            then
+                mods-common:simple-row(
+                    mods-common:serialize-list($distinct-language-labels, $distinct-language-labels-count)
+                ,
+                if ($distinct-language-labels-count gt 1) 
+                then 'Languages of Cataloging' 
+                else 'Language of Cataloging'
+                    )
+            else ()
     ,
     
     (: script of cataloging :)
-    (:Since there can only be one (default) script of cataloging, the assumption must be that multiple script terms refer to the same script, so just take the first one. 
-    Language and script of resource can be multiple.:)
-    let $script-label := $entry/mods:recordInfo/mods:languageOfCataloging/mods:scriptTerm[1]
-    let $script-label := 
-        if ($script-label)
-        then mods-common:get-script-label($script-label)
-        else ()
-    return
-        if ($script-label)
-        then mods-common:simple-row($script-label, 'Script of Cataloging')
-        else ()
+    let $distinct-script-labels := distinct-values(
+        for $language in $entry/mods:recordInfo/mods:languageOfCataloging
+        return mods-common:get-script-label($language/mods:scriptTerm)
+        )
+    let $distinct-script-labels-count := count($distinct-script-labels)
+        return
+            if ($distinct-script-labels-count gt 0)
+            then
+                mods-common:simple-row(
+                    mods-common:serialize-list($distinct-script-labels, $distinct-script-labels-count)
+                ,
+                if ($distinct-script-labels-count gt 1) 
+                then 'Scripts of Cataloging' 
+                else 'Script of Cataloging'
+                    )
+            else ()
     ,
 
     (: identifier :)
@@ -565,7 +572,10 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
             mods-common:simple-row(functx:substring-before-last-match($last-modified[count(.)], 'T'), 'Record Last Modified')
         else ()
     ,
-    mods-common:simple-row(concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $ID), 'Stable Link to This Record')
+    let $url := concat(replace(request:get-url(), '/retrieve', '/index.html'), '?search-field=ID&amp;value=', $ID)
+    let $url-for-display := replace(replace($url, '([%?])', concat('&#8203;', '$1')), '([\.=&amp;])', concat('$1', '&#8203;'))
+    return 
+        mods-common:simple-row($url-for-display, 'Stable Link to This Record')
     ,
     if (contains($collection-short, 'Priya Paul Collection')) 
     then 
@@ -679,10 +689,10 @@ declare function retrieve-mods:format-list-view($position as xs:string, $entry a
         	then
             	for $url in $entry/mods:location/mods:url
 	                return
-                    (: NB: Too long URLs do not line-wrap, forcing the display of results down below the folder view, so do not display too long URLs. The link is anyway not clickable. :)
-	                if (string-length($url) le 80)
-	                then concat(' <', $url, '>', '.')
-    	            else ""
+                        let $url-for-display := replace(replace($url, '([%?])', concat('&#8203;', '$1')), '([\.=&amp;])', concat('$1', '&#8203;')) 
+                        return
+                            (: NB: The link is not clickable. :)
+                            concat(' <', $url-for-display, '>', '.')
         	else '.'
         )
     
