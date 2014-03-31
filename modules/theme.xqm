@@ -99,7 +99,7 @@ declare function theme:theme-for-prefix($prefix as xs:string?) {
         "default"
     else
         let $theme :=
-            doc($config:theme-config)//map[@path = $prefix]/@theme/string()
+            doc($config:theme-config)//theme[@id = 'default-theme']/@name/string()
         return
             if ($theme) then
                 $theme
@@ -122,7 +122,7 @@ declare function theme:get-root($prefix as xs:string?) as xs:string {
         if ($theme eq "default") then
             $config:mods-commons
         else
-            doc($config:theme-config)//map[@theme = $theme]/@root/string()
+            doc($config:theme-config)//theme[@id = 'default-theme']/@root/string()
 };
 
 (:~
