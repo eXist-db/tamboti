@@ -18,9 +18,10 @@
 		<mavenVersion>3.1.1</mavenVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<package-name>http://exist-db.org/apps/tamboti</package-name>
-		<package-abbrev>tamboti</package-abbrev>
+		<package-abbrev>${project.artifactId}</package-abbrev>
 		<package-title>Tamboti Metadata Framework</package-title>
 		<package-type>application</package-type>
+		<app-id>${package-abbrev}-${user.name}</app-id>
 	</properties>
 
 	<pluginRepositories>
@@ -47,7 +48,7 @@
 
 	<profiles>
 		<profile>
-			<id>test-build</id>
+			<id>user-test-build</id>
 			<build>
 				<plugins>
 					<plugin>
@@ -56,7 +57,7 @@
 						<version>1.5.2</version>
 						<executions>
 							<execution>
-								<id>filter-files</id>
+								<id>filter-page.html</id>
 								<phase>generate-resources</phase>
 								<goals>
 									<goal>replace</goal>
@@ -77,6 +78,23 @@
 									</replacements>
 								</configuration>
 							</execution>
+							<execution>
+								<id>filter-config.xqm</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>replace</goal>
+								</goals>
+								<configuration>
+									<file>${basedir}/modules/config.xqm</file>
+									<outputFile>${project.build.directory}/maven-replacer-plugin/config.xqm</outputFile>
+									<replacements>
+										<replacement>
+											<token>config:app-id := "tamboti"</token>
+											<value>config:app-id := "${app-id}"</value>
+										</replacement>
+									</replacements>
+								</configuration>
+							</execution>
 						</executions>
 					</plugin>
 					<plugin>
@@ -85,25 +103,68 @@
 						<version>0.3</version>
 						<executions>
 							<execution>
-								<id>create-test-build</id>
+								<id>create-user-test-build</id>
 								<phase>package</phase>
 								<goals>
 									<goal>make-xar</goal>
 								</goals>
 								<configuration>
-									<descriptor>build/test-assembly.xml</descriptor>
-									<finalName>${project.build.finalName}-test</finalName>
+									<descriptor>build/user-test-build-assembly.xml</descriptor>
+									<finalName>${project.build.finalName}-test-${user.name}</finalName>
 								</configuration>
 							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>general-test-build</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.google.code.maven-replacer-plugin</groupId>
+						<artifactId>replacer</artifactId>
+						<version>1.5.2</version>
+						<executions>
 							<execution>
-								<id>create-production-build</id>
+								<id>filter-page.html</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>replace</goal>
+								</goals>
+								<configuration>
+									<file>${basedir}/themes/tamboti/pages/page.html</file>
+									<outputFile>${project.build.directory}/maven-replacer-plugin/page.html</outputFile>
+									<replacements>
+										<replacement>
+											<token>theme/images/tamboti.png</token>
+											<value>theme/images/tamboti-test.png</value>
+										</replacement>
+										<replacement>
+											<token>&lt;div id="page-head-right"&gt;</token>
+											<value>&lt;div&gt;Version ${project.version}, build ${maven.build.timestamp}&lt;/div&gt;&lt;div
+												id="page-head-right"&gt;</value>
+										</replacement>
+									</replacements>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>ro.kuberam.maven.plugins</groupId>
+						<artifactId>kuberam-expath-plugin</artifactId>
+						<version>0.3</version>
+						<executions>
+							<execution>
+								<id>create-general-test-build</id>
 								<phase>package</phase>
 								<goals>
 									<goal>make-xar</goal>
 								</goals>
 								<configuration>
-									<descriptor>build/production-assembly.xml</descriptor>
-									<finalName>${project.build.finalName}</finalName>
+									<descriptor>build/general-test-build-assembly.xml</descriptor>
+									<finalName>${project.build.finalName}-test</finalName>
 								</configuration>
 							</execution>
 						</executions>
