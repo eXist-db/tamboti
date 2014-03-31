@@ -20,6 +20,8 @@ declare variable $config:app-root :=
         substring-before($modulePath, "/modules")
 ;
 
+declare variable $config:app-id := "tamboti";
+
 (:~ Biblio security - admin user and users group :)
 declare variable $config:biblio-admin-user := "editor";
 declare variable $config:biblio-users-group := "biblio.users";

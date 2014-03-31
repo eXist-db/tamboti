@@ -3,7 +3,11 @@ $(function() {
         loadIndexTerms();
         return false; 
     });
-    updateCollectionPathOutputs($("#simple-search-form input[name = 'render-collection-path']").val())
+    
+    if ($("*[name='render-collection-path']")[0]) {
+        updateCollectionPathOutputs($("#simple-search-form input[name = 'render-collection-path']").val())    
+    }
+
     initCollectionTree();
     
     galleries = new tamboti.galleries.Viewer($("#lightbox"));

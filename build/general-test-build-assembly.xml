@@ -13,7 +13,7 @@
 	<license>GNU-LGPL</license>
 	<copyright>true</copyright>
 	<type>application</type>
-	<target>${package-abbrev}</target>
+	<target>${package-abbrev}-test</target>
 	<permissions user="editor" password="editor" group="biblio.users" mode="0444" />
 	<status>stable</status>
 	<prepare>pre-install.xql</prepare>
