@@ -1,6 +1,6 @@
 <package xmlns="http://expath.org/ns/pkg" name="${package-name}-${user.name}" abbrev="${package-abbrev}" version="${project.version}"
 	spec="1.0">
-	<title>${package-title}</title>
+	<title>${package-title}, test</title>
 	<dependency package="http://exist-db.org/apps/shared" />
 	<dependency package="http://exist-db.org/apps/xsltforms" />
 	<author>Adam Retter</author>
