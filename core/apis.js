@@ -47,7 +47,7 @@ $(function() {
     };
     
     tamboti.apis._loadPaginator = function(data) {
-        $("#results-head .hit-count").text($(data).find("#results-head .hit-count:first-of-type").text());
+        $("#results-head .hit-count").text($(data).find("#results-head .hit-count").first().text());
         $("#last-collection-queried").text(" found in " + $("#simple-search-form input[name='render-collection-path']").val());
         $("#results").pagination({
             url: "retrieve",
