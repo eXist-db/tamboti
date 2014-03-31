@@ -1297,7 +1297,7 @@ $id
 $operator
 $sort
 query-tabs
-    can have values "simple", "advanced-search-form", "personal-list" (search-form.html)
+    can have values "simple-search-form-tab", "advanced-search-form", "personal-list" (search-form.html)
 
 $param
 :
