@@ -77,7 +77,7 @@ declare variable $biblio:FIELDS :=
             (
             mods:mods[ft:query(., '$q', $options)]
             union
-            vra:vra[ft:query(., '$q', $options)]
+            vra:vra[ft:query(.[vra:work], '$q', $options)]
             union
             tei:TEI[ft:query(., '$q', $options)]
             union
@@ -126,7 +126,7 @@ declare variable $biblio:FIELDS :=
             (
             mods:mods[ft:query(mods:abstract, '$q', $options)]
             union
-            vra:vra[ft:query(.//vra:descriptionSet, '$q', $options)]
+            vra:vra[ft:query(.[vra:work]//vra:descriptionSet, '$q', $options)]
             )
         </search-expression>
         <targets>
@@ -153,7 +153,7 @@ declare variable $biblio:FIELDS :=
             (
             mods:mods[ft:query(.//mods:name, '$q', $options)]
             union
-            vra:vra[ft:query(.//vra:agentSet, '$q', $options)]
+            vra:vra[ft:query(.[vra:work]//vra:agentSet, '$q', $options)]
             union
             tei:TEI//tei:p[ft:query(tei:name, '$q', $options)]
             union
@@ -206,12 +206,12 @@ declare variable $biblio:FIELDS :=
             (
             mods:mods[@ID eq '$q']
             union
-            vra:vra[vra:collection/@id eq '$q']
-            union
+            (:vra:vra[vra:collection/@id eq '$q']
+            union:)
             vra:vra[vra:work/@id eq '$q']
             union
-            vra:vra[vra:image/@id eq '$q']
-            union
+            (:vra:vra[vra:image/@id eq '$q']
+            union:)
             atom:entry[atom:id eq '$q']
             )
         </search-expression>
@@ -230,7 +230,7 @@ declare variable $biblio:FIELDS :=
             (
             mods:mods[ft:query(mods:subject, '$q', $options)]
             union
-            vra:vra[ft:query(.//vra:subjectSet, '$q', $options)]
+            vra:vra[ft:query(.[vra:work]//vra:subjectSet, '$q', $options)]
             union
             tei:TEI//tei:p[ft:query(.//tei:term, '$q', $options)]
             union
@@ -248,7 +248,7 @@ declare variable $biblio:FIELDS :=
             (
             mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]
             union
-            vra:vra[ft:query(.//vra:titleSet, '$q', $options)]
+            vra:vra[ft:query(.[vra:work]//vra:titleSet, '$q', $options)]
             union
             tei:TEI//tei:p[ft:query(tei:title, '$q', $options)]
             union
@@ -507,8 +507,8 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                     Therefore a search is made in all other sub-collections of /db/resources.
                     Both this and the identical replacement in biblio:evaluate-query() are necessary.:)
                     if ($query-as-xml/string() eq '/resources')
-                    then ('(collection("/resources/commons","/resources/users", "/resources/groups"))//(mods:mods | vra:vra | tei:TEI | atom:entry)')
-                    else ('collection("', $query-as-xml, '")//(mods:mods | vra:vra | tei:TEI | atom:entry)')
+                    then ('(collection("/resources/commons","/resources/users", "/resources/groups"))//(mods:mods | vra:vra[vra:work] | tei:TEI | atom:entry)')
+                    else ('collection("', $query-as-xml, '")//(mods:mods | vra:vra[vra:work] | tei:TEI | atom:entry)')
                 else ()
             default 
                 return ()
@@ -861,31 +861,6 @@ declare function biblio:eval-query($query-as-xml as element(query)?, $sort as it
             else $query
         let $sort := if ($sort) then $sort else session:get-attribute("sort")
         let $results := biblio:evaluate-query($query, $sort)
-        let $results-vra-work := $results[vra:work]
-        let $results-vra-image := 
-            (:treat vra:image records only if there is a search term in the query; 
-            otherwise empty searches will be slowed down by finding all work records for all image records:)
-            (:NB: searches exclusively in extracted text from vra:image records are omitted, since these proceed through "ft:search('page:$q')", i.e. do not contain a "[":)
-            if (contains($query, '['))
-            then $results[vra:image]
-            else ()
-        (:since vra:collection are not captured, these are in effect filtered away:)
-        let $results-vra-image := 
-            if ($results-vra-image)
-            then $results-vra-image/vra:image/vra:relationSet/vra:relation[@type eq "imageOf"]/@relids
-            else ()
-        let $results-vra-image := 
-            if ($results-vra-image)
-            then collection($config:mods-root)//vra:work[@id = $results-vra-image]/..
-            else ()
-        let $results-vra := ($results-vra-work union $results-vra-image)
-        (:we assume that all mods records will have a titleInfo element - otherwise we cannot process them:)
-        let $results-mods := $results[mods:titleInfo]
-        (:we will have tei objects returned that are not whole documents, so this has to be filtered by namespace, but using namespace-uri() is too expensive:)
-        let $results-tei := $results[self::tei:p | self::tei:bibl | self::tei:titleStmt | self::tei:person | self::tei:TEI | self::tei:title | self::tei:name | self::tei:persName | self::tei:term | self::tei:head]
-        (:using "let $results-tei := $results[self::tei:*]" should work, but gives error: context is missing for node 1 !:)
-        let $results-atom := $results[atom:title]
-        let $results := ($results-vra, $results-mods, $results-tei, $results-atom)
         let $processed :=
             for $item in $results
             return
