@@ -143,25 +143,8 @@
 										</replacement>
 										<replacement>
 											<token>&lt;div id="page-head-right"&gt;</token>
-											<value>&lt;div&gt;Version ${project.version}, build ${maven.build.timestamp}&lt;/div&gt;&lt;div
+											<value>&lt;div&gt;Version ${project.version}, build ${maven.build.timestamp} by ${user.name}&lt;/div&gt;&lt;div
 												id="page-head-right"&gt;</value>
-										</replacement>
-									</replacements>
-								</configuration>
-							</execution>
-							<execution>
-								<id>filter-config.xqm</id>
-								<phase>generate-resources</phase>
-								<goals>
-									<goal>replace</goal>
-								</goals>
-								<configuration>
-									<file>${basedir}/modules/config.xqm</file>
-									<outputFile>${project.build.directory}/maven-replacer-plugin/config.xqm</outputFile>
-									<replacements>
-										<replacement>
-											<token>config:app-id := "tamboti"</token>
-											<value>config:app-id := "${project.artifactId}"</value>
 										</replacement>
 									</replacements>
 								</configuration>
