@@ -914,18 +914,18 @@ declare function biblio:list-collection($query-as-xml as element(query)?, $sort 
         let $processed :=
             if ($sort eq "Author") 
             then 
-                for $item in collection($collection)/*
+                for $item in collection($collection)[vra:vra[vra:work] | mods:mods | tei:TEI | atom:entry]/*
                 order by biblio:order-by-author($item)
                 return $item
             else 
                 if ($sort eq "Year")
                 then 
-                    for $item in collection($collection)/*
+                    for $item in collection($collection)[vra:vra[vra:work] | mods:mods | tei:TEI | atom:entry]/*
                     order by biblio:get-year($item)
                     return $item
                 else
                     (:when listing collection, the Lucene-based Score has no meaning; therefore default to sorting by Title.:) 
-                    for $item in collection($collection)/*
+                    for $item in collection($collection)[vra:vra[vra:work] | mods:mods | tei:TEI | atom:entry]/*
                     order by translate($item/(mods:titleInfo[not(@type)][1]/mods:title[1] | vra:work/vra:titleSet[1]/vra:title[1] | tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1] | atom:entry/atom:title), '“‘«「‹‚›‟‛([""''', '')
                     return $item
         (:~ Take the query results and store them into the HTTP session. :)
