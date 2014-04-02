@@ -18,10 +18,8 @@
 		<mavenVersion>3.1.1</mavenVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<package-name>http://exist-db.org/apps/tamboti</package-name>
-		<package-abbrev>${project.artifactId}</package-abbrev>
 		<package-title>Tamboti Metadata Framework</package-title>
 		<package-type>application</package-type>
-		<app-id>${package-abbrev}-${user.name}</app-id>
 	</properties>
 
 	<pluginRepositories>
@@ -90,7 +88,7 @@
 									<replacements>
 										<replacement>
 											<token>config:app-id := "tamboti"</token>
-											<value>config:app-id := "${app-id}"</value>
+											<value>config:app-id := "${project.artifactId}-${user.name}"</value>
 										</replacement>
 									</replacements>
 								</configuration>
