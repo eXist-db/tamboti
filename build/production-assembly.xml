@@ -1,4 +1,4 @@
-<package xmlns="http://expath.org/ns/pkg" name="${package-name}" abbrev="${package-abbrev}" version="${project.version}"
+<package xmlns="http://expath.org/ns/pkg" name="${package-name}" abbrev="${project.artifactId}" version="${project.version}"
 	spec="1.0">
 	<title>${package-title}</title>
 	<dependency package="http://exist-db.org/apps/shared" />
@@ -13,7 +13,7 @@
 	<license>GNU-LGPL</license>
 	<copyright>true</copyright>
 	<type>application</type>
-	<target>${package-abbrev}</target>
+	<target>${project.artifactId}</target>
 	<permissions user="editor" password="editor" group="biblio.users" mode="0444" />
 	<status>stable</status>
 	<prepare>pre-install.xql</prepare>
