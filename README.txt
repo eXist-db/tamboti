@@ -18,3 +18,8 @@ Note that in $EXIST_HOME/webapp/WEB-INF/controller-config.xml, the following map
 before
   
   <root pattern="/apps" path="xmldb:exist:///db"/>
+  
+  To build with maven 3.1.1+:
+  For user test instance of tamboti, use "clean package -Puser-test-build".
+  For general (stable) test instance of tamboti, use "clean package -Pgeneral-test-build".
+  For production instance of tamboti, use "clean package -Pproduction-build".
