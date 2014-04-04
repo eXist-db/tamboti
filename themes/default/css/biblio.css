@@ -191,7 +191,8 @@ img {
   padding-right: 1em;
   padding-top: 2px;
 }
-#advanced-search-form-submit-button, #simple-search-form-submit-button {
+#advanced-search-form-submit-button,
+#simple-search-form-submit-button {
   font-weight: 700;
   display: inline;
   padding-bottom: 2px;
@@ -448,10 +449,30 @@ span.readable .dynatree-title {
   padding: 0;
 }
 /*main structures for display of search results begins*/
+#results-toolbar {
+  height: 30px;
+}
+
+#results-toolbar > * {
+  display: inline-block;
+}
+
+#ddlcb {
+  margin-right: 20px;
+  margin-left: -4px;
+}
+
+#search-list-action {
+  position: relative;
+  top: -10px;
+  margin-left: 170px;
+}
+
 #results {
   margin-top: .5em;
   overflow: auto;
 }
+
 #results table {
   width: 100%;
 }
