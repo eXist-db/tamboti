@@ -99,7 +99,9 @@ $(function() {
     });
     
     $("#search-list-action").change(function() {
-        if ($( this ).val() == "edit") {
+        var $this = $(this);
+        $this.val("actions");
+        if ($this.val() == "edit") {
             //alert(tamboti.ddlcb.selectedOptionsIndex.toString());
             $.post('/exist/restxq/ziziphus/group', {}, function() {
                 window.open('target-file', '_blank');
