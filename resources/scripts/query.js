@@ -49,6 +49,64 @@ $(function() {
     
     pingSession();
     
+    // initialize the dropDownListCheckbox
+    tamboti.ddlcb = $("#ddlcb").dropDownListCheckbox({
+        containerCls: "#ddlcb",
+        mainOption: '#ddlcb-select-all',
+        mainComponentOptionSelected: function() {
+            $("#pagination input:checkbox").attr("checked", "checked").each(
+                function(index) {
+                    $("#ddlcb").dropDownListCheckbox.registerExternalOption([this.id]);
+                }
+            );
+        },
+        mainComponentOptionUnselected: function() {
+            $("#pagination input:checkbox").removeAttr('checked').each(
+                function(index) {
+                    $("#ddlcb").dropDownListCheckbox.unregisterExternalOption([this.id]);
+                }    
+			);
+        },
+        otherComponentOptionSelected: function($option) {
+            $(".search-list-item-checkbox").prop("checked", "checked").each(
+                function(index) {
+                    $("#ddlcb").dropDownListCheckbox.registerExternalOption([this.id]);
+                }
+            );
+        },
+        otherComponentOptionUnselected: function($option) {
+            $(".search-list-item-checkbox").removeAttr('checked').each(
+                function(index) {
+                    $("#ddlcb").dropDownListCheckbox.unregisterExternalOption([this.id]);
+                }    
+			);
+        },
+        showComponentStatusMessage: true,
+        componentStatusMessage: "$numberOfSelectedOptions of $maxNumberOfOptions record(s) selected"
+	}).dropDownListCheckbox.setMaxNumberOfOptions($("#results-head .hit-count").text());
+	
+    // initialize the check boxes of the search list
+    $(".search-list-item-checkbox").live("click", function (ev) {
+        //ev.preventDefault();
+        var $this = $(this);
+        if ($this.is(":checked")) {
+            tamboti.ddlcb.registerExternalOption([$this.attr("data-tamboti-record-id")]);
+            $("#message").html(tamboti.ddlcb.selectedOptionsIndex.toString().replace(/,/gi, "<br/>"));
+        } else {
+            tamboti.ddlcb.unregisterExternalOption([$this.attr("data-tamboti-record-id")]);
+            $("#message").html(tamboti.ddlcb.selectedOptionsIndex.toString().replace(/,/gi, "<br/>"));
+        }
+    });
+    
+    $("#search-list-action").change(function() {
+        if ($( this ).val() == "edit") {
+            //alert(tamboti.ddlcb.selectedOptionsIndex.toString());
+            $.post('/exist/restxq/ziziphus/group', {}, function() {
+                window.open('target-file', '_blank');
+            });            
+        }
+    });    
+    
     $("#splash").fadeOut(1000);
 });
 
