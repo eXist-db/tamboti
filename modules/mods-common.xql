@@ -550,11 +550,7 @@ let $url :=
     (:Special formatting for image collections.:)
     then concat('images/',$collection-short,'/',$url,'?s',$config:url-image-size) 
     else $url
-let $url-for-display := 
-    if ((string-length($url) le 70))
-    then $url
-    (:avoid too long urls that do not line-wrap:)
-    else (substring($url, 1, 70), '...') 
+let $url-for-display := replace(replace($url, '([%?])', concat('&#8203;', '$1')), '([\.=&amp;])', concat('$1', '&#8203;')) 
 return 
     <a href="{$url}" target="_blank">{$url-for-display}</a>
 };
