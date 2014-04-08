@@ -56,47 +56,47 @@ $(function() {
         mainComponentOptionSelected: function() {
             $("#pagination input:checkbox").attr("checked", "checked").each(
                 function(index) {
-                    $("#ddlcb").dropDownListCheckbox.registerExternalOption([this.id]);
+                    tamboti.ddlcb.dropDownListCheckbox.registerExternalOption([this.id]);
                 }
             );
         },
         mainComponentOptionUnselected: function() {
             $("#pagination input:checkbox").removeAttr('checked').each(
                 function(index) {
-                    $("#ddlcb").dropDownListCheckbox.unregisterExternalOption([this.id]);
+                    tamboti.ddlcb.dropDownListCheckbox.unregisterExternalOption([this.id]);
                 }    
 			);
         },
         otherComponentOptionSelected: function($option) {
             $(".search-list-item-checkbox").prop("checked", "checked").each(
                 function(index) {
-                    $("#ddlcb").dropDownListCheckbox.registerExternalOption([this.id]);
+                    tamboti.ddlcb.dropDownListCheckbox.registerExternalOption([this.id]);
                 }
             );
         },
         otherComponentOptionUnselected: function($option) {
             $(".search-list-item-checkbox").removeAttr('checked').each(
                 function(index) {
-                    $("#ddlcb").dropDownListCheckbox.unregisterExternalOption([this.id]);
+                    tamboti.ddlcb.dropDownListCheckbox.unregisterExternalOption([this.id]);
                 }    
 			);
         },
         showComponentStatusMessage: true,
         componentStatusMessage: "$numberOfSelectedOptions of $maxNumberOfOptions record(s) selected"
-	}).dropDownListCheckbox.setMaxNumberOfOptions($("#results-head .hit-count").text());
+	});
 	
     // initialize the check boxes of the search list
     $(".search-list-item-checkbox").live("click", function (ev) {
         //ev.preventDefault();
         var $this = $(this);
         if ($this.is(":checked")) {
-            tamboti.ddlcb.registerExternalOption([$this.attr("data-tamboti-record-id")]);
+            tamboti.ddlcb.dropDownListCheckbox.registerExternalOption([$this.attr("data-tamboti-record-id")]);
             $("#message").html(tamboti.ddlcb.selectedOptionsIndex.toString().replace(/,/gi, "<br/>"));
         } else {
-            tamboti.ddlcb.unregisterExternalOption([$this.attr("data-tamboti-record-id")]);
+            tamboti.ddlcb.dropDownListCheckbox.unregisterExternalOption([$this.attr("data-tamboti-record-id")]);
             $("#message").html(tamboti.ddlcb.selectedOptionsIndex.toString().replace(/,/gi, "<br/>"));
         }
-    });
+    });	
     
     $("#search-list-action").change(function() {
         var $this = $(this);
@@ -107,7 +107,7 @@ $(function() {
                 window.open('target-file', '_blank');
             });            
         }
-    });    
+    });
     
     $("#splash").fadeOut(1000);
 });

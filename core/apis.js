@@ -47,7 +47,9 @@ $(function() {
     };
     
     tamboti.apis._loadPaginator = function(data) {
-        $("#results-head .hit-count").text($(data).find("#results-head .hit-count").first().text());
+        var hitCounts = $(data).find("#results-head .hit-count").first().text();
+        $("#results-head .hit-count").text(hitCounts);
+        tamboti.ddlcb.dropDownListCheckbox.setMaxNumberOfOptions(hitCounts);
         $("#last-collection-queried").text(" found in " + $("#simple-search-form input[name='render-collection-path']").val());
         $("#results").pagination({
             url: "retrieve",
