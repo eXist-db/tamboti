@@ -376,15 +376,20 @@ declare function retrieve-mods:format-detail-view($position as xs:string, $entry
     (: typeOfResource :)
     mods-common:simple-row(string($entry/mods:typeOfResource[1]), 'Type of Resource')
     ,
+    
     (: internetMediaType :)
-    mods-common:simple-row(
-    (
-	    let $label := doc(concat($config:edit-app-root, '/code-tables/internet-media-type-codes.xml'))/*:code-table/*:items/*:item[*:value eq $entry/mods:physicalDescription[1]/mods:internetMediaType]/*:label
-	    return
-	        if ($label) 
-	        then $label
-	        else $entry/mods:physicalDescription[1]/mods:internetMediaType)
-    , 'Internet Media Type')
+    let $internetMediaTypes := $entry/mods:physicalDescription/mods:internetMediaType
+    return
+        for $internetMediaType in $internetMediaTypes
+        return
+            mods-common:simple-row(
+            (
+        	    let $label := doc(concat($config:edit-app-root, '/code-tables/internet-media-type-codes.xml'))/*:code-table/*:items/*:item[*:value eq $internetMediaType]/*:label
+        	    return
+        	        if ($label) 
+        	        then $label
+        	        else $internetMediaType)
+            , 'Internet Media Type')
     ,
     
     (: genre :)
