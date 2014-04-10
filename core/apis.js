@@ -51,13 +51,13 @@ $(function() {
         $("#results-head .hit-count").text(hitCounts);
         tamboti.ddlcb.dropDownListCheckbox.setMaxNumberOfOptions(hitCounts);
         $("#last-collection-queried").text(" found in " + $("#simple-search-form input[name='render-collection-path']").val());
+        
         $("#results").pagination({
             url: "retrieve",
             totalItems: $("#results-head .hit-count").text(),
             itemsPerPage: 10,
-            navContainer: "#results-head .navbar",
             readyCallback: resultsLoaded,
             params: { mode: "list" }
-        });
+        });        
     };
 });

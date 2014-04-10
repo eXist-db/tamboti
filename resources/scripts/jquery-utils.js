@@ -42,6 +42,7 @@
                     if (base.options.totalItems == 1)
                         base.options.itemsPerPage = 1;
                     base.element = $(base);
+
                     helpers.initNavbar(base);
                     if (base.options.totalItems > 0)
                         helpers.retrievePage(base, 1);
@@ -114,7 +115,10 @@
                             helpers.retrievePage(base, 1);
                     return false;
                 });
-                $(".pagination-next", div).click(function () {
+                $(".pagination-next", div).click(function (ev) {//alert($(ev.currentTarget).attr("class"));
+                    for (prop in ev) {
+                        //alert(prop + ": " + ev[prop]);
+                    }
                     if (base.options.totalItems - (base.currentItem + base.options.itemsPerPage) >= 0)
                     helpers.retrievePage(base, base.currentItem + base.options.itemsPerPage);
                     return false;
@@ -213,7 +217,7 @@
                     url: base.options.url,
                     data: params,
                     dataType: "html",
-                    success: function(data) { 
+                    success: function(data) {
                         base.currentItem = start;
                         helpers.displayPage(base, data); 
                     },

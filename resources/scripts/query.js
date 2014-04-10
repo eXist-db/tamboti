@@ -91,10 +91,10 @@ $(function() {
         var $this = $(this);
         if ($this.is(":checked")) {
             tamboti.ddlcb.dropDownListCheckbox.registerExternalOption([$this.attr("data-tamboti-record-id")]);
-            $("#message").html(tamboti.ddlcb.selectedOptionsIndex.toString().replace(/,/gi, "<br/>"));
+            $("#message").html(tamboti.ddlcb.dropDownListCheckbox.selectedOptionsIndex.toString().replace(/,/gi, "<br/>"));
         } else {
             tamboti.ddlcb.dropDownListCheckbox.unregisterExternalOption([$this.attr("data-tamboti-record-id")]);
-            $("#message").html(tamboti.ddlcb.selectedOptionsIndex.toString().replace(/,/gi, "<br/>"));
+            $("#message").html(tamboti.ddlcb.dropDownListCheckbox.selectedOptionsIndex.toString().replace(/,/gi, "<br/>"));
         }
     });	
     
@@ -107,7 +107,7 @@ $(function() {
                 window.open('target-file', '_blank');
             });            
         }
-    });
+    });    
     
     $("#splash").fadeOut(1000);
 });
