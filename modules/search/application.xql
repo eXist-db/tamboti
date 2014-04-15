@@ -697,27 +697,36 @@ declare function biblio:order-by-author($hit as element()) as xs:string?
 declare function biblio:get-year($hit as element()) as xs:string? {
 (:NB: year is sorted as string.:)
 (:NB: TEI documents are hard to fit in.:)
-    if ($hit/mods:originInfo[1]/mods:dateIssued[1]) 
-    then functx:substring-before-if-contains($hit/mods:originInfo[1]/mods:dateIssued[1],'-') 
-    else 
-        if ($hit/mods:originInfo[1]/mods:copyrightDate[1]) 
-        then functx:substring-before-if-contains($hit/mods:originInfo[1]/mods:copyrightDate[1],'-') 
+    (:NB: VRA date need to be selected more precisely.:)
+    let $vra-date := $hit//vra:earliestDate[1]/string()
+    return
+        if ($vra-date)
+        then functx:substring-before-if-contains($vra-date,'-')
         else
-            if ($hit/mods:originInfo[1]/mods:dateCreated[1]) 
-            then functx:substring-before-if-contains($hit/mods:originInfo[1]/mods:dateCreated[1],'-') 
-            else
-                if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateIssued[1]) 
-                then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateIssued[1],'-') 
-                else
-                    if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:copyrightDate[1]) 
-                    then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:copyrightDate[1],'-') 
+            if ($hit//mods:originInfo)
+            then
+                if ($hit/mods:originInfo[1]/mods:dateIssued[1]) 
+                then functx:substring-before-if-contains($hit/mods:originInfo[1]/mods:dateIssued[1],'-') 
+                else 
+                    if ($hit/mods:originInfo[1]/mods:copyrightDate[1]) 
+                    then functx:substring-before-if-contains($hit/mods:originInfo[1]/mods:copyrightDate[1],'-') 
                     else
-                        if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateCreated[1]) 
-                        then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateCreated[1],'-') 
+                        if ($hit/mods:originInfo[1]/mods:dateCreated[1]) 
+                        then functx:substring-before-if-contains($hit/mods:originInfo[1]/mods:dateCreated[1],'-') 
                         else
-                            if ($hit/mods:relatedItem[1]/mods:part[1]/mods:date[1]) 
-                            then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:part[1]/mods:date[1],'-') 
-                            else ()
+                            if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateIssued[1]) 
+                            then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateIssued[1],'-') 
+                            else
+                                if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:copyrightDate[1]) 
+                                then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:copyrightDate[1],'-') 
+                                else
+                                    if ($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateCreated[1]) 
+                                    then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:originInfo[1]/mods:dateCreated[1],'-') 
+                                    else
+                                        if ($hit/mods:relatedItem[1]/mods:part[1]/mods:date[1]) 
+                                        then functx:substring-before-if-contains($hit/mods:relatedItem[1]/mods:part[1]/mods:date[1],'-') 
+                                        else ()
+            else ()
 };
 
 
