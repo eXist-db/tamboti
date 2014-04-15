@@ -626,60 +626,72 @@ declare function biblio:process-form() as element(query)? {
 :)
 
 declare variable $biblio:eastern-languages := ('chi', 'jpn', 'kor', 'skt', 'tib');
-declare variable $biblio:author-roles := ('aut', 'author', 'cre', 'creator', 'composer', 'cmp', 'artist', 'art', 'director', 'drt');
+declare variable $biblio:author-roles := ('aut', 'author', 'cre', 'creator', 'composer', 'cmp', 'artist', 'art', 'director', 'drt', 'photographer', 'pht');
 (: This function is adapted in nameutil:format-name() in names.xql. Any changes should be coordinated. :)
 declare function biblio:order-by-author($hit as element()) as xs:string?
 {
     (: Pick the first occurring name element of an author/creator. :)
-    let $names := $hit/mods:name[mods:role/mods:roleTerm = $biblio:author-roles or not(mods:role/mods:roleTerm)][1] 
-    (: Iterate through the single name in order to be able to order it in a return statement. :)
-    for $name in $names
-    (: Sort according to family and given names.:)
-    let $sortFirst :=
-    	(: If there is a namePart marked as being in a Western language, there could in addition be a transliterated and a Eastern-script "nick-name", but the Western namePart should have precedence over the nick-name, therefore pick out the Western-language nameParts first. :)
-    	if ($name/mods:namePart[@lang != $biblio:eastern-languages]/text())
-    	then
-    		(: If it has a family type, take it; otherwise take whatever namePart there is (in case of a name which has not been analysed into given and family names. :)
-    		if ($name/mods:namePart[@type eq 'family']/text())
-    		then $name/mods:namePart[@lang != $biblio:eastern-languages][@type eq 'family'][1]/text()
-    		else $name/mods:namePart[@lang != $biblio:eastern-languages][1]/text()
-    	else
-    		(: If there is not a Western-language namePart, check if there is a namePart with transliteration; if this is the case, take it. :)
-	    	if ($name/mods:namePart[@transliteration]/text())
-	    	then
-	    		(: If it has a family type, take it; otherwise take whatever transliterated namePart there is. :)
-	    		if ($name/mods:namePart[@type eq 'family']/text())
-	    		then $name/mods:namePart[@type eq 'family'][@transliteration][1]/text()
-		    	else $name/mods:namePart[@transliteration][1]/text()
-		    else
-		    	(: If the name does not have a transliterated namePart, it is probably a "standard" (unmarked) Western name, if it does not have a script attribute or uses Latin script. :)
-	    		if ($name/mods:namePart[@script eq 'Latn']/text() or $name/mods:namePart[not(@script)]/text())
-	    		then
-	    		(: If it has a family type, take it; otherwise takes whatever untransliterated namePart there is.:) 
-		    		if ($name/mods:namePart[@type eq 'family']/text())
-		    		then $name/mods:namePart[not(@script) or @script eq 'Latn'][@type eq 'family'][1]/text()
-	    			else $name/mods:namePart[not(@script) or @script eq 'Latn'][1]/text()
-	    		(: The last step should take care of Eastern names without transliteration. These will usually have a script attribute :)
-	    		else
-	    			if ($name/mods:namePart[@type eq 'family']/text())
-		    		then $name/mods:namePart[@type eq 'family'][1]/text()
-	    			else $name/mods:namePart[1]/text()
-	let $sortLast :=
-	    	if ($name/mods:namePart[@lang != $biblio:eastern-languages]/text())
-	    	then $name/mods:namePart[@lang != $biblio:eastern-languages][@type eq 'given'][1]/text()
-	    	else
-		    	if ($name/mods:namePart[@transliteration]/text())
-		    	then $name/mods:namePart[@type eq 'given'][@transliteration][1]/text()
-			    else
-			    	if ($name/mods:namePart[@script eq 'Latn']/text() or $name/mods:namePart[not(@script)]/text())
-		    		then $name/mods:namePart[@type eq 'given'][not(@script) or @script eq 'Latn'][1]/text()
-		    		else $name/mods:namePart[@type eq 'given'][1]/text()
-    let $sort :=
-        if (concat($sortFirst, $sortLast)) 
-        then upper-case(concat($sortFirst, ' ', $sortLast)) 
-        else ()
+    let $vra-name := $hit//vra:agent[vra:role = $biblio:author-roles][1]/vra:name
+    let $mods-name := 
+        if ($vra-name) 
+        then () 
+        else $hit/mods:name[mods:role/mods:roleTerm = $biblio:author-roles or not(mods:role/mods:roleTerm)][1] 
     return
-        $sort
+        if ($mods-name) 
+        then
+                (: Sort according to family and given names.:)
+                let $mods-sortFirst :=
+            	(: If there is a namePart marked as being in a Western language, there could in addition be a transliterated and a Eastern-script "nick-name", but the Western namePart should have precedence over the nick-name, therefore pick out the Western-language nameParts first. :)
+            	if ($mods-name/mods:namePart[@lang != $biblio:eastern-languages]/text())
+            	then
+            		(: If it has a family type, take it; otherwise take whatever namePart there is (in case of a name which has not been analysed into given and family names. :)
+            		if ($mods-name/mods:namePart[@type eq 'family']/text())
+            		then $mods-name/mods:namePart[@lang != $biblio:eastern-languages][@type eq 'family'][1]/text()
+            		else $mods-name/mods:namePart[@lang != $biblio:eastern-languages][1]/text()
+            	else
+            		(: If there is not a Western-language namePart, check if there is a namePart with transliteration; if this is the case, take it. :)
+        	    	if ($mods-name/mods:namePart[@transliteration]/text())
+        	    	then
+        	    		(: If it has a family type, take it; otherwise take whatever transliterated namePart there is. :)
+        	    		if ($mods-name/mods:namePart[@type eq 'family']/text())
+        	    		then $mods-name/mods:namePart[@type eq 'family'][@transliteration][1]/text()
+        		    	else $mods-name/mods:namePart[@transliteration][1]/text()
+        		    else
+        		    	(: If the name does not have a transliterated namePart, it is probably a "standard" (unmarked) Western name, if it does not have a script attribute or uses Latin script. :)
+        	    		if ($mods-name/mods:namePart[@script eq 'Latn']/text() or $mods-name/mods:namePart[not(@script)]/text())
+        	    		then
+        	    		(: If it has a family type, take it; otherwise takes whatever untransliterated namePart there is.:) 
+        		    		if ($mods-name/mods:namePart[@type eq 'family']/text())
+        		    		then $mods-name/mods:namePart[not(@script) or @script eq 'Latn'][@type eq 'family'][1]/text()
+        	    			else $mods-name/mods:namePart[not(@script) or @script eq 'Latn'][1]/text()
+        	    		(: The last step should take care of Eastern names without transliteration. These will usually have a script attribute :)
+        	    		else
+        	    			if ($mods-name/mods:namePart[@type eq 'family']/text())
+        		    		then $mods-name/mods:namePart[@type eq 'family'][1]/text()
+        	    			else $mods-name/mods:namePart[1]/text()
+        	let $mods-sortLast :=
+        	    	if ($mods-name/mods:namePart[@lang != $biblio:eastern-languages]/text())
+        	    	then $mods-name/mods:namePart[@lang != $biblio:eastern-languages][@type eq 'given'][1]/text()
+        	    	else
+        		    	if ($mods-name/mods:namePart[@transliteration]/text())
+        		    	then $mods-name/mods:namePart[@type eq 'given'][@transliteration][1]/text()
+        			    else
+        			    	if ($mods-name/mods:namePart[@script eq 'Latn']/text() or $mods-name/mods:namePart[not(@script)]/text())
+        		    		then $mods-name/mods:namePart[@type eq 'given'][not(@script) or @script eq 'Latn'][1]/text()
+        		    		else $mods-name/mods:namePart[@type eq 'given'][1]/text()
+            let $mods-sort-string :=
+                if (concat($mods-sortFirst, $mods-sortLast)) 
+                then upper-case(concat($mods-sortFirst, ' ', $mods-sortLast)) 
+                else ()
+            return
+                $mods-sort-string
+            else
+                if ($vra-name) 
+                then 
+                    let $vra-sort-string := upper-case($vra-name)
+                    return 
+                        $vra-sort-string
+                else ()
 };
 
 declare function biblio:get-year($hit as element()) as xs:string? {
