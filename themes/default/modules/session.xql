@@ -753,35 +753,37 @@ declare function bs:list-view-table($item as node(), $currentPos as xs:int) {
 declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id as xs:string) {
     let $home := security:get-home-collection-uri($bs:USER)
     (:determine for image record:)
-   
-
     let $collection := util:collection-name($item)
     let $id := 
-        if (name($item) eq 'mods') 
+        if (name($item) eq "mods") 
         then $item/@ID 
         else
             if (exists($item/vra:work))
             then $item/vra:work/@id
             else ()
-    let $imageId :=  if (exists($item/vra:work))
-                      then
-                            if (exists($item/vra:work/vra:relationSet/vra:relation/@pref[.='true']))
-                            then $item/vra:work/vra:relationSet/vra:relation[@pref='true']/@relids
-                            else $item/vra:work/vra:relationSet/vra:relation[1]/@relids
-                      else $item/vra:image/@id
-
-    let $workdir := if (contains($collection, 'VRA_images')) then (  functx:substring-before-last($collection, "/")) else ($collection)
-    let $workdir := if (ends-with($workdir,'/')) then ($workdir) else ($workdir || '/')
-    let $imagepath := $workdir || 'VRA_images/' || $imageId || ".xml"
-    
-     
-     let $upload-button:=  
+    let $imageId :=  
+        if (exists($item/vra:work))
+        then
+            if ($item/vra:work/vra:relationSet/vra:relation/@pref[. eq "true"])
+            then $item/vra:work/vra:relationSet/vra:relation[@pref eq "true"][1]/@relids
+            else $item/vra:work/vra:relationSet/vra:relation[1]/@relids
+        else $item/vra:image/@id
+    let $workdir := 
+        if (contains($collection, "VRA_images")) 
+        then functx:substring-before-last($collection, "/") 
+        else $collection
+    let $workdir := 
+        if (ends-with($workdir,"/")) 
+        then $workdir 
+        else $workdir || "/"
+    let $imagepath := $workdir || "VRA_images/" || $imageId || ".xml"
+    let $upload-button:=  
         if (not($item/vra:image/@id))
-            then <a class="upload-file-style"  directory="false" href="#{$id}" onclick="updateAttachmentDialog"><img title="Upload Image" src="theme/images/database_add.png" /> </a>
+        then <a class="upload-file-style"  directory="false" href="#{$id}" onclick="updateAttachmentDialog"><img title="Upload Image" src="theme/images/database_add.png" /> </a>
         else ()
     return
         <div class="actions-toolbar">{
-            if (name($item) = ('mods', 'vra'))
+            if (name($item) = ("mods", "vra", "tei"))
             then
                <a target="_new" href="source.xql?id={$id}&amp;clean=yes">
                     <img title="View XML Source of Record" src="theme/images/script_code.png"/>
@@ -789,36 +791,36 @@ declare function bs:toolbar($item as element(), $isWritable as xs:boolean, $id a
             else ()
             }
             {
-                (: if the item's collection is writable, display edit/delete and move buttons :)
-                if ($isWritable) 
+            (: if the item's collection is writable, display edit, delete and move buttons :)
+            if ($isWritable) 
+            then
+                (
+                if (xmldb:collection-available("/db/apps/ziziphus/") and name($item) eq "vra")
                 then
-                    (
-                        if (xmldb:collection-available("/db/apps/ziziphus/") and name($item) eq 'vra')
-                        then
-                            <a target="_new" href="/exist/apps/ziziphus/record.html?id={$id}&amp;workdir={$workdir}&amp;imagepath={$imagepath}">
-                                <img title="Edit VRA Record" src="theme/images/page_edit.png"/>
-                            </a>
-                        else 
-                            if (name($item) eq 'mods')
-                            then
-                                <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={util:collection-name($item)}&amp;type={$item/mods:extension/*:template}">
-                                    <img title="Edit MODS Record" src="theme/images/page_edit.png"/>
-                                </a>
-                            else ()
-                        ,
-                        <a class="remove-resource" href="#{$id}"><img title="Delete Record" src="theme/images/delete.png"/></a>
-                        ,
-                        <a class="move-resource" href="#{$id}"><img title="Move Record" src="theme/images/shape_move_front.png"/></a>
-                        ,
-                        $upload-button                        
-                    )
-                else ()
-            }
+                    <a target="_new" href="/exist/apps/ziziphus/record.html?id={$id}&amp;workdir={$workdir}&amp;imagepath={$imagepath}">
+                        <img title="Edit VRA Record" src="theme/images/page_edit.png"/>
+                    </a>
+                else 
+                    if (name($item) eq "mods")
+                    then
+                        <a href="../edit/edit.xq?id={$item/@ID}&amp;collection={$collection}&amp;type={$item/mods:extension/*:template}">
+                            <img title="Edit MODS Record" src="theme/images/page_edit.png"/>
+                        </a>
+                    else ()
+                ,
+                <a class="remove-resource" href="#{$id}"><img title="Delete Record" src="theme/images/delete.png"/></a>
+                ,
+                <a class="move-resource" href="#{$id}"><img title="Move Record" src="theme/images/shape_move_front.png"/></a>
+                ,
+                $upload-button                        
+                )
+            else ()
+        }
             {
                 (: button to add a related item :)
                 if ($bs:USER ne "guest") 
                 then
-                    if (name($item) eq 'mods')
+                    if (name($item) eq "mods")
                     then
                         <a class="add-related" href="#{if ($isWritable) then $collection else $home}#{$item/@ID}">
                             <img title="Create Related MODS Record" src="theme/images/page_add.png"/>
