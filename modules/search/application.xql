@@ -486,7 +486,6 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
                 if ($expr/@name = ($biblio:RECORD-ID-FIELD, 'ID', $biblio:XLINK-FIELD)) 
                 then $config:mods-root-minus-temp
                 else $query-as-xml/ancestor::query/collection/string()
-            let $log := util:log("DEBUG", ("##$collectionxxx): ", $collection-path))
             let $collection :=
                 if ($collection-path eq $config:groups-collection)
                 then
@@ -1457,10 +1456,8 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
 
     (: Process request parameters and generate an XML representation of the query :)
     let $query-as-xml := biblio:prepare-query($id, $collection, $reload, $history, $clear, $filter, $search-field, $mylist, $value)
-    let $log := util:log("DEBUG", ("##$query-as-xmlxxx): ", $query-as-xml))
     (: Get the results :)
     let $query-as-regex := biblio:get-query-as-regex($query-as-xml)
-    let $log := util:log("DEBUG", ("##$query-as-regexxxx): ", $query-as-regex))
     let $null := session:set-attribute('regex', $query-as-regex)
     let $results := biblio:get-or-create-cached-results($mylist, $query-as-xml, $sort)
     return
