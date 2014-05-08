@@ -88,16 +88,13 @@ declare function bs:collection-is-writable($collection as xs:string) {
         security:can-write-collection(xmldb:decode($collection))
 };
 
-declare function bs:get-item-uri($item-id as xs:string) {
+declare function bs:get-item-uri($item-id as xs:string?) {
     fn:concat(
         request:get-scheme(),
         "://",
         request:get-server-name(),
         if((request:get-scheme() eq "http" and request:get-server-port() eq 80) or (request:get-scheme() eq "https" and request:get-server-port() eq 443))then "" else fn:concat(":", request:get-server-port()),
-        
         fn:replace(request:get-uri(), "/exist/([^/]*)/([^/]*)/.*", "/exist/$1/$2"),
-        
-        (:fn:substring-before(request:get-url(), "/modules"), :)
         "/item/",
         $item-id
     )
@@ -215,7 +212,7 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
     let $id := concat(document-uri(root($item)), '#', util:node-id($item))
     let $stored := session:get-attribute("personal-list")
     let $saved := exists($stored//*[@id = $id])
-    let $results :=  collection($config:mods-root)//mods:mods[@ID=$item/@ID]/mods:relatedItem
+    let $results :=  collection($config:mods-root-minus-temp)//mods:mods[@ID=$item/@ID]/mods:relatedItem
     return
         <tr class="pagination-item detail" xmlns="http://www.w3.org/1999/xhtml">
             <td class="pagination-number">{$currentPos}</td>
@@ -237,7 +234,7 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
                             if ($image-is-preview)
                             then 
                             (
-                                let $image := collection($config:mods-root)//vra:image[@id=data($entry//mods:url)]
+                                let $image := collection($config:mods-root-minus-temp)//vra:image[@id=data($entry//mods:url)]
                                 return 
                                    local:return-thumbnail-detail-view($image)
                   
@@ -315,7 +312,7 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
             else '/vra:image/@id'
     let $stored := session:get-attribute("personal-list")
     let $saved := exists($stored//*[@id = $id])
-    let $vra-work :=  collection($config:mods-root)//vra:work[@id=$id]/vra:relationSet/vra:relation
+    let $vra-work :=  collection($config:mods-root-minus-temp)//vra:work[@id=$id]/vra:relationSet/vra:relation
     
     return
         <tr class="pagination-item detail" xmlns="http://www.w3.org/1999/xhtml">
@@ -333,11 +330,11 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
                     then
                         for $entry in $vra-work
                         (:return <img src="{$entry/@relids}"/>:)
-                        let $image := collection($config:mods-root)//vra:image[@id=$entry/@relids]
+                        let $image := collection($config:mods-root-minus-temp)//vra:image[@id=$entry/@relids]
                             return
                                 local:return-thumbnail-detail-view($image)
                     else 
-                        let $image := collection($config:mods-root)//vra:image[@id=$id]
+                        let $image := collection($config:mods-root-minus-temp)//vra:image[@id=$id]
                             return
                                 local:return-thumbnail-detail-view($image)
                      (: 
@@ -383,7 +380,7 @@ declare function bs:wiki-detail-view-table($item as element(), $currentPos as xs
             else '/vra:image/@id'
     let $stored := session:get-attribute("personal-list")
     let $saved := exists($stored//*[@id = $id])
-    let $vra-work :=  collection($config:mods-root)//vra:work[@id=$id]/vra:relationSet/vra:relation
+    let $vra-work :=  collection($config:mods-root-minus-temp)//vra:work[@id=$id]/vra:relationSet/vra:relation
     
     return
         <tr class="pagination-item detail" xmlns="http://www.w3.org/1999/xhtml">
@@ -401,11 +398,11 @@ declare function bs:wiki-detail-view-table($item as element(), $currentPos as xs
                     then
                         for $entry in $vra-work
                         (:return <img src="{$entry/@relids}"/>:)
-                        let $image := collection($config:mods-root)//vra:image[@id=$entry/@relids]
+                        let $image := collection($config:mods-root-minus-temp)//vra:image[@id=$entry/@relids]
                             return
                                 local:return-thumbnail-detail-view($image)
                     else 
-                        let $image := collection($config:mods-root)//vra:image[@id=$id]
+                        let $image := collection($config:mods-root-minus-temp)//vra:image[@id=$id]
                             return
                                 local:return-thumbnail-detail-view($image)
                      (: 
@@ -551,7 +548,7 @@ declare function bs:vra-list-view-table($item as node(), $currentPos as xs:int) 
                 (:NB: relids can hold multiple values; the image record with @pref on vra:relation is "true".
                 For now, we disregard this; otherwise we have to check after retrieving the image records.:)
                 let $relids := tokenize($relids, ' ')[1]
-                let $image := collection($config:mods-root)//vra:image[@id = $relids]
+                let $image := collection($config:mods-root-minus-temp)//vra:image[@id = $relids]
                     return
                         <td class="list-image">{local:return-thumbnail-list-view($image)}</td>               
     }
