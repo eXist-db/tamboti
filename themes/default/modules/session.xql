@@ -239,7 +239,7 @@ declare function bs:mods-detail-view-table($item as element(mods:mods), $current
                             (
                                 let $image := collection($config:mods-root)//vra:image[@id=data($entry//mods:url)]
                                 return 
-                                   <p>{local:return-thumbnail-detail-view($image)}</p>
+                                   local:return-thumbnail-detail-view($image)
                   
                             )
                             else()
@@ -287,7 +287,11 @@ declare function local:basic-get-http($uri,$username,$password) {
   return httpclient:get(xs:anyURI($uri),false(), $headers)
 };
 declare function local:return-thumbnail-detail-view($image){
-    let $image-url := <img src="{concat($config:image-service-url, $image/@id)}?width=150" alt="" class="relatedImage"/>
+    let $image-url := 
+        if ($bs:USER eq "guest")
+        then <img src="{concat($config:image-service-url, $image/@id)}?width=150" alt="image" class="relatedImage"/>
+        else <a href="{concat($config:image-service-url, $image/@id)}?width=1000" target="_blank"><img src="{concat($config:image-service-url, $image/@id)}?width=150" alt="image" class="relatedImage"/></a> 
+    
         return $image-url
 };
 
@@ -331,11 +335,11 @@ declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos
                         (:return <img src="{$entry/@relids}"/>:)
                         let $image := collection($config:mods-root)//vra:image[@id=$entry/@relids]
                             return
-                                <p>{local:return-thumbnail-detail-view($image)}</p>
+                                local:return-thumbnail-detail-view($image)
                     else 
                         let $image := collection($config:mods-root)//vra:image[@id=$id]
                             return
-                                <p>{local:return-thumbnail-detail-view($image)}</p>
+                                local:return-thumbnail-detail-view($image)
                      (: 
                      return <img src="{concat(request:get-scheme(),'://',request:get-server-name(),':',request:get-server-port(),request:get-context-path(),'/rest', util:collection-name($image),"/" ,$image-name)}"  width="200px"/>
                      :)               
@@ -399,11 +403,11 @@ declare function bs:wiki-detail-view-table($item as element(), $currentPos as xs
                         (:return <img src="{$entry/@relids}"/>:)
                         let $image := collection($config:mods-root)//vra:image[@id=$entry/@relids]
                             return
-                                <p>{local:return-thumbnail-detail-view($image)}</p>
+                                local:return-thumbnail-detail-view($image)
                     else 
                         let $image := collection($config:mods-root)//vra:image[@id=$id]
                             return
-                                <p>{local:return-thumbnail-detail-view($image)}</p>
+                                local:return-thumbnail-detail-view($image)
                      (: 
                      return <img src="{concat(request:get-scheme(),'://',request:get-server-name(),':',request:get-server-port(),request:get-context-path(),'/rest', util:collection-name($image),"/" ,$image-name)}"  width="200px"/>
                      :)               
