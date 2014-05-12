@@ -2,6 +2,8 @@ xquery version "1.0";
 
 declare namespace user="http://exist-db.org/xquery/biblio/user";
 declare namespace mods="http://www.loc.gov/mods/v3";
+declare namespace vra = "http://www.vraweb.org/vracore4.htm";
+declare namespace tei="http://www.tei-c.org/ns/1.0";
 
 declare function user:add-to-personal-list() {
     let $cached := session:get-attribute("mods:cached")
@@ -48,18 +50,19 @@ declare function user:personal-list-size() {
         else <span>{count($list/listitem)} items</span>
 };
 
-declare function user:export-personal-list() as element(mods:modsCollection) {
+declare function user:export-personal-list() as element(my-list-export) {
     util:declare-option("exist:serialize", "method=xml media-type=application/xml"),   
-    response:set-header("Content-Disposition", "attachment; filename=export.mods.xml"),
-    <mods:modsCollection>
+    response:set-header("Content-Disposition", "attachment; filename=my-list-export.xml"),
+    <my-list-export>
     {
-        session:get-attribute("personal-list")/listitem/mods:mods
+        (
+        session:get-attribute("personal-list")/listitem/mods:mods, 
+        session:get-attribute("personal-list")/listitem/vra:vra,
+        session:get-attribute("personal-list")/listitem/tei:TEI
+        )
     }
-    </mods:modsCollection>
+    </my-list-export>
 };
-
-let $log := util:log("DEBUG", ("##param-names: ", string-join(request:get-parameter-names(), ' || ')))
-let $log := util:log("DEBUG", ("##$module-param): ", request:get-parameter('action', '')))
 
 let $list := request:get-parameter("list", ())
 let $export := request:get-parameter("export", ())

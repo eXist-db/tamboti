@@ -70,6 +70,10 @@ declare function functx:replace-first($arg as xs:string?, $pattern as xs:string,
     An XLink may be passed through retrieve-mods:format-detail-view() without a hash or or it may be passed with a hash through the search interface; 
     therefore any leading hash is first removed and then added, to prevent double hashes. 
 :)
+
+declare variable $biblio:RECORD-ID-FIELD := 'the Record ID Field (MODS, VRA, Wiki)';
+declare variable $biblio:XLINK-FIELD := 'the XLink Field (MODS)';
+
 declare variable $biblio:FIELDS :=
 <fields>
     <field name="any Field (MODS, TEI, VRA, Wiki)" short-name="All">
@@ -201,7 +205,7 @@ declare variable $biblio:FIELDS :=
             <target>mods:publisher</target>
         </targets>
     </field>
-    <field name="the Record ID Field (MODS, VRA, Wiki)" short-name="ID">
+    <field name="{$biblio:RECORD-ID-FIELD}" short-name="ID">
         <search-expression>
             (
             mods:mods[@ID eq '$q']
@@ -266,7 +270,7 @@ declare variable $biblio:FIELDS :=
             <target>atom:title</target>
         </targets>
     </field>
-    <field name="the XLink Field (MODS)" short-name="XLink">
+    <field name="{$biblio:XLINK-FIELD}" short-name="XLink">
         <search-expression>
             mods:mods[mods:relatedItem[ends-with(@xlink:href, '$q')]]
         </search-expression>
@@ -477,10 +481,10 @@ declare function biblio:generate-query($query-as-xml as element()) as xs:string*
             <field name="Title">mods:mods[ft:query(.//mods:titleInfo, '$q', $options)]</field>.
             The search term, to be substituted for '$q', is held in $query-as-xml. :)
             
-            (: When searching for ID and xlink:href, do not use the chosen collection-path, but search throughout all of /resources. :)
+            (: When searching for ID and xlink:href, do not use the chosen collection-path, but search throughout all of /db/resources except /db/resources/temp. :)
             let $collection-path := 
-                if ($expr/@name = ('the Record ID Field (MODS, VRA)', 'ID', 'the XLink Field (MODS)')) 
-                then '/resources'
+                if ($expr/@name = ($biblio:RECORD-ID-FIELD, 'ID', $biblio:XLINK-FIELD)) 
+                then $config:mods-root-minus-temp
                 else $query-as-xml/ancestor::query/collection/string()
             let $collection :=
                 if ($collection-path eq $config:groups-collection)
@@ -594,7 +598,6 @@ declare function biblio:process-form-parameters($params as xs:string*) as elemen
     the query. Filter out empty parameters and take care of boolean operators.
 :)
 declare function biblio:process-form() as element(query)? {
-    (:let $collection := xmldb:encode-uri(request:get-parameter("collection", theme:get-root())):)
     let $collection := xmldb:encode-uri(request:get-parameter("collection", theme:get-root()))
     let $fields :=
         (:  Get a list of all input parameters which are not empty,
@@ -760,7 +763,7 @@ declare function biblio:evaluate-query($query-as-string as xs:string, $sort as x
     since it may contain stray files left there if the user is logged out.
     Therefore a search is made in all other sub-collections of /db/resources.
     Both this and the identical replacement in biblio:generate-query() are necessary.:)
-    let $query-as-string := replace($query-as-string, "'/resources'", "'/resources/commons','/resources/users', '/resources/groups'")
+    let $query-as-string := replace($query-as-string, "'/resources/'", "'/resources/commons/','/resources/users/', '/resources/groups/'")
     (:NB: The following hack is required because some queries end up with "//" before "order by", raising the error that "by" is an unexpected expression.:)
     let $query-as-string := if (ends-with($query-as-string, "//")) then concat($query-as-string, "*") else $query-as-string
     let $order-by-expression := biblio:construct-order-by-expression($sort)
@@ -1057,7 +1060,6 @@ declare function biblio:login($node as node(), $params as element(parameters)?, 
 };
 
 declare function biblio:collection-path($node as node(), $params as element(parameters)?, $model as item()*) {
-    (:let $collection := functx:replace-first(xmldb:encode-uri(request:get-parameter("collection", theme:get-root())), "/db/", ""):)
     let $collection := functx:replace-first(xmldb:encode-uri(request:get-parameter("collection", theme:get-root())), "/db/", "")    
         return
             templates:copy-set-attribute($node, "value", xmldb:decode-uri($collection), $model)
@@ -1305,7 +1307,7 @@ declare function biblio:prepare-query($id as xs:string?, $collection as xs:strin
     then
         <query>
             <collection>{$config:mods-root}</collection>
-            <field m="1" name="the Record ID Field (MODS, VRA)">{$id}</field>
+            <field m="1" name="{$biblio:RECORD-ID-FIELD}">{$id}</field>
         </query>
     else 
         if (empty($collection)) 
@@ -1446,7 +1448,7 @@ declare function biblio:query($node as node(), $params as element(parameters)?, 
     let $reload := request:get-parameter("reload", ())
     let $clear := request:get-parameter("clear", ())
     let $mylist := request:get-parameter("mylist", ()) (:clear, display:)
-    (:let $collection := xmldb:encode-uri(request:get-parameter("collection", $config:mods-root)):)
+    (:let $collection := xmldb:encode-uri(request:get-parameter("collection", collection("/resources/commons","/resources/users", "/resources/groups"))):)
     let $collection := xmldb:encode-uri(request:get-parameter("collection", $config:mods-root))
     let $collection := if (starts-with($collection, "/db")) then $collection else concat("/db", $collection)
     let $id := request:get-parameter("id", ())

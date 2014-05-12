@@ -457,6 +457,12 @@ select .xforms-value {
     padding-left:.2em;
     }
 
+.table-of-contents .textarea .xforms-value, .note .textarea .xforms-value, .abstract .textarea .xforms-value  {
+    width:40em; 
+    height:25em; 
+    padding-left:.2em;
+    }
+
 /*size of text boxes and text areas ends*/
 
 
