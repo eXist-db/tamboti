@@ -283,18 +283,21 @@ declare function local:basic-get-http($uri,$username,$password) {
     </headers>
   return httpclient:get(xs:anyURI($uri),false(), $headers)
 };
+
 declare function local:return-thumbnail-detail-view($image){
     let $image-url := 
         if ($bs:USER eq "guest")
         then <img src="{concat($config:image-service-url, $image/@id)}?width=150" alt="image" class="relatedImage"/>
         else <a href="{concat($config:image-service-url, $image/@id)}?width=1000" target="_blank"><img src="{concat($config:image-service-url, $image/@id)}?width=150" alt="image" class="relatedImage"/></a> 
-    
-        return $image-url
+    return $image-url
 };
 
 declare function local:return-thumbnail-list-view($image){
-    let $image-url := <img src="{concat($config:image-service-url,$image/@id)}?width=40&amp;height=40&amp;crop_type=middle" alt="" class="relatedImage"/>
-        return $image-url
+    let $image-url := 
+        if ($bs:USER eq "guest")
+        then <img src="{concat($config:image-service-url, $image/@id)}?width=40&amp;height=40&amp;crop_type=middle" alt="image" class="relatedImage"/>
+        else <a href="{concat($config:image-service-url, $image/@id)}?width=1000" target="_blank"><img src="{concat($config:image-service-url, $image/@id)}?width=40&amp;height=40&amp;crop_type=middle" alt="image" class="relatedImage"/></a> 
+    return $image-url
 };
 
 declare function bs:vra-detail-view-table($item as element(vra:vra), $currentPos as xs:int) {
