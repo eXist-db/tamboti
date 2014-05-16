@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--let $code-table :=
 -->
 <code-table xml:id="hint-code">
@@ -1535,6 +1534,7 @@
             <parent>language</parent>
             <tab-id>language</tab-id>
             <tab-id>record-info</tab-id>
+            <tab-id>compact-c</tab-id>
         </item>
         <item xml:id="hint-code_location">
             <help>
@@ -2122,6 +2122,7 @@
             <local-name>objectPart</local-name>
             <parent>language</parent>
             <tab-id>language</tab-id>
+            <tab-id>compact-c</tab-id>
         </item>
         <item xml:id="hint-code_occupation">
             <help>
@@ -3681,6 +3682,7 @@
             <local-name>type</local-name>
             <parent>languageTerm</parent>
             <tab-id>language</tab-id>
+            <tab-id>compact-c</tab-id>
         </item>
         <item xml:id="hint-code_location-type">
             <help>
@@ -3732,6 +3734,7 @@
             <tab-id>origin</tab-id>
             <tab-id>language</tab-id>
             <tab-id>subject</tab-id>
+            <tab-id>compat-c</tab-id>
         </item>
         <item xml:id="hint-code_url-compact">
             <help>
