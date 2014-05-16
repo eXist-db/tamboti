@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ext="http://exist-db.org/mods/extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.5" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://cluster-schemas.uni-hd.de/modsCluster.xsd" ID="">
     <titleInfo>
         <nonSort/>
@@ -43,7 +42,7 @@
     </physicalDescription>
     <targetAudience authority="marctarget">adult</targetAudience>
     <typeOfResource>text</typeOfResource>
-    <genre authority="marcgt">newspaper</genre>
+    <genre authority="marcgt">motion picture</genre>
     <subject valueURI="" authority="" xlink:href="">
         <topic authority=""/>
         <geographic authority=""/>
@@ -65,7 +64,7 @@
     <classification authority="lcc"/>
     <abstract lang=""/>
     <tableOfContents lang="" script="" xlink:href=""/>
-    <note lang="" type="content"/>
+    <note lang="" type="internal"/>
     <relatedItem type="preceeding" xlink:href="">
         <titleInfo>
             <nonSort/>
