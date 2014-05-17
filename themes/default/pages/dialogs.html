@@ -62,9 +62,9 @@ function FileUploadCtrl(scope) {
         var clazz = 'not-available'
         //var ok = evt.dataTransfer &amp;&amp; evt.dataTransfer.types &amp;&amp; evt.dataTransfer.types.indexOf('Files') &gt;= 0
         scope.$apply(function(){
-          //  scope.dropText = ok ? 'Drop files here …' : 'Only files are allowed!'
+          //  scope.dropText = ok ? 'Drop files here...' : 'Only files are allowed!'
           //  scope.dropClass = ok ? 'over' : 'not-available'
-          scope.dropText  = 'Drop files here …'
+          scope.dropText  = 'Drop files here...'
           scope.dropClass = 'over' 
         })
     }, false)
@@ -73,7 +73,7 @@ function FileUploadCtrl(scope) {
         evt.stopPropagation()
         evt.preventDefault()
         scope.$apply(function(){
-            scope.dropText = 'Drop files here...'
+            scope.dropText = 'Drop files here …'
             scope.dropClass = ''
         })
         var files = evt.dataTransfer.files
@@ -174,9 +174,15 @@ function FileUploadCtrl(scope) {
         </div>
         <div ng-show="files.length" id="file-list">
             <div ng-repeat="file in files.slice(0)">
-                <span class="name">{{file.webkitRelativePath || file.name}}</span>
-                <!--<span>{{file.size / 1024 / 1024 | number:2}} MB</span>-->
-                <span ng-switch="file.size &gt; 1024*1024"> ({{file.size / 1024 | number:2}} kB)</span>
+                <table>
+                    <tr>
+                        <td colspan="1">{{file.webkitRelativePath || file.name}}</td>
+                        <td ng-switch="file.size &gt; 1024*1024" colspan="1">
+                            <!--<span>{{file.size / 1024 / 1024 | number:2}} MB</span>-->
+                            <span> ({{file.size / 1024 | number:2}} kB)</span>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <input type="button" ng-click="uploadFile()" value="Upload"/>
             <div ng-show="progressVisible">
@@ -186,14 +192,14 @@ function FileUploadCtrl(scope) {
                 </div>
             </div>
         </div>
-        <!--<table>
+        <table>
             <tr>
                 <td>
                     <div id="upload-resource-id" name="resource"/>
                     <div id="file-upload-folder" style="display: none;"/>
                 </td>
             </tr>
-        </table>-->
+        </table>
     </jquery:dialog>
     <jquery:dialog id="rename-collection-dialog" modal="true" title="Rename Folder" trigger="#collection-rename-folder" width="450">
         <jquery:button label="Rename" function="renameCollection"/>
