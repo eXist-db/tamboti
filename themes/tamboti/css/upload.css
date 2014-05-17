@@ -1,4 +1,12 @@
-
+#dropbox span {
+    margin:.5em;
+}
+#file-list input {
+    margin-top:1em;
+}
+#dropbox.dropbox {
+    margin-top:.3em;
+}
 #drop-area {
     border: 2px dashed #DDDDDD;
     height: 50px;
@@ -59,10 +67,12 @@
     border-bottom: medium none;
       border-bottom: 1px solid #000000;
 }
-#file-list div {
-    margin-bottom: 0em;
-    	float:left;
-    	align:middle;
+#file-list div .name, #file-list div .size{
+    width:10em !important;
+}
+
+#file-list div .name-label, #file-list div .size-label{
+    width:4em;
 }
 #file-list li img {
     
@@ -179,5 +189,3 @@
   display: block;
 }
 /* collection sharing dialog ends*/
-
-
