@@ -6,7 +6,7 @@
     <xsd:annotation>
         <xsd:documentation> This schema is an extension (patched version) of the VRA Core version
             4.0 used at the University of Heidelberg for the implementation of Ziziphus, an
-            implementation of an VRA editor. We use a patched version rather than a Schema overwrite
+            implementation of an VRA editor. We use a patched version rather than a Schema override
             or extension version for pragmatic reasons: - handling of the schema is easier within
             common tools such as Oxygen - some extensions are hard to do with pure extensions (not
             allowing overwrites) as known in XML Schema 1.0 and are either hard to do with pure
