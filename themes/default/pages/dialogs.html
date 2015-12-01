@@ -43,14 +43,14 @@ function FileUploadCtrl(scope) {
     //============== DRAG &amp; DROP =============
     // source for drag&amp;drop: http://www.webappers.com/2011/09/28/drag-drop-file-upload-with-html5-javascript/
     var dropbox = document.getElementById("dropbox")
-    scope.dropText = 'Drop files here...'
+    scope.dropText = 'Drop files here …'
     
     // init event handlers
     function dragEnterLeave(evt) {
         evt.stopPropagation()
         evt.preventDefault()
         scope.$apply(function(){
-            scope.dropText = 'Drop files here...'
+            scope.dropText = 'Drop files here …'
             scope.dropClass = ''
         })
     }
@@ -73,7 +73,7 @@ function FileUploadCtrl(scope) {
         evt.stopPropagation()
         evt.preventDefault()
         scope.$apply(function(){
-            scope.dropText = 'Drop files here...'
+            scope.dropText = 'Drop files here …'
             scope.dropClass = ''
         })
         var files = evt.dataTransfer.files
@@ -178,8 +178,8 @@ function FileUploadCtrl(scope) {
                     <tr>
                         <td colspan="1">{{file.webkitRelativePath || file.name}}</td>
                         <td ng-switch="file.size &gt; 1024*1024" colspan="1">
-                            <span>{{file.size / 1024 / 1024 | number:2}} MB</span>
-                            <span>{{file.size / 1024 | number:2}} kB</span>
+                            <!--<span>{{file.size / 1024 / 1024 | number:2}} MB</span>-->
+                            <span> ({{file.size / 1024 | number:2}} kB)</span>
                         </td>
                     </tr>
                 </table>

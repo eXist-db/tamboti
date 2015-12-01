@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ext="http://exist-db.org/mods/extension" class="compact block-form" tab-id="compact-c" ext:dummy="dummy" xlink:dummy="dummy">
     <xf:group>
         <fieldset class="level-1">
@@ -405,6 +404,107 @@
                             <xf:group ref="." class="hide-label margin-plus">
                                 <xf:input ref="." class="text_100">
                                     <xf:label>Genre</xf:label>
+                                </xf:input>
+                            </xf:group>
+                        </xf:repeat>
+                    </fieldset>
+                </xf:group>
+            </xf:repeat>
+        </fieldset>
+    </xf:group>
+    <xf:group ref=".[string(mods:extension/ext:template) = 'moving-images'] | .[string(mods:extension/ext:template) = 'moving-images-transliterated']">
+        <fieldset class="level-1">
+            <div class="label-box">
+                <span class="legend">Resource Languages</span>
+                <span class="xforms-help">
+                    <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                    <div class="xforms-help-value">
+                        <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_language',instance('code-tables'))/help"/>
+                    </div>
+                </span>
+                <span class="add-delete-button">
+                    <xf:trigger ref=".[mods:language]">
+                        <xf:label>+</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert nodeset="mods:language" at="index('language-repeat')" position="before" origin="instance('new-instance')/mods:language"/>
+                        </xf:action>
+                    </xf:trigger>
+                </span>
+                <span class="add-delete-button">
+                    <xf:trigger ref=".[mods:language]">
+                        <xf:label>–</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:language" at="index('language-repeat')"/>
+                        </xf:action>
+                    </xf:trigger>
+                </span>
+            </div>
+            <xf:repeat nodeset="instance('save-data')/mods:language" id="language-repeat">
+                <xf:group appearance="full" class="margin-plus" ref=".[@objectPart]">
+                    <xf:input ref="./@objectPart" class="text_50">
+                        <xf:label>Object Part<span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_objectPart',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </xf:label>
+                    </xf:input>
+                </xf:group>
+                <br/>
+                <xf:group appearance="full" class="schema_3.3 schema_3.4 schema_3.5" ref=".[mods:languageTerm]">
+                    <fieldset class="level-2">
+                        <div class="label-box">
+                            <span class="legend">Language Terms</span>
+                            <span class="xforms-help">
+                                <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                <div class="xforms-help-value">
+                                    <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_languageTerm',instance('code-tables'))/help"/>
+                                </div>
+                            </span>
+                        </div>
+                        
+                        <xf:repeat nodeset="./mods:languageTerm" id="languageTerm-repeat">
+                            <xf:group appearance="full" class="margin-plus" ref=".[@type]">
+                                <xf:select1 ref="./@type">
+                                    <xf:label>Type<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_code-text',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='code-text-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <br/>
+                            <xf:group appearance="full" class="hide-label margin-plus" ref=".[@type='code']">
+                                <xf:select1 ref=".">
+                                    <xf:label>Language Term (code)<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_languageTerm',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
+                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                                        <xf:label ref="label"/>
+                                        <xf:value ref="value"/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </xf:group>
+                            <xf:group appearance="full" class="hide-label margin-plus" ref=".[@type='text']">
+                                <xf:input ref=".">
+                                    <xf:label>Language Term (text)<span class="xforms-help">
+                                            <span onmouseover="XsltForms_browser.show(this, 'hint', true)" onmouseout="XsltForms_browser.show(this, 'hint', false)" class="xforms-hint-icon"/>
+                                            <div class="xforms-help-value">
+                                                <xf:output mediatype="application/xhtml+xml" incremental="true" ref="id('hint-code_languageTerm',instance('code-tables'))/help"/>
+                                            </div>
+                                        </span>
+                                    </xf:label>
                                 </xf:input>
                             </xf:group>
                         </xf:repeat>

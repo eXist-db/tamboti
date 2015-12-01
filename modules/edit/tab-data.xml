@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <tabs>
     <tab>
         <top-tab-label>Basic Input Forms</top-tab-label>
@@ -115,7 +114,7 @@
             Contribution</contribution-to-edited-volume-transliterated>
         <suebs-tibetan>Contents of Main Publication</suebs-tibetan>
         <suebs-chinese>Contents of Main Publication</suebs-chinese>
-        <moving-images-latin>Contents of Moving Images</moving-images-latin>
+        <moving-images-latin>Contents and Language of Moving Images</moving-images-latin>
         <newspaper-latin>Contents of Newspaper</newspaper-latin>
         <newspaper-transliterated>Contents of Newspaper</newspaper-transliterated>
         <newspaper-article-latin>Contents of Newspaper Article</newspaper-article-latin>
@@ -126,6 +125,7 @@
         <path>mods:note</path>
         <path>mods:abstract</path>
         <path>mods:extension</path>
+        <path>mods:language</path>
     </tab>
     <tab>
         <top-tab-label>Citation Forms</top-tab-label>
