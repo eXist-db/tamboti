@@ -45,7 +45,7 @@ declare function functx:repeat-string($stringToRepeat as xs:string?, $count as x
    string-join((for $i in 1 to $count return $stringToRepeat), '')
  };
  
-declare function local:create-new-record($id as xs:string, $type-request as xs:string, $target-collection as xs:string) as empty() {
+declare function local:create-new-record($id as xs:string, $type-request as xs:string, $target-collection as xs:string) as empty-sequence() {
     (:Copy the template and store it with the ID as file name.:)
     (:First, get the right template, based on the type-request and the presence or absence of transliteration.:)
     let $transliterationOfResource := request:get-parameter("transliterationOfResource", '')
